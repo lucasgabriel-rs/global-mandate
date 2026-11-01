@@ -1,0 +1,10 @@
+[gd_scene format=3]
+
+[ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="1_1758d"]
+
+[node name="BillRow" type="Button" unique_id=103498918]
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme = ExtResource("1_1758d")
+alignment = 0
+clip_text = true

@@ -1,0 +1,98 @@
+[gd_scene format=3]
+
+[ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="1_a86ru"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jfcdm"]
+content_margin_left = 20.0
+content_margin_top = 20.0
+content_margin_right = 20.0
+content_margin_bottom = 20.0
+bg_color = Color(0.05, 0.09, 0.12, 0.99)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.9254902, 0.3529412, 0.2627451, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="GameOver" type="ColorRect" unique_id=637185455]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource("1_a86ru")
+color = Color(0.01, 0.03, 0.05, 0.62)
+
+[node name="Centro" type="CenterContainer" parent="." unique_id=731064491]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Painel" type="PanelContainer" parent="Centro" unique_id=1341847702]
+custom_minimum_size = Vector2(560, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_jfcdm")
+
+[node name="col" type="VBoxContainer" parent="Centro/Painel" unique_id=245236655]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="title" type="Label" parent="Centro/Painel/col" unique_id=413653520]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9254902, 0.3529412, 0.2627451, 1)
+theme_override_font_sizes/font_size = 24
+text = "Fim de jogo"
+
+[node name="body" type="Label" parent="Centro/Painel/col" unique_id=165836055]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 15
+text = "Texto"
+autowrap_mode = 3
+
+[node name="Separador" type="ColorRect" parent="Centro/Painel/col" unique_id=644381346]
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 2
+mouse_filter = 2
+color = Color(0.15294118, 0.2509804, 0.30980393, 1)
+
+[node name="score" type="Label" parent="Centro/Painel/col" unique_id=2097120967]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9490196, 0.7019608, 0.23921569, 1)
+theme_override_font_sizes/font_size = 20
+text = "Pontuação final: 0"
+
+[node name="stats" type="Label" parent="Centro/Painel/col" unique_id=1599039684]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 14
+text = "Tempo no poder: 0,0 anos  ·  Reeleições: 0
+PIB per capita real: 1,00 vezes o de 2025
+Dívida/PIB: 87%  ·  Inflação: 4,4%  ·  Influência: 18º no mundo"
+autowrap_mode = 3
+
+[node name="NovaPartida" type="Button" parent="Centro/Painel/col" unique_id=319644691]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 38)
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Começar um novo jogo"
+
+[node name="NovoPersonagem" type="Button" parent="Centro/Painel/col"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Segue a mesma partida, no mesmo país, com outra pessoa."
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Assumir um novo personagem"
+

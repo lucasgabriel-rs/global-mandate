@@ -1,0 +1,10 @@
+[gd_scene format=3]
+
+[ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="1_y8iv6"]
+
+[node name="ListButton" type="Button" unique_id=1398413902]
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme = ExtResource("1_y8iv6")
+theme_override_font_sizes/font_size = 12
+alignment = 0

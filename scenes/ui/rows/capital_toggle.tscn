@@ -1,0 +1,10 @@
+[gd_scene format=3]
+
+[ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="1_p2tte"]
+
+[node name="CapitalToggle" type="Button" unique_id=602816759]
+tooltip_text = "A capital atual, se houver, é substituída."
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme = ExtResource("1_p2tte")
+clip_text = true

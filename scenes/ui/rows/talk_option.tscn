@@ -1,0 +1,10 @@
+[gd_scene format=3]
+
+[ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="1_3gqvq"]
+
+[node name="TalkOption" type="Button" unique_id=923258392]
+custom_minimum_size = Vector2(0, 30)
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme = ExtResource("1_3gqvq")
+alignment = 0

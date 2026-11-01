@@ -1,0 +1,49 @@
+[gd_scene format=3]
+
+[ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="1_rg8oc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6xivm"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jqevr"]
+content_margin_left = 1.0
+content_margin_top = 1.0
+content_margin_right = 1.0
+content_margin_bottom = 1.0
+bg_color = Color(1, 1, 1, 0.08)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 0)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rtc10"]
+content_margin_left = 1.0
+content_margin_top = 1.0
+content_margin_right = 1.0
+content_margin_bottom = 1.0
+bg_color = Color(1, 1, 1, 0.05)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 0)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[node name="NewsItem" type="Button" unique_id=1722252517]
+size_flags_horizontal = 3
+focus_mode = 0
+theme = ExtResource("1_rg8oc")
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleBoxEmpty_6xivm")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_jqevr")
+theme_override_styles/hover = SubResource("StyleBoxFlat_rtc10")
+flat = true
+alignment = 0
+clip_text = true

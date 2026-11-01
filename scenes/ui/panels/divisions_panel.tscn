@@ -1,0 +1,107 @@
+[gd_scene format=3]
+
+[ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="1_3dtqb"]
+[ext_resource type="Script" path="res://scripts/ui/divisions_panel.gd" id="2_82y22"]
+
+[node name="divisions" type="VBoxContainer" unique_id=1305001401]
+size_flags_horizontal = 3
+mouse_filter = 2
+theme = ExtResource("1_3dtqb")
+theme_override_constants/separation = 6
+script = ExtResource("2_82y22")
+
+[node name="TIPOSDEUNIDADE" type="Label" parent="." unique_id=1190861492]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_constants/line_spacing = 0
+theme_override_font_sizes/font_size = 11
+text = "TIPOS DE UNIDADE"
+
+[node name="OMarcadorDefineOTipo" type="Label" parent="." unique_id=1470496723]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 12
+text = "O marcador define o tipo da próxima unidade. Clique em um nome para editá-lo."
+autowrap_mode = 3
+
+[node name="types_box" type="VBoxContainer" parent="." unique_id=145401982]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 3
+
+[node name="NovoTipo" type="Button" parent="." unique_id=1259222274]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Cria um tipo de unidade com o nome que você quiser."
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "+ Novo tipo"
+
+[node name="Separador" type="ColorRect" parent="." unique_id=1939006741]
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 2
+mouse_filter = 2
+color = Color(0.15294118, 0.2509804, 0.30980393, 1)
+
+[node name="DESENHAR" type="Label" parent="." unique_id=272918817]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_constants/line_spacing = 0
+theme_override_font_sizes/font_size = 11
+text = "DESENHAR"
+
+[node name="context" type="Label" parent="." unique_id=1124022512]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+autowrap_mode = 3
+
+[node name="draw_button" type="Button" parent="." unique_id=189877929]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 34)
+layout_mode = 2
+tooltip_text = "Clique no mapa para colocar vértices e no primeiro ponto para fechar o polígono."
+focus_mode = 0
+mouse_default_cursor_shape = 2
+
+[node name="status" type="Label" parent="." unique_id=851867866]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.29803923, 0.78039217, 0.5803922, 1)
+theme_override_font_sizes/font_size = 12
+autowrap_mode = 3
+
+[node name="Separador2" type="ColorRect" parent="." unique_id=1826297887]
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 2
+mouse_filter = 2
+color = Color(0.15294118, 0.2509804, 0.30980393, 1)
+
+[node name="detail_box" type="VBoxContainer" parent="." unique_id=1302913690]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 5
+
+[node name="HIERARQUIA" type="Label" parent="." unique_id=979986641]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_constants/line_spacing = 0
+theme_override_font_sizes/font_size = 11
+text = "HIERARQUIA"
+
+[node name="search" type="LineEdit" parent="." unique_id=2067278037]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "Buscar unidade pelo nome"
+
+[node name="tree_box" type="VBoxContainer" parent="." unique_id=2094603087]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 2

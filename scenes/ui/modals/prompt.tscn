@@ -1,0 +1,57 @@
+[gd_scene format=3]
+
+[ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="1_ognm5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vgjvd"]
+content_margin_left = 20.0
+content_margin_top = 20.0
+content_margin_right = 20.0
+content_margin_bottom = 20.0
+bg_color = Color(0.05, 0.09, 0.12, 0.99)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.9490196, 0.7019608, 0.23921569, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="Prompt" type="ColorRect" unique_id=1948961341]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource("1_ognm5")
+color = Color(0.01, 0.03, 0.05, 0.62)
+
+[node name="Centro" type="CenterContainer" parent="." unique_id=422385408]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Painel" type="PanelContainer" parent="Centro" unique_id=1543524707]
+custom_minimum_size = Vector2(520, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_vgjvd")
+
+[node name="col" type="VBoxContainer" parent="Centro/Painel" unique_id=1118027982]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="title" type="Label" parent="Centro/Painel/col" unique_id=560448588]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9490196, 0.7019608, 0.23921569, 1)
+theme_override_font_sizes/font_size = 24
+text = "Título"
+
+[node name="body" type="Label" parent="Centro/Painel/col" unique_id=1031586751]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 15
+text = "Texto"
+autowrap_mode = 3

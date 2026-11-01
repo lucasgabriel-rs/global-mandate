@@ -1,0 +1,7 @@
+[gd_scene format=3]
+
+[ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="e1"]
+
+[node name="CheckRow" type="CheckBox"]
+focus_mode = 0
+theme = ExtResource("e1")

@@ -1,0 +1,80 @@
+[gd_scene format=3]
+
+[ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="1_8on71"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1s37k"]
+content_margin_left = 20.0
+content_margin_top = 20.0
+content_margin_right = 20.0
+content_margin_bottom = 20.0
+bg_color = Color(0.05, 0.09, 0.12, 0.99)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.9254902, 0.3529412, 0.2627451, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="Confirm" type="ColorRect" unique_id=1202897950]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource("1_8on71")
+color = Color(0.01, 0.03, 0.05, 0.62)
+
+[node name="Centro" type="CenterContainer" parent="." unique_id=511811966]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Painel" type="PanelContainer" parent="Centro" unique_id=1501084206]
+custom_minimum_size = Vector2(520, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_1s37k")
+
+[node name="col" type="VBoxContainer" parent="Centro/Painel" unique_id=1283924846]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="title" type="Label" parent="Centro/Painel/col" unique_id=736203700]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9254902, 0.3529412, 0.2627451, 1)
+theme_override_font_sizes/font_size = 24
+text = "Confirmar"
+
+[node name="body" type="Label" parent="Centro/Painel/col" unique_id=363213528]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 15
+text = "Texto da confirmação"
+autowrap_mode = 3
+
+[node name="Linha" type="HBoxContainer" parent="Centro/Painel/col" unique_id=957336918]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
+
+[node name="Cancelar" type="Button" parent="Centro/Painel/col/Linha" unique_id=84800841]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Cancelar"
+
+[node name="Confirmar" type="Button" parent="Centro/Painel/col/Linha" unique_id=1531242835]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Confirmar"

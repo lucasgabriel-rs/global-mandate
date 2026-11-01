@@ -1,0 +1,135 @@
+[gd_scene format=3]
+
+[ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="1_e5kp5"]
+[ext_resource type="Script" path="res://scripts/ui/character_view.gd" id="2_7d5b6"]
+[ext_resource type="Script" path="res://scripts/ui/compass_view.gd" id="3_hliyt"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g72lc"]
+content_margin_left = 20.0
+content_margin_top = 20.0
+content_margin_right = 20.0
+content_margin_bottom = 20.0
+bg_color = Color(0.05, 0.09, 0.12, 0.99)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.9490196, 0.7019608, 0.23921569, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="Talk" type="ColorRect" unique_id=2112359095]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource("1_e5kp5")
+color = Color(0.01, 0.03, 0.05, 0.62)
+
+[node name="Centro" type="CenterContainer" parent="." unique_id=300452471]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Painel" type="PanelContainer" parent="Centro" unique_id=393395363]
+custom_minimum_size = Vector2(720, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_g72lc")
+
+[node name="col" type="VBoxContainer" parent="Centro/Painel" unique_id=218584448]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="title" type="Label" parent="Centro/Painel/col" unique_id=896396697]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9490196, 0.7019608, 0.23921569, 1)
+theme_override_font_sizes/font_size = 24
+text = "Conversa com Robert Johnson"
+
+[node name="body" type="Label" parent="Centro/Painel/col" unique_id=1020115156]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 15
+text = "Estados Unidos  ·  Aliança Liberal"
+autowrap_mode = 3
+
+[node name="Linha" type="HBoxContainer" parent="Centro/Painel/col" unique_id=1524606812]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 14
+
+[node name="Coluna" type="VBoxContainer" parent="Centro/Painel/col/Linha" unique_id=1356023050]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
+
+[node name="face" type="Control" parent="Centro/Painel/col/Linha/Coluna" unique_id=2035564084]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 150)
+clip_contents = true
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("2_7d5b6")
+portrait = true
+
+[node name="talk_compass" type="Control" parent="Centro/Painel/col/Linha/Coluna" unique_id=1317361514]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("3_hliyt")
+
+[node name="legend" type="Label" parent="Centro/Painel/col/Linha/Coluna" unique_id=410666523]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 11
+text = "Dourado: Robert Johnson. Branco: você."
+autowrap_mode = 3
+
+[node name="Coluna2" type="VBoxContainer" parent="Centro/Painel/col/Linha" unique_id=1128150067]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_constants/separation = 8
+
+[node name="talk_reply" type="Label" parent="Centro/Painel/col/Linha/Coluna2" unique_id=1781958067]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 15
+text = "“Recebi o seu pedido de conversa. O que deseja discutir?”"
+autowrap_mode = 3
+
+[node name="talk_options" type="VBoxContainer" parent="Centro/Painel/col/Linha/Coluna2" unique_id=54609390]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 5
+
+[node name="remaining" type="Label" parent="Centro/Painel/col/Linha/Coluna2/talk_options" unique_id=524964860]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 12
+text = "Falas restantes: 3"
+
+[node name="choices" type="VBoxContainer" parent="Centro/Painel/col/Linha/Coluna2/talk_options" unique_id=271725798]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 5
+
+[node name="say_end" type="Button" parent="Centro/Painel/col/Linha/Coluna2/talk_options" unique_id=1786061592]
+unique_name_in_owner = true
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Encerrar a conversa"

@@ -1,0 +1,75 @@
+[gd_scene format=3]
+
+[ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="1_tikmp"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f7dxy"]
+content_margin_left = 20.0
+content_margin_top = 20.0
+content_margin_right = 20.0
+content_margin_bottom = 20.0
+bg_color = Color(0.05, 0.09, 0.12, 0.99)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.9490196, 0.7019608, 0.23921569, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="Help" type="ColorRect" unique_id=197714310]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource("1_tikmp")
+color = Color(0.01, 0.03, 0.05, 0.62)
+
+[node name="Centro" type="CenterContainer" parent="." unique_id=575668611]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Painel" type="PanelContainer" parent="Centro" unique_id=1712726971]
+custom_minimum_size = Vector2(620, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_f7dxy")
+
+[node name="col" type="VBoxContainer" parent="Centro/Painel" unique_id=961832498]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="title" type="Label" parent="Centro/Painel/col" unique_id=414614753]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9490196, 0.7019608, 0.23921569, 1)
+theme_override_font_sizes/font_size = 24
+text = "Como jogar"
+
+[node name="OMundoCorreEmTempo" type="Label" parent="Centro/Painel/col" unique_id=1313895261]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 15
+text = "O mundo corre em tempo real: pause com Espaço e ajuste a velocidade com 1 (normal), 2 (2x) e 3 ou 4 (4x). Os botões +7 e +30 dias avançam o tempo de uma vez. Arraste o mapa, use a roda do mouse para o zoom e clique nos países para ver o dossiê.
+
+O cenário já traz estados e províncias de todos os países. Na aba Divisões, selecione uma unidade do seu país e pressione N para desenhar outra dentro dela: clique no mapa para colocar vértices e no primeiro ponto para fechar o polígono. Ali também é possível fundir e desmembrar unidades.
+
+Ao vencer uma guerra, você escolhe entre demarcar no mapa o que fica com o seu país ou não ficar com nada. Em uma paz sem vencedor, as fronteiras antigas voltam ou os dois lados negociam novas.
+
+A economia responde com defasagem. Juros levam cerca de um ano para frear a inflação; gastos em educação e infraestrutura demoram anos para aparecer no PIB potencial.
+
+Dívida acima do limite encarece o financiamento e pode terminar em moratória. Em democracias você perde o cargo nas urnas se a aprovação estiver baixa; em regimes fechados, a ameaça é golpe ou revolta.
+
+Não há limite de tempo. Se perder uma eleição ou uma guerra, você passa a liderar a oposição e pode voltar ao poder. O jogo só acaba com impeachment, golpe, renúncia ou morte, e aí você escolhe entre um novo jogo e assumir outro personagem.
+
+Todos envelhecem, adoecem e morrem, inclusive você, e novos políticos surgem com o tempo. Em países democráticos, criar uma unidade subnacional passa pelo parlamento e por plebiscito."
+autowrap_mode = 3
+
+[node name="Entendi" type="Button" parent="Centro/Painel/col" unique_id=1671173531]
+unique_name_in_owner = true
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Entendi"

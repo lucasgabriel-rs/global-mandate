@@ -1,0 +1,26 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/main.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/ui/map_view.gd" id="2"]
+[ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="3"]
+[ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="4"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1")
+
+[node name="Map" type="Node2D" parent="."]
+script = ExtResource("2")
+
+[node name="UiLayer" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="Hud" parent="UiLayer" instance=ExtResource("3")]
+visible = false
+
+[node name="ModalRoot" type="Control" parent="UiLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+theme = ExtResource("4")

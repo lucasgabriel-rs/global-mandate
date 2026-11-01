@@ -1,0 +1,27 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/law_slot.gd" id="e1"]
+[ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="e2"]
+
+[node name="LawSlot" type="HBoxContainer"]
+theme_override_constants/separation = 4
+script = ExtResource("e1")
+theme = ExtResource("e2")
+
+[node name="bar" type="ColorRect" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(6, 0)
+mouse_filter = 2
+color = Color(0, 0, 0, 0.25)
+
+[node name="items" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 22)
+theme_override_constants/separation = 3
+
+[node name="hint" type="Label" parent="items"]
+unique_name_in_owner = true
+mouse_filter = 2
+theme_override_font_sizes/font_size = 11
+theme_override_colors/font_color = Color(1, 1, 1, 0.55)
+text = "solte blocos aqui"

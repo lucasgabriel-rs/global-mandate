@@ -1,0 +1,44 @@
+[gd_scene format=3]
+
+[ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="1_xe42n"]
+[ext_resource type="Script" path="res://scripts/ui/character_view.gd" id="2_8pkdr"]
+[ext_resource type="Script" path="res://scripts/ui/compass_view.gd" id="3_hd7kj"]
+
+[node name="MemberRow" type="HBoxContainer" unique_id=1974918293]
+mouse_filter = 2
+theme = ExtResource("1_xe42n")
+theme_override_constants/separation = 8
+
+[node name="face" type="Control" parent="." unique_id=1311940078]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(38, 38)
+clip_contents = true
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("2_8pkdr")
+portrait = true
+
+[node name="pick" type="Button" parent="." unique_id=191249272]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Nome"
+alignment = 0
+clip_text = true
+
+[node name="label" type="Label" parent="." unique_id=1115453437]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "Nome"
+
+[node name="compass" type="Control" parent="." unique_id=280379636]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(38, 38)
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("3_hd7kj")

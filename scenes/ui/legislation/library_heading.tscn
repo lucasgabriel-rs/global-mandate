@@ -1,0 +1,9 @@
+[gd_scene format=3]
+
+[ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="e1"]
+
+[node name="LibraryHeading" type="Label"]
+mouse_filter = 2
+theme_override_font_sizes/font_size = 11
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme = ExtResource("e1")

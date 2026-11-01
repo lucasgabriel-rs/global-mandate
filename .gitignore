@@ -1,0 +1,6 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+
+# Dados brutos de terceiros: grandes e baixáveis de novo (fontes no README)
+tools/raw/

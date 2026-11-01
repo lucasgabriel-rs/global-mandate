@@ -1,0 +1,114 @@
+[gd_scene format=3]
+
+[ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="1_ksgnp"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m8vrg"]
+content_margin_left = 20.0
+content_margin_top = 20.0
+content_margin_right = 20.0
+content_margin_bottom = 20.0
+bg_color = Color(0.05, 0.09, 0.12, 0.99)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.9490196, 0.7019608, 0.23921569, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="PauseMenu" type="ColorRect" unique_id=1564042444]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource("1_ksgnp")
+color = Color(0.01, 0.03, 0.05, 0.62)
+
+[node name="Centro" type="CenterContainer" parent="." unique_id=973910368]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Painel" type="PanelContainer" parent="Centro" unique_id=1499120569]
+custom_minimum_size = Vector2(520, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_m8vrg")
+
+[node name="col" type="VBoxContainer" parent="Centro/Painel" unique_id=795578491]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="title" type="Label" parent="Centro/Painel/col" unique_id=1577461309]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9490196, 0.7019608, 0.23921569, 1)
+theme_override_font_sizes/font_size = 24
+text = "Pausa"
+
+[node name="VoltarAoJogo" type="Button" parent="Centro/Painel/col" unique_id=2055454226]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Voltar ao jogo"
+
+[node name="SalvarPartida" type="Button" parent="Centro/Painel/col" unique_id=377963380]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Salvar partida"
+
+[node name="CarregarPartida" type="Button" parent="Centro/Painel/col" unique_id=889101881]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Carregar partida"
+
+[node name="NovaPartida" type="Button" parent="Centro/Painel/col" unique_id=883508570]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Nova partida"
+
+[node name="MenuDebugF12" type="Button" parent="Centro/Painel/col" unique_id=5843081]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Menu debug (F12)"
+
+[node name="ComoJogar" type="Button" parent="Centro/Painel/col" unique_id=2135075168]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Como jogar"
+
+[node name="Renunciar" type="Button" parent="Centro/Painel/col"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+tooltip_text = "Deixa o governo. Depois, você escolhe entre um novo jogo e um novo personagem."
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.9254902, 0.3529412, 0.2627451, 1)
+text = "Renunciar ao cargo"
+
+[node name="Sair" type="Button" parent="Centro/Painel/col" unique_id=2068636533]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Sair"

@@ -1,0 +1,95 @@
+[gd_scene format=3]
+
+[ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="1_m8y4e"]
+[ext_resource type="Script" path="res://scripts/ui/compass_view.gd" id="2_uuaoe"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6wvsi"]
+content_margin_left = 20.0
+content_margin_top = 20.0
+content_margin_right = 20.0
+content_margin_bottom = 20.0
+bg_color = Color(0.05, 0.09, 0.12, 0.99)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.9490196, 0.7019608, 0.23921569, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="PartyDetail" type="ColorRect" unique_id=134730421]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource("1_m8y4e")
+color = Color(0.01, 0.03, 0.05, 0.62)
+
+[node name="Centro" type="CenterContainer" parent="." unique_id=489764932]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Painel" type="PanelContainer" parent="Centro" unique_id=1326429800]
+custom_minimum_size = Vector2(700, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_6wvsi")
+
+[node name="col" type="VBoxContainer" parent="Centro/Painel" unique_id=1430648824]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="title" type="Label" parent="Centro/Painel/col" unique_id=2073436390]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9490196, 0.7019608, 0.23921569, 1)
+theme_override_font_sizes/font_size = 24
+text = "Frente Nacional"
+
+[node name="body" type="Label" parent="Centro/Painel/col" unique_id=307596033]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 15
+text = "Nacionalista  ·  144 assentos  ·  24% dos votos. A bússola do partido é a média dos políticos."
+autowrap_mode = 3
+
+[node name="Linha" type="HBoxContainer" parent="Centro/Painel/col" unique_id=170595772]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 14
+
+[node name="party_compass" type="Control" parent="Centro/Painel/col/Linha" unique_id=189818420]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(240, 240)
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("2_uuaoe")
+
+[node name="Coluna" type="VBoxContainer" parent="Centro/Painel/col/Linha" unique_id=694745106]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="Rolagem" type="ScrollContainer" parent="Centro/Painel/col/Linha/Coluna" unique_id=687192541]
+custom_minimum_size = Vector2(0, 300)
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="rows" type="VBoxContainer" parent="Centro/Painel/col/Linha/Coluna/Rolagem" unique_id=293152454]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="Fechar" type="Button" parent="Centro/Painel/col" unique_id=1294412531]
+unique_name_in_owner = true
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Fechar"

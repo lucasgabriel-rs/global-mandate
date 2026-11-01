@@ -1,0 +1,25 @@
+[gd_scene format=3]
+
+[ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="1_grovp"]
+
+[node name="PromptOption" type="VBoxContainer" unique_id=176155760]
+mouse_filter = 2
+theme = ExtResource("1_grovp")
+theme_override_constants/separation = 2
+
+[node name="pick" type="Button" parent="." unique_id=1476922830]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_font_sizes/font_size = 14
+text = "Opção"
+
+[node name="hint" type="Label" parent="." unique_id=256817061]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 12
+autowrap_mode = 3

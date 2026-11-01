@@ -1,0 +1,46 @@
+[gd_scene format=3]
+
+[ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="e1"]
+
+[node name="NegotiationRow" type="HBoxContainer"]
+theme_override_constants/separation = 5
+theme = ExtResource("e1")
+
+[node name="chip" type="ColorRect" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(10, 30)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="party" type="Label" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(260, 0)
+layout_mode = 2
+clip_text = true
+
+[node name="state" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 12
+
+[node name="ask_yes" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+
+[node name="ask_no" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+
+[node name="offer_post" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Sem custo no fundo: o partido entra na coalizão e vota a favor."
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Oferecer governo"

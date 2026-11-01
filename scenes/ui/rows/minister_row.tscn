@@ -1,0 +1,84 @@
+[gd_scene format=3]
+
+[ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="1_g713p"]
+[ext_resource type="Script" path="res://scripts/ui/character_view.gd" id="2_jal3i"]
+[ext_resource type="Script" path="res://scripts/ui/compass_view.gd" id="3_pj3p3"]
+
+[node name="MinisterRow" type="VBoxContainer" unique_id=325449794]
+mouse_filter = 2
+theme = ExtResource("1_g713p")
+theme_override_constants/separation = 2
+
+[node name="Linha" type="HBoxContainer" parent="." unique_id=545917179]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 6
+
+[node name="title" type="Label" parent="Linha" unique_id=1235654464]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+theme_override_colors/font_color = Color(0.9490196, 0.7019608, 0.23921569, 1)
+theme_override_font_sizes/font_size = 14
+text = "Pasta"
+
+[node name="change" type="Button" parent="Linha" unique_id=393213685]
+unique_name_in_owner = true
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Trocar"
+
+[node name="fire" type="Button" parent="Linha" unique_id=2128648990]
+unique_name_in_owner = true
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Exonerar"
+
+[node name="vacant" type="Label" parent="." unique_id=306456419]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9254902, 0.3529412, 0.2627451, 1)
+theme_override_font_sizes/font_size = 12
+text = "Pasta vaga."
+autowrap_mode = 3
+
+[node name="person" type="HBoxContainer" parent="." unique_id=1602992884]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
+
+[node name="face" type="Control" parent="person" unique_id=956069748]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(46, 46)
+clip_contents = true
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("2_jal3i")
+portrait = true
+
+[node name="who" type="Label" parent="person" unique_id=1122313625]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 12
+autowrap_mode = 3
+
+[node name="compass" type="Control" parent="person" unique_id=1953771570]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(46, 46)
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("3_pj3p3")
+
+[node name="Separador" type="ColorRect" parent="." unique_id=1332938630]
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 2
+mouse_filter = 2
+color = Color(0.15294118, 0.2509804, 0.30980393, 1)

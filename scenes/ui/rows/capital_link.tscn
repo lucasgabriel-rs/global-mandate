@@ -1,0 +1,12 @@
+[gd_scene format=3]
+
+[ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="1_mcdp1"]
+
+[node name="CapitalLink" type="Button" unique_id=1074782647]
+tooltip_text = "Selecionar a capital"
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme = ExtResource("1_mcdp1")
+theme_override_colors/font_color = Color(0.9490196, 0.7019608, 0.23921569, 1)
+alignment = 0
+clip_text = true

@@ -1,0 +1,39 @@
+[gd_scene format=3]
+
+[ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="1_ocn17"]
+
+[node name="CountryCapital" type="VBoxContainer" unique_id=1350685220]
+mouse_filter = 2
+theme = ExtResource("1_ocn17")
+theme_override_constants/separation = 5
+
+[node name="Separador" type="ColorRect" parent="." unique_id=62912634]
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 2
+mouse_filter = 2
+color = Color(0.15294118, 0.2509804, 0.30980393, 1)
+
+[node name="CAPITALDOPAIS" type="Label" parent="." unique_id=1721949322]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_constants/line_spacing = 0
+theme_override_font_sizes/font_size = 11
+text = "CAPITAL DO PAÍS"
+
+[node name="link" type="Button" parent="." unique_id=528086043]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Selecionar a capital"
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.9490196, 0.7019608, 0.23921569, 1)
+alignment = 0
+clip_text = true
+
+[node name="note" type="Label" parent="." unique_id=420814358]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 12
+autowrap_mode = 3

@@ -1,0 +1,92 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/ui/legislation/poll_box.tscn" id="poll_box"]
+[ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="e1"]
+
+[sub_resource type="StyleBoxFlat" id="s1"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(1, 1, 1, 0.03)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.15294118, 0.2509804, 0.30980393, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[node name="ProcessRow" type="PanelContainer"]
+theme_override_styles/panel = SubResource("s1")
+theme = ExtResource("e1")
+
+[node name="Coluna" type="VBoxContainer" parent="."]
+theme_override_constants/separation = 3
+
+[node name="Cabeca" type="HBoxContainer" parent="Coluna"]
+theme_override_constants/separation = 6
+
+[node name="name_label" type="Label" parent="Coluna/Cabeca"]
+unique_name_in_owner = true
+mouse_filter = 2
+theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(0.9490196, 0.7019608, 0.23921569, 1)
+
+[node name="Espaco" type="Control" parent="Coluna/Cabeca"]
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="step_label" type="Label" parent="Coluna/Cabeca"]
+unique_name_in_owner = true
+mouse_filter = 2
+theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(0.30980393, 0.7019608, 0.8509804, 1)
+
+[node name="track" type="Label" parent="Coluna"]
+unique_name_in_owner = true
+mouse_filter = 2
+theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+autowrap_mode = 3
+
+[node name="forecast" type="Label" parent="Coluna"]
+unique_name_in_owner = true
+mouse_filter = 2
+theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+autowrap_mode = 3
+
+[node name="poll" parent="Coluna" instance=ExtResource("poll_box")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Botoes" type="HBoxContainer" parent="Coluna"]
+theme_override_constants/separation = 4
+
+[node name="open" type="Button" parent="Coluna/Botoes"]
+unique_name_in_owner = true
+text = "Ver a norma"
+focus_mode = 0
+mouse_default_cursor_shape = 2
+
+[node name="negotiate" type="Button" parent="Coluna/Botoes"]
+unique_name_in_owner = true
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Negociar votos"
+
+[node name="sanction" type="Button" parent="Coluna/Botoes"]
+unique_name_in_owner = true
+text = "Sancionar"
+focus_mode = 0
+mouse_default_cursor_shape = 2
+
+[node name="veto" type="Button" parent="Coluna/Botoes"]
+unique_name_in_owner = true
+text = "Vetar"
+focus_mode = 0
+mouse_default_cursor_shape = 2

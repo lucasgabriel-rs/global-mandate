@@ -1,0 +1,240 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/ui/legislation/poll_box.tscn" id="poll_box"]
+[ext_resource type="Script" path="res://scripts/ui/hemicycle.gd" id="hemi2"]
+[ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="1_054s0"]
+[ext_resource type="Script" path="res://scripts/ui/politics_panel.gd" id="2_faoui"]
+[ext_resource type="Script" path="res://scripts/ui/hemicycle.gd" id="3_lsy2b"]
+[ext_resource type="Script" path="res://scripts/ui/compass_view.gd" id="4_r2wn6"]
+
+[node name="politics" type="VBoxContainer" unique_id=125859476]
+size_flags_horizontal = 3
+mouse_filter = 2
+theme = ExtResource("1_054s0")
+theme_override_constants/separation = 6
+script = ExtResource("2_faoui")
+
+[node name="SEUPARTIDO" type="Label" parent="." unique_id=1847869760]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_constants/line_spacing = 0
+theme_override_font_sizes/font_size = 11
+text = "SEU PARTIDO"
+
+[node name="party_label" type="Label" parent="." unique_id=978943207]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9490196, 0.7019608, 0.23921569, 1)
+theme_override_font_sizes/font_size = 14
+autowrap_mode = 3
+
+[node name="fund_label" type="Label" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+tooltip_text = "O fundo paga pesquisas, campanhas, críticas, moções e convites. Cada gasto tem o próprio preço."
+mouse_filter = 1
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+autowrap_mode = 3
+
+[node name="SuasIdeiasTrocarOuFundar" type="Button" parent="." unique_id=521562055]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Só é possível mudar de partido uma vez por ano e, no governo, isso custa aprovação. Ao entrar em um partido, você adota as ideias dele."
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Trocar ou criar partido"
+
+[node name="CentroLegislativo" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Criar normas com blocos, acompanhar a tramitação, emendar a Constituição e consultar a auditoria (tecla L)."
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Centro legislativo (L)"
+
+[node name="UltimaEleicao" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Mostra votos, cadeiras e distritos da última eleição."
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Resultado da última eleição"
+
+[node name="opposition" type="VBoxContainer" parent="." unique_id=974062362]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="NAOPOSIO" type="Label" parent="opposition" unique_id=293945869]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_constants/line_spacing = 0
+theme_override_font_sizes/font_size = 11
+text = "NA OPOSIÇÃO"
+
+[node name="AIAGovernaOPais" type="Label" parent="opposition" unique_id=843959341]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 12
+text = "A IA governa o país. Você lidera seu partido até a próxima eleição."
+autowrap_mode = 3
+
+[node name="CriticarOGoverno6" type="Button" parent="opposition" unique_id=816768049]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Derruba a aprovação do governo e ajuda seu partido."
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Criticar o governo (6)"
+
+[node name="FazerCampanha10" type="Button" parent="opposition" unique_id=1315950836]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Faz seu partido crescer nas pesquisas."
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Fazer campanha (10)"
+
+[node name="MocaoDeCensura15" type="Button" parent="opposition" unique_id=1019243283]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Se a oposição somar a maioria dos assentos, há eleição agora."
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Moção de censura (15)"
+
+[node name="Separador" type="ColorRect" parent="." unique_id=1230006611]
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 2
+mouse_filter = 2
+color = Color(0.15294118, 0.2509804, 0.30980393, 1)
+
+[node name="PARLAMENTO" type="Label" parent="." unique_id=1527356757]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_constants/line_spacing = 0
+theme_override_font_sizes/font_size = 11
+text = "PARLAMENTO"
+
+[node name="house_tabs" type="TabContainer" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(320, 205)
+layout_mode = 2
+
+[node name="lower_tab" type="VBoxContainer" parent="house_tabs"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="hemicycle" type="Control" parent="house_tabs/lower_tab"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(320, 165)
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("hemi2")
+
+[node name="lower_info" type="Label" parent="house_tabs/lower_tab"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 12
+
+[node name="upper_tab" type="VBoxContainer" parent="house_tabs"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="hemicycle_upper" type="Control" parent="house_tabs/upper_tab"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(320, 165)
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("hemi2")
+
+[node name="upper_info" type="Label" parent="house_tabs/upper_tab"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 12
+
+[node name="BUSSOLAPOLITICADOSPARTIDOS" type="Label" parent="." unique_id=1504995691]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_constants/line_spacing = 0
+theme_override_font_sizes/font_size = 11
+text = "BÚSSOLA POLÍTICA DOS PARTIDOS"
+
+[node name="compass" type="Control" parent="." unique_id=555624611]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(320, 170)
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("4_r2wn6")
+
+[node name="majority" type="Label" parent="." unique_id=1972872110]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+autowrap_mode = 3
+
+[node name="rows" type="VBoxContainer" parent="." unique_id=2118528232]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 3
+
+[node name="status" type="Label" parent="." unique_id=829289015]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.29803923, 0.78039217, 0.5803922, 1)
+theme_override_font_sizes/font_size = 12
+autowrap_mode = 3
+
+[node name="Separador2" type="ColorRect" parent="." unique_id=215247552]
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 2
+mouse_filter = 2
+color = Color(0.15294118, 0.2509804, 0.30980393, 1)
+
+[node name="PROJETOSDELEI" type="Label" parent="." unique_id=1612890980]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_constants/line_spacing = 0
+theme_override_font_sizes/font_size = 11
+text = "PROJETOS DE LEI"
+
+[node name="CadaVotacaoCusta5De" type="Label" parent="." unique_id=346016167]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 12
+text = "O parlamento leva semanas para deliberar: um projeto enviado só vale se for aprovado no fim do rito."
+autowrap_mode = 3
+
+[node name="bills" type="VBoxContainer" parent="." unique_id=562905721]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 3
+
+[node name="bill_poll_title" type="Label" parent="."]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 12
+text = "Pesquisar um projeto antes de enviar:"
+
+[node name="bill_poll_pick" type="OptionButton" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+focus_mode = 0
+
+[node name="poll" parent="." instance=ExtResource("poll_box")]
+unique_name_in_owner = true
+layout_mode = 2
+

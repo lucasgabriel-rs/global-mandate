@@ -1,0 +1,285 @@
+[gd_scene format=3]
+
+[ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="1_aqjl8"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m7t1o"]
+content_margin_left = 16.0
+content_margin_top = 16.0
+content_margin_right = 16.0
+content_margin_bottom = 16.0
+bg_color = Color(0.043, 0.075, 0.102, 0.95)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.15294118, 0.2509804, 0.30980393, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[node name="StartScreen" type="Control" unique_id=1473793532]
+layout_mode = 3
+anchors_preset = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+theme = ExtResource("1_aqjl8")
+
+[node name="Coluna" type="VBoxContainer" parent="." unique_id=715579672]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 26.0
+offset_right = 36.0
+offset_bottom = 26.0
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="GLOBALMANDATE" type="Label" parent="Coluna" unique_id=1946457759]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9490196, 0.7019608, 0.23921569, 1)
+theme_override_font_sizes/font_size = 40
+text = "GLOBAL MANDATE"
+
+[node name="GeopoliticaEmTempoRealSobre" type="Label" parent="Coluna" unique_id=1422446451]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 16
+text = "Geopolítica em tempo real sobre um modelo econômico mundial"
+
+[node name="Painel" type="PanelContainer" parent="." unique_id=271621886]
+layout_mode = 0
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -390.0
+offset_top = 24.0
+offset_right = -20.0
+offset_bottom = -24.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_m7t1o")
+
+[node name="Coluna" type="VBoxContainer" parent="Painel" unique_id=1762317609]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 9
+
+[node name="ASSUMAUMGOVERNO" type="Label" parent="Painel/Coluna" unique_id=163294973]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_constants/line_spacing = 0
+theme_override_font_sizes/font_size = 11
+text = "ASSUMA UM GOVERNO"
+
+[node name="CliqueEmQualquerPaisNo" type="Label" parent="Painel/Coluna" unique_id=1675239533]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Clique em qualquer país no mapa ou escolha um abaixo. Cenário: janeiro de 2025."
+autowrap_mode = 3
+
+[node name="Grade" type="GridContainer" parent="Painel/Coluna" unique_id=488897203]
+layout_mode = 2
+theme_override_constants/h_separation = 4
+theme_override_constants/v_separation = 4
+columns = 3
+
+[node name="pick_BRA" type="Button" parent="Painel/Coluna/Grade" unique_id=711830612]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_font_sizes/font_size = 12
+text = "Brasil"
+clip_text = true
+
+[node name="pick_USA" type="Button" parent="Painel/Coluna/Grade" unique_id=1529787002]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_font_sizes/font_size = 12
+text = "Estados Unidos"
+clip_text = true
+
+[node name="pick_CHN" type="Button" parent="Painel/Coluna/Grade" unique_id=843012482]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_font_sizes/font_size = 12
+text = "China"
+clip_text = true
+
+[node name="pick_IND" type="Button" parent="Painel/Coluna/Grade" unique_id=609325992]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_font_sizes/font_size = 12
+text = "Índia"
+clip_text = true
+
+[node name="pick_DEU" type="Button" parent="Painel/Coluna/Grade" unique_id=225569773]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_font_sizes/font_size = 12
+text = "Alemanha"
+clip_text = true
+
+[node name="pick_RUS" type="Button" parent="Painel/Coluna/Grade" unique_id=527710030]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_font_sizes/font_size = 12
+text = "Rússia"
+clip_text = true
+
+[node name="pick_GBR" type="Button" parent="Painel/Coluna/Grade" unique_id=157976306]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_font_sizes/font_size = 12
+text = "Reino Unido"
+clip_text = true
+
+[node name="pick_JPN" type="Button" parent="Painel/Coluna/Grade" unique_id=856376009]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_font_sizes/font_size = 12
+text = "Japão"
+clip_text = true
+
+[node name="pick_SAU" type="Button" parent="Painel/Coluna/Grade" unique_id=830654051]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_font_sizes/font_size = 12
+text = "Arábia Saudita"
+clip_text = true
+
+[node name="pick_ZAF" type="Button" parent="Painel/Coluna/Grade" unique_id=285164928]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_font_sizes/font_size = 12
+text = "África do Sul"
+clip_text = true
+
+[node name="pick_ARG" type="Button" parent="Painel/Coluna/Grade" unique_id=1450623009]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_font_sizes/font_size = 12
+text = "Argentina"
+clip_text = true
+
+[node name="pick_TWN" type="Button" parent="Painel/Coluna/Grade" unique_id=1384728904]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_font_sizes/font_size = 12
+text = "Taiwan"
+clip_text = true
+
+[node name="Separador" type="ColorRect" parent="Painel/Coluna" unique_id=77645316]
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 2
+mouse_filter = 2
+color = Color(0.15294118, 0.2509804, 0.30980393, 1)
+
+[node name="start_title" type="Label" parent="Painel/Coluna" unique_id=1813224322]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9490196, 0.7019608, 0.23921569, 1)
+theme_override_font_sizes/font_size = 22
+text = "Nenhum país selecionado"
+
+[node name="start_info" type="Label" parent="Painel/Coluna" unique_id=975775533]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+autowrap_mode = 3
+
+[node name="Espaco" type="Control" parent="Painel/Coluna" unique_id=1449254781]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="DIFICULDADE" type="Label" parent="Painel/Coluna" unique_id=2102108518]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_constants/line_spacing = 0
+theme_override_font_sizes/font_size = 11
+text = "DIFICULDADE"
+
+[node name="Linha" type="HBoxContainer" parent="Painel/Coluna" unique_id=1200453497]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="diff_facil" type="Button" parent="Painel/Coluna/Linha" unique_id=216976889]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Fácil"
+
+[node name="diff_normal" type="Button" parent="Painel/Coluna/Linha" unique_id=317522665]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Normal"
+
+[node name="diff_dificil" type="Button" parent="Painel/Coluna/Linha" unique_id=1691546808]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Difícil"
+
+[node name="start_button" type="Button" parent="Painel/Coluna" unique_id=904970469]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_font_sizes/font_size = 16
+disabled = true
+text = "Assumir o governo"
+
+[node name="continue_game" type="Button" parent="Painel/Coluna" unique_id=822030624]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Continuar partida salva"

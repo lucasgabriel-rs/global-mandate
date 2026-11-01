@@ -1,0 +1,11 @@
+[gd_scene format=3]
+
+[ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="e1"]
+
+[node name="ValidationRow" type="Button"]
+flat = true
+focus_mode = 0
+alignment = 0
+clip_text = true
+theme_override_font_sizes/font_size = 12
+theme = ExtResource("e1")

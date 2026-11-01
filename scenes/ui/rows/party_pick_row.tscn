@@ -1,0 +1,25 @@
+[gd_scene format=3]
+
+[ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="1_en85h"]
+
+[node name="PartyPickRow" type="HBoxContainer" unique_id=529833038]
+mouse_filter = 2
+theme = ExtResource("1_en85h")
+theme_override_constants/separation = 8
+
+[node name="chip" type="ColorRect" parent="." unique_id=1330361211]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(12, 30)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="pick" type="Button" parent="." unique_id=744778043]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Partido"
+alignment = 0
+clip_text = true

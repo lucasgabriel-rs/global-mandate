@@ -1,0 +1,46 @@
+[gd_scene format=3]
+
+[ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="1_55hle"]
+
+[node name="PartyRow" type="HBoxContainer" unique_id=1531621493]
+mouse_filter = 2
+theme = ExtResource("1_55hle")
+theme_override_constants/separation = 5
+
+[node name="chip" type="ColorRect" parent="." unique_id=786893134]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(10, 18)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="name_button" type="Button" parent="." unique_id=1007794770]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Partido"
+alignment = 0
+clip_text = true
+
+[node name="tag" type="Label" parent="." unique_id=1132480416]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 11
+text = "governo"
+
+[node name="dismiss" type="Button" parent="." unique_id=1631545717]
+unique_name_in_owner = true
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Tirar do governo"
+
+[node name="invite" type="Button" parent="." unique_id=183542682]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Partidos próximos das suas ideias podem aceitar."
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Convidar"

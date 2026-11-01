@@ -1,0 +1,45 @@
+[gd_scene format=3]
+
+[ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="e1"]
+
+[node name="FieldRow" type="VBoxContainer"]
+theme_override_constants/separation = 2
+theme = ExtResource("e1")
+
+[node name="label" type="Label" parent="."]
+unique_name_in_owner = true
+mouse_filter = 2
+theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+
+[node name="edit" type="LineEdit" parent="."]
+unique_name_in_owner = true
+
+[node name="option" type="OptionButton" parent="."]
+unique_name_in_owner = true
+size_flags_horizontal = 3
+focus_mode = 0
+
+[node name="check" type="CheckBox" parent="."]
+unique_name_in_owner = true
+focus_mode = 0
+text = "Sim"
+
+[node name="Encaixe" type="HBoxContainer" parent="."]
+unique_name_in_owner = true
+theme_override_constants/separation = 4
+
+[node name="plugged" type="Label" parent="Encaixe"]
+unique_name_in_owner = true
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(0.30980393, 0.7019608, 0.8509804, 1)
+autowrap_mode = 3
+
+[node name="unplug" type="Button" parent="Encaixe"]
+unique_name_in_owner = true
+text = "Soltar"
+focus_mode = 0
+mouse_default_cursor_shape = 2
+tooltip_text = "Devolve o campo a um valor digitado."

@@ -1,0 +1,10 @@
+[gd_scene format=3]
+
+[ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="1_ujhcs"]
+
+[node name="DebugGrid" type="GridContainer" unique_id=1201863071]
+size_flags_horizontal = 3
+theme = ExtResource("1_ujhcs")
+theme_override_constants/h_separation = 4
+theme_override_constants/v_separation = 3
+columns = 2

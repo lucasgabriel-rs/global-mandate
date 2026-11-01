@@ -1,0 +1,49 @@
+[gd_scene format=3]
+
+[ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="1_m41yb"]
+
+[node name="WarCard" type="VBoxContainer" unique_id=1792337127]
+mouse_filter = 2
+theme = ExtResource("1_m41yb")
+theme_override_constants/separation = 3
+
+[node name="enemy" type="Label" parent="." unique_id=1687163915]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9254902, 0.3529412, 0.2627451, 1)
+theme_override_font_sizes/font_size = 14
+text = "Contra"
+
+[node name="bar" type="ProgressBar" parent="." unique_id=201208722]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+min_value = -60.0
+show_percentage = false
+
+[node name="txt" type="Label" parent="." unique_id=510517512]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 12
+autowrap_mode = 3
+
+[node name="Linha" type="HBoxContainer" parent="." unique_id=1636649178]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="stance" type="Button" parent="Linha" unique_id=921600163]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Ofensiva acelera a frente, mas aumenta as baixas dos dois lados."
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Postura: ofensiva"
+
+[node name="peace" type="Button" parent="Linha" unique_id=1064389660]
+unique_name_in_owner = true
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Propor paz"
