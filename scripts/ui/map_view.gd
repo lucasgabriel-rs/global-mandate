@@ -20,6 +20,9 @@ const MUN_LABEL_ZOOM := 5.0
 const CAPITAL_ZOOM := 1.6
 const FOREIGN_CAPITAL_ZOOM := 1.1
 const CAPITAL_NAME_ZOOM := 2.4
+## Portos e aeroportos do país do jogador: símbolos a partir deste zoom, nomes a partir do seguinte.
+const INFRA_ZOOM := 0.9
+const INFRA_NAME_ZOOM := 3.2
 const OCEAN := Color("0a1520")
 const OCEAN_LINE := Color(0.32, 0.5, 0.6, 0.10)
 const BORDER := Color(0.03, 0.07, 0.10, 0.95)
@@ -84,6 +87,9 @@ var _mun_lines: Node2D
 var _lines_revision := -1
 var _units_layer: Node2D
 var _draft_layer: Node2D
+## Marcas de portos e aeroportos, refeitas fora da simulação: [posição no mapa, tipo, cor, nome].
+var _infra_marks: Array = []
+var _infra_key := []
 
 
 func _ready() -> void:
@@ -518,6 +524,46 @@ func _draw_capitals(font: Font, xf: Transform2D, z: float, vp: Rect2, placed: Ar
 	return late
 
 
+## Porto é um losango, aeroporto um triângulo; a cor diz o quanto está cheio (ou fechado).
+func _draw_infra(font: Font, xf: Transform2D, z: float, vp: Rect2, placed: Array[Rect2], names: bool) -> void:
+	if z < INFRA_ZOOM or (names and z < INFRA_NAME_ZOOM):
+		return
+	var r := clampf(2.5 + z * 1.2, 3.5, 7.0)
+	for m: Array in _infra_marks:
+		var pos: Vector2 = xf * (m[0] as Vector2)
+		if not vp.has_point(pos):
+			continue
+		if names:
+			_capital_name(m[3], pos, 10, font, placed)
+			continue
+		var pts := PackedVector2Array()
+		if m[1] == Infrastructure.PORT:
+			pts = PackedVector2Array([pos + Vector2(0, -r), pos + Vector2(r, 0), pos + Vector2(0, r), pos + Vector2(-r, 0)])
+		else:
+			pts = PackedVector2Array([pos + Vector2(0, -r * 1.1), pos + Vector2(r, r * 0.8), pos + Vector2(-r, r * 0.8)])
+		_labels.draw_colored_polygon(pts, m[2])
+		pts.append(pts[0])
+		_labels.draw_polyline(pts, Color(0.02, 0.05, 0.07, 0.9), 1.0, true)
+
+
+func _refresh_infra_marks() -> void:
+	var key := [world.infra, world.player, world.infra.revision, world.months_elapsed]
+	if key == _infra_key:
+		return
+	_infra_key = key
+	_infra_marks = []
+	if world.player == null:
+		return
+	for f: Dictionary in world.infra.facilities_of(world.player, world):
+		var pos: Vector2 = f.pos if f.has("pos") else _project(float(f.lon), float(f.lat))
+		var u := float(f.util)
+		var col := Color("ec5a43") if u >= 0.95 else (Color("f2b33d") if u >= 0.8 else Color("4fb3d9"))
+		if f.closed:
+			col = Color("5d6b74")
+		_infra_marks.append([pos, f.kind, col, String(f.name)])
+	_labels.queue_redraw()
+
+
 func _star(pos: Vector2, r: float, color: Color) -> void:
 	var pts := PackedVector2Array()
 	for i in 10:
@@ -567,6 +613,7 @@ func _draw_labels() -> void:
 	var z := _camera.zoom.x
 	var vp := get_viewport_rect()
 	var placed: Array[Rect2] = []
+	_draw_infra(font, xf, z, vp, placed, false)
 	var late_names := _draw_capitals(font, xf, z, vp, placed)
 	_draw_custom_labels(font, xf, z, vp, placed)
 	for f: Dictionary in features:
@@ -598,6 +645,7 @@ func _draw_labels() -> void:
 		_labels.draw_string(font, bl, txt, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, Color(0.92, 0.95, 0.97, 0.92))
 	for item: Array in late_names:
 		_capital_name(item[0], item[1], item[2], font, placed)
+	_draw_infra(font, xf, z, vp, placed, true)
 	_draw_base_labels(font, xf, z, vp, placed)
 
 
@@ -941,6 +989,7 @@ func _process(delta: float) -> void:
 		_last_cam = _camera.position
 		_last_zoom = _camera.zoom
 		_labels.queue_redraw()
+	_refresh_infra_marks()
 	if world.refresh_map:
 		world.refresh_map = false
 		refresh_colors()
