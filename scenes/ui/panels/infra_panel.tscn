@@ -2,6 +2,7 @@
 
 [ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="1_theme"]
 [ext_resource type="Script" path="res://scripts/ui/infra_panel.gd" id="2_script"]
+[ext_resource type="PackedScene" path="res://scenes/ui/panels/infra_build.tscn" id="3_build"]
 
 [node name="infra" type="VBoxContainer"]
 size_flags_horizontal = 3
@@ -21,5 +22,136 @@ custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_font_sizes/font_size = 12
-text = "Portos e aeroportos do país."
+text = "Portos acompanham o comércio exterior; aeroportos, o PIB e o turismo. Acima de 80% de uso, a logística piora: o comércio engasga e transporte e turismo perdem produtividade."
 autowrap_mode = 3
+
+[node name="Resumo" type="GridContainer" parent="."]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 2
+columns = 2
+
+[node name="PortosLabel" type="Label" parent="Resumo"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 13
+text = "Portos"
+
+[node name="port_sat" type="Label" parent="Resumo"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "85% da capacidade"
+horizontal_alignment = 2
+
+[node name="AeroportosLabel" type="Label" parent="Resumo"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 13
+text = "Aeroportos"
+
+[node name="air_sat" type="Label" parent="Resumo"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "66% da capacidade"
+horizontal_alignment = 2
+
+[node name="LogisticaLabel" type="Label" parent="Resumo"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 13
+text = "Logística"
+
+[node name="logistics" type="Label" parent="Resumo"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "neutra"
+horizontal_alignment = 2
+
+[node name="Acoes" type="HBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
+
+[node name="build_port" type="Button" parent="Acoes"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_font_sizes/font_size = 12
+text = "Construir porto"
+
+[node name="build_air" type="Button" parent="Acoes"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_font_sizes/font_size = 12
+text = "Construir aeroporto"
+
+[node name="feedback" type="Label" parent="."]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.29803923, 0.78039217, 0.5803922, 1)
+theme_override_font_sizes/font_size = 12
+autowrap_mode = 3
+
+[node name="form" parent="." instance=ExtResource("3_build")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="ObrasTitulo" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 11
+text = "OBRAS EM ANDAMENTO"
+
+[node name="no_projects" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 12
+text = "Nenhuma obra pública em andamento."
+
+[node name="project_rows" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
+
+[node name="PortosTitulo" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 11
+text = "PORTOS"
+
+[node name="port_rows" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 6
+
+[node name="AeroportosTitulo" type="Label" parent="."]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 11
+text = "AEROPORTOS"
+
+[node name="air_rows" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 6
