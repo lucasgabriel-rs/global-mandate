@@ -240,7 +240,8 @@ static func _demand(c: Country, world: GameWorld) -> void:
 	c.ext_demand = trade.x
 	c.trade_loss += (float(trade.loss) - c.trade0 - c.trade_loss) * 0.08
 	var openness := clampf(c.x_share, 0.0, 1.0)
-	var ext := openness * (1.1 * c.ext_demand + 0.8 * c.trade_loss)
+	# Portos e aeroportos saturados (logistics < 1) travam parte do comércio exterior.
+	var ext := openness * (1.1 * c.ext_demand + 0.8 * c.trade_loss + 0.3 * clampf(c.logistics - 1.0, -0.4, 0.2))
 	var rer_effect := clampf(0.5 * openness * log(c.rer / c.rer_ref), -0.06, 0.06)
 	c.rer_ref += (c.rer - c.rer_ref) * 0.01
 
@@ -404,16 +405,18 @@ static func _fiscal(c: Country, world: GameWorld) -> void:
 	var tax_rev := tax_rate * yn * (1.0 + 0.1 * c.gap) * collection
 	var rent := c.comm_exports * c.e * c.rent_take
 	var tariff_rev := c.tariff * c.imports * c.e * 0.7
-	c.revenue = tax_rev + rent + tariff_rev + c.aid_flow * c.e * 0.85 + c.law_rev_bucket * 12.0 * c.e
+	c.revenue = tax_rev + rent + tariff_rev + c.aid_flow * c.e * 0.85 + (c.law_rev_bucket + c.extra_rev_bucket) * 12.0 * c.e
 
 	var prog := yn_pot * (c.sp_health + c.sp_education + c.sp_infra + c.sp_defense + c.sp_admin)
 	# Estabilizador automático: gasto social sobe quando há desemprego.
 	var social := c.sp_social * yn_pot * (1.0 + 2.0 * clampf(c.unemp - c.unemp_n, -0.03, 0.2))
 	var war_cost := c.mobilization * 0.035 * yn_pot
 	c.interest = c.debt_loc * c.avg_rate + c.debt_fx * c.e * c.avg_fx
-	c.spending = prog + social + war_cost + c.interest + c.reparations * c.e + c.law_spend_bucket * 12.0 * c.e
+	c.spending = prog + social + war_cost + c.interest + c.reparations * c.e + (c.law_spend_bucket + c.extra_spend_bucket) * 12.0 * c.e
 	c.law_rev_bucket = 0.0
 	c.law_spend_bucket = 0.0
+	c.extra_rev_bucket = 0.0
+	c.extra_spend_bucket = 0.0
 	c.deficit = c.spending - c.revenue
 
 	var no_market := world.year_float() < c.default_until

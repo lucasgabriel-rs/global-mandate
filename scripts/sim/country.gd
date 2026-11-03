@@ -126,6 +126,10 @@ var sector_out := PackedFloat32Array()
 ## Ganho de produtividade por setor que outros sistemas aplicam (0.03 = +3%). Infraestrutura e empresas somam aqui.
 var sector_boost := PackedFloat32Array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
 var sector_drought := 0.0
+## Dinheiro do mês, em US$ bi, que entra ou sai do Tesouro fora dos tributos e das normas:
+## dividendos de estatais, venda de participações, obras em portos e aeroportos.
+var extra_rev_bucket := 0.0
+var extra_spend_bucket := 0.0
 ## Capacidade logística de portos e aeroportos frente à demanda: 1 é neutro, abaixo disso o comércio engasga.
 var logistics := 1.0
 
