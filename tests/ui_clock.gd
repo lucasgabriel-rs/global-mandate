@@ -43,8 +43,8 @@ func _clock() -> int:
 
 ## O que o jogador lê na barra, e não o valor interno: "07 Fev 2025  08:13".
 func _shown_minutes() -> int:
-	var text: String = main.hud._date.text
-	return int(text.substr(text.length() - 5, 2)) * 60 + int(text.substr(text.length() - 2, 2))
+	# A barra mostra só a data; a hora fica nos ponteiros do relógio redondo.
+	return main.hud._day_clock.minute
 
 
 func _key(code: Key) -> void:
@@ -189,7 +189,7 @@ func _process(delta: float) -> void:
 			_check(w.day_index == day0 + 7, "+7 dias avança 7 dias (%d)" % (w.day_index - day0))
 			_check(w.minute == minute0, "hora não muda no avanço")
 			_check(hud._skip_card.visible and hud._skip_title.text == "Resumo de 7 dias", "resumo aparece")
-			_check(hud._date.text == w.date_string(), "data atualizada na barra")
+			_check(hud._date.text == w.date_string().get_slice("  ", 0), "data atualizada na barra")
 			_shot("t2_resumo_7")
 			day0 = w.day_index
 			_click(hud._skip_buttons[1])
@@ -232,7 +232,7 @@ func _process(delta: float) -> void:
 			main._load_game()
 			wait = 0.3
 		21:
-			_check(main.world.minute == 725 and hud._date.text.contains("12:05"), "carregar restaura a hora: " + hud._date.text)
+			_check(main.world.minute == 725 and hud._day_clock.minute == 725, "carregar restaura a hora: %d" % hud._day_clock.minute)
 			DirAccess.remove_absolute(ProjectSettings.globalize_path(main.SAVE_PATH))
 			print("RESULTADO: ", failures, " falhas")
 			get_tree().quit(1 if failures > 0 else 0)

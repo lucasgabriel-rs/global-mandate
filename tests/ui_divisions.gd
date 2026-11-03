@@ -120,7 +120,7 @@ func _process(delta: float) -> void:
 			_check(differ.size() < subs.base_count * 0.02, "unidades coincidem com os países do mapa")
 			map._camera.position = w.player.center
 			map._camera.zoom = Vector2.ONE * 3.2
-			hud._gov_tabs.current_tab = hud._divisions_tab
+			hud._desk.current_tab = hud._divisions_tab
 		4:
 			_check(map.unit_pick, "aba Divisões ativa a seleção de unidades")
 			_check(panel._tree_box.get_child_count() == 28, "árvore lista o país e as 27 unidades do Brasil")
@@ -255,7 +255,7 @@ func _process(delta: float) -> void:
 			_check(s2.custom_ids.size() == 3 and s2.units.size() == s2.base_count + 3, "carregar restaura cenário e unidades")
 			_check(s2.depth_of(s2.custom_ids[1]) == 3, "carregar restaura a hierarquia")
 			_check(s2.units[coast_id].name == "Litoral Renomeado", "carregar restaura o nome editado")
-			hud._gov_tabs.current_tab = hud._divisions_tab
+			hud._desk.current_tab = hud._divisions_tab
 			hud._on_mode("inflacao")
 		22:
 			_shot("d5_carregado_modo_dados")

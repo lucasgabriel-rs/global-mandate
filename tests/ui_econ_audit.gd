@@ -112,7 +112,7 @@ func _audit_labels(prefix: String, tab: String) -> Dictionary:
 
 
 func _tab(i: int) -> void:
-	main.hud._gov_tabs.current_tab = i
+	main.hud._desk.current_tab = i
 	main.hud.refresh(true)
 	await _wait()
 

@@ -75,12 +75,13 @@ func _process(delta: float) -> void:
 			main._pick_start(w.by_iso["BRA"])
 			main._begin()
 			main._set_speed(0)
+			hud._desk.current_tab = 0
 		2:
 			_shot("k1_mundo")
 			_check(hud._dyn.o_capital.text == "Brasília", "painel mostra a capital do país")
 			map._camera.position = s.units[_state(s, "São Paulo")].center
 			map._camera.zoom = Vector2.ONE * 3.2
-			hud._gov_tabs.current_tab = hud._divisions_tab
+			hud._desk.current_tab = hud._divisions_tab
 		3:
 			_shot("k2_estados")
 			_check(_find(panel._detail_box, "Brasília") != null, "aba mostra a capital do país")
@@ -122,7 +123,7 @@ func _process(delta: float) -> void:
 			main._load_game()
 		9:
 			_check(main.world.subdivisions.capital_of("BRA") == int(hud.get_meta("capital")), "carregar mantém a capital escolhida")
-			hud._gov_tabs.current_tab = hud._divisions_tab
+			hud._desk.current_tab = hud._divisions_tab
 			panel.select_unit(int(hud.get_meta("capital")))
 		10:
 			_click(_find(panel._detail_box, "Capital de Brasil: remover").get_global_rect().get_center())

@@ -108,11 +108,11 @@ func _run() -> void:
 	main._begin(ch, {})
 	main._set_speed(0)
 	var hud: Hud = main.hud
-	for i in hud._gov_tabs.get_tab_count():
-		hud._gov_tabs.current_tab = i
+	for i in hud._desk.get_tab_count():
+		hud._desk.current_tab = i
 		hud.refresh(true)
 		await _snap("aba_%d" % i)
-	hud._gov_tabs.current_tab = 0
+	hud._desk.current_tab = 0
 	hud.show_country(usa)
 	await _snap("dossie_outro")
 	hud.show_country(brazil)
@@ -157,7 +157,7 @@ func _run() -> void:
 	await _snap("noticia")
 	hud._toast.visible = false
 	world.do_action("war", world.by_iso["ARG"])
-	hud._gov_tabs.current_tab = 4
+	hud._desk.current_tab = 4
 	hud.refresh(true)
 	await _snap("guerra")
 	var state: Dictionary = {"kind": "negotiation", "war": {}, "rival": usa, "budget": 0.1}
@@ -169,7 +169,7 @@ func _run() -> void:
 	hud.border.begin(state)
 	await _snap("fronteira_vitoria")
 	hud.border._close()
-	hud._gov_tabs.current_tab = hud._divisions_tab
+	hud._desk.current_tab = hud._divisions_tab
 	hud.refresh(true)
 	await _snap("divisoes_pais")
 	var unit: int = world.subdivisions.roots_of("BRA")[0]
@@ -184,9 +184,9 @@ func _run() -> void:
 	hud._divisions._end_merge()
 	world.start_in_opposition()
 	hud.refresh(true)
-	hud._gov_tabs.current_tab = hud._politics_tab
+	hud._desk.current_tab = hud._politics_tab
 	hud.refresh(true)
 	await _snap("oposicao_politica")
-	hud._gov_tabs.current_tab = hud._cabinet_tab
+	hud._desk.current_tab = hud._cabinet_tab
 	hud.refresh(true)
 	await _snap("oposicao_ministros")

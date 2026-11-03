@@ -72,7 +72,7 @@ func _run() -> void:
 	var hud: Hud = main.hud
 	var c := w.player
 	var inf := w.infra
-	hud._gov_tabs.current_tab = hud._tab_of(hud.economy)
+	hud._desk.current_tab = hud._tab_of(hud.economy)
 	var sub: TabContainer = hud.economy.get_node("%sub_tabs")
 	sub.current_tab = 1
 	hud.refresh(true)
@@ -148,7 +148,7 @@ func _run() -> void:
 	map._target_zoom = 2.2
 	map._camera.zoom = Vector2.ONE * 2.2
 	map._camera.position = map._project(-46.0, -21.0)
-	hud._gov_tabs.current_tab = 0
+	hud._desk.current_tab = 0
 	await _wait(6)
 	_check(map._infra_marks.size() == inf.facilities_of(c, w).size(), "um marcador por instalação: %d" % map._infra_marks.size())
 	await _shot("i7_mapa")

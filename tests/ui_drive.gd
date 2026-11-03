@@ -63,27 +63,27 @@ func _process(delta: float) -> void:
 			_shot("03_painel")
 			# Uma decisão aleatória pode pausar o jogo já no primeiro mês.
 			_check(w.day_index > 25, "tempo passou (dia %d)" % w.day_index)
-			main.hud._gov_tabs.current_tab = 1
+			main.hud._desk.current_tab = 1
 		6:
 			_dismiss_prompts()
 			_shot("04_fiscal")
-			main.hud._gov_tabs.current_tab = 2
+			main.hud._desk.current_tab = 2
 		7:
 			_dismiss_prompts()
 			_shot("05_moeda")
-			main.hud._gov_tabs.current_tab = 3
+			main.hud._desk.current_tab = 3
 		8:
 			_dismiss_prompts()
 			_shot("06_comercio")
-			main.hud._gov_tabs.current_tab = 4
+			main.hud._desk.current_tab = 4
 		9:
 			_dismiss_prompts()
 			_shot("07_militar")
-			main.hud._gov_tabs.current_tab = 5
+			main.hud._desk.current_tab = 5
 		10:
 			_dismiss_prompts()
 			_shot("08_mundo")
-			main.hud._gov_tabs.current_tab = 0
+			main.hud._desk.current_tab = 0
 			main.map.select(w.by_iso["CHN"])
 			main.hud.show_country(w.by_iso["CHN"])
 		11:
@@ -106,7 +106,7 @@ func _process(delta: float) -> void:
 			w.diplomacy.declare_war(w.by_iso["IND"], w.by_iso["BGD"], w)
 			main.map.select(w.by_iso["ARG"])
 			main.hud.show_country(w.by_iso["ARG"])
-			main.hud._gov_tabs.current_tab = 4
+			main.hud._desk.current_tab = 4
 		14:
 			_shot("11b_decisao")
 			_dismiss_prompts()

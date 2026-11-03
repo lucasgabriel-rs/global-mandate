@@ -30,6 +30,13 @@ func _check(cond: bool, what: String) -> void:
 
 
 func _click(b: Control) -> void:
+	# Nas janelas o conteúdo rola: traz o alvo para a área visível antes do clique.
+	var scroll := b.get_parent()
+	while scroll and not scroll is ScrollContainer:
+		scroll = scroll.get_parent()
+	if scroll:
+		(scroll as ScrollContainer).ensure_control_visible(b)
+		scroll.notification(Container.NOTIFICATION_SORT_CHILDREN)
 	_click_at(b.get_global_rect().get_center())
 
 
@@ -105,9 +112,9 @@ func _process(delta: float) -> void:
 			_check(absf(float(w.leader.econ) - float(w.politics.player_party(w).econ)) < 0.2, "quem entra em um partido adota as ideias dele")
 			var me := w.politics.player_politician(w)
 			_check(me.get("player", false) and absf(float(me.econ) - float(w.leader.econ)) < 0.001, "o jogador é um político do partido")
-			hud._gov_tabs.current_tab = hud._cabinet_tab
+			hud._desk.current_tab = hud._cabinet_tab
 		6:
-			_check(not hud._gov_tabs.get_tab_bar().get_offset_buttons_visible(), "as 9 abas cabem, sem setas")
+			_check(hud._dock.items().size() == hud._desk.get_tab_count() + 1, "o dock tem um ícone por janela e o da legislação")
 			_check(hud._cabinet._rows.get_child_count() == Politics.PORTFOLIOS.size(), "uma linha por pasta")
 			_shot("s2_ministros")
 			_click(_named(hud._cabinet, "pick_finance"))
@@ -119,7 +126,7 @@ func _process(delta: float) -> void:
 			first.pressed.emit()
 		8:
 			_check(not main.modal_open and not w.politics.minister(w, "finance").is_empty(), "nomeia: " + hud._cabinet._status.text)
-			hud._gov_tabs.current_tab = hud._politics_tab
+			hud._desk.current_tab = hud._politics_tab
 		9:
 			_shot("s4_politica")
 			var party: Dictionary = w.politics.player_party(w)
@@ -172,7 +179,7 @@ func _process(delta: float) -> void:
 		19:
 			_check(not w.in_office and hud._player_name.text.contains("oposição"), "barra mostra a oposição: " + hud._player_name.text)
 			_check(not (hud._sliders.sp_social as HSlider).editable, "controles travados")
-			hud._gov_tabs.current_tab = hud._politics_tab
+			hud._desk.current_tab = hud._politics_tab
 			w.player.next_election = 9999.0
 		20:
 			_check(hud._politics._opposition.visible, "ações da oposição aparecem")
@@ -181,7 +188,7 @@ func _process(delta: float) -> void:
 			_click(_text(hud._politics._opposition, "Criticar"))
 		21:
 			_check(w.player.approval < mark, "criticar derruba a aprovação: " + hud._politics._status.text)
-			hud._gov_tabs.current_tab = hud._cabinet_tab
+			hud._desk.current_tab = hud._cabinet_tab
 		22:
 			_check(_named(hud._cabinet, "pick_finance") == null, "ministros travados na oposição")
 			main.map.select(w.by_iso["ARG"])
@@ -251,7 +258,7 @@ func _process(delta: float) -> void:
 			_check(hud._player_name.text.contains("oposição"), "barra indica a oposição: " + hud._player_name.text)
 			_check(not (hud._sliders.sp_social as HSlider).editable, "controles travados desde o início")
 			main._set_speed(0)
-			hud._gov_tabs.current_tab = hud._politics_tab
+			hud._desk.current_tab = hud._politics_tab
 		34:
 			_check(hud._politics._opposition.visible, "ações da oposição desde o início")
 			_shot("s14_comeca_oposicao")

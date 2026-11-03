@@ -1,0 +1,183 @@
+[gd_scene format=3]
+
+[ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="1_theme"]
+[ext_resource type="Script" path="res://scripts/ui/float_window.gd" id="2_script"]
+
+[sub_resource type="StyleBoxFlat" id="Frame"]
+bg_color = Color(0.05, 0.085, 0.11, 0.97)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.22, 0.33, 0.4, 0.9)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0, 0, 0, 0.45)
+shadow_size = 18
+shadow_offset = Vector2(0, 6)
+
+[sub_resource type="StyleBoxFlat" id="TitleBar"]
+content_margin_left = 12.0
+content_margin_top = 8.0
+content_margin_right = 12.0
+content_margin_bottom = 8.0
+bg_color = Color(0.09, 0.13, 0.16, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+
+[sub_resource type="StyleBoxFlat" id="Red"]
+bg_color = Color(1, 0.37, 0.34, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="Red_h"]
+bg_color = Color(1, 0.5, 0.47, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="Yellow"]
+bg_color = Color(1, 0.74, 0.18, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="Yellow_h"]
+bg_color = Color(1, 0.82, 0.4, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="Green"]
+bg_color = Color(0.16, 0.79, 0.25, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="Green_h"]
+bg_color = Color(0.35, 0.87, 0.42, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[node name="FloatWindow" type="PanelContainer"]
+offset_right = 460.0
+offset_bottom = 600.0
+theme = ExtResource("1_theme")
+theme_override_styles/panel = SubResource("Frame")
+script = ExtResource("2_script")
+
+[node name="Moldura" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="title_bar" type="PanelContainer" parent="Moldura"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_default_cursor_shape = 13
+theme_override_styles/panel = SubResource("TitleBar")
+
+[node name="Linha" type="HBoxContainer" parent="Moldura/title_bar"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
+
+[node name="close" type="Button" parent="Moldura/title_bar/Linha"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(12, 12)
+layout_mode = 2
+size_flags_vertical = 4
+tooltip_text = "Fechar"
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("Red")
+theme_override_styles/hover = SubResource("Red_h")
+theme_override_styles/pressed = SubResource("Red_h")
+
+[node name="minimize" type="Button" parent="Moldura/title_bar/Linha"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(12, 12)
+layout_mode = 2
+size_flags_vertical = 4
+tooltip_text = "Minimizar para o dock"
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("Yellow")
+theme_override_styles/hover = SubResource("Yellow_h")
+theme_override_styles/pressed = SubResource("Yellow_h")
+
+[node name="maximize" type="Button" parent="Moldura/title_bar/Linha"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(12, 12)
+layout_mode = 2
+size_flags_vertical = 4
+tooltip_text = "Esticar até a altura toda"
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("Green")
+theme_override_styles/hover = SubResource("Green_h")
+theme_override_styles/pressed = SubResource("Green_h")
+
+[node name="Espaco" type="Control" parent="Moldura/title_bar/Linha"]
+custom_minimum_size = Vector2(6, 0)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="title_icon" type="TextureRect" parent="Moldura/title_bar/Linha"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(18, 18)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="title_label" type="Label" parent="Moldura/title_bar/Linha"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 14
+text = "Janela"
+
+[node name="body" type="MarginContainer" parent="Moldura"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 0
+
+[node name="Rodape" type="HBoxContainer" parent="Moldura"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Espaco" type="Control" parent="Moldura/Rodape"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="grip" type="Label" parent="Moldura/Rodape"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+tooltip_text = "Arraste para redimensionar"
+mouse_filter = 0
+mouse_default_cursor_shape = 12
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 0.7)
+theme_override_font_sizes/font_size = 12
+text = "◢"
+horizontal_alignment = 2
+vertical_alignment = 2

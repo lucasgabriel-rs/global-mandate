@@ -136,10 +136,10 @@ func _process(delta: float) -> void:
 			_check(w.politics.player_party(w).name == "Partido do Palito", "jogador pertence ao partido fundado")
 			_check(w.leader.hair_color == Color.MAGENTA, "personagem chega à partida")
 			main._set_speed(0)
-			hud._gov_tabs.current_tab = hud._politics_tab
+			hud._desk.current_tab = hud._politics_tab
 		9:
 			_shot("p4_parlamento")
-			_check(not hud._gov_tabs.get_tab_bar().get_offset_buttons_visible(), "todas as abas cabem, sem setas de rolagem")
+			_check(hud._dock.items().size() == hud._desk.get_tab_count() + 1, "o dock tem um ícone por janela e o da legislação")
 			_check(not hud._politics._hemicycle._seats.is_empty(), "plenário desenhado")
 			var total: int = w.politics.data_of("BRA").seats_total
 			_check(hud._politics._hemicycle._seats.size() == total, "um ponto por assento")
@@ -166,7 +166,7 @@ func _process(delta: float) -> void:
 			main.map.select(null)
 			hud.show_country(null)
 			# Orçamento direto pelos controles da aba Fiscal.
-			hud._gov_tabs.current_tab = 1
+			hud._desk.current_tab = 1
 			income0 = w.player.sp_social
 			(hud._sliders.sp_social as HSlider).value = income0 * 100.0 + 2.0
 		14:
@@ -190,7 +190,7 @@ func _process(delta: float) -> void:
 			_check(absf(w.player.sp_health - 0.09) < 0.001, "o gasto segue a lei")
 			_shot("p8_aprovado")
 			# Projeto de lei aprovado também aparece no controle.
-			hud._gov_tabs.current_tab = hud._politics_tab
+			hud._desk.current_tab = hud._politics_tab
 		17:
 			infra0 = (hud._sliders.sp_infra as HSlider).value
 			_text(hud._politics._bills, "Pacote de infraestrutura").pressed.emit()

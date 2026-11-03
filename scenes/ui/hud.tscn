@@ -12,6 +12,20 @@
 [ext_resource type="PackedScene" path="res://scenes/ui/panels/debug_menu.tscn" id="sub_5"]
 [ext_resource type="PackedScene" path="res://scenes/ui/panels/economy_panel.tscn" id="sub_6"]
 
+[ext_resource type="PackedScene" path="res://scenes/ui/float_window.tscn" id="fw_1"]
+[ext_resource type="PackedScene" path="res://scenes/ui/dock.tscn" id="dock_1"]
+[ext_resource type="Script" path="res://scripts/ui/window_desk.gd" id="desk_1"]
+[ext_resource type="Texture2D" path="res://assets/ui/dock/painel.svg" id="wi_painel"]
+[ext_resource type="Texture2D" path="res://assets/ui/dock/fiscal.svg" id="wi_fiscal"]
+[ext_resource type="Texture2D" path="res://assets/ui/dock/moeda.svg" id="wi_moeda"]
+[ext_resource type="Texture2D" path="res://assets/ui/dock/comercio.svg" id="wi_comercio"]
+[ext_resource type="Texture2D" path="res://assets/ui/dock/militar.svg" id="wi_militar"]
+[ext_resource type="Texture2D" path="res://assets/ui/dock/mundo.svg" id="wi_mundo"]
+[ext_resource type="Texture2D" path="res://assets/ui/dock/divisoes.svg" id="wi_divisoes"]
+[ext_resource type="Texture2D" path="res://assets/ui/dock/politica.svg" id="wi_politica"]
+[ext_resource type="Texture2D" path="res://assets/ui/dock/ministros.svg" id="wi_ministros"]
+[ext_resource type="Texture2D" path="res://assets/ui/dock/economia.svg" id="wi_economia"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_el1dq"]
 content_margin_left = 8.0
 content_margin_top = 8.0
@@ -458,2113 +472,6 @@ focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "☰"
 
-[node name="gov_panel" type="PanelContainer" parent="." unique_id=1441681012]
-unique_name_in_owner = true
-layout_mode = 0
-anchor_bottom = 1.0
-offset_left = 8.0
-offset_top = 66.0
-offset_right = 440.0
-offset_bottom = -8.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_gmc6u")
-
-[node name="gov_tabs" type="TabContainer" parent="gov_panel" unique_id=1892183385]
-unique_name_in_owner = true
-layout_mode = 2
-current_tab = 0
-
-[node name="Painel" type="ScrollContainer" parent="gov_panel/gov_tabs" unique_id=98370691]
-layout_mode = 2
-horizontal_scroll_mode = 0
-metadata/_tab_index = 0
-
-[node name="Margem" type="MarginContainer" parent="gov_panel/gov_tabs/Painel" unique_id=128838808]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/margin_top = 8
-theme_override_constants/margin_right = 6
-
-[node name="Coluna" type="VBoxContainer" parent="gov_panel/gov_tabs/Painel/Margem" unique_id=62882394]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-theme_override_constants/separation = 6
-
-[node name="Linha" type="HBoxContainer" parent="gov_panel/gov_tabs/Painel/Margem/Coluna" unique_id=1871606050]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 8
-
-[node name="leader_view" type="Control" parent="gov_panel/gov_tabs/Painel/Margem/Coluna/Linha" unique_id=691061342]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(64, 64)
-clip_contents = true
-layout_mode = 2
-mouse_filter = 2
-script = ExtResource("3_0h1do")
-portrait = true
-
-[node name="Coluna" type="VBoxContainer" parent="gov_panel/gov_tabs/Painel/Margem/Coluna/Linha" unique_id=959602970]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="leader_name" type="Label" parent="gov_panel/gov_tabs/Painel/Margem/Coluna/Linha/Coluna" unique_id=1001774342]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(60, 0)
-layout_mode = 2
-theme_override_colors/font_color = Color(0.9490196, 0.7019608, 0.23921569, 1)
-theme_override_font_sizes/font_size = 16
-autowrap_mode = 3
-
-[node name="EditarPersonagem" type="Button" parent="gov_panel/gov_tabs/Painel/Margem/Coluna/Linha/Coluna" unique_id=680817376]
-unique_name_in_owner = true
-layout_mode = 2
-focus_mode = 0
-mouse_default_cursor_shape = 2
-text = "Editar personagem"
-
-[node name="Separador" type="ColorRect" parent="gov_panel/gov_tabs/Painel/Margem/Coluna" unique_id=1668424055]
-custom_minimum_size = Vector2(0, 1)
-layout_mode = 2
-mouse_filter = 2
-color = Color(0.15294118, 0.2509804, 0.30980393, 1)
-
-[node name="Linha2" type="HBoxContainer" parent="gov_panel/gov_tabs/Painel/Margem/Coluna" unique_id=2066997237]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="Sistema" type="Label" parent="gov_panel/gov_tabs/Painel/Margem/Coluna/Linha2" unique_id=707590060]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Sistema"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Painel/Margem/Coluna/Linha2" unique_id=638289668]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="o_regime" type="Label" parent="gov_panel/gov_tabs/Painel/Margem/Coluna/Linha2" unique_id=941593168]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-text = "—"
-
-[node name="Linha3" type="HBoxContainer" parent="gov_panel/gov_tabs/Painel/Margem/Coluna" unique_id=334399301]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="Capital" type="Label" parent="gov_panel/gov_tabs/Painel/Margem/Coluna/Linha3" unique_id=562322647]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Capital"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Painel/Margem/Coluna/Linha3" unique_id=624940101]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="o_capital" type="Label" parent="gov_panel/gov_tabs/Painel/Margem/Coluna/Linha3" unique_id=1450083794]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-text = "—"
-
-[node name="Linha4" type="HBoxContainer" parent="gov_panel/gov_tabs/Painel/Margem/Coluna" unique_id=908645091]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="Partido" type="Label" parent="gov_panel/gov_tabs/Painel/Margem/Coluna/Linha4" unique_id=566638159]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Partido"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Painel/Margem/Coluna/Linha4" unique_id=979656118]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="o_party" type="Label" parent="gov_panel/gov_tabs/Painel/Margem/Coluna/Linha4" unique_id=690419918]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-text = "—"
-
-[node name="Linha5" type="HBoxContainer" parent="gov_panel/gov_tabs/Painel/Margem/Coluna" unique_id=311338716]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="ApoioNoParlamento" type="Label" parent="gov_panel/gov_tabs/Painel/Margem/Coluna/Linha5" unique_id=76432979]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Apoio no parlamento"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Painel/Margem/Coluna/Linha5" unique_id=2042097860]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="o_seats" type="Label" parent="gov_panel/gov_tabs/Painel/Margem/Coluna/Linha5" unique_id=555037309]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-text = "—"
-
-[node name="Linha6" type="HBoxContainer" parent="gov_panel/gov_tabs/Painel/Margem/Coluna" unique_id=1804147748]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="ProximaEleicao" type="Label" parent="gov_panel/gov_tabs/Painel/Margem/Coluna/Linha6" unique_id=512299248]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Próxima eleição"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Painel/Margem/Coluna/Linha6" unique_id=1090551254]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="o_next" type="Label" parent="gov_panel/gov_tabs/Painel/Margem/Coluna/Linha6" unique_id=2012067065]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-text = "—"
-
-[node name="Linha7" type="HBoxContainer" parent="gov_panel/gov_tabs/Painel/Margem/Coluna" unique_id=736764529]
-layout_mode = 2
-tooltip_text = "Ranking entre as nações, combinando economia, força militar, alianças e estabilidade."
-theme_override_constants/separation = 4
-
-[node name="InfluenciaGlobal" type="Label" parent="gov_panel/gov_tabs/Painel/Margem/Coluna/Linha7" unique_id=657621836]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Influência global"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Painel/Margem/Coluna/Linha7" unique_id=196383693]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="o_rank" type="Label" parent="gov_panel/gov_tabs/Painel/Margem/Coluna/Linha7" unique_id=749701957]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-text = "—"
-
-[node name="Separador2" type="ColorRect" parent="gov_panel/gov_tabs/Painel/Margem/Coluna" unique_id=1616570008]
-custom_minimum_size = Vector2(0, 1)
-layout_mode = 2
-mouse_filter = 2
-color = Color(0.15294118, 0.2509804, 0.30980393, 1)
-
-[node name="Grade" type="GridContainer" parent="gov_panel/gov_tabs/Painel/Margem/Coluna" unique_id=685368399]
-layout_mode = 2
-theme_override_constants/h_separation = 6
-theme_override_constants/v_separation = 6
-columns = 2
-
-[node name="c_growth" type="Control" parent="gov_panel/gov_tabs/Painel/Margem/Coluna/Grade" unique_id=206628226]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(160, 64)
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-script = ExtResource("5_erw67")
-title = "Crescimento"
-color = Color(0.29803923, 0.78039217, 0.5803922, 1)
-series_key = "growth"
-
-[node name="c_infl" type="Control" parent="gov_panel/gov_tabs/Painel/Margem/Coluna/Grade" unique_id=814301988]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(160, 64)
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-script = ExtResource("5_erw67")
-title = "Inflação"
-color = Color(0.9254902, 0.3529412, 0.2627451, 1)
-series_key = "infl"
-
-[node name="c_unemp" type="Control" parent="gov_panel/gov_tabs/Painel/Margem/Coluna/Grade" unique_id=519923622]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(160, 64)
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-script = ExtResource("5_erw67")
-title = "Desemprego"
-color = Color(0.9490196, 0.7019608, 0.23921569, 1)
-series_key = "unemp"
-
-[node name="c_debt" type="Control" parent="gov_panel/gov_tabs/Painel/Margem/Coluna/Grade" unique_id=2099598528]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(160, 64)
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-script = ExtResource("5_erw67")
-title = "Dívida/PIB"
-series_key = "debt"
-
-[node name="c_approval" type="Control" parent="gov_panel/gov_tabs/Painel/Margem/Coluna/Grade" unique_id=1591452440]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(160, 64)
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-script = ExtResource("5_erw67")
-title = "Aprovação"
-color = Color(0.9490196, 0.7019608, 0.23921569, 1)
-series_key = "approval"
-
-[node name="c_stability" type="Control" parent="gov_panel/gov_tabs/Painel/Margem/Coluna/Grade" unique_id=1755626231]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(160, 64)
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-script = ExtResource("5_erw67")
-title = "Estabilidade"
-color = Color(0.29803923, 0.78039217, 0.5803922, 1)
-series_key = "stability"
-
-[node name="Separador3" type="ColorRect" parent="gov_panel/gov_tabs/Painel/Margem/Coluna" unique_id=1198232353]
-custom_minimum_size = Vector2(0, 1)
-layout_mode = 2
-mouse_filter = 2
-color = Color(0.15294118, 0.2509804, 0.30980393, 1)
-
-[node name="Linha8" type="HBoxContainer" parent="gov_panel/gov_tabs/Painel/Margem/Coluna" unique_id=285747857]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="PIBPerCapita" type="Label" parent="gov_panel/gov_tabs/Painel/Margem/Coluna/Linha8" unique_id=919722544]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "PIB per capita"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Painel/Margem/Coluna/Linha8" unique_id=1529249397]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="o_gdp_pc" type="Label" parent="gov_panel/gov_tabs/Painel/Margem/Coluna/Linha8" unique_id=495193531]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-text = "—"
-
-[node name="Linha9" type="HBoxContainer" parent="gov_panel/gov_tabs/Painel/Margem/Coluna" unique_id=1685765513]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="Populacao" type="Label" parent="gov_panel/gov_tabs/Painel/Margem/Coluna/Linha9" unique_id=995083277]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "População"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Painel/Margem/Coluna/Linha9" unique_id=498967640]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="o_pop" type="Label" parent="gov_panel/gov_tabs/Painel/Margem/Coluna/Linha9" unique_id=1363084868]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-text = "—"
-
-[node name="Linha10" type="HBoxContainer" parent="gov_panel/gov_tabs/Painel/Margem/Coluna" unique_id=1701158778]
-layout_mode = 2
-tooltip_text = "Saldo com o exterior. Déficit persistente enfraquece a moeda."
-theme_override_constants/separation = 4
-
-[node name="ContaCorrentePIB" type="Label" parent="gov_panel/gov_tabs/Painel/Margem/Coluna/Linha10" unique_id=407512468]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Conta corrente / PIB"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Painel/Margem/Coluna/Linha10" unique_id=699703780]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="o_ca" type="Label" parent="gov_panel/gov_tabs/Painel/Margem/Coluna/Linha10" unique_id=519902046]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-text = "—"
-
-[node name="Linha11" type="HBoxContainer" parent="gov_panel/gov_tabs/Painel/Margem/Coluna" unique_id=1254093623]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="ReservasInternacionais" type="Label" parent="gov_panel/gov_tabs/Painel/Margem/Coluna/Linha11" unique_id=787219439]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Reservas internacionais"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Painel/Margem/Coluna/Linha11" unique_id=985445207]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="o_res" type="Label" parent="gov_panel/gov_tabs/Painel/Margem/Coluna/Linha11" unique_id=2142106911]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-text = "—"
-
-[node name="Linha12" type="HBoxContainer" parent="gov_panel/gov_tabs/Painel/Margem/Coluna" unique_id=991026938]
-layout_mode = 2
-tooltip_text = "Calculada pelo prêmio de risco que o mercado cobra da sua dívida."
-theme_override_constants/separation = 4
-
-[node name="NotaDeCredito" type="Label" parent="gov_panel/gov_tabs/Painel/Margem/Coluna/Linha12" unique_id=2122464805]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Nota de crédito"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Painel/Margem/Coluna/Linha12" unique_id=1695245972]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="o_rating" type="Label" parent="gov_panel/gov_tabs/Painel/Margem/Coluna/Linha12" unique_id=250039811]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-text = "—"
-
-[node name="Linha13" type="HBoxContainer" parent="gov_panel/gov_tabs/Painel/Margem/Coluna" unique_id=849933960]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="JuroDaDivida" type="Label" parent="gov_panel/gov_tabs/Painel/Margem/Coluna/Linha13" unique_id=1517177371]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Juro da dívida"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Painel/Margem/Coluna/Linha13" unique_id=1683768040]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="o_yield" type="Label" parent="gov_panel/gov_tabs/Painel/Margem/Coluna/Linha13" unique_id=552304142]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-text = "—"
-
-[node name="Linha14" type="HBoxContainer" parent="gov_panel/gov_tabs/Painel/Margem/Coluna" unique_id=66202458]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="BolsaBase100" type="Label" parent="gov_panel/gov_tabs/Painel/Margem/Coluna/Linha14" unique_id=2108121006]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Bolsa (base 100)"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Painel/Margem/Coluna/Linha14" unique_id=1396713355]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="o_stock" type="Label" parent="gov_panel/gov_tabs/Painel/Margem/Coluna/Linha14" unique_id=774506574]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-text = "—"
-
-[node name="Fiscal" type="ScrollContainer" parent="gov_panel/gov_tabs" unique_id=1641257936]
-visible = false
-layout_mode = 2
-horizontal_scroll_mode = 0
-metadata/_tab_index = 1
-
-[node name="Margem" type="MarginContainer" parent="gov_panel/gov_tabs/Fiscal" unique_id=310748348]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/margin_top = 8
-theme_override_constants/margin_right = 6
-
-[node name="Coluna" type="VBoxContainer" parent="gov_panel/gov_tabs/Fiscal/Margem" unique_id=1220421169]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-theme_override_constants/separation = 6
-
-[node name="ORAMENTO" type="Label" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna" unique_id=1490946489]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_constants/line_spacing = 0
-theme_override_font_sizes/font_size = 11
-text = "ORÇAMENTO"
-
-[node name="ImpostosGastosETarifaSo" type="Label" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna" unique_id=1666536433]
-custom_minimum_size = Vector2(60, 0)
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 12
-text = "O governo define os gastos sozinho, e a mudança vale na hora. Só fica travado o que uma lei em vigor obrigar."
-autowrap_mode = 3
-
-[node name="Separador" type="ColorRect" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna" unique_id=1702064230]
-custom_minimum_size = Vector2(0, 1)
-layout_mode = 2
-mouse_filter = 2
-color = Color(0.15294118, 0.2509804, 0.30980393, 1)
-
-[node name="IMPOSTOSDOPIB" type="Label" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna" unique_id=1466004481]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_constants/line_spacing = 0
-theme_override_font_sizes/font_size = 11
-text = "IMPOSTOS (% DO PIB)"
-
-[node name="TaxaRenda" type="HBoxContainer" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna" unique_id=643588654]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="Titulo" type="Label" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/TaxaRenda" unique_id=729120926]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Renda e folha"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/TaxaRenda" unique_id=558546530]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="f_rate_tax_income" type="Label" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/TaxaRenda" unique_id=1085829744]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_font_sizes/font_size = 13
-text = "—"
-
-[node name="TaxaConsumo" type="HBoxContainer" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna" unique_id=1504122350]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="Titulo" type="Label" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/TaxaConsumo" unique_id=556008377]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Consumo"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/TaxaConsumo" unique_id=1008810349]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="f_rate_tax_consumption" type="Label" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/TaxaConsumo" unique_id=866320912]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_font_sizes/font_size = 13
-text = "—"
-
-[node name="TaxaEmpresas" type="HBoxContainer" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna" unique_id=1001622648]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="Titulo" type="Label" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/TaxaEmpresas" unique_id=600789096]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Empresas e capital"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/TaxaEmpresas" unique_id=1418706255]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="f_rate_tax_corporate" type="Label" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/TaxaEmpresas" unique_id=1648425590]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_font_sizes/font_size = 13
-text = "—"
-
-[node name="LegislarTributos" type="Button" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna" unique_id=300307949]
-unique_name_in_owner = true
-layout_mode = 2
-tooltip_text = "Abre o editor de blocos com as alíquotas em vigor. A mudança passa pelo parlamento como qualquer lei."
-focus_mode = 0
-mouse_default_cursor_shape = 2
-text = "Mudar tributos por lei"
-
-[node name="Separador2" type="ColorRect" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna" unique_id=1816078355]
-custom_minimum_size = Vector2(0, 1)
-layout_mode = 2
-mouse_filter = 2
-color = Color(0.15294118, 0.2509804, 0.30980393, 1)
-
-[node name="GASTOSDOPIB" type="Label" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna" unique_id=1296205905]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_constants/line_spacing = 0
-theme_override_font_sizes/font_size = 11
-text = "GASTOS (% DO PIB)"
-
-[node name="Coluna4" type="VBoxContainer" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna" unique_id=1771533986]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 0
-
-[node name="Linha" type="HBoxContainer" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/Coluna4" unique_id=2101212266]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="PrevidenciaEAssistencia" type="Label" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/Coluna4/Linha" unique_id=1154075359]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Previdência e assistência"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/Coluna4/Linha" unique_id=561080202]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="slider_value_sp_social" type="Label" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/Coluna4/Linha" unique_id=1844375097]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-
-[node name="slider_sp_social" type="HSlider" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/Coluna4" unique_id=314730316]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 18)
-layout_mode = 2
-tooltip_text = "Sustenta a aprovação e reduz a dor do desemprego."
-focus_mode = 0
-max_value = 30.0
-step = 0.1
-
-[node name="Coluna5" type="VBoxContainer" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna" unique_id=5228427]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 0
-
-[node name="Linha" type="HBoxContainer" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/Coluna5" unique_id=391297857]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="Saude" type="Label" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/Coluna5/Linha" unique_id=1927950795]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Saúde"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/Coluna5/Linha" unique_id=22199861]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="slider_value_sp_health" type="Label" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/Coluna5/Linha" unique_id=148916054]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-
-[node name="slider_sp_health" type="HSlider" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/Coluna5" unique_id=550326654]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 18)
-layout_mode = 2
-tooltip_text = "Melhora a aprovação e, aos poucos, a produtividade."
-focus_mode = 0
-max_value = 14.000000000000002
-step = 0.1
-
-[node name="Coluna6" type="VBoxContainer" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna" unique_id=1411711496]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 0
-
-[node name="Linha" type="HBoxContainer" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/Coluna6" unique_id=1573698081]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="EducacaoECiencia" type="Label" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/Coluna6/Linha" unique_id=1788148042]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Educação e ciência"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/Coluna6/Linha" unique_id=1089756860]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="slider_value_sp_education" type="Label" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/Coluna6/Linha" unique_id=1283551680]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-
-[node name="slider_sp_education" type="HSlider" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/Coluna6" unique_id=169756123]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 18)
-layout_mode = 2
-tooltip_text = "O maior efeito de longo prazo: eleva capital humano e PTF."
-focus_mode = 0
-max_value = 12.0
-step = 0.1
-
-[node name="Coluna7" type="VBoxContainer" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna" unique_id=826045577]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 0
-
-[node name="Linha" type="HBoxContainer" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/Coluna7" unique_id=434829096]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="Infraestrutura" type="Label" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/Coluna7/Linha" unique_id=62083033]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Infraestrutura"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/Coluna7/Linha" unique_id=705522541]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="slider_value_sp_infra" type="Label" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/Coluna7/Linha" unique_id=55638442]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-
-[node name="slider_sp_infra" type="HSlider" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/Coluna7" unique_id=1814286114]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 18)
-layout_mode = 2
-tooltip_text = "Vira capital público e amplia o PIB potencial."
-focus_mode = 0
-max_value = 10.0
-step = 0.1
-
-[node name="Coluna8" type="VBoxContainer" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna" unique_id=483814742]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 0
-
-[node name="Linha" type="HBoxContainer" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/Coluna8" unique_id=561471801]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="Defesa" type="Label" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/Coluna8/Linha" unique_id=1288193899]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Defesa"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/Coluna8/Linha" unique_id=820892822]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="slider_value_sp_defense" type="Label" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/Coluna8/Linha" unique_id=851262927]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-
-[node name="slider_sp_defense" type="HSlider" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/Coluna8" unique_id=1610771762]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 18)
-layout_mode = 2
-tooltip_text = "Compra equipamento militar; o estoque se deprecia 6% ao ano."
-focus_mode = 0
-max_value = 20.0
-step = 0.1
-
-[node name="Coluna9" type="VBoxContainer" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna" unique_id=1140375212]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 0
-
-[node name="Linha" type="HBoxContainer" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/Coluna9" unique_id=1286317797]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="Administracao" type="Label" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/Coluna9/Linha" unique_id=502372942]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Administração"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/Coluna9/Linha" unique_id=707495815]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="slider_value_sp_admin" type="Label" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/Coluna9/Linha" unique_id=645925007]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-
-[node name="slider_sp_admin" type="HSlider" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/Coluna9" unique_id=62612683]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 18)
-layout_mode = 2
-tooltip_text = "Cortes fáceis, mas a estabilidade depende de um Estado funcional."
-focus_mode = 0
-max_value = 12.0
-step = 0.1
-
-[node name="Separador3" type="ColorRect" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna" unique_id=1745899337]
-custom_minimum_size = Vector2(0, 1)
-layout_mode = 2
-mouse_filter = 2
-color = Color(0.15294118, 0.2509804, 0.30980393, 1)
-
-[node name="RESULTADOANUAL" type="Label" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna" unique_id=1058161296]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_constants/line_spacing = 0
-theme_override_font_sizes/font_size = 11
-text = "RESULTADO ANUAL"
-
-[node name="Linha2" type="HBoxContainer" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna" unique_id=1317051047]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="Receita" type="Label" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/Linha2" unique_id=1308442002]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Receita"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/Linha2" unique_id=1195869688]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="f_rev" type="Label" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/Linha2" unique_id=1110657478]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-text = "—"
-
-[node name="Linha3" type="HBoxContainer" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna" unique_id=506561211]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="DespesaPrimaria" type="Label" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/Linha3" unique_id=515656080]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Despesa primária"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/Linha3" unique_id=1897786534]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="f_sp" type="Label" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/Linha3" unique_id=849233531]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-text = "—"
-
-[node name="Linha4" type="HBoxContainer" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna" unique_id=1528037297]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="JurosDaDivida" type="Label" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/Linha4" unique_id=1892460830]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Juros da dívida"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/Linha4" unique_id=815526006]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="f_int" type="Label" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/Linha4" unique_id=1028704290]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-text = "—"
-
-[node name="Linha5" type="HBoxContainer" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna" unique_id=1268070461]
-layout_mode = 2
-tooltip_text = "Déficit nominal: acima de ~4% do PIB, o mercado cobra mais caro."
-theme_override_constants/separation = 4
-
-[node name="DeficitPIB" type="Label" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/Linha5" unique_id=8635626]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Déficit / PIB"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/Linha5" unique_id=1022640426]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="f_def" type="Label" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/Linha5" unique_id=1673685812]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-text = "—"
-
-[node name="Linha6" type="HBoxContainer" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna" unique_id=739875329]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="DividaPIB" type="Label" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/Linha6" unique_id=820027349]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Dívida / PIB"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/Linha6" unique_id=734579777]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="f_debt" type="Label" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/Linha6" unique_id=1065178935]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-text = "—"
-
-[node name="Linha7" type="HBoxContainer" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna" unique_id=805319037]
-layout_mode = 2
-tooltip_text = "Nível de dívida a partir do qual o prêmio de risco acelera."
-theme_override_constants/separation = 4
-
-[node name="LimiteDeTolerancia" type="Label" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/Linha7" unique_id=1290230138]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Limite de tolerância"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/Linha7" unique_id=271952959]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="f_tol" type="Label" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/Linha7" unique_id=1693615370]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-text = "—"
-
-[node name="Coluna10" type="VBoxContainer" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna" unique_id=1837216566]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 0
-
-[node name="Linha" type="HBoxContainer" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/Coluna10" unique_id=1470843061]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="EmissaoMonetariaDoDeficit" type="Label" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/Coluna10/Linha" unique_id=1379196686]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Emissão monetária (% do déficit)"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/Coluna10/Linha" unique_id=1776331554]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="slider_value_mon_fin" type="Label" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/Coluna10/Linha" unique_id=152972908]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-
-[node name="slider_mon_fin" type="HSlider" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/Coluna10" unique_id=396272690]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 18)
-layout_mode = 2
-tooltip_text = "Evita dívida, mas gera inflação e destrói a credibilidade do banco central."
-focus_mode = 0
-step = 5.0
-
-[node name="PedirSocorroAoFMI" type="Button" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna" unique_id=1984051318]
-unique_name_in_owner = true
-layout_mode = 2
-tooltip_text = "Empréstimo de 8% do PIB em troca de ajuste fiscal e perda de aprovação."
-focus_mode = 0
-mouse_default_cursor_shape = 2
-text = "Pedir socorro ao FMI"
-
-[node name="Moeda" type="ScrollContainer" parent="gov_panel/gov_tabs" unique_id=1946392384]
-visible = false
-layout_mode = 2
-horizontal_scroll_mode = 0
-metadata/_tab_index = 2
-
-[node name="Margem" type="MarginContainer" parent="gov_panel/gov_tabs/Moeda" unique_id=1979016783]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/margin_top = 8
-theme_override_constants/margin_right = 6
-
-[node name="Coluna" type="VBoxContainer" parent="gov_panel/gov_tabs/Moeda/Margem" unique_id=1545376544]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-theme_override_constants/separation = 6
-
-[node name="BANCOCENTRAL" type="Label" parent="gov_panel/gov_tabs/Moeda/Margem/Coluna" unique_id=1937632060]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_constants/line_spacing = 0
-theme_override_font_sizes/font_size = 11
-text = "BANCO CENTRAL"
-
-[node name="Linha" type="HBoxContainer" parent="gov_panel/gov_tabs/Moeda/Margem/Coluna" unique_id=1954620882]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="Regime" type="Label" parent="gov_panel/gov_tabs/Moeda/Margem/Coluna/Linha" unique_id=1398445838]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Regime"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Moeda/Margem/Coluna/Linha" unique_id=1321319181]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="m_status" type="Label" parent="gov_panel/gov_tabs/Moeda/Margem/Coluna/Linha" unique_id=736618176]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-text = "—"
-
-[node name="AlternarRegraDeTaylorJuro" type="Button" parent="gov_panel/gov_tabs/Moeda/Margem/Coluna" unique_id=713567552]
-unique_name_in_owner = true
-layout_mode = 2
-tooltip_text = "Manual dá controle direto, mas interferência reduz a credibilidade do banco central."
-focus_mode = 0
-mouse_default_cursor_shape = 2
-text = "Alternar: regra de Taylor / juro manual"
-
-[node name="Coluna" type="VBoxContainer" parent="gov_panel/gov_tabs/Moeda/Margem/Coluna" unique_id=657840903]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 0
-
-[node name="Linha" type="HBoxContainer" parent="gov_panel/gov_tabs/Moeda/Margem/Coluna/Coluna" unique_id=1483066238]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="JuroBasicoAlvo" type="Label" parent="gov_panel/gov_tabs/Moeda/Margem/Coluna/Coluna/Linha" unique_id=1865340218]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Juro básico alvo"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Moeda/Margem/Coluna/Coluna/Linha" unique_id=16740976]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="slider_value_rate_set" type="Label" parent="gov_panel/gov_tabs/Moeda/Margem/Coluna/Coluna/Linha" unique_id=581254707]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-
-[node name="slider_rate_set" type="HSlider" parent="gov_panel/gov_tabs/Moeda/Margem/Coluna/Coluna" unique_id=223577615]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 18)
-layout_mode = 2
-tooltip_text = "Mais juros: menos inflação e mais câmbio valorizado, ao custo de recessão e dívida mais cara."
-focus_mode = 0
-step = 0.25
-
-[node name="Linha2" type="HBoxContainer" parent="gov_panel/gov_tabs/Moeda/Margem/Coluna" unique_id=1370928]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="JuroBasicoAtual" type="Label" parent="gov_panel/gov_tabs/Moeda/Margem/Coluna/Linha2" unique_id=626558813]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Juro básico atual"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Moeda/Margem/Coluna/Linha2" unique_id=2137124670]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="m_rate" type="Label" parent="gov_panel/gov_tabs/Moeda/Margem/Coluna/Linha2" unique_id=1403087223]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-text = "—"
-
-[node name="Linha3" type="HBoxContainer" parent="gov_panel/gov_tabs/Moeda/Margem/Coluna" unique_id=824154138]
-layout_mode = 2
-tooltip_text = "Juro nominal menos inflação esperada."
-theme_override_constants/separation = 4
-
-[node name="JuroReal" type="Label" parent="gov_panel/gov_tabs/Moeda/Margem/Coluna/Linha3" unique_id=2112538057]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Juro real"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Moeda/Margem/Coluna/Linha3" unique_id=2072936160]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="m_real" type="Label" parent="gov_panel/gov_tabs/Moeda/Margem/Coluna/Linha3" unique_id=413103002]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-text = "—"
-
-[node name="Linha4" type="HBoxContainer" parent="gov_panel/gov_tabs/Moeda/Margem/Coluna" unique_id=1909498139]
-layout_mode = 2
-tooltip_text = "Juro real que nem estimula nem freia a economia."
-theme_override_constants/separation = 4
-
-[node name="JuroNeutro" type="Label" parent="gov_panel/gov_tabs/Moeda/Margem/Coluna/Linha4" unique_id=1775521329]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Juro neutro"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Moeda/Margem/Coluna/Linha4" unique_id=1163352804]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="m_neutral" type="Label" parent="gov_panel/gov_tabs/Moeda/Margem/Coluna/Linha4" unique_id=382318834]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-text = "—"
-
-[node name="Linha5" type="HBoxContainer" parent="gov_panel/gov_tabs/Moeda/Margem/Coluna" unique_id=714949143]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="MetaDeInflacao" type="Label" parent="gov_panel/gov_tabs/Moeda/Margem/Coluna/Linha5" unique_id=1770394013]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Meta de inflação"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Moeda/Margem/Coluna/Linha5" unique_id=1586826758]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="m_target" type="Label" parent="gov_panel/gov_tabs/Moeda/Margem/Coluna/Linha5" unique_id=665036510]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-text = "—"
-
-[node name="Linha6" type="HBoxContainer" parent="gov_panel/gov_tabs/Moeda/Margem/Coluna" unique_id=589059477]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="InflacaoEsperada" type="Label" parent="gov_panel/gov_tabs/Moeda/Margem/Coluna/Linha6" unique_id=1474177706]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Inflação esperada"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Moeda/Margem/Coluna/Linha6" unique_id=438590889]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="m_pie" type="Label" parent="gov_panel/gov_tabs/Moeda/Margem/Coluna/Linha6" unique_id=1101050602]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-text = "—"
-
-[node name="Linha7" type="HBoxContainer" parent="gov_panel/gov_tabs/Moeda/Margem/Coluna" unique_id=1348805329]
-layout_mode = 2
-tooltip_text = "Quanto as expectativas se ancoram na meta. Sobe devagar quando a meta é cumprida."
-theme_override_constants/separation = 4
-
-[node name="Credibilidade" type="Label" parent="gov_panel/gov_tabs/Moeda/Margem/Coluna/Linha7" unique_id=908364594]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Credibilidade"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Moeda/Margem/Coluna/Linha7" unique_id=2066557650]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="m_cred" type="Label" parent="gov_panel/gov_tabs/Moeda/Margem/Coluna/Linha7" unique_id=1015909029]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-text = "—"
-
-[node name="Separador" type="ColorRect" parent="gov_panel/gov_tabs/Moeda/Margem/Coluna" unique_id=734751838]
-custom_minimum_size = Vector2(0, 1)
-layout_mode = 2
-mouse_filter = 2
-color = Color(0.15294118, 0.2509804, 0.30980393, 1)
-
-[node name="CMBIO" type="Label" parent="gov_panel/gov_tabs/Moeda/Margem/Coluna" unique_id=1785814279]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_constants/line_spacing = 0
-theme_override_font_sizes/font_size = 11
-text = "CÂMBIO"
-
-[node name="Linha8" type="HBoxContainer" parent="gov_panel/gov_tabs/Moeda/Margem/Coluna" unique_id=1503884428]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="MoedaPorUSIndice2025" type="Label" parent="gov_panel/gov_tabs/Moeda/Margem/Coluna/Linha8" unique_id=741309198]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Moeda por US$ (índice 2025 = 1)"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Moeda/Margem/Coluna/Linha8" unique_id=1911338650]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="m_fx" type="Label" parent="gov_panel/gov_tabs/Moeda/Margem/Coluna/Linha8" unique_id=1323121352]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-text = "—"
-
-[node name="Linha9" type="HBoxContainer" parent="gov_panel/gov_tabs/Moeda/Margem/Coluna" unique_id=892077111]
-layout_mode = 2
-tooltip_text = "Acima de 1: moeda real mais fraca que em 2025, exportações mais competitivas."
-theme_override_constants/separation = 4
-
-[node name="CambioReal" type="Label" parent="gov_panel/gov_tabs/Moeda/Margem/Coluna/Linha9" unique_id=2112687586]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Câmbio real"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Moeda/Margem/Coluna/Linha9" unique_id=326539988]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="m_rer" type="Label" parent="gov_panel/gov_tabs/Moeda/Margem/Coluna/Linha9" unique_id=33150660]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-text = "—"
-
-[node name="AlternarFlutuanteAncoraNoDolar" type="Button" parent="gov_panel/gov_tabs/Moeda/Margem/Coluna" unique_id=1868752990]
-unique_name_in_owner = true
-layout_mode = 2
-tooltip_text = "A âncora importa a política monetária dos EUA e exige reservas para ser defendida."
-focus_mode = 0
-mouse_default_cursor_shape = 2
-text = "Alternar: flutuante / âncora no dólar"
-
-[node name="Grade" type="GridContainer" parent="gov_panel/gov_tabs/Moeda/Margem/Coluna" unique_id=1719146685]
-layout_mode = 2
-columns = 2
-
-[node name="mc_rate" type="Control" parent="gov_panel/gov_tabs/Moeda/Margem/Coluna/Grade" unique_id=1222791836]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(160, 64)
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-script = ExtResource("5_erw67")
-title = "Juro básico"
-color = Color(0.9490196, 0.7019608, 0.23921569, 1)
-series_key = "rate"
-
-[node name="mc_infl" type="Control" parent="gov_panel/gov_tabs/Moeda/Margem/Coluna/Grade" unique_id=665453022]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(160, 64)
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-script = ExtResource("5_erw67")
-title = "Inflação"
-color = Color(0.9254902, 0.3529412, 0.2627451, 1)
-series_key = "infl"
-
-[node name="mc_fx" type="Control" parent="gov_panel/gov_tabs/Moeda/Margem/Coluna/Grade" unique_id=32291216]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(160, 64)
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-script = ExtResource("5_erw67")
-title = "Câmbio"
-format = "num2"
-series_key = "fx"
-
-[node name="mc_yield" type="Control" parent="gov_panel/gov_tabs/Moeda/Margem/Coluna/Grade" unique_id=1776240829]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(160, 64)
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-script = ExtResource("5_erw67")
-title = "Juro da dívida"
-color = Color(0.29803923, 0.78039217, 0.5803922, 1)
-series_key = "yield"
-
-[node name="Comércio" type="ScrollContainer" parent="gov_panel/gov_tabs" unique_id=807492480]
-visible = false
-layout_mode = 2
-horizontal_scroll_mode = 0
-metadata/_tab_index = 3
-
-[node name="Margem" type="MarginContainer" parent="gov_panel/gov_tabs/Comércio" unique_id=1111050038]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/margin_top = 8
-theme_override_constants/margin_right = 6
-
-[node name="Coluna" type="VBoxContainer" parent="gov_panel/gov_tabs/Comércio/Margem" unique_id=872357808]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-theme_override_constants/separation = 6
-
-[node name="Linha" type="HBoxContainer" parent="gov_panel/gov_tabs/Comércio/Margem/Coluna" unique_id=1341247101]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="Exportacoes" type="Label" parent="gov_panel/gov_tabs/Comércio/Margem/Coluna/Linha" unique_id=605298273]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Exportações"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Comércio/Margem/Coluna/Linha" unique_id=1489671527]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="t_exp" type="Label" parent="gov_panel/gov_tabs/Comércio/Margem/Coluna/Linha" unique_id=964970790]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-text = "—"
-
-[node name="Linha2" type="HBoxContainer" parent="gov_panel/gov_tabs/Comércio/Margem/Coluna" unique_id=663808653]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="Importacoes" type="Label" parent="gov_panel/gov_tabs/Comércio/Margem/Coluna/Linha2" unique_id=212684549]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Importações"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Comércio/Margem/Coluna/Linha2" unique_id=1594028017]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="t_imp" type="Label" parent="gov_panel/gov_tabs/Comércio/Margem/Coluna/Linha2" unique_id=559329626]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-text = "—"
-
-[node name="Linha3" type="HBoxContainer" parent="gov_panel/gov_tabs/Comércio/Margem/Coluna" unique_id=1411924362]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="ContaCorrentePIB" type="Label" parent="gov_panel/gov_tabs/Comércio/Margem/Coluna/Linha3" unique_id=568892194]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Conta corrente / PIB"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Comércio/Margem/Coluna/Linha3" unique_id=993322214]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="t_ca" type="Label" parent="gov_panel/gov_tabs/Comércio/Margem/Coluna/Linha3" unique_id=1805194980]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-text = "—"
-
-[node name="Linha4" type="HBoxContainer" parent="gov_panel/gov_tabs/Comércio/Margem/Coluna" unique_id=1017376209]
-layout_mode = 2
-tooltip_text = "Efeito líquido de sanções, tarifas e acordos sobre suas exportações."
-theme_override_constants/separation = 4
-
-[node name="AcessoAMercados" type="Label" parent="gov_panel/gov_tabs/Comércio/Margem/Coluna/Linha4" unique_id=1260163277]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Acesso a mercados"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Comércio/Margem/Coluna/Linha4" unique_id=157659221]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="t_loss" type="Label" parent="gov_panel/gov_tabs/Comércio/Margem/Coluna/Linha4" unique_id=749589120]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-text = "—"
-
-[node name="TaxaTarifa" type="HBoxContainer" parent="gov_panel/gov_tabs/Comércio/Margem/Coluna" unique_id=1596550245]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="Titulo" type="Label" parent="gov_panel/gov_tabs/Comércio/Margem/Coluna/TaxaTarifa" unique_id=1653639229]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Tarifa geral de importação"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Comércio/Margem/Coluna/TaxaTarifa" unique_id=1817225819]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="t_tariff" type="Label" parent="gov_panel/gov_tabs/Comércio/Margem/Coluna/TaxaTarifa" unique_id=470974831]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_font_sizes/font_size = 13
-text = "—"
-
-[node name="LegislarTarifa" type="Button" parent="gov_panel/gov_tabs/Comércio/Margem/Coluna" unique_id=2133620015]
-unique_name_in_owner = true
-layout_mode = 2
-tooltip_text = "Abre o editor de blocos com as alíquotas em vigor. A mudança passa pelo parlamento como qualquer lei."
-focus_mode = 0
-mouse_default_cursor_shape = 2
-text = "Mudar a tarifa por lei"
-
-[node name="Separador" type="ColorRect" parent="gov_panel/gov_tabs/Comércio/Margem/Coluna" unique_id=450180485]
-custom_minimum_size = Vector2(0, 1)
-layout_mode = 2
-mouse_filter = 2
-color = Color(0.15294118, 0.2509804, 0.30980393, 1)
-
-[node name="PRINCIPAISDESTINOS" type="Label" parent="gov_panel/gov_tabs/Comércio/Margem/Coluna" unique_id=482807080]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_constants/line_spacing = 0
-theme_override_font_sizes/font_size = 11
-text = "PRINCIPAIS DESTINOS"
-
-[node name="partners_box" type="VBoxContainer" parent="gov_panel/gov_tabs/Comércio/Margem/Coluna" unique_id=345388266]
-unique_name_in_owner = true
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 2
-
-[node name="Separador2" type="ColorRect" parent="gov_panel/gov_tabs/Comércio/Margem/Coluna" unique_id=124649024]
-custom_minimum_size = Vector2(0, 1)
-layout_mode = 2
-mouse_filter = 2
-color = Color(0.15294118, 0.2509804, 0.30980393, 1)
-
-[node name="COMMODITIESPRODUOCONSUMO" type="Label" parent="gov_panel/gov_tabs/Comércio/Margem/Coluna" unique_id=1048366030]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_constants/line_spacing = 0
-theme_override_font_sizes/font_size = 11
-text = "COMMODITIES (PRODUÇÃO - CONSUMO)"
-
-[node name="Linha5" type="HBoxContainer" parent="gov_panel/gov_tabs/Comércio/Margem/Coluna" unique_id=1893216590]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="Petroleo" type="Label" parent="gov_panel/gov_tabs/Comércio/Margem/Coluna/Linha5" unique_id=2005371112]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Petróleo"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Comércio/Margem/Coluna/Linha5" unique_id=278841769]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="t_comm_0" type="Label" parent="gov_panel/gov_tabs/Comércio/Margem/Coluna/Linha5" unique_id=346267225]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-text = "—"
-
-[node name="Linha6" type="HBoxContainer" parent="gov_panel/gov_tabs/Comércio/Margem/Coluna" unique_id=1070577671]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="Gas" type="Label" parent="gov_panel/gov_tabs/Comércio/Margem/Coluna/Linha6" unique_id=1368414237]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Gás"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Comércio/Margem/Coluna/Linha6" unique_id=501358150]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="t_comm_1" type="Label" parent="gov_panel/gov_tabs/Comércio/Margem/Coluna/Linha6" unique_id=314184230]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-text = "—"
-
-[node name="Linha7" type="HBoxContainer" parent="gov_panel/gov_tabs/Comércio/Margem/Coluna" unique_id=962917436]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="Graos" type="Label" parent="gov_panel/gov_tabs/Comércio/Margem/Coluna/Linha7" unique_id=109141045]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Grãos"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Comércio/Margem/Coluna/Linha7" unique_id=1142908446]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="t_comm_2" type="Label" parent="gov_panel/gov_tabs/Comércio/Margem/Coluna/Linha7" unique_id=2083244343]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-text = "—"
-
-[node name="Linha8" type="HBoxContainer" parent="gov_panel/gov_tabs/Comércio/Margem/Coluna" unique_id=305738065]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="Metais" type="Label" parent="gov_panel/gov_tabs/Comércio/Margem/Coluna/Linha8" unique_id=66688116]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Metais"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Comércio/Margem/Coluna/Linha8" unique_id=897059798]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="t_comm_3" type="Label" parent="gov_panel/gov_tabs/Comércio/Margem/Coluna/Linha8" unique_id=266295496]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-text = "—"
-
-[node name="Linha9" type="HBoxContainer" parent="gov_panel/gov_tabs/Comércio/Margem/Coluna" unique_id=1872823704]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="Chips" type="Label" parent="gov_panel/gov_tabs/Comércio/Margem/Coluna/Linha9" unique_id=592020999]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Chips"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Comércio/Margem/Coluna/Linha9" unique_id=2018803997]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="t_comm_4" type="Label" parent="gov_panel/gov_tabs/Comércio/Margem/Coluna/Linha9" unique_id=1343513707]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-text = "—"
-
-[node name="Militar" type="ScrollContainer" parent="gov_panel/gov_tabs" unique_id=148291898]
-visible = false
-layout_mode = 2
-horizontal_scroll_mode = 0
-metadata/_tab_index = 4
-
-[node name="Margem" type="MarginContainer" parent="gov_panel/gov_tabs/Militar" unique_id=446426137]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/margin_top = 8
-theme_override_constants/margin_right = 6
-
-[node name="Coluna" type="VBoxContainer" parent="gov_panel/gov_tabs/Militar/Margem" unique_id=2106750893]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-theme_override_constants/separation = 6
-
-[node name="Linha" type="HBoxContainer" parent="gov_panel/gov_tabs/Militar/Margem/Coluna" unique_id=167720295]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="PoderMilitarEUA100" type="Label" parent="gov_panel/gov_tabs/Militar/Margem/Coluna/Linha" unique_id=2000385663]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Poder militar (EUA = 100)"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Militar/Margem/Coluna/Linha" unique_id=2044913926]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="w_power" type="Label" parent="gov_panel/gov_tabs/Militar/Margem/Coluna/Linha" unique_id=1748952299]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-text = "—"
-
-[node name="Linha2" type="HBoxContainer" parent="gov_panel/gov_tabs/Militar/Margem/Coluna" unique_id=550807971]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="RankingMilitar" type="Label" parent="gov_panel/gov_tabs/Militar/Margem/Coluna/Linha2" unique_id=754690823]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Ranking militar"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Militar/Margem/Coluna/Linha2" unique_id=1718068990]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="w_rank" type="Label" parent="gov_panel/gov_tabs/Militar/Margem/Coluna/Linha2" unique_id=1509507830]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-text = "—"
-
-[node name="Linha3" type="HBoxContainer" parent="gov_panel/gov_tabs/Militar/Margem/Coluna" unique_id=2028387740]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="TropasAtivas" type="Label" parent="gov_panel/gov_tabs/Militar/Margem/Coluna/Linha3" unique_id=1676032910]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Tropas ativas"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Militar/Margem/Coluna/Linha3" unique_id=856595794]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="w_troops" type="Label" parent="gov_panel/gov_tabs/Militar/Margem/Coluna/Linha3" unique_id=32030050]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-text = "—"
-
-[node name="Linha4" type="HBoxContainer" parent="gov_panel/gov_tabs/Militar/Margem/Coluna" unique_id=1897888094]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="Equipamento" type="Label" parent="gov_panel/gov_tabs/Militar/Margem/Coluna/Linha4" unique_id=1759051855]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Equipamento"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Militar/Margem/Coluna/Linha4" unique_id=874456782]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="w_stock" type="Label" parent="gov_panel/gov_tabs/Militar/Margem/Coluna/Linha4" unique_id=1887811980]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-text = "—"
-
-[node name="Linha5" type="HBoxContainer" parent="gov_panel/gov_tabs/Militar/Margem/Coluna" unique_id=1323793680]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="OgivasNucleares" type="Label" parent="gov_panel/gov_tabs/Militar/Margem/Coluna/Linha5" unique_id=773540875]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Ogivas nucleares"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Militar/Margem/Coluna/Linha5" unique_id=2051094524]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="w_nukes" type="Label" parent="gov_panel/gov_tabs/Militar/Margem/Coluna/Linha5" unique_id=2124791550]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-text = "—"
-
-[node name="Linha6" type="HBoxContainer" parent="gov_panel/gov_tabs/Militar/Margem/Coluna" unique_id=26969218]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="CansacoDeGuerra" type="Label" parent="gov_panel/gov_tabs/Militar/Margem/Coluna/Linha6" unique_id=531414870]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Cansaço de guerra"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Militar/Margem/Coluna/Linha6" unique_id=266462880]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="w_exhaust" type="Label" parent="gov_panel/gov_tabs/Militar/Margem/Coluna/Linha6" unique_id=1403833585]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-text = "—"
-
-[node name="Coluna" type="VBoxContainer" parent="gov_panel/gov_tabs/Militar/Margem/Coluna" unique_id=28640903]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 0
-
-[node name="Linha" type="HBoxContainer" parent="gov_panel/gov_tabs/Militar/Margem/Coluna/Coluna" unique_id=370759813]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="Mobilizacao" type="Label" parent="gov_panel/gov_tabs/Militar/Margem/Coluna/Coluna/Linha" unique_id=213875001]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Mobilização"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Militar/Margem/Coluna/Coluna/Linha" unique_id=810377080]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="slider_value_mobilization" type="Label" parent="gov_panel/gov_tabs/Militar/Margem/Coluna/Coluna/Linha" unique_id=512449140]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-
-[node name="slider_mobilization" type="HSlider" parent="gov_panel/gov_tabs/Militar/Margem/Coluna/Coluna" unique_id=1397880732]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 18)
-layout_mode = 2
-tooltip_text = "Aumenta o poder de combate. Tira trabalhadores da economia e custa até 3,5% do PIB."
-focus_mode = 0
-step = 5.0
-
-[node name="Separador" type="ColorRect" parent="gov_panel/gov_tabs/Militar/Margem/Coluna" unique_id=384741788]
-custom_minimum_size = Vector2(0, 1)
-layout_mode = 2
-mouse_filter = 2
-color = Color(0.15294118, 0.2509804, 0.30980393, 1)
-
-[node name="GUERRAS" type="Label" parent="gov_panel/gov_tabs/Militar/Margem/Coluna" unique_id=1813463887]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_constants/line_spacing = 0
-theme_override_font_sizes/font_size = 11
-text = "GUERRAS"
-
-[node name="wars_box" type="VBoxContainer" parent="gov_panel/gov_tabs/Militar/Margem/Coluna" unique_id=369902088]
-unique_name_in_owner = true
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 6
-
-[node name="wars_peace" type="Label" parent="gov_panel/gov_tabs/Militar/Margem/Coluna/wars_box" unique_id=1839390421]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Em paz."
-
-[node name="war_cards" type="VBoxContainer" parent="gov_panel/gov_tabs/Militar/Margem/Coluna/wars_box" unique_id=453331819]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 6
-
-[node name="Separador2" type="ColorRect" parent="gov_panel/gov_tabs/Militar/Margem/Coluna" unique_id=1565102781]
-custom_minimum_size = Vector2(0, 1)
-layout_mode = 2
-mouse_filter = 2
-color = Color(0.15294118, 0.2509804, 0.30980393, 1)
-
-[node name="ALIADOSDEDEFESA" type="Label" parent="gov_panel/gov_tabs/Militar/Margem/Coluna" unique_id=927359056]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_constants/line_spacing = 0
-theme_override_font_sizes/font_size = 11
-text = "ALIADOS DE DEFESA"
-
-[node name="w_allies" type="Label" parent="gov_panel/gov_tabs/Militar/Margem/Coluna" unique_id=1924740005]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(60, 0)
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 12
-autowrap_mode = 3
-
-[node name="Mundo" type="ScrollContainer" parent="gov_panel/gov_tabs" unique_id=1511109916]
-visible = false
-layout_mode = 2
-horizontal_scroll_mode = 0
-metadata/_tab_index = 5
-
-[node name="Margem" type="MarginContainer" parent="gov_panel/gov_tabs/Mundo" unique_id=1598786418]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/margin_top = 8
-theme_override_constants/margin_right = 6
-
-[node name="Coluna" type="VBoxContainer" parent="gov_panel/gov_tabs/Mundo/Margem" unique_id=907736745]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-theme_override_constants/separation = 6
-
-[node name="Linha" type="HBoxContainer" parent="gov_panel/gov_tabs/Mundo/Margem/Coluna" unique_id=1324319237]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="PIBMundial" type="Label" parent="gov_panel/gov_tabs/Mundo/Margem/Coluna/Linha" unique_id=712888471]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "PIB mundial"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Mundo/Margem/Coluna/Linha" unique_id=1817861465]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="g_gdp" type="Label" parent="gov_panel/gov_tabs/Mundo/Margem/Coluna/Linha" unique_id=1071528897]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-text = "—"
-
-[node name="Linha2" type="HBoxContainer" parent="gov_panel/gov_tabs/Mundo/Margem/Coluna" unique_id=1095036010]
-layout_mode = 2
-tooltip_text = "Quando sobe, dinheiro foge de emergentes e os juros deles disparam."
-theme_override_constants/separation = 4
-
-[node name="AversaoARisco" type="Label" parent="gov_panel/gov_tabs/Mundo/Margem/Coluna/Linha2" unique_id=713049617]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Aversão a risco"
-
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Mundo/Margem/Coluna/Linha2" unique_id=604531255]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
-[node name="g_risk" type="Label" parent="gov_panel/gov_tabs/Mundo/Margem/Coluna/Linha2" unique_id=1916476419]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-text = "—"
-
-[node name="Grade" type="GridContainer" parent="gov_panel/gov_tabs/Mundo/Margem/Coluna" unique_id=1927562543]
-layout_mode = 2
-columns = 2
-
-[node name="g_comm_0" type="Control" parent="gov_panel/gov_tabs/Mundo/Margem/Coluna/Grade" unique_id=2053556920]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(160, 64)
-layout_mode = 2
-mouse_filter = 2
-script = ExtResource("5_erw67")
-title = "Petróleo"
-color = Color(0.9490196, 0.7019608, 0.23921569, 1)
-format = "num0"
-
-[node name="g_comm_1" type="Control" parent="gov_panel/gov_tabs/Mundo/Margem/Coluna/Grade" unique_id=1367095252]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(160, 64)
-layout_mode = 2
-mouse_filter = 2
-script = ExtResource("5_erw67")
-title = "Gás"
-format = "num1"
-
-[node name="g_comm_2" type="Control" parent="gov_panel/gov_tabs/Mundo/Margem/Coluna/Grade" unique_id=101441600]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(160, 64)
-layout_mode = 2
-mouse_filter = 2
-script = ExtResource("5_erw67")
-title = "Grãos"
-color = Color(0.29803923, 0.78039217, 0.5803922, 1)
-format = "num0"
-
-[node name="g_comm_3" type="Control" parent="gov_panel/gov_tabs/Mundo/Margem/Coluna/Grade" unique_id=130039383]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(160, 64)
-layout_mode = 2
-mouse_filter = 2
-script = ExtResource("5_erw67")
-title = "Metais"
-color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-format = "num0"
-
-[node name="g_comm_4" type="Control" parent="gov_panel/gov_tabs/Mundo/Margem/Coluna/Grade" unique_id=1114584407]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(160, 64)
-layout_mode = 2
-mouse_filter = 2
-script = ExtResource("5_erw67")
-title = "Chips"
-color = Color(0.9254902, 0.3529412, 0.2627451, 1)
-format = "num0"
-
-[node name="g_tension" type="Control" parent="gov_panel/gov_tabs/Mundo/Margem/Coluna/Grade" unique_id=1595491997]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(160, 64)
-layout_mode = 2
-mouse_filter = 2
-script = ExtResource("5_erw67")
-title = "Tensão global"
-color = Color(0.9254902, 0.3529412, 0.2627451, 1)
-
-[node name="Separador" type="ColorRect" parent="gov_panel/gov_tabs/Mundo/Margem/Coluna" unique_id=891262656]
-custom_minimum_size = Vector2(0, 1)
-layout_mode = 2
-mouse_filter = 2
-color = Color(0.15294118, 0.2509804, 0.30980393, 1)
-
-[node name="MAIORESECONOMIAS" type="Label" parent="gov_panel/gov_tabs/Mundo/Margem/Coluna" unique_id=383264408]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_constants/line_spacing = 0
-theme_override_font_sizes/font_size = 11
-text = "MAIORES ECONOMIAS"
-
-[node name="world_box" type="VBoxContainer" parent="gov_panel/gov_tabs/Mundo/Margem/Coluna" unique_id=1656653957]
-unique_name_in_owner = true
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 1
-
-[node name="Divisões" type="ScrollContainer" parent="gov_panel/gov_tabs" unique_id=2108917443]
-visible = false
-layout_mode = 2
-horizontal_scroll_mode = 0
-metadata/_tab_index = 6
-
-[node name="Margem" type="MarginContainer" parent="gov_panel/gov_tabs/Divisões" unique_id=1233509490]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/margin_top = 8
-theme_override_constants/margin_right = 6
-
-[node name="Coluna" type="VBoxContainer" parent="gov_panel/gov_tabs/Divisões/Margem" unique_id=1675050762]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-theme_override_constants/separation = 6
-
-[node name="divisions" parent="gov_panel/gov_tabs/Divisões/Margem/Coluna" unique_id=1978991367 instance=ExtResource("sub_1")]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="Política" type="ScrollContainer" parent="gov_panel/gov_tabs" unique_id=1879929363]
-visible = false
-layout_mode = 2
-horizontal_scroll_mode = 0
-metadata/_tab_index = 7
-
-[node name="Margem" type="MarginContainer" parent="gov_panel/gov_tabs/Política" unique_id=372749908]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/margin_top = 8
-theme_override_constants/margin_right = 6
-
-[node name="Coluna" type="VBoxContainer" parent="gov_panel/gov_tabs/Política/Margem" unique_id=1776601147]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-theme_override_constants/separation = 6
-
-[node name="politics" parent="gov_panel/gov_tabs/Política/Margem/Coluna" unique_id=1641834698 instance=ExtResource("sub_2")]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="Ministros" type="ScrollContainer" parent="gov_panel/gov_tabs" unique_id=1712945007]
-visible = false
-layout_mode = 2
-horizontal_scroll_mode = 0
-metadata/_tab_index = 8
-
-[node name="Margem" type="MarginContainer" parent="gov_panel/gov_tabs/Ministros" unique_id=132606559]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/margin_top = 8
-theme_override_constants/margin_right = 6
-
-[node name="Coluna" type="VBoxContainer" parent="gov_panel/gov_tabs/Ministros/Margem" unique_id=403978378]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-theme_override_constants/separation = 6
-
-[node name="cabinet" parent="gov_panel/gov_tabs/Ministros/Margem/Coluna" unique_id=1132680773 instance=ExtResource("sub_3")]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="Economia" type="ScrollContainer" parent="gov_panel/gov_tabs" unique_id=708840669]
-visible = false
-layout_mode = 2
-horizontal_scroll_mode = 0
-metadata/_tab_index = 9
-
-[node name="Margem" type="MarginContainer" parent="gov_panel/gov_tabs/Economia" unique_id=315555165]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/margin_top = 8
-theme_override_constants/margin_right = 6
-
-[node name="Coluna" type="VBoxContainer" parent="gov_panel/gov_tabs/Economia/Margem" unique_id=1750809291]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-theme_override_constants/separation = 6
-
-[node name="economy" parent="gov_panel/gov_tabs/Economia/Margem/Coluna" unique_id=409467782 instance=ExtResource("sub_6")]
-unique_name_in_owner = true
-layout_mode = 2
-
 [node name="dossier" type="PanelContainer" parent="." unique_id=21776636]
 unique_name_in_owner = true
 visible = false
@@ -2575,7 +482,7 @@ anchor_bottom = 1.0
 offset_left = -348.0
 offset_top = 66.0
 offset_right = -8.0
-offset_bottom = -8.0
+offset_bottom = -90.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_1e6lo")
 
 [node name="Rolagem" type="ScrollContainer" parent="dossier" unique_id=1704648243]
@@ -3349,12 +1256,10 @@ autowrap_mode = 3
 
 [node name="Linha" type="HBoxContainer" parent="." unique_id=1360652697]
 layout_mode = 0
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 450.0
-offset_top = -186.0
-offset_right = 1200.0
-offset_bottom = -156.0
+offset_left = 8.0
+offset_top = 66.0
+offset_right = 900.0
+offset_bottom = 92.0
 mouse_filter = 2
 theme_override_constants/separation = 3
 
@@ -3439,11 +1344,10 @@ theme_override_font_sizes/font_size = 12
 [node name="Painel2" type="PanelContainer" parent="." unique_id=768886934]
 layout_mode = 0
 anchor_top = 1.0
-anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 450.0
-offset_top = -150.0
-offset_right = -358.0
+offset_left = 8.0
+offset_top = -170.0
+offset_right = 400.0
 offset_bottom = -8.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_gmc6u")
 
@@ -3486,6 +1390,2177 @@ layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 theme_override_constants/separation = 1
+
+[node name="desk" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 58.0
+offset_bottom = -82.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("desk_1")
+
+[node name="w_painel" parent="desk" instance=ExtResource("fw_1")]
+layout_mode = 0
+offset_right = 440.0
+offset_bottom = 640.0
+title = "Painel do governo"
+icon = ExtResource("wi_painel")
+default_size = Vector2(440, 640)
+
+[node name="w_fiscal" parent="desk" instance=ExtResource("fw_1")]
+layout_mode = 0
+offset_right = 440.0
+offset_bottom = 640.0
+title = "Orçamento e impostos"
+icon = ExtResource("wi_fiscal")
+default_size = Vector2(440, 640)
+
+[node name="w_moeda" parent="desk" instance=ExtResource("fw_1")]
+layout_mode = 0
+offset_right = 440.0
+offset_bottom = 600.0
+title = "Moeda e juros"
+icon = ExtResource("wi_moeda")
+default_size = Vector2(440, 600)
+
+[node name="w_comercio" parent="desk" instance=ExtResource("fw_1")]
+layout_mode = 0
+offset_right = 440.0
+offset_bottom = 600.0
+title = "Comércio exterior"
+icon = ExtResource("wi_comercio")
+default_size = Vector2(440, 600)
+
+[node name="w_militar" parent="desk" instance=ExtResource("fw_1")]
+layout_mode = 0
+offset_right = 440.0
+offset_bottom = 600.0
+title = "Forças armadas"
+icon = ExtResource("wi_militar")
+default_size = Vector2(440, 600)
+
+[node name="w_mundo" parent="desk" instance=ExtResource("fw_1")]
+layout_mode = 0
+offset_right = 440.0
+offset_bottom = 600.0
+title = "Mundo"
+icon = ExtResource("wi_mundo")
+default_size = Vector2(440, 600)
+
+[node name="w_divisoes" parent="desk" instance=ExtResource("fw_1")]
+layout_mode = 0
+offset_right = 440.0
+offset_bottom = 640.0
+title = "Divisões do território"
+icon = ExtResource("wi_divisoes")
+default_size = Vector2(440, 640)
+
+[node name="w_politica" parent="desk" instance=ExtResource("fw_1")]
+layout_mode = 0
+offset_right = 480.0
+offset_bottom = 680.0
+title = "Política"
+icon = ExtResource("wi_politica")
+default_size = Vector2(480, 680)
+
+[node name="w_ministros" parent="desk" instance=ExtResource("fw_1")]
+layout_mode = 0
+offset_right = 460.0
+offset_bottom = 640.0
+title = "Ministros"
+icon = ExtResource("wi_ministros")
+default_size = Vector2(460, 640)
+
+[node name="w_economia" parent="desk" instance=ExtResource("fw_1")]
+layout_mode = 0
+offset_right = 520.0
+offset_bottom = 680.0
+title = "Setores, empresas e bolsa"
+icon = ExtResource("wi_economia")
+default_size = Vector2(520, 680)
+
+[node name="Painel" type="ScrollContainer" parent="desk/w_painel" unique_id=98370691]
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="Margem" type="MarginContainer" parent="desk/w_painel/Painel" unique_id=128838808]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 6
+
+[node name="Coluna" type="VBoxContainer" parent="desk/w_painel/Painel/Margem" unique_id=62882394]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_constants/separation = 6
+
+[node name="Linha" type="HBoxContainer" parent="desk/w_painel/Painel/Margem/Coluna" unique_id=1871606050]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
+
+[node name="leader_view" type="Control" parent="desk/w_painel/Painel/Margem/Coluna/Linha" unique_id=691061342]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(64, 64)
+clip_contents = true
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("3_0h1do")
+portrait = true
+
+[node name="Coluna" type="VBoxContainer" parent="desk/w_painel/Painel/Margem/Coluna/Linha" unique_id=959602970]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="leader_name" type="Label" parent="desk/w_painel/Painel/Margem/Coluna/Linha/Coluna" unique_id=1001774342]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9490196, 0.7019608, 0.23921569, 1)
+theme_override_font_sizes/font_size = 16
+autowrap_mode = 3
+
+[node name="EditarPersonagem" type="Button" parent="desk/w_painel/Painel/Margem/Coluna/Linha/Coluna" unique_id=680817376]
+unique_name_in_owner = true
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Editar personagem"
+
+[node name="Separador" type="ColorRect" parent="desk/w_painel/Painel/Margem/Coluna" unique_id=1668424055]
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 2
+mouse_filter = 2
+color = Color(0.15294118, 0.2509804, 0.30980393, 1)
+
+[node name="Linha2" type="HBoxContainer" parent="desk/w_painel/Painel/Margem/Coluna" unique_id=2066997237]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="Sistema" type="Label" parent="desk/w_painel/Painel/Margem/Coluna/Linha2" unique_id=707590060]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Sistema"
+
+[node name="Espaco" type="Control" parent="desk/w_painel/Painel/Margem/Coluna/Linha2" unique_id=638289668]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="o_regime" type="Label" parent="desk/w_painel/Painel/Margem/Coluna/Linha2" unique_id=941593168]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="Linha3" type="HBoxContainer" parent="desk/w_painel/Painel/Margem/Coluna" unique_id=334399301]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="Capital" type="Label" parent="desk/w_painel/Painel/Margem/Coluna/Linha3" unique_id=562322647]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Capital"
+
+[node name="Espaco" type="Control" parent="desk/w_painel/Painel/Margem/Coluna/Linha3" unique_id=624940101]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="o_capital" type="Label" parent="desk/w_painel/Painel/Margem/Coluna/Linha3" unique_id=1450083794]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="Linha4" type="HBoxContainer" parent="desk/w_painel/Painel/Margem/Coluna" unique_id=908645091]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="Partido" type="Label" parent="desk/w_painel/Painel/Margem/Coluna/Linha4" unique_id=566638159]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Partido"
+
+[node name="Espaco" type="Control" parent="desk/w_painel/Painel/Margem/Coluna/Linha4" unique_id=979656118]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="o_party" type="Label" parent="desk/w_painel/Painel/Margem/Coluna/Linha4" unique_id=690419918]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="Linha5" type="HBoxContainer" parent="desk/w_painel/Painel/Margem/Coluna" unique_id=311338716]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="ApoioNoParlamento" type="Label" parent="desk/w_painel/Painel/Margem/Coluna/Linha5" unique_id=76432979]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Apoio no parlamento"
+
+[node name="Espaco" type="Control" parent="desk/w_painel/Painel/Margem/Coluna/Linha5" unique_id=2042097860]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="o_seats" type="Label" parent="desk/w_painel/Painel/Margem/Coluna/Linha5" unique_id=555037309]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="Linha6" type="HBoxContainer" parent="desk/w_painel/Painel/Margem/Coluna" unique_id=1804147748]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="ProximaEleicao" type="Label" parent="desk/w_painel/Painel/Margem/Coluna/Linha6" unique_id=512299248]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Próxima eleição"
+
+[node name="Espaco" type="Control" parent="desk/w_painel/Painel/Margem/Coluna/Linha6" unique_id=1090551254]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="o_next" type="Label" parent="desk/w_painel/Painel/Margem/Coluna/Linha6" unique_id=2012067065]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="Linha7" type="HBoxContainer" parent="desk/w_painel/Painel/Margem/Coluna" unique_id=736764529]
+layout_mode = 2
+tooltip_text = "Ranking entre as nações, combinando economia, força militar, alianças e estabilidade."
+theme_override_constants/separation = 4
+
+[node name="InfluenciaGlobal" type="Label" parent="desk/w_painel/Painel/Margem/Coluna/Linha7" unique_id=657621836]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Influência global"
+
+[node name="Espaco" type="Control" parent="desk/w_painel/Painel/Margem/Coluna/Linha7" unique_id=196383693]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="o_rank" type="Label" parent="desk/w_painel/Painel/Margem/Coluna/Linha7" unique_id=749701957]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="Separador2" type="ColorRect" parent="desk/w_painel/Painel/Margem/Coluna" unique_id=1616570008]
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 2
+mouse_filter = 2
+color = Color(0.15294118, 0.2509804, 0.30980393, 1)
+
+[node name="Grade" type="GridContainer" parent="desk/w_painel/Painel/Margem/Coluna" unique_id=685368399]
+layout_mode = 2
+theme_override_constants/h_separation = 6
+theme_override_constants/v_separation = 6
+columns = 2
+
+[node name="c_growth" type="Control" parent="desk/w_painel/Painel/Margem/Coluna/Grade" unique_id=206628226]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+script = ExtResource("5_erw67")
+title = "Crescimento"
+color = Color(0.29803923, 0.78039217, 0.5803922, 1)
+series_key = "growth"
+
+[node name="c_infl" type="Control" parent="desk/w_painel/Painel/Margem/Coluna/Grade" unique_id=814301988]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+script = ExtResource("5_erw67")
+title = "Inflação"
+color = Color(0.9254902, 0.3529412, 0.2627451, 1)
+series_key = "infl"
+
+[node name="c_unemp" type="Control" parent="desk/w_painel/Painel/Margem/Coluna/Grade" unique_id=519923622]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+script = ExtResource("5_erw67")
+title = "Desemprego"
+color = Color(0.9490196, 0.7019608, 0.23921569, 1)
+series_key = "unemp"
+
+[node name="c_debt" type="Control" parent="desk/w_painel/Painel/Margem/Coluna/Grade" unique_id=2099598528]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+script = ExtResource("5_erw67")
+title = "Dívida/PIB"
+series_key = "debt"
+
+[node name="c_approval" type="Control" parent="desk/w_painel/Painel/Margem/Coluna/Grade" unique_id=1591452440]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+script = ExtResource("5_erw67")
+title = "Aprovação"
+color = Color(0.9490196, 0.7019608, 0.23921569, 1)
+series_key = "approval"
+
+[node name="c_stability" type="Control" parent="desk/w_painel/Painel/Margem/Coluna/Grade" unique_id=1755626231]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+script = ExtResource("5_erw67")
+title = "Estabilidade"
+color = Color(0.29803923, 0.78039217, 0.5803922, 1)
+series_key = "stability"
+
+[node name="Separador3" type="ColorRect" parent="desk/w_painel/Painel/Margem/Coluna" unique_id=1198232353]
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 2
+mouse_filter = 2
+color = Color(0.15294118, 0.2509804, 0.30980393, 1)
+
+[node name="Linha8" type="HBoxContainer" parent="desk/w_painel/Painel/Margem/Coluna" unique_id=285747857]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="PIBPerCapita" type="Label" parent="desk/w_painel/Painel/Margem/Coluna/Linha8" unique_id=919722544]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "PIB per capita"
+
+[node name="Espaco" type="Control" parent="desk/w_painel/Painel/Margem/Coluna/Linha8" unique_id=1529249397]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="o_gdp_pc" type="Label" parent="desk/w_painel/Painel/Margem/Coluna/Linha8" unique_id=495193531]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="Linha9" type="HBoxContainer" parent="desk/w_painel/Painel/Margem/Coluna" unique_id=1685765513]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="Populacao" type="Label" parent="desk/w_painel/Painel/Margem/Coluna/Linha9" unique_id=995083277]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "População"
+
+[node name="Espaco" type="Control" parent="desk/w_painel/Painel/Margem/Coluna/Linha9" unique_id=498967640]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="o_pop" type="Label" parent="desk/w_painel/Painel/Margem/Coluna/Linha9" unique_id=1363084868]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="Linha10" type="HBoxContainer" parent="desk/w_painel/Painel/Margem/Coluna" unique_id=1701158778]
+layout_mode = 2
+tooltip_text = "Saldo com o exterior. Déficit persistente enfraquece a moeda."
+theme_override_constants/separation = 4
+
+[node name="ContaCorrentePIB" type="Label" parent="desk/w_painel/Painel/Margem/Coluna/Linha10" unique_id=407512468]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Conta corrente / PIB"
+
+[node name="Espaco" type="Control" parent="desk/w_painel/Painel/Margem/Coluna/Linha10" unique_id=699703780]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="o_ca" type="Label" parent="desk/w_painel/Painel/Margem/Coluna/Linha10" unique_id=519902046]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="Linha11" type="HBoxContainer" parent="desk/w_painel/Painel/Margem/Coluna" unique_id=1254093623]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="ReservasInternacionais" type="Label" parent="desk/w_painel/Painel/Margem/Coluna/Linha11" unique_id=787219439]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Reservas internacionais"
+
+[node name="Espaco" type="Control" parent="desk/w_painel/Painel/Margem/Coluna/Linha11" unique_id=985445207]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="o_res" type="Label" parent="desk/w_painel/Painel/Margem/Coluna/Linha11" unique_id=2142106911]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="Linha12" type="HBoxContainer" parent="desk/w_painel/Painel/Margem/Coluna" unique_id=991026938]
+layout_mode = 2
+tooltip_text = "Calculada pelo prêmio de risco que o mercado cobra da sua dívida."
+theme_override_constants/separation = 4
+
+[node name="NotaDeCredito" type="Label" parent="desk/w_painel/Painel/Margem/Coluna/Linha12" unique_id=2122464805]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Nota de crédito"
+
+[node name="Espaco" type="Control" parent="desk/w_painel/Painel/Margem/Coluna/Linha12" unique_id=1695245972]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="o_rating" type="Label" parent="desk/w_painel/Painel/Margem/Coluna/Linha12" unique_id=250039811]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="Linha13" type="HBoxContainer" parent="desk/w_painel/Painel/Margem/Coluna" unique_id=849933960]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="JuroDaDivida" type="Label" parent="desk/w_painel/Painel/Margem/Coluna/Linha13" unique_id=1517177371]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Juro da dívida"
+
+[node name="Espaco" type="Control" parent="desk/w_painel/Painel/Margem/Coluna/Linha13" unique_id=1683768040]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="o_yield" type="Label" parent="desk/w_painel/Painel/Margem/Coluna/Linha13" unique_id=552304142]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="Linha14" type="HBoxContainer" parent="desk/w_painel/Painel/Margem/Coluna" unique_id=66202458]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="BolsaBase100" type="Label" parent="desk/w_painel/Painel/Margem/Coluna/Linha14" unique_id=2108121006]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Bolsa (base 100)"
+
+[node name="Espaco" type="Control" parent="desk/w_painel/Painel/Margem/Coluna/Linha14" unique_id=1396713355]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="o_stock" type="Label" parent="desk/w_painel/Painel/Margem/Coluna/Linha14" unique_id=774506574]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="Fiscal" type="ScrollContainer" parent="desk/w_fiscal" unique_id=1641257936]
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="Margem" type="MarginContainer" parent="desk/w_fiscal/Fiscal" unique_id=310748348]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 6
+
+[node name="Coluna" type="VBoxContainer" parent="desk/w_fiscal/Fiscal/Margem" unique_id=1220421169]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_constants/separation = 6
+
+[node name="ORAMENTO" type="Label" parent="desk/w_fiscal/Fiscal/Margem/Coluna" unique_id=1490946489]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_constants/line_spacing = 0
+theme_override_font_sizes/font_size = 11
+text = "ORÇAMENTO"
+
+[node name="ImpostosGastosETarifaSo" type="Label" parent="desk/w_fiscal/Fiscal/Margem/Coluna" unique_id=1666536433]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 12
+text = "O governo define os gastos sozinho, e a mudança vale na hora. Só fica travado o que uma lei em vigor obrigar."
+autowrap_mode = 3
+
+[node name="Separador" type="ColorRect" parent="desk/w_fiscal/Fiscal/Margem/Coluna" unique_id=1702064230]
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 2
+mouse_filter = 2
+color = Color(0.15294118, 0.2509804, 0.30980393, 1)
+
+[node name="IMPOSTOSDOPIB" type="Label" parent="desk/w_fiscal/Fiscal/Margem/Coluna" unique_id=1466004481]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_constants/line_spacing = 0
+theme_override_font_sizes/font_size = 11
+text = "IMPOSTOS (% DO PIB)"
+
+[node name="TaxaRenda" type="HBoxContainer" parent="desk/w_fiscal/Fiscal/Margem/Coluna" unique_id=643588654]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="Titulo" type="Label" parent="desk/w_fiscal/Fiscal/Margem/Coluna/TaxaRenda" unique_id=729120926]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Renda e folha"
+
+[node name="Espaco" type="Control" parent="desk/w_fiscal/Fiscal/Margem/Coluna/TaxaRenda" unique_id=558546530]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="f_rate_tax_income" type="Label" parent="desk/w_fiscal/Fiscal/Margem/Coluna/TaxaRenda" unique_id=1085829744]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="TaxaConsumo" type="HBoxContainer" parent="desk/w_fiscal/Fiscal/Margem/Coluna" unique_id=1504122350]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="Titulo" type="Label" parent="desk/w_fiscal/Fiscal/Margem/Coluna/TaxaConsumo" unique_id=556008377]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Consumo"
+
+[node name="Espaco" type="Control" parent="desk/w_fiscal/Fiscal/Margem/Coluna/TaxaConsumo" unique_id=1008810349]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="f_rate_tax_consumption" type="Label" parent="desk/w_fiscal/Fiscal/Margem/Coluna/TaxaConsumo" unique_id=866320912]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="TaxaEmpresas" type="HBoxContainer" parent="desk/w_fiscal/Fiscal/Margem/Coluna" unique_id=1001622648]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="Titulo" type="Label" parent="desk/w_fiscal/Fiscal/Margem/Coluna/TaxaEmpresas" unique_id=600789096]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Empresas e capital"
+
+[node name="Espaco" type="Control" parent="desk/w_fiscal/Fiscal/Margem/Coluna/TaxaEmpresas" unique_id=1418706255]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="f_rate_tax_corporate" type="Label" parent="desk/w_fiscal/Fiscal/Margem/Coluna/TaxaEmpresas" unique_id=1648425590]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="LegislarTributos" type="Button" parent="desk/w_fiscal/Fiscal/Margem/Coluna" unique_id=300307949]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Abre o editor de blocos com as alíquotas em vigor. A mudança passa pelo parlamento como qualquer lei."
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Mudar tributos por lei"
+
+[node name="Separador2" type="ColorRect" parent="desk/w_fiscal/Fiscal/Margem/Coluna" unique_id=1816078355]
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 2
+mouse_filter = 2
+color = Color(0.15294118, 0.2509804, 0.30980393, 1)
+
+[node name="GASTOSDOPIB" type="Label" parent="desk/w_fiscal/Fiscal/Margem/Coluna" unique_id=1296205905]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_constants/line_spacing = 0
+theme_override_font_sizes/font_size = 11
+text = "GASTOS (% DO PIB)"
+
+[node name="Coluna4" type="VBoxContainer" parent="desk/w_fiscal/Fiscal/Margem/Coluna" unique_id=1771533986]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="Linha" type="HBoxContainer" parent="desk/w_fiscal/Fiscal/Margem/Coluna/Coluna4" unique_id=2101212266]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="PrevidenciaEAssistencia" type="Label" parent="desk/w_fiscal/Fiscal/Margem/Coluna/Coluna4/Linha" unique_id=1154075359]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Previdência e assistência"
+
+[node name="Espaco" type="Control" parent="desk/w_fiscal/Fiscal/Margem/Coluna/Coluna4/Linha" unique_id=561080202]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="slider_value_sp_social" type="Label" parent="desk/w_fiscal/Fiscal/Margem/Coluna/Coluna4/Linha" unique_id=1844375097]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+
+[node name="slider_sp_social" type="HSlider" parent="desk/w_fiscal/Fiscal/Margem/Coluna/Coluna4" unique_id=314730316]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 18)
+layout_mode = 2
+tooltip_text = "Sustenta a aprovação e reduz a dor do desemprego."
+focus_mode = 0
+max_value = 30.0
+step = 0.1
+
+[node name="Coluna5" type="VBoxContainer" parent="desk/w_fiscal/Fiscal/Margem/Coluna" unique_id=5228427]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="Linha" type="HBoxContainer" parent="desk/w_fiscal/Fiscal/Margem/Coluna/Coluna5" unique_id=391297857]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="Saude" type="Label" parent="desk/w_fiscal/Fiscal/Margem/Coluna/Coluna5/Linha" unique_id=1927950795]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Saúde"
+
+[node name="Espaco" type="Control" parent="desk/w_fiscal/Fiscal/Margem/Coluna/Coluna5/Linha" unique_id=22199861]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="slider_value_sp_health" type="Label" parent="desk/w_fiscal/Fiscal/Margem/Coluna/Coluna5/Linha" unique_id=148916054]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+
+[node name="slider_sp_health" type="HSlider" parent="desk/w_fiscal/Fiscal/Margem/Coluna/Coluna5" unique_id=550326654]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 18)
+layout_mode = 2
+tooltip_text = "Melhora a aprovação e, aos poucos, a produtividade."
+focus_mode = 0
+max_value = 14.000000000000002
+step = 0.1
+
+[node name="Coluna6" type="VBoxContainer" parent="desk/w_fiscal/Fiscal/Margem/Coluna" unique_id=1411711496]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="Linha" type="HBoxContainer" parent="desk/w_fiscal/Fiscal/Margem/Coluna/Coluna6" unique_id=1573698081]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="EducacaoECiencia" type="Label" parent="desk/w_fiscal/Fiscal/Margem/Coluna/Coluna6/Linha" unique_id=1788148042]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Educação e ciência"
+
+[node name="Espaco" type="Control" parent="desk/w_fiscal/Fiscal/Margem/Coluna/Coluna6/Linha" unique_id=1089756860]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="slider_value_sp_education" type="Label" parent="desk/w_fiscal/Fiscal/Margem/Coluna/Coluna6/Linha" unique_id=1283551680]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+
+[node name="slider_sp_education" type="HSlider" parent="desk/w_fiscal/Fiscal/Margem/Coluna/Coluna6" unique_id=169756123]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 18)
+layout_mode = 2
+tooltip_text = "O maior efeito de longo prazo: eleva capital humano e PTF."
+focus_mode = 0
+max_value = 12.0
+step = 0.1
+
+[node name="Coluna7" type="VBoxContainer" parent="desk/w_fiscal/Fiscal/Margem/Coluna" unique_id=826045577]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="Linha" type="HBoxContainer" parent="desk/w_fiscal/Fiscal/Margem/Coluna/Coluna7" unique_id=434829096]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="Infraestrutura" type="Label" parent="desk/w_fiscal/Fiscal/Margem/Coluna/Coluna7/Linha" unique_id=62083033]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Infraestrutura"
+
+[node name="Espaco" type="Control" parent="desk/w_fiscal/Fiscal/Margem/Coluna/Coluna7/Linha" unique_id=705522541]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="slider_value_sp_infra" type="Label" parent="desk/w_fiscal/Fiscal/Margem/Coluna/Coluna7/Linha" unique_id=55638442]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+
+[node name="slider_sp_infra" type="HSlider" parent="desk/w_fiscal/Fiscal/Margem/Coluna/Coluna7" unique_id=1814286114]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 18)
+layout_mode = 2
+tooltip_text = "Vira capital público e amplia o PIB potencial."
+focus_mode = 0
+max_value = 10.0
+step = 0.1
+
+[node name="Coluna8" type="VBoxContainer" parent="desk/w_fiscal/Fiscal/Margem/Coluna" unique_id=483814742]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="Linha" type="HBoxContainer" parent="desk/w_fiscal/Fiscal/Margem/Coluna/Coluna8" unique_id=561471801]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="Defesa" type="Label" parent="desk/w_fiscal/Fiscal/Margem/Coluna/Coluna8/Linha" unique_id=1288193899]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Defesa"
+
+[node name="Espaco" type="Control" parent="desk/w_fiscal/Fiscal/Margem/Coluna/Coluna8/Linha" unique_id=820892822]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="slider_value_sp_defense" type="Label" parent="desk/w_fiscal/Fiscal/Margem/Coluna/Coluna8/Linha" unique_id=851262927]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+
+[node name="slider_sp_defense" type="HSlider" parent="desk/w_fiscal/Fiscal/Margem/Coluna/Coluna8" unique_id=1610771762]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 18)
+layout_mode = 2
+tooltip_text = "Compra equipamento militar; o estoque se deprecia 6% ao ano."
+focus_mode = 0
+max_value = 20.0
+step = 0.1
+
+[node name="Coluna9" type="VBoxContainer" parent="desk/w_fiscal/Fiscal/Margem/Coluna" unique_id=1140375212]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="Linha" type="HBoxContainer" parent="desk/w_fiscal/Fiscal/Margem/Coluna/Coluna9" unique_id=1286317797]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="Administracao" type="Label" parent="desk/w_fiscal/Fiscal/Margem/Coluna/Coluna9/Linha" unique_id=502372942]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Administração"
+
+[node name="Espaco" type="Control" parent="desk/w_fiscal/Fiscal/Margem/Coluna/Coluna9/Linha" unique_id=707495815]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="slider_value_sp_admin" type="Label" parent="desk/w_fiscal/Fiscal/Margem/Coluna/Coluna9/Linha" unique_id=645925007]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+
+[node name="slider_sp_admin" type="HSlider" parent="desk/w_fiscal/Fiscal/Margem/Coluna/Coluna9" unique_id=62612683]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 18)
+layout_mode = 2
+tooltip_text = "Cortes fáceis, mas a estabilidade depende de um Estado funcional."
+focus_mode = 0
+max_value = 12.0
+step = 0.1
+
+[node name="Separador3" type="ColorRect" parent="desk/w_fiscal/Fiscal/Margem/Coluna" unique_id=1745899337]
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 2
+mouse_filter = 2
+color = Color(0.15294118, 0.2509804, 0.30980393, 1)
+
+[node name="RESULTADOANUAL" type="Label" parent="desk/w_fiscal/Fiscal/Margem/Coluna" unique_id=1058161296]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_constants/line_spacing = 0
+theme_override_font_sizes/font_size = 11
+text = "RESULTADO ANUAL"
+
+[node name="Linha2" type="HBoxContainer" parent="desk/w_fiscal/Fiscal/Margem/Coluna" unique_id=1317051047]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="Receita" type="Label" parent="desk/w_fiscal/Fiscal/Margem/Coluna/Linha2" unique_id=1308442002]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Receita"
+
+[node name="Espaco" type="Control" parent="desk/w_fiscal/Fiscal/Margem/Coluna/Linha2" unique_id=1195869688]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="f_rev" type="Label" parent="desk/w_fiscal/Fiscal/Margem/Coluna/Linha2" unique_id=1110657478]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="Linha3" type="HBoxContainer" parent="desk/w_fiscal/Fiscal/Margem/Coluna" unique_id=506561211]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="DespesaPrimaria" type="Label" parent="desk/w_fiscal/Fiscal/Margem/Coluna/Linha3" unique_id=515656080]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Despesa primária"
+
+[node name="Espaco" type="Control" parent="desk/w_fiscal/Fiscal/Margem/Coluna/Linha3" unique_id=1897786534]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="f_sp" type="Label" parent="desk/w_fiscal/Fiscal/Margem/Coluna/Linha3" unique_id=849233531]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="Linha4" type="HBoxContainer" parent="desk/w_fiscal/Fiscal/Margem/Coluna" unique_id=1528037297]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="JurosDaDivida" type="Label" parent="desk/w_fiscal/Fiscal/Margem/Coluna/Linha4" unique_id=1892460830]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Juros da dívida"
+
+[node name="Espaco" type="Control" parent="desk/w_fiscal/Fiscal/Margem/Coluna/Linha4" unique_id=815526006]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="f_int" type="Label" parent="desk/w_fiscal/Fiscal/Margem/Coluna/Linha4" unique_id=1028704290]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="Linha5" type="HBoxContainer" parent="desk/w_fiscal/Fiscal/Margem/Coluna" unique_id=1268070461]
+layout_mode = 2
+tooltip_text = "Déficit nominal: acima de ~4% do PIB, o mercado cobra mais caro."
+theme_override_constants/separation = 4
+
+[node name="DeficitPIB" type="Label" parent="desk/w_fiscal/Fiscal/Margem/Coluna/Linha5" unique_id=8635626]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Déficit / PIB"
+
+[node name="Espaco" type="Control" parent="desk/w_fiscal/Fiscal/Margem/Coluna/Linha5" unique_id=1022640426]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="f_def" type="Label" parent="desk/w_fiscal/Fiscal/Margem/Coluna/Linha5" unique_id=1673685812]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="Linha6" type="HBoxContainer" parent="desk/w_fiscal/Fiscal/Margem/Coluna" unique_id=739875329]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="DividaPIB" type="Label" parent="desk/w_fiscal/Fiscal/Margem/Coluna/Linha6" unique_id=820027349]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Dívida / PIB"
+
+[node name="Espaco" type="Control" parent="desk/w_fiscal/Fiscal/Margem/Coluna/Linha6" unique_id=734579777]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="f_debt" type="Label" parent="desk/w_fiscal/Fiscal/Margem/Coluna/Linha6" unique_id=1065178935]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="Linha7" type="HBoxContainer" parent="desk/w_fiscal/Fiscal/Margem/Coluna" unique_id=805319037]
+layout_mode = 2
+tooltip_text = "Nível de dívida a partir do qual o prêmio de risco acelera."
+theme_override_constants/separation = 4
+
+[node name="LimiteDeTolerancia" type="Label" parent="desk/w_fiscal/Fiscal/Margem/Coluna/Linha7" unique_id=1290230138]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Limite de tolerância"
+
+[node name="Espaco" type="Control" parent="desk/w_fiscal/Fiscal/Margem/Coluna/Linha7" unique_id=271952959]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="f_tol" type="Label" parent="desk/w_fiscal/Fiscal/Margem/Coluna/Linha7" unique_id=1693615370]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="Coluna10" type="VBoxContainer" parent="desk/w_fiscal/Fiscal/Margem/Coluna" unique_id=1837216566]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="Linha" type="HBoxContainer" parent="desk/w_fiscal/Fiscal/Margem/Coluna/Coluna10" unique_id=1470843061]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="EmissaoMonetariaDoDeficit" type="Label" parent="desk/w_fiscal/Fiscal/Margem/Coluna/Coluna10/Linha" unique_id=1379196686]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Emissão monetária (% do déficit)"
+
+[node name="Espaco" type="Control" parent="desk/w_fiscal/Fiscal/Margem/Coluna/Coluna10/Linha" unique_id=1776331554]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="slider_value_mon_fin" type="Label" parent="desk/w_fiscal/Fiscal/Margem/Coluna/Coluna10/Linha" unique_id=152972908]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+
+[node name="slider_mon_fin" type="HSlider" parent="desk/w_fiscal/Fiscal/Margem/Coluna/Coluna10" unique_id=396272690]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 18)
+layout_mode = 2
+tooltip_text = "Evita dívida, mas gera inflação e destrói a credibilidade do banco central."
+focus_mode = 0
+step = 5.0
+
+[node name="PedirSocorroAoFMI" type="Button" parent="desk/w_fiscal/Fiscal/Margem/Coluna" unique_id=1984051318]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Empréstimo de 8% do PIB em troca de ajuste fiscal e perda de aprovação."
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Pedir socorro ao FMI"
+
+[node name="Moeda" type="ScrollContainer" parent="desk/w_moeda" unique_id=1946392384]
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="Margem" type="MarginContainer" parent="desk/w_moeda/Moeda" unique_id=1979016783]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 6
+
+[node name="Coluna" type="VBoxContainer" parent="desk/w_moeda/Moeda/Margem" unique_id=1545376544]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_constants/separation = 6
+
+[node name="BANCOCENTRAL" type="Label" parent="desk/w_moeda/Moeda/Margem/Coluna" unique_id=1937632060]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_constants/line_spacing = 0
+theme_override_font_sizes/font_size = 11
+text = "BANCO CENTRAL"
+
+[node name="Linha" type="HBoxContainer" parent="desk/w_moeda/Moeda/Margem/Coluna" unique_id=1954620882]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="Regime" type="Label" parent="desk/w_moeda/Moeda/Margem/Coluna/Linha" unique_id=1398445838]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Regime"
+
+[node name="Espaco" type="Control" parent="desk/w_moeda/Moeda/Margem/Coluna/Linha" unique_id=1321319181]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="m_status" type="Label" parent="desk/w_moeda/Moeda/Margem/Coluna/Linha" unique_id=736618176]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="AlternarRegraDeTaylorJuro" type="Button" parent="desk/w_moeda/Moeda/Margem/Coluna" unique_id=713567552]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Manual dá controle direto, mas interferência reduz a credibilidade do banco central."
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Alternar: regra de Taylor / juro manual"
+
+[node name="Coluna" type="VBoxContainer" parent="desk/w_moeda/Moeda/Margem/Coluna" unique_id=657840903]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="Linha" type="HBoxContainer" parent="desk/w_moeda/Moeda/Margem/Coluna/Coluna" unique_id=1483066238]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="JuroBasicoAlvo" type="Label" parent="desk/w_moeda/Moeda/Margem/Coluna/Coluna/Linha" unique_id=1865340218]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Juro básico alvo"
+
+[node name="Espaco" type="Control" parent="desk/w_moeda/Moeda/Margem/Coluna/Coluna/Linha" unique_id=16740976]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="slider_value_rate_set" type="Label" parent="desk/w_moeda/Moeda/Margem/Coluna/Coluna/Linha" unique_id=581254707]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+
+[node name="slider_rate_set" type="HSlider" parent="desk/w_moeda/Moeda/Margem/Coluna/Coluna" unique_id=223577615]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 18)
+layout_mode = 2
+tooltip_text = "Mais juros: menos inflação e mais câmbio valorizado, ao custo de recessão e dívida mais cara."
+focus_mode = 0
+step = 0.25
+
+[node name="Linha2" type="HBoxContainer" parent="desk/w_moeda/Moeda/Margem/Coluna" unique_id=1370928]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="JuroBasicoAtual" type="Label" parent="desk/w_moeda/Moeda/Margem/Coluna/Linha2" unique_id=626558813]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Juro básico atual"
+
+[node name="Espaco" type="Control" parent="desk/w_moeda/Moeda/Margem/Coluna/Linha2" unique_id=2137124670]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="m_rate" type="Label" parent="desk/w_moeda/Moeda/Margem/Coluna/Linha2" unique_id=1403087223]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="Linha3" type="HBoxContainer" parent="desk/w_moeda/Moeda/Margem/Coluna" unique_id=824154138]
+layout_mode = 2
+tooltip_text = "Juro nominal menos inflação esperada."
+theme_override_constants/separation = 4
+
+[node name="JuroReal" type="Label" parent="desk/w_moeda/Moeda/Margem/Coluna/Linha3" unique_id=2112538057]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Juro real"
+
+[node name="Espaco" type="Control" parent="desk/w_moeda/Moeda/Margem/Coluna/Linha3" unique_id=2072936160]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="m_real" type="Label" parent="desk/w_moeda/Moeda/Margem/Coluna/Linha3" unique_id=413103002]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="Linha4" type="HBoxContainer" parent="desk/w_moeda/Moeda/Margem/Coluna" unique_id=1909498139]
+layout_mode = 2
+tooltip_text = "Juro real que nem estimula nem freia a economia."
+theme_override_constants/separation = 4
+
+[node name="JuroNeutro" type="Label" parent="desk/w_moeda/Moeda/Margem/Coluna/Linha4" unique_id=1775521329]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Juro neutro"
+
+[node name="Espaco" type="Control" parent="desk/w_moeda/Moeda/Margem/Coluna/Linha4" unique_id=1163352804]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="m_neutral" type="Label" parent="desk/w_moeda/Moeda/Margem/Coluna/Linha4" unique_id=382318834]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="Linha5" type="HBoxContainer" parent="desk/w_moeda/Moeda/Margem/Coluna" unique_id=714949143]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="MetaDeInflacao" type="Label" parent="desk/w_moeda/Moeda/Margem/Coluna/Linha5" unique_id=1770394013]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Meta de inflação"
+
+[node name="Espaco" type="Control" parent="desk/w_moeda/Moeda/Margem/Coluna/Linha5" unique_id=1586826758]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="m_target" type="Label" parent="desk/w_moeda/Moeda/Margem/Coluna/Linha5" unique_id=665036510]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="Linha6" type="HBoxContainer" parent="desk/w_moeda/Moeda/Margem/Coluna" unique_id=589059477]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="InflacaoEsperada" type="Label" parent="desk/w_moeda/Moeda/Margem/Coluna/Linha6" unique_id=1474177706]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Inflação esperada"
+
+[node name="Espaco" type="Control" parent="desk/w_moeda/Moeda/Margem/Coluna/Linha6" unique_id=438590889]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="m_pie" type="Label" parent="desk/w_moeda/Moeda/Margem/Coluna/Linha6" unique_id=1101050602]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="Linha7" type="HBoxContainer" parent="desk/w_moeda/Moeda/Margem/Coluna" unique_id=1348805329]
+layout_mode = 2
+tooltip_text = "Quanto as expectativas se ancoram na meta. Sobe devagar quando a meta é cumprida."
+theme_override_constants/separation = 4
+
+[node name="Credibilidade" type="Label" parent="desk/w_moeda/Moeda/Margem/Coluna/Linha7" unique_id=908364594]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Credibilidade"
+
+[node name="Espaco" type="Control" parent="desk/w_moeda/Moeda/Margem/Coluna/Linha7" unique_id=2066557650]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="m_cred" type="Label" parent="desk/w_moeda/Moeda/Margem/Coluna/Linha7" unique_id=1015909029]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="Separador" type="ColorRect" parent="desk/w_moeda/Moeda/Margem/Coluna" unique_id=734751838]
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 2
+mouse_filter = 2
+color = Color(0.15294118, 0.2509804, 0.30980393, 1)
+
+[node name="CMBIO" type="Label" parent="desk/w_moeda/Moeda/Margem/Coluna" unique_id=1785814279]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_constants/line_spacing = 0
+theme_override_font_sizes/font_size = 11
+text = "CÂMBIO"
+
+[node name="Linha8" type="HBoxContainer" parent="desk/w_moeda/Moeda/Margem/Coluna" unique_id=1503884428]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="MoedaPorUSIndice2025" type="Label" parent="desk/w_moeda/Moeda/Margem/Coluna/Linha8" unique_id=741309198]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Moeda por US$ (índice 2025 = 1)"
+
+[node name="Espaco" type="Control" parent="desk/w_moeda/Moeda/Margem/Coluna/Linha8" unique_id=1911338650]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="m_fx" type="Label" parent="desk/w_moeda/Moeda/Margem/Coluna/Linha8" unique_id=1323121352]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="Linha9" type="HBoxContainer" parent="desk/w_moeda/Moeda/Margem/Coluna" unique_id=892077111]
+layout_mode = 2
+tooltip_text = "Acima de 1: moeda real mais fraca que em 2025, exportações mais competitivas."
+theme_override_constants/separation = 4
+
+[node name="CambioReal" type="Label" parent="desk/w_moeda/Moeda/Margem/Coluna/Linha9" unique_id=2112687586]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Câmbio real"
+
+[node name="Espaco" type="Control" parent="desk/w_moeda/Moeda/Margem/Coluna/Linha9" unique_id=326539988]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="m_rer" type="Label" parent="desk/w_moeda/Moeda/Margem/Coluna/Linha9" unique_id=33150660]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="AlternarFlutuanteAncoraNoDolar" type="Button" parent="desk/w_moeda/Moeda/Margem/Coluna" unique_id=1868752990]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "A âncora importa a política monetária dos EUA e exige reservas para ser defendida."
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Alternar: flutuante / âncora no dólar"
+
+[node name="Grade" type="GridContainer" parent="desk/w_moeda/Moeda/Margem/Coluna" unique_id=1719146685]
+layout_mode = 2
+columns = 2
+
+[node name="mc_rate" type="Control" parent="desk/w_moeda/Moeda/Margem/Coluna/Grade" unique_id=1222791836]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+script = ExtResource("5_erw67")
+title = "Juro básico"
+color = Color(0.9490196, 0.7019608, 0.23921569, 1)
+series_key = "rate"
+
+[node name="mc_infl" type="Control" parent="desk/w_moeda/Moeda/Margem/Coluna/Grade" unique_id=665453022]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+script = ExtResource("5_erw67")
+title = "Inflação"
+color = Color(0.9254902, 0.3529412, 0.2627451, 1)
+series_key = "infl"
+
+[node name="mc_fx" type="Control" parent="desk/w_moeda/Moeda/Margem/Coluna/Grade" unique_id=32291216]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+script = ExtResource("5_erw67")
+title = "Câmbio"
+format = "num2"
+series_key = "fx"
+
+[node name="mc_yield" type="Control" parent="desk/w_moeda/Moeda/Margem/Coluna/Grade" unique_id=1776240829]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+script = ExtResource("5_erw67")
+title = "Juro da dívida"
+color = Color(0.29803923, 0.78039217, 0.5803922, 1)
+series_key = "yield"
+
+[node name="Comércio" type="ScrollContainer" parent="desk/w_comercio" unique_id=807492480]
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="Margem" type="MarginContainer" parent="desk/w_comercio/Comércio" unique_id=1111050038]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 6
+
+[node name="Coluna" type="VBoxContainer" parent="desk/w_comercio/Comércio/Margem" unique_id=872357808]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_constants/separation = 6
+
+[node name="Linha" type="HBoxContainer" parent="desk/w_comercio/Comércio/Margem/Coluna" unique_id=1341247101]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="Exportacoes" type="Label" parent="desk/w_comercio/Comércio/Margem/Coluna/Linha" unique_id=605298273]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Exportações"
+
+[node name="Espaco" type="Control" parent="desk/w_comercio/Comércio/Margem/Coluna/Linha" unique_id=1489671527]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="t_exp" type="Label" parent="desk/w_comercio/Comércio/Margem/Coluna/Linha" unique_id=964970790]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="Linha2" type="HBoxContainer" parent="desk/w_comercio/Comércio/Margem/Coluna" unique_id=663808653]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="Importacoes" type="Label" parent="desk/w_comercio/Comércio/Margem/Coluna/Linha2" unique_id=212684549]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Importações"
+
+[node name="Espaco" type="Control" parent="desk/w_comercio/Comércio/Margem/Coluna/Linha2" unique_id=1594028017]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="t_imp" type="Label" parent="desk/w_comercio/Comércio/Margem/Coluna/Linha2" unique_id=559329626]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="Linha3" type="HBoxContainer" parent="desk/w_comercio/Comércio/Margem/Coluna" unique_id=1411924362]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="ContaCorrentePIB" type="Label" parent="desk/w_comercio/Comércio/Margem/Coluna/Linha3" unique_id=568892194]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Conta corrente / PIB"
+
+[node name="Espaco" type="Control" parent="desk/w_comercio/Comércio/Margem/Coluna/Linha3" unique_id=993322214]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="t_ca" type="Label" parent="desk/w_comercio/Comércio/Margem/Coluna/Linha3" unique_id=1805194980]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="Linha4" type="HBoxContainer" parent="desk/w_comercio/Comércio/Margem/Coluna" unique_id=1017376209]
+layout_mode = 2
+tooltip_text = "Efeito líquido de sanções, tarifas e acordos sobre suas exportações."
+theme_override_constants/separation = 4
+
+[node name="AcessoAMercados" type="Label" parent="desk/w_comercio/Comércio/Margem/Coluna/Linha4" unique_id=1260163277]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Acesso a mercados"
+
+[node name="Espaco" type="Control" parent="desk/w_comercio/Comércio/Margem/Coluna/Linha4" unique_id=157659221]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="t_loss" type="Label" parent="desk/w_comercio/Comércio/Margem/Coluna/Linha4" unique_id=749589120]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="TaxaTarifa" type="HBoxContainer" parent="desk/w_comercio/Comércio/Margem/Coluna" unique_id=1596550245]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="Titulo" type="Label" parent="desk/w_comercio/Comércio/Margem/Coluna/TaxaTarifa" unique_id=1653639229]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Tarifa geral de importação"
+
+[node name="Espaco" type="Control" parent="desk/w_comercio/Comércio/Margem/Coluna/TaxaTarifa" unique_id=1817225819]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="t_tariff" type="Label" parent="desk/w_comercio/Comércio/Margem/Coluna/TaxaTarifa" unique_id=470974831]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="LegislarTarifa" type="Button" parent="desk/w_comercio/Comércio/Margem/Coluna" unique_id=2133620015]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Abre o editor de blocos com as alíquotas em vigor. A mudança passa pelo parlamento como qualquer lei."
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Mudar a tarifa por lei"
+
+[node name="Separador" type="ColorRect" parent="desk/w_comercio/Comércio/Margem/Coluna" unique_id=450180485]
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 2
+mouse_filter = 2
+color = Color(0.15294118, 0.2509804, 0.30980393, 1)
+
+[node name="PRINCIPAISDESTINOS" type="Label" parent="desk/w_comercio/Comércio/Margem/Coluna" unique_id=482807080]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_constants/line_spacing = 0
+theme_override_font_sizes/font_size = 11
+text = "PRINCIPAIS DESTINOS"
+
+[node name="partners_box" type="VBoxContainer" parent="desk/w_comercio/Comércio/Margem/Coluna" unique_id=345388266]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 2
+
+[node name="Separador2" type="ColorRect" parent="desk/w_comercio/Comércio/Margem/Coluna" unique_id=124649024]
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 2
+mouse_filter = 2
+color = Color(0.15294118, 0.2509804, 0.30980393, 1)
+
+[node name="COMMODITIESPRODUOCONSUMO" type="Label" parent="desk/w_comercio/Comércio/Margem/Coluna" unique_id=1048366030]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_constants/line_spacing = 0
+theme_override_font_sizes/font_size = 11
+text = "COMMODITIES (PRODUÇÃO - CONSUMO)"
+
+[node name="Linha5" type="HBoxContainer" parent="desk/w_comercio/Comércio/Margem/Coluna" unique_id=1893216590]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="Petroleo" type="Label" parent="desk/w_comercio/Comércio/Margem/Coluna/Linha5" unique_id=2005371112]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Petróleo"
+
+[node name="Espaco" type="Control" parent="desk/w_comercio/Comércio/Margem/Coluna/Linha5" unique_id=278841769]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="t_comm_0" type="Label" parent="desk/w_comercio/Comércio/Margem/Coluna/Linha5" unique_id=346267225]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="Linha6" type="HBoxContainer" parent="desk/w_comercio/Comércio/Margem/Coluna" unique_id=1070577671]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="Gas" type="Label" parent="desk/w_comercio/Comércio/Margem/Coluna/Linha6" unique_id=1368414237]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Gás"
+
+[node name="Espaco" type="Control" parent="desk/w_comercio/Comércio/Margem/Coluna/Linha6" unique_id=501358150]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="t_comm_1" type="Label" parent="desk/w_comercio/Comércio/Margem/Coluna/Linha6" unique_id=314184230]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="Linha7" type="HBoxContainer" parent="desk/w_comercio/Comércio/Margem/Coluna" unique_id=962917436]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="Graos" type="Label" parent="desk/w_comercio/Comércio/Margem/Coluna/Linha7" unique_id=109141045]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Grãos"
+
+[node name="Espaco" type="Control" parent="desk/w_comercio/Comércio/Margem/Coluna/Linha7" unique_id=1142908446]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="t_comm_2" type="Label" parent="desk/w_comercio/Comércio/Margem/Coluna/Linha7" unique_id=2083244343]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="Linha8" type="HBoxContainer" parent="desk/w_comercio/Comércio/Margem/Coluna" unique_id=305738065]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="Metais" type="Label" parent="desk/w_comercio/Comércio/Margem/Coluna/Linha8" unique_id=66688116]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Metais"
+
+[node name="Espaco" type="Control" parent="desk/w_comercio/Comércio/Margem/Coluna/Linha8" unique_id=897059798]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="t_comm_3" type="Label" parent="desk/w_comercio/Comércio/Margem/Coluna/Linha8" unique_id=266295496]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="Linha9" type="HBoxContainer" parent="desk/w_comercio/Comércio/Margem/Coluna" unique_id=1872823704]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="Chips" type="Label" parent="desk/w_comercio/Comércio/Margem/Coluna/Linha9" unique_id=592020999]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Chips"
+
+[node name="Espaco" type="Control" parent="desk/w_comercio/Comércio/Margem/Coluna/Linha9" unique_id=2018803997]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="t_comm_4" type="Label" parent="desk/w_comercio/Comércio/Margem/Coluna/Linha9" unique_id=1343513707]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="Militar" type="ScrollContainer" parent="desk/w_militar" unique_id=148291898]
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="Margem" type="MarginContainer" parent="desk/w_militar/Militar" unique_id=446426137]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 6
+
+[node name="Coluna" type="VBoxContainer" parent="desk/w_militar/Militar/Margem" unique_id=2106750893]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_constants/separation = 6
+
+[node name="Linha" type="HBoxContainer" parent="desk/w_militar/Militar/Margem/Coluna" unique_id=167720295]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="PoderMilitarEUA100" type="Label" parent="desk/w_militar/Militar/Margem/Coluna/Linha" unique_id=2000385663]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Poder militar (EUA = 100)"
+
+[node name="Espaco" type="Control" parent="desk/w_militar/Militar/Margem/Coluna/Linha" unique_id=2044913926]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="w_power" type="Label" parent="desk/w_militar/Militar/Margem/Coluna/Linha" unique_id=1748952299]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="Linha2" type="HBoxContainer" parent="desk/w_militar/Militar/Margem/Coluna" unique_id=550807971]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="RankingMilitar" type="Label" parent="desk/w_militar/Militar/Margem/Coluna/Linha2" unique_id=754690823]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Ranking militar"
+
+[node name="Espaco" type="Control" parent="desk/w_militar/Militar/Margem/Coluna/Linha2" unique_id=1718068990]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="w_rank" type="Label" parent="desk/w_militar/Militar/Margem/Coluna/Linha2" unique_id=1509507830]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="Linha3" type="HBoxContainer" parent="desk/w_militar/Militar/Margem/Coluna" unique_id=2028387740]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="TropasAtivas" type="Label" parent="desk/w_militar/Militar/Margem/Coluna/Linha3" unique_id=1676032910]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Tropas ativas"
+
+[node name="Espaco" type="Control" parent="desk/w_militar/Militar/Margem/Coluna/Linha3" unique_id=856595794]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="w_troops" type="Label" parent="desk/w_militar/Militar/Margem/Coluna/Linha3" unique_id=32030050]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="Linha4" type="HBoxContainer" parent="desk/w_militar/Militar/Margem/Coluna" unique_id=1897888094]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="Equipamento" type="Label" parent="desk/w_militar/Militar/Margem/Coluna/Linha4" unique_id=1759051855]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Equipamento"
+
+[node name="Espaco" type="Control" parent="desk/w_militar/Militar/Margem/Coluna/Linha4" unique_id=874456782]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="w_stock" type="Label" parent="desk/w_militar/Militar/Margem/Coluna/Linha4" unique_id=1887811980]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="Linha5" type="HBoxContainer" parent="desk/w_militar/Militar/Margem/Coluna" unique_id=1323793680]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="OgivasNucleares" type="Label" parent="desk/w_militar/Militar/Margem/Coluna/Linha5" unique_id=773540875]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Ogivas nucleares"
+
+[node name="Espaco" type="Control" parent="desk/w_militar/Militar/Margem/Coluna/Linha5" unique_id=2051094524]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="w_nukes" type="Label" parent="desk/w_militar/Militar/Margem/Coluna/Linha5" unique_id=2124791550]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="Linha6" type="HBoxContainer" parent="desk/w_militar/Militar/Margem/Coluna" unique_id=26969218]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="CansacoDeGuerra" type="Label" parent="desk/w_militar/Militar/Margem/Coluna/Linha6" unique_id=531414870]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Cansaço de guerra"
+
+[node name="Espaco" type="Control" parent="desk/w_militar/Militar/Margem/Coluna/Linha6" unique_id=266462880]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="w_exhaust" type="Label" parent="desk/w_militar/Militar/Margem/Coluna/Linha6" unique_id=1403833585]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="Coluna" type="VBoxContainer" parent="desk/w_militar/Militar/Margem/Coluna" unique_id=28640903]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="Linha" type="HBoxContainer" parent="desk/w_militar/Militar/Margem/Coluna/Coluna" unique_id=370759813]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="Mobilizacao" type="Label" parent="desk/w_militar/Militar/Margem/Coluna/Coluna/Linha" unique_id=213875001]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Mobilização"
+
+[node name="Espaco" type="Control" parent="desk/w_militar/Militar/Margem/Coluna/Coluna/Linha" unique_id=810377080]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="slider_value_mobilization" type="Label" parent="desk/w_militar/Militar/Margem/Coluna/Coluna/Linha" unique_id=512449140]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+
+[node name="slider_mobilization" type="HSlider" parent="desk/w_militar/Militar/Margem/Coluna/Coluna" unique_id=1397880732]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 18)
+layout_mode = 2
+tooltip_text = "Aumenta o poder de combate. Tira trabalhadores da economia e custa até 3,5% do PIB."
+focus_mode = 0
+step = 5.0
+
+[node name="Separador" type="ColorRect" parent="desk/w_militar/Militar/Margem/Coluna" unique_id=384741788]
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 2
+mouse_filter = 2
+color = Color(0.15294118, 0.2509804, 0.30980393, 1)
+
+[node name="GUERRAS" type="Label" parent="desk/w_militar/Militar/Margem/Coluna" unique_id=1813463887]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_constants/line_spacing = 0
+theme_override_font_sizes/font_size = 11
+text = "GUERRAS"
+
+[node name="wars_box" type="VBoxContainer" parent="desk/w_militar/Militar/Margem/Coluna" unique_id=369902088]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 6
+
+[node name="wars_peace" type="Label" parent="desk/w_militar/Militar/Margem/Coluna/wars_box" unique_id=1839390421]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Em paz."
+
+[node name="war_cards" type="VBoxContainer" parent="desk/w_militar/Militar/Margem/Coluna/wars_box" unique_id=453331819]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 6
+
+[node name="Separador2" type="ColorRect" parent="desk/w_militar/Militar/Margem/Coluna" unique_id=1565102781]
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 2
+mouse_filter = 2
+color = Color(0.15294118, 0.2509804, 0.30980393, 1)
+
+[node name="ALIADOSDEDEFESA" type="Label" parent="desk/w_militar/Militar/Margem/Coluna" unique_id=927359056]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_constants/line_spacing = 0
+theme_override_font_sizes/font_size = 11
+text = "ALIADOS DE DEFESA"
+
+[node name="w_allies" type="Label" parent="desk/w_militar/Militar/Margem/Coluna" unique_id=1924740005]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 12
+autowrap_mode = 3
+
+[node name="Mundo" type="ScrollContainer" parent="desk/w_mundo" unique_id=1511109916]
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="Margem" type="MarginContainer" parent="desk/w_mundo/Mundo" unique_id=1598786418]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 6
+
+[node name="Coluna" type="VBoxContainer" parent="desk/w_mundo/Mundo/Margem" unique_id=907736745]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_constants/separation = 6
+
+[node name="Linha" type="HBoxContainer" parent="desk/w_mundo/Mundo/Margem/Coluna" unique_id=1324319237]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="PIBMundial" type="Label" parent="desk/w_mundo/Mundo/Margem/Coluna/Linha" unique_id=712888471]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "PIB mundial"
+
+[node name="Espaco" type="Control" parent="desk/w_mundo/Mundo/Margem/Coluna/Linha" unique_id=1817861465]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="g_gdp" type="Label" parent="desk/w_mundo/Mundo/Margem/Coluna/Linha" unique_id=1071528897]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="Linha2" type="HBoxContainer" parent="desk/w_mundo/Mundo/Margem/Coluna" unique_id=1095036010]
+layout_mode = 2
+tooltip_text = "Quando sobe, dinheiro foge de emergentes e os juros deles disparam."
+theme_override_constants/separation = 4
+
+[node name="AversaoARisco" type="Label" parent="desk/w_mundo/Mundo/Margem/Coluna/Linha2" unique_id=713049617]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Aversão a risco"
+
+[node name="Espaco" type="Control" parent="desk/w_mundo/Mundo/Margem/Coluna/Linha2" unique_id=604531255]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="g_risk" type="Label" parent="desk/w_mundo/Mundo/Margem/Coluna/Linha2" unique_id=1916476419]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="Grade" type="GridContainer" parent="desk/w_mundo/Mundo/Margem/Coluna" unique_id=1927562543]
+layout_mode = 2
+columns = 2
+
+[node name="g_comm_0" type="Control" parent="desk/w_mundo/Mundo/Margem/Coluna/Grade" unique_id=2053556920]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 64)
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("5_erw67")
+title = "Petróleo"
+color = Color(0.9490196, 0.7019608, 0.23921569, 1)
+format = "num0"
+
+[node name="g_comm_1" type="Control" parent="desk/w_mundo/Mundo/Margem/Coluna/Grade" unique_id=1367095252]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 64)
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("5_erw67")
+title = "Gás"
+format = "num1"
+
+[node name="g_comm_2" type="Control" parent="desk/w_mundo/Mundo/Margem/Coluna/Grade" unique_id=101441600]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 64)
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("5_erw67")
+title = "Grãos"
+color = Color(0.29803923, 0.78039217, 0.5803922, 1)
+format = "num0"
+
+[node name="g_comm_3" type="Control" parent="desk/w_mundo/Mundo/Margem/Coluna/Grade" unique_id=130039383]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 64)
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("5_erw67")
+title = "Metais"
+color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+format = "num0"
+
+[node name="g_comm_4" type="Control" parent="desk/w_mundo/Mundo/Margem/Coluna/Grade" unique_id=1114584407]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 64)
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("5_erw67")
+title = "Chips"
+color = Color(0.9254902, 0.3529412, 0.2627451, 1)
+format = "num0"
+
+[node name="g_tension" type="Control" parent="desk/w_mundo/Mundo/Margem/Coluna/Grade" unique_id=1595491997]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 64)
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("5_erw67")
+title = "Tensão global"
+color = Color(0.9254902, 0.3529412, 0.2627451, 1)
+
+[node name="Separador" type="ColorRect" parent="desk/w_mundo/Mundo/Margem/Coluna" unique_id=891262656]
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 2
+mouse_filter = 2
+color = Color(0.15294118, 0.2509804, 0.30980393, 1)
+
+[node name="MAIORESECONOMIAS" type="Label" parent="desk/w_mundo/Mundo/Margem/Coluna" unique_id=383264408]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_constants/line_spacing = 0
+theme_override_font_sizes/font_size = 11
+text = "MAIORES ECONOMIAS"
+
+[node name="world_box" type="VBoxContainer" parent="desk/w_mundo/Mundo/Margem/Coluna" unique_id=1656653957]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 1
+
+[node name="Divisões" type="ScrollContainer" parent="desk/w_divisoes" unique_id=2108917443]
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="Margem" type="MarginContainer" parent="desk/w_divisoes/Divisões" unique_id=1233509490]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 6
+
+[node name="Coluna" type="VBoxContainer" parent="desk/w_divisoes/Divisões/Margem" unique_id=1675050762]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_constants/separation = 6
+
+[node name="divisions" parent="desk/w_divisoes/Divisões/Margem/Coluna" unique_id=1978991367 instance=ExtResource("sub_1")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Política" type="ScrollContainer" parent="desk/w_politica" unique_id=1879929363]
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="Margem" type="MarginContainer" parent="desk/w_politica/Política" unique_id=372749908]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 6
+
+[node name="Coluna" type="VBoxContainer" parent="desk/w_politica/Política/Margem" unique_id=1776601147]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_constants/separation = 6
+
+[node name="politics" parent="desk/w_politica/Política/Margem/Coluna" unique_id=1641834698 instance=ExtResource("sub_2")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Ministros" type="ScrollContainer" parent="desk/w_ministros" unique_id=1712945007]
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="Margem" type="MarginContainer" parent="desk/w_ministros/Ministros" unique_id=132606559]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 6
+
+[node name="Coluna" type="VBoxContainer" parent="desk/w_ministros/Ministros/Margem" unique_id=403978378]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_constants/separation = 6
+
+[node name="cabinet" parent="desk/w_ministros/Ministros/Margem/Coluna" unique_id=1132680773 instance=ExtResource("sub_3")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Economia" type="ScrollContainer" parent="desk/w_economia" unique_id=708840669]
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="Margem" type="MarginContainer" parent="desk/w_economia/Economia" unique_id=315555165]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 6
+
+[node name="Coluna" type="VBoxContainer" parent="desk/w_economia/Economia/Margem" unique_id=1750809291]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_constants/separation = 6
+
+[node name="economy" parent="desk/w_economia/Economia/Margem/Coluna" unique_id=409467782 instance=ExtResource("sub_6")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="dock" parent="." instance=ExtResource("dock_1")]
+unique_name_in_owner = true
+layout_mode = 1
+left_reserved = 410.0
 
 [node name="toast" type="PanelContainer" parent="." unique_id=1817966838]
 unique_name_in_owner = true

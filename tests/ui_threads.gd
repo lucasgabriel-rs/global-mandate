@@ -36,7 +36,7 @@ func _run() -> void:
 	await _frames(5)
 	# Banco central independente: a tela não deixa escolher o juro.
 	var c: Country = main.world.player
-	main.hud._gov_tabs.current_tab = 2
+	main.hud._desk.current_tab = 2
 	main.hud.refresh(true)
 	await _frames(2)
 	_check(c.cb_independent, "o Brasil tem banco central independente")
@@ -46,7 +46,7 @@ func _run() -> void:
 	var rate0 := c.rate_manual
 	main.hud._on_toggle_taylor()
 	_check(c.rate_manual == rate0, "nem chamando direto o governo muda o regime")
-	main.hud._gov_tabs.current_tab = 0
+	main.hud._desk.current_tab = 0
 	await _day_turn()
 	await _month_turn()
 	await _click_during_work()

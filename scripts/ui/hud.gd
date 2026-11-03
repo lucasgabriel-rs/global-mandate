@@ -58,8 +58,9 @@ var _hover_unit := -1
 @onready var _skip_title: Label = %skip_title
 @onready var _skip_body: Label = %skip_body
 @onready var _player_name: Label = %player_name
-@onready var _gov_tabs: TabContainer = %gov_tabs
-@onready var _gov_panel: PanelContainer = %gov_panel
+## As janelas flutuantes do governo; o índice de cada uma é o das antigas abas.
+@onready var _desk: WindowDesk = %desk
+@onready var _dock: Dock = %dock
 @onready var _dossier: PanelContainer = %dossier
 @onready var _dossier_body: VBoxContainer = %dossier_body
 @onready var _news_box: VBoxContainer = %news_box
@@ -96,7 +97,9 @@ func _ready() -> void:
 ## Os valores que o jogo atualiza são achados pelo nome do nó, então dá para movê-los na cena à vontade.
 func _collect(from: Node) -> void:
 	for n: Node in from.get_children():
+		# Janelas e dock são cenas próprias; o conteúdo do HUD pode morar dentro delas.
 		if n.owner != self:
+			_collect(n)
 			continue
 		var id := String(n.name)
 		if id.begins_with("top_"):
@@ -118,8 +121,9 @@ func _collect(from: Node) -> void:
 
 
 func _tab_of(content: Control) -> int:
-	for i in _gov_tabs.get_tab_count():
-		if _gov_tabs.get_tab_control(i).is_ancestor_of(content):
+	for i in _desk.get_tab_count():
+		var page := _desk.get_tab_control(i)
+		if page == content or page.is_ancestor_of(content):
 			return i
 	return -1
 
@@ -138,7 +142,9 @@ func _connect_buttons() -> void:
 	%Menu.pressed.connect(menu_requested.emit)
 	%skip_close.pressed.connect(func(): _skip_card.visible = false)
 	%EditarPersonagem.pressed.connect(character_requested.emit)
-	_gov_tabs.tab_changed.connect(_on_tab_changed)
+	_desk.tab_changed.connect(_on_tab_changed)
+	_dock.desk = _desk
+	_dock.item_pressed.connect(_on_dock_item)
 	_cabinet.pick_requested.connect(func(post): minister_pick_requested.emit(post))
 	_politics.party_requested.connect(func(): party_requested.emit())
 	_politics.legislation_requested.connect(func(): legislation_requested.emit())
@@ -172,7 +178,7 @@ func _connect_buttons() -> void:
 func refresh_clock() -> void:
 	if world:
 		_day_clock.minute = world.minute
-		var text := world.date_string()
+		var text := world.date_string().get_slice("  ", 0)
 		if _date.text != text:
 			_date.text = text
 
@@ -253,7 +259,7 @@ func bind(w: GameWorld, m: MapView) -> void:
 	economy.bind(w)
 	border.bind(w, m)
 	refresh_leader()
-	map.unit_pick = _gov_tabs.current_tab == _divisions_tab
+	map.unit_pick = _desk.current_tab == _divisions_tab
 	selected = null
 	_dossier.visible = false
 	_dossier_built_for = null
@@ -281,14 +287,21 @@ func set_speed_display(s: int) -> void:
 
 func _on_tab_changed(_i: int) -> void:
 	if map:
-		map.unit_pick = _gov_tabs.current_tab == _divisions_tab
+		map.unit_pick = _desk.current_tab == _divisions_tab
 	refresh(true)
+
+
+func _on_dock_item(item: DockItem) -> void:
+	if item.window_index >= 0:
+		_desk.toggle(item.window_index, _dock.item_center(item))
+	elif item.action == "legislation":
+		legislation_requested.emit()
 
 
 func start_drawing() -> void:
 	if border.active:
 		return
-	_gov_tabs.current_tab = _divisions_tab
+	_desk.current_tab = _divisions_tab
 	_divisions.start_drawing()
 
 
@@ -632,7 +645,7 @@ func refresh(force := false) -> void:
 		return
 	_refresh_office()
 	_tick += 1
-	_date.text = world.date_string()
+	_date.text = world.date_string().get_slice("  ", 0)
 	var m := world.markets
 	_commodity_labels[0].text = "$%.0f" % m.price[Markets.OIL]
 	_commodity_labels[1].text = "$" + UiKit.num(m.price[Markets.GAS], 1)
@@ -650,8 +663,7 @@ func refresh(force := false) -> void:
 		if _tick % 16 == 0:
 			refresh_leader()
 		_refresh_top(c)
-		if force or _gov_panel.visible:
-			_refresh_tab(c)
+		_refresh_tab(c)
 		if force or _tick % 8 == 0:
 			_sync_mobilization(c)
 			_sync_budget_sliders(c)
@@ -685,8 +697,14 @@ func _set_chart(key: String, c: Country) -> void:
 	ch.set_data(c.hist.get(ch.series_key, PackedFloat32Array()))
 
 
+## Atualiza todas as janelas abertas; fechadas não custam nada.
 func _refresh_tab(c: Country) -> void:
-	match _gov_tabs.current_tab:
+	for i in _desk.open_windows():
+		_refresh_window(i, c)
+
+
+func _refresh_window(i: int, c: Country) -> void:
+	match i:
 		0: _refresh_overview(c)
 		1: _refresh_fiscal(c)
 		2: _refresh_monetary(c)

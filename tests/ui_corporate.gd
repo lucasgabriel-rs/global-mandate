@@ -59,7 +59,7 @@ func _run() -> void:
 		w.tick_day()
 	main.prompts.clear()
 	var hud: Hud = main.hud
-	hud._gov_tabs.current_tab = 9
+	hud._desk.current_tab = 9
 	var economy: EconomyPanel = hud.economy
 	var tabs: TabContainer = economy.get_node("%sub_tabs")
 	tabs.current_tab = 2

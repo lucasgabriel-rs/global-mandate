@@ -138,7 +138,7 @@ func _process(delta: float) -> void:
 			_shot("c4_jogo")
 			map._camera.position = w.player.center
 			map._camera.zoom = Vector2.ONE * 3.2
-			hud._gov_tabs.current_tab = hud._divisions_tab
+			hud._desk.current_tab = hud._divisions_tab
 		7:
 			_click(_at(_center("BRA", "Pará")))
 			_check(s.units[panel.selected_unit].name == "Pará", "seleciona o Pará")
@@ -162,7 +162,7 @@ func _process(delta: float) -> void:
 			_check(s.custom_ids.size() >= 2 and not map.drawing, "desmembrar pela interface")
 			print("status: ", panel._status.text)
 			_shot("f3_desmembrado")
-			hud._gov_tabs.current_tab = 0
+			hud._desk.current_tab = 0
 			panel.select_unit(-1)
 			# Guerra vencida contra a Argentina.
 			var arg: Country = w.by_iso["ARG"]

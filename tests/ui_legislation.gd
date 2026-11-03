@@ -101,7 +101,7 @@ func _run() -> void:
 	main._set_speed(0)
 	await _wait(5)
 	var hud: Hud = main.hud
-	hud._gov_tabs.current_tab = hud._politics_tab
+	hud._desk.current_tab = hud._politics_tab
 	hud.refresh(true)
 	await _wait()
 	var tabs: TabContainer = hud._politics.get_node("%house_tabs")

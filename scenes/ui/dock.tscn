@@ -1,0 +1,181 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/dock.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://scenes/ui/dock_item.tscn" id="2_item"]
+[ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="3_theme"]
+[ext_resource type="Texture2D" path="res://assets/ui/dock/painel.svg" id="ic_painel"]
+[ext_resource type="Texture2D" path="res://assets/ui/dock/politica.svg" id="ic_politica"]
+[ext_resource type="Texture2D" path="res://assets/ui/dock/ministros.svg" id="ic_ministros"]
+[ext_resource type="Texture2D" path="res://assets/ui/dock/legislacao.svg" id="ic_legislacao"]
+[ext_resource type="Texture2D" path="res://assets/ui/dock/fiscal.svg" id="ic_fiscal"]
+[ext_resource type="Texture2D" path="res://assets/ui/dock/moeda.svg" id="ic_moeda"]
+[ext_resource type="Texture2D" path="res://assets/ui/dock/comercio.svg" id="ic_comercio"]
+[ext_resource type="Texture2D" path="res://assets/ui/dock/economia.svg" id="ic_economia"]
+[ext_resource type="Texture2D" path="res://assets/ui/dock/militar.svg" id="ic_militar"]
+[ext_resource type="Texture2D" path="res://assets/ui/dock/divisoes.svg" id="ic_divisoes"]
+[ext_resource type="Texture2D" path="res://assets/ui/dock/mundo.svg" id="ic_mundo"]
+
+[sub_resource type="StyleBoxFlat" id="Shelf"]
+bg_color = Color(0.1, 0.15, 0.19, 0.72)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 0.16)
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_right = 18
+corner_radius_bottom_left = 18
+shadow_color = Color(0, 0, 0, 0.35)
+shadow_size = 12
+
+[sub_resource type="StyleBoxFlat" id="Tip"]
+content_margin_left = 10.0
+content_margin_top = 4.0
+content_margin_right = 10.0
+content_margin_bottom = 4.0
+bg_color = Color(0.1, 0.15, 0.19, 0.92)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 0.16)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[node name="dock" type="Control"]
+layout_mode = 3
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -150.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+theme = ExtResource("3_theme")
+script = ExtResource("1_script")
+
+[node name="shelf" type="Panel" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+theme_override_styles/panel = SubResource("Shelf")
+
+[node name="items" type="HBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+mouse_filter = 2
+theme_override_constants/separation = 6
+alignment = 1
+
+[node name="dock_painel" parent="items" instance=ExtResource("2_item")]
+layout_mode = 2
+label = "Painel do governo"
+icon = ExtResource("ic_painel")
+window_index = 0
+action = ""
+
+[node name="dock_politica" parent="items" instance=ExtResource("2_item")]
+layout_mode = 2
+label = "Política"
+icon = ExtResource("ic_politica")
+window_index = 7
+action = ""
+
+[node name="dock_ministros" parent="items" instance=ExtResource("2_item")]
+layout_mode = 2
+label = "Ministros"
+icon = ExtResource("ic_ministros")
+window_index = 8
+action = ""
+
+[node name="dock_legislacao" parent="items" instance=ExtResource("2_item")]
+layout_mode = 2
+label = "Centro legislativo"
+icon = ExtResource("ic_legislacao")
+window_index = -1
+action = "legislation"
+
+[node name="Separador1" type="ColorRect" parent="items"]
+custom_minimum_size = Vector2(1, 40)
+layout_mode = 2
+size_flags_vertical = 8
+mouse_filter = 2
+color = Color(1, 1, 1, 0.18)
+
+[node name="dock_fiscal" parent="items" instance=ExtResource("2_item")]
+layout_mode = 2
+label = "Orçamento e impostos"
+icon = ExtResource("ic_fiscal")
+window_index = 1
+action = ""
+
+[node name="dock_moeda" parent="items" instance=ExtResource("2_item")]
+layout_mode = 2
+label = "Moeda e juros"
+icon = ExtResource("ic_moeda")
+window_index = 2
+action = ""
+
+[node name="dock_comercio" parent="items" instance=ExtResource("2_item")]
+layout_mode = 2
+label = "Comércio exterior"
+icon = ExtResource("ic_comercio")
+window_index = 3
+action = ""
+
+[node name="dock_economia" parent="items" instance=ExtResource("2_item")]
+layout_mode = 2
+label = "Setores, empresas e bolsa"
+icon = ExtResource("ic_economia")
+window_index = 9
+action = ""
+
+[node name="Separador2" type="ColorRect" parent="items"]
+custom_minimum_size = Vector2(1, 40)
+layout_mode = 2
+size_flags_vertical = 8
+mouse_filter = 2
+color = Color(1, 1, 1, 0.18)
+
+[node name="dock_militar" parent="items" instance=ExtResource("2_item")]
+layout_mode = 2
+label = "Forças armadas"
+icon = ExtResource("ic_militar")
+window_index = 4
+action = ""
+
+[node name="dock_divisoes" parent="items" instance=ExtResource("2_item")]
+layout_mode = 2
+label = "Divisões do território"
+icon = ExtResource("ic_divisoes")
+window_index = 6
+action = ""
+
+[node name="Separador3" type="ColorRect" parent="items"]
+custom_minimum_size = Vector2(1, 40)
+layout_mode = 2
+size_flags_vertical = 8
+mouse_filter = 2
+color = Color(1, 1, 1, 0.18)
+
+[node name="dock_mundo" parent="items" instance=ExtResource("2_item")]
+layout_mode = 2
+label = "Mundo"
+icon = ExtResource("ic_mundo")
+window_index = 5
+action = ""
+
+[node name="tip" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("Tip")
+
+[node name="tip_label" type="Label" parent="tip"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13

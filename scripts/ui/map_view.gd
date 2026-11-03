@@ -300,7 +300,9 @@ func _draw() -> void:
 
 
 func _draw_native_borders() -> void:
-	_native_borders.draw_multiline(_border_points, BORDER, -1.0)
+	# A camada pode pedir desenho antes de a thread do mapa entregar as fronteiras.
+	if not _border_points.is_empty():
+		_native_borders.draw_multiline(_border_points, BORDER, -1.0)
 
 
 ## Áreas que mudaram de país, por cima do mapa de base, com a cor do dono atual e fronteira própria.
@@ -394,17 +396,23 @@ func _draw_units() -> void:
 		var u: Dictionary = subs.units[id]
 		if u.get("plain", false):
 			var mine: bool = world.player != null and world.resolve_owner(u.owner) == world.player
-			_units_layer.draw_multiline(subs.outline_of(u), Color(0.95, 0.97, 1.0, 0.5) if mine else Color(0.03, 0.07, 0.10, 0.55), -1.0)
+			_unit_outline(subs.outline_of(u), Color(0.95, 0.97, 1.0, 0.5) if mine else Color(0.03, 0.07, 0.10, 0.55), -1.0)
 			continue
 		var w := maxf(2.0 - float(subs.depth_of(id)) * 0.5, 0.8) / z
-		_units_layer.draw_multiline(subs.outline_of(u), subs.unit_color(u).lightened(0.35), w)
+		_unit_outline(subs.outline_of(u), subs.unit_color(u).lightened(0.35), w)
 	if subs.units.has(_hover_unit):
-		_units_layer.draw_multiline(subs.outline_of(subs.units[_hover_unit]), Color(1, 1, 1, 0.7), 1.6 / z)
+		_unit_outline(subs.outline_of(subs.units[_hover_unit]), Color(1, 1, 1, 0.7), 1.6 / z)
 	if subs.units.has(selected_unit):
-		_units_layer.draw_multiline(subs.outline_of(subs.units[selected_unit]), Color("f2b33d"), 2.6 / z)
+		_unit_outline(subs.outline_of(subs.units[selected_unit]), Color("f2b33d"), 2.6 / z)
 	for id: int in marked_units:
 		if subs.units.has(id):
-			_units_layer.draw_multiline(subs.outline_of(subs.units[id]), Color("4fb3d9"), 2.6 / z)
+			_unit_outline(subs.outline_of(subs.units[id]), Color("4fb3d9"), 2.6 / z)
+
+
+## Contorno de uma unidade; unidades sem fronteira desenhada (ilhas minúsculas, por exemplo) não têm pontos.
+func _unit_outline(pts: PackedVector2Array, color: Color, width: float) -> void:
+	if pts.size() >= 2:
+		_units_layer.draw_multiline(pts, color, width)
 
 
 ## Divisas do cenário: uma camada estática, redesenhada só quando as unidades mudam.

@@ -54,7 +54,7 @@ func _run() -> void:
 	for i in 400:
 		w.tick_day()
 	var hud: Hud = main.hud
-	var tabs: TabContainer = hud._gov_tabs
+	var tabs: WindowDesk = hud._desk
 	tabs.current_tab = 9
 	hud.refresh(true)
 	await _wait()

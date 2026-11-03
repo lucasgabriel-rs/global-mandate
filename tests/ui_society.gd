@@ -91,7 +91,7 @@ func _run() -> void:
 	# Eleição: relatório.
 	main.world.politics.player_election(w)
 	main.world.politics.revision += 1
-	hud._gov_tabs.current_tab = hud._politics_tab
+	hud._desk.current_tab = hud._politics_tab
 	hud.refresh(true)
 	await _wait()
 	var last: Button = hud._politics.get_node("%UltimaEleicao")
@@ -156,7 +156,7 @@ func _run() -> void:
 	get_window().size = Vector2i(1100, 700)
 	await _wait(8)
 	_check(get_window().size.x <= 1200, "o tamanho muda: %s" % str(get_window().size))
-	hud._gov_tabs.current_tab = 0
+	hud._desk.current_tab = 0
 	await _shot("v9_janela_menor")
 	get_window().size = size0
 	await _wait(8)

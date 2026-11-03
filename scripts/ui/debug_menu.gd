@@ -333,7 +333,7 @@ func _cede(from: Country, to: Country) -> String:
 
 func _define_units() -> void:
 	var s := "Unidades"
-	_add(s, "Abrir a aba Divisões", func(): hud._gov_tabs.current_tab = hud._divisions_tab)
+	_add(s, "Abrir a aba Divisões", func(): hud._desk.current_tab = hud._divisions_tab)
 	_add(s, "Desenhar no país", func():
 		hud._divisions.select_unit(-1)
 		hud.start_drawing())
@@ -366,7 +366,7 @@ func _define_units() -> void:
 
 
 func _select_first_unit() -> bool:
-	hud._gov_tabs.current_tab = hud._divisions_tab
+	hud._desk.current_tab = hud._divisions_tab
 	if map.drawing:
 		map.cancel_draft()
 	var roots := world.subdivisions.roots_of(pl.iso)
@@ -391,7 +391,7 @@ func _merge_neighbors() -> String:
 
 func _define_politics() -> void:
 	var s := "Política"
-	_add(s, "Abrir a aba Política", func(): hud._gov_tabs.current_tab = hud._politics_tab)
+	_add(s, "Abrir a aba Política", func(): hud._desk.current_tab = hud._politics_tab)
 	_add(s, "Escolher partido", func(): hud.party_requested.emit())
 	_add(s, "Entrar no menor partido", func():
 		var data := world.politics.data_of(pl.iso)
@@ -417,7 +417,7 @@ func _define_politics() -> void:
 	_add(s, "Oposição: moção de censura", func():
 		return String(world.politics.censure(world).msg))
 	_add(s, "Refazer o gabinete", func(): world.politics.auto_cabinet(world))
-	_add(s, "Abrir a aba Ministros", func(): hud._gov_tabs.current_tab = hud._cabinet_tab)
+	_add(s, "Abrir a aba Ministros", func(): hud._desk.current_tab = hud._cabinet_tab)
 	_add(s, "Abrir o primeiro partido", func(): main._open_party_detail(int(world.politics.data_of(pl.iso).parties[0].id)))
 	_add(s, "Conversar com o alvo", func():
 		world.talks.erase(target.iso)
@@ -466,7 +466,7 @@ func _define_interface() -> void:
 	for key: String in MapView.MODES:
 		_add(s, "Mapa: " + String(MapView.MODES[key][0]), func(): hud._on_mode(key))
 	for i in 9:
-		_add(s, "Aba %d do painel" % (i + 1), func(): hud._gov_tabs.current_tab = i)
+		_add(s, "Aba %d do painel" % (i + 1), func(): hud._desk.current_tab = i)
 	_add(s, "Centralizar no alvo", func():
 		map.focus_on(target)
 		map.select(target)

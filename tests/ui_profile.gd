@@ -90,10 +90,10 @@ func _run() -> void:
 	_time("mapa: refresh_units(true)", func(): main.map.refresh_units(true))
 	_time("hud.refresh(true), aba Painel", func(): main.hud.refresh(true))
 	for tab in [main.hud._divisions_tab, main.hud._politics_tab]:
-		main.hud._gov_tabs.current_tab = tab
+		main.hud._desk.current_tab = tab
 		_time("abrir aba %d" % tab, func(): main.hud.refresh(true))
 		await _frames()
-	main.hud._gov_tabs.current_tab = 0
+	main.hud._desk.current_tab = 0
 	_time("dossiê de um país", func(): main.hud.show_country(w.by_iso["USA"]))
 	main.hud.show_country(null)
 	await _frames()
