@@ -1,21 +1,16 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://ri5t3sdh865h"]
 
-[ext_resource type="PackedScene" path="res://scenes/ui/panels/debug_menu.tscn" id="sub_5"]
-[ext_resource type="PackedScene" path="res://scenes/ui/panels/border_panel.tscn" id="sub_4"]
-[ext_resource type="PackedScene" path="res://scenes/ui/panels/cabinet_panel.tscn" id="sub_3"]
-[ext_resource type="PackedScene" path="res://scenes/ui/panels/politics_panel.tscn" id="sub_2"]
-[ext_resource type="PackedScene" path="res://scenes/ui/panels/divisions_panel.tscn" id="sub_1"]
-[ext_resource type="PackedScene" path="res://scenes/ui/panels/economy_panel.tscn" id="sub_6"]
 [ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="1_kicr4"]
-[ext_resource type="Script" path="res://scripts/ui/hud.gd" id="2_mj13f"]
-[ext_resource type="Script" path="res://scripts/ui/character_view.gd" id="3_0h1do"]
-[ext_resource type="Script" path="res://scripts/ui/day_clock.gd" id="4_4d46k"]
-[ext_resource type="Script" path="res://scripts/ui/chart.gd" id="5_erw67"]
-[ext_resource type="Script" path="res://scripts/ui/divisions_panel.gd" id="6_gonto"]
-[ext_resource type="Script" path="res://scripts/ui/politics_panel.gd" id="7_cwdlq"]
-[ext_resource type="Script" path="res://scripts/ui/cabinet_panel.gd" id="8_o6xly"]
-[ext_resource type="Script" path="res://scripts/ui/border_panel.gd" id="9_we3sy"]
-[ext_resource type="Script" path="res://scripts/ui/debug_menu.gd" id="10_65nxt"]
+[ext_resource type="Script" uid="uid://bntrohifu8c0m" path="res://scripts/ui/hud.gd" id="2_mj13f"]
+[ext_resource type="Script" uid="uid://x0ayvl0ebf5h" path="res://scripts/ui/character_view.gd" id="3_0h1do"]
+[ext_resource type="Script" uid="uid://bgcmqtfb5aary" path="res://scripts/ui/day_clock.gd" id="4_4d46k"]
+[ext_resource type="Script" uid="uid://cuo1ffufbd646" path="res://scripts/ui/chart.gd" id="5_erw67"]
+[ext_resource type="PackedScene" path="res://scenes/ui/panels/divisions_panel.tscn" id="sub_1"]
+[ext_resource type="PackedScene" path="res://scenes/ui/panels/politics_panel.tscn" id="sub_2"]
+[ext_resource type="PackedScene" path="res://scenes/ui/panels/cabinet_panel.tscn" id="sub_3"]
+[ext_resource type="PackedScene" path="res://scenes/ui/panels/border_panel.tscn" id="sub_4"]
+[ext_resource type="PackedScene" path="res://scenes/ui/panels/debug_menu.tscn" id="sub_5"]
+[ext_resource type="PackedScene" path="res://scenes/ui/panels/economy_panel.tscn" id="sub_6"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_el1dq"]
 content_margin_left = 8.0
@@ -77,22 +72,6 @@ corner_radius_top_right = 3
 corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bcglm"]
-content_margin_left = 12.0
-content_margin_top = 12.0
-content_margin_right = 12.0
-content_margin_bottom = 12.0
-bg_color = Color(0.043, 0.075, 0.102, 0.95)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.9490196, 0.7019608, 0.23921569, 1)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pkwgd"]
 content_margin_left = 10.0
 content_margin_top = 10.0
@@ -109,28 +88,14 @@ corner_radius_top_right = 3
 corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gpqoy"]
-content_margin_left = 10.0
-content_margin_top = 10.0
-content_margin_right = 10.0
-content_margin_bottom = 10.0
-bg_color = Color(0.05, 0.08, 0.1, 0.98)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.30980393, 0.7019608, 0.8509804, 1)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
-
 [node name="Hud" type="Control" unique_id=1865312192]
 visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
 theme = ExtResource("1_kicr4")
 script = ExtResource("2_mj13f")
@@ -994,79 +959,73 @@ theme_override_constants/line_spacing = 0
 theme_override_font_sizes/font_size = 11
 text = "IMPOSTOS (% DO PIB)"
 
-[node name="TaxaRenda" type="HBoxContainer" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna"]
+[node name="TaxaRenda" type="HBoxContainer" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna" unique_id=643588654]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 4
 
-[node name="Titulo" type="Label" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/TaxaRenda"]
+[node name="Titulo" type="Label" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/TaxaRenda" unique_id=729120926]
 layout_mode = 2
-mouse_filter = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_font_sizes/font_size = 13
 text = "Renda e folha"
 
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/TaxaRenda"]
+[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/TaxaRenda" unique_id=558546530]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="f_rate_tax_income" type="Label" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/TaxaRenda"]
+[node name="f_rate_tax_income" type="Label" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/TaxaRenda" unique_id=1085829744]
 unique_name_in_owner = true
 layout_mode = 2
-mouse_filter = 2
 theme_override_font_sizes/font_size = 13
 text = "—"
 
-[node name="TaxaConsumo" type="HBoxContainer" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna"]
+[node name="TaxaConsumo" type="HBoxContainer" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna" unique_id=1504122350]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 4
 
-[node name="Titulo" type="Label" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/TaxaConsumo"]
+[node name="Titulo" type="Label" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/TaxaConsumo" unique_id=556008377]
 layout_mode = 2
-mouse_filter = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_font_sizes/font_size = 13
 text = "Consumo"
 
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/TaxaConsumo"]
+[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/TaxaConsumo" unique_id=1008810349]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="f_rate_tax_consumption" type="Label" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/TaxaConsumo"]
+[node name="f_rate_tax_consumption" type="Label" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/TaxaConsumo" unique_id=866320912]
 unique_name_in_owner = true
 layout_mode = 2
-mouse_filter = 2
 theme_override_font_sizes/font_size = 13
 text = "—"
 
-[node name="TaxaEmpresas" type="HBoxContainer" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna"]
+[node name="TaxaEmpresas" type="HBoxContainer" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna" unique_id=1001622648]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 4
 
-[node name="Titulo" type="Label" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/TaxaEmpresas"]
+[node name="Titulo" type="Label" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/TaxaEmpresas" unique_id=600789096]
 layout_mode = 2
-mouse_filter = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_font_sizes/font_size = 13
 text = "Empresas e capital"
 
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/TaxaEmpresas"]
+[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/TaxaEmpresas" unique_id=1418706255]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="f_rate_tax_corporate" type="Label" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/TaxaEmpresas"]
+[node name="f_rate_tax_corporate" type="Label" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna/TaxaEmpresas" unique_id=1648425590]
 unique_name_in_owner = true
 layout_mode = 2
-mouse_filter = 2
 theme_override_font_sizes/font_size = 13
 text = "—"
 
-[node name="LegislarTributos" type="Button" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna"]
+[node name="LegislarTributos" type="Button" parent="gov_panel/gov_tabs/Fiscal/Margem/Coluna" unique_id=300307949]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Abre o editor de blocos com as alíquotas em vigor. A mudança passa pelo parlamento como qualquer lei."
@@ -1951,31 +1910,29 @@ theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
 theme_override_font_sizes/font_size = 13
 text = "—"
 
-[node name="TaxaTarifa" type="HBoxContainer" parent="gov_panel/gov_tabs/Comércio/Margem/Coluna"]
+[node name="TaxaTarifa" type="HBoxContainer" parent="gov_panel/gov_tabs/Comércio/Margem/Coluna" unique_id=1596550245]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 4
 
-[node name="Titulo" type="Label" parent="gov_panel/gov_tabs/Comércio/Margem/Coluna/TaxaTarifa"]
+[node name="Titulo" type="Label" parent="gov_panel/gov_tabs/Comércio/Margem/Coluna/TaxaTarifa" unique_id=1653639229]
 layout_mode = 2
-mouse_filter = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_font_sizes/font_size = 13
 text = "Tarifa geral de importação"
 
-[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Comércio/Margem/Coluna/TaxaTarifa"]
+[node name="Espaco" type="Control" parent="gov_panel/gov_tabs/Comércio/Margem/Coluna/TaxaTarifa" unique_id=1817225819]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="t_tariff" type="Label" parent="gov_panel/gov_tabs/Comércio/Margem/Coluna/TaxaTarifa"]
+[node name="t_tariff" type="Label" parent="gov_panel/gov_tabs/Comércio/Margem/Coluna/TaxaTarifa" unique_id=470974831]
 unique_name_in_owner = true
 layout_mode = 2
-mouse_filter = 2
 theme_override_font_sizes/font_size = 13
 text = "—"
 
-[node name="LegislarTarifa" type="Button" parent="gov_panel/gov_tabs/Comércio/Margem/Coluna"]
+[node name="LegislarTarifa" type="Button" parent="gov_panel/gov_tabs/Comércio/Margem/Coluna" unique_id=2133620015]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Abre o editor de blocos com as alíquotas em vigor. A mudança passa pelo parlamento como qualquer lei."
@@ -2538,8 +2495,10 @@ size_flags_horizontal = 3
 mouse_filter = 2
 theme_override_constants/separation = 6
 
-[node name="divisions" parent="gov_panel/gov_tabs/Divisões/Margem/Coluna" instance=ExtResource("sub_1")]
+[node name="divisions" parent="gov_panel/gov_tabs/Divisões/Margem/Coluna" unique_id=1978991367 instance=ExtResource("sub_1")]
 unique_name_in_owner = true
+layout_mode = 2
+
 [node name="Política" type="ScrollContainer" parent="gov_panel/gov_tabs" unique_id=1879929363]
 visible = false
 layout_mode = 2
@@ -2558,8 +2517,10 @@ size_flags_horizontal = 3
 mouse_filter = 2
 theme_override_constants/separation = 6
 
-[node name="politics" parent="gov_panel/gov_tabs/Política/Margem/Coluna" instance=ExtResource("sub_2")]
+[node name="politics" parent="gov_panel/gov_tabs/Política/Margem/Coluna" unique_id=1641834698 instance=ExtResource("sub_2")]
 unique_name_in_owner = true
+layout_mode = 2
+
 [node name="Ministros" type="ScrollContainer" parent="gov_panel/gov_tabs" unique_id=1712945007]
 visible = false
 layout_mode = 2
@@ -2578,27 +2539,29 @@ size_flags_horizontal = 3
 mouse_filter = 2
 theme_override_constants/separation = 6
 
-[node name="cabinet" parent="gov_panel/gov_tabs/Ministros/Margem/Coluna" instance=ExtResource("sub_3")]
+[node name="cabinet" parent="gov_panel/gov_tabs/Ministros/Margem/Coluna" unique_id=1132680773 instance=ExtResource("sub_3")]
 unique_name_in_owner = true
-[node name="Economia" type="ScrollContainer" parent="gov_panel/gov_tabs"]
+layout_mode = 2
+
+[node name="Economia" type="ScrollContainer" parent="gov_panel/gov_tabs" unique_id=708840669]
 visible = false
 layout_mode = 2
 horizontal_scroll_mode = 0
 metadata/_tab_index = 9
 
-[node name="Margem" type="MarginContainer" parent="gov_panel/gov_tabs/Economia"]
+[node name="Margem" type="MarginContainer" parent="gov_panel/gov_tabs/Economia" unique_id=315555165]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 6
 
-[node name="Coluna" type="VBoxContainer" parent="gov_panel/gov_tabs/Economia/Margem"]
+[node name="Coluna" type="VBoxContainer" parent="gov_panel/gov_tabs/Economia/Margem" unique_id=1750809291]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 theme_override_constants/separation = 6
 
-[node name="economy" parent="gov_panel/gov_tabs/Economia/Margem/Coluna" instance=ExtResource("sub_6")]
+[node name="economy" parent="gov_panel/gov_tabs/Economia/Margem/Coluna" unique_id=409467782 instance=ExtResource("sub_6")]
 unique_name_in_owner = true
 layout_mode = 2
 
@@ -3163,18 +3126,16 @@ script = ExtResource("5_erw67")
 title = "Inflação"
 color = Color(0.9254902, 0.3529412, 0.2627451, 1)
 
-[node name="ParlamentoTitulo" type="Label" parent="dossier/Rolagem/dossier_body" groups=["foreign_only"]]
+[node name="ParlamentoTitulo" type="Label" parent="dossier/Rolagem/dossier_body" unique_id=27700190 groups=["foreign_only"]]
 layout_mode = 2
-mouse_filter = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_font_sizes/font_size = 11
 text = "PARLAMENTO"
 
-[node name="dossier_parliament" type="Label" parent="dossier/Rolagem/dossier_body" groups=["foreign_only"]]
+[node name="dossier_parliament" type="Label" parent="dossier/Rolagem/dossier_body" unique_id=646099900 groups=["foreign_only"]]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
-mouse_filter = 2
 theme_override_font_sizes/font_size = 12
 autowrap_mode = 3
 
@@ -3201,7 +3162,7 @@ mouse_default_cursor_shape = 2
 text = "Falar com o líder"
 clip_text = true
 
-[node name="ProporTratado" type="Button" parent="dossier/Rolagem/dossier_body" groups=["foreign_only"]]
+[node name="ProporTratado" type="Button" parent="dossier/Rolagem/dossier_body" unique_id=1885962718 groups=["foreign_only"]]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Negocia um tratado: assinado, ele ainda precisa ser ratificado pelos parlamentos."
@@ -3543,8 +3504,10 @@ theme_override_font_sizes/font_size = 14
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="border" parent="." instance=ExtResource("sub_4")]
+[node name="border" parent="." unique_id=1322788387 instance=ExtResource("sub_4")]
 unique_name_in_owner = true
+layout_mode = 0
+
 [node name="banner" type="PanelContainer" parent="." unique_id=793154953]
 unique_name_in_owner = true
 visible = false
@@ -3614,5 +3577,6 @@ theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
 theme_override_font_sizes/font_size = 13
 autowrap_mode = 3
 
-[node name="debug" parent="." instance=ExtResource("sub_5")]
+[node name="debug" parent="." unique_id=1232885025 instance=ExtResource("sub_5")]
 unique_name_in_owner = true
+layout_mode = 0

@@ -1,8 +1,8 @@
-[gd_resource type="Theme" format=3]
+[gd_resource type="Theme" format=3 uid="uid://ctxxkt1t232m8"]
 
-[ext_resource type="Texture2D" path="res://assets/ui/grabber.png" id="1_v84ch"]
-[ext_resource type="Texture2D" path="res://assets/ui/grabber_disabled.png" id="2_1m12o"]
-[ext_resource type="Texture2D" path="res://assets/ui/grabber_highlight.png" id="3_oci2t"]
+[ext_resource type="Texture2D" uid="uid://bm0rckj2k8tqq" path="res://assets/ui/grabber.png" id="1_v84ch"]
+[ext_resource type="Texture2D" uid="uid://b32s3n41vgkjh" path="res://assets/ui/grabber_disabled.png" id="2_1m12o"]
+[ext_resource type="Texture2D" uid="uid://buhu5qvsgrkvu" path="res://assets/ui/grabber_highlight.png" id="3_oci2t"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gjfte"]
 content_margin_left = 6.0
