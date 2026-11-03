@@ -1,0 +1,76 @@
+[gd_scene format=3]
+
+[ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="1_theme"]
+[ext_resource type="Script" path="res://scripts/ui/economy_panel.gd" id="2_script"]
+[ext_resource type="PackedScene" path="res://scenes/ui/panels/infra_panel.tscn" id="3_infra"]
+[ext_resource type="PackedScene" path="res://scenes/ui/panels/companies_panel.tscn" id="4_companies"]
+[ext_resource type="PackedScene" path="res://scenes/ui/panels/stock_panel.tscn" id="5_stock"]
+
+[node name="economy" type="VBoxContainer"]
+size_flags_horizontal = 3
+mouse_filter = 2
+theme = ExtResource("1_theme")
+theme_override_constants/separation = 6
+script = ExtResource("2_script")
+
+[node name="sub_tabs" type="TabContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+current_tab = 0
+
+[node name="Setores" type="VBoxContainer" parent="sub_tabs"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 6
+metadata/_tab_index = 0
+
+[node name="SETORES" type="Label" parent="sub_tabs/Setores"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 11
+text = "SETORES DA ECONOMIA"
+
+[node name="Nota" type="Label" parent="sub_tabs/Setores"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 12
+text = "Quanto cada atividade produz por ano e quanto cresceu em 12 meses. Construção sente o juro, mineração o preço das commodities, turismo a guerra e a instabilidade."
+autowrap_mode = 3
+
+[node name="sector_rows" type="VBoxContainer" parent="sub_tabs/Setores"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
+
+[node name="Infraestrutura" type="VBoxContainer" parent="sub_tabs"]
+visible = false
+layout_mode = 2
+mouse_filter = 2
+metadata/_tab_index = 1
+
+[node name="infra" parent="sub_tabs/Infraestrutura" instance=ExtResource("3_infra")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Empresas" type="VBoxContainer" parent="sub_tabs"]
+visible = false
+layout_mode = 2
+mouse_filter = 2
+metadata/_tab_index = 2
+
+[node name="companies" parent="sub_tabs/Empresas" instance=ExtResource("4_companies")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Bolsa" type="VBoxContainer" parent="sub_tabs"]
+visible = false
+layout_mode = 2
+mouse_filter = 2
+metadata/_tab_index = 3
+
+[node name="stock" parent="sub_tabs/Bolsa" instance=ExtResource("5_stock")]
+unique_name_in_owner = true
+layout_mode = 2

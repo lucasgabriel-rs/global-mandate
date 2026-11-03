@@ -79,6 +79,7 @@ var _hover_unit := -1
 @onready var _leader_name: Label = %leader_name
 @onready var _politics: PoliticsPanel = %politics
 @onready var _cabinet: CabinetPanel = %cabinet
+@onready var economy: EconomyPanel = %economy
 @onready var _banner: PanelContainer = %banner
 @onready var _banner_label: Label = %banner_label
 
@@ -249,6 +250,7 @@ func bind(w: GameWorld, m: MapView) -> void:
 	_divisions.bind(w, m)
 	_politics.bind(w)
 	_cabinet.bind(w)
+	economy.bind(w)
 	border.bind(w, m)
 	refresh_leader()
 	map.unit_pick = _gov_tabs.current_tab == _divisions_tab
@@ -691,6 +693,7 @@ func _refresh_tab(c: Country) -> void:
 		5: _refresh_world()
 		7: _politics.refresh()
 		8: _cabinet.refresh()
+		9: economy.refresh()
 
 
 func _leader_text(leader: Dictionary) -> String:

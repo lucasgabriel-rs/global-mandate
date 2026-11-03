@@ -43,6 +43,8 @@ var territories := Territories.new()
 var politics := Politics.new()
 var legislation := Legislation.new()
 var treaties := Treaties.new()
+var infra := Infrastructure.new()
+var corporate := Corporate.new()
 var next_talk_month := TALK_FIRST_MONTH
 var campaign_noticed := false
 var leader := {}
@@ -103,12 +105,15 @@ func setup(seed_value: int = 0) -> void:
 	markets.setup(self)
 	for c: Country in countries:
 		Economy.finish_init(c, self)
+		Sectors.init_country(c, self)
 		c.push_hist("y", c.y)
 	diplomacy.setup(self)
 	diplomacy.refresh_sanction_cache(self)
 	subdivisions.load_base(GameData.load_admin1())
 	politics.setup(self)
 	treaties.setup(self)
+	infra.setup(self)
+	corporate.setup(self)
 	next_step.resize(countries.size())
 	next_ai.resize(countries.size())
 	for i in countries.size():
@@ -241,6 +246,8 @@ func _on_month() -> void:
 	People.step_month(self)
 	treaties.step_month(self)
 	legislation.step_month(self)
+	infra.step_month(self)
+	corporate.step_month(self)
 	for i in 5:
 		markets.push_hist(i)
 	if month == 0:
@@ -951,6 +958,7 @@ func to_dict() -> Dictionary:
 		"rng_state": rng.state, "rng_seed": rng.seed, "subdivisions": subdivisions.to_dict(),
 		"territories": territories.to_dict(), "leader": leader, "minute": minute, "politics": politics.to_dict(),
 		"in_office": in_office, "talks": talks, "legislation": legislation.to_dict(), "treaties": treaties.to_dict(), "next_talk_month": next_talk_month,
+		"infra": infra.to_dict(), "corporate": corporate.to_dict(),
 	}
 
 
@@ -989,6 +997,16 @@ func load_dict(d: Dictionary) -> void:
 		legislation.from_dict(d.legislation, self)
 	elif player:
 		legislation.setup(self)
+	infra = Infrastructure.new()
+	if d.has("infra"):
+		infra.from_dict(d.infra, self)
+	else:
+		infra.setup(self)
+	corporate = Corporate.new()
+	if d.has("corporate"):
+		corporate.from_dict(d.corporate, self)
+	else:
+		corporate.setup(self)
 	if player and int(politics.data_of(player.iso).player_party) < 0:
 		politics.join_party(self, int(politics.data_of(player.iso).ruling), true)
 	over = false

@@ -182,6 +182,7 @@ static func step_month(c: Country, world: GameWorld) -> void:
 	_fiscal(c, world)
 	_labor_and_politics(c, world)
 	_credit_cycle(c, world)
+	Sectors.step_month(c, world)
 	_record(c, world)
 
 
@@ -214,7 +215,7 @@ static func _supply(c: Country, world: GameWorld) -> void:
 	c.tfp *= 1.0 + g_tfp * DT
 	c.damage = maxf(c.damage - 0.05 * DT * c.damage - 0.01 * DT, 0.0)
 	var base := c.tfp * pow(c.capital, ALPHA) * pow(c.human * labor, 1.0 - ALPHA)
-	c.y_pot = base * (1.0 - c.occupied * 0.85) * (1.0 - c.damage) * (1.0 + c.supply_shock)
+	c.y_pot = base * (1.0 - c.occupied * 0.85) * (1.0 - c.damage) * (1.0 + c.supply_shock) * (1.0 + Sectors.boost_total(c))
 	c.supply_shock *= 0.97
 
 
@@ -570,7 +571,7 @@ static func _labor_and_politics(c: Country, world: GameWorld) -> void:
 	c.stability += (clampf(stab_target, 0.03, 0.97) - c.stability) * 0.025
 	c.unrest = maxf(c.unrest * 0.96, 0.0)
 	c.conf += (clampf(0.35 + 0.4 * c.stability + 2.5 * clampf(growth - c.g0, -0.1, 0.05) - 1.2 * clampf(c.risk - c.risk0, 0.0, 0.3), 0.05, 1.0) - c.conf) * 0.08
-	c.stock *= exp(clampf(0.05 + 2.0 * (growth - c.g0) - 1.0 * c.rgap - 0.3 * (world.global_risk - 0.2) + c.pi_yoy * 0.8 + world.rng.randfn(0.0, 0.14), -0.8, 0.8) * DT)
+	Corporate.update_index(c, world, growth)
 
 	# Regimes fechados podem cair por golpe; democracias vão às urnas.
 	var yf := world.year_float()

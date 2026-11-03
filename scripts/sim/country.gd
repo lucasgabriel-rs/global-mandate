@@ -117,7 +117,17 @@ var trade0 := 0.0              # atritos já embutidos no PIB-base (sanções de
 var press0 := 0.0
 var occ0 := 0.0
 var ext_demand := 0.0
-var stock := 100.0
+var stock := 100.0             # índice da bolsa; quem o move é o Corporate
+
+# Setores (ver Sectors): frações do PIB que somam 1, produto real por setor e impulsos externos
+var sector_base := PackedFloat32Array()
+var sector_share := PackedFloat32Array()
+var sector_out := PackedFloat32Array()
+## Ganho de produtividade por setor que outros sistemas aplicam (0.03 = +3%). Infraestrutura e empresas somam aqui.
+var sector_boost := PackedFloat32Array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+var sector_drought := 0.0
+## Capacidade logística de portos e aeroportos frente à demanda: 1 é neutro, abaixo disso o comércio engasga.
+var logistics := 1.0
 
 # Commodities: produção/consumo-base por mercado e capacidade relativa
 var prod := PackedFloat32Array([0, 0, 0, 0, 0])
