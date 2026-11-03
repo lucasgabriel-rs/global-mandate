@@ -5,7 +5,7 @@ extends RefCounted
 ##
 ## kind: event (inicia um artigo), statement (instrução), cblock (instrução com blocos dentro),
 ## value (número ou texto) e bool (condição). rank é a menor hierarquia de norma que pode usar o bloco.
-## Campos: t = num, money, pct, days, bool, text, date, any, var ou choice; d = valor inicial.
+## Campos: t = num, money, pct, days, bool, text, date, any, var, choice, unit, ministry ou company; d = valor inicial.
 
 const CATEGORIES := [
 	{"id": "events", "label": "Eventos", "color": Color("b5532c")},
@@ -115,6 +115,8 @@ const BLOCKS := [
 	{"id": "ec_subsidy", "cat": "economy", "kind": "statement", "text": "Criar subsídio de {amount} bilhões por ano para {sector}", "fields": {"amount": {"t": "num", "d": 1}, "sector": {"t": "choice", "of": "sector", "d": "industria"}}, "rank": RANK_LAW, "econ": -0.3, "social": -0.05},
 	{"id": "ec_minwage", "cat": "economy", "kind": "statement", "text": "Estabelecer salário mínimo de {amount} por mês", "fields": {"amount": {"t": "money", "d": 300}}, "rank": RANK_LAW, "econ": -0.45, "social": 0.05},
 	{"id": "ec_spend", "cat": "economy", "kind": "statement", "text": "Criar despesa permanente de {amount} bilhões por ano para {purpose}", "fields": {"amount": {"t": "num", "d": 1}, "purpose": {"t": "text", "d": "Programa social"}}, "rank": RANK_LAW, "econ": -0.35},
+	{"id": "ec_privatize", "cat": "economy", "kind": "statement", "text": "Privatizar {stake}% da participação do Estado em {company}", "fields": {"stake": {"t": "pct", "d": 50}, "company": {"t": "company", "d": ""}}, "rank": RANK_LAW, "econ": 0.45},
+	{"id": "ec_nationalize", "cat": "economy", "kind": "statement", "text": "Estatizar {company}, levando a participação do Estado a {stake}% do capital", "fields": {"company": {"t": "company", "d": ""}, "stake": {"t": "pct", "d": 100}}, "rank": RANK_LAW, "econ": -0.5, "social": -0.05},
 	{"id": "ec_budget", "cat": "economy", "kind": "statement", "text": "Obrigar o orçamento de {field} a {value}% do PIB", "fields": {"field": {"t": "choice", "of": "budget_field", "d": "sp_health"}, "value": {"t": "pct", "d": 5}}, "rank": RANK_LAW, "econ": -0.15},
 	# --- Direitos e obrigações -----------------------------------------------------------
 	{"id": "rg_grant", "cat": "rights", "kind": "statement", "text": "Conceder o direito: {right}", "fields": {"right": {"t": "choice", "of": "right", "d": "greve"}}, "rank": RANK_LAW, "econ": -0.05, "social": 0.5},
@@ -181,6 +183,6 @@ static func compatible(from: String, to: String) -> bool:
 		return to != "bool" or from == "bool" or from == "any"
 	if to == "bool" or from == "bool":
 		return to == from
-	if to == "text" or to == "date" or to == "var" or to == "choice" or to == "unit" or to == "ministry":
+	if to == "text" or to == "date" or to == "var" or to == "choice" or to == "unit" or to == "ministry" or to == "company":
 		return false
 	return from in ["num", "money", "pct", "days"]

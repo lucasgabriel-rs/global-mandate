@@ -212,6 +212,11 @@ func _check_literal(block: Dictionary, key: String, spec: Dictionary, value: Var
 				_err(block, "Parâmetro ausente: escolha o ministério em \"%s\"." % LawProgram.block_text(block))
 			elif _context.has("ministries") and not _context.ministries.has(String(value)) and not _will_create(String(value)):
 				_err(block, "Referência inexistente: não há ministério \"%s\"." % value)
+		"company":
+			if String(value) == "":
+				_err(block, "Parâmetro ausente: escolha a empresa em \"%s\"." % LawProgram.block_text(block))
+			elif _context.has("companies") and not _context.companies.has(String(value)):
+				_err(block, "Referência inexistente: não há empresa \"%s\" no país." % value)
 		"unit":
 			if int(value) >= 0 and _context.has("units") and not _context.units.has(int(value)):
 				_err(block, "Referência inexistente: essa unidade do território não existe mais.")
@@ -250,6 +255,15 @@ func _check_block_logic(block: Dictionary, set_here: Dictionary) -> void:
 				_err(block, "Variável não inicializada: \"%s\" nunca é definida nesta norma." % name_)
 			elif not set_here.has(name_) and _var_articles.get(name_, {}).keys() == [_article]:
 				_err(block, "Variável não inicializada: \"%s\" é usada antes de ser definida." % name_)
+		"ec_privatize":
+			var name_ := String(block.fields.get("company", ""))
+			if _context.has("companies") and _context.companies.has(name_) and float(_context.companies[name_]) <= 0.0:
+				_err(block, "Operação impossível: o Estado não tem participação em %s." % name_)
+		"ec_nationalize":
+			var name_ := String(block.fields.get("company", ""))
+			var share: Variant = _literal_number(block, "stake")
+			if share != null and _context.has("companies") and _context.companies.has(name_) and float(_context.companies[name_]) * 100.0 >= share - 0.1:
+				_warn(block, "O Estado já tem %d%% de %s: nada a comprar." % [int(roundf(float(_context.companies[name_]) * 100.0)), name_])
 		"cd_norm":
 			if _context.has("norms") and not _context.norms.has(int(block.fields.get("norm", -1))):
 				_err(block, "Referência inexistente: não há norma nº %s." % block.fields.get("norm", ""))

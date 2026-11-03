@@ -127,6 +127,8 @@ func _ready() -> void:
 		autotest = load("res://tests/ui_society.gd")
 	if OS.get_cmdline_user_args().has("--ui-infra"):
 		autotest = load("res://tests/ui_infra.gd")
+	if OS.get_cmdline_user_args().has("--ui-corporate"):
+		autotest = load("res://tests/ui_corporate.gd")
 	if OS.get_cmdline_user_args().has("--ui-boot"):
 		print("abertura ok: %d países, %d no mapa, %d ms" % [world.countries.size(), map.features.size(), Time.get_ticks_msec()])
 		get_tree().quit()
