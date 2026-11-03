@@ -24,6 +24,34 @@ const NAMES := [
 const CYCLE_BETA := [0.3, 0.5, 1.5, 2.5, 1.2, 1.3, 1.4, 1.0, 1.8, 0.0]
 ## A composição estrutural muda devagar: uma fração por ano em direção ao que a renda pede.
 const STRUCTURAL_PACE := 0.03
+## Composição real aproximada do valor adicionado (% do PIB, contas nacionais de 2022-2024), na ordem de NAMES.
+## Imobiliário e serviços às empresas entram em "Serviços financeiros"; saúde e educação em "Serviços públicos".
+## Os outros países usam a composição prevista pela renda e pelos recursos naturais.
+const CALIBRATION := {
+	"USA": [1.0, 2.5, 11.0, 4.3, 11.5, 3.3, 20.0, 7.0, 3.0, 17.0],
+	"CHN": [7.0, 4.0, 28.0, 7.0, 10.0, 4.5, 12.0, 4.0, 2.0, 12.0],
+	"JPN": [1.0, 0.3, 21.0, 5.5, 13.0, 5.0, 17.0, 5.0, 2.5, 18.0],
+	"DEU": [0.9, 0.5, 20.0, 5.5, 10.0, 4.5, 14.0, 5.0, 1.7, 18.0],
+	"IND": [17.0, 2.5, 15.0, 8.0, 12.0, 6.0, 12.0, 5.0, 3.0, 10.0],
+	"GBR": [0.6, 1.2, 9.0, 6.0, 10.0, 4.0, 22.0, 6.5, 3.0, 20.0],
+	"FRA": [1.6, 0.2, 11.0, 5.5, 10.0, 4.5, 17.0, 5.0, 3.0, 23.0],
+	"ITA": [2.0, 0.4, 15.0, 5.0, 11.0, 5.0, 17.0, 3.5, 4.0, 18.0],
+	"BRA": [7.0, 4.0, 13.0, 3.5, 13.0, 4.5, 15.0, 3.5, 2.5, 17.0],
+	"CAN": [1.7, 8.0, 10.0, 7.0, 10.0, 4.5, 19.0, 3.5, 2.3, 17.0],
+	"RUS": [4.0, 12.0, 14.0, 5.0, 13.0, 7.0, 10.0, 2.5, 1.0, 13.0],
+	"KOR": [1.8, 0.1, 26.0, 5.5, 8.0, 4.0, 13.0, 5.0, 2.0, 14.0],
+	"AUS": [2.5, 10.0, 6.0, 7.5, 8.5, 5.0, 17.0, 2.5, 2.5, 16.0],
+	"MEX": [3.5, 5.0, 18.0, 6.5, 18.0, 6.5, 12.0, 2.0, 2.5, 9.0],
+	"ESP": [2.5, 0.3, 12.0, 6.0, 12.0, 4.5, 15.0, 3.5, 6.5, 17.0],
+	"IDN": [13.0, 9.0, 19.0, 10.0, 13.0, 6.0, 7.0, 4.0, 3.0, 8.0],
+	"SAU": [2.5, 28.0, 13.0, 5.0, 9.0, 3.5, 8.0, 2.0, 2.0, 17.0],
+	"TUR": [6.0, 1.0, 20.0, 6.0, 13.0, 8.0, 11.0, 3.0, 4.0, 9.0],
+	"ARG": [6.0, 4.0, 16.0, 3.0, 13.0, 5.0, 13.0, 3.0, 2.0, 14.0],
+	"ZAF": [2.5, 8.0, 13.0, 3.5, 12.0, 7.0, 20.0, 3.0, 2.0, 18.0],
+	"NOR": [1.6, 20.0, 6.5, 6.0, 8.0, 4.0, 13.0, 4.0, 1.5, 22.0],
+	"NGA": [24.0, 7.0, 9.0, 4.0, 16.0, 1.5, 9.0, 10.0, 1.0, 4.0],
+	"EGY": [11.0, 8.0, 15.0, 7.0, 14.0, 4.0, 8.0, 2.5, 3.0, 8.0],
+}
 
 
 ## Composição "natural" para a renda e a dotação de recursos do país, somando 1.
@@ -58,7 +86,20 @@ static func structural_shares(c: Country, world: GameWorld) -> PackedFloat32Arra
 
 
 static func init_country(c: Country, world: GameWorld) -> void:
-	c.sector_base = structural_shares(c, world)
+	var model := structural_shares(c, world)
+	c.sector_base = model.duplicate()
+	# O desvio entre o dado real e o modelo fica guardado: a mudança estrutural parte dele, não o apaga.
+	c.sector_bias = PackedFloat32Array()
+	c.sector_bias.resize(COUNT)
+	c.sector_bias.fill(1.0)
+	if CALIBRATION.has(c.iso):
+		var real: Array = CALIBRATION[c.iso]
+		var total := 0.0
+		for x: float in real:
+			total += x
+		for i in COUNT:
+			c.sector_base[i] = float(real[i]) / total
+			c.sector_bias[i] = c.sector_base[i] / maxf(model[i], 0.0001)
 	c.sector_share = c.sector_base.duplicate()
 	c.sector_out = PackedFloat32Array()
 	c.sector_out.resize(COUNT)
@@ -107,8 +148,12 @@ static func step_month(c: Country, world: GameWorld) -> void:
 		init_country(c, world)
 	if world.month == 0:
 		var target := structural_shares(c, world)
+		var total := 0.0
 		for i in COUNT:
-			c.sector_base[i] += (target[i] - c.sector_base[i]) * STRUCTURAL_PACE
+			target[i] *= c.sector_bias[i] if c.sector_bias.size() == COUNT else 1.0
+			total += target[i]
+		for i in COUNT:
+			c.sector_base[i] += (target[i] / total - c.sector_base[i]) * STRUCTURAL_PACE
 	# Secas e quebras de safra: raras, curtas e mais prováveis onde a agricultura pesa mais.
 	c.sector_drought *= 0.8
 	if world.rng.randf() < 0.004:

@@ -121,6 +121,7 @@ var stock := 100.0             # índice da bolsa; quem o move é o Corporate
 
 # Setores (ver Sectors): frações do PIB que somam 1, produto real por setor e impulsos externos
 var sector_base := PackedFloat32Array()
+var sector_bias := PackedFloat32Array()
 var sector_share := PackedFloat32Array()
 var sector_out := PackedFloat32Array()
 ## Ganho de produtividade por setor que outros sistemas aplicam (0.03 = +3%). Infraestrutura e empresas somam aqui.
