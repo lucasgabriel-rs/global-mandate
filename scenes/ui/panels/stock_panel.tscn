@@ -2,6 +2,7 @@
 
 [ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="1_theme"]
 [ext_resource type="Script" path="res://scripts/ui/stock_panel.gd" id="2_script"]
+[ext_resource type="Script" path="res://scripts/ui/chart.gd" id="3_chart"]
 
 [node name="stock" type="VBoxContainer"]
 size_flags_horizontal = 3
@@ -16,10 +17,158 @@ theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_font_sizes/font_size = 11
 text = "BOLSA DE VALORES"
 
-[node name="Nota" type="Label" parent="."]
+[node name="exchange" type="Label" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Bolsa"
+autowrap_mode = 3
+
+[node name="Indice" type="HBoxContainer" parent="."]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="index_value" type="Label" parent="Indice"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "100"
+
+[node name="Variacoes" type="VBoxContainer" parent="Indice"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="index_month" type="Label" parent="Indice/Variacoes"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "+0,0% no mês"
+
+[node name="index_year" type="Label" parent="Indice/Variacoes"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "+0,0% em 12 meses"
+
+[node name="index_chart" type="Control" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 96)
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("3_chart")
+title = "Índice (pontos)"
+color = Color(0.9490196, 0.7019608, 0.23921569, 1)
+format = "num0"
+series_key = "stock"
+
+[node name="cap_chart" type="Control" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 72)
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("3_chart")
+title = "Valor de mercado (US$ bi)"
+format = "num0"
+series_key = "mcap"
+
+[node name="Numeros" type="GridContainer" parent="."]
+layout_mode = 2
+theme_override_constants/h_separation = 12
+theme_override_constants/v_separation = 2
+columns = 2
+
+[node name="total_cap" type="Label" parent="Numeros"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 12
+text = "Valor de mercado: US$ 0"
+
+[node name="cap_gdp" type="Label" parent="Numeros"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 12
+text = "0% do PIB"
+
+[node name="pe" type="Label" parent="Numeros"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "P/L médio: 0"
+
+[node name="dy" type="Label" parent="Numeros"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Dividendos: 0%"
+
+[node name="listed" type="Label" parent="Numeros"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "0 listadas"
+
+[node name="state_cap" type="Label" parent="Numeros"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Estado: US$ 0"
+
+[node name="ALTAS" type="Label" parent="."]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 11
+text = "MAIORES ALTAS DO MÊS"
+
+[node name="gainers" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 2
+
+[node name="BAIXAS" type="Label" parent="."]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 11
+text = "MAIORES BAIXAS DO MÊS"
+
+[node name="losers" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 2
+
+[node name="MOVIMENTOS" type="Label" parent="."]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 11
+text = "IPOS E MOVIMENTOS RECENTES"
+
+[node name="events" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 2
+
+[node name="events_empty" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 12
+text = "Nenhuma abertura de capital, falência ou privatização ainda."
+autowrap_mode = 3
+
+[node name="no_exchange" type="Label" parent="."]
+unique_name_in_owner = true
+visible = false
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_font_sizes/font_size = 12
-text = "A bolsa de valores do país."
+text = "O país não tem bolsa de valores: as empresas são todas de capital fechado. O índice acompanha só a economia."
 autowrap_mode = 3

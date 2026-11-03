@@ -107,11 +107,14 @@ var rng_seed := 0
 ## Sobe a cada mudança, para a interface saber quando redesenhar.
 var revision := 0
 var _rng := RandomNumberGenerator.new()
+## O mundo, para o compilador consultar as empresas do país (privatizar e estatizar).
+var _world: WeakRef
 
 
 func setup(world: GameWorld) -> void:
 	var c := world.player
 	iso = c.iso
+	_world = weakref(world)
 	_rng.seed = hash("legislacao" + c.iso)
 	constitution = _seed_constitution(c, world.politics.data_of(c.iso))
 	norms = {}
@@ -363,7 +366,11 @@ func compile_context(type: String) -> Dictionary:
 			ministries[String(op.get("name", ""))] = true
 	for p: Dictionary in Politics.PORTFOLIOS:
 		ministries[String(p.label)] = true
-	return {"rank": int(NORM_TYPES[type].rank), "norms": numbers, "institutions": institutions, "ministries": ministries}
+	var context := {"rank": int(NORM_TYPES[type].rank), "norms": numbers, "institutions": institutions, "ministries": ministries}
+	var world: GameWorld = _world.get_ref() if _world else null
+	if world:
+		context["companies"] = world.corporate.state_shares(iso)
+	return context
 
 
 func compile_norm(norm: Dictionary) -> Dictionary:
@@ -1566,6 +1573,14 @@ func _commit(world: GameWorld, norm: Dictionary, effects: Array, _view: Dictiona
 				_ministry_op(world, str(effect.block), {"op": "merge", "a": String(v.a), "b": String(v.b), "name": String(v.name)}, who, prio)
 			"ad_min_abolish":
 				_ministry_op(world, str(effect.block), {"op": "abolish", "a": String(v.a)}, who, prio)
+			"ec_privatize":
+				var note := world.corporate.privatize(world, c, String(v.company), float(v.stake) / 100.0 * clampf(w, 0.0, 1.0))
+				if note != "":
+					notes.append(note)
+			"ec_nationalize":
+				var note := world.corporate.nationalize(world, c, String(v.company), float(v.stake) / 100.0)
+				if note != "":
+					notes.append(note)
 			"ec_treasury":
 				var usd := minf(float(v.amount) * w, maxf(c.reserves * 0.5, 0.0))
 				c.reserves -= usd
@@ -1883,6 +1898,7 @@ func to_dict() -> Dictionary:
 
 
 func from_dict(d: Dictionary, world: GameWorld) -> void:
+	_world = weakref(world)
 	for key: String in ["iso", "norms", "next_id", "constitution", "standing", "licenses", "registry", "obligations", "pending", "variables", "audit", "fired", "failures", "revenue_ring", "spend_ring", "last_war"]:
 		if d.has(key):
 			set(key, d[key])

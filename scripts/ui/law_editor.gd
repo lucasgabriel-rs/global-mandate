@@ -265,6 +265,23 @@ func _field_row(block: Dictionary, key: String, spec: Dictionary) -> Control:
 			option.item_selected.connect(func(i: int):
 				block.fields[key] = option.get_item_metadata(i)
 				_after_edit())
+		"company":
+			option.visible = true
+			option.add_item("Escolha a empresa")
+			option.set_item_metadata(0, "")
+			var listing: Array = world.corporate.companies_of(world.legislation.iso).duplicate()
+			listing.sort_custom(func(a, b): return float(a.value) > float(b.value))
+			for co: Dictionary in listing:
+				var label := String(co.name)
+				if float(co.state) > 0.0:
+					label += " (Estado: %d%%)" % int(roundf(float(co.state) * 100.0))
+				option.add_item(label)
+				option.set_item_metadata(option.item_count - 1, String(co.name))
+				if String(co.name) == String(block.fields.get(key, "")):
+					option.select(option.item_count - 1)
+			option.item_selected.connect(func(i: int):
+				block.fields[key] = option.get_item_metadata(i)
+				_after_edit())
 		"unit":
 			option.visible = true
 			option.add_item("Qualquer parte do país")
@@ -304,6 +321,7 @@ const FIELD_NAMES := {
 	"a": "Primeiro valor", "b": "Segundo valor", "lo": "Mínimo", "hi": "Máximo", "times": "Vezes", "set": "Cada", "status": "Situação", "posts": "Vagas", "salary": "Salário anual",
 	"cost": "Custo anual (bilhões)", "purpose": "Finalidade", "share": "Parte isenta (%)", "max": "Limite por pessoa", "sector": "Setor", "right": "Direito", "cond": "Condição",
 	"vtype": "Tipo da variável", "profession": "Profissão", "unit": "Território", "area": "Área",
+	"company": "Empresa", "stake": "Participação (%)",
 }
 
 
