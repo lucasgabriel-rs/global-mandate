@@ -1508,10 +1508,12 @@ func _named_values(kind: String) -> Dictionary:
 
 static func _collect(c: Country, usd_bi: float) -> void:
 	c.law_rev_bucket += usd_bi
+	c.law_rev_month += usd_bi
 
 
 static func _pay(c: Country, usd_bi: float) -> void:
 	c.law_spend_bucket += usd_bi
+	c.law_spend_month += usd_bi
 
 
 ## Aplica os efeitos de uma execução bem-sucedida. O peso e o grupo viram dinheiro de verdade aqui.
@@ -1708,8 +1710,10 @@ func step_month(world: GameWorld) -> void:
 
 ## Traduz o que está em vigor em pressão sobre a economia, a aprovação e a estabilidade.
 func _update_macro(c: Country) -> void:
-	revenue_ring.append(c.law_rev_bucket)
-	spend_ring.append(c.law_spend_bucket)
+	revenue_ring.append(c.law_rev_month)
+	spend_ring.append(c.law_spend_month)
+	c.law_rev_month = 0.0
+	c.law_spend_month = 0.0
 	if revenue_ring.size() > 12:
 		revenue_ring.pop_front()
 		spend_ring.pop_front()

@@ -330,6 +330,8 @@ func _on_toggle_peg() -> void:
 	var c := world.player
 	if not world.in_office:
 		return
+	if c == world.usa:
+		return
 	if c.peg == 2:
 		world.emit_news("Membros do euro não têm moeda própria.", "economia", c)
 	elif c.peg == 1:
@@ -774,7 +776,14 @@ func _refresh_monetary(c: Country) -> void:
 	elif c.rate_manual:
 		status = "Juro definido pelo governo"
 	_dyn.m_status.text = status
-	(_sliders.rate_set as HSlider).editable = _can_set_rate(c)
+	var rate_slider: HSlider = _sliders.rate_set
+	rate_slider.editable = _can_set_rate(c)
+	# Fora do juro manual, o controle mostra a taxa que quem decide (banco central, BCE ou Fed) está praticando.
+	if not rate_slider.editable:
+		rate_slider.set_value_no_signal(c.rate * 100.0)
+		_label_slider("rate_set", c.rate)
+	var peg_toggle: Button = %AlternarFlutuanteAncoraNoDolar
+	peg_toggle.disabled = c == world.usa or c.peg == 2 or not world.in_office
 	var toggle: Button = %AlternarRegraDeTaylorJuro
 	toggle.disabled = c.cb_independent or c.peg != 0 or not world.in_office
 	toggle.tooltip_text = "O banco central é independente: o governo não escolhe o juro. A Constituição pode mudar isso por emenda." if c.cb_independent else "Manual dá controle direto, mas interferência reduz a credibilidade do banco central."
@@ -795,7 +804,7 @@ func _refresh_trade(c: Country) -> void:
 	_dyn.t_exp.text = UiKit.money(c.exports)
 	_dyn.t_imp.text = UiKit.money(c.imports)
 	_dyn.t_ca.text = UiKit.pct(c.ca_ratio)
-	_dyn.t_loss.text = "%+.1f%%" % (c.trade_loss * 100.0)
+	_dyn.t_loss.text = ("+" if c.trade_loss >= 0.0 else "") + UiKit.pct(c.trade_loss)
 	_dyn.t_loss.add_theme_color_override("font_color", UiKit.good_bad(c.trade_loss))
 	for i in 5:
 		var net := c.prod[i] * c.prod_factor[i] - c.use[i] * pow(c.y / c.y0, Markets.INCOME_ELAST[i])

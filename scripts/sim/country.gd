@@ -57,6 +57,8 @@ var r_n := 0.01                # juro real neutro
 var cb_independent := true
 var rate_manual := false
 var rate_set := 0.03
+## Último juro anunciado no noticiário (negativo: ainda nenhum).
+var rate_said := -1.0
 var e := 1.0                   # moeda local por US$ (índice, 1 no início)
 var rer := 1.0
 var rer_ref := 1.0
@@ -150,6 +152,10 @@ var next_election := 0.0
 ## Efeitos das normas em vigor. Os "bucket" são o dinheiro do mês, em US$ bi.
 var law_rev_bucket := 0.0
 var law_spend_bucket := 0.0
+## O mesmo dinheiro somado desde o último fechamento mensal das normas: a Economia zera os "bucket" no dia
+## da etapa fiscal do país, que não coincide com o fechamento.
+var law_rev_month := 0.0
+var law_spend_month := 0.0
 var law_tax := 0.0             # peso anual dos tributos das normas, em fração do PIB
 var law_spend := 0.0           # peso anual das despesas das normas, em fração do PIB
 var law_approval := 0.0

@@ -107,6 +107,10 @@ func setup(seed_value: int = 0) -> void:
 		Economy.finish_init(c, self)
 		Sectors.init_country(c, self)
 		c.push_hist("y", c.y)
+		Economy.record_start(c)
+	# Gráficos já têm o ponto de partida no primeiro dia.
+	for i in 5:
+		markets.push_hist(i)
 	diplomacy.setup(self)
 	diplomacy.refresh_sanction_cache(self)
 	subdivisions.load_base(GameData.load_admin1())

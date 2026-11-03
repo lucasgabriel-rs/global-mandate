@@ -14,6 +14,9 @@ const KY := 3.0
 const OKUN := 0.40
 const KAPPA := 0.30
 const MAX_RATE := 1.2
+const RATINGS := ["AAA", "AA", "A", "BBB", "BB", "B", "CCC", "CC"]
+## Economias acima desta fatia do PIB mundial viram notícia quando entram em recessão ou mudam de nota.
+const NEWS_SHARE := 0.02
 
 
 static func init_country(c: Country, row: Dictionary, world: GameWorld) -> void:
@@ -168,6 +171,9 @@ static func finish_init(c: Country, world: GameWorld) -> void:
 	c.comm_exports = comm_x
 	for i in 5:
 		c.p_ref[i] = 1.0
+	# As contas do ano e a nota já valem no primeiro dia, antes da primeira etapa mensal.
+	_fiscal_flows(c)
+	c.rating = _rating_from(c.risk)
 
 
 static func step_month(c: Country, world: GameWorld) -> void:
@@ -381,7 +387,10 @@ static func _external(c: Country, world: GameWorld) -> void:
 		cap_flow = clampf((c.rate - world.usa.rate - c.risk * 0.5) * 2.0, -0.08, 0.08) * yusd
 		c.reserves += (c.ca + cap_flow) * 0.5 * DT
 	elif c.peg == 0:
-		c.reserves += c.ca * 0.08 * DT
+		# Flutuante: o câmbio e o capital estrangeiro fecham o balanço. O banco central guarda parte dos
+		# superávits e só queima reservas quando o capital foge (risco acima do de partida).
+		var flight := clampf((c.risk - c.risk0) * 8.0, 0.0, 1.0)
+		c.reserves += c.ca * 0.08 * (1.0 if c.ca > 0.0 else flight) * DT
 	c.reserves = maxf(c.reserves, 0.0)
 	if c.peg == 1 and c.reserves < c.imports / 12.0 * 0.7 and c.ca < 0.0:
 		_break_peg(c, world)
@@ -398,26 +407,7 @@ static func _break_peg(c: Country, world: GameWorld) -> void:
 
 static func _fiscal(c: Country, world: GameWorld) -> void:
 	var yn := c.y_nominal()
-	var yn_pot := c.y_pot * c.p
-	var tax_rate := c.tax_total()
-	# Curva de Laffer: acima de ~48% a evasão corrói a arrecadação. Elasticidade cíclica de 1,1.
-	var collection := clampf(1.0 - 2.2 * maxf(tax_rate - 0.48, 0.0) ** 1.3, 0.55, 1.0)
-	var tax_rev := tax_rate * yn * (1.0 + 0.1 * c.gap) * collection
-	var rent := c.comm_exports * c.e * c.rent_take
-	var tariff_rev := c.tariff * c.imports * c.e * 0.7
-	c.revenue = tax_rev + rent + tariff_rev + c.aid_flow * c.e * 0.85 + (c.law_rev_bucket + c.extra_rev_bucket) * 12.0 * c.e
-
-	var prog := yn_pot * (c.sp_health + c.sp_education + c.sp_infra + c.sp_defense + c.sp_admin)
-	# Estabilizador automático: gasto social sobe quando há desemprego.
-	var social := c.sp_social * yn_pot * (1.0 + 2.0 * clampf(c.unemp - c.unemp_n, -0.03, 0.2))
-	var war_cost := c.mobilization * 0.035 * yn_pot
-	c.interest = c.debt_loc * c.avg_rate + c.debt_fx * c.e * c.avg_fx
-	c.spending = prog + social + war_cost + c.interest + c.reparations * c.e + (c.law_spend_bucket + c.extra_spend_bucket) * 12.0 * c.e
-	c.law_rev_bucket = 0.0
-	c.law_spend_bucket = 0.0
-	c.extra_rev_bucket = 0.0
-	c.extra_spend_bucket = 0.0
-	c.deficit = c.spending - c.revenue
+	_fiscal_flows(c)
 
 	var no_market := world.year_float() < c.default_until
 	var financed_by_cb := c.mon_fin
@@ -440,8 +430,38 @@ static func _fiscal(c: Country, world: GameWorld) -> void:
 	# Dívida rola em ~6 anos: o custo médio segue o rendimento de mercado com atraso.
 	c.avg_rate += (c.yield_gov * c.yield_mult - c.avg_rate) * DT / 6.0
 	c.avg_fx += ((world.usa.rate + 0.005 + minf(c.risk, 0.25)) * c.yield_mult - c.avg_fx) * DT / 6.0
+	var old_rating := c.rating
 	c.rating = _rating_for(c)
+	if c.rating != old_rating and old_rating != "D" and world.year_float() >= c.default_until and _newsworthy(c, world):
+		var down := RATINGS.find(c.rating) > RATINGS.find(old_rating)
+		world.emit_news("Agências %s a nota de crédito de %s de %s para %s." % ["rebaixam" if down else "elevam", c.name, old_rating, c.rating], "crise" if down and c == world.player else "economia", c)
 	_check_default(c, world)
+
+
+## Receita, gasto, juros e déficit do ano, a partir das alíquotas e do gasto em vigor. Consome o dinheiro
+## avulso do mês (normas, estatais, obras).
+static func _fiscal_flows(c: Country) -> void:
+	var yn := c.y_nominal()
+	var yn_pot := c.y_pot * c.p
+	var tax_rate := c.tax_total()
+	# Curva de Laffer: acima de ~48% a evasão corrói a arrecadação. Elasticidade cíclica de 1,1.
+	var collection := clampf(1.0 - 2.2 * maxf(tax_rate - 0.48, 0.0) ** 1.3, 0.55, 1.0)
+	var tax_rev := tax_rate * yn * (1.0 + 0.1 * c.gap) * collection
+	var rent := c.comm_exports * c.e * c.rent_take
+	var tariff_rev := c.tariff * c.imports * c.e * 0.7
+	c.revenue = tax_rev + rent + tariff_rev + c.aid_flow * c.e * 0.85 + (c.law_rev_bucket + c.extra_rev_bucket) * 12.0 * c.e
+
+	var prog := yn_pot * (c.sp_health + c.sp_education + c.sp_infra + c.sp_defense + c.sp_admin)
+	# Estabilizador automático: gasto social sobe quando há desemprego.
+	var social := c.sp_social * yn_pot * (1.0 + 2.0 * clampf(c.unemp - c.unemp_n, -0.03, 0.2))
+	var war_cost := c.mobilization * 0.035 * yn_pot
+	c.interest = c.debt_loc * c.avg_rate + c.debt_fx * c.e * c.avg_fx
+	c.spending = prog + social + war_cost + c.interest + c.reparations * c.e + (c.law_spend_bucket + c.extra_spend_bucket) * 12.0 * c.e
+	c.law_rev_bucket = 0.0
+	c.law_spend_bucket = 0.0
+	c.extra_rev_bucket = 0.0
+	c.extra_spend_bucket = 0.0
+	c.deficit = c.spending - c.revenue
 
 
 static func _risk_premium(c: Country, world: GameWorld) -> float:
@@ -465,8 +485,21 @@ static func _risk_premium(c: Country, world: GameWorld) -> float:
 	return clampf(r, 0.0, 0.6)
 
 
+## A nota só muda quando o risco passa do limite com folga de 10%: agências não oscilam todo mês.
 static func _rating_for(c: Country) -> String:
-	var s := c.risk
+	var now := RATINGS.find(c.rating)
+	if now < 0:
+		return _rating_from(c.risk)
+	var worse := RATINGS.find(_rating_from(c.risk * 0.9))
+	if worse > now:
+		return RATINGS[worse]
+	var better := RATINGS.find(_rating_from(c.risk * 1.1))
+	if better < now:
+		return RATINGS[better]
+	return c.rating
+
+
+static func _rating_from(s: float) -> String:
 	if s < 0.006: return "AAA"
 	if s < 0.012: return "AA"
 	if s < 0.02: return "A"
@@ -629,8 +662,49 @@ static func banking_crisis(c: Country, world: GameWorld) -> void:
 	world.emit_news("Crise bancária em %s: crédito congela e o Tesouro socorre bancos." % c.name, "crise", c)
 
 
-static func _record(c: Country, _world: GameWorld) -> void:
+static func _newsworthy(c: Country, world: GameWorld) -> bool:
+	return c == world.player or c.y_usd() > world.world_gdp() * NEWS_SHARE
+
+
+## Recessão, inflação e juros do jogador viram manchete; de outras grandes economias, só a recessão.
+static func _macro_news(c: Country, world: GameWorld) -> void:
+	var g := c.growth_yoy()
+	var s: PackedFloat32Array = c.hist.get("growth", PackedFloat32Array())
+	if s.size() >= 13 and _newsworthy(c, world):
+		var before := s[s.size() - 1]
+		if g < 0.0 and before >= 0.0:
+			world.emit_news("%s entra em recessão: o PIB encolhe %s em 12 meses." % [c.name, UiKit.pct(-g)], "crise" if c == world.player else "economia", c)
+		elif g >= 0.005 and before < 0.0:
+			world.emit_news("%s sai da recessão: o PIB volta a crescer." % c.name, "economia", c)
+	if c != world.player:
+		return
+	var infl: PackedFloat32Array = c.hist.get("infl", PackedFloat32Array())
+	if infl.size() >= 1:
+		for limit: float in [0.1, 0.25, 0.5, 1.0]:
+			if c.pi_yoy > limit and infl[infl.size() - 1] <= limit:
+				world.emit_news("Inflação em %s passa de %s ao ano." % [c.name, UiKit.pct(limit, 0)], "crise" if limit >= 0.25 else "economia", c)
+	# O banco central anuncia quando o juro já andou meio ponto desde o último anúncio.
+	if c.rate_said < 0.0:
+		c.rate_said = c.rate
+	elif absf(c.rate - c.rate_said) >= 0.005:
+		var who := "O BCE" if c.peg == 2 else "O banco central de %s" % c.name
+		world.emit_news("%s %s o juro básico para %s ao ano." % [who, "eleva" if c.rate > c.rate_said else "reduz", UiKit.pct(c.rate, 2)], "economia", c)
+		c.rate_said = c.rate
+
+
+static func _record(c: Country, world: GameWorld) -> void:
+	_macro_news(c, world)
 	c.push_hist("y", c.y)
+	_push_series(c)
+
+
+## O ponto de partida de cada gráfico, para nenhum aparecer vazio no primeiro mês. O PIB real ("y") já
+## entra no início e mede o crescimento em 12 meses; não pode repetir.
+static func record_start(c: Country) -> void:
+	_push_series(c)
+
+
+static func _push_series(c: Country) -> void:
 	c.push_hist("gdp", c.y_usd())
 	c.push_hist("growth", c.growth_yoy())
 	c.push_hist("infl", c.pi_yoy)

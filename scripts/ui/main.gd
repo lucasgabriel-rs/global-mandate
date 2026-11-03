@@ -139,6 +139,8 @@ func _ready() -> void:
 		autotest = load("res://tests/ui_profile.gd")
 	if OS.get_cmdline_user_args().has("--ui-economy"):
 		autotest = load("res://tests/ui_economy.gd")
+	if OS.get_cmdline_user_args().has("--ui-econ-audit"):
+		autotest = load("res://tests/ui_econ_audit.gd")
 	if OS.get_cmdline_user_args().has("--ui-layout"):
 		autotest = load("res://tests/ui_layout.gd")
 	if autotest:

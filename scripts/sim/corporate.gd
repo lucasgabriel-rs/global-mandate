@@ -506,7 +506,8 @@ func _log(m: Dictionary, world: GameWorld, kind: String, co: Dictionary, value: 
 func step_month(world: GameWorld) -> void:
 	var rng := _rng
 	# O humor mundial sente o risco global: subida brusca do risco derruba todas as bolsas juntas.
-	global_mood += -0.07 * global_mood + rng.randfn(0.0, 0.02) - 1.5 * (world.global_risk - _last_risk)
+	# O risco global já oscila uns 5 pontos por mês; com peso 0,6 a bolsa americana varia ~5% ao mês, como a real.
+	global_mood += -0.07 * global_mood + rng.randfn(0.0, 0.02) - 0.6 * (world.global_risk - _last_risk)
 	global_mood = clampf(global_mood, -1.0, 0.6)
 	_last_risk = world.global_risk
 	# Governos estrangeiros apertados vendem participações; regimes fechados às vezes tomam empresas.

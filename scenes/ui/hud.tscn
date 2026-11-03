@@ -3050,10 +3050,15 @@ mouse_filter = 2
 
 [node name="dossier_leader" type="Label" parent="dossier/Rolagem/dossier_body/Linha19" unique_id=1374157578]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 4.0
 theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
 theme_override_font_sizes/font_size = 13
 text = "—"
+horizontal_alignment = 2
+autowrap_mode = 3
 
 [node name="Linha20" type="HBoxContainer" parent="dossier/Rolagem/dossier_body" unique_id=181312939]
 layout_mode = 2
