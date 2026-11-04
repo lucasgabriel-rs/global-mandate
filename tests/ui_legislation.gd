@@ -115,7 +115,7 @@ func _run() -> void:
 	await _click(open_button)
 	var center := _top()
 	_check(center is LegislationCenter, "o botão da aba Política abre o centro legislativo")
-	_check(main.modal_open, "o tempo para com a janela aberta")
+	_check(main.legislation_center() != null, "o centro abre como janela flutuante")
 	await _shot("l1_centro")
 	for tab in 5:
 		center.get_node("%tabs").current_tab = tab
@@ -266,7 +266,7 @@ func _run() -> void:
 	_check(center is LegislationCenter, "voltar retorna à tramitação")
 	center.get_node("%close").pressed.emit()
 	await _wait()
-	_check(not main.modal_open, "fechar devolve o tempo")
+	_check(main.legislation_center() == null and not main.modal_open, "fechar tira a janela")
 	for i in 150:
 		main.world.player.next_election = 9999.0
 		main.world.tick_day()
@@ -344,8 +344,12 @@ func _run() -> void:
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(main.BACKUP_PATH))
 
 
+## A tela da frente: um modal aberto, ou a janela do centro legislativo.
 func _top() -> Control:
-	return main.modal_root.get_child(main.modal_root.get_child_count() - 1)
+	var n: int = main.modal_root.get_child_count()
+	if not main.modal_open and main.legislation_center() != null:
+		return main.legislation_center()
+	return main.modal_root.get_child(n - 1)
 
 
 func _find_view(from: Node, type: String) -> LawBlockView:

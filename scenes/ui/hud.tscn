@@ -26,6 +26,7 @@
 [ext_resource type="Texture2D" path="res://assets/ui/dock/ministros.svg" id="wi_ministros"]
 [ext_resource type="Texture2D" path="res://assets/ui/dock/economia.svg" id="wi_economia"]
 
+[ext_resource type="Texture2D" path="res://assets/ui/dock/legislacao.svg" id="wi_legislacao"]
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_el1dq"]
 content_margin_left = 8.0
 content_margin_top = 8.0
@@ -3556,6 +3557,14 @@ theme_override_constants/separation = 6
 [node name="economy" parent="desk/w_economia/Economia/Margem/Coluna" unique_id=409467782 instance=ExtResource("sub_6")]
 unique_name_in_owner = true
 layout_mode = 2
+
+[node name="w_legislacao" parent="desk" instance=ExtResource("fw_1")]
+layout_mode = 0
+offset_right = 1180.0
+offset_bottom = 720.0
+title = "Centro legislativo"
+icon = ExtResource("wi_legislacao")
+default_size = Vector2(1180, 720)
 
 [node name="dock" parent="." instance=ExtResource("dock_1")]
 unique_name_in_owner = true

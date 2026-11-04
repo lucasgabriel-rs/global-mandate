@@ -36,8 +36,12 @@ func _shot(name_: String) -> void:
 	get_viewport().get_texture().get_image().save_png("%s/%s.png" % [out, name_])
 
 
+## A tela da frente: um modal aberto, ou a janela do centro legislativo.
 func _top() -> Control:
-	return main.modal_root.get_child(main.modal_root.get_child_count() - 1)
+	var n: int = main.modal_root.get_child_count()
+	if not main.modal_open and main.legislation_center() != null:
+		return main.legislation_center()
+	return main.modal_root.get_child(n - 1)
 
 
 func _run() -> void:

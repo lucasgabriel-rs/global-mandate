@@ -6,8 +6,7 @@ extends Control
 
 signal tab_changed(index: int)
 
-## Onde a primeira janela aparece; as próximas descem em cascata.
-const FIRST_SPOT := Vector2(16, 52)
+## As janelas abrem no centro da tela; cada janela a mais desce um degrau em cascata.
 const CASCADE := Vector2(28, 26)
 
 var current_tab: int:
@@ -66,7 +65,8 @@ func open(i: int, from := Vector2.ZERO) -> void:
 	if w.is_open:
 		w.raise()
 		return
-	w.open_at(FIRST_SPOT + CASCADE * float(open_count() % 6))
+	var step := float(open_count() % 6) - 1.5
+	w.open_at(((size - w.size) * 0.5 + CASCADE * step).floor())
 
 
 func close(i: int) -> void:

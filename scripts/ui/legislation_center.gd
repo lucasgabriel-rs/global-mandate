@@ -1,5 +1,5 @@
 class_name LegislationCenter
-extends ColorRect
+extends MarginContainer
 ## Gerenciador de normas: lista e situação, tramitação, Constituição, instituições e auditoria.
 
 const NORM_ROW := preload("res://scenes/ui/legislation/norm_row.tscn")
@@ -26,8 +26,8 @@ func setup(owner_main: Node, tab := 0, message := "") -> void:
 	leg = world.legislation
 	_tabs.current_tab = tab
 	_feedback.text = message
-	(%role_note as Label).text = "Você atua como %s. Fundo de %s: %s. O tempo fica parado enquanto esta janela está aberta." % [Legislation.ROLE_LABELS[leg.role(world)], world.politics.player_party(world).get("short", "seu partido"), UiKit.millions(world.politics.party_fund(world))]
-	%close.pressed.connect(func(): main._close_modal(self))
+	(%role_note as Label).text = "Você atua como %s. Fundo de %s: %s." % [Legislation.ROLE_LABELS[leg.role(world)], world.politics.player_party(world).get("short", "seu partido"), UiKit.millions(world.politics.party_fund(world))]
+	%close.pressed.connect(func(): main.close_legislation())
 	var types: OptionButton = %new_type
 	for key: String in Legislation.NORM_TYPES:
 		if key != "constituicao" and key != "emenda" and leg.can(world, "present", key):

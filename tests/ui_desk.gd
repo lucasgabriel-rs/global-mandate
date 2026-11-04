@@ -65,7 +65,7 @@ func _run() -> void:
 	await _wait()
 	_check(not (hud.get_node("%date") as Label).text.contains(":"), "a data aparece sem a hora: " + (hud.get_node("%date") as Label).text)
 	_check(desk.open_count() == 0, "o jogo começa sem janelas abertas, com o mapa livre")
-	_check(dock.items().size() == 11, "o dock tem 11 ícones: %d" % dock.items().size())
+	_check(dock.items().size() == desk.get_tab_count(), "o dock tem um ícone por janela: %d" % dock.items().size())
 	await _shot("d1_mapa_livre")
 
 	# Abrir pelo dock.
@@ -127,10 +127,15 @@ func _run() -> void:
 	for it in dock.items():
 		if it.action == "legislation":
 			await _press(it)
-	_check(main.modal_open, "o ícone da legislação abre o centro legislativo")
+	_check(main.legislation_center() != null and desk.current_tab == hud.LEGISLATION_WINDOW, "o ícone da legislação abre o centro legislativo como janela")
+	_check(not main.modal_open, "o centro não bloqueia o resto da tela")
+	var center_rect := desk.window(hud.LEGISLATION_WINDOW).get_rect()
+	_check(absf(center_rect.get_center().x - desk.size.x * 0.5) < 60.0, "a janela abre no centro da tela")
 	await _shot("d3_legislacao")
-	_top().get_node("%close").pressed.emit()
-	await _wait()
+	for it in dock.items():
+		if it.action == "legislation":
+			await _press(it)
+	_check(main.legislation_center() == null, "clicar de novo no ícone minimiza o centro")
 
 	# Dock com o mouse em cima: os ícones crescem.
 	desk.current_tab = 7

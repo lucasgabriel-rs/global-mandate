@@ -787,11 +787,33 @@ func _drop_law_screens() -> void:
 			child.queue_free()
 
 
+## O centro legislativo é uma janela flutuante como as outras; editor, norma e emenda continuam por cima, em tela própria.
 func open_legislation(tab := 0, message := "") -> void:
 	if not playing or (modal_open and not _law_screen_open()):
 		return
-	var dim: LegislationCenter = _swap_law_screen(LEGISLATION_CENTER)
-	dim.setup(self, tab, message)
+	_drop_law_screens()
+	_sync_modal_state()
+	var center: LegislationCenter = LEGISLATION_CENTER.instantiate()
+	hud.show_legislation(center)
+	center.setup(self, tab, message)
+
+
+func close_legislation() -> void:
+	hud.close_legislation()
+
+
+## A janela do centro legislativo, se estiver aberta.
+func legislation_center() -> LegislationCenter:
+	return hud.legislation_center()
+
+
+func _sync_modal_state() -> void:
+	var another := false
+	for child: Node in modal_root.get_children():
+		if child != start_screen and child != _loading_screen and not child.is_queued_for_deletion() and child.visible:
+			another = true
+	modal_open = another
+	map.interactive = not another
 
 
 func reopen_legislation(tab := 0, message := "") -> void:

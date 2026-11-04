@@ -95,7 +95,7 @@ action = ""
 layout_mode = 2
 label = "Centro legislativo"
 icon = ExtResource("ic_legislacao")
-window_index = -1
+window_index = 10
 action = "legislation"
 
 [node name="Separador1" type="ColorRect" parent="items"]

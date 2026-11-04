@@ -53,6 +53,14 @@ func _ready() -> void:
 	_grip.gui_input.connect(_on_grip_input)
 
 
+## Troca o conteúdo da janela por outro (o anterior é descartado).
+func set_content(node: Control) -> void:
+	for child in _body.get_children():
+		_body.remove_child(child)
+		child.queue_free()
+	_body.add_child(node)
+
+
 ## O conteúdo que a janela mostra (o primeiro filho do corpo).
 func content() -> Control:
 	return _body.get_child(0) if _body.get_child_count() > 0 else null

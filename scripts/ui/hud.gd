@@ -44,6 +44,9 @@ var _syncing := false
 var _wars_sig := ""
 var _partners_tick := 0
 var _tick := 0
+## A janela do centro legislativo vem depois das dez do governo.
+const LEGISLATION_WINDOW := 10
+
 var _divisions_tab := -1
 var _politics_tab := -1
 var _cabinet_tab := -1
@@ -123,7 +126,7 @@ func _collect(from: Node) -> void:
 func _tab_of(content: Control) -> int:
 	for i in _desk.get_tab_count():
 		var page := _desk.get_tab_control(i)
-		if page == content or page.is_ancestor_of(content):
+		if page != null and (page == content or page.is_ancestor_of(content)):
 			return i
 	return -1
 
@@ -292,10 +295,29 @@ func _on_tab_changed(_i: int) -> void:
 
 
 func _on_dock_item(item: DockItem) -> void:
-	if item.window_index >= 0:
+	if item.action == "legislation":
+		# O centro é montado de novo a cada abertura; clicar com ele na frente minimiza.
+		if _desk.is_open(LEGISLATION_WINDOW) and _desk.current_tab == LEGISLATION_WINDOW:
+			_desk.toggle(LEGISLATION_WINDOW, _dock.item_center(item))
+		else:
+			_desk.window(LEGISLATION_WINDOW).origin = _dock.item_center(item)
+			legislation_requested.emit()
+	elif item.window_index >= 0:
 		_desk.toggle(item.window_index, _dock.item_center(item))
-	elif item.action == "legislation":
-		legislation_requested.emit()
+
+
+func show_legislation(center: LegislationCenter) -> void:
+	_desk.window(LEGISLATION_WINDOW).set_content(center)
+	_desk.open(LEGISLATION_WINDOW)
+
+
+func close_legislation() -> void:
+	_desk.close(LEGISLATION_WINDOW)
+
+
+func legislation_center() -> LegislationCenter:
+	var w := _desk.window(LEGISLATION_WINDOW)
+	return w.content() as LegislationCenter if w.is_open else null
 
 
 func start_drawing() -> void:
