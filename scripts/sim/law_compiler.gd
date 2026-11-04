@@ -185,7 +185,7 @@ func _check_block_fields(block: Dictionary, set_here := {}) -> void:
 
 func _check_literal(block: Dictionary, key: String, spec: Dictionary, value: Variant) -> void:
 	match spec.t:
-		"text", "var":
+		"text", "var", "ref":
 			if String(value).strip_edges() == "":
 				_err(block, "Parâmetro ausente: preencha o texto em \"%s\"." % LawProgram.block_text(block))
 		"date":

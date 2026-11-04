@@ -152,7 +152,7 @@ func _propose_revocation() -> void:
 	var revocation: Dictionary = leg.start_revocation(world, norm, articles)
 	var r: Dictionary = leg.present(world, revocation)
 	if r.ok:
-		main.reopen_legislation(1, r.msg)
+		main.reopen_legislation(0, r.msg)
 	else:
 		leg.delete_draft(int(revocation.id))
 		_feedback.text = r.msg

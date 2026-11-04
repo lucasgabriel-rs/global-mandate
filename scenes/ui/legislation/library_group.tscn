@@ -1,0 +1,31 @@
+[gd_scene format=3]
+
+[ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="e1"]
+
+[node name="LibraryGroup" type="VBoxContainer"]
+theme_override_constants/separation = 4
+theme = ExtResource("e1")
+
+[node name="toggle" type="Button" parent="."]
+unique_name_in_owner = true
+size_flags_horizontal = 0
+theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(0.9490196, 0.7019608, 0.23921569, 1)
+toggle_mode = true
+text = "▸ Avançado"
+flat = true
+alignment = 0
+focus_mode = 0
+mouse_default_cursor_shape = 2
+
+[node name="hint" type="Label" parent="."]
+unique_name_in_owner = true
+mouse_filter = 2
+theme_override_font_sizes/font_size = 11
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+autowrap_mode = 3
+
+[node name="items" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+visible = false
+theme_override_constants/separation = 4

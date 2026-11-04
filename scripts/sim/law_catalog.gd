@@ -5,7 +5,9 @@ extends RefCounted
 ##
 ## kind: event (inicia um artigo), statement (instrução), cblock (instrução com blocos dentro),
 ## value (número ou texto) e bool (condição). rank é a menor hierarquia de norma que pode usar o bloco.
-## Campos: t = num, money, pct, days, bool, text, date, any, var, choice, unit, ministry ou company; d = valor inicial.
+## Campos: t = num, money, pct, days, bool, text, date, any, var, choice, unit, ministry, company ou ref; d = valor inicial.
+## ref: nome de algo que já existe (of = tax, license, institution ou duty), escolhido numa lista no editor;
+## texto livre só para dar nome a algo novo.
 ##
 ## Os blocos concretos de cada código legal (Tributário, Penal...) vêm de `LawCodes`; os daqui são os
 ## avançados, para quem quer escrever regras próprias. `categories()`, `get_def()`, `in_category()`
@@ -62,9 +64,9 @@ const BLOCKS := [
 	{"id": "cd_territory", "cat": "conditions", "kind": "bool", "text": "cidadão vive em {unit}", "fields": {"unit": {"t": "unit", "d": -1}}, "rank": RANK_ANY},
 	{"id": "cd_money", "cat": "conditions", "kind": "bool", "text": "cidadão tem pelo menos {amount} em dinheiro", "fields": {"amount": {"t": "money", "d": 10000}}, "rank": RANK_ANY},
 	{"id": "cd_owner", "cat": "conditions", "kind": "bool", "text": "a propriedade pertence ao cidadão", "rank": RANK_ANY},
-	{"id": "cd_license", "cat": "conditions", "kind": "bool", "text": "cidadão tem a licença {license}", "fields": {"license": {"t": "text", "d": "Comércio"}}, "rank": RANK_ANY},
+	{"id": "cd_license", "cat": "conditions", "kind": "bool", "text": "cidadão tem a licença {license}", "fields": {"license": {"t": "ref", "of": "license", "d": "Comércio"}}, "rank": RANK_ANY},
 	{"id": "cd_period", "cat": "conditions", "kind": "bool", "text": "a data está entre {from} e {to}", "fields": {"from": {"t": "date", "d": "2025-01-01"}, "to": {"t": "date", "d": "2030-12-31"}}, "rank": RANK_ANY},
-	{"id": "cd_institution", "cat": "conditions", "kind": "bool", "text": "a instituição {institution} está ativa", "fields": {"institution": {"t": "text", "d": "Receita Federal"}}, "rank": RANK_ANY},
+	{"id": "cd_institution", "cat": "conditions", "kind": "bool", "text": "a instituição {institution} está ativa", "fields": {"institution": {"t": "ref", "of": "institution", "d": "Receita Federal"}}, "rank": RANK_ANY},
 	{"id": "cd_norm", "cat": "conditions", "kind": "bool", "text": "a norma nº {norm} está em vigor", "fields": {"norm": {"t": "num", "d": 1}}, "rank": RANK_ANY},
 	# --- Operadores lógicos --------------------------------------------------------------
 	{"id": "op_and", "cat": "logic", "kind": "bool", "text": "{a} E {b}", "fields": {"a": {"t": "bool"}, "b": {"t": "bool"}}, "rank": RANK_ANY},
@@ -97,8 +99,8 @@ const BLOCKS := [
 	{"id": "ac_obligation", "cat": "admin", "kind": "statement", "text": "Criar obrigação tributária de {amount} com prazo de {days} dias", "fields": {"amount": {"t": "money", "d": 100}, "days": {"t": "days", "d": 30}}, "rank": RANK_LAW, "econ": 0.3, "social": -0.05},
 	{"id": "ac_fine", "cat": "admin", "kind": "statement", "text": "Aplicar multa de {amount}", "fields": {"amount": {"t": "money", "d": 100}}, "rank": RANK_DECREE, "econ": 0.05, "social": -0.2},
 	{"id": "ac_benefit", "cat": "admin", "kind": "statement", "text": "Conceder benefício de {amount}", "fields": {"amount": {"t": "money", "d": 100}}, "rank": RANK_LAW, "econ": -0.4, "social": 0.1},
-	{"id": "ac_revoke_license", "cat": "admin", "kind": "statement", "text": "Revogar a licença {license}", "fields": {"license": {"t": "text", "d": "Comércio"}}, "rank": RANK_DECREE, "social": -0.2},
-	{"id": "ac_issue_license", "cat": "admin", "kind": "statement", "text": "Emitir autorização: licença {license}", "fields": {"license": {"t": "text", "d": "Comércio"}}, "rank": RANK_ANY, "social": 0.05},
+	{"id": "ac_revoke_license", "cat": "admin", "kind": "statement", "text": "Revogar a licença {license}", "fields": {"license": {"t": "ref", "of": "license", "d": "Comércio"}}, "rank": RANK_DECREE, "social": -0.2},
+	{"id": "ac_issue_license", "cat": "admin", "kind": "statement", "text": "Emitir autorização: licença {license}", "fields": {"license": {"t": "ref", "of": "license", "d": "Comércio"}}, "rank": RANK_ANY, "social": 0.05},
 	{"id": "ac_register", "cat": "admin", "kind": "statement", "text": "Registrar o cidadão no cadastro", "rank": RANK_ANY, "social": -0.05},
 	{"id": "ac_status", "cat": "admin", "kind": "statement", "text": "Alterar situação cadastral para {status}", "fields": {"status": {"t": "text", "d": "Regular"}}, "rank": RANK_ANY},
 	{"id": "ac_post", "cat": "admin", "kind": "statement", "text": "Criar o cargo público {name} com {posts} vagas e salário anual de {salary}", "fields": {"name": {"t": "text", "d": "Fiscal"}, "posts": {"t": "num", "d": 1000}, "salary": {"t": "money", "d": 20000}}, "rank": RANK_LAW, "econ": -0.15},
@@ -111,11 +113,11 @@ const BLOCKS := [
 	# --- Economia e tributação ---------------------------------------------------------
 	{"id": "ec_rate", "cat": "economy", "kind": "statement", "text": "Definir alíquota de {field} em {value}% do PIB", "fields": {"field": {"t": "choice", "of": "tax_field", "d": "tax_income"}, "value": {"t": "pct", "d": 10}}, "rank": RANK_LAW, "econ": -0.3},
 	{"id": "ec_calc", "cat": "economy", "kind": "value", "out": "money", "text": "imposto de {rate}% sobre {base}", "fields": {"rate": {"t": "pct", "d": 5}, "base": {"t": "money", "d": 0}}, "rank": RANK_ANY},
-	{"id": "ec_charge", "cat": "economy", "kind": "statement", "text": "Cobrar o tributo {name} no valor de {amount}", "fields": {"name": {"t": "text", "d": "Imposto"}, "amount": {"t": "money", "d": 100}}, "rank": RANK_LAW, "econ": -0.35},
+	{"id": "ec_charge", "cat": "economy", "kind": "statement", "text": "Cobrar o tributo {name} no valor de {amount}", "fields": {"name": {"t": "ref", "of": "tax", "d": "Imposto"}, "amount": {"t": "money", "d": 100}}, "rank": RANK_LAW, "econ": -0.35},
 	{"id": "ec_fee", "cat": "economy", "kind": "statement", "text": "Criar a taxa {name} de {amount}", "fields": {"name": {"t": "text", "d": "Taxa"}, "amount": {"t": "money", "d": 10}}, "rank": RANK_LAW, "econ": -0.15},
 	{"id": "ec_contribution", "cat": "economy", "kind": "statement", "text": "Criar a contribuição {name} de {rate}% da renda mensal", "fields": {"name": {"t": "text", "d": "Contribuição"}, "rate": {"t": "pct", "d": 2}}, "rank": RANK_COMPLEMENTARY, "econ": -0.35},
-	{"id": "ec_exempt", "cat": "economy", "kind": "statement", "text": "Definir isenção de {share}% no tributo {name}", "fields": {"name": {"t": "text", "d": "Imposto"}, "share": {"t": "pct", "d": 100}}, "rank": RANK_LAW, "econ": 0.2},
-	{"id": "ec_cap", "cat": "economy", "kind": "statement", "text": "Limitar a cobrança de {name} a {max} por pessoa", "fields": {"name": {"t": "text", "d": "Imposto"}, "max": {"t": "money", "d": 1000}}, "rank": RANK_LAW, "econ": 0.2},
+	{"id": "ec_exempt", "cat": "economy", "kind": "statement", "text": "Definir isenção de {share}% no tributo {name}", "fields": {"name": {"t": "ref", "of": "tax", "d": "Imposto"}, "share": {"t": "pct", "d": 100}}, "rank": RANK_LAW, "econ": 0.2},
+	{"id": "ec_cap", "cat": "economy", "kind": "statement", "text": "Limitar a cobrança de {name} a {max} por pessoa", "fields": {"name": {"t": "ref", "of": "tax", "d": "Imposto"}, "max": {"t": "money", "d": 1000}}, "rank": RANK_LAW, "econ": 0.2},
 	{"id": "ec_treasury", "cat": "economy", "kind": "statement", "text": "Transferir {amount} bilhões das reservas ao Tesouro", "fields": {"amount": {"t": "num", "d": 1}}, "rank": RANK_DECREE},
 	{"id": "ec_subsidy", "cat": "economy", "kind": "statement", "text": "Criar subsídio de {amount} bilhões por ano para {sector}", "fields": {"amount": {"t": "num", "d": 1}, "sector": {"t": "choice", "of": "sector", "d": "industria"}}, "rank": RANK_LAW, "econ": -0.3, "social": -0.05},
 	{"id": "ec_minwage", "cat": "economy", "kind": "statement", "text": "Estabelecer salário mínimo de {amount} por mês", "fields": {"amount": {"t": "money", "d": 300}}, "rank": RANK_LAW, "econ": -0.45, "social": 0.05},
@@ -127,11 +129,11 @@ const BLOCKS := [
 	{"id": "rg_grant", "cat": "rights", "kind": "statement", "text": "Conceder o direito: {right}", "fields": {"right": {"t": "choice", "of": "right", "d": "greve"}}, "rank": RANK_LAW, "econ": -0.05, "social": 0.5},
 	{"id": "rg_remove", "cat": "rights", "kind": "statement", "text": "Remover o direito: {right}", "fields": {"right": {"t": "choice", "of": "right", "d": "greve"}}, "rank": RANK_COMPLEMENTARY, "social": -0.7},
 	{"id": "rg_duty", "cat": "rights", "kind": "statement", "text": "Criar a obrigação: {name}", "fields": {"name": {"t": "text", "d": "Serviço cívico"}}, "rank": RANK_LAW, "social": -0.35},
-	{"id": "rg_deadline", "cat": "rights", "kind": "statement", "text": "Estabelecer prazo de {days} dias para {name}", "fields": {"days": {"t": "days", "d": 90}, "name": {"t": "text", "d": "Serviço cívico"}}, "rank": RANK_DECREE},
+	{"id": "rg_deadline", "cat": "rights", "kind": "statement", "text": "Estabelecer prazo de {days} dias para {name}", "fields": {"days": {"t": "days", "d": 90}, "name": {"t": "ref", "of": "duty", "d": "Serviço cívico"}}, "rank": RANK_DECREE},
 	{"id": "rg_restrict", "cat": "rights", "kind": "statement", "text": "Definir a restrição: {name}", "fields": {"name": {"t": "text", "d": "Toque de recolher"}}, "rank": RANK_LAW, "social": -0.6},
 	{"id": "rg_require", "cat": "rights", "kind": "statement", "text": "Estabelecer o requisito: {name}", "fields": {"name": {"t": "text", "d": "Registro profissional"}}, "rank": RANK_DECREE, "social": -0.1},
-	{"id": "rg_exception", "cat": "rights", "kind": "statement", "text": "Criar exceção à obrigação {name}", "fields": {"name": {"t": "text", "d": "Serviço cívico"}}, "rank": RANK_DECREE, "social": 0.15},
-	{"id": "rg_penalty", "cat": "rights", "kind": "statement", "text": "Definir penalidade de {amount} para {name}", "fields": {"amount": {"t": "money", "d": 500}, "name": {"t": "text", "d": "Serviço cívico"}}, "rank": RANK_LAW, "social": -0.2},
+	{"id": "rg_exception", "cat": "rights", "kind": "statement", "text": "Criar exceção à obrigação {name}", "fields": {"name": {"t": "ref", "of": "duty", "d": "Serviço cívico"}}, "rank": RANK_DECREE, "social": 0.15},
+	{"id": "rg_penalty", "cat": "rights", "kind": "statement", "text": "Definir penalidade de {amount} para {name}", "fields": {"amount": {"t": "money", "d": 500}, "name": {"t": "ref", "of": "duty", "d": "Serviço cívico"}}, "rank": RANK_LAW, "social": -0.2},
 	# --- Controle de fluxo ---------------------------------------------------------------
 	{"id": "fl_if", "cat": "flow", "kind": "cblock", "text": "Se {cond}", "fields": {"cond": {"t": "bool"}}, "slots": ["do"], "rank": RANK_ANY},
 	{"id": "fl_ifelse", "cat": "flow", "kind": "cblock", "text": "Se {cond}", "fields": {"cond": {"t": "bool"}}, "slots": ["do", "else"], "rank": RANK_ANY},
@@ -233,6 +235,6 @@ static func compatible(from: String, to: String) -> bool:
 		return to != "bool" or from == "bool" or from == "any"
 	if to == "bool" or from == "bool":
 		return to == from
-	if to == "text" or to == "date" or to == "var" or to == "choice" or to == "unit" or to == "ministry" or to == "company":
+	if to == "text" or to == "date" or to == "var" or to == "choice" or to == "unit" or to == "ministry" or to == "company" or to == "ref":
 		return false
 	return from in ["num", "money", "pct", "days"]

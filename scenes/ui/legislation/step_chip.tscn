@@ -1,0 +1,31 @@
+[gd_scene format=3]
+
+[ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="e1"]
+
+[node name="StepChip" type="VBoxContainer"]
+custom_minimum_size = Vector2(96, 0)
+size_flags_horizontal = 3
+theme_override_constants/separation = 2
+theme = ExtResource("e1")
+
+[node name="bar" type="ColorRect" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 5)
+mouse_filter = 2
+color = Color(0.15294118, 0.2509804, 0.30980393, 1)
+
+[node name="chip_name" type="Label" parent="."]
+unique_name_in_owner = true
+mouse_filter = 2
+theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+text = "Comissão"
+horizontal_alignment = 1
+
+[node name="chip_days" type="Label" parent="."]
+unique_name_in_owner = true
+mouse_filter = 2
+theme_override_font_sizes/font_size = 11
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+text = ""
+horizontal_alignment = 1

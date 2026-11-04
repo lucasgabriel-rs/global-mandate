@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://scripts/ui/law_trash.gd" id="e3"]
 [ext_resource type="Script" path="res://scripts/ui/law_canvas.gd" id="e4"]
 [ext_resource type="PackedScene" path="res://scenes/ui/legislation/law_simulator.tscn" id="e5"]
+[ext_resource type="PackedScene" path="res://scenes/ui/legislation/law_review.tscn" id="e6"]
 
 [sub_resource type="StyleBoxFlat" id="s1"]
 content_margin_left = 8.0
@@ -70,6 +71,13 @@ mouse_filter = 2
 theme_override_font_sizes/font_size = 20
 theme_override_colors/font_color = Color(0.9490196, 0.7019608, 0.23921569, 1)
 text = "Editor legislativo"
+
+[node name="code_badge" type="Label" parent="Margem/Coluna/Cabeca"]
+unique_name_in_owner = true
+visible = false
+mouse_filter = 2
+theme_override_font_sizes/font_size = 13
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
 
 [node name="Espaco" type="Control" parent="Margem/Coluna/Cabeca"]
 size_flags_horizontal = 3
@@ -336,3 +344,6 @@ autowrap_mode = 3
 [node name="simulator" parent="." instance=ExtResource("e5")]
 unique_name_in_owner = true
 anchors_preset = 15
+
+[node name="review" parent="." instance=ExtResource("e6")]
+unique_name_in_owner = true
