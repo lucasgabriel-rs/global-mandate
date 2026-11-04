@@ -3,8 +3,8 @@ extends Node
 
 const SAVE_PATH := "user://mandato.save"
 const BACKUP_PATH := "user://mandato.bak"
-## Na velocidade normal, cada 0,05 s reais é 1 minuto de jogo. Os valores multiplicam isso.
-const SECONDS_PER_MINUTE := 0.05
+## Na velocidade normal, cada 0,0125 s reais é 1 minuto de jogo (80 min/s). Os valores multiplicam isso.
+const SECONDS_PER_MINUTE := 0.0125
 const SPEEDS := [0.0, 1.0, 2.0, 4.0]
 const MAX_MINUTES_PER_FRAME := 60
 const START_SCREEN := preload("res://scenes/ui/start_screen.tscn")

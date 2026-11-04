@@ -139,7 +139,7 @@ func _process(delta: float) -> void:
 		4:
 			_start_measure()
 		5:
-			_rate_ok(20.0)
+			_rate_ok(80.0)
 			_shot("t1_normal")
 			_key(KEY_2)
 			wait = 0.3
@@ -147,7 +147,7 @@ func _process(delta: float) -> void:
 			_check(main.speed == 2, "tecla 2 escolhe 2x")
 			_start_measure()
 		7:
-			_rate_ok(40.0)
+			_rate_ok(160.0)
 			_shot("t1b_2x")
 			_click(hud._speed_buttons[3])
 			wait = 0.3
@@ -155,7 +155,7 @@ func _process(delta: float) -> void:
 			_check(main.speed == 3, "botão escolhe 4x")
 			_start_measure()
 		9:
-			_rate_ok(80.0)
+			_rate_ok(320.0)
 			_shot("t1c_4x")
 			_click(hud._speed_buttons[2])
 			wait = 0.3
@@ -163,7 +163,7 @@ func _process(delta: float) -> void:
 			_check(main.speed == 2, "botão escolhe 2x")
 			_start_measure()
 		11:
-			_rate_ok(40.0)
+			_rate_ok(160.0)
 			_key(KEY_4)
 			wait = 0.3
 		12:
