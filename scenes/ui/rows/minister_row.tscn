@@ -1,7 +1,7 @@
 [gd_scene format=3]
 
 [ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="1_g713p"]
-[ext_resource type="Script" path="res://scripts/ui/character_view.gd" id="2_jal3i"]
+[ext_resource type="PackedScene" path="res://scenes/ui/countryball.tscn" id="2_jal3i"]
 [ext_resource type="Script" path="res://scripts/ui/compass_view.gd" id="3_pj3p3"]
 
 [node name="MinisterRow" type="VBoxContainer" unique_id=325449794]
@@ -52,14 +52,11 @@ layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 8
 
-[node name="face" type="Control" parent="person" unique_id=956069748]
+[node name="face" parent="person" unique_id=956069748 instance=ExtResource("2_jal3i")]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(46, 46)
-clip_contents = true
 layout_mode = 2
 mouse_filter = 2
-script = ExtResource("2_jal3i")
-portrait = true
 
 [node name="who" type="Label" parent="person" unique_id=1122313625]
 unique_name_in_owner = true

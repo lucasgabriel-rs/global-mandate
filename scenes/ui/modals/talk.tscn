@@ -1,7 +1,7 @@
 [gd_scene format=3]
 
 [ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="1_e5kp5"]
-[ext_resource type="Script" path="res://scripts/ui/character_view.gd" id="2_7d5b6"]
+[ext_resource type="PackedScene" path="res://scenes/ui/countryball.tscn" id="2_7d5b6"]
 [ext_resource type="Script" path="res://scripts/ui/compass_view.gd" id="3_hliyt"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g72lc"]
@@ -68,14 +68,11 @@ layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 8
 
-[node name="face" type="Control" parent="Centro/Painel/col/Linha/Coluna" unique_id=2035564084]
+[node name="face" parent="Centro/Painel/col/Linha/Coluna" unique_id=2035564084 instance=ExtResource("2_7d5b6")]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(150, 150)
-clip_contents = true
 layout_mode = 2
 mouse_filter = 2
-script = ExtResource("2_7d5b6")
-portrait = true
 
 [node name="talk_compass" type="Control" parent="Centro/Painel/col/Linha/Coluna" unique_id=1317361514]
 unique_name_in_owner = true

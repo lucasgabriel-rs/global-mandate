@@ -1,7 +1,7 @@
 [gd_scene format=3]
 
 [ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="1_hmfsw"]
-[ext_resource type="Script" path="res://scripts/ui/character_view.gd" id="2_r6ifn"]
+[ext_resource type="PackedScene" path="res://scenes/ui/countryball.tscn" id="2_r6ifn"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vhtfc"]
 content_margin_left = 20.0
@@ -19,12 +19,7 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
-[sub_resource type="Gradient" id="Gradient_lej7d"]
-offsets = PackedFloat32Array(0, 0.11111111, 0.22222222, 0.33333334, 0.44444445, 0.5555556, 0.6666667, 0.7777778, 0.8888889, 1)
-colors = PackedColorArray(0.9647059, 0.92941177, 0.89411765, 1, 0.9529412, 0.90588236, 0.85882354, 1, 0.96862745, 0.91764706, 0.8156863, 1, 0.91764706, 0.85490197, 0.7294118, 1, 0.84313726, 0.7411765, 0.5882353, 1, 0.627451, 0.49411765, 0.3372549, 1, 0.50980395, 0.36078432, 0.2627451, 1, 0.3764706, 0.25490198, 0.20392157, 1, 0.22745098, 0.19215687, 0.16470589, 1, 0.16078432, 0.14117648, 0.1254902, 1)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_4pd0t"]
-gradient = SubResource("Gradient_lej7d")
+[sub_resource type="ButtonGroup" id="ButtonGroup_gender"]
 
 [node name="Creator" type="ColorRect" unique_id=890517902]
 anchor_right = 1.0
@@ -38,7 +33,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="Painel" type="PanelContainer" parent="Centro" unique_id=1761024268]
-custom_minimum_size = Vector2(900, 0)
+custom_minimum_size = Vector2(760, 0)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_vhtfc")
 
@@ -58,33 +53,114 @@ text = "Crie seu personagem"
 [node name="Linha" type="HBoxContainer" parent="Centro/Painel/col" unique_id=981433621]
 layout_mode = 2
 mouse_filter = 2
-theme_override_constants/separation = 20
+theme_override_constants/separation = 24
 
-[node name="view" type="Control" parent="Centro/Painel/col/Linha" unique_id=946742865]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(300, 450)
-clip_contents = true
+[node name="Retrato" type="VBoxContainer" parent="Centro/Painel/col/Linha"]
 layout_mode = 2
 mouse_filter = 2
-script = ExtResource("2_r6ifn")
+theme_override_constants/separation = 6
+
+[node name="view" parent="Centro/Painel/col/Linha/Retrato" unique_id=946742865 instance=ExtResource("2_r6ifn")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 330)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="country_label" type="Label" parent="Centro/Painel/col/Linha/Retrato"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Bandeira do país"
+horizontal_alignment = 1
 
 [node name="Coluna" type="VBoxContainer" parent="Centro/Painel/col/Linha" unique_id=1714398173]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 4
 mouse_filter = 2
-theme_override_constants/separation = 7
+theme_override_constants/separation = 8
 
-[node name="NOME" type="Label" parent="Centro/Painel/col/Linha/Coluna" unique_id=263698992]
+[node name="NomeLinha" type="HBoxContainer" parent="Centro/Painel/col/Linha/Coluna"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
+
+[node name="NomeCampo" type="VBoxContainer" parent="Centro/Painel/col/Linha/Coluna/NomeLinha"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="NOME" type="Label" parent="Centro/Painel/col/Linha/Coluna/NomeLinha/NomeCampo" unique_id=263698992]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_constants/line_spacing = 0
 theme_override_font_sizes/font_size = 11
 text = "NOME"
 
-[node name="name_edit" type="LineEdit" parent="Centro/Painel/col/Linha/Coluna" unique_id=1095234065]
+[node name="first_name_edit" type="LineEdit" parent="Centro/Painel/col/Linha/Coluna/NomeLinha/NomeCampo" unique_id=1095234065]
 unique_name_in_owner = true
 layout_mode = 2
-max_length = 40
+placeholder_text = "Nome"
+max_length = 24
+
+[node name="SobrenomeCampo" type="VBoxContainer" parent="Centro/Painel/col/Linha/Coluna/NomeLinha"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="SOBRENOME" type="Label" parent="Centro/Painel/col/Linha/Coluna/NomeLinha/SobrenomeCampo"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 11
+text = "SOBRENOME"
+
+[node name="last_name_edit" type="LineEdit" parent="Centro/Painel/col/Linha/Coluna/NomeLinha/SobrenomeCampo"]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "Sobrenome"
+max_length = 32
+
+[node name="roll_name" type="Button" parent="Centro/Painel/col/Linha/Coluna/NomeLinha"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 8
+focus_mode = 0
+mouse_default_cursor_shape = 2
+tooltip_text = "Sorteia um nome e um sobrenome do país, conforme o gênero escolhido."
+text = "Sortear"
+
+[node name="GENERO" type="Label" parent="Centro/Painel/col/Linha/Coluna"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 11
+text = "GÊNERO"
+
+[node name="GeneroLinha" type="HBoxContainer" parent="Centro/Painel/col/Linha/Coluna"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 6
+
+[node name="gender_m" type="Button" parent="Centro/Painel/col/Linha/Coluna/GeneroLinha"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+mouse_default_cursor_shape = 2
+toggle_mode = true
+button_group = SubResource("ButtonGroup_gender")
+text = "Masculino"
+
+[node name="gender_f" type="Button" parent="Centro/Painel/col/Linha/Coluna/GeneroLinha"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+mouse_default_cursor_shape = 2
+toggle_mode = true
+button_group = SubResource("ButtonGroup_gender")
+text = "Feminino"
 
 [node name="IdadeTitulo" type="Label" parent="Centro/Painel/col/Linha/Coluna"]
 layout_mode = 2
@@ -112,263 +188,13 @@ custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
 text = "50 anos"
 
-[node name="APARNCIA" type="Label" parent="Centro/Painel/col/Linha/Coluna" unique_id=37719964]
+[node name="Dica" type="Label" parent="Centro/Painel/col/Linha/Coluna"]
+custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_constants/line_spacing = 0
-theme_override_font_sizes/font_size = 11
-text = "APARÊNCIA"
-
-[node name="Linha" type="HBoxContainer" parent="Centro/Painel/col/Linha/Coluna" unique_id=1363064316]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="Cabelo" type="Label" parent="Centro/Painel/col/Linha/Coluna/Linha" unique_id=1748149123]
-custom_minimum_size = Vector2(70, 0)
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Cabelo"
-
-[node name="prev_hair" type="Button" parent="Centro/Painel/col/Linha/Coluna/Linha" unique_id=1691715471]
-unique_name_in_owner = true
-layout_mode = 2
-focus_mode = 0
-mouse_default_cursor_shape = 2
-text = "◀"
-
-[node name="value_hair" type="Label" parent="Centro/Painel/col/Linha/Coluna/Linha" unique_id=516183933]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-horizontal_alignment = 1
-
-[node name="next_hair" type="Button" parent="Centro/Painel/col/Linha/Coluna/Linha" unique_id=1090203834]
-unique_name_in_owner = true
-layout_mode = 2
-focus_mode = 0
-mouse_default_cursor_shape = 2
-text = "▶"
-
-[node name="Linha2" type="HBoxContainer" parent="Centro/Painel/col/Linha/Coluna" unique_id=1061284852]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="Olhos" type="Label" parent="Centro/Painel/col/Linha/Coluna/Linha2" unique_id=2075626575]
-custom_minimum_size = Vector2(70, 0)
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Olhos"
-
-[node name="prev_eyes" type="Button" parent="Centro/Painel/col/Linha/Coluna/Linha2" unique_id=712540992]
-unique_name_in_owner = true
-layout_mode = 2
-focus_mode = 0
-mouse_default_cursor_shape = 2
-text = "◀"
-
-[node name="value_eyes" type="Label" parent="Centro/Painel/col/Linha/Coluna/Linha2" unique_id=207856441]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-horizontal_alignment = 1
-
-[node name="next_eyes" type="Button" parent="Centro/Painel/col/Linha/Coluna/Linha2" unique_id=750388375]
-unique_name_in_owner = true
-layout_mode = 2
-focus_mode = 0
-mouse_default_cursor_shape = 2
-text = "▶"
-
-[node name="Linha3" type="HBoxContainer" parent="Centro/Painel/col/Linha/Coluna" unique_id=171064151]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="Rosto" type="Label" parent="Centro/Painel/col/Linha/Coluna/Linha3" unique_id=351608037]
-custom_minimum_size = Vector2(70, 0)
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Rosto"
-
-[node name="prev_face" type="Button" parent="Centro/Painel/col/Linha/Coluna/Linha3" unique_id=1523086266]
-unique_name_in_owner = true
-layout_mode = 2
-focus_mode = 0
-mouse_default_cursor_shape = 2
-text = "◀"
-
-[node name="value_face" type="Label" parent="Centro/Painel/col/Linha/Coluna/Linha3" unique_id=1327408093]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-horizontal_alignment = 1
-
-[node name="next_face" type="Button" parent="Centro/Painel/col/Linha/Coluna/Linha3" unique_id=2034556803]
-unique_name_in_owner = true
-layout_mode = 2
-focus_mode = 0
-mouse_default_cursor_shape = 2
-text = "▶"
-
-[node name="Linha4" type="HBoxContainer" parent="Centro/Painel/col/Linha/Coluna" unique_id=250475716]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="Corpo" type="Label" parent="Centro/Painel/col/Linha/Coluna/Linha4" unique_id=1931117099]
-custom_minimum_size = Vector2(70, 0)
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Corpo"
-
-[node name="prev_body" type="Button" parent="Centro/Painel/col/Linha/Coluna/Linha4" unique_id=1971193101]
-unique_name_in_owner = true
-layout_mode = 2
-focus_mode = 0
-mouse_default_cursor_shape = 2
-text = "◀"
-
-[node name="value_body" type="Label" parent="Centro/Painel/col/Linha/Coluna/Linha4" unique_id=1955424373]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-horizontal_alignment = 1
-
-[node name="next_body" type="Button" parent="Centro/Painel/col/Linha/Coluna/Linha4" unique_id=906903111]
-unique_name_in_owner = true
-layout_mode = 2
-focus_mode = 0
-mouse_default_cursor_shape = 2
-text = "▶"
-
-[node name="Linha5" type="HBoxContainer" parent="Centro/Painel/col/Linha/Coluna" unique_id=1579955458]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="Roupa" type="Label" parent="Centro/Painel/col/Linha/Coluna/Linha5" unique_id=1619698311]
-custom_minimum_size = Vector2(70, 0)
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_font_sizes/font_size = 13
-text = "Roupa"
-
-[node name="prev_outfit" type="Button" parent="Centro/Painel/col/Linha/Coluna/Linha5" unique_id=369760519]
-unique_name_in_owner = true
-layout_mode = 2
-focus_mode = 0
-mouse_default_cursor_shape = 2
-text = "◀"
-
-[node name="value_outfit" type="Label" parent="Centro/Painel/col/Linha/Coluna/Linha5" unique_id=1758025754]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-theme_override_font_sizes/font_size = 13
-horizontal_alignment = 1
-
-[node name="next_outfit" type="Button" parent="Centro/Painel/col/Linha/Coluna/Linha5" unique_id=2112120447]
-unique_name_in_owner = true
-layout_mode = 2
-focus_mode = 0
-mouse_default_cursor_shape = 2
-text = "▶"
-
-[node name="PELE" type="Label" parent="Centro/Painel/col/Linha/Coluna" unique_id=1930840588]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_constants/line_spacing = 0
-theme_override_font_sizes/font_size = 11
-text = "PELE"
-
-[node name="Coluna" type="VBoxContainer" parent="Centro/Painel/col/Linha/Coluna" unique_id=1130769218]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 2
-
-[node name="Faixa" type="TextureRect" parent="Centro/Painel/col/Linha/Coluna/Coluna" unique_id=123855671]
-custom_minimum_size = Vector2(0, 12)
-layout_mode = 2
-mouse_filter = 2
-texture = SubResource("GradientTexture1D_4pd0t")
-expand_mode = 1
-
-[node name="skin_slider" type="HSlider" parent="Centro/Painel/col/Linha/Coluna/Coluna" unique_id=293905416]
-unique_name_in_owner = true
-layout_mode = 2
-focus_mode = 0
-max_value = 1.0
-step = 0.005
-value = 0.105
-
-[node name="CORES" type="Label" parent="Centro/Painel/col/Linha/Coluna" unique_id=608481368]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-theme_override_constants/line_spacing = 0
-theme_override_font_sizes/font_size = 11
-text = "CORES"
-
-[node name="Coluna2" type="VBoxContainer" parent="Centro/Painel/col/Linha/Coluna" unique_id=1246662538]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="Linha" type="HBoxContainer" parent="Centro/Painel/col/Linha/Coluna/Coluna2" unique_id=532021006]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 4
-
-[node name="paint_eyes_color" type="Button" parent="Centro/Painel/col/Linha/Coluna/Coluna2/Linha" unique_id=65417692]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-focus_mode = 0
-mouse_default_cursor_shape = 2
-text = "Olhos"
-
-[node name="paint_hair_color" type="Button" parent="Centro/Painel/col/Linha/Coluna/Coluna2/Linha" unique_id=1618947834]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-focus_mode = 0
-mouse_default_cursor_shape = 2
-text = "Cabelo"
-
-[node name="paint_clothes_color" type="Button" parent="Centro/Painel/col/Linha/Coluna/Coluna2/Linha" unique_id=2132306269]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-focus_mode = 0
-mouse_default_cursor_shape = 2
-text = "Roupa"
-
-[node name="color_wheel" type="ColorPicker" parent="Centro/Painel/col/Linha/Coluna/Coluna2" unique_id=194815447]
-unique_name_in_owner = true
-layout_mode = 2
-color = Color(0.18039216, 0.10980392, 0.0627451, 1)
-edit_alpha = false
-picker_shape = 1
-can_add_swatches = false
-sampler_visible = false
-color_modes_visible = false
-sliders_visible = false
-hex_visible = false
-presets_visible = false
+theme_override_font_sizes/font_size = 12
+text = "Seu personagem é uma countryball com a bandeira do país. Trocar o gênero troca o nome sorteado, não o que você digitou."
+autowrap_mode = 3
 
 [node name="Linha6" type="HBoxContainer" parent="Centro/Painel/col/Linha/Coluna" unique_id=9218043]
 layout_mode = 2
@@ -381,6 +207,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
 mouse_default_cursor_shape = 2
+tooltip_text = "Sorteia gênero, nome e idade."
 text = "Aleatório"
 
 [node name="Confirmar" type="Button" parent="Centro/Painel/col/Linha/Coluna/Linha6" unique_id=1589138990]

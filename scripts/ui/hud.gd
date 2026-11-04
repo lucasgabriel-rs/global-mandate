@@ -78,8 +78,8 @@ var _hover_unit := -1
 @onready var _divisions: DivisionsPanel = %divisions
 @onready var border: BorderPanel = %border
 @onready var debug: DebugMenu = %debug
-@onready var _portrait: CharacterView = %portrait
-@onready var _leader_view: CharacterView = %leader_view
+@onready var _portrait: Countryball = %portrait
+@onready var _leader_view: Countryball = %leader_view
 @onready var _leader_name: Label = %leader_name
 @onready var _politics: PoliticsPanel = %politics
 @onready var _cabinet: CabinetPanel = %cabinet
@@ -244,8 +244,8 @@ func begin_demarcation(session: Dictionary) -> void:
 func refresh_leader() -> void:
 	if world == null:
 		return
-	_portrait.character = world.leader
-	_leader_view.character = world.leader
+	_portrait.show_person(world.leader, world.player.iso)
+	_leader_view.show_person(world.leader, world.player.iso)
 	var sick: Dictionary = world.leader.get("illness", {})
 	_leader_name.text = "%s, %d anos%s" % [world.leader.get("name", ""), People.age_of(world.leader, world), "" if sick.is_empty() else " (enfrenta %s)" % sick.name]
 	_portrait.tooltip_text = _leader_name.text

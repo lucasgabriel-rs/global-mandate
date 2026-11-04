@@ -2,7 +2,7 @@
 
 [ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="1_kicr4"]
 [ext_resource type="Script" uid="uid://bntrohifu8c0m" path="res://scripts/ui/hud.gd" id="2_mj13f"]
-[ext_resource type="Script" uid="uid://x0ayvl0ebf5h" path="res://scripts/ui/character_view.gd" id="3_0h1do"]
+[ext_resource type="PackedScene" path="res://scenes/ui/countryball.tscn" id="3_0h1do"]
 [ext_resource type="Script" uid="uid://bgcmqtfb5aary" path="res://scripts/ui/day_clock.gd" id="4_4d46k"]
 [ext_resource type="Script" uid="uid://cuo1ffufbd646" path="res://scripts/ui/chart.gd" id="5_erw67"]
 [ext_resource type="PackedScene" path="res://scenes/ui/panels/divisions_panel.tscn" id="sub_1"]
@@ -126,14 +126,11 @@ layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 14
 
-[node name="portrait" type="Control" parent="Painel/Linha" unique_id=1083615981]
+[node name="portrait" parent="Painel/Linha" unique_id=1083615981 instance=ExtResource("3_0h1do")]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(42, 42)
-clip_contents = true
 layout_mode = 2
 mouse_filter = 2
-script = ExtResource("3_0h1do")
-portrait = true
 
 [node name="Coluna" type="VBoxContainer" parent="Painel/Linha" unique_id=299986161]
 custom_minimum_size = Vector2(150, 0)
@@ -1506,14 +1503,11 @@ layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 8
 
-[node name="leader_view" type="Control" parent="desk/w_painel/Painel/Margem/Coluna/Linha" unique_id=691061342]
+[node name="leader_view" parent="desk/w_painel/Painel/Margem/Coluna/Linha" unique_id=691061342 instance=ExtResource("3_0h1do")]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(64, 64)
-clip_contents = true
 layout_mode = 2
 mouse_filter = 2
-script = ExtResource("3_0h1do")
-portrait = true
 
 [node name="Coluna" type="VBoxContainer" parent="desk/w_painel/Painel/Margem/Coluna/Linha" unique_id=959602970]
 layout_mode = 2

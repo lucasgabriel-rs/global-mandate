@@ -8,7 +8,6 @@ var step := 0
 var wait := 1.0
 var failures := 0
 var leader := {}
-var hair0 := 0
 var income0 := 0.0
 var health0 := 0.0
 var infra0 := 0.0
@@ -77,41 +76,19 @@ func _process(delta: float) -> void:
 		2:
 			_check(main.modal_open, "criador abriu")
 			_shot("p1_criador")
-			# Todas as opções pedidas existem.
-			for key: String in ["next_hair", "next_eyes", "next_face", "next_body", "next_outfit"]:
+			for key: String in ["first_name_edit", "last_name_edit", "gender_m", "gender_f", "roll_name", "age_slider"]:
 				_check(_named(root, key) != null, "opção " + key)
-			_check(_named(root, "color_wheel") is ColorPicker, "roda de cor")
-			_check((_named(root, "color_wheel") as ColorPicker).picker_shape == ColorPicker.SHAPE_HSV_WHEEL, "seletor em forma de roda")
-			_check(_named(root, "skin_slider") is HSlider, "faixa de pele")
 			var view := _view(root)
 			leader = view.character
-			hair0 = leader.hair
-			_click(_named(root, "next_hair"))
+			_check(view.iso == "BRA", "a bola veste a bandeira do país escolhido")
+			(_named(root, "first_name_edit") as LineEdit).text = "Palito"
+			(_named(root, "first_name_edit") as LineEdit).text_changed.emit("Palito")
+			_click(_named(root, "gender_f"))
 		3:
-			_check(leader.hair == posmod(hair0 + 1, Character.option_count("hair")), "seta troca o cabelo")
-			for key: String in ["eyes", "face", "body", "outfit"]:
-				_named(root, "next_" + key).pressed.emit()
-			var wheel: ColorPicker = _named(root, "color_wheel")
-			_named(root, "paint_hair_color").pressed.emit()
-			wheel.color = Color.MAGENTA
-			wheel.color_changed.emit(Color.MAGENTA)
-			_check(leader.hair_color == Color.MAGENTA, "roda pinta o cabelo")
-			_named(root, "paint_clothes_color").pressed.emit()
-			wheel.color_changed.emit(Color.CYAN)
-			_check(leader.clothes_color == Color.CYAN and leader.hair_color == Color.MAGENTA, "roda pinta a roupa sem mexer no cabelo")
-			_named(root, "paint_eyes_color").pressed.emit()
-			wheel.color_changed.emit(Color.YELLOW)
-			_check(leader.eyes_color == Color.YELLOW, "roda pinta os olhos")
-			var skin: HSlider = _named(root, "skin_slider")
-			skin.value = 0.85
-			_check(is_equal_approx(leader.skin, 0.85), "faixa muda a pele")
-			skin.value = 5.0
-			_check(leader.skin <= 1.0, "pele não passa do fim da escala")
-			skin.value = 0.3
+			_check(leader.gender == "f" and leader.first_name == "Palito", "gênero troca e o nome digitado fica")
+			_check(_view(root).is_female(), "a bola mostra o laço")
 		4:
 			_shot("p2_personalizado")
-			var view := _view(root)
-			_check(view.layers().size() >= 3, "personagem tem camadas (%d)" % view.layers().size())
 			_click(_text(root, "Confirmar"))
 		5:
 			_check(main.modal_open and not main.playing, "partido é obrigatório antes de começar")
@@ -134,7 +111,7 @@ func _process(delta: float) -> void:
 			_check(main.playing, "fundar inicia a partida")
 			w = main.world
 			_check(w.politics.player_party(w).name == "Partido do Palito", "jogador pertence ao partido fundado")
-			_check(w.leader.hair_color == Color.MAGENTA, "personagem chega à partida")
+			_check(w.leader.first_name == "Palito" and w.leader.gender == "f", "personagem chega à partida")
 			main._set_speed(0)
 			hud._desk.current_tab = hud._politics_tab
 		9:
@@ -205,14 +182,14 @@ func _process(delta: float) -> void:
 			main._load_game()
 		20:
 			_check(main.world.politics.player_party(main.world).name == "Partido do Palito", "carregar mantém o partido")
-			_check(main.world.leader.hair_color == Color.MAGENTA, "carregar mantém o personagem")
+			_check(main.world.leader.first_name == "Palito" and main.world.leader.gender == "f", "carregar mantém o personagem")
 			DirAccess.remove_absolute(ProjectSettings.globalize_path(main.SAVE_PATH))
 			print("RESULTADO: ", failures, " falhas")
 			get_tree().quit(1 if failures > 0 else 0)
 
 
-func _view(root: Node) -> CharacterView:
+func _view(root: Node) -> Countryball:
 	for child in root.find_children("*", "Control", true, false):
-		if child is CharacterView:
+		if child is Countryball:
 			return child
 	return null

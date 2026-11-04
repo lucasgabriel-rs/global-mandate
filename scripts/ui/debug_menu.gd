@@ -478,7 +478,7 @@ func _define_interface() -> void:
 		main._load_game())
 	_add(s, "Abrir o menu de pausa", func(): main._open_menu())
 	_add(s, "Abrir a ajuda", func(): main._show_help())
-	_add(s, "Abrir o criador de personagem", func(): main._open_creator(Character.random(world.rng), func(ch):
+	_add(s, "Abrir o criador de personagem", func(): main._open_creator(Character.random(world.rng, world.player.iso, world.player.region), func(ch):
 		world.leader = ch
 		hud.refresh_leader()))
 

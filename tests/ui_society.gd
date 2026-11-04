@@ -180,8 +180,10 @@ func _run() -> void:
 	end.get_node("%NovoPersonagem").pressed.emit()
 	await _wait()
 	var next_creator := _top()
-	(next_creator.get_node("%name_edit") as LineEdit).text = "Maria Sucessora"
-	(next_creator.get_node("%name_edit") as LineEdit).text_changed.emit("Maria Sucessora")
+	(next_creator.get_node("%first_name_edit") as LineEdit).text = "Maria"
+	(next_creator.get_node("%first_name_edit") as LineEdit).text_changed.emit("Maria")
+	(next_creator.get_node("%last_name_edit") as LineEdit).text = "Sucessora"
+	(next_creator.get_node("%last_name_edit") as LineEdit).text_changed.emit("Sucessora")
 	next_creator.get_node("%Confirmar").pressed.emit()
 	await _wait()
 	_check(not w.over and w.leader.name == "Maria Sucessora", "a mesma partida segue com outra pessoa")

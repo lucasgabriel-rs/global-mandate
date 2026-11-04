@@ -66,7 +66,7 @@ func _row(portfolio: Dictionary) -> Control:
 	var person: Control = box.get_node("%person")
 	person.visible = not vacant_post
 	if not vacant_post:
-		(box.get_node("%face") as CharacterView).character = Character.for_politician(who)
+		(box.get_node("%face") as Countryball).show_person(Character.for_politician(who), world.player.iso)
 		var party: Dictionary = world.politics.party_of(world.player.iso, world.politics.data_of(world.player.iso).cabinet[portfolio.id].party)
 		(box.get_node("%who") as Label).text = "%s, %d anos  ·  %s\nCompetência: %d%%%s" % [who.name, People.age_of(who, world), party.short, int(float(who.competence) * 100.0), "" if not who.has("illness") else "  ·  doente"]
 		(box.get_node("%compass") as CompassView).points = [{"econ": who.econ, "social": who.social, "color": Color.WHITE, "big": true}]

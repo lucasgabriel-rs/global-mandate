@@ -145,6 +145,8 @@ func _ready() -> void:
 		autotest = load("res://tests/ui_econ_audit.gd")
 	if OS.get_cmdline_user_args().has("--ui-layout"):
 		autotest = load("res://tests/ui_layout.gd")
+	if OS.get_cmdline_user_args().has("--ui-creator"):
+		autotest = load("res://tests/ui_creator.gd")
 	if autotest:
 		add_child(autotest.new())
 
@@ -291,7 +293,7 @@ func _build_start_screen() -> void:
 	for k: String in diff_buttons:
 		diff_buttons[k].pressed.connect(style_diff.bind(k))
 	style_diff.call("normal")
-	_start_button.pressed.connect(func(): _open_creator(Character.random(world.rng), func(ch):
+	_start_button.pressed.connect(func(): _open_creator(Character.random(world.rng, _start_pick.iso, _start_pick.region), func(ch):
 		_open_party_picker(_start_pick, true, func(choice): _begin(ch, choice))))
 	var saved: Button = start_screen.get_node("%continue_game")
 	saved.visible = FileAccess.file_exists(SAVE_PATH)
@@ -326,7 +328,7 @@ func _pick_start(c: Country) -> void:
 func _begin(character := {}, choice := {}) -> void:
 	if _start_pick == null:
 		return
-	world.leader = character if not character.is_empty() else Character.random(world.rng)
+	world.leader = character if not character.is_empty() else Character.random(world.rng, _start_pick.iso, _start_pick.region)
 	world.set_player(_start_pick, _difficulty)
 	_apply_party_choice(choice, true)
 	world.diplomacy.update_prod_factors(world)
@@ -346,7 +348,7 @@ func _enter_game() -> void:
 		# Save de antes do criador de personagem: gera um líder fixo para aquele país.
 		var rng := RandomNumberGenerator.new()
 		rng.seed = hash(world.player.iso)
-		world.leader = Character.random(rng)
+		world.leader = Character.random(rng, world.player.iso, world.player.region)
 	if start_screen:
 		start_screen.queue_free()
 		start_screen = null
@@ -583,8 +585,8 @@ func _apply_party_choice(choice: Dictionary, at_start: bool) -> Dictionary:
 
 func _member_row(member: Dictionary, party: Dictionary, on_press := Callable()) -> Control:
 	var row: Control = MEMBER_ROW.instantiate()
-	var face: CharacterView = row.get_node("%face")
-	face.character = world.leader if member.get("player", false) else Character.for_politician(member)
+	var face: Countryball = row.get_node("%face")
+	face.show_person(world.leader if member.get("player", false) else Character.for_politician(member), world.player.iso)
 	var text := "%s, %d anos  ·  %s  ·  competência %d%%%s" % [member.name, People.age_of(member, world), party.short, int(float(member.competence) * 100.0), "  ·  doente" if member.has("illness") else ""]
 	var pick: Button = row.get_node("%pick")
 	var label: Label = row.get_node("%label")
@@ -640,7 +642,7 @@ func _open_talk(target: Country, invited := false) -> void:
 	var theirs := Dialogue.leader_of(world, target)
 	var party_now: Dictionary = world.politics.player_party(world)
 	var dim := _modal(TALK, "Conversa com %s" % theirs.get("name", "o líder"), "%s  ·  %s  ·  %s, %d anos, %s" % [target.name, world.politics.ruling_party(target.iso).get("name", ""), theirs.get("name", ""), People.age_of(theirs, world), Dialogue.temper(theirs)])
-	(dim.get_node("%face") as CharacterView).character = Character.for_politician(theirs)
+	(dim.get_node("%face") as Countryball).show_person(Character.for_politician(theirs), target.iso)
 	var compass: CompassView = dim.get_node("%talk_compass")
 	compass.points = [{"econ": theirs.get("econ", 0.0), "social": theirs.get("social", 0.0), "color": Color("f2b33d"), "big": true}, {"econ": party_now.get("econ", 0.0), "social": party_now.get("social", 0.0), "color": Color.WHITE, "big": true}]
 	(dim.get_node("%legend") as Label).text = "Dourado: %s. Branco: seu partido." % theirs.get("name", "líder")
@@ -856,11 +858,38 @@ func open_amendment_editor(norm: Dictionary) -> void:
 
 func _open_creator(character: Dictionary, on_done: Callable) -> void:
 	var dim := _modal(CREATOR)
-	var view: CharacterView = dim.get_node("%view")
-	view.character = character
-	var name_edit: LineEdit = dim.get_node("%name_edit")
-	name_edit.text = character.name
-	name_edit.text_changed.connect(func(t): character.name = t)
+	var country := _creator_country()
+	var group := Names.group_for(country.iso, country.region)
+	var view: Countryball = dim.get_node("%view")
+	view.show_person(character, country.iso)
+	(dim.get_node("%country_label") as Label).text = "Bandeira: %s" % country.name
+	var first_edit: LineEdit = dim.get_node("%first_name_edit")
+	var last_edit: LineEdit = dim.get_node("%last_name_edit")
+	var show_name := func():
+		first_edit.text = character.first_name
+		last_edit.text = character.last_name
+	show_name.call()
+	first_edit.text_changed.connect(func(t: String):
+		character["first_rolled"] = false
+		Character.set_names(character, t.strip_edges(), character.last_name))
+	last_edit.text_changed.connect(func(t: String):
+		character["last_rolled"] = false
+		Character.set_names(character, character.first_name, t.strip_edges()))
+	dim.get_node("%roll_name").pressed.connect(func():
+		Character.reroll_name(character, group, world.rng)
+		show_name.call())
+	var gender_buttons := {"m": dim.get_node("%gender_m"), "f": dim.get_node("%gender_f")}
+	var show_gender := func():
+		for g: String in gender_buttons:
+			(gender_buttons[g] as Button).set_pressed_no_signal(character.gender == g)
+		view.queue_redraw()
+	show_gender.call()
+	for g: String in gender_buttons:
+		(gender_buttons[g] as Button).pressed.connect(func():
+			if character.gender != g:
+				Character.set_gender(character, g, group, world.rng)
+				show_name.call()
+			show_gender.call())
 	var age_slider: HSlider = dim.get_node("%age_slider")
 	var age_label: Label = dim.get_node("%age_label")
 	var year_now: int = world.year
@@ -869,63 +898,28 @@ func _open_creator(character: Dictionary, on_done: Callable) -> void:
 	age_slider.value_changed.connect(func(v: float):
 		character["birth_year"] = year_now - int(v)
 		age_label.text = "%d anos" % int(v))
-	var values := {}
-	var sync := func():
-		for key: String in values:
-			(values[key] as Label).text = Character.option_label(key, int(character[key]))
-		view.queue_redraw()
-	for key: String in Character.SHAPES:
-		var count := Character.option_count(key)
-		var step := func(by: int):
-			character[key] = posmod(int(character[key]) + by, count)
-			sync.call()
-		dim.get_node("%prev_" + key).pressed.connect(step.bind(-1))
-		dim.get_node("%next_" + key).pressed.connect(step.bind(1))
-		values[key] = dim.get_node("%value_" + key)
-	_skin_picker(dim, character, view)
-	_color_wheel(dim, character, view)
-	sync.call()
 	dim.get_node("%Aleatorio").pressed.connect(func():
-		var fresh := Character.random(world.rng)
+		var fresh := Character.random(world.rng, country.iso, country.region)
 		for key: String in fresh:
-			if key != "name":
-				character[key] = fresh[key]
+			character[key] = fresh[key]
 		_close_modal(dim)
 		_open_creator(character, on_done))
 	dim.get_node("%Confirmar").pressed.connect(func():
-		if name_edit.text.strip_edges() == "":
-			character.name = "Sem Nome"
+		if Character.full_name(character) == "":
+			Character.reroll_name(character, group, world.rng)
+		elif String(character.first_name) == "":
+			Character.set_names(character, Names.first(group, character.gender, world.rng), character.last_name)
 		_close_modal(dim)
 		on_done.call(character))
 
 
-## Faixa de tons reais de pele: uma posição ao longo da escala, sem cor livre.
-func _skin_picker(dim: Control, character: Dictionary, view: CharacterView) -> void:
-	var slider: HSlider = dim.get_node("%skin_slider")
-	slider.value = character.skin
-	slider.value_changed.connect(func(v: float):
-		character.skin = v
-		view.queue_redraw())
-
-
-## Roda de cor única: os botões escolhem o que ela está pintando.
-func _color_wheel(dim: Control, character: Dictionary, view: CharacterView) -> void:
-	var picker: ColorPicker = dim.get_node("%color_wheel")
-	var target := {"key": "eyes_color"}
-	var buttons := {}
-	var select := func(key: String):
-		target.key = key
-		picker.color = character[key]
-		for k: String in buttons:
-			(buttons[k] as Button).add_theme_color_override("font_color", UiKit.ACCENT if k == key else UiKit.TEXT)
-	for key: String in Character.COLOR_KEYS:
-		var b: Button = dim.get_node("%paint_" + key)
-		b.pressed.connect(select.bind(key))
-		buttons[key] = b
-	picker.color_changed.connect(func(c: Color):
-		character[target.key] = c
-		view.queue_redraw())
-	select.call("eyes_color")
+## País do personagem no criador: o escolhido na tela inicial ou o da partida; se ele deixou de existir,
+## quem o tomou, que é onde o novo personagem vai governar.
+func _creator_country() -> Country:
+	var c: Country = world.player if playing or _start_pick == null else _start_pick
+	if c != null and not c.alive:
+		c = world.countries[c.annexed_by] if c.annexed_by >= 0 else world.usa
+	return c
 
 
 func _show_prompt(p: Dictionary) -> void:
@@ -1010,7 +1004,8 @@ func _on_game_ended(result: Dictionary) -> void:
 
 ## A partida segue com outra pessoa: no mesmo país, ou em quem o tomou se ele deixou de existir.
 func _new_character() -> void:
-	_open_creator(Character.random(world.rng), func(ch):
+	var home := _creator_country()
+	_open_creator(Character.random(world.rng, home.iso, home.region), func(ch):
 		world.assume_new_character(ch)
 		hud.refresh_leader()
 		hud.refresh(true)
