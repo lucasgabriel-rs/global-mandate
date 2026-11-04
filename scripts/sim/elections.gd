@@ -31,6 +31,25 @@ static func rules(c: Country, data: Dictionary) -> Dictionary:
 	return data.electoral
 
 
+## Comparecimento esperado sem lei eleitoral: estabilidade e democracia levam gente às urnas.
+static func base_turnout(c: Country) -> float:
+	return 0.5 + c.stability * 0.2 + c.dem * 0.012
+
+
+## Parte do voto acompanha o fundo de cada partido: quanto mais pesa o dinheiro privado, mais pesa o caixa.
+static func _weigh_money(data: Dictionary, weight: float) -> void:
+	if weight <= 0.0:
+		return
+	var total := 0.0
+	for p: Dictionary in data.parties:
+		total += maxf(float(p.get("funds", 0.0)), 0.0)
+	if total <= 0.0:
+		return
+	for p: Dictionary in data.parties:
+		p.support = float(p.support) * (1.0 - weight) + maxf(float(p.get("funds", 0.0)), 0.0) / total * weight
+	Politics._normalize(data)
+
+
 ## Votos de um partido em um distrito: a força nacional, ajustada pelo reduto de cada um. O reduto é sempre o
 ## mesmo para o par partido e lugar, então as bases eleitorais persistem de uma eleição para outra.
 static func _district_votes(parties: Array, place: String, rng: RandomNumberGenerator) -> Dictionary:
@@ -126,15 +145,22 @@ static func apportion(shares: Array, total: int) -> Array:
 static func run(world: GameWorld, c: Country, data: Dictionary, mood: Callable) -> Dictionary:
 	var rng := world.rng
 	var rule := rules(c, data)
+	# O Código Eleitoral do jogador ajusta barreira, comparecimento e o peso do dinheiro; a Constituição vale primeiro.
+	var law := CodeEleitoral.rules_for(world, c)
 	for p: Dictionary in data.parties:
 		p.support = float(p.support) * float(mood.call(p)) * rng.randf_range(0.92, 1.08)
+		# Voto obrigatório leva às urnas quem costuma faltar, e esse eleitor pende para a esquerda econômica.
+		if law.get("compulsory", false):
+			p.support = float(p.support) * (1.0 - 0.06 * float(p.get("econ", 0.0)))
 	Politics._normalize(data)
-	var turnout := clampf(0.5 + c.stability * 0.2 + c.dem * 0.012 + rng.randf_range(-0.04, 0.04), 0.3, 0.92)
+	_weigh_money(data, float(law.get("money_weight", 0.0)))
+	var turnout := clampf(base_turnout(c) + float(law.get("turnout", 0.0)) + rng.randf_range(-0.04, 0.04), 0.3, 0.97 if law.get("compulsory", false) else 0.92)
+	var threshold := maxf(float(rule.threshold), float(law.get("threshold", 0.0)))
 	var subs: Subdivisions = world.subdivisions
 	var roots: Array = subs.roots_of(c.iso)
 	var total: int = data.seats_total
 	# Partidos abaixo da cláusula de barreira, medida no voto nacional, não entram pela lista.
-	var eligible: Array = data.parties.filter(func(p): return float(p.support) >= float(rule.threshold))
+	var eligible: Array = data.parties.filter(func(p): return float(p.support) >= threshold)
 	if eligible.is_empty():
 		eligible = data.parties
 	var districts := []
@@ -154,7 +180,7 @@ static func run(world: GameWorld, c: Country, data: Dictionary, mood: Callable) 
 	var national := {}
 	for p: Dictionary in eligible:
 		national[p.id] = float(p.support)
-	var system: String = rule.system
+	var system: String = rule.system if String(law.get("system", "")) == "" else String(law.system)
 	var by_list := 0
 	if system == "mixed":
 		by_list = total / 2
@@ -210,7 +236,7 @@ static func run(world: GameWorld, c: Country, data: Dictionary, mood: Callable) 
 		head = _presidential(data, rng)
 	var report := {
 		"country": c.name, "date": world.date_string().get_slice("  ", 0), "year": world.year, "system": system, "head_system": rule.head, "turnout": turnout,
-		"districts": report_districts, "district_total": districts.size(), "head": head, "threshold": rule.threshold, "parties": [],
+		"districts": report_districts, "district_total": districts.size(), "head": head, "threshold": threshold, "parties": [],
 	}
 	for p: Dictionary in data.parties:
 		report.parties.append({"name": p.name, "short": p.short, "vote": float(p.support), "seats": int(p.seats), "upper": int(p.get("upper_seats", 0)), "color": p.color})
