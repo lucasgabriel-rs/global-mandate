@@ -1,0 +1,73 @@
+[gd_scene format=3]
+
+[ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="e1"]
+
+[sub_resource type="StyleBoxFlat" id="s1"]
+content_margin_left = 10.0
+content_margin_top = 8.0
+content_margin_right = 10.0
+content_margin_bottom = 8.0
+bg_color = Color(1, 1, 1, 0.04)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.15294118, 0.2509804, 0.30980393, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="CodeCard" type="PanelContainer"]
+custom_minimum_size = Vector2(250, 0)
+theme_override_styles/panel = SubResource("s1")
+theme = ExtResource("e1")
+
+[node name="Linha" type="HBoxContainer" parent="."]
+theme_override_constants/separation = 10
+
+[node name="swatch" type="ColorRect" parent="Linha"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(6, 0)
+mouse_filter = 2
+
+[node name="Coluna" type="VBoxContainer" parent="Linha"]
+size_flags_horizontal = 3
+theme_override_constants/separation = 2
+
+[node name="code_name" type="Label" parent="Linha/Coluna"]
+unique_name_in_owner = true
+mouse_filter = 2
+theme_override_font_sizes/font_size = 15
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+text = "Código"
+
+[node name="articles" type="Label" parent="Linha/Coluna"]
+unique_name_in_owner = true
+mouse_filter = 2
+theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+text = "0 artigos"
+
+[node name="status" type="Label" parent="Linha/Coluna"]
+unique_name_in_owner = true
+mouse_filter = 2
+theme_override_font_sizes/font_size = 11
+theme_override_colors/font_color = Color(0.30980393, 0.7019608, 0.8509804, 1)
+
+[node name="Botoes" type="HBoxContainer" parent="Linha/Coluna"]
+theme_override_constants/separation = 4
+
+[node name="alter" type="Button" parent="Linha/Coluna/Botoes"]
+unique_name_in_owner = true
+text = "Alterar"
+focus_mode = 0
+mouse_default_cursor_shape = 2
+tooltip_text = "Abre o código no editor de blocos como projeto de alteração."
+
+[node name="read" type="Button" parent="Linha/Coluna/Botoes"]
+unique_name_in_owner = true
+text = "Ler"
+focus_mode = 0
+mouse_default_cursor_shape = 2
+tooltip_text = "Mostra o texto em vigor."

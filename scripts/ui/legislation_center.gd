@@ -1,7 +1,10 @@
 class_name LegislationCenter
 extends MarginContainer
-## Gerenciador de normas: lista e situação, tramitação, Constituição, instituições e auditoria.
+## Gerenciador de normas. A primeira aba junta o que se usa sempre: os códigos, os projetos em tramitação,
+## as normas em vigor e, por último, a lei avulsa com todos os blocos. Depois vêm Constituição, instituições,
+## auditoria e tratados.
 
+const CODE_CARD := preload("res://scenes/ui/legislation/code_card.tscn")
 const NORM_ROW := preload("res://scenes/ui/legislation/norm_row.tscn")
 const PROCESS_ROW := preload("res://scenes/ui/legislation/process_row.tscn")
 const TREATY_ROW := preload("res://scenes/ui/legislation/treaty_row.tscn")
@@ -51,7 +54,10 @@ func setup(owner_main: Node, tab := 0, message := "") -> void:
 	filter.add_item("Todas")
 	for state: String in STATE_COLORS:
 		filter.add_item(state)
+		if state == Legislation.STATE_IN_FORCE:
+			filter.select(filter.item_count - 1)
 	filter.item_selected.connect(func(_i): _fill_norms())
+	_fill_codes()
 	_fill_norms()
 	_fill_process()
 	_fill_constitution_versions()
@@ -66,6 +72,38 @@ func setup(owner_main: Node, tab := 0, message := "") -> void:
 		audit_filter.add_item(kind)
 	audit_filter.item_selected.connect(func(_i): _fill_audit())
 	_fill_audit()
+
+
+func _fill_codes() -> void:
+	var box: Control = %code_cards
+	for code: LawCode in LawCodes.all():
+		var card: Control = CODE_CARD.instantiate()
+		card.name = "code_%s" % code.id
+		var info := leg.code_card(code.id)
+		(card.get_node("%swatch") as ColorRect).color = code.category.get("color", Color.GRAY)
+		(card.get_node("%code_name") as Label).text = code.title
+		var norm: Dictionary = info.norm
+		var articles: int = info.articles
+		(card.get_node("%articles") as Label).text = ("%s  ·  %d artigo%s" % [leg.norm_label(norm), articles, "" if articles == 1 else "s"]) if not norm.is_empty() else "Ainda não existe: alterar cria o código."
+		var status: Label = card.get_node("%status")
+		status.text = "%d alteração(ões) em tramitação" % int(info.pending) if int(info.pending) > 0 else ""
+		var alter: Button = card.get_node("%alter")
+		alter.disabled = not leg.can(world, "present", code.norm_type)
+		alter.tooltip_text = code.ementa if not alter.disabled else "%s não pode apresentar %s." % [Legislation.ROLE_LABELS[leg.role(world)], Legislation.NORM_TYPES[code.norm_type].label]
+		alter.pressed.connect(_alter_code.bind(code.id))
+		var read: Button = card.get_node("%read")
+		read.visible = not norm.is_empty()
+		read.pressed.connect(func(): main.open_norm(norm))
+		box.add_child(card)
+
+
+func _alter_code(id: String) -> void:
+	# Enquanto o Código Tributário não tem texto próprio, alterar é mudar o antigo, feito só de alíquotas.
+	var legacy: Dictionary = leg.code_card(id).norm
+	var bill := leg.start_change(world, legacy) if leg.code_norm(id).is_empty() and not legacy.is_empty() else leg.start_code_bill(world, id)
+	if bill.is_empty():
+		return
+	main.open_law_editor(bill)
 
 
 func _use_template() -> void:
@@ -95,6 +133,7 @@ func _fill_norms() -> void:
 	var state := "" if filter.selected <= 0 else filter.get_item_text(filter.selected)
 	var list := leg.list_norms(state)
 	(%norm_count as Label).text = "%d norma(s)" % list.size()
+	(%norms_title as Label).text = "Normas em vigor" if state == Legislation.STATE_IN_FORCE else ("Todas as normas" if state == "" else "Normas: %s" % state.to_lower())
 	for norm: Dictionary in list:
 		var row: Control = NORM_ROW.instantiate()
 		(row.get_node("%state_chip") as ColorRect).color = STATE_COLORS.get(norm.state, Color.GRAY)
@@ -111,22 +150,17 @@ func _fill_process() -> void:
 	var box: Control = %process_rows
 	var list := leg.in_process()
 	(%process_empty as Control).visible = list.is_empty()
+	(%process_count as Label).text = "%d projeto(s)" % list.size() if not list.is_empty() else ""
 	for norm: Dictionary in list:
 		var row: Control = PROCESS_ROW.instantiate()
+		row.name = "process_%d" % int(norm.id)
 		(row.get_node("%name_label") as Label).text = "%s  ·  %s" % [leg.norm_label(norm), norm.title]
 		var process: Dictionary = norm.process
-		var at := mini(int(process.at), process.steps.size() - 1)
-		var step: String = process.steps[at]
 		var waiting: bool = process.get("waiting_player", false)
-		(row.get_node("%step_label") as Label).text = "Aguardando sua sanção" if waiting else String(Legislation.STEP_LABELS.get(step, step))
-		var parts := []
-		for i in process.steps.size():
-			var label: String = Legislation.STEP_LABELS.get(process.steps[i], process.steps[i])
-			parts.append(("[%s]" % label) if i == at else label)
-		(row.get_node("%track") as Label).text = "  →  ".join(parts)
+		(row.get_node("%step_label") as Label).text = "Aguardando sua sanção" if waiting else String(norm.state)
+		(row.get_node("%track") as ProcessTrack).setup(world, norm)
 		var last: String = process.log[-1].result if not process.log.is_empty() else ""
-		var days_left: int = (int(process.get("tacit", 0)) if waiting else int(process.due)) - world.day_index
-		(row.get_node("%forecast") as Label).text = "%s  Próximo passo em %d dia(s)." % [last, maxi(days_left, 0)]
+		(row.get_node("%forecast") as Label).text = "Último passo: %s" % last if last != "" else ""
 		row.get_node("%open").pressed.connect(func(): main.open_norm(norm))
 		var deal: Button = row.get_node("%negotiate")
 		deal.visible = leg.can_negotiate(norm)
@@ -162,7 +196,7 @@ func _fill_treaties() -> void:
 
 func _sanction(norm: Dictionary, approve: bool) -> void:
 	var r: Dictionary = leg.sanction(world, norm, approve)
-	main.reopen_legislation(1, r.msg)
+	main.reopen_legislation(0, r.msg)
 
 
 # --- Constituição --------------------------------------------------------------------

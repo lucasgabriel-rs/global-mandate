@@ -1,0 +1,200 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/law_review.gd" id="e1"]
+[ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="e2"]
+[ext_resource type="PackedScene" path="res://scenes/ui/legislation/process_track.tscn" id="track"]
+
+[sub_resource type="StyleBoxFlat" id="s1"]
+content_margin_left = 14.0
+content_margin_top = 12.0
+content_margin_right = 14.0
+content_margin_bottom = 12.0
+bg_color = Color(0.05, 0.09, 0.12, 0.99)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.9490196, 0.7019608, 0.23921569, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="s2"]
+content_margin_left = 8.0
+content_margin_top = 6.0
+content_margin_right = 8.0
+content_margin_bottom = 6.0
+bg_color = Color(1, 1, 1, 0.04)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[node name="LawReview" type="PanelContainer"]
+visible = false
+anchors_preset = 15
+anchor_left = 0.18
+anchor_top = 0.1
+anchor_right = 0.82
+anchor_bottom = 0.9
+theme_override_styles/panel = SubResource("s1")
+script = ExtResource("e1")
+theme = ExtResource("e2")
+
+[node name="Coluna" type="VBoxContainer" parent="."]
+theme_override_constants/separation = 8
+
+[node name="Cabeca" type="HBoxContainer" parent="Coluna"]
+theme_override_constants/separation = 6
+
+[node name="Titulo" type="Label" parent="Coluna/Cabeca"]
+mouse_filter = 2
+theme_override_font_sizes/font_size = 20
+theme_override_colors/font_color = Color(0.9490196, 0.7019608, 0.23921569, 1)
+text = "Antes de enviar: efeitos esperados"
+
+[node name="Espaco" type="Control" parent="Coluna/Cabeca"]
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="rv_back" type="Button" parent="Coluna/Cabeca"]
+unique_name_in_owner = true
+text = "Voltar ao editor"
+focus_mode = 0
+mouse_default_cursor_shape = 2
+
+[node name="rv_send" type="Button" parent="Coluna/Cabeca"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 32)
+text = "Enviar ao parlamento"
+focus_mode = 0
+mouse_default_cursor_shape = 2
+
+[node name="rv_norm" type="Label" parent="Coluna"]
+unique_name_in_owner = true
+mouse_filter = 2
+theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+autowrap_mode = 3
+
+[node name="Rolagem" type="ScrollContainer" parent="Coluna"]
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="Corpo" type="VBoxContainer" parent="Coluna/Rolagem"]
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="Numeros" type="HBoxContainer" parent="Coluna/Rolagem/Corpo"]
+theme_override_constants/separation = 8
+
+[node name="Aprovacao" type="PanelContainer" parent="Coluna/Rolagem/Corpo/Numeros"]
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("s2")
+
+[node name="Coluna" type="VBoxContainer" parent="Coluna/Rolagem/Corpo/Numeros/Aprovacao"]
+theme_override_constants/separation = 2
+
+[node name="AprovacaoTitulo" type="Label" parent="Coluna/Rolagem/Corpo/Numeros/Aprovacao/Coluna"]
+mouse_filter = 2
+theme_override_font_sizes/font_size = 11
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+text = "APROVAÇÃO DO GOVERNO"
+
+[node name="rv_approval" type="Label" parent="Coluna/Rolagem/Corpo/Numeros/Aprovacao/Coluna"]
+unique_name_in_owner = true
+mouse_filter = 2
+theme_override_font_sizes/font_size = 18
+
+[node name="rv_popularity" type="Label" parent="Coluna/Rolagem/Corpo/Numeros/Aprovacao/Coluna"]
+unique_name_in_owner = true
+mouse_filter = 2
+theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+autowrap_mode = 3
+
+[node name="Orcamento" type="PanelContainer" parent="Coluna/Rolagem/Corpo/Numeros"]
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("s2")
+
+[node name="Coluna" type="VBoxContainer" parent="Coluna/Rolagem/Corpo/Numeros/Orcamento"]
+theme_override_constants/separation = 2
+
+[node name="OrcamentoTitulo" type="Label" parent="Coluna/Rolagem/Corpo/Numeros/Orcamento/Coluna"]
+mouse_filter = 2
+theme_override_font_sizes/font_size = 11
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+text = "ORÇAMENTO POR ANO"
+
+[node name="rv_budget" type="Label" parent="Coluna/Rolagem/Corpo/Numeros/Orcamento/Coluna"]
+unique_name_in_owner = true
+mouse_filter = 2
+theme_override_font_sizes/font_size = 18
+
+[node name="rv_budget_note" type="Label" parent="Coluna/Rolagem/Corpo/Numeros/Orcamento/Coluna"]
+unique_name_in_owner = true
+mouse_filter = 2
+theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+autowrap_mode = 3
+
+[node name="Grupos" type="HBoxContainer" parent="Coluna/Rolagem/Corpo"]
+theme_override_constants/separation = 8
+
+[node name="Sociais" type="PanelContainer" parent="Coluna/Rolagem/Corpo/Grupos"]
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("s2")
+
+[node name="Coluna" type="VBoxContainer" parent="Coluna/Rolagem/Corpo/Grupos/Sociais"]
+theme_override_constants/separation = 2
+
+[node name="SociaisTitulo" type="Label" parent="Coluna/Rolagem/Corpo/Grupos/Sociais/Coluna"]
+mouse_filter = 2
+theme_override_font_sizes/font_size = 11
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+text = "GRUPOS SOCIAIS"
+
+[node name="rv_groups" type="RichTextLabel" parent="Coluna/Rolagem/Corpo/Grupos/Sociais/Coluna"]
+unique_name_in_owner = true
+size_flags_horizontal = 3
+theme_override_font_sizes/normal_font_size = 13
+bbcode_enabled = true
+fit_content = true
+
+[node name="Partidos" type="PanelContainer" parent="Coluna/Rolagem/Corpo/Grupos"]
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("s2")
+
+[node name="Coluna" type="VBoxContainer" parent="Coluna/Rolagem/Corpo/Grupos/Partidos"]
+theme_override_constants/separation = 2
+
+[node name="PartidosTitulo" type="Label" parent="Coluna/Rolagem/Corpo/Grupos/Partidos/Coluna"]
+mouse_filter = 2
+theme_override_font_sizes/font_size = 11
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+text = "REAÇÃO DOS PARTIDOS"
+
+[node name="rv_parties" type="RichTextLabel" parent="Coluna/Rolagem/Corpo/Grupos/Partidos/Coluna"]
+unique_name_in_owner = true
+size_flags_horizontal = 3
+theme_override_font_sizes/normal_font_size = 13
+bbcode_enabled = true
+fit_content = true
+
+[node name="TramitacaoTitulo" type="Label" parent="Coluna/Rolagem/Corpo"]
+mouse_filter = 2
+theme_override_font_sizes/font_size = 11
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+text = "CAMINHO NO PARLAMENTO"
+
+[node name="rv_track" parent="Coluna/Rolagem/Corpo" instance=ExtResource("track")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="rv_feedback" type="Label" parent="Coluna"]
+unique_name_in_owner = true
+mouse_filter = 2
+theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(0.9254902, 0.3529412, 0.2627451, 1)
+autowrap_mode = 3

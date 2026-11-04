@@ -80,9 +80,22 @@ func _click(control: Control) -> void:
 
 
 func _library_block(editor: LawEditor, type: String) -> LawBlockView:
-	for child in (editor.get_node("%library_list") as Control).get_children():
+	var found := _find_library(editor.get_node("%library_list"), type)
+	if found and not found.is_visible_in_tree():
+		var group := editor.library_group_of(found)
+		if group:
+			(group.get_node("%toggle") as Button).button_pressed = true
+	return found
+
+
+func _find_library(from: Node, type: String) -> LawBlockView:
+	for child in from.get_children():
 		if child is LawBlockView and child.block.type == type:
 			return child
+		if not child is LawBlockView:
+			var deep := _find_library(child, type)
+			if deep:
+				return deep
 	return null
 
 
@@ -123,14 +136,94 @@ func _run() -> void:
 	center.get_node("%tabs").current_tab = 0
 	await _wait()
 
+	# Códigos: um cartão por código, e "Alterar" abre o editor só com os blocos daquela área.
+	var cards: Control = center.get_node("%code_cards")
+	_check(cards.get_child_count() == LawCodes.all().size(), "um cartão por código: %d" % cards.get_child_count())
+	var tax_card: Control = cards.get_node("code_tributario")
+	_check((tax_card.get_node("%articles") as Label).text.contains("artigo"), "o cartão do tributário mostra os artigos: " + (tax_card.get_node("%articles") as Label).text)
+	await _click(tax_card.get_node("%alter"))
+	var code_editor: LawEditor = _top()
+	_check(code_editor is LawEditor and code_editor.code_id == "tributario", "o cartão abre o editor do Código Tributário")
+	_check(int(code_editor.norm.get("amends", -1)) >= 0, "é um projeto que altera o código em vigor")
+	var lib: Control = code_editor.get_node("%library_list")
+	_check(lib.has_node("cat_events") and not lib.has_node("cat_flow") and not lib.has_node("cat_direitos"), "a paleta mostra só o código e os eventos")
+	var adv: Control = lib.get_node("group_avançado")
+	_check(not (adv.get_node("%items") as Control).visible, "os avançados começam recolhidos")
+	await _shot("l2_codigo_tributario")
+	await _click(adv.get_node("%toggle"))
+	_check((adv.get_node("%items") as Control).visible, "um clique abre o grupo Avançado")
+	await _shot("l2_codigo_avancado_aberto")
+	await _click(adv.get_node("%toggle"))
+	# Nomes: isenção escolhe o tributo de uma lista, com "Outro nome" só para criar.
+	var tax_program: Dictionary = code_editor.norm_program()
+	var exempt := LawProgram.new_block(tax_program, "ec_exempt")
+	tax_program.stacks[0].blocks.append(exempt)
+	code_editor.refresh()
+	code_editor.select_block(int(exempt.id))
+	await _wait()
+	var ref_row: Control = (code_editor.get_node("%props_box") as Control).get_child(0)
+	var ref_option: OptionButton = ref_row.get_node("%option")
+	_check(ref_option.visible and ref_option.get_item_text(ref_option.item_count - 1) == LawEditor.REF_NEW, "tributo vem de uma lista, com Outro nome no fim")
+	_check(not (ref_row.get_node("%edit") as Control).visible, "sem texto livre até pedir um nome novo")
+	await _shot("l2_lista_de_nomes")
+	tax_program.stacks[0].blocks.erase(exempt)
+	code_editor.selected_id = -1
+	# Sobe a alíquota de renda em um ponto e envia.
+	for b: Dictionary in tax_program.stacks[0].blocks:
+		if b.type == "ec_rate" and b.fields.field == "tax_income":
+			b.fields.value = float(b.fields.value) + 1.0
+	code_editor.refresh()
+	await _wait()
+	_check(code_editor.last_compile.ok, "a alteração do código compila: %s" % str(code_editor.last_compile.errors))
+	await _click(code_editor.get_node("%present"))
+	var review: LawReview = code_editor.get_node("%review")
+	_check(review.visible, "apresentar mostra antes os efeitos esperados")
+	_check((review.get_node("%rv_budget") as Label).text.contains("US$"), "o painel mostra o efeito no orçamento: " + (review.get_node("%rv_budget") as Label).text)
+	_check((review.get_node("%rv_groups") as RichTextLabel).text.contains("Trabalhadores"), "e a reação dos grupos sociais")
+	_check((review.get_node("%rv_parties") as RichTextLabel).text.contains("tende a"), "e a dos partidos")
+	var review_track: ProcessTrack = review.get_node("%rv_track")
+	_check((review_track.get_node("%chips") as Control).get_child_count() >= 4, "e o caminho no parlamento")
+	_check((review_track.get_node("%rule") as Label).text.contains("maioria"), "uma linha explica o tipo de norma: " + (review_track.get_node("%rule") as Label).text)
+	await _shot("l2_efeitos_esperados")
+	var tax_bill: Dictionary = code_editor.norm
+	await _click(review.get_node("%rv_send"))
+	_check(tax_bill.state == Legislation.STATE_PROCESS, "a alteração do código entra em tramitação: %s" % tax_bill.state)
+	center = _top()
+	_check(center is LegislationCenter, "volta ao centro legislativo")
+	var tax_row: Control = center.get_node("%process_rows").get_node("process_%d" % int(tax_bill.id))
+	var track: ProcessTrack = tax_row.get_node("%track")
+	var chips: Control = track.get_node("%chips")
+	_check((chips.get_child(0).get_node("%chip_name") as Label).text == "Comissão", "o passo a passo começa na comissão")
+	_check((track.get_node("%chance") as Label).text.contains("Chance de aprovação"), "mostra a chance de aprovação: " + (track.get_node("%chance") as Label).text)
+	_check((track.get_node("%now") as Label).text.contains("dias"), "e os dias que faltam: " + (track.get_node("%now") as Label).text)
+	await _shot("l2_tramitacao_passos")
+	# Direitos e deveres: blocos concretos, sem nomes digitados.
+	(center.get_node("%Rolagem") as ScrollContainer).scroll_vertical = 0
+	await _wait()
+	await _click(center.get_node("%code_cards").get_node("code_direitos").get_node("%alter"))
+	var rights_editor: LawEditor = _top()
+	_check(rights_editor is LawEditor and rights_editor.code_id == "direitos", "o cartão abre o editor de Direitos e deveres")
+	_check(_library_block(rights_editor, "dr_military") != null and _library_block(rights_editor, "dr_censor") != null, "a paleta tem serviço militar e censura")
+	for b: Dictionary in LawProgram.all_blocks(rights_editor.norm_program()):
+		if b.type == "dr_military":
+			rights_editor.select_block(int(b.id))
+	await _shot("l2_codigo_direitos")
+	await _click(rights_editor.get_node("%delete_draft"))
+	center = _top()
+	_check(center is LegislationCenter, "excluir o rascunho volta ao centro")
+
 	# Editor: norma nova, de lei ordinária.
 	var types: OptionButton = center.get_node("%new_type")
 	for i in types.item_count:
 		if types.get_item_metadata(i) == "ordinaria":
 			types.select(i)
+	(center.get_node("%Rolagem") as ScrollContainer).ensure_control_visible(center.get_node("%new_norm"))
+	await _wait()
+	await _shot("l1_lei_avulsa")
 	await _click(center.get_node("%new_norm"))
 	var editor: LawEditor = _top()
 	_check(editor is LawEditor, "abre o editor de blocos")
+	_check(editor.code_id == "" and (editor.get_node("%library_list").get_node("group_avançado").get_node("%items") as Control).visible, "lei avulsa mostra os avançados abertos")
 	await _shot("l2_editor_vazio")
 	_check((editor.get_node("%present") as Button).disabled, "norma vazia não pode ser apresentada")
 	var canvas: LawCanvas = editor.canvas
@@ -240,12 +333,15 @@ func _run() -> void:
 	# Apresentar: a norma sai do editor e entra em tramitação.
 	var norm: Dictionary = editor.norm
 	await _click(editor.get_node("%present"))
+	await _click(editor.get_node("%review").get_node("%rv_send"))
 	_check(norm.state == Legislation.STATE_PROCESS, "norma apresentada: %s" % norm.state)
 	center = _top()
-	_check(center is LegislationCenter and center.get_node("%tabs").current_tab == 1, "volta à aba de tramitação")
+	_check(center is LegislationCenter and center.get_node("%tabs").current_tab == 0, "volta à primeira aba, com a tramitação")
 	await _shot("l6_tramitacao")
 	# Negociação com as bancadas, pelos botões da tramitação.
-	var process_row: Control = center.get_node("%process_rows").get_child(0)
+	var process_row: Control = center.get_node("%process_rows").get_node("process_%d" % int(norm.id))
+	(center.get_node("%Rolagem") as ScrollContainer).ensure_control_visible(process_row)
+	await _wait()
 	await _click(process_row.get_node("%negotiate"))
 	var deal: NegotiationScreen = _top()
 	_check(deal is NegotiationScreen, "abre a negociação de votos")

@@ -125,7 +125,8 @@ func seed_program(world: GameWorld, c: Country) -> Dictionary:
 		block.fields.right = r
 		block.fields.scope = "cidadaos" if r == "voto" or r == "arma" else ("adultos" if r == "aborto" else "todos")
 		stack.blocks.append(block)
-	var duties := LawProgram.add_stack(program, LawProgram.new_block(program, "ev_enact"), Vector2(30, 70 + 34 * rights.size()))
+	# Direitos numa coluna; deveres e imprensa em outra, ao lado, para nada se sobrepor no editor.
+	var duties := LawProgram.add_stack(program, LawProgram.new_block(program, "ev_enact"), Vector2(520, 30))
 	var duty := LawProgram.new_block(program, "dr_duty")
 	duty.fields.duty = "tributos"
 	duties.blocks.append(duty)
@@ -159,8 +160,8 @@ func seed_program(world: GameWorld, c: Country) -> Dictionary:
 		media.append(["dr_block", {"service": "redes"}])
 		media.append(["dr_block", {"service": "vpn"}])
 	if not media.is_empty():
-		var y: int = 110 + 34 * (rights.size() + duties.blocks.size())
-		var press := LawProgram.add_stack(program, LawProgram.new_block(program, "ev_enact"), Vector2(30, y))
+		var y: int = 90 + 40 * duties.blocks.size()
+		var press := LawProgram.add_stack(program, LawProgram.new_block(program, "ev_enact"), Vector2(520, y))
 		for entry: Array in media:
 			var block := LawProgram.new_block(program, entry[0])
 			block.fields.merge(entry[1], true)

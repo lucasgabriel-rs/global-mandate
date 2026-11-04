@@ -933,8 +933,23 @@ func position_for(world: GameWorld, norm: Dictionary) -> Dictionary:
 		base.social = clampf(float(base.social) + float(_amendment_position(norm).social), -1.0, 1.0)
 		return base
 	var adds := 0.0
-	var blocks := LawProgram.all_blocks(norm.get("program", LawProgram.empty()))
+	var change := change_of(norm)
+	var blocks: Array = change.added
 	var seen := 0
+	if int(norm.get("amends", -1)) >= 0:
+		# Alteração: vale o que muda, não o texto inteiro que o rascunho copia.
+		base = {"econ": 0.0, "social": 0.0}
+		for pair: Array in [[change.added, 1.0], [change.removed, -1.0]]:
+			for block: Dictionary in pair[0]:
+				var def := LawCatalog.get_def(block.type)
+				base.econ = float(base.econ) + float(def.get("econ", 0.0)) * pair[1]
+				base.social = float(base.social) + float(def.get("social", 0.0)) * pair[1]
+				if def.has("econ") or def.has("social"):
+					seen += 1
+		var scale := 1.0 / maxf(sqrt(float(seen)), 1.0)
+		base.econ = clampf(float(base.econ) * scale, -1.0, 1.0)
+		base.social = clampf(float(base.social) * scale, -1.0, 1.0)
+		seen = 0
 	for block: Dictionary in blocks:
 		var def := LawCatalog.get_def(block.type)
 		if def.has("econ") or def.has("social"):
@@ -956,8 +971,11 @@ func popularity_of(world: GameWorld, norm: Dictionary) -> float:
 		median.econ = float(median.econ) + float(party.econ) * float(party.support)
 		median.social = float(median.social) + float(party.social) * float(party.support)
 	var score := 0.56 - Politics.distance(position_for(world, norm), median) * 0.25
-	for block: Dictionary in LawProgram.all_blocks(norm.get("program", LawProgram.empty())):
-		score += float(POPULARITY_WEIGHTS.get(block.type, 0.0))
+	var change := change_of(norm)
+	for block: Dictionary in change.removed:
+		score -= _popularity_weight(block.type)
+	for block: Dictionary in change.added:
+		score += _popularity_weight(block.type)
 		if block.type == "ec_rate" and not block.plugs.has("value"):
 			score -= (float(block.fields.get("value", 0.0)) / 100.0 - float(c.get(String(block.fields.get("field"))))) * 6.0
 		elif block.type == "ec_budget" and not block.plugs.has("value"):
@@ -973,6 +991,44 @@ func popularity_of(world: GameWorld, norm: Dictionary) -> float:
 			score -= 0.15
 	score += (c.approval - 0.46) * 0.25
 	return clampf(score, 0.03, 0.97)
+
+
+## Peso de um bloco na opinião do eleitor: da tabela, ou o "pop" do bloco de um código.
+static func _popularity_weight(type: String) -> float:
+	if POPULARITY_WEIGHTS.has(type):
+		return float(POPULARITY_WEIGHTS[type])
+	return float(LawCatalog.get_def(type).get("pop", 0.0))
+
+
+## O que a norma acrescenta e tira. Norma nova: tudo é acréscimo. Alteração: compara com a versão em vigor
+## do alvo, bloco por bloco, pelo tipo e pelos valores.
+func change_of(norm: Dictionary) -> Dictionary:
+	var mine := LawProgram.all_blocks(norm.get("program", LawProgram.empty()))
+	var target: Dictionary = norms.get(int(norm.get("amends", -1)), {})
+	if target.is_empty() or target.get("versions", []).is_empty():
+		return {"added": mine, "removed": []}
+	var theirs := LawProgram.all_blocks(_current_program(target))
+	var pool := {}
+	for block: Dictionary in theirs:
+		pool.get_or_add(_block_key(block), []).append(block)
+	var added := []
+	for block: Dictionary in mine:
+		var key := _block_key(block)
+		if pool.has(key) and not pool[key].is_empty():
+			pool[key].pop_back()
+		else:
+			added.append(block)
+	var removed := []
+	for key: String in pool:
+		removed.append_array(pool[key])
+	return {"added": added, "removed": removed}
+
+
+static func _block_key(block: Dictionary) -> String:
+	var plugs := {}
+	for key: String in block.plugs:
+		plugs[key] = _block_key(block.plugs[key])
+	return "%s|%s|%s" % [block.type, var_to_str(block.fields), var_to_str(plugs)]
 
 
 ## Estimativa de votos em uma casa, sem contar dissidentes. Quem usa isto é a pesquisa paga.
@@ -1021,6 +1077,273 @@ func poll(world: GameWorld, kind: String, norm: Dictionary) -> Dictionary:
 func bill_probe(id: String) -> Dictionary:
 	var b := Politics.bill(id)
 	return {"type": "ordinaria", "payload": {"kind": "bill", "id": id, "share": float(b.get("share", 0.0))}, "position": {"econ": b.econ, "social": b.social}, "by_player": true}
+
+
+# --- Consultas para a tela ---------------------------------------------------------------
+
+## Fases da tramitação em linguagem simples, cada uma juntando etapas do rito.
+const PHASES := [
+	{"id": "comissao", "label": "Comissão", "steps": ["present", "admissibility", "constitutional"]},
+	{"id": "plenario", "label": "Plenário", "steps": ["discussion", "vote", "interval", "vote_2", "quorum"]},
+	{"id": "outra_casa", "label": "Outra casa", "steps": ["vote_upper"]},
+	{"id": "plebiscito", "label": "Plebiscito", "steps": ["plebiscite"]},
+	{"id": "sancao", "label": "Sanção", "steps": ["sign", "sanction", "override"]},
+	{"id": "publicacao", "label": "Publicação", "steps": ["promulgate", "publish", "apply"]},
+	{"id": "vigencia", "label": "Vigência", "steps": []},
+]
+## Grupos sociais da bússola, para a reação esperada a uma proposta.
+const SOCIAL_GROUPS := [
+	{"label": "Trabalhadores", "econ": -0.6, "social": 0.1},
+	{"label": "Empresários", "econ": 0.7, "social": 0.1},
+	{"label": "Classe média", "econ": 0.2, "social": 0.3},
+	{"label": "Religiosos", "econ": 0.1, "social": -0.6},
+	{"label": "Jovens", "econ": -0.2, "social": 0.7},
+	{"label": "Aposentados", "econ": -0.3, "social": -0.3},
+]
+const VOTE_WORDS := {"none": "sem votação", "simple": "maioria simples", "absolute": "maioria absoluta", "qualified": "maioria qualificada", "amendment": "quórum de emenda"}
+
+
+## O código de uma norma: o dela, o da norma que ela altera, ou "".
+func code_of(norm: Dictionary) -> String:
+	if String(norm.get("code", "")) != "":
+		return String(norm.code)
+	var target: Dictionary = norms.get(int(norm.get("amends", -1)), {})
+	if String(target.get("code", "")) != "":
+		return String(target.code)
+	# O Código Tributário antigo, feito só de alíquotas, ainda é o tributário.
+	if target.get("base_code", false) and String(target.get("title", "")) == "Código Tributário":
+		return "tributario"
+	return ""
+
+
+## Cartão de um código para o centro legislativo: a norma em vigor, se houver, e quantos artigos tem.
+func code_card(id: String) -> Dictionary:
+	var norm := code_norm(id)
+	if norm.is_empty() and id == "tributario":
+		for other: Dictionary in norms.values():
+			if other.get("base_code", false) and other.state == STATE_IN_FORCE and String(other.get("code", "")) == "" and String(other.title) == "Código Tributário":
+				norm = other
+	var articles := 0
+	var blocks := 0
+	if not norm.is_empty():
+		for stack: Dictionary in _current_program(norm).stacks:
+			if not stack.get("repealed", false):
+				articles += 1
+				blocks += stack.blocks.size()
+	var pending := 0
+	for other: Dictionary in in_process():
+		if code_of(other) == id:
+			pending += 1
+	return {"norm": norm, "articles": articles, "blocks": blocks, "pending": pending}
+
+
+## Uma linha que explica o rito do tipo de norma, com os votos de que ela precisa.
+func type_rule_text(world: GameWorld, type: String) -> String:
+	var def: Dictionary = NORM_TYPES[type]
+	if def.vote == "none":
+		return "%s: assinada por %s, sem votação no parlamento." % [def.label, String(def.organ).to_lower()]
+	var share := _required_share({"type": type})
+	var houses := []
+	for house: Dictionary in world.politics.houses(world):
+		var total: int = house.total
+		var needed: int = ceili(float(total) * share) if share > 0.0 else total / 2 + 1
+		houses.append("%d de %d votos %s" % [needed, total, "na " + String(house.name) if world.politics.houses(world).size() > 1 else "no Parlamento"])
+	var text := "%s exige %s: %s." % [def.label, VOTE_WORDS[def.vote], " e ".join(houses)]
+	if def.sanction and param("veto", true):
+		text += " Depois vai à sanção, e o chefe de governo pode vetar."
+	return text
+
+
+## Passo a passo da tramitação: [{label, state (done, current, todo, failed), days, detail}].
+## Rascunho: o caminho que a norma vai seguir, tudo por fazer.
+func process_track(world: GameWorld, norm: Dictionary) -> Array:
+	var process: Dictionary = norm.get("process", {})
+	var steps: Array = process.get("steps", _steps_for(norm))
+	var at: int = int(process.get("at", -1)) if not process.is_empty() else -1
+	var failed: bool = norm.state in [STATE_REJECTED, STATE_INVALID]
+	var finished: bool = norm.state in [STATE_PUBLISHED, STATE_IN_FORCE, STATE_SUSPENDED, STATE_REVOKED, STATE_EXPIRED]
+	var out := []
+	for phase: Dictionary in PHASES:
+		var mine := []
+		for i in steps.size():
+			if steps[i] in phase.steps:
+				mine.append(i)
+		if mine.is_empty() and phase.id != "vigencia":
+			continue
+		var entry := {"label": phase.label, "state": "todo", "days": 0, "detail": ""}
+		if phase.id == "vigencia":
+			entry.days = int(norm.get("vacatio", 0))
+			if norm.state == STATE_PUBLISHED:
+				entry.state = "current"
+				entry.days = maxi(int(norm.get("force_due", world.day_index)) - world.day_index, 0)
+				entry.detail = "Publicada, aguardando a vigência"
+			elif norm.state == STATE_IN_FORCE:
+				entry.state = "done"
+				entry.detail = "Em vigor desde %s" % String(norm.dates.get("in_force", ""))
+			out.append(entry)
+			continue
+		for i: int in mine:
+			entry.days += _days_of(steps[i])
+		if finished or (at >= 0 and at > int(mine[-1])):
+			entry.state = "done"
+			entry.days = 0
+		elif at >= 0 and at >= int(mine[0]):
+			entry.state = "failed" if failed else "current"
+			var step: String = steps[at]
+			entry.detail = String(STEP_LABELS.get(step, step))
+			var left: int = (int(process.get("tacit", 0)) if process.get("waiting_player", false) else int(process.get("due", 0))) - world.day_index
+			entry.days = maxi(left, 0)
+			for i: int in mine:
+				if i > at:
+					entry.days += _days_of(steps[i])
+			if process.get("waiting_player", false):
+				entry.detail = "Aguardando sua sanção"
+		out.append(entry)
+	if failed and not out.any(func(e): return e.state == "failed"):
+		for entry: Dictionary in out:
+			if entry.state == "todo":
+				entry.state = "failed"
+				break
+	return out
+
+
+## Dias que faltam até a norma valer, somando as fases por fazer.
+func days_to_force(world: GameWorld, norm: Dictionary) -> int:
+	var total := 0
+	for entry: Dictionary in process_track(world, norm):
+		if entry.state in ["current", "todo"]:
+			total += int(entry.days)
+	return total
+
+
+## Chance de passar pelas votações que faltam, de 0 a 1, sem contar acordos ainda por fazer. -1: não há votação.
+## É uma estimativa grosseira e gratuita; a pesquisa paga mostra a contagem por partido.
+func pass_chance(world: GameWorld, norm: Dictionary) -> float:
+	var process: Dictionary = norm.get("process", {})
+	var steps: Array = process.get("steps", _steps_for(norm))
+	var at: int = maxi(int(process.get("at", 0)), 0)
+	var probe := {"type": norm.type, "position": position_for(world, norm), "by_player": norm.get("by_player", true), "deals": norm.get("deals", {}), "author_party": norm.get("author_party", -1), "payload": norm.get("payload", {})}
+	var share := _required_share(probe)
+	var data: Dictionary = world.politics.data_of(iso)
+	var chance := 1.0
+	var any := false
+	var houses_seen := {}
+	for i in range(at, steps.size()):
+		var step: String = steps[i]
+		if not step in ["vote", "vote_2", "vote_upper", "plebiscite"]:
+			continue
+		any = true
+		if step == "plebiscite":
+			chance *= 1.0 / (1.0 + exp(-(popularity_of(world, norm) - 0.5) / 0.07 * 1.7))
+			continue
+		var upper := step == "vote_upper"
+		if houses_seen.has(upper):
+			continue
+		houses_seen[upper] = true
+		var estimate := _estimate_house(world, Politics.upper_house(data) if upper else data.parties, probe)
+		var total := maxf(float(estimate.total), 1.0)
+		var needed: float = ceilf(total * share) if share > 0.0 else floorf(total / 2.0) + 1.0
+		var expected := float(estimate.yes) * 0.96 + (total - float(estimate.yes)) * 0.04
+		chance *= 1.0 / (1.0 + exp(-(expected - needed) / (total * 0.02) * 1.7))
+	if not any:
+		return -1.0
+	if "constitutional" in steps.slice(at) and _court_problem(norm) != "":
+		chance *= 0.35
+	return clampf(chance, 0.0, 1.0)
+
+
+## Palavra para a chance: o jogador lê "provável", não 0,73.
+static func chance_word(chance: float) -> String:
+	if chance < 0.0:
+		return "sem votação"
+	if chance >= 0.85:
+		return "muito provável"
+	if chance >= 0.6:
+		return "provável"
+	if chance >= 0.4:
+		return "incerta"
+	if chance >= 0.15:
+		return "difícil"
+	return "muito difícil"
+
+
+## Efeito esperado de uma proposta, para o painel antes de enviar: aprovação, orçamento, grupos e partidos.
+func expected_effects(world: GameWorld, norm: Dictionary) -> Dictionary:
+	var c := world.player
+	var popularity := popularity_of(world, norm)
+	var position := position_for(world, norm)
+	var change := change_of(norm)
+	var yusd := c.y_usd()
+	var budget := 0.0
+	var unknown := 0
+	for pair: Array in [[change.added, 1.0], [change.removed, -1.0]]:
+		for block: Dictionary in pair[0]:
+			var f: Dictionary = block.fields
+			var sign: float = pair[1]
+			match String(block.type):
+				"ec_rate":
+					if sign > 0.0 and not block.plugs.has("value"):
+						budget += (float(f.get("value", 0.0)) / 100.0 - float(c.get(String(f.get("field"))))) * yusd
+				"ec_budget":
+					if sign > 0.0 and not block.plugs.has("value"):
+						budget -= (float(f.get("value", 0.0)) / 100.0 - float(c.get(String(f.get("field"))))) * yusd
+				"ec_spend", "ec_subsidy":
+					budget -= float(f.get("amount", 0.0)) * sign
+				"ac_institution":
+					budget -= float(f.get("cost", 0.0)) * sign
+				"ac_post":
+					budget -= float(f.get("posts", 0.0)) * float(f.get("salary", 0.0)) / 1e9 * sign
+				_:
+					var def := LawCatalog.get_def(block.type)
+					if LawCodes.owner_of(String(block.type)) != null and (def.has("econ") or def.has("social")):
+						unknown += 1
+	var groups := []
+	for g: Dictionary in SOCIAL_GROUPS:
+		var score := clampf(0.8 - Politics.distance(position, g) * 0.45 + (popularity - 0.5) * 0.5, 0.0, 1.0)
+		groups.append({"label": g.label, "score": score, "mood": "a favor" if score >= 0.58 else ("contra" if score <= 0.42 else "dividido")})
+	var parties := []
+	var probe := {"position": position, "by_player": norm.get("by_player", true), "deals": norm.get("deals", {}), "author_party": norm.get("author_party", -1)}
+	for party: Dictionary in world.politics.data_of(iso).parties:
+		if int(party.seats) <= 0:
+			continue
+		var favor := _party_votes_yes(world, party, probe, false)
+		parties.append({"short": party.short, "name": party.get("name", party.short), "seats": int(party.seats), "favor": favor, "color": party.get("color", Color.GRAY)})
+	parties.sort_custom(func(a, b): return int(a.seats) > int(b.seats))
+	return {
+		"popularity": popularity, "approval": (popularity - 0.5) * POPULARITY_APPROVAL, "budget": budget, "budget_share": budget / maxf(yusd, 0.001),
+		"unknown_budget": unknown, "groups": groups, "parties": parties, "position": position, "chance": pass_chance(world, norm),
+		"days": days_to_force(world, norm), "added": change.added.size(), "removed": change.removed.size(),
+	}
+
+
+## Nomes que já existem para um campo de referência ("tax", "license", "institution", "duty"), em vigor ou
+## criados no próprio programa. O campo continua aceitando um nome novo quando o bloco cria algo.
+func known_names(kind: String, program := {}) -> Array:
+	var names := []
+	var add := func(n: Variant):
+		var text := String(n).strip_edges()
+		if text != "" and not text in names:
+			names.append(text)
+	var creators: Dictionary = {"tax": ["ec_charge", "ec_fee", "ec_contribution"], "license": ["ac_issue_license"], "institution": ["ac_institution"], "duty": ["rg_duty"]}
+	var sources := norms.values().filter(func(n): return n.state == STATE_IN_FORCE).map(func(n): return _current_program(n))
+	if not program.is_empty():
+		sources.append(program)
+	for source: Dictionary in sources:
+		for block: Dictionary in LawProgram.all_blocks(source):
+			if block.type in creators.get(kind, []):
+				add.call(block.fields.get("name", block.fields.get("license", "")))
+	match kind:
+		"license":
+			for key: String in licenses:
+				add.call(key)
+		"institution":
+			for key: String in standing.institutions:
+				add.call(key)
+		"duty":
+			for key: String in standing.duties:
+				add.call(key)
+	names.sort()
+	return names
 
 
 func _admissibility(world: GameWorld, norm: Dictionary) -> String:

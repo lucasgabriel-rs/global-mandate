@@ -833,7 +833,7 @@ func open_law_editor(norm: Dictionary, version := -1) -> void:
 
 
 func close_law_screen(_screen: Control, message := "") -> void:
-	open_legislation(1 if message != "" else 0, message)
+	open_legislation(0, message)
 
 
 func open_norm(norm: Dictionary, message := "") -> void:

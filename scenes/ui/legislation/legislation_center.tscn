@@ -56,125 +56,183 @@ unique_name_in_owner = true
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Normas" type="MarginContainer" parent="col/tabs"]
+[node name="Legislação" type="MarginContainer" parent="col/tabs"]
 theme_override_constants/margin_top = 8
 
-[node name="Coluna" type="VBoxContainer" parent="col/tabs/Normas"]
-theme_override_constants/separation = 6
-
-[node name="Novo" type="HBoxContainer" parent="col/tabs/Normas/Coluna"]
-theme_override_constants/separation = 6
-
-[node name="new_type" type="OptionButton" parent="col/tabs/Normas/Coluna/Novo"]
+[node name="Rolagem" type="ScrollContainer" parent="col/tabs/Legislação"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(210, 0)
-focus_mode = 0
+horizontal_scroll_mode = 0
 
-[node name="new_norm" type="Button" parent="col/tabs/Normas/Coluna/Novo"]
-unique_name_in_owner = true
-text = "Nova norma"
-focus_mode = 0
-mouse_default_cursor_shape = 2
-tooltip_text = "Abre o editor de blocos."
-
-[node name="Divisor" type="VSeparator" parent="col/tabs/Normas/Coluna/Novo"]
-
-[node name="template_pick" type="OptionButton" parent="col/tabs/Normas/Coluna/Novo"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(270, 0)
-focus_mode = 0
-
-[node name="new_template" type="Button" parent="col/tabs/Normas/Coluna/Novo"]
-unique_name_in_owner = true
-text = "Usar modelo"
-focus_mode = 0
-mouse_default_cursor_shape = 2
-tooltip_text = "Abre um modelo pronto como rascunho."
-
-[node name="Divisor2" type="VSeparator" parent="col/tabs/Normas/Coluna/Novo"]
-
-[node name="new_amendment" type="Button" parent="col/tabs/Normas/Coluna/Novo"]
-unique_name_in_owner = true
-text = "Nova emenda constitucional"
-focus_mode = 0
-mouse_default_cursor_shape = 2
-
-[node name="Espaco" type="Control" parent="col/tabs/Normas/Coluna/Novo"]
+[node name="Coluna" type="VBoxContainer" parent="col/tabs/Legislação/Rolagem"]
 size_flags_horizontal = 3
-mouse_filter = 2
+theme_override_constants/separation = 8
 
-[node name="import_pick" type="OptionButton" parent="col/tabs/Normas/Coluna/Novo"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(190, 0)
-focus_mode = 0
-
-[node name="import_norm" type="Button" parent="col/tabs/Normas/Coluna/Novo"]
-unique_name_in_owner = true
-text = "Importar"
-focus_mode = 0
-mouse_default_cursor_shape = 2
-
-[node name="Filtro" type="HBoxContainer" parent="col/tabs/Normas/Coluna"]
-theme_override_constants/separation = 6
-
-[node name="FiltroTexto" type="Label" parent="col/tabs/Normas/Coluna/Filtro"]
+[node name="CodigosTitulo" type="Label" parent="col/tabs/Legislação/Rolagem/Coluna"]
 mouse_filter = 2
 theme_override_font_sizes/font_size = 13
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-text = "Situação"
+theme_override_colors/font_color = Color(0.9490196, 0.7019608, 0.23921569, 1)
+text = "Códigos"
 
-[node name="state_filter" type="OptionButton" parent="col/tabs/Normas/Coluna/Filtro"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(220, 0)
-focus_mode = 0
-
-[node name="Espaco" type="Control" parent="col/tabs/Normas/Coluna/Filtro"]
-size_flags_horizontal = 3
+[node name="CodigosNota" type="Label" parent="col/tabs/Legislação/Rolagem/Coluna"]
 mouse_filter = 2
+theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+text = "Cada código é uma lei complementar com os blocos da sua área. Para mudar tributos, penas, trabalho, eleições ou direitos, altere o código: o editor abre com os blocos dele, e a mudança passa pelo parlamento com maioria absoluta."
+autowrap_mode = 3
 
-[node name="norm_count" type="Label" parent="col/tabs/Normas/Coluna/Filtro"]
+[node name="code_cards" type="HFlowContainer" parent="col/tabs/Legislação/Rolagem/Coluna"]
+unique_name_in_owner = true
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
+
+[node name="Separador" type="ColorRect" parent="col/tabs/Legislação/Rolagem/Coluna"]
+custom_minimum_size = Vector2(0, 1)
+mouse_filter = 2
+color = Color(0.15294118, 0.2509804, 0.30980393, 1)
+
+[node name="TramitacaoCabeca" type="HBoxContainer" parent="col/tabs/Legislação/Rolagem/Coluna"]
+theme_override_constants/separation = 6
+
+[node name="TramitacaoTitulo" type="Label" parent="col/tabs/Legislação/Rolagem/Coluna/TramitacaoCabeca"]
+mouse_filter = 2
+theme_override_font_sizes/font_size = 13
+theme_override_colors/font_color = Color(0.9490196, 0.7019608, 0.23921569, 1)
+text = "Em tramitação"
+
+[node name="process_count" type="Label" parent="col/tabs/Legislação/Rolagem/Coluna/TramitacaoCabeca"]
 unique_name_in_owner = true
 mouse_filter = 2
 theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 
-[node name="Rolagem" type="ScrollContainer" parent="col/tabs/Normas/Coluna"]
-size_flags_vertical = 3
-horizontal_scroll_mode = 0
-
-[node name="norm_rows" type="VBoxContainer" parent="col/tabs/Normas/Coluna/Rolagem"]
-unique_name_in_owner = true
-size_flags_horizontal = 3
-theme_override_constants/separation = 3
-
-[node name="Tramitação" type="MarginContainer" parent="col/tabs"]
-theme_override_constants/margin_top = 8
-
-[node name="Coluna" type="VBoxContainer" parent="col/tabs/Tramitação"]
-theme_override_constants/separation = 6
-
-[node name="Explica" type="Label" parent="col/tabs/Tramitação/Coluna"]
+[node name="TramitacaoNota" type="Label" parent="col/tabs/Legislação/Rolagem/Coluna"]
 mouse_filter = 2
 theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 text = "Cada projeto anda sozinho com o tempo do jogo. Quando um projeto de outro autor chega à sanção, você tem alguns dias para sancionar ou vetar; depois disso, vale a sanção tácita."
 autowrap_mode = 3
 
-[node name="Rolagem" type="ScrollContainer" parent="col/tabs/Tramitação/Coluna"]
-size_flags_vertical = 3
-horizontal_scroll_mode = 0
-
-[node name="process_rows" type="VBoxContainer" parent="col/tabs/Tramitação/Coluna/Rolagem"]
+[node name="process_rows" type="VBoxContainer" parent="col/tabs/Legislação/Rolagem/Coluna"]
 unique_name_in_owner = true
 size_flags_horizontal = 3
 theme_override_constants/separation = 6
 
-[node name="process_empty" type="Label" parent="col/tabs/Tramitação/Coluna"]
+[node name="process_empty" type="Label" parent="col/tabs/Legislação/Rolagem/Coluna"]
 unique_name_in_owner = true
 mouse_filter = 2
 theme_override_font_sizes/font_size = 13
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 text = "Nenhum projeto em tramitação."
+
+[node name="Separador2" type="ColorRect" parent="col/tabs/Legislação/Rolagem/Coluna"]
+custom_minimum_size = Vector2(0, 1)
+mouse_filter = 2
+color = Color(0.15294118, 0.2509804, 0.30980393, 1)
+
+[node name="Filtro" type="HBoxContainer" parent="col/tabs/Legislação/Rolagem/Coluna"]
+theme_override_constants/separation = 6
+
+[node name="norms_title" type="Label" parent="col/tabs/Legislação/Rolagem/Coluna/Filtro"]
+unique_name_in_owner = true
+mouse_filter = 2
+theme_override_font_sizes/font_size = 13
+theme_override_colors/font_color = Color(0.9490196, 0.7019608, 0.23921569, 1)
+text = "Normas em vigor"
+
+[node name="Espaco" type="Control" parent="col/tabs/Legislação/Rolagem/Coluna/Filtro"]
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="FiltroTexto" type="Label" parent="col/tabs/Legislação/Rolagem/Coluna/Filtro"]
+mouse_filter = 2
+theme_override_font_sizes/font_size = 13
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+text = "Mostrar"
+
+[node name="state_filter" type="OptionButton" parent="col/tabs/Legislação/Rolagem/Coluna/Filtro"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(220, 0)
+focus_mode = 0
+
+[node name="norm_count" type="Label" parent="col/tabs/Legislação/Rolagem/Coluna/Filtro"]
+unique_name_in_owner = true
+mouse_filter = 2
+theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+
+[node name="norm_rows" type="VBoxContainer" parent="col/tabs/Legislação/Rolagem/Coluna"]
+unique_name_in_owner = true
+size_flags_horizontal = 3
+theme_override_constants/separation = 3
+
+[node name="Separador3" type="ColorRect" parent="col/tabs/Legislação/Rolagem/Coluna"]
+custom_minimum_size = Vector2(0, 1)
+mouse_filter = 2
+color = Color(0.15294118, 0.2509804, 0.30980393, 1)
+
+[node name="AvulsaTitulo" type="Label" parent="col/tabs/Legislação/Rolagem/Coluna"]
+mouse_filter = 2
+theme_override_font_sizes/font_size = 13
+theme_override_colors/font_color = Color(0.9490196, 0.7019608, 0.23921569, 1)
+text = "Lei avulsa (avançado)"
+
+[node name="AvulsaNota" type="Label" parent="col/tabs/Legislação/Rolagem/Coluna"]
+mouse_filter = 2
+theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+text = "Para regras que não cabem em nenhum código: uma norma nova, montada com todos os blocos, um modelo pronto, uma emenda à Constituição ou um arquivo exportado."
+autowrap_mode = 3
+
+[node name="Novo" type="HFlowContainer" parent="col/tabs/Legislação/Rolagem/Coluna"]
+theme_override_constants/h_separation = 6
+theme_override_constants/v_separation = 6
+
+[node name="new_type" type="OptionButton" parent="col/tabs/Legislação/Rolagem/Coluna/Novo"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(210, 0)
+focus_mode = 0
+
+[node name="new_norm" type="Button" parent="col/tabs/Legislação/Rolagem/Coluna/Novo"]
+unique_name_in_owner = true
+text = "Nova norma"
+focus_mode = 0
+mouse_default_cursor_shape = 2
+tooltip_text = "Abre o editor de blocos com todos os blocos."
+
+[node name="Divisor" type="VSeparator" parent="col/tabs/Legislação/Rolagem/Coluna/Novo"]
+
+[node name="template_pick" type="OptionButton" parent="col/tabs/Legislação/Rolagem/Coluna/Novo"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(270, 0)
+focus_mode = 0
+
+[node name="new_template" type="Button" parent="col/tabs/Legislação/Rolagem/Coluna/Novo"]
+unique_name_in_owner = true
+text = "Usar modelo"
+focus_mode = 0
+mouse_default_cursor_shape = 2
+tooltip_text = "Abre um modelo pronto como rascunho."
+
+[node name="Divisor2" type="VSeparator" parent="col/tabs/Legislação/Rolagem/Coluna/Novo"]
+
+[node name="new_amendment" type="Button" parent="col/tabs/Legislação/Rolagem/Coluna/Novo"]
+unique_name_in_owner = true
+text = "Nova emenda constitucional"
+focus_mode = 0
+mouse_default_cursor_shape = 2
+
+[node name="Divisor3" type="VSeparator" parent="col/tabs/Legislação/Rolagem/Coluna/Novo"]
+
+[node name="import_pick" type="OptionButton" parent="col/tabs/Legislação/Rolagem/Coluna/Novo"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(190, 0)
+focus_mode = 0
+
+[node name="import_norm" type="Button" parent="col/tabs/Legislação/Rolagem/Coluna/Novo"]
+unique_name_in_owner = true
+text = "Importar"
+focus_mode = 0
+mouse_default_cursor_shape = 2
 
 [node name="Constituição" type="MarginContainer" parent="col/tabs"]
 theme_override_constants/margin_top = 8

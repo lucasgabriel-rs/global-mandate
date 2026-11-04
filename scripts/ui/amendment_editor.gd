@@ -234,4 +234,4 @@ func _present() -> void:
 	_feedback.text = r.msg
 	_feedback.add_theme_color_override("font_color", UiKit.GREEN if r.ok else UiKit.RED)
 	if r.ok:
-		main.reopen_legislation(1, r.msg)
+		main.reopen_legislation(0, r.msg)

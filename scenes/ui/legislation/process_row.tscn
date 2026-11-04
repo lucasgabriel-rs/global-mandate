@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" path="res://scenes/ui/legislation/poll_box.tscn" id="poll_box"]
 [ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="e1"]
+[ext_resource type="PackedScene" path="res://scenes/ui/legislation/process_track.tscn" id="track"]
 
 [sub_resource type="StyleBoxFlat" id="s1"]
 content_margin_left = 8.0
@@ -45,12 +46,9 @@ mouse_filter = 2
 theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(0.30980393, 0.7019608, 0.8509804, 1)
 
-[node name="track" type="Label" parent="Coluna"]
+[node name="track" parent="Coluna" instance=ExtResource("track")]
 unique_name_in_owner = true
-mouse_filter = 2
-theme_override_font_sizes/font_size = 12
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-autowrap_mode = 3
+layout_mode = 2
 
 [node name="forecast" type="Label" parent="Coluna"]
 unique_name_in_owner = true

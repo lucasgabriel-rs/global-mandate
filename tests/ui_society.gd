@@ -108,7 +108,7 @@ func _run() -> void:
 	report.get_node("%close").pressed.emit()
 	await _wait()
 	# Centro legislativo: tratados.
-	main.open_legislation(5)
+	main.open_legislation(4)
 	await _wait()
 	var center := _top()
 	_check(center.get_node("%treaty_rows").get_child_count() >= 1, "a aba Tratados lista os tratados do país")

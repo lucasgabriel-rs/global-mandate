@@ -4,6 +4,7 @@ extends ColorRect
 
 const BLOCK := preload("res://scenes/ui/legislation/law_block.tscn")
 const LIBRARY_HEADING := preload("res://scenes/ui/legislation/library_heading.tscn")
+const LIBRARY_GROUP := preload("res://scenes/ui/legislation/library_group.tscn")
 const VALIDATION_ROW := preload("res://scenes/ui/legislation/validation_row.tscn")
 const FIELD_ROW := preload("res://scenes/ui/legislation/field_row.tscn")
 
@@ -17,6 +18,8 @@ var last_compile := {}
 ## Na leitura de uma versão publicada, o programa não é o rascunho da norma.
 var _shown_program := {}
 var _library_program := LawProgram.empty()
+## Código que a norma altera ("tributario"...), ou "" para a lei avulsa.
+var code_id := ""
 
 @onready var canvas: LawCanvas = %canvas
 @onready var _library: VBoxContainer = %library_list
@@ -36,11 +39,13 @@ func setup(owner_main: Node, target: Dictionary, version := -1) -> void:
 	main = owner_main
 	world = main.world
 	norm = target
+	code_id = world.legislation.code_of(norm)
 	read_only = version >= 0 or norm.state != Legislation.STATE_DRAFT
 	_shown_program = norm.versions[version].program if version >= 0 else norm.program
 	canvas.editor = self
 	_trash.editor = self
 	(%simulator as LawSimulator).setup(self)
+	(%review as LawReview).setup(self)
 	_build_library()
 	_fill_document()
 	_connect()
@@ -84,6 +89,9 @@ func _input(event: InputEvent) -> void:
 	# Em leitura não há "salvar": Esc fecha. Na edição, Esc também salva e fecha.
 	if event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE and not (%simulator as Control).visible:
 		get_viewport().set_input_as_handled()
+		if (%review as Control).visible:
+			(%review as Control).visible = false
+			return
 		close_editor()
 
 
@@ -102,6 +110,12 @@ func _fill_document() -> void:
 	var leg: Legislation = world.legislation
 	(%doc_number as Label).text = "%s  ·  autor: %s  ·  %s" % [leg.norm_label(norm), norm.author, norm.state]
 	(%doc_title as Label).text = "Editor legislativo" if not read_only else "Programação de %s" % leg.norm_label(norm)
+	var code := LawCodes.get_code(code_id)
+	var badge: Label = %code_badge
+	badge.visible = code != null
+	if code:
+		(%doc_title as Label).text = code.title if read_only else "Alterar: %s" % code.title
+		badge.text = "%s · blocos de %s" % [Legislation.NORM_TYPES[norm.type].label, String(code.category.label).to_lower()]
 	for key: String in Legislation.NORM_TYPES:
 		if key == "constituicao" or (key == "emenda" and norm.type != "emenda"):
 			continue
@@ -122,16 +136,68 @@ func _fill_document() -> void:
 	_doc_type.disabled = read_only or norm.type == "emenda" or int(norm.get("amends", -1)) >= 0 or not norm.get("revokes", {}).is_empty()
 
 
+## Paleta. Lei avulsa: os blocos dos códigos e, num grupo aberto, os avançados. Norma de código: só a
+## categoria do código e os eventos; os outros códigos e os avançados ficam recolhidos, a um clique.
 func _build_library() -> void:
-	for cat: Dictionary in LawCatalog.categories():
+	var cats := LawCatalog.categories()
+	var others: Control = null
+	var advanced: Control = _library_group("Avançado", "Blocos genéricos para regras próprias: condições, cálculos, variáveis e ações administrativas.", code_id == "")
+	for cat: Dictionary in cats:
+		var mine: bool = String(cat.get("code", "")) == code_id or (code_id != "" and cat.id == "events")
+		var target: Control = _library
+		if code_id != "" and not mine:
+			if cat.has("code"):
+				if others == null:
+					others = _library_group("Outros códigos", "Blocos de outras áreas. Prefira alterar o código de cada área.", false)
+				target = others.get_node("%items")
+			else:
+				target = advanced.get_node("%items")
+		elif cat.get("advanced", false) and not mine:
+			target = advanced.get_node("%items")
+		var blocks := LawCatalog.in_category(cat.id)
 		var heading: Label = LIBRARY_HEADING.instantiate()
+		heading.name = "cat_%s" % cat.id
 		heading.text = String(cat.label).to_upper()
-		_library.add_child(heading)
-		for def: Dictionary in LawCatalog.in_category(cat.id):
+		target.add_child(heading)
+		if blocks.is_empty():
+			var empty: Label = LIBRARY_HEADING.instantiate()
+			empty.name = "empty_%s" % cat.id
+			empty.text = "Os blocos desta área ainda não foram feitos."
+			target.add_child(empty)
+		for def: Dictionary in blocks:
 			var view: LawBlockView = BLOCK.instantiate()
 			view.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
-			_library.add_child(view)
+			target.add_child(view)
 			view.setup(self, LawProgram.new_block(_library_program, def.id), true)
+	if others:
+		_library.move_child(others, -1)
+	_library.move_child(advanced, -1)
+
+
+func _library_group(title: String, hint: String, open: bool) -> Control:
+	var group: Control = LIBRARY_GROUP.instantiate()
+	group.name = "group_%s" % title.to_lower().replace(" ", "_")
+	_library.add_child(group)
+	var toggle: Button = group.get_node("%toggle")
+	var items: Control = group.get_node("%items")
+	(group.get_node("%hint") as Label).text = hint
+	var show := func(on: bool):
+		items.visible = on
+		toggle.text = ("▾ " if on else "▸ ") + title
+	toggle.button_pressed = open
+	show.call(open)
+	toggle.toggled.connect(show)
+	return group
+
+
+## O grupo recolhido da paleta que tem o bloco, para o teste abrir antes de arrastar.
+func library_group_of(view: Control) -> Control:
+	var node := view.get_parent()
+	while node and node != _library:
+		if node.has_node("%toggle"):
+			return node
+		node = node.get_parent()
+	return null
 
 
 func refresh() -> void:
@@ -176,12 +242,23 @@ func _add_validation(entry: Dictionary, is_error: bool) -> void:
 	_validation.add_child(row)
 
 
+## Apresentar abre primeiro o painel de efeitos esperados; quem envia é o botão de lá.
 func _on_present() -> void:
+	if String(norm.title).strip_edges() == "" or String(norm.ementa).strip_edges() == "":
+		_feedback.text = "Preencha o título e a ementa da norma."
+		_feedback.add_theme_color_override("font_color", UiKit.RED)
+		return
+	(%review as LawReview).open()
+
+
+func send() -> void:
 	var r: Dictionary = world.legislation.present(world, norm)
 	_feedback.text = r.msg
 	_feedback.add_theme_color_override("font_color", UiKit.GREEN if r.ok else UiKit.RED)
 	if r.ok:
 		main.close_law_screen(self, r.msg)
+	else:
+		(%review as LawReview).show_error(r.msg)
 
 
 # --- Seleção e propriedades ------------------------------------------------------------
@@ -215,6 +292,8 @@ func _show_props() -> void:
 func _field_row(block: Dictionary, key: String, spec: Dictionary) -> Control:
 	var row: Control = FIELD_ROW.instantiate()
 	(row.get_node("%label") as Label).text = key.capitalize() if not FIELD_NAMES.has(key) else FIELD_NAMES[key]
+	if spec.get("t", "") == "ref":
+		(row.get_node("%label") as Label).text = REF_LABELS.get(String(spec.get("of", "")), "Nome")
 	var edit: LineEdit = row.get_node("%edit")
 	var option: OptionButton = row.get_node("%option")
 	var check: CheckBox = row.get_node("%check")
@@ -265,6 +344,8 @@ func _field_row(block: Dictionary, key: String, spec: Dictionary) -> Control:
 			option.item_selected.connect(func(i: int):
 				block.fields[key] = option.get_item_metadata(i)
 				_after_edit())
+		"ref":
+			_ref_field(block, key, spec, option, edit)
 		"company":
 			option.visible = true
 			option.add_item("Escolha a empresa")
@@ -315,6 +396,41 @@ func _field_row(block: Dictionary, key: String, spec: Dictionary) -> Control:
 	return row
 
 
+## Lista do que já existe (tributos, licenças, instituições, deveres). "Outro nome" abre o texto livre, só
+## para dar nome a algo que esta norma cria.
+func _ref_field(block: Dictionary, key: String, spec: Dictionary, option: OptionButton, edit: LineEdit) -> void:
+	option.visible = true
+	var names := world.legislation.known_names(String(spec.get("of", "")), _shown_program)
+	var current := String(block.fields.get(key, ""))
+	if current != "" and not current in names:
+		names.append(current)
+	for label: String in names:
+		option.add_item(label)
+		option.set_item_metadata(option.item_count - 1, label)
+		if label == current:
+			option.select(option.item_count - 1)
+	option.add_item(REF_NEW)
+	option.set_item_metadata(option.item_count - 1, "")
+	edit.placeholder_text = "Nome do que esta norma cria"
+	edit.text = current
+	edit.text_changed.connect(func(t: String):
+		block.fields[key] = t.strip_edges()
+		_after_edit(false))
+	edit.focus_exited.connect(_after_edit)
+	option.item_selected.connect(func(i: int):
+		var value := String(option.get_item_metadata(i))
+		edit.visible = value == ""
+		if value != "":
+			block.fields[key] = value
+			edit.text = value
+			_after_edit()
+		else:
+			edit.grab_focus())
+
+
+const REF_NEW := "Outro nome…"
+const REF_LABELS := {"tax": "Tributo", "license": "Licença", "institution": "Instituição", "duty": "Obrigação"}
+
 const FIELD_NAMES := {
 	"amount": "Valor", "days": "Dias", "name": "Nome", "rate": "Alíquota (%)", "base": "Base", "value": "Valor", "field": "Campo", "age": "Idade",
 	"date": "Data (aaaa-mm-dd)", "from": "De (aaaa-mm-dd)", "to": "Até (aaaa-mm-dd)", "license": "Licença", "institution": "Instituição", "norm": "Número da norma",
@@ -322,6 +438,7 @@ const FIELD_NAMES := {
 	"cost": "Custo anual (bilhões)", "purpose": "Finalidade", "share": "Parte isenta (%)", "max": "Limite por pessoa", "sector": "Setor", "right": "Direito", "cond": "Condição",
 	"vtype": "Tipo da variável", "profession": "Profissão", "unit": "Território", "area": "Área",
 	"company": "Empresa", "stake": "Participação (%)",
+	"scope": "Para quem", "duty": "Dever", "months": "Duração (meses)", "who": "Quem serve", "outlet": "Meio", "level": "Rigor", "service": "Serviço",
 }
 
 
@@ -333,7 +450,7 @@ static func _edit_text(value: Variant) -> String:
 
 static func _parse(text: String, type: String) -> Variant:
 	var clean := text.strip_edges().replace(",", ".")
-	if type == "text" or type == "date" or type == "var":
+	if type == "text" or type == "date" or type == "var" or type == "ref":
 		return text.strip_edges()
 	if clean.is_valid_float():
 		return clean.to_float()
