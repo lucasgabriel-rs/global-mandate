@@ -507,16 +507,17 @@ func _taxes_and_funds() -> void:
 	for norm: Dictionary in leg.norms.values():
 		if norm.get("base_code", false):
 			code = norm
-	_check(code.state == Legislation.STATE_IN_FORCE and code.versions[0].program.stacks[0].blocks.size() == 5, "o país começa com um Código Tributário em blocos")
+	code = leg.code_norm("tributario")
+	_check(code.state == Legislation.STATE_IN_FORCE and code.versions[0].program.stacks[0].blocks.size() > 15, "o país começa com um Código Tributário em blocos")
 	var income0 := c.tax_income
 	var bill: Dictionary = leg.start_tax_bill(world)
 	for block: Dictionary in bill.program.stacks[0].blocks:
-		if block.type == "ec_rate" and block.fields.field == "tax_income":
-			block.fields.value = income0 * 100.0 + 2.0
+		if block.type == "tr_prev":
+			block.fields.aliquota = float(block.fields.aliquota) + 4.0
 	var cut: Dictionary = leg.start_tax_bill(world)
 	for block: Dictionary in cut.program.stacks[0].blocks:
-		if block.type == "ec_rate" and block.fields.field == "tax_income":
-			block.fields.value = income0 * 100.0 - 2.0
+		if block.type == "tr_prev":
+			block.fields.aliquota = float(block.fields.aliquota) - 4.0
 	_check(float(leg.position_for(world, bill).econ) < float(leg.position_for(world, cut).econ), "subir imposto fica mais à esquerda que cortar")
 	_check(leg.popularity_of(world, bill) < leg.popularity_of(world, cut), "subir imposto é menos popular que cortar")
 	leg.delete_draft(int(cut.id))

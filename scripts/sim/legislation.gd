@@ -149,6 +149,8 @@ func _seed_codes(world: GameWorld) -> void:
 		norm.state = STATE_IN_FORCE
 		norm.dates["published"] = world.date_string()
 		norm.dates["in_force"] = world.date_string()
+		# O texto já vale: o que o código mantém em vigor (faixas, alíquotas...) fica registrado desde já.
+		fire(world, "ev_enact", {"only": norm.id})
 		has_tax = has_tax or code.id == "tributario"
 	if not has_tax:
 		_seed_tax_code(world)
@@ -942,8 +944,19 @@ func position_for(world: GameWorld, norm: Dictionary) -> Dictionary:
 		if block.type == "ec_rate" and not block.plugs.has("value"):
 			var delta := float(block.fields.get("value", 0.0)) / 100.0 - float(world.player.get(String(block.fields.get("field"))))
 			adds += 0.3 - delta * 30.0
-	base.econ = clampf(float(base.econ) + adds / maxf(sqrt(float(seen)), 1.0), -1.0, 1.0)
+	base.econ = clampf(float(base.econ) + adds / maxf(sqrt(float(seen)), 1.0) + float(_code_effect(world, norm).get("econ", 0.0)), -1.0, 1.0)
 	return base
+
+
+## O que os códigos dizem do projeto ("econ", "popularity"), para os que sabem medir a mudança que ele faz.
+func _code_effect(world: GameWorld, norm: Dictionary) -> Dictionary:
+	var out := {"econ": 0.0, "popularity": 0.0}
+	for code: LawCode in LawCodes.all():
+		if code.has_method("bill_effect"):
+			var got: Dictionary = code.call("bill_effect", world, self, norm)
+			for key: String in out:
+				out[key] += float(got.get(key, 0.0))
+	return out
 
 
 ## O que o eleitorado acha, de 0 a 1: a distância das ideias da maioria, o que a norma tira ou dá ao
@@ -962,6 +975,7 @@ func popularity_of(world: GameWorld, norm: Dictionary) -> float:
 			score -= (float(block.fields.get("value", 0.0)) / 100.0 - float(c.get(String(block.fields.get("field"))))) * 6.0
 		elif block.type == "ec_budget" and not block.plugs.has("value"):
 			score += (float(block.fields.get("value", 0.0)) / 100.0 - float(c.get(String(block.fields.get("field"))))) * 4.0
+	score += float(_code_effect(world, norm).get("popularity", 0.0))
 	var payload: Dictionary = norm.get("payload", {})
 	if payload.get("kind", "") in ["new_unit", "split_unit"]:
 		# Criar unidade costuma agradar a região, e o resto do país não se opõe muito.
