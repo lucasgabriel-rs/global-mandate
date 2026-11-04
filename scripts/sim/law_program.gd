@@ -199,7 +199,7 @@ static func field_text(block: Dictionary, field: String) -> String:
 	var value: Variant = block.fields[field]
 	match spec.get("t", ""):
 		"choice":
-			return String(LawCatalog.CHOICES[spec.of].get(value, value))
+			return String(LawCatalog.choice_list(spec.of).get(value, value))
 		"money":
 			return "%s moedas" % UiKit.thousand(float(value))
 		"unit":

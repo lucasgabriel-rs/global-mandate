@@ -87,7 +87,7 @@ var iso := ""
 var norms := {}
 var next_id := 2
 var constitution := {}
-var standing := {"rights": {}, "minwage": {}, "posts": {}, "institutions": {}, "subsidies": {}, "spends": {}, "duties": {}, "restrictions": {}, "requirements": {}, "exceptions": {}, "penalties": {}, "deadlines": {}, "exemptions": {}, "caps": {}, "budget_locks": {}, "ministry_ops": {}}
+var standing := {"rights": {}, "minwage": {}, "posts": {}, "institutions": {}, "subsidies": {}, "spends": {}, "duties": {}, "restrictions": {}, "requirements": {}, "exceptions": {}, "penalties": {}, "deadlines": {}, "exemptions": {}, "caps": {}, "budget_locks": {}, "ministry_ops": {}, "codes": {}}
 var licenses := {}
 var registry := {"registered": 0.0, "status": {}}
 var obligations: Array = []
@@ -124,8 +124,60 @@ func setup(world: GameWorld) -> void:
 		"dates": {"published": world.date_string(), "in_force": world.date_string()}, "state": STATE_IN_FORCE, "program": LawProgram.empty(),
 		"versions": [], "current_v": 0, "votes": [], "process": {}, "history": [],
 	}
-	_seed_tax_code(world)
+	_seed_codes(world)
 	revision += 1
+
+
+## Cada código legal com texto inicial vira uma lei complementar em vigor desde o começo da partida.
+## Sem Código Tributário próprio, fica o antigo, feito só de alíquotas.
+func _seed_codes(world: GameWorld) -> void:
+	var has_tax := false
+	for code: LawCode in LawCodes.all():
+		var program := code.seed_program(world, world.player)
+		if program.is_empty():
+			continue
+		var norm := new_norm(world, code.norm_type, "Parlamento")
+		norm.by_player = false
+		norm.title = code.title
+		norm.ementa = code.ementa
+		norm["base_code"] = true
+		norm["code"] = code.id
+		norm.program = program
+		var compiled := LawCompiler.compile(program, compile_context(code.norm_type))
+		norm.versions.append(_make_version(world, program, compiled, "Texto original"))
+		norm.current_v = 0
+		norm.state = STATE_IN_FORCE
+		norm.dates["published"] = world.date_string()
+		norm.dates["in_force"] = world.date_string()
+		has_tax = has_tax or code.id == "tributario"
+	if not has_tax:
+		_seed_tax_code(world)
+
+
+## A norma em vigor de um código ("tributario", "penal"...), ou vazio.
+func code_norm(id: String) -> Dictionary:
+	for norm: Dictionary in norms.values():
+		if String(norm.get("code", "")) == id and norm.state == STATE_IN_FORCE:
+			return norm
+	return {}
+
+
+## Rascunho que altera um código em vigor (ou o cria, se o país ainda não tem), para o editor de blocos.
+func start_code_bill(world: GameWorld, id: String) -> Dictionary:
+	var target := code_norm(id)
+	if not target.is_empty():
+		return start_change(world, target)
+	var code := LawCodes.get_code(id)
+	if code == null:
+		return {}
+	var norm := new_norm(world, code.norm_type)
+	norm.program = code.seed_program(world, world.player)
+	if norm.program.is_empty():
+		norm.program = LawProgram.empty()
+	norm.title = code.title
+	norm.ementa = code.ementa
+	norm["code"] = id
+	return norm
 
 
 ## Os tributos do início da partida já são lei: mudá-los é alterar ou substituir esta norma.
@@ -158,6 +210,8 @@ func tax_program(world: GameWorld) -> Dictionary:
 
 ## Rascunho de lei tributária, para abrir direto no editor de blocos.
 func start_tax_bill(world: GameWorld) -> Dictionary:
+	if not code_norm("tributario").is_empty():
+		return start_code_bill(world, "tributario")
 	var norm := new_norm(world, "ordinaria")
 	norm.program = tax_program(world)
 	norm.title = "Reforma tributária"
@@ -1610,6 +1664,12 @@ func _commit(world: GameWorld, norm: Dictionary, effects: Array, _view: Dictiona
 				_stand("exceptions", String(v.name), {"on": true}, who, prio)
 			"rg_penalty":
 				_stand("penalties", String(v.name), {"value": float(v.amount)}, who, prio)
+			_:
+				var code := LawCodes.owner_of(String(effect.op))
+				if code != null:
+					var note := code.apply(world, self, String(effect.op), v, w, who, prio)
+					if note != "":
+						notes.append(note)
 	if collected > 0.0:
 		_collect(c, collected)
 		notes.append("arrecadou %s" % UiKit.money(collected))
@@ -1619,6 +1679,21 @@ func _commit(world: GameWorld, norm: Dictionary, effects: Array, _view: Dictiona
 	if notes.is_empty() and not effects.is_empty():
 		notes.append("%d ação(ões)" % effects.size())
 	return ", ".join(notes)
+
+
+## Para os códigos: guarda o efeito de um bloco em `standing.codes` enquanto a norma valer.
+## A chave costuma ser "código:item" (por exemplo "penal:maioridade").
+func stand(key: String, data: Dictionary, norm: int, prio: float) -> void:
+	_stand("codes", key, data, norm, prio)
+
+
+## O que um código mantém em vigor: chave → dados, só as chaves que começam com "id:".
+func code_standing(id: String) -> Dictionary:
+	var out := {}
+	for key: String in standing.codes:
+		if key.begins_with(id + ":"):
+			out[key.trim_prefix(id + ":")] = standing.codes[key]
+	return out
 
 
 ## A norma de maior prioridade fica com a vaga; a de prioridade menor não sobrescreve.
@@ -1748,10 +1823,25 @@ func _update_macro(c: Country) -> void:
 		var ratio := float(standing.minwage.valor.value) * 12.0 / maxf(c.gdp_pc() * 0.6, 1.0)
 		approval += minf(ratio, 0.8) * 0.02
 		unemp = clampf((ratio - 0.6) * 0.05, 0.0, 0.06)
+	var extra := {"inequality": 0.0, "labor": 0.0, "tfp": 0.0, "evasion": 0.0}
+	var world: GameWorld = _world.get_ref() if _world else null
+	if world:
+		for code: LawCode in LawCodes.all():
+			var got := code.monthly(world, c, self)
+			approval += float(got.get("approval", 0.0))
+			stability += float(got.get("stability", 0.0))
+			invest += float(got.get("invest", 0.0))
+			unemp += float(got.get("unemp", 0.0))
+			for key: String in extra:
+				extra[key] += float(got.get(key, 0.0))
 	c.law_approval = clampf(approval, -0.2, 0.2)
 	c.law_stability = clampf(stability, -0.15, 0.15)
 	c.law_invest = clampf(invest, -0.3, 0.3)
-	c.law_unemp = unemp
+	c.law_unemp = clampf(unemp, -0.03, 0.08)
+	c.law_inequality = clampf(extra.inequality, -0.12, 0.12)
+	c.law_labor = clampf(extra.labor, -0.1, 0.05)
+	c.law_tfp = clampf(extra.tfp, -0.01, 0.01)
+	c.law_evasion = clampf(extra.evasion, -0.05, 0.3)
 
 
 static func _sum(values: Array) -> float:
@@ -1908,6 +1998,7 @@ func from_dict(d: Dictionary, world: GameWorld) -> void:
 			set(key, d[key])
 	standing.get_or_add("budget_locks", {})
 	standing.get_or_add("ministry_ops", {})
+	standing.get_or_add("codes", {})
 	next_ministry_seq = int(d.get("next_ministry_seq", 1))
 	# Saves antigos: a Constituição ganha o artigo do banco central, com a situação que o país já tinha.
 	if world.player and constitution.has("articles") and not constitution.articles.any(func(a): return a.param == "cb_independent"):

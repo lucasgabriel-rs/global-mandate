@@ -162,6 +162,14 @@ var law_approval := 0.0
 var law_stability := 0.0
 var law_invest := 0.0
 var law_unemp := 0.0
+# Canais dos códigos legais (LawCode.monthly): desigualdade, oferta de trabalho, produtividade e evasão.
+var law_inequality := 0.0      # desvio do Gini em relação à base do país
+var law_labor := 0.0           # fração a mais ou a menos de oferta de trabalho
+var law_tfp := 0.0             # crescimento anual extra da PTF
+var law_evasion := 0.0         # fração da arrecadação perdida para a sonegação
+var inequality0 := 0.38        # Gini de partida, para onde a desigualdade volta devagar
+## Indicadores próprios dos códigos (criminalidade, cobertura previdenciária...), por chave.
+var code_stats := {}
 var regime_age := 0.0
 var unrest := 0.0
 var influence := 0.0

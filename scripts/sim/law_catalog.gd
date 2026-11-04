@@ -6,7 +6,12 @@ extends RefCounted
 ## kind: event (inicia um artigo), statement (instrução), cblock (instrução com blocos dentro),
 ## value (número ou texto) e bool (condição). rank é a menor hierarquia de norma que pode usar o bloco.
 ## Campos: t = num, money, pct, days, bool, text, date, any, var, choice, unit, ministry ou company; d = valor inicial.
+##
+## Os blocos concretos de cada código legal (Tributário, Penal...) vêm de `LawCodes`; os daqui são os
+## avançados, para quem quer escrever regras próprias. `categories()`, `get_def()`, `in_category()`
+## e `choice_list()` juntam as duas fontes.
 
+## Categorias avançadas: ficam depois das dos códigos, sob o título "Avançado".
 const CATEGORIES := [
 	{"id": "events", "label": "Eventos", "color": Color("b5532c")},
 	{"id": "conditions", "label": "Condições", "color": Color("2f7f7a")},
@@ -139,24 +144,69 @@ const BLOCKS := [
 ]
 
 static var _by_id := {}
+static var _categories: Array = []
+static var _choices := {}
+static var _all_blocks: Array = []
+static var _mutex := Mutex.new()
+
+
+## Junta os blocos avançados aos dos códigos, uma vez só; depois é só leitura, seguro entre threads.
+static func _warm() -> void:
+	if not _by_id.is_empty():
+		return
+	_mutex.lock()
+	if _by_id.is_empty():
+		var cats := []
+		var choices := CHOICES.duplicate()
+		var blocks := []
+		for code: LawCode in LawCodes.all():
+			var cat: Dictionary = code.category.duplicate()
+			cat["code"] = code.id
+			cats.append(cat)
+			choices.merge(code.choices())
+			blocks.append_array(code.blocks())
+		for cat: Dictionary in CATEGORIES:
+			var advanced := cat.duplicate()
+			advanced["advanced"] = true
+			cats.append(advanced)
+		blocks.append_array(BLOCKS)
+		var by_id := {}
+		for b: Dictionary in blocks:
+			by_id[b.id] = b
+		_categories = cats
+		_choices = choices
+		_all_blocks = blocks
+		_by_id = by_id
+	_mutex.unlock()
 
 
 static func get_def(id: String) -> Dictionary:
-	if _by_id.is_empty():
-		for b: Dictionary in BLOCKS:
-			_by_id[b.id] = b
+	_warm()
 	return _by_id.get(id, {})
 
 
+## Categorias da paleta: primeiro as dos códigos (com "code"), depois as avançadas (com "advanced").
+static func categories() -> Array:
+	_warm()
+	return _categories
+
+
 static func category(id: String) -> Dictionary:
-	for c: Dictionary in CATEGORIES:
+	for c: Dictionary in categories():
 		if c.id == id:
 			return c
 	return {}
 
 
 static func in_category(id: String) -> Array:
-	return BLOCKS.filter(func(b): return b.cat == id)
+	_warm()
+	return _all_blocks.filter(func(b): return b.cat == id)
+
+
+## Lista de escolha de um campo {"t": "choice", "of": nome}, dos avançados ou de um código.
+static func choice_list(of: String) -> Dictionary:
+	_warm()
+	return _choices.get(of, {})
 
 
 ## Pedaços do texto de um bloco: [{"text": "Cobrar"}, {"field": "amount"}, ...], para a tela e para a lei.

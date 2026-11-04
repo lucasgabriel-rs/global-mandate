@@ -113,6 +113,7 @@ static func init_country(c: Country, row: Dictionary, world: GameWorld) -> void:
 	c.stability = clampf(0.25 + 0.035 * c.dem + 0.08 * log(maxf(pc, 400.0) / 400.0), 0.15, 0.95)
 	c.approval = clampf(0.47 + world.rng.randf_range(-0.07, 0.07), 0.2, 0.75)
 	c.inequality = clampf(0.47 - 0.012 * c.dem - 0.000001 * pc, 0.24, 0.55)
+	c.inequality0 = c.inequality
 	c.next_election = world.year_float() + world.rng.randf_range(0.2, 4.0)
 	c.conf = 0.6
 	c.mil_stock = _mil_stock_init(c, gdp * mil, pc)
@@ -196,7 +197,7 @@ static func _supply(c: Country, world: GameWorld) -> void:
 	c.pop *= 1.0 + c.popg * DT
 	# Oferta de trabalho responde à tributação da renda (elasticidade baixa).
 	var tax_wedge := clampf((c.tax_income - c.tax0 * 0.45) * 0.25, -0.03, 0.08)
-	var labor := c.pop * (1.0 - tax_wedge) * (1.0 - 0.12 * c.mobilization)
+	var labor := c.pop * (1.0 - tax_wedge) * (1.0 - 0.12 * c.mobilization) * (1.0 + clampf(c.law_labor, -0.1, 0.05))
 
 	var r_effect := clampf(1.0 - 2.5 * c.rgap, 0.5, 1.4)
 	var conf_effect := clampf(0.7 + 0.5 * c.conf, 0.6, 1.2)
@@ -217,6 +218,9 @@ static func _supply(c: Country, world: GameWorld) -> void:
 	g_tfp += 0.10 * edu_extra + 0.05 * health_extra
 	g_tfp += 0.012 * clampf(c.trade_loss, -0.3, 0.2)
 	g_tfp -= 0.012 * maxf(0.45 - c.stability, 0.0)
+	g_tfp += clampf(c.law_tfp, -0.01, 0.01)
+	# A desigualdade anda devagar até a base do país mais o que as leis empurram.
+	c.inequality += (clampf(c.inequality0 + c.law_inequality, 0.2, 0.65) - c.inequality) * 0.02
 	c.human *= 1.0 + clampf(0.15 * edu_extra, -0.004, 0.006) * DT
 	c.tfp *= 1.0 + g_tfp * DT
 	c.damage = maxf(c.damage - 0.05 * DT * c.damage - 0.01 * DT, 0.0)
@@ -445,7 +449,7 @@ static func _fiscal_flows(c: Country) -> void:
 	var yn_pot := c.y_pot * c.p
 	var tax_rate := c.tax_total()
 	# Curva de Laffer: acima de ~48% a evasão corrói a arrecadação. Elasticidade cíclica de 1,1.
-	var collection := clampf(1.0 - 2.2 * maxf(tax_rate - 0.48, 0.0) ** 1.3, 0.55, 1.0)
+	var collection := clampf(1.0 - 2.2 * maxf(tax_rate - 0.48, 0.0) ** 1.3, 0.55, 1.0) * (1.0 - clampf(c.law_evasion, -0.05, 0.3))
 	var tax_rev := tax_rate * yn * (1.0 + 0.1 * c.gap) * collection
 	var rent := c.comm_exports * c.e * c.rent_take
 	var tariff_rev := c.tariff * c.imports * c.e * 0.7

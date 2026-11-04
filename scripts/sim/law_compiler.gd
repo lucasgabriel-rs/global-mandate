@@ -192,7 +192,7 @@ func _check_literal(block: Dictionary, key: String, spec: Dictionary, value: Var
 			if not LawEngine.valid_date(String(value)):
 				_err(block, "Data inválida (%s). Use o formato aaaa-mm-dd." % value)
 		"choice":
-			if not LawCatalog.CHOICES[spec.of].has(value):
+			if not LawCatalog.choice_list(spec.of).has(value):
 				_err(block, "Opção inexistente: %s." % value)
 		"money", "days":
 			if not (value is float or value is int):

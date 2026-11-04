@@ -85,6 +85,8 @@ func setup(seed_value: int = 0) -> void:
 		rng.randomize()
 	else:
 		rng.seed = seed_value
+	# Monta o catálogo de blocos e os códigos legais aqui, antes de a simulação ganhar uma thread.
+	LawCatalog.categories()
 	var map_info := GameData.map_info()
 	var rows := GameData.load_countries()
 	for row: Dictionary in rows:

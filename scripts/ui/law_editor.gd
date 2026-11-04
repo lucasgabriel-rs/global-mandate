@@ -123,7 +123,7 @@ func _fill_document() -> void:
 
 
 func _build_library() -> void:
-	for cat: Dictionary in LawCatalog.CATEGORIES:
+	for cat: Dictionary in LawCatalog.categories():
 		var heading: Label = LIBRARY_HEADING.instantiate()
 		heading.text = String(cat.label).to_upper()
 		_library.add_child(heading)
@@ -238,7 +238,7 @@ func _field_row(block: Dictionary, key: String, spec: Dictionary) -> Control:
 	match spec.t:
 		"choice":
 			option.visible = true
-			var choices: Dictionary = LawCatalog.CHOICES[spec.of]
+			var choices: Dictionary = LawCatalog.choice_list(spec.of)
 			for value: String in choices:
 				option.add_item(choices[value])
 				option.set_item_metadata(option.item_count - 1, value)
