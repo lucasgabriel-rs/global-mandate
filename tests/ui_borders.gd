@@ -2,6 +2,8 @@ extends Node
 ## Roteiro com cliques reais: criador de personagem, fundir, desmembrar, demarcar e negociar.
 ## Uso: godot --path . -- --ui-borders --shots=/caminho/da/pasta
 
+const COUNTRYBALL := preload("res://scenes/ui/countryball.tscn")
+
 var main: Node
 var out := "user://shots"
 var step := 0
@@ -118,11 +120,10 @@ func _process(delta: float) -> void:
 		2:
 			_check(main.modal_open, "assumir o governo abre o criador")
 			_shot("c1_criador")
-			_press_named(main.modal_root, "next_hair")
-			_press_named(main.modal_root, "next_outfit")
+			_press_named(main.modal_root, "gender_f")
 		3:
 			_shot("c2_alterado")
-			# Monta personagens variados para conferir todas as opções em uma galeria.
+			# Uma countryball de cada país, para conferir todas as bandeiras em uma galeria.
 			_gallery()
 		4:
 			_shot("c3_galeria")
@@ -269,22 +270,14 @@ func _gallery() -> void:
 	var rng := RandomNumberGenerator.new()
 	rng.seed = 11
 	var grid := GridContainer.new()
-	grid.columns = 10
+	grid.columns = 15
 	_gallery_root.add_child(grid)
-	var m := Character.manifest()
-	for i in 30:
-		var v := CharacterView.new()
-		v.custom_minimum_size = Vector2(150, 225) if i < 20 else Vector2(150, 150)
-		v.portrait = i >= 20
-		var who := Character.random(rng)
-		# As primeiras linhas percorrem todas as peças, para nenhuma ficar sem conferir.
-		who.hair = i % m.hair.size()
-		who.eyes = i % m.eyes.size()
-		who.face = i % m.face.size()
-		who.body = i % m.body.size()
-		who.outfit = i % m.outfit.size()
-		who.skin = float(i) / 29.0
-		v.character = who
+	for c: Country in main.world.countries:
+		var v: Countryball = COUNTRYBALL.instantiate()
+		v.custom_minimum_size = Vector2(72, 72)
+		var who := Character.random(rng, c.iso)
+		v.show_person(who, c.iso)
+		v.tooltip_text = c.iso
 		grid.add_child(v)
 
 

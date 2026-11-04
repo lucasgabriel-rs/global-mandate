@@ -56,15 +56,6 @@ const PORTFOLIOS := [
 ## Ministério a mais custa dinheiro, e ministério a menos economiza, mas a área dele fica sem titular.
 const MINISTRY_COST_SHARE := 0.0005
 const MERGED_MINISTRY_FACTOR := 0.9
-const REGION_NAMES := {
-	"LAM": [["Ana", "Carlos", "María", "José", "Lucía", "Pedro", "Paula", "Diego", "Camila", "Andrés"], ["Silva", "Gómez", "Santos", "Rojas", "Pereira", "Díaz", "Costa", "Vega", "Lima", "Torres"]],
-	"NAM": [["John", "Mary", "Robert", "Linda", "James", "Susan", "David", "Karen", "Paul", "Emily"], ["Smith", "Johnson", "Brown", "Miller", "Wilson", "Clark", "Lewis", "Walker", "Young", "Hall"]],
-	"EUR": [["Anna", "Jan", "Marie", "Luca", "Elena", "Henrik", "Clara", "Marek", "Sofia", "Pierre"], ["Müller", "Rossi", "Novak", "Dubois", "Larsen", "Kowalski", "Weber", "Martin", "Horvat", "Berg"]],
-	"MEA": [["Omar", "Fatima", "Hassan", "Layla", "Karim", "Nadia", "Yusuf", "Amira", "Tariq", "Samira"], ["Haddad", "Rahman", "Khalil", "Nasser", "Aziz", "Mansour", "Saleh", "Farah", "Hamid", "Karimi"]],
-	"AFR": [["Amara", "Kwame", "Zola", "Tunde", "Nia", "Kofi", "Thandi", "Moussa", "Aisha", "Sipho"], ["Okafor", "Mensah", "Dlamini", "Diallo", "Traoré", "Moyo", "Abebe", "Banda", "Ndlovu", "Kamau"]],
-	"ASI": [["Wei", "Priya", "Kenji", "Mei", "Arjun", "Yuki", "Min", "Lan", "Ravi", "Hana"], ["Chen", "Sharma", "Tanaka", "Nguyen", "Kim", "Singh", "Wang", "Sato", "Tran", "Park"]],
-	"OCE": [["Jack", "Grace", "Liam", "Ruby", "Noah", "Tui", "Ella", "Sione", "Mia", "Ben"], ["Taylor", "Ngata", "Wright", "Scott", "Tamati", "Reid", "King", "Fraser", "Ward", "Hughes"]],
-}
 const START_FOUNDED_SUPPORT := 0.05
 const MID_TERM_FOUNDED_SUPPORT := 0.02
 
@@ -149,6 +140,7 @@ func _generate(c: Country) -> Dictionary:
 		"ruling": -1, "coalition": [], "player_party": -1, "bills_used": {}, "next_id": 0,
 	}
 	data["region"] = c.region
+	data["iso"] = c.iso
 	data["next_member"] = 0
 	for i in count:
 		var family: String = keys[i]
@@ -194,10 +186,14 @@ func _add_party(data: Dictionary, party_name: String, family: String, color: Col
 ## Cada político tem a própria bússola, espalhada em torno da família do partido. O primeiro lidera.
 func _fill_members(data: Dictionary, party: Dictionary, count: int, rng: RandomNumberGenerator, birth_low := GameWorld.START_YEAR - 74, birth_high := GameWorld.START_YEAR - 32) -> void:
 	var family: Dictionary = FAMILIES[party.family]
-	var names: Array = REGION_NAMES.get(data.get("region", "EUR"), REGION_NAMES["EUR"])
+	var group := Names.group_for(String(data.get("iso", "")), String(data.get("region", "EUR")))
 	for i in count:
+		# O gênero sai de um sorteador à parte, para não mudar o resto da geração dos partidos.
+		var gender_rng := RandomNumberGenerator.new()
+		gender_rng.seed = hash("%s%d" % [data.get("iso", ""), int(data.next_member)])
+		var gender: String = Character.GENDERS[gender_rng.randi() % Character.GENDERS.size()]
 		party.members.append({
-			"id": data.next_member, "name": "%s %s" % [names[0][rng.randi() % names[0].size()], names[1][rng.randi() % names[1].size()]],
+			"id": data.next_member, "name": "%s %s" % [Names.first(group, gender, rng), Names.last(group, gender, rng)], "gender": gender,
 			"econ": clampf(float(family.econ) + rng.randf_range(-MEMBER_SPREAD, MEMBER_SPREAD), -1.0, 1.0),
 			"social": clampf(float(family.social) + rng.randf_range(-MEMBER_SPREAD, MEMBER_SPREAD), -1.0, 1.0),
 			"competence": rng.randf_range(0.25, 0.95), "seed": rng.randi(), "birth_year": rng.randi_range(birth_low, birth_high),
@@ -253,6 +249,7 @@ func _seat_player(world: GameWorld, data: Dictionary, party: Dictionary) -> void
 		me = {"id": data.next_member, "player": true, "competence": 0.7, "seed": 1}
 		data.next_member = int(data.next_member) + 1
 	me["name"] = world.leader.get("name", "Você")
+	me["gender"] = world.leader.get("gender", "m")
 	me["birth_year"] = int(world.leader.get("birth_year", world.start_year - 50))
 	me["econ"] = float(world.leader.get("econ", party.econ))
 	me["social"] = float(world.leader.get("social", party.social))
@@ -1106,6 +1103,7 @@ func from_dict(d: Dictionary) -> void:
 	# Saves anteriores aos políticos: cada partido ganha os seus, em volta da posição que já tinha.
 	for iso: String in countries:
 		var data: Dictionary = countries[iso]
+		data["iso"] = iso
 		if not data.has("next_member"):
 			data["next_member"] = 0
 			data["region"] = "EUR"

@@ -297,52 +297,76 @@ func _character() -> void:
 	var rng := RandomNumberGenerator.new()
 	rng.seed = 5
 	for i in 40:
-		var c := Character.random(rng)
-		for key: String in Character.SHAPES:
-			if int(c[key]) < 0 or int(c[key]) >= Character.option_count(key):
-				_check(false, "opção fora da faixa: %s" % key)
+		var c := Character.random(rng, "RUS")
+		var group := Names.group_for("RUS")
+		_check(String(c.gender) in Character.GENDERS, "gênero válido")
+		_check(String(c.first_name) in Names.GROUPS[group][c.gender], "prenome do gênero sorteado: %s (%s)" % [c.first_name, c.gender])
+		_check(c.name == "%s %s" % [c.first_name, c.last_name], "nome inteiro igual a prenome e sobrenome")
+		if c.gender == "f":
+			_check(not String(c.last_name).ends_with("ov") and not String(c.last_name).ends_with("ev"), "sobrenome russo no feminino: %s" % c.last_name)
 	_check(String(Character.random(rng).name).contains(" "), "personagem aleatório tem nome e sobrenome")
+	# Trocar o gênero troca o que foi sorteado e mantém o que foi digitado.
+	var who := Character.random(rng, "RUS")
+	Character.set_gender(who, "m", "ru", rng)
+	Character.set_names(who, who.first_name, "Ivanov")
+	Character.set_gender(who, "f", "ru", rng)
+	_check(String(who.first_name) in Names.GROUPS.ru.f and who.last_name == "Ivanova", "trocar para feminino troca prenome e forma do sobrenome sorteados")
+	who["first_rolled"] = false
+	Character.set_names(who, "Boris", who.last_name)
+	Character.set_gender(who, "m", "ru", rng)
+	_check(who.first_name == "Boris" and who.last_name == "Ivanov", "prenome digitado fica, sobrenome sorteado volta ao masculino")
+	who["last_rolled"] = false
+	Character.set_gender(who, "f", "ru", rng)
+	_check(who.last_name == "Ivanov" and who.name == "Boris Ivanov", "sobrenome digitado fica como está")
+	_check(Names.group_for("XXX", "AFR") == "af_en" and Names.group_for("BRA") == "pt", "idioma por país, e pela região quando falta")
 	var w := _world()
-	var who := Character.random(rng)
-	who.name = "Teste"
-	who.hair = 5
-	who.clothes_color = Color.RED
+	who = Character.random(rng, "BRA")
+	Character.set_names(who, "Teste", "da Silva")
+	who.gender = "f"
 	w.leader = who
 	var w2 := GameWorld.new()
 	w2.setup(99)
 	w2.load_dict(bytes_to_var(var_to_bytes(w.to_dict())))
-	_check(w2.leader.name == "Teste" and w2.leader.hair == 5 and w2.leader.clothes_color == Color.RED, "personagem entra no save")
+	_check(w2.leader.first_name == "Teste" and w2.leader.last_name == "da Silva" and w2.leader.gender == "f", "personagem entra no save")
+	# Saves antigos: só o nome inteiro, às vezes com o boneco antigo junto.
 	var old := w.to_dict()
-	old.leader = {"name": "Antigo", "skin": 3, "hat": 2, "glasses": 1, "outfit": 3}
+	old.leader = {"name": "Helena Moreira Prado", "skin": 3, "hat": 2, "glasses": 1, "outfit": 3}
 	var w3 := GameWorld.new()
 	w3.setup(99)
 	w3.load_dict(bytes_to_var(var_to_bytes(old)))
-	_check(w3.leader.name == "Antigo" and w3.leader.has("face") and w3.leader.skin is float, "personagem de save antigo é refeito com o mesmo nome")
-	# Pele: só tons da escala humana, nos extremos e no meio.
-	_check(Character.skin_color(-1.0) == Character.SKIN_TONES[0] and Character.skin_color(2.0) == Character.SKIN_TONES[9], "pele não sai da escala")
-	var mid := Character.skin_color(0.5)
-	_check(mid.r > Character.SKIN_TONES[9].r and mid.r < Character.SKIN_TONES[0].r and mid.r >= mid.g and mid.g >= mid.b, "tom do meio fica entre os reais")
-	for t: float in [0.0, 0.25, 0.5, 0.75, 1.0]:
-		var skin := Character.skin_color(t)
-		_check(skin.r >= skin.g and skin.g >= skin.b, "pele em %.2f tem matiz humano" % t)
-	# Peças: todas existem para qualquer combinação de corpo e roupa.
-	var missing := []
-	var m := Character.manifest()
-	var files := []
-	for hair: Dictionary in m.hair:
-		files.append_array(hair.front + hair.back)
-	for key: String in ["eyes", "face", "body"]:
-		for option: Dictionary in m[key]:
-			files.append_array(option.layers)
-	for outfit: Dictionary in m.outfit:
-		_check(outfit.byBody.size() == m.body.size(), "%s existe para todos os corpos" % outfit.label)
-		for layers: Array in outfit.byBody:
-			files.append_array(layers)
-	for layer: Dictionary in files:
-		if not ResourceLoader.exists("res://assets/character/" + String(layer.file)):
-			missing.append(layer.file)
-	_check(missing.is_empty(), "%d peças existem como recurso %s" % [files.size(), str(missing.slice(0, 3))])
-	_check(m.hair.size() >= 8 and m.eyes.size() >= 5 and m.face.size() >= 5 and m.body.size() >= 5 and m.outfit.size() >= 5, "há opções de cabelo, olhos, rosto, corpo e roupa")
+	_check(w3.leader.first_name == "Helena" and w3.leader.last_name == "Moreira Prado" and w3.leader.name == "Helena Moreira Prado", "save antigo divide o nome no primeiro espaço")
+	_check(w3.leader.gender == "f" and w3.leader.has("birth_year"), "save antigo ganha gênero pelo prenome")
+	old.leader = {"name": "Otávio", "face": 1, "clothes_color": Color.RED}
+	w3.load_dict(bytes_to_var(var_to_bytes(old)))
+	_check(w3.leader.first_name == "Otávio" and w3.leader.last_name == "" and w3.leader.gender == "m", "nome sem sobrenome também abre")
+	# Políticos: gênero e nome coerentes; os de saves antigos ganham gênero pelo prenome.
+	var data: Dictionary = w.politics.data_of("RUS")
+	var members := 0
+	for party: Dictionary in data.parties:
+		for m: Dictionary in party.members:
+			if m.get("player", false):
+				continue
+			members += 1
+			var first := String(m.name).get_slice(" ", 0)
+			_check(first in Names.GROUPS.ru[m.gender], "político com prenome do gênero: %s (%s)" % [m.name, m.gender])
+	_check(members > 5, "há políticos para conferir")
+	var women := 0
+	var everyone := 0
+	for iso: String in w.politics.countries:
+		for party: Dictionary in w.politics.countries[iso].parties:
+			for m: Dictionary in party.members:
+				everyone += 1
+				women += 1 if m.get("gender", "") == "f" else 0
+	_check(women > everyone * 0.4 and women < everyone * 0.6, "metade dos políticos são mulheres (%d de %d)" % [women, everyone])
+	_check(Character.for_politician({"name": "Ana Souza"}).gender == "f" and Character.for_politician({"name": "Pedro Souza"}).gender == "m", "político antigo ganha gênero pelo prenome")
+	# Bandeiras: todo país tem uma, e todas as cores são válidas.
+	var flags: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(Countryball.FLAGS))
+	var lacking := []
+	for c: Country in w.countries:
+		if not flags.has(c.iso):
+			lacking.append(c.iso)
+	_check(lacking.is_empty(), "todo país tem bandeira %s" % str(lacking))
+	_check(Countryball.flag("ZZZ").has("h") or Countryball.flag("ZZZ").has("v"), "país sem bandeira vira listras")
 
 
 func _init() -> void:
