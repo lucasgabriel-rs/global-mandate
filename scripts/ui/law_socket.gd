@@ -12,6 +12,12 @@ func setup(owner_view: LawBlockView, field_name: String, field_spec: Dictionary)
 	field = field_name
 	spec = field_spec
 	text = LawProgram.field_text(view.block, field) if view.block.fields.has(field) else "?"
+	# Campo de condição é sextavado, do formato da peça que entra nele.
+	if spec.t == "bool":
+		for state: String in ["normal", "hover", "pressed"]:
+			var style := get_theme_stylebox(state).duplicate() as StyleBoxFlat
+			style.corner_detail = 1
+			add_theme_stylebox_override(state, style)
 	tooltip_text = "Clique para editar. Arraste aqui um bloco compatível." if spec.t != "bool" else "Arraste uma condição para cá."
 	pressed.connect(func():
 		if not view.in_library:
