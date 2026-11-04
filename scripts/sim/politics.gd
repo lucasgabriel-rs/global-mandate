@@ -1063,17 +1063,22 @@ func player_election(world: GameWorld) -> Dictionary:
 	var c := world.player
 	var data := data_of(c.iso)
 	var me := _find(data, data.ruling)
+	# Sem direito a outro mandato pelo Código Eleitoral, o jogador não concorre: o partido vai às urnas sem ele.
+	var barred := not CodeEleitoral.may_run_again(world)
 	var report := Elections.run(world, c, data, _mood_for(world, data))
 	var winner := _winner_of(data, report)
 	var won: bool = winner.id == me.id
 	if report.head.is_empty() and not won:
 		won = government_seats(c.iso) * 2 > int(data.seats_total)
+	if barred:
+		world.emit_news("O Código Eleitoral de %s não permite outro mandato: o chefe de governo deixa o cargo, e %s assume." % [c.name, winner.name], "politica", c)
+		won = false
 	if not won:
 		data.ruling = winner.id
 	form_coalition(data)
 	_prune_cabinet(data)
 	revision += 1
-	return {"won": won, "vote": float(me.support), "seats": int(me.seats), "total": int(data.seats_total), "winner": winner, "report": report}
+	return {"won": won, "barred": barred, "vote": float(me.support), "seats": int(me.seats), "total": int(data.seats_total), "winner": winner, "report": report}
 
 
 ## Países da IA: a mesma eleição. Devolve se o governo continuou.
