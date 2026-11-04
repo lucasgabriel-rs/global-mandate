@@ -19,6 +19,7 @@ func setup(owner_view: LawBlockView, name_: String) -> void:
 	hint.visible = inner.is_empty()
 	for child: Dictionary in inner:
 		var block_view: LawBlockView = load(BLOCK_PATH).instantiate()
+		block_view.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 		items.add_child(block_view)
 		block_view.setup(view.editor, child, view.in_library)
 

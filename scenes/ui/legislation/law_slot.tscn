@@ -12,12 +12,12 @@ theme = ExtResource("e2")
 unique_name_in_owner = true
 custom_minimum_size = Vector2(6, 0)
 mouse_filter = 2
-color = Color(0, 0, 0, 0.25)
+color = Color(0, 0, 0, 0)
 
 [node name="items" type="VBoxContainer" parent="."]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(120, 22)
-theme_override_constants/separation = 3
+custom_minimum_size = Vector2(120, 26)
+theme_override_constants/separation = 0
 
 [node name="hint" type="Label" parent="items"]
 unique_name_in_owner = true
