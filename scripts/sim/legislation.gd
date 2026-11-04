@@ -447,7 +447,7 @@ func find_conflicts(norm: Dictionary) -> Array:
 				out.append({"block": -1, "text": "Conflito com %s sobre %s: %s." % [norm_label(other), theirs[key], "a outra norma prevalece por ter hierarquia maior" if low else "vale a hierarquia, a especialidade e a data de vigência"]})
 	# Direito protegido pela Constituição.
 	for block: Dictionary in LawProgram.all_blocks(norm.program):
-		if block.type == "rg_remove" and block.fields.get("right") in param("rights", []):
+		if block.type in ["rg_remove", "dr_suspend"] and block.fields.get("right") in param("rights", []):
 			out.append({"block": int(block.id), "text": "A Constituição garante esse direito: a corte pode declarar a norma inválida."})
 	return out
 
@@ -460,7 +460,7 @@ func _claims(program: Dictionary) -> Dictionary:
 				out[String(b.fields.get("field"))] = LawProgram.block_text(b)
 			"ec_minwage":
 				out["minwage"] = "salário mínimo"
-			"rg_grant", "rg_remove":
+			"rg_grant", "rg_remove", "dr_right", "dr_suspend":
 				out["right:" + String(b.fields.get("right"))] = "o direito %s" % LawProgram.field_text(b, "right")
 	return out
 
@@ -1048,7 +1048,7 @@ func _court_problem(norm: Dictionary) -> String:
 	if norm.type == "emenda":
 		return ""
 	for block: Dictionary in LawProgram.all_blocks(norm.program):
-		if block.type == "rg_remove" and block.fields.get("right") in param("rights", []):
+		if block.type in ["rg_remove", "dr_suspend"] and block.fields.get("right") in param("rights", []):
 			return "remove um direito garantido no Art. 3º."
 		if block.type == "ec_rate" and float(block.fields.get("value", 0.0)) > 35.0:
 			return "tributo com efeito de confisco."
