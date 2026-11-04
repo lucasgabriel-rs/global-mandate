@@ -81,7 +81,11 @@ func _seed_keeps_totals() -> void:
 		for m in 3:
 			_to_month_end(probe)
 		_check(absf(c.tax_total() - revenue0) < 1e-6, "%s: três meses depois a carga legal é a mesma" % iso)
-		_check(absf(c.law_evasion) < 1e-6 and absf(c.law_inequality) < 0.02, "%s: sem efeito extra de partida (sonegação %.4f, Gini %.4f)" % [iso, c.law_evasion, c.law_inequality])
+		# Só a parte do Tributário: outros códigos (Penal, Direitos...) também mexem na sonegação.
+		var own: Dictionary = LawCodes.get_code("tributario").monthly(probe, c, leg)
+		var own_evasion := float(own.get("evasion", 0.0))
+		var own_gini := float(own.get("inequality", 0.0))
+		_check(absf(own_evasion) < 1e-6 and absf(own_gini) < 0.02, "%s: sem efeito extra de partida (sonegação %.4f, Gini %.4f)" % [iso, own_evasion, own_gini])
 		_check(c.code_stats.has("carga_tributaria") and c.code_stats.has("progressividade") and c.code_stats.has("sonegacao"), "%s: indicadores do código" % iso)
 		if iso == "BRA":
 			for b: Dictionary in LawProgram.all_blocks(code.program):

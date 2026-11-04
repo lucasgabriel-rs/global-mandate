@@ -150,6 +150,11 @@ func _run() -> void:
 	var adv: Control = lib.get_node("group_avançado")
 	_check(not (adv.get_node("%items") as Control).visible, "os avançados começam recolhidos")
 	await _shot("l2_codigo_tributario")
+	# A paleta do tributário é longa: rola até o botão do grupo antes de clicar.
+	var lib_scroll := lib.get_parent() as ScrollContainer
+	if lib_scroll:
+		lib_scroll.ensure_control_visible(adv.get_node("%toggle"))
+		await _wait()
 	await _click(adv.get_node("%toggle"))
 	_check((adv.get_node("%items") as Control).visible, "um clique abre o grupo Avançado")
 	await _shot("l2_codigo_avancado_aberto")
@@ -168,10 +173,10 @@ func _run() -> void:
 	await _shot("l2_lista_de_nomes")
 	tax_program.stacks[0].blocks.erase(exempt)
 	code_editor.selected_id = -1
-	# Sobe a alíquota de renda em um ponto e envia.
+	# Sobe o IRPJ em cinco pontos e envia.
 	for b: Dictionary in tax_program.stacks[0].blocks:
-		if b.type == "ec_rate" and b.fields.field == "tax_income":
-			b.fields.value = float(b.fields.value) + 1.0
+		if b.type == "tr_irpj":
+			b.fields.aliquota = float(b.fields.aliquota) + 5.0
 	code_editor.refresh()
 	await _wait()
 	_check(code_editor.last_compile.ok, "a alteração do código compila: %s" % str(code_editor.last_compile.errors))

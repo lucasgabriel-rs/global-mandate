@@ -512,4 +512,5 @@ func bill_effect(world: GameWorld, leg: Legislation, norm: Dictionary) -> Dictio
 			delta += clampf(float(eff[group]), 0.0, maxf(float(LIMITS[field]), float(ref.start.get(field, 0.0)))) - float(c.get(field))
 	if eff.tariff >= 0.0:
 		delta += (clampf(float(eff.tariff), 0.0, 0.5) - c.tariff) * clampf(c.m_share, 0.05, 0.5)
-	return {"econ": clampf(-delta * 15.0, -1.0, 1.0), "popularity": -delta * 6.0}
+	# budget: receita a mais por ano, em US$ bi, para o painel de efeitos esperados.
+	return {"econ": clampf(-delta * 15.0, -1.0, 1.0), "popularity": -delta * 6.0, "budget": delta * c.y_usd()}

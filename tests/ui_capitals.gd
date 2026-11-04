@@ -87,6 +87,11 @@ func _process(delta: float) -> void:
 			_check(_find(panel._detail_box, "Brasília") != null, "aba mostra a capital do país")
 			# Duplo nível: estado e depois o município sob o cursor.
 			var at: Vector2 = map.get_canvas_transform() * (s.units[_state(s, "São Paulo")].center as Vector2)
+			# As janelas abrem no centro: tira de cima do ponto clicado no mapa as que o cobrem.
+			for i in hud._desk.open_windows():
+				var win: FloatWindow = hud._desk.window(i)
+				if win.get_global_rect().has_point(at):
+					win.position.x = 0.0 if at.x > hud._desk.size.x * 0.5 else hud._desk.size.x - win.size.x
 			_click(at)
 			_click(at)
 		4:

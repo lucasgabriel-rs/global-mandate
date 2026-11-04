@@ -164,6 +164,13 @@ func code_norm(id: String) -> Dictionary:
 	return {}
 
 
+## O código de uma norma, ou o da norma que ela altera; "" se não é um código.
+func norm_code_of(norm: Dictionary) -> String:
+	if String(norm.get("code", "")) != "":
+		return String(norm.code)
+	return String(norms.get(int(norm.get("amends", -1)), {}).get("code", ""))
+
+
 ## Rascunho que altera um código em vigor (ou o cria, se o país ainda não tem), para o editor de blocos.
 func start_code_bill(world: GameWorld, id: String) -> Dictionary:
 	var target := code_norm(id)
@@ -1311,6 +1318,14 @@ func expected_effects(world: GameWorld, norm: Dictionary) -> Dictionary:
 					var def := LawCatalog.get_def(block.type)
 					if LawCodes.owner_of(String(block.type)) != null and (def.has("econ") or def.has("social")):
 						unknown += 1
+	# Códigos que sabem estimar a própria receita (o Tributário) entram com a conta deles.
+	var code_id := String(norm.get("code", norm_code_of(norm)))
+	var code := LawCodes.get_code(code_id)
+	if code != null and code.has_method("bill_effect"):
+		var got: Dictionary = code.call("bill_effect", world, self, norm)
+		if got.has("budget"):
+			budget += float(got.budget)
+			unknown = 0
 	var groups := []
 	for g: Dictionary in SOCIAL_GROUPS:
 		var score := clampf(0.8 - Politics.distance(position, g) * 0.45 + (popularity - 0.5) * 0.5, 0.0, 1.0)

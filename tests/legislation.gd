@@ -242,7 +242,8 @@ func _tramitation(world: GameWorld) -> void:
 	norm.ementa = "Teste"
 	r = leg.present(world, norm)
 	_check(r.ok and norm.state == Legislation.STATE_PROCESS, "lei entra em tramitação")
-	_check(not leg.standing.minwage.has("valor"), "antes da vigência a norma não vale")
+	# O Código Trabalhista já fixa um salário mínimo desde o início; o que conta é esta norma não valer.
+	_check(int(leg.standing.minwage.get("valor", {}).get("norm", -1)) != int(norm.id), "antes da vigência a norma não vale")
 	_settle(world, norm)
 	print("  estado: ", norm.state, " votos: ", norm.votes.map(func(v): return "%d/%d" % [v.yes, v.needed]))
 	_check(norm.process.log.size() >= 4, "cada etapa ficou registrada: %d" % norm.process.log.size())
