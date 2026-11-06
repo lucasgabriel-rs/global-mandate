@@ -1,4 +1,5 @@
 # Gera uma release ao subir uma tag de versão (ex.: git tag v0.2.0 && git push origin v0.2.0).
+# Tags com sufixo, como v0.1.0-alpha, viram pré-lançamento.
 # O repositório tem releases imutáveis ligadas: depois de publicada, a release não muda mais
 # (nem os arquivos nem a tag). Por isso tudo é anexado com ela ainda em rascunho e só então publicado.
 name: Release
@@ -66,5 +67,11 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           tag="${GITHUB_REF_NAME}"
-          gh release create "$tag" --draft --verify-tag --title "Global Mandate $tag" --generate-notes "$RUNNER_TEMP"/dist/*
-          gh release edit "$tag" --draft=false --latest
+          # Tag com sufixo (v0.1.0-alpha, v0.2.0-beta.1) sai como pré-lançamento.
+          if [[ "$tag" == *-* ]]; then
+            gh release create "$tag" --draft --prerelease --verify-tag --title "Global Mandate $tag" --generate-notes "$RUNNER_TEMP"/dist/*
+            gh release edit "$tag" --draft=false
+          else
+            gh release create "$tag" --draft --verify-tag --title "Global Mandate $tag" --generate-notes "$RUNNER_TEMP"/dist/*
+            gh release edit "$tag" --draft=false --latest
+          fi
