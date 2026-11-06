@@ -7,6 +7,8 @@ name: Release
 on:
   push:
     tags: ["v*"]
+  # Execução manual (aba Actions): só gera os arquivos, como artefato da execução, sem release.
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -44,14 +46,16 @@ jobs:
           godot --headless --path . --export-release "Linux arm64" "$out/global_mandate.arm64"
           godot --headless --path . --export-release "Windows x86_64" "$out/global_mandate_x86_64.exe"
           godot --headless --path . --export-release "Windows arm64" "$out/global_mandate_arm64.exe"
+          # macOS: .app universal (Intel e Apple Silicon) com assinatura ad-hoc, já dentro de um .zip.
+          godot --headless --path . --export-release "macOS" "$out/global_mandate_macos.zip"
           ls -l "$out"
-          for f in global_mandate.x86_64 global_mandate.arm64 global_mandate_x86_64.exe global_mandate_arm64.exe; do
+          for f in global_mandate.x86_64 global_mandate.arm64 global_mandate_x86_64.exe global_mandate_arm64.exe global_mandate_macos.zip; do
             test -s "$out/$f" || { echo "::error::$f não foi gerado"; exit 1; }
           done
 
       - name: Empacotar
         run: |
-          tag="${GITHUB_REF_NAME}"
+          tag="${GITHUB_REF_NAME//\//-}"
           b="$RUNNER_TEMP/build"
           d="$RUNNER_TEMP/dist"
           mkdir -p "$d"
@@ -59,10 +63,19 @@ jobs:
           tar -czf "$d/global-mandate-${tag}-linux-arm64.tar.gz" -C "$b" global_mandate.arm64
           (cd "$b" && zip -q "$d/global-mandate-${tag}-windows-x86_64.zip" global_mandate_x86_64.exe)
           (cd "$b" && zip -q "$d/global-mandate-${tag}-windows-arm64.zip" global_mandate_arm64.exe)
+          cp "$b/global_mandate_macos.zip" "$d/global-mandate-${tag}-macos-universal.zip"
           (cd "$d" && sha256sum * > SHA256SUMS.txt)
           ls -l "$d"
 
+      - name: Guardar os arquivos (execução manual)
+        if: github.event_name == 'workflow_dispatch'
+        uses: actions/upload-artifact@v4
+        with:
+          name: global-mandate-build
+          path: ${{ runner.temp }}/dist/
+
       - name: Publicar a release
+        if: startsWith(github.ref, 'refs/tags/v')
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
