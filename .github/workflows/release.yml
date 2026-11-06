@@ -53,16 +53,17 @@ jobs:
             test -s "$out/$f" || { echo "::error::$f não foi gerado"; exit 1; }
           done
 
-      - name: Empacotar
+      - name: Preparar os arquivos
         run: |
           tag="${GITHUB_REF_NAME//\//-}"
           b="$RUNNER_TEMP/build"
           d="$RUNNER_TEMP/dist"
           mkdir -p "$d"
-          tar -czf "$d/global-mandate-${tag}-linux-x86_64.tar.gz" -C "$b" global_mandate.x86_64
-          tar -czf "$d/global-mandate-${tag}-linux-arm64.tar.gz" -C "$b" global_mandate.arm64
-          (cd "$b" && zip -q "$d/global-mandate-${tag}-windows-x86_64.zip" global_mandate_x86_64.exe)
-          (cd "$b" && zip -q "$d/global-mandate-${tag}-windows-arm64.zip" global_mandate_arm64.exe)
+          # Windows e Linux vão soltos; o macOS precisa do .zip porque o .app é uma pasta.
+          cp "$b/global_mandate.x86_64" "$d/global-mandate-${tag}-linux.x86_64"
+          cp "$b/global_mandate.arm64" "$d/global-mandate-${tag}-linux.arm64"
+          cp "$b/global_mandate_x86_64.exe" "$d/global-mandate-${tag}-windows-x86_64.exe"
+          cp "$b/global_mandate_arm64.exe" "$d/global-mandate-${tag}-windows-arm64.exe"
           cp "$b/global_mandate_macos.zip" "$d/global-mandate-${tag}-macos-universal.zip"
           (cd "$d" && sha256sum * > SHA256SUMS.txt)
           ls -l "$d"
