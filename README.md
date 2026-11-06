@@ -1,290 +1,322 @@
 # Global Mandate
 
-Jogo de geopolítica em tempo real sobre um modelo econômico mundial, feito em Godot 4.7.
-Você assume o governo de um país em janeiro de 2025 e joga por quanto tempo quiser. Perder uma eleição não encerra o jogo: você passa a liderar a oposição e pode voltar ao poder. A partida só acaba com golpe, revolução, derrota militar, guerra nuclear ou o fim do seu país.
+A real-time geopolitical game built on a world economic model, made with Godot 4.7.
+You take over the government of a country in January 2025 and play for as long as you like. Losing an election does not end the game: you become the leader of the opposition and can come back to power. The game only ends with a coup, a revolution, a military defeat, a nuclear war or the end of your country.
 
-## Como rodar
+The game text is currently in Brazilian Portuguese.
 
-Abra a pasta no Godot 4.7 e pressione F5, ou execute na raiz do projeto:
+## Running
+
+Open the folder in Godot 4.7 and press F5, or run from the project root:
 
 ```bash
 godot --path .
 ```
 
-## Controles
+## Controls
 
-| Ação | Comando |
+| Action | Input |
 | --- | --- |
-| Pausar | Espaço |
-| Velocidade normal, 2x e 4x | 1, 2, 3 ou 4 |
-| Avançar 7 ou 30 dias | Botões **+7 dias** e **+30 dias** |
-| Mover o mapa | Arrastar, WASD ou setas |
-| Zoom | Roda do mouse |
-| Dossiê e diplomacia | Clicar no país |
-| Desenhar unidade subnacional | N |
-| Desfazer vértice | Botão direito ou Backspace |
-| Cancelar desenho | Esc |
-| Menu, salvar e carregar | Esc |
-| Tela cheia | F11 |
-| Menu debug | F12 |
+| Pause | Space |
+| Normal speed, 2x and 4x | 1, 2, 3 or 4 |
+| Skip 7 or 30 days | **+7 dias** and **+30 dias** buttons |
+| Pan the map | Drag, WASD or arrow keys |
+| Zoom | Mouse wheel |
+| Dossier and diplomacy | Click a country |
+| Open or close a government window | Click its icon in the dock |
+| Legislative center | L, or the document icon in the dock |
+| Draw a subnational unit | N |
+| Undo vertex | Right click or Backspace |
+| Cancel drawing | Esc |
+| Menu, save and load | Esc |
+| Fullscreen | F11 |
+| Debug menu | F12 |
 
-## Tempo
+## Interface: floating windows and the dock
 
-O relógio mostra data e hora. Na velocidade normal, cada 0,05 s é 1 minuto de jogo, ou seja, um dia dura 72 s. Em 2x, dura 36 s, e em 4x, 18 s. Os dígitos dos minutos trocam rápido demais para o olho em qualquer velocidade, então a barra também tem um relógio analógico: o ponteiro longo dá uma volta por hora de jogo, a cada 3 s em 1x, 1,5 s em 2x e 0,75 s em 4x, e o anel em volta enche ao longo do dia. Ao lado dos botões, a barra mostra o ritmo real do relógio em minutos por segundo: 20, 40 ou 80, em vermelho se estiver longe do esperado. A simulação é diária: a economia, as guerras e os mercados andam à meia-noite, e o que se move durante o dia é o relógio.
+The government panels are floating windows, like the windows of a desktop app. A dock at the bottom of the screen, in the style of the macOS Dock, holds one icon per window, grouped by theme:
 
-Os botões **+7 dias** e **+30 dias** rodam a mesma simulação de cada dia sem esperar o relógio, mantêm a hora atual e mostram um resumo com os indicadores do país e o noticiário do período. Uma decisão que apareça no meio para o avanço, que continua depois da resposta.
+- **Government:** Panel, Politics, Ministers and Legislation.
+- **Economy:** Fiscal, Currency, Trade and Economy.
+- **Security:** Military and Divisions.
+- **World:** World.
 
-Os eventos aleatórios (seca, pandemia, desastres, protestos, onda tecnológica, choque de oferta e dilemas de governo) estão desligados por enquanto, em `RANDOM_EVENTS` de `events.gd`, e podem ser disparados pelo menu debug. Continuam ativos as decisões da IA, inclusive propostas e ameaças ao jogador, as eleições, as crises econômicas calculadas pelo modelo e a variação diária dos mercados.
+Clicking an icon opens the window in the center of the screen. Clicking it again brings the window to the front, and clicking it once more while it is in front minimizes it. A dot under the icon marks open windows, and the icons grow under the mouse.
 
-## Unidades subnacionais
+Each window is dragged by its title bar and resized by its bottom-right corner. The red button closes it, the yellow one minimizes it and the green one stretches it to the full height of the screen; double-clicking the title bar does the same. Clicking anywhere on a window brings it to the front. With no window open, the map is free. The legislative center is also a window of the dock and does not block the rest of the screen.
 
-O cenário já começa com as 4.220 unidades de 1º nível dos 170 países, como estados, províncias e departamentos, e com os 5.564 municípios do Brasil dentro dos estados. As divisas aparecem no mapa conforme o zoom, primeiro as dos estados e depois as dos municípios, e passar o mouse mostra o nome e o tipo da unidade mais específica, em qualquer país.
+The top bar shows the date (without the time), the analog clock, the speed buttons, the main indicators and the party fund. The news feed sits in the bottom-left corner and the map modes in the top-left corner.
 
-Na aba **Divisões** você edita o seu país, incluindo territórios anexados:
+## Time
 
-1. Escolha o tipo da unidade pelo marcador. Cada país tem os próprios tipos, com o nome que você quiser: edite os existentes ou crie novos com **+ Novo tipo**.
-2. Selecione a unidade-mãe na lista ou no mapa. O primeiro clique no mapa seleciona o estado, e clicar de novo dentro dele desce para o município. Na lista, a seta abre as unidades de dentro, e o campo de busca encontra qualquer uma pelo nome. Um desenho só é aceito em área livre: como os estados cobrem o Brasil e os municípios cobrem os estados, desenhe dentro de um município ou apague antes o que ocupa a área.
-3. Pressione **N** e clique no mapa para colocar os vértices. As arestas não podem se cruzar.
-4. Clique no primeiro ponto para fechar o polígono. A unidade é criada com um nome próprio automático, que pode ser trocado depois. A hierarquia não tem limite de níveis.
+At normal speed (1x) the game clock runs at 80 game minutes per real second, so a day lasts 18 s. At 2x it runs at 160 minutes per second (9 s per day) and at 4x at 320 (4.5 s per day). The top bar shows the date only. The analog clock keeps track of the hours: the long hand makes one turn per game hour and the ring around it fills over the day. Next to the buttons, the bar shows the actual clock rate in minutes per second, in red if it is far from the expected value. The simulation is daily: the economy, wars and markets move at midnight, and what moves during the day is the clock.
 
-Qualquer unidade pode ser capital de cada unidade que a contém e do país: selecione-a e use os botões da seção **Capital**, que também removem a função. Cada unidade ou país tem uma capital por vez, e escolher outra substitui a anterior. O Brasil já começa com Brasília e as 27 capitais estaduais, e os outros 169 países com a capital nacional na posição real. Quando a capital não é uma província inteira, ela é uma unidade pequena do tipo "Cidade" dentro da província. No mapa, a capital do seu país tem uma estrela dourada grande, as dos outros países, uma menor, e as das unidades, uma estrela clara, todas com zoom, menos a sua. Numa fusão, a nova unidade herda o papel de capital. Num desmembramento, a capital fica com a parte onde está. Se uma guerra entrega a capital nacional a outro país, o país fica sem capital até escolher outra. Por enquanto a capital não afeta a economia, as guerras nem a política.
+The **+7 dias** and **+30 dias** buttons run the same daily simulation without waiting for the clock, keep the current time and show a summary with the country's indicators and the news of the period. A decision that comes up midway pauses the skip, which resumes after you answer.
 
-O traçado é recortado automaticamente pela fronteira nacional e pela unidade-mãe, e não invade as unidades vizinhas do mesmo nível. Para fundir, selecione uma unidade, use **Fundir com...** e clique nas vizinhas do mesmo nível: a resultante fica com o nome e o tipo da primeira, e as filhas passam para ela. Para desmembrar, selecione a unidade, use **Desmembrar** e contorne no mapa a parte que vai se separar; ela vira uma unidade irmã, com nome automático, e as filhas seguem a parte onde está o centro delas. Apagar uma unidade apaga as que estão dentro dela. Um tipo só pode ser apagado quando nenhuma unidade o usa. Por enquanto as unidades são apenas organização territorial: não alteram a economia nem a política.
+Random events (drought, pandemic, disasters, protests, technology boom, supply shock and government dilemmas) are turned off for now, in `RANDOM_EVENTS` in `events.gd`, and can be triggered from the debug menu. AI decisions (including proposals and threats to the player), elections, economic crises computed by the model and daily market moves are still active.
 
-## Fronteiras
+## Economy
 
-As fronteiras só mudam quando uma guerra termina. O desenho usa os mesmos vértices das unidades subnacionais, e o tempo fica parado enquanto você demarca.
+### Sectors
 
-- **Você venceu** (capitulação, paz com a frente a seu favor ou invasor expulso): escolha **Demarcar novas fronteiras**, para desenhar uma ou mais áreas até o limite do que foi conquistado, ou **Não ficar com território**, que encerra a guerra e melhora a reputação. Na capitulação continuam existindo as opções de anexar e de instalar governo aliado.
-- **Paz sem vencedor** (frente entre -15 e +15): escolha **Restabelecer fronteiras antigas** ou **Propor novas fronteiras**. Cada traçado vale como pedido, se cair mais sobre o rival, ou como oferta, se cair mais sobre o seu país. O rival compara o saldo em PIB e tolera mais quando a frente está contra ele ou quando está cansado. Depois de 3 recusas, as fronteiras antigas voltam a valer.
-- **Você perdeu ou a guerra é entre outros países:** o vencedor fica com unidades subnacionais inteiras, das mais próximas dele para as mais distantes, até chegar perto da fração do tratado. Um país com uma só unidade não perde nada dessa forma.
+GDP is split into ten sectors: agriculture, mining and energy, industry, construction, trade, transport and logistics, financial services, technology and communication, tourism and public services. The starting mix comes from income per capita and commodity production, with calibrated values for the largest economies. Each sector reacts to the cycle in its own way: construction feels interest rates, mining feels ore prices, and tourism feels war and instability. The **Economy** window (Sectors tab) shows each sector's output, share of GDP and growth over 12 months.
 
-A população, o capital, as commodities e o PIB acompanham a fração de área cedida, e as unidades subnacionais mudam de dono, inteiras ou cortadas pelo traçado. A área é medida no mapa, então uma faixa pequena vale o mesmo por km² em qualquer parte do país: o jogo não sabe onde estão as cidades.
+### Ports and airports
 
-## Personagem
+Each country has its real main ports and airports, with capacity in TEU, tonnes or passengers. Port demand follows foreign trade and airport demand follows GDP and tourism. Cargo goes to its usual facility first and spills over to those with spare capacity. The country's saturation (demand divided by capacity) sets its logistics: congested ports and airports hold back part of foreign trade and slow the transport and tourism sectors. The effect is measured against the starting saturation, which is already built into the starting GDP.
 
-Ao assumir o governo, você cria o seu líder no estilo stickman: nome, cabelo, olhos, formato do rosto, formato do corpo, com silhueta cheia como a de uma placa de sanitário, e roupa, ou um sorteio com **Aleatório**. Uma roda de cor define as cores dos olhos, do cabelo e da roupa. A pele é escolhida ao longo da escala Monk de tons de pele, então fica limitada às cores reais da espécie humana. As peças são desenhadas no VectorCraft por `tools/build_character_art.mjs`, que precisa do `vectorcraft-cli` e grava os PNGs em `assets/character`. O retrato aparece na barra superior e na aba **Painel**, onde **Editar personagem** reabre o criador.
+In the **Infrastructure** tab you can expand a facility (a construction project that takes time and money), grant it as a concession to private operators (the state collects a share of the replacement cost and a concession runs a little more efficiently) or see who operates it. War damages facilities and occupation closes them. Ports and airports appear as markers on the map. Landlocked countries have no seaport.
 
-## Partidos e parlamento
+### Companies and stock exchange
 
-Cada um dos 170 países tem partidos fictícios, gerados por família política (socialista, trabalhista, verde, social-democrata, centro, liberal, democrata-cristão, conservador e nacionalista), e um parlamento com assentos distribuídos pelos votos, com cláusula de barreira de 3%. O tamanho segue a raiz cúbica da população, entre 30 e 700 assentos. Regimes fechados têm um partido dominante.
+Each country has companies, real for the large economies and generated for the rest. Each one bills a share of its sector's output. Margins feel the cycle, interest rates and the exchange rate, and the value is profit times a P/E that falls when rates and risk go up. Companies are either **publicly traded** (open capital, listed on the exchange) or **privately held** (closed capital), and the state may own all or part of them. The rest of the listed market enters as "other companies", which follows nominal GDP. The country's stock index comes from all of this. The **Companies** and **Stock exchange** tabs show the companies, their owners and the index history.
 
-Ao assumir o governo, você escolhe um partido, cujas ideias passa a adotar, ou cria o seu, definindo a bússola dele, que vira o partido do governo com a bancada que tiver. Na aba **Política**, você vê o plenário e a coalizão, convida ou tira partidos do governo, troca de partido e leva projetos de lei a voto. Cada projeto vai ao parlamento, leva semanas para ser deliberado e só volta à pauta depois de 6 meses. A coalizão vota a favor, salvo quem discorda muito, e a oposição só apoia o que está perto das próprias ideias. Eleições Antecipadas precisam de 3/5 dos assentos.
+Companies change hands by law: the **Privatize** and **Nationalize** blocks in the law editor sell or buy the state's stake. A strong national champion lifts the productivity of its whole sector.
 
-Nas eleições, a aprovação move os votos do seu partido e dos aliados, e você continua se o seu partido for o maior ou se a coalizão mantiver a maioria. Governo sem maioria perde estabilidade aos poucos, e com aprovação abaixo de 20% e menos de 1/3 dos assentos pode sofrer impeachment. O governo define os gastos sozinho na aba Fiscal, e a mudança vale na hora. Só fica travado o campo que uma lei em vigor obrigar, com o bloco **Obrigar o orçamento**. Impostos e tarifa só mudam por lei no editor de blocos.
+### Public accounts
 
-## Oposição
+The first day of the game already has budget figures, a credit rating and reserves. The central bank works with a target rate, and the news feed reports major macro moves (growth, inflation, rating changes, crises).
 
-Antes de começar, na escolha de partido, você decide entre **Governar** e **Liderar a oposição**, com qualquer partido ou um criado por você. Na oposição, o partido que já governa continua no poder e fica indisponível para você. Regimes fechados não têm eleições, então neles só é possível governar.
+## Legislation
 
-Ao perder uma eleição ou sofrer impeachment, você continua no mesmo país como líder do seu partido, e a IA passa a governar: orçamento, juros, diplomacia e guerras saem das suas mãos, e os controles só mostram o que ela decide. Na aba **Política**, você pode criticar o governo, fazer campanha e apresentar moção de censura, que só derruba o governo se a oposição somar a maioria dos assentos. Na eleição seguinte, quanto pior a aprovação do governo, melhor para o seu partido, e você volta ao poder se ele for o maior.
+The **legislative center** (L key or the document icon in the dock) lists the country's legal codes at the top, then the bills in progress, the norms in force and, last, the option to write a standalone law. Laws are built with visual blocks, as in Scratch: each stack that starts with an event is an article. The editor has a block library, a programming area, block properties, validation and a simulator. Its screens are in `scenes/ui/legislation/`.
 
-## Políticos e bússola política
+### Legal codes
 
-Cada partido tem de 5 a 8 políticos, cada um com a própria posição na bússola política (economia e autoridade), competência e aparência. A bússola do partido é a média dos políticos dele. Você também é um político: define suas ideias clicando na bússola ao escolher o partido, e a média do partido muda quando você entra, sai ou muda de ideias. Clique em um partido, na aba **Política**, para ver os políticos.
+The country starts with six codes in force, all of them **complementary laws** (they need an absolute majority to change):
 
-## Ministros
+| Code | What it covers |
+| --- | --- |
+| **Tax Code** | Personal income tax by brackets, social security, VAT and reduced rates, selective tax, corporate income tax, simplified regime for small firms, IOF, property and inheritance taxes, wealth tax and tax enforcement. |
+| **Labor Code** | Minimum wage, working hours, overtime, vacation, 13th salary, severance and FGTS, unemployment insurance, parental leave, unions, strikes, outsourcing, gig work, minimum working age, retirement age and benefit cap. |
+| **Penal Code** | Crimes and penalties, age of criminal responsibility, drugs, guns, death penalty and life imprisonment, sentence progression, alternative penalties, prisons and policing. |
+| **Civil Code** | Marriage age, same-sex marriage, divorce, property regime, property rights and expropriation, adverse possession, inheritance, contracts and usury, business registration, bankruptcy and statute of limitations. |
+| **Electoral Code** | Compulsory voting, voting age, electoral system, threshold, campaign finance, reelection limits, gender quotas, electronic voting and free airtime. |
+| **Rights and duties** | Fundamental rights from a closed list with their scope, duties such as military service and compulsory schooling, press and internet censorship and state of emergency. |
 
-Na aba **Ministros**, você escolhe entre os políticos dos partidos da coalizão para sete pastas: Fazenda, Relações Exteriores, Defesa, Saúde, Educação, Infraestrutura e Justiça. Competência acima de 50% ajuda a pasta, e abaixo atrapalha, todo mês. Pasta vaga conta como 30%. Um aliado sem nenhum ministério pode abandonar o governo, e partido que sai leva os ministros.
+Each code has its own concrete blocks, with choices and numbers instead of typed names. The starting text depends on the country (democracy level, income per capita and, where it exists, the political data of the country), and the starting text is neutral: only what the player changes has an effect. Each code feeds the economy and politics every month through approval, stability, investment, unemployment, inequality, labor supply, productivity and tax evasion, and keeps its own indicators, such as crime rate, legal certainty, pension coverage and deficit, labor rigidity, turnout and civil liberties.
 
-## Conversa com líderes
+The Constitution prevails: the Electoral Code cannot change the electoral system, the minimum threshold or the length of the mandate that the Constitution sets, and a code block that tries to do so leaves a note in the history explaining why it had no effect.
 
-No dossiê de um país, **Falar com o líder** abre uma conversa com escolhas: elogiar, propor livre comércio ou pacto de defesa, enviar ajuda, pedir sanções contra um inimigo, protestar, ameaçar ou, em guerra, propor paz. O líder responde conforme a relação entre os países, a distância entre as bússolas e a competência do seu chanceler. Cada conversa tem até 3 falas, uma por mês com cada líder. Os botões de política externa continuam no dossiê.
+### Editing a code
 
-## Menu debug
+On a code's card, **Alterar** opens the editor with the text in force. The block library shows only that code's blocks and the events; the generic blocks stay folded under **Avançado** and open with one click. Fields that refer to something that already exists (a tax, a right, an institution, a license, a ministry) are lists, and free text is only used to create something new.
 
-**F12**, ou **Menu debug** na pausa, abre um painel que dispara à mão os sistemas do jogo: tempo, jogador, economia, mercados, eventos e dilemas, diplomacia, guerra, fronteiras, unidades, interface e finais de jogo. Os comandos agem sobre o jogador ou sobre o país-alvo, escolhido na lista ou com um clique no mapa. O alvo começa no seu país; o que exige outro país, como declarar guerra, fica em cinza até você escolher um. O campo de filtro encontra um comando pelo nome. O menu fica sempre disponível e os comandos valem como trapaça: a pontuação não marca a partida.
+Before sending a bill, the **expected effects** panel shows the expected change in approval, the effect on the budget (for the Tax Code, the extra or lost revenue per year), how each social group sees it and how each party is likely to vote.
 
-## Legislação
+The blocks look like puzzle pieces: statements have a notch on top and a tab underneath and snap into the stack, events have a rounded top, control blocks ("If", "Repeat") have a C-shaped mouth, values are round pieces and conditions are hexagonal. Each piece is as wide as its own text. The programming area grows to fit the longest stack, scrolls to the end and can be dragged by its empty background with the left or middle mouse button.
 
-O **Centro legislativo** (tecla L ou aba Política) cria normas com blocos, como no Scratch: cada pilha que começa com um evento é um artigo. Há biblioteca, área de programação, propriedades do bloco, validação e simulador. As telas ficam em `scenes/ui/legislation/`.
+### Taxes, parliament and the Constitution
 
-**Tributos só mudam por lei.** O país começa com um Código Tributário em blocos, e os botões das abas Fiscal e Comércio abrem o editor com as alíquotas em vigor. Os controles deslizantes ficaram para gastos, mobilização, emissão e juro.
+**Taxes only change by law.** The Fiscal and Trade windows open the editor with the Tax Code in force. The sliders are kept for spending, mobilization, money printing and interest rates.
 
-**O parlamento delibera.** Normas e projetos prontos passam por discussão e votação, cerca de um mês por casa. Países com duas casas têm uma aba para a Câmara e outra para o Senado na aba Política, cada uma com a própria bancada, e a norma precisa passar nas duas.
+**Parliament deliberates.** Ready bills go through debate and vote, about a month per chamber. Bills now show their path as a step tracker (committee, floor, other chamber, sanction, publication, entry into force), with the current step highlighted, the days left and the estimated chance of passing. Countries with two chambers have one tab for the Chamber and another for the Senate in the Politics window, each with its own seats, and the bill must pass both.
 
-**A Constituição muda por emenda.** A emenda altera, substitui, acrescenta ou exclui dispositivos. Novos artigos podem ser só texto ou programados com blocos, e os programados executam como qualquer norma. Excluir o artigo de um poder, como o veto, acaba com esse poder. Cláusulas pétreas não podem mudar, e toda versão anterior fica guardada.
+**The Constitution changes by amendment.** An amendment alters, replaces, adds or removes provisions. New articles can be text only or programmed with blocks, and programmed ones run like any norm. Removing the article of a power, such as the veto, ends that power. Entrenched clauses cannot change, and every previous version is kept.
 
-O jogo não tem cidadãos individuais: cada evento roda sobre um grupo agregado, e uma condição vale pela fração do grupo em que é verdadeira. O simulador roda o mesmo programa com uma pessoa fictícia. Só o país do jogador tem normas. Na oposição, quem ajusta os tributos é a IA do governo, sem passar pelo editor.
+The game has no individual citizens: each event runs over an aggregate group, and a condition is worth the share of the group for which it is true. The simulator runs the same program with a fictional person. Only the player's country has norms. In opposition, the government AI adjusts taxes without going through the editor.
 
-## Juros
+## Subnational units
 
-Em democracias consolidadas e na zona do euro, o banco central é independente: ele decide o juro sozinho, e nem o jogador nem os outros governos escolhem. A independência está na Constituição do seu país e pode mudar por emenda. Com banco subordinado, o governo pode fixar o juro à mão, ao custo de credibilidade, e líderes de esquerda ou impopulares fazem isso sozinhos.
+The scenario starts with the 4,220 first-level units of the 170 countries, such as states, provinces and departments, and with Brazil's 5,564 municipalities inside the states. Borders appear on the map with zoom, first those of the states and then those of the municipalities, and hovering shows the name and type of the most specific unit, in any country.
 
-## Eleições
+In the **Divisions** window you edit your country, including annexed territories:
 
-Cada país vota por distritos, nas unidades subnacionais, com cadeiras repartidas pela população. O sistema pode ser proporcional (D'Hondt), distrital de maioria simples, distrital em dois turnos ou misto, com cláusula de barreira. No presidencialismo, o chefe de governo é eleito direto em dois turnos, e o parlamento pode sair contra ele; no parlamentarismo, governa quem forma maioria. O senado elege o mesmo número de senadores por unidade. A Constituição do seu país define tudo isso e pode mudar por emenda. A aba Política mostra o resultado da última eleição.
+1. Choose the unit type with the marker. Each country has its own types, with any name you want: edit the existing ones or create new ones with **+ Novo tipo**.
+2. Select the parent unit in the list or on the map. The first click on the map selects the state, and clicking again inside it goes down to the municipality. In the list, the arrow opens the units inside, and the search field finds any unit by name. A drawing is only accepted in free area: since states cover Brazil and municipalities cover the states, draw inside a municipality or first delete what occupies the area.
+3. Press **N** and click on the map to place the vertices. Edges cannot cross.
+4. Click the first point to close the polygon. The unit is created with an automatic name, which can be changed later. The hierarchy has no depth limit.
 
-As unidades têm população. Os estados do Brasil e dos EUA usam números do censo, arredondados. O resto do mundo é estimado pela área, e os municípios repartem a população do estado do mesmo jeito.
+Any unit can be the capital of each unit that contains it and of the country: select it and use the buttons in the **Capital** section, which also remove the role. Each unit or country has one capital at a time, and choosing another replaces the previous one. Brazil starts with Brasília and the 27 state capitals, and the other 169 countries with the national capital at its real position. When the capital is not a whole province, it is a small "City" unit inside the province. On the map, your country's capital has a large golden star, other countries' capitals a smaller one, and unit capitals a light star, all scaling with zoom except yours. In a merge, the new unit inherits the capital role. In a split, the capital stays with the part where it lies. If a war hands the national capital to another country, the country has no capital until it picks another. For now the capital does not affect the economy, wars or politics.
 
-## Plebiscito
+The outline is clipped automatically by the national border and by the parent unit, and does not overlap neighboring units of the same level. To merge, select a unit, use **Fundir com...** and click the neighbors of the same level: the result keeps the name and type of the first one, and the children move to it. To split, select the unit, use **Desmembrar** and outline on the map the part that will separate; it becomes a sibling unit with an automatic name, and the children follow the part where their center lies. Deleting a unit deletes the units inside it. A type can only be deleted when no unit uses it. For now units are only territorial organization: they do not change the economy or politics.
 
-A norma do tipo **Plebiscito** passa pelo parlamento e depois pelas urnas: só vale se a maioria do eleitorado aprovar. O resultado depende da popularidade da proposta, que a pesquisa paga estima. Em países democráticos, criar ou desmembrar uma unidade subnacional segue o mesmo rito, e a unidade só nasce no fim dele.
+## Borders
 
-## Ministérios
+Borders only change when a war ends. The drawing uses the same vertices as the subnational units, and time stays paused while you draw.
 
-Os blocos **Criar**, **Fundir** e **Extinguir ministério**, no editor de leis, mudam o gabinete. Ministério a mais custa dinheiro, e a menos economiza, mas a área sem titular fica mal cuidada, e quem acumula áreas rende menos em cada uma. Revogada a lei, os ministérios voltam ao que eram.
+- **You won** (capitulation, peace with the front in your favor or invader expelled): choose **Demarcar novas fronteiras**, to draw one or more areas up to the limit of what was conquered, or **Não ficar com território**, which ends the war and improves your reputation. On capitulation, the options to annex and to install an allied government are still there.
+- **Peace without a winner** (front between -15 and +15): choose **Restabelecer fronteiras antigas** or **Propor novas fronteiras**. Each outline counts as a demand, if it falls more on the rival, or as an offer, if it falls more on your country. The rival compares the balance in GDP and tolerates more when the front is against it or when it is tired. After 3 refusals, the old borders apply again.
+- **You lost, or the war is between other countries:** the winner takes whole subnational units, from the closest to the farthest, until it gets close to the treaty share. A country with a single unit loses nothing this way.
 
-## Vida e fim de carreira
+Population, capital, commodities and GDP follow the share of area ceded, and subnational units change owner, whole or cut by the outline. Area is measured on the map, so a small strip is worth the same per km² anywhere in the country: the game does not know where the cities are.
 
-Todos os políticos têm idade, inclusive você, adoecem e morrem, com risco crescente pela idade. Morto o líder de um partido, o mais competente assume. Todo janeiro, os partidos ganham nomes novos.
+## Character
 
-O jogo só termina para o seu personagem em impeachment, golpe, renúncia, assassinato ou morte. Aí você escolhe entre um novo jogo e assumir outro personagem na mesma partida. Perder uma eleição ou uma guerra leva à oposição; em regime fechado, sem eleições para disputar, perder a guerra derruba o líder. Se o seu país deixar de existir, o novo personagem começa em quem o anexou.
+When you take over the government, you create your leader as a **countryball**: a ball wearing your country's flag, with white countryball eyes and no mouth. Female characters wear a pink bow on top of the ball. The creator has separate **first name** and **last name** fields and a gender choice. **Aleatório** draws a first name and last name that match the gender, from name lists by region and language of the country; switching gender while the name is still random swaps the first name for one of the new gender, while a name you typed stays as it is. The portrait appears in the top bar and in the **Panel** window, where **Editar personagem** reopens the creator. Older saves that only have the full name still load: it is split at the first space.
 
-## Conversas e tratados
+The flags come from `data/flags.json`; a country without a flag there gets stripes with colors derived from its ISO code. The old stickman art in `assets/character/` is no longer used.
 
-O líder responde pela relação entre os países, pela distância entre a bússola dele e a do seu partido e pelo que ele mesmo pensa de cada assunto: quem é de direita abre mercados mais fácil, e um autoritário só recua diante de muito mais força. Os líderes também tomam a iniciativa: se reúnem entre si, e às vezes pedem para falar com você.
+## Parties and parliament
 
-Tratados seguem o rito da vida real: negociação, assinatura, ratificação pelos parlamentos, vigência por um prazo e denúncia com seis meses de aviso. Há livre comércio, união aduaneira, defesa mútua, não agressão, controle de armas, clima, extradição e investimentos. O mundo já começa com tratados como o do Atlântico Norte. Proponha pelo dossiê do outro país e acompanhe na aba **Tratados** do Centro legislativo.
+Each of the 170 countries has fictional parties, generated by political family (socialist, labor, green, social democrat, center, liberal, Christian democrat, conservative and nationalist), and a parliament with seats distributed by votes, with a 3% threshold by default. Its size follows the cube root of the population, between 30 and 700 seats. Closed regimes have a dominant party.
 
-## O mundo age sozinho
+When you take over the government, you choose a party, whose ideas you adopt, or create your own, setting its compass, and it becomes the governing party with whatever seats it has. In the **Politics** window you see the chamber and the coalition, invite parties into the government or remove them, change parties and put bills to a vote. Each bill goes to parliament, takes weeks to be debated and can only return to the agenda after 6 months. The coalition votes in favor, except members who strongly disagree, and the opposition only supports what is close to its own ideas. Early elections need 3/5 of the seats.
 
-Todo mês, os governos dos outros países agem conforme a bússola do líder. À esquerda gastam e tributam mais; à direita cortam e abrem o comércio. Autoritários armam o país, brigam mais e governam por decreto; libertários investem em educação e preferem acordos. Eles fecham comércio e pactos, trocam missões, criticam, impõem tarifas e sanções, inclusive contra você, e entram em guerra. Ideias parecidas aproximam os países, e ideias opostas os afastam. O noticiário mostra o que envolve você ou grandes economias.
+In elections, approval moves the votes of your party and its allies, and you stay in power if your party is the largest or the coalition keeps the majority. A government without a majority slowly loses stability, and with approval below 20% and less than 1/3 of the seats it can be impeached. The government sets spending on its own in the Fiscal window, and the change applies immediately. Only the field that a law in force locks with the **Obrigar o orçamento** block stays fixed. Taxes and tariffs only change by law in the block editor.
 
-Em todo país com parlamento livre, os partidos propõem projetos conforme as próprias ideias, e as bancadas votam semanas depois. O dossiê mostra o que está em debate e as últimas votações. Regimes autoritários não têm propostas do parlamento. No seu país, os partidos também apresentam projetos, que aparecem na tramitação.
+## Opposition
 
-## Negociar votos
+Before starting, when choosing a party, you decide between **Governar** and **Liderar a oposição**, with any party or one you create. In opposition, the party already in government stays in power and is unavailable to you. Closed regimes have no elections, so there you can only govern.
 
-Na tramitação, **Negociar votos** pede o voto de cada bancada, a favor ou contra, inclusive em projetos de outros partidos. O preço segue o tamanho da bancada e sai do fundo do seu partido; a oferta generosa custa o dobro e tem mais chance. Quanto mais longe das ideias do partido, mais difícil virar o voto. A recusa não custa nada, mas encerra a conversa sobre aquela proposta. No governo, também é possível oferecer a entrada na coalizão. Sua própria bancada segue a orientação de graça.
+When you lose an election or are impeached, you stay in the same country as the leader of your party, and the AI governs: budget, interest rates, diplomacy and wars leave your hands, and the controls only show what it decides. In the **Politics** window you can criticize the government, campaign and file a motion of no confidence, which only brings down the government if the opposition holds the majority of seats. In the next election, the worse the government's approval, the better for your party, and you return to power if it is the largest.
 
-## Fundo dos partidos
+## Politicians and political compass
 
-Cada partido tem um fundo em dinheiro, que recebe todo mês conforme a votação. O do seu partido aparece no alto da tela e paga, cada um com seu preço: pesquisa de popularidade (a mais cara), campanha, moção de censura, pesquisa de apoios no parlamento, crítica ao governo e convite a um partido. Os preços acompanham o tamanho da economia.
+Each party has 5 to 8 politicians, each with their own position on the political compass (economy and authority), competence and appearance. The party's compass is the average of its politicians. You are also a politician: you set your ideas by clicking the compass when choosing the party, and the party's average changes when you join, leave or change your mind. Click a party in the **Politics** window to see its politicians.
 
-Não há previsão gratuita de votos. A **pesquisa de apoios** mostra como cada bancada deve votar, por casa, com margem de erro. A **pesquisa de popularidade** mostra quantos eleitores aprovam a proposta. A popularidade conta de verdade: quando a norma entra em vigor, uma impopular tira aprovação do governo, e uma popular dá.
+## Ministers
 
-As ações externas não têm custo: a mesma ação com o mesmo país só se repete depois de 30 dias.
+In the **Ministers** window you choose among the politicians of the coalition parties for seven portfolios: Finance, Foreign Affairs, Defense, Health, Education, Infrastructure and Justice. Competence above 50% helps the portfolio every month, and below 50% hurts it. A vacant portfolio counts as 30%. An ally without any ministry may leave the government, and a party that leaves takes its ministers with it.
 
-## Editar a interface
+## Ministries
 
-Todos os menus são cenas em `scenes/ui/`, abertas e editadas no Godot:
+The **Criar**, **Fundir** and **Extinguir ministério** blocks in the law editor change the cabinet. An extra ministry costs money and one fewer saves money, but the area without its own minister is poorly run, and a minister who accumulates areas performs worse in each. When the law is revoked, the ministries go back to what they were.
 
-- `start_screen.tscn`: tela inicial.
-- `hud.tscn`: barra superior, painel do governo com as abas, dossiê, modos de mapa, noticiário e avisos.
-- `panels/`: abas Divisões, Política e Ministros, painel de fronteiras e menu debug.
-- `modals/`: pausa, ajuda, confirmação, decisão, criador de personagem, escolha de partido, partido, ministro, conversa e fim de jogo.
-- `rows/`: linhas que se repetem em listas, como notícia, partido, ministro e unidade.
-- `theme.tres`: tema geral. As imagens do controle deslizante ficam em `assets/ui/`.
+## Elections
 
-Textos, tamanhos, cores e posições podem mudar à vontade no editor. Os scripts acham os nós pelo nome único (`%`), então renomear um nó marcado com `%` exige trocar o nome no script. Nós com prefixo, como `top_gdp`, `slider_tax_income`, `dossier_pop` ou `action_war`, recebem valores pelo nome e podem ser movidos para qualquer lugar da mesma cena. As partes do dossiê que só aparecem para outro país estão no grupo `foreign_only`, e as da escolha de partido que só aparecem no início, em `at_start_only`.
+Each country votes by districts, in the subnational units, with seats shared by population. The system can be proportional (D'Hondt), first-past-the-post, two-round single-member or mixed, with a threshold. In presidential systems the head of government is elected directly in two rounds, and parliament can turn out against them; in parliamentary systems, whoever forms a majority governs. The senate elects the same number of senators per unit. Your country's Constitution defines all of this and can change by amendment, and the Electoral Code sets the rest: compulsory voting, voting age, free airtime and electronic voting change turnout, campaign finance sets how much each party's fund weighs on the vote, a higher threshold keeps small parties out, and the reelection limit is enforced on the player. The Politics window shows the result of the last election.
 
-Parte dos textos muda durante o jogo: o que o script escreve em um rótulo, como valores e nomes de país, substitui o texto da cena. Os gráficos, retratos e bússolas são desenhados por script e aparecem vazios no editor. Os comandos do menu debug são gerados a partir da lista em `debug_menu.gd`.
+Units have population. The states of Brazil and the United States use rounded census figures. The rest of the world is estimated by area, and municipalities share their state's population the same way.
 
-## O modelo
+## Plebiscite
 
-São 170 países com PIB, população, dívida, inflação, juros, exportações, forças armadas e produção
-de commodities próprios. Cada um roda a mesma economia todo mês:
+A norm of the **Plebiscito** type goes through parliament and then to the polls: it only applies if the majority of the electorate approves. The result depends on the popularity of the proposal, which the paid poll estimates. In democratic countries, creating or splitting a subnational unit follows the same procedure, and the unit is only born at the end of it.
 
-- **Oferta:** função de produção de Solow com capital, trabalho, capital humano e produtividade, com convergência de renda.
-- **Demanda:** hiato do produto movido por juro real, impulso fiscal, demanda dos parceiros, câmbio real, termos de troca, crédito e confiança.
-- **Preços:** curva de Phillips com expectativas ancoradas pela credibilidade do banco central, repasse cambial e choques de energia e alimentos.
-- **Política monetária:** regra de Taylor, zona do euro com BCE comum, âncoras no dólar que podem quebrar.
-- **Câmbio:** paridade de poder de compra, diferencial de juros real, conta corrente e prêmio de risco.
-- **Contas públicas:** impostos com curva de Laffer, estabilizadores automáticos, dívida em moeda local e em dólar, prêmio de risco endógeno, nota de crédito, FMI e moratória.
-- **Comércio:** matriz bilateral gravitacional, alterada por tarifas, acordos, sanções e guerras.
-- **Commodities:** petróleo, gás, grãos, metais e chips com oferta por país, estoques e OPEP+.
-- **Crises financeiras:** ciclo de crédito que produz crises bancárias e contágio global.
+## Interest rates
 
-Por cima disso roda a geopolítica: relações bilaterais, alianças, sanções, guerras com frente e
-atrito, dissuasão nuclear, eleições, golpes e nações com IA própria.
+In consolidated democracies and in the euro zone the central bank is independent: it sets the rate on its own, and neither the player nor the other governments choose it. Independence is in your country's Constitution and can change by amendment. With a subordinate bank, the government can set the rate by hand, at a cost in credibility, and left-wing or unpopular leaders do so on their own.
 
-## Dados
+## Leader conversations and treaties
 
-- Fronteiras: Natural Earth (domínio público), via pacote `world-atlas`. `tools/build_map.mjs` gera `data/map.json`.
-Os arquivos brutos ficam em `tools/raw/`, fora do repositório. Só é preciso baixá-los para gerar `data/` de novo; o jogo roda sem eles.
+In a country's dossier, **Falar com o líder** opens a conversation with choices: praise, propose free trade or a defense pact, send aid, ask for sanctions against an enemy, protest, threaten or, at war, propose peace. The leader answers based on the relationship between the countries, the distance between your party's compass and theirs, what they think of each subject (a right-wing leader opens markets more easily, an authoritarian only backs down in the face of much greater force) and the competence of your foreign minister. Each conversation has up to 3 lines, one per month with each leader. Leaders also take the initiative: they meet each other, and sometimes ask to talk to you. The foreign policy buttons are still in the dossier.
 
-- Unidades subnacionais: Natural Earth admin-1 10m (domínio público). `tools/build_admin1.mjs` gera `data/admin1.json` a partir de `tools/raw/ne_10m_admin_1.geojson`, que o jogo não usa diretamente. Os nomes seguem a fonte, sem tradução, e a atribuição de territórios disputados segue o controle de fato adotado por ela. Municípios e outros níveis abaixo do 1º não estão incluídos.
-- Municípios do Brasil: malha do IBGE publicada pelo projeto `tbrugz/geodata-br` (CC0). `tools/build_municipios.mjs` gera `data/municipios.json` a partir de `tools/raw/geojs-100-mun.json`. A malha tem 5.564 municípios, menos que os 5.570 atuais: os criados depois dela aparecem dentro do município de origem. 
-- Limites: `tools/clip_units.gd` recorta os estados pelo contorno do país e os municípios pelo estado, com áreas e linhas. Unidades inteiramente fora do contorno, como ilhas que o mapa não tem, viram um marcador pequeno na borda mais próxima. Para gerar tudo do zero, rode `build_map.mjs`, `build_admin1.mjs`, `build_municipios.mjs` e esse script, nessa ordem.
-- Capitais nacionais: Natural Earth populated places 10m (domínio público). `tools/build_capitais.mjs` gera `data/capitais.json`, com nomes em português de uma tabela própria, digitada de memória, e correções onde a fonte marca várias capitais ou a maior cidade. Em capitais disputadas, como Jerusalém, o jogo segue a fonte. Rode esse script antes de `clip_units.gd`.
-- Economia e forças armadas: `data/countries.csv`, valores aproximados de 2024 digitados de memória para fins de jogo. Não foram conferidos com as fontes e não servem como referência factual.
+Treaties follow the real-life process: negotiation, signature, ratification by parliaments, a term in force and withdrawal with six months' notice. There are free trade, customs union, mutual defense, non-aggression, arms control, climate, extradition and investment treaties. The world already starts with treaties such as the North Atlantic one. Propose one from the other country's dossier and follow it in the **Tratados** tab of the legislative center.
 
-Microestados e pequenas ilhas aparecem no mapa como territórios neutros.
+## Life and end of career
 
-## Desempenho
+All politicians have an age, including you, fall ill and die, with risk rising with age. When a party leader dies, the most competent member takes over. Every January parties get new names.
 
-A simulação de cada dia, salvar, carregar e abrir o jogo rodam em outras threads, e a tela continua desenhando. Só a thread principal cria nós e fala com a interface. O mundo tem um dono de cada vez: enquanto uma thread trabalha nele, `world.busy` fica ligado e a interface não lê nem muda nada; um clique ou uma tecla espera ela terminar, e os sinais da simulação ficam na fila até lá. O código da simulação nunca deve tocar em nós nem emitir sinais diretamente: use `_send`, em `world.gd`. Abrir o mapa triangula cada país em paralelo, nos núcleos disponíveis.
+The game only ends for your character with impeachment, a coup, resignation, assassination or death. Then you choose between a new game and taking over another character in the same game. Losing an election or a war leads to opposition; in a closed regime, with no elections to contest, losing the war brings down the leader. If your country ceases to exist, the new character starts in the country that annexed it.
 
-`--ui-profile` mede o tempo de cada operação pesada, e `--ui-threads` testa a virada de mês, cliques no meio da simulação, decisões durante o avanço de dias e o save.
+## The world acts on its own
 
-## Testes
+Every month the governments of the other countries act according to their leader's compass. On the left they spend and tax more; on the right they cut and open trade. Authoritarians arm the country, fight more and govern by decree; libertarians invest in education and prefer agreements. They sign trade deals and pacts, exchange missions, criticize, impose tariffs and sanctions (including on you) and go to war. Similar ideas bring countries closer, and opposite ideas push them apart. The news feed shows what involves you or the large economies.
 
-`society.gd` e `--ui-society` testam idade e morte, eleições, plebiscito, unidades com rito, ministérios, fim de carreira, conversas e tratados.
+In every country with a free parliament, parties propose bills according to their own ideas, and the benches vote weeks later. The dossier shows what is being debated and the latest votes. Authoritarian regimes have no proposals from parliament. In your country, parties also file bills, which appear among the bills in progress.
 
-`world_ai.gd` deixa o mundo correr sozinho e imprime o que aconteceu.
+## Vote trading
 
-`tests/scenes.gd` abre todas as cenas e recusa nomes repetidos sob o mesmo pai. `legislation.gd` e `--ui-legislation` testam leis, tramitação, fundo, pesquisas, emendas e o arrastar de blocos.
+On a bill in progress, **Negociar votos** asks each bench for its vote, for or against, including on bills from other parties. The price follows the size of the bench and comes out of your party's fund; the generous offer costs double and has a better chance. The further from the party's ideas, the harder it is to turn the vote. A refusal costs nothing, but ends the conversation about that bill. In government you can also offer a place in the coalition. Your own bench follows the party line for free.
 
-`--ui-layout --shots=DIR` registra posição e estilo de cada controle em todas as telas, em `layout.txt`, com uma captura de cada uma. Rodar antes e depois de mudar uma cena mostra o que saiu do lugar.
+## Party funds
+
+Each party has a cash fund that it receives every month according to its vote share. Your party's fund appears at the top of the screen and pays, each at its own price, for: popularity poll (the most expensive), campaign, motion of no confidence, parliamentary support poll, criticism of the government and inviting a party. Prices follow the size of the economy.
+
+There is no free vote forecast. The **support poll** shows how each bench is likely to vote, by chamber, with a margin of error. The **popularity poll** shows how many voters approve the proposal. Popularity counts for real: when the norm enters into force, an unpopular one takes approval away from the government and a popular one adds to it.
+
+Foreign actions have no cost: the same action with the same country can only be repeated after 30 days.
+
+## Debug menu
+
+**F12**, or **Menu debug** in the pause menu, opens a panel that triggers the game systems by hand: time, player, economy, markets, events and dilemmas, diplomacy, war, borders, units, interface and game endings. Commands act on the player or on the target country, chosen in the list or with a click on the map. The target starts on your country; commands that need another country, such as declaring war, stay grayed out until you pick one. The filter field finds a command by name. The menu is always available and its commands count as cheating: the game is not scored.
+
+## Editing the interface
+
+All menus are scenes in `scenes/ui/`, opened and edited in Godot:
+
+- `start_screen.tscn`: start screen.
+- `hud.tscn`: top bar, the window desk with all government windows, the dossier, map modes, news feed, notices and the dock.
+- `float_window.tscn`, `dock.tscn` and `dock_item.tscn`: the floating window frame (title bar, traffic-light buttons and resize grip), the dock and its icons. The dock icons are in `assets/ui/dock/`.
+- `panels/`: the content of each window (Divisions, Politics, Ministers, Economy with Sectors, Infrastructure, Companies and Stock exchange tabs), the border panel and the debug menu.
+- `legislation/`: legislative center, law editor, blocks, amendments, expected effects and the step tracker.
+- `modals/`: pause, help, confirmation, decision, character creator, party choice, party, minister, conversation and game over.
+- `rows/`: rows repeated in lists, such as news, party, minister, unit and sector.
+- `theme.tres`: general theme. The slider images are in `assets/ui/`.
+
+Texts, sizes, colors and positions can be changed freely in the editor. Scripts find nodes by unique name (`%`), so renaming a node marked with `%` requires changing the name in the script. Nodes with a prefix, such as `top_gdp`, `slider_tax_income`, `dossier_pop` or `action_war`, receive values by name and can be moved anywhere in the same scene. The parts of the dossier that only appear for another country are in the `foreign_only` group, and the parts of the party choice that only appear at the start are in `at_start_only`. Windows are children of the desk in `hud.tscn`, and their order there is their index in the dock.
+
+Some texts change during the game: what the script writes into a label, such as values and country names, replaces the scene text. Charts, portraits, compasses and countryballs are drawn by script and appear empty in the editor. The debug menu commands are generated from the list in `debug_menu.gd`.
+
+## Exporting
+
+Export presets for Windows and Linux (x86_64 and arm64) are in `export_presets.cfg`, with `tools/*`, `tests/*` and `assets/character/*` excluded. Builds go to `bin/`, which Git and Godot ignore.
+
+`data/countries.csv` must stay imported as **Keep File** (`importer="keep"` in `countries.csv.import`). Godot imports CSV files as translations by default, and then the export only carries the generated `.translation` files: without the CSV the exported game cannot load the countries.
+
+## The model
+
+There are 170 countries with their own GDP, population, debt, inflation, interest rates, exports, armed forces and commodity production. Each one runs the same economy every month:
+
+- **Supply:** Solow production function with capital, labor, human capital and productivity, with income convergence, split into ten sectors.
+- **Demand:** output gap driven by the real interest rate, fiscal impulse, partner demand, real exchange rate, terms of trade, credit and confidence, plus the logistics of ports and airports.
+- **Prices:** Phillips curve with expectations anchored by central bank credibility, exchange rate pass-through and energy and food shocks.
+- **Monetary policy:** Taylor rule, the euro zone with a common ECB, dollar pegs that can break.
+- **Exchange rate:** purchasing power parity, real interest rate differential, current account and risk premium.
+- **Public finances:** taxes with a Laffer curve and tax evasion, automatic stabilizers, debt in local currency and in dollars, endogenous risk premium, credit rating, IMF and default.
+- **Trade:** gravity-based bilateral matrix, changed by tariffs, agreements, sanctions and wars.
+- **Commodities:** oil, gas, grains, metals and chips with supply by country, stocks and OPEC+.
+- **Financial crises:** credit cycle that produces banking crises and global contagion.
+- **Companies:** company profits and valuations and a stock index per country.
+- **Laws:** the legal codes feed investment, unemployment, inequality, labor supply, productivity and tax evasion.
+
+On top of this runs geopolitics: bilateral relations, alliances, sanctions, wars with a front line and attrition, nuclear deterrence, elections, coups and nations with their own AI.
+
+## Data
+
+- Borders: Natural Earth (public domain), via the `world-atlas` package. `tools/build_map.mjs` generates `data/map.json`.
+The raw files live in `tools/raw/`, outside the repository. You only need to download them to regenerate `data/`; the game runs without them.
+- Subnational units: Natural Earth admin-1 10m (public domain). `tools/build_admin1.mjs` generates `data/admin1.json` from `tools/raw/ne_10m_admin_1.geojson`, which the game does not use directly. Names follow the source, untranslated, and the assignment of disputed territories follows the de facto control the source adopts. Municipalities and other levels below the first are not included.
+- Municipalities of Brazil: IBGE mesh published by the `tbrugz/geodata-br` project (CC0). `tools/build_municipios.mjs` generates `data/municipios.json` from `tools/raw/geojs-100-mun.json`. The mesh has 5,564 municipalities, fewer than the current 5,570: those created after it appear inside their original municipality.
+- Limits: `tools/clip_units.gd` clips the states by the country outline and the municipalities by the state, with areas and lines. Units entirely outside the outline, such as islands the map does not have, become a small marker on the nearest edge. To generate everything from scratch, run `build_map.mjs`, `build_admin1.mjs`, `build_municipios.mjs` and that script, in this order.
+- National capitals: Natural Earth populated places 10m (public domain). `tools/build_capitais.mjs` generates `data/capitais.json`, with Portuguese names from its own table, typed from memory, and corrections where the source marks several capitals or the largest city. For disputed capitals, such as Jerusalem, the game follows the source. Run this script before `clip_units.gd`.
+- Ports and airports: `data/infra.json`, main facilities of each country with approximate capacity. Companies: `data/companies.json`, large real companies of the main economies with approximate figures. Flags: `data/flags.json`.
+- Economy and armed forces: `data/countries.csv`, approximate 2024 values typed from memory for game purposes.
+
+The values in `countries.csv`, `infra.json` and `companies.json` were not checked against their sources and must not be used as factual reference. Microstates and small islands appear on the map as neutral territories.
+
+## Performance
+
+Each day's simulation, saving, loading and starting the game run on other threads, and the screen keeps drawing. Only the main thread creates nodes and talks to the interface. The world has one owner at a time: while a thread works on it, `world.busy` is on and the interface neither reads nor changes anything; a click or key press waits for it to finish, and simulation signals are queued until then. Simulation code must never touch nodes or emit signals directly: use `_send`, in `world.gd`, or `world.emit_news` for news. Opening the map triangulates each country in parallel, on the available cores.
+
+`--ui-profile` measures the time of each heavy operation, and `--ui-threads` tests the turn of the month, clicks in the middle of the simulation, decisions during day skips and saving.
+
+## Tests
+
+Headless tests run as scripts and print `RESULTADO: N falhas` (`falhas: N` for `policy.gd`). Interface tests run the game with a flag and save screenshots to the folder given in `--shots`.
 
 ```bash
-godot --headless --path . -s tests/policy.gd
+godot --headless --path . -s tests/legislation.gd
 ```
 
 ```bash
-godot --headless --path . -s tests/calibrate.gd -- 15 42
+godot --path . -- --ui-legislation --shots=/tmp/shots
 ```
 
-```bash
-godot --headless --path . -s tests/calibrate.gd -- 5 42 taiwan
-```
+| Headless (`-s tests/X.gd`) | What it covers |
+| --- | --- |
+| `scenes.gd` | Opens every scene and rejects repeated names under the same parent. |
+| `policy.gd` | Checks the effect of each player lever against a control. |
+| `calibrate.gd` | Prints world indicators year by year (`-- 15 42`), with optional `taiwan` and `hormuz` scenarios. |
+| `economy_health.gd` | Long runs of the world economy within sane bounds. |
+| `sectors.gd`, `infra.gd`, `corporate.gd` | Sectors, ports and airports, companies and the stock exchange. |
+| `legislation.gd` | Laws, legislative process, party fund, polls, amendments and block dragging. |
+| `code_tributario.gd`, `code_penal_civil.gd`, `code_trabalho_eleicoes.gd`, `direitos.gd` | Each legal code: starting text, changes by bill, revocation and monthly effects. |
+| `politics.gd` | Parties, parliament, votes, elections and the character creator. |
+| `statecraft.gd` | Opposition, politicians, compass, ministers and conversations. |
+| `society.gd` | Age and death, elections, plebiscite, units with formal procedure, ministries, end of career, conversations and treaties. |
+| `world_ai.gd` | Lets the world run on its own and prints what happened. |
+| `clock.gd`, `capitals.gd`, `borders.gd`, `subdivisions.gd` | Clock and day skips, capitals, borders and wars, subnational units. |
 
-```bash
-godot --path . -- --ui-test --shots=/tmp/shots
-```
-
-```bash
-godot --headless --path . -s tests/subdivisions.gd
-```
-
-```bash
-godot --path . -- --ui-divisions --shots=/tmp/shots
-```
-
-```bash
-godot --path . -- --ui-debug --shots=/tmp/shots
-```
-
-```bash
-godot --headless --path . -s tests/borders.gd
-```
-
-```bash
-godot --headless --path . -s tests/statecraft.gd
-```
-
-```bash
-godot --path . -- --ui-statecraft --shots=/tmp/shots
-```
-
-```bash
-godot --headless --path . -s tests/politics.gd
-```
-
-```bash
-godot --path . -- --ui-politics --shots=/tmp/shots
-```
-
-```bash
-godot --headless --path . -s tests/clock.gd
-```
-
-```bash
-godot --path . -- --ui-clock --shots=/tmp/shots
-```
-
-```bash
-godot --headless --path . -s tests/capitals.gd
-```
-
-```bash
-godot --path . -- --ui-capitals --shots=/tmp/shots
-```
-
-```bash
-godot --path . -- --ui-borders --shots=/tmp/shots
-```
-
-`statecraft.gd` e `--ui-statecraft` testam oposição, políticos, bússola, ministros e conversas. `politics.gd` e `--ui-politics` testam partidos, parlamento, votações, eleições e o criador de personagem. `clock.gd` e `--ui-clock` testam o relógio, as velocidades, o avanço de dias e a ausência de eventos aleatórios. `capitals.gd` e `--ui-capitals` testam as capitais no modelo e na interface. `--ui-debug` aperta todos os comandos do menu debug, um por vez. `borders.gd` testa fusões, desmembramentos, cessões e todos os finais de guerra. `--ui-borders` passa pelo criador de personagem, funde, desmembra, demarca e negocia com cliques no mapa. `subdivisions.gd` testa tipos, recortes, hierarquia e salvamento das unidades. `--ui-divisions` desenha unidades com cliques no mapa e salva capturas de tela. `policy.gd` confere o efeito de cada alavanca do jogador contra um controle. `calibrate.gd` imprime
-os indicadores mundiais ano a ano, com os cenários opcionais `taiwan` e `hormuz`. `--ui-test` joga
-sozinho pela interface e salva capturas de tela.
+| Interface (`-- --ui-X --shots=DIR`) | What it covers |
+| --- | --- |
+| `--ui-desk` | Dock and floating windows: open, bring to front, drag, resize, minimize, centered opening and small screens. |
+| `--ui-legislation`, `--ui-society` | Legislative center, code cards, filtered library, expected effects, step tracker, amendments and society systems. |
+| `--ui-economy`, `--ui-infra`, `--ui-corporate`, `--ui-econ-audit` | Economy windows, infrastructure, companies and stock exchange. |
+| `--ui-creator` | Countryball creator, with male and female portraits and names. |
+| `--ui-politics`, `--ui-statecraft` | Politics and statecraft through the interface. |
+| `--ui-clock`, `--ui-capitals`, `--ui-divisions`, `--ui-borders` | Clock, capitals, drawing units and borders with clicks on the map. |
+| `--ui-debug` | Presses every debug menu command, one at a time. |
+| `--ui-threads`, `--ui-profile` | Threading and timing. |
+| `--ui-layout` | Records the position and style of each control on every screen in `layout.txt`, with a screenshot of each. Running it before and after changing a scene shows what moved. |
+| `--ui-test` | Plays on its own through the interface and saves screenshots. |
