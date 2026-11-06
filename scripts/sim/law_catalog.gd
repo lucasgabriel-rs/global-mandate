@@ -212,9 +212,10 @@ static func choice_list(of: String) -> Dictionary:
 
 
 ## Pedaços do texto de um bloco: [{"text": "Cobrar"}, {"field": "amount"}, ...], para a tela e para a lei.
-static func segments(def: Dictionary) -> Array:
+## Com localized, o molde é traduzido antes de ser cortado: a ordem dos campos pode mudar no outro idioma.
+static func segments(def: Dictionary, localized := false) -> Array:
 	var out := []
-	var text: String = def.text
+	var text: String = TranslationServer.translate(def.text) if localized else def.text
 	var at := 0
 	while at < text.length():
 		var open := text.find("{", at)

@@ -159,7 +159,7 @@ static func step_month(c: Country, world: GameWorld) -> void:
 	if world.rng.randf() < 0.004:
 		c.sector_drought = world.rng.randf_range(0.08, 0.25)
 		if c == world.player:
-			world.emit_news("Quebra de safra em %s: a agropecuária encolhe." % c.name, "economia", c)
+			world.emit_news(TranslationServer.translate("Quebra de safra em %s: a agropecuária encolhe.") % c.name, "economia", c)
 	var spec := _specific(c, world)
 	var weights := PackedFloat32Array()
 	weights.resize(COUNT)

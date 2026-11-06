@@ -39,9 +39,9 @@ func setup(owner_editor: LawEditor, data: Dictionary, library := false) -> void:
 	var def := LawCatalog.get_def(block.type)
 	_paint(def)
 	if def.is_empty():
-		_add_text("Bloco desconhecido: %s" % block.type)
+		_add_text(tr("Bloco desconhecido: %s") % block.type)
 		return
-	for seg: Dictionary in LawCatalog.segments(def):
+	for seg: Dictionary in LawCatalog.segments(def, true):
 		if seg.has("text"):
 			_add_text(seg.text)
 		elif block.plugs.has(seg.field):

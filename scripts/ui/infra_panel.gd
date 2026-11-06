@@ -60,16 +60,16 @@ func refresh() -> void:
 	_saturation_label(_port_sat, inf.saturation(c, Infrastructure.PORT))
 	_saturation_label(_air_sat, inf.saturation(c, Infrastructure.AIR))
 	var l := c.logistics - 1.0
-	_logistics.text = "neutra" if absf(l) < 0.005 else ("%s no comércio" % ("+" + UiKit.pct(l) if l > 0.0 else UiKit.pct(l)))
+	_logistics.text = tr("neutra") if absf(l) < 0.005 else (tr("%s no comércio") % ("+" + UiKit.pct(l) if l > 0.0 else UiKit.pct(l)))
 	_logistics.add_theme_color_override("font_color", UiKit.good_bad(l if absf(l) >= 0.005 else 0.0))
 	var can_port := inf.can_build_port(c)
 	_build_port.disabled = not office or not can_port
-	_build_port.tooltip_text = "" if can_port else "%s não tem litoral." % c.name
+	_build_port.tooltip_text = "" if can_port else tr("%s não tem litoral.") % c.name
 	_build_air.disabled = not office
 	var facs := inf.facilities_of(c, world)
 	var ports := facs.filter(func(f): return f.kind == Infrastructure.PORT)
 	var airs := facs.filter(func(f): return f.kind == Infrastructure.AIR)
-	_ports_title.text = "PORTOS" if not ports.is_empty() else "PORTOS: o país não tem porto marítimo"
+	_ports_title.text = tr("PORTOS") if not ports.is_empty() else tr("PORTOS: o país não tem porto marítimo")
 	_fill(_port_rows, ports, c, office)
 	_fill(_air_rows, airs, c, office)
 	_fill_projects(c)
@@ -82,7 +82,7 @@ func _saturation_label(label: Label, s: float) -> void:
 		label.text = "—"
 		label.add_theme_color_override("font_color", UiKit.DIM)
 		return
-	label.text = "%s da capacidade" % UiKit.pct(s, 0)
+	label.text = tr("%s da capacidade") % UiKit.pct(s, 0)
 	label.add_theme_color_override("font_color", _use_color(s))
 
 
@@ -117,19 +117,19 @@ func _fill(box: VBoxContainer, list: Array, c: Country, office: bool) -> void:
 		(row.get_node("%fac_name") as Label).text = String(f.name)
 		(row.get_node("%fac_owner") as Label).text = String(Infrastructure.OWNER_NAMES.get(f.owner, ""))
 		var use: Label = row.get_node("%fac_use")
-		use.text = "fechado" if f.closed else UiKit.pct(util, 0)
+		use.text = tr("fechado") if f.closed else UiKit.pct(util, 0)
 		use.add_theme_color_override("font_color", UiKit.RED if f.closed else _use_color(util))
 		var bar: ProgressBar = row.get_node("%fac_bar")
 		bar.value = minf(util, 1.0)
 		(bar.get_theme_stylebox("fill") as StyleBoxFlat).bg_color = _use_color(util)
-		var parts := ["%s · %s por ano" % [f.city, Infrastructure.capacity_text(f)]]
+		var parts := [tr("%s · %s por ano") % [f.city, Infrastructure.capacity_text(f)]]
 		if f.closed:
-			parts.append("fechado: região ocupada")
+			parts.append(tr("fechado: região ocupada"))
 		elif float(f.cond) < 0.999:
-			parts.append("danificado, opera a %d%%" % int(float(f.cond) * 100.0))
+			parts.append(tr("danificado, opera a %d%%") % int(float(f.cond) * 100.0))
 		var p := inf.project_on(int(f.id))
 		if not p.is_empty():
-			parts.append("em obra: +%s" % Infrastructure.capacity_text({"cap": p.add, "unit": f.unit}))
+			parts.append(tr("em obra: +%s") % Infrastructure.capacity_text({"cap": p.add, "unit": f.unit}))
 		(row.get_node("%fac_detail") as Label).text = " · ".join(parts)
 		var public: bool = f.owner == "public"
 		var blocked: bool = not office or f.closed or not p.is_empty()
@@ -153,10 +153,10 @@ func _fill_projects(c: Country) -> void:
 		var row: Control = _project_rows.get_child(i)
 		(row.get_node("%proj_name") as Label).text = String(p.label)
 		var left := int(p.left)
-		(row.get_node("%proj_left") as Label).text = "falta 1 mês" if left == 1 else "faltam %d meses" % left
+		(row.get_node("%proj_left") as Label).text = tr("falta 1 mês") if left == 1 else tr("faltam %d meses") % left
 		var unit: String = p.spec.unit if p.has("spec") else String(world.infra.facility(int(p.fac)).get("unit", "t"))
-		var added := "+%s por ano" % Infrastructure.capacity_text({"cap": p.add, "unit": unit})
-		var paid := "%s, pagos mês a mês pelo Tesouro" % UiKit.money(float(p.cost)) if p.public else "paga pela operadora"
+		var added := tr("+%s por ano") % Infrastructure.capacity_text({"cap": p.add, "unit": unit})
+		var paid := tr("%s, pagos mês a mês pelo Tesouro") % UiKit.money(float(p.cost)) if p.public else tr("paga pela operadora")
 		(row.get_node("%proj_detail") as Label).text = "%s · %s" % [added, paid]
 		(row.get_node("%proj_bar") as ProgressBar).value = 1.0 - float(left) / maxf(float(p.months), 1.0)
 
@@ -169,15 +169,15 @@ func open_expand(id: int) -> void:
 		return
 	_mode = "expand"
 	_target = id
-	_form_title.text = "Ampliar %s" % f.name
-	_form_body.text = "Hoje: %s por ano, %s em uso. A obra é paga mês a mês pelo Tesouro e só aumenta a capacidade quando termina." % [Infrastructure.capacity_text(f), UiKit.pct(float(f.util), 0)]
+	_form_title.text = tr("Ampliar %s") % f.name
+	_form_body.text = tr("Hoje: %s por ano, %s em uso. A obra é paga mês a mês pelo Tesouro e só aumenta a capacidade quando termina.") % [Infrastructure.capacity_text(f), UiKit.pct(float(f.util), 0)]
 	_city_line.visible = false
 	_size_line.visible = true
 	_size_pick.clear()
 	for label: String in EXPAND_LABELS:
 		_size_pick.add_item(label)
 	_size_pick.select(1)
-	_confirm.text = "Iniciar obra"
+	_confirm.text = tr("Iniciar obra")
 	_show_form()
 
 
@@ -187,8 +187,8 @@ func open_new(kind: String) -> void:
 	_kind = kind
 	_target = -1
 	var port := kind == Infrastructure.PORT
-	_form_title.text = "Construir porto" if port else "Construir aeroporto"
-	_form_body.text = ("Um porto novo divide a carga com os outros e alivia os que estão lotados." if port else "Um aeroporto novo alivia os que estão lotados e ajuda o turismo.") + " Leva anos, e o custo sai mês a mês pelo Tesouro."
+	_form_title.text = tr("Construir porto") if port else tr("Construir aeroporto")
+	_form_body.text = (tr("Um porto novo divide a carga com os outros e alivia os que estão lotados.") if port else tr("Um aeroporto novo alivia os que estão lotados e ajuda o turismo.")) + tr(" Leva anos, e o custo sai mês a mês pelo Tesouro.")
 	# Porto novo só onde já há porto (litoral); aeroporto em qualquer cidade com instalação.
 	_cities = world.infra.cities_of(c, world).filter(func(f): return not port or f.kind == Infrastructure.PORT)
 	if _cities.is_empty():
@@ -202,7 +202,7 @@ func open_new(kind: String) -> void:
 	for item: Array in Infrastructure.NEW_SIZES:
 		_size_pick.add_item(String(item[0]))
 	_size_pick.select(1)
-	_confirm.text = "Iniciar obra"
+	_confirm.text = tr("Iniciar obra")
 	_show_form()
 
 
@@ -212,11 +212,11 @@ func open_concede(id: int) -> void:
 		return
 	_mode = "concede"
 	_target = id
-	_form_title.text = "Conceder %s" % f.name
-	_form_body.text = "Uma operadora privada assume o ativo e paga uma outorga única ao Tesouro. Ela opera um pouco melhor e amplia por conta própria quando lotar, mas o governo deixa de decidir sobre ele."
+	_form_title.text = tr("Conceder %s") % f.name
+	_form_body.text = tr("Uma operadora privada assume o ativo e paga uma outorga única ao Tesouro. Ela opera um pouco melhor e amplia por conta própria quando lotar, mas o governo deixa de decidir sobre ele.")
 	_city_line.visible = false
 	_size_line.visible = false
-	_confirm.text = "Assinar concessão"
+	_confirm.text = tr("Assinar concessão")
 	_show_form()
 
 
@@ -246,7 +246,7 @@ func _update_quote() -> void:
 			_quote.text = _quote_text(q.add, f.unit, q.cost, q.months)
 		"new":
 			if _cities.is_empty():
-				_quote.text = "O país não tem onde construir."
+				_quote.text = tr("O país não tem onde construir.")
 				_confirm.disabled = true
 				return
 			var q := inf.new_quote(c, world, _kind, maxi(_size_pick.selected, 0))
@@ -256,12 +256,12 @@ func _update_quote() -> void:
 			if f.is_empty():
 				close_form()
 				return
-			_quote.text = "Outorga estimada: %s, de uma vez." % UiKit.money(inf.concession_value(f, c))
+			_quote.text = tr("Outorga estimada: %s, de uma vez.") % UiKit.money(inf.concession_value(f, c))
 	_confirm.disabled = not world.in_office
 
 
 func _quote_text(add: float, unit: String, cost: float, months: int) -> String:
-	return "+%s por ano · %s em %s (%s por mês)" % [Infrastructure.capacity_text({"cap": add, "unit": unit}), UiKit.money(cost), Infrastructure.years_text(months), UiKit.money(cost / months)]
+	return tr("+%s por ano · %s em %s (%s por mês)") % [Infrastructure.capacity_text({"cap": add, "unit": unit}), UiKit.money(cost), Infrastructure.years_text(months), UiKit.money(cost / months)]
 
 
 func _on_confirm() -> void:

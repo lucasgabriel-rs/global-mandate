@@ -5,10 +5,12 @@ extends VBoxContainer
 const STOCK_ROW := preload("res://scenes/ui/rows/stock_row.tscn")
 const MOVERS := 5
 const EVENTS := 8
+# i18n-begin
 const EVENT_LABELS := {
 	"ipo": "IPO", "fechamento": "Fechou o capital", "falencia": "Falência", "socorro": "Socorro do governo",
 	"privatizacao": "Privatização", "estatizacao": "Estatização", "nova": "Nova empresa",
 }
+# i18n-end
 
 var world: GameWorld
 var _pools := {}
@@ -42,26 +44,26 @@ func refresh() -> void:
 	var c := world.player
 	var m: Dictionary = world.corporate.market_of(c.iso)
 	var has_exchange := String(m.get("exchange", "")) != ""
-	_exchange.text = String(m.get("exchange", "")) if has_exchange else "Sem bolsa de valores"
+	_exchange.text = String(m.get("exchange", "")) if has_exchange else tr("Sem bolsa de valores")
 	_no_exchange.visible = not has_exchange
 	var hist: PackedFloat32Array = c.hist.get("stock", PackedFloat32Array())
 	_index_value.text = UiKit.num(c.stock, 0)
-	_set_change(_index_month, _change(hist, 1), "no mês")
-	_set_change(_index_year, _change(hist, 12), "em 12 meses")
+	_set_change(_index_month, _change(hist, 1), tr("no mês"))
+	_set_change(_index_year, _change(hist, 12), tr("em 12 meses"))
 	_index_chart.set_data(hist)
 	_cap_chart.set_data(c.hist.get("mcap", PackedFloat32Array()))
 	var cap := float(m.get("cap", 0.0))
-	_total_cap.text = "Valor de mercado: %s" % UiKit.money(cap)
-	_cap_gdp.text = "%s do PIB" % UiKit.pct(cap / maxf(c.y_usd(), 0.001), 0)
+	_total_cap.text = tr("Valor de mercado: %s") % UiKit.money(cap)
+	_cap_gdp.text = tr("%s do PIB") % UiKit.pct(cap / maxf(c.y_usd(), 0.001), 0)
 	var pe := float(m.get("pe", 0.0))
-	_pe.text = "P/L médio: %s" % (UiKit.num(pe, 1) if pe > 0.0 else "—")
-	_dy.text = "Dividendos: %s ao ano" % UiKit.pct(float(m.get("dy", 0.0)))
+	_pe.text = tr("P/L médio: %s") % (UiKit.num(pe, 1) if pe > 0.0 else "—")
+	_dy.text = tr("Dividendos: %s ao ano") % UiKit.pct(float(m.get("dy", 0.0)))
 	var listed: Array = world.corporate.companies_of(c.iso).filter(func(co): return co.listed)
 	var state_value := 0.0
 	for co: Dictionary in world.corporate.companies_of(c.iso):
 		state_value += float(co.value) * float(co.state)
-	_listed.text = "%d grandes listadas" % listed.size()
-	_state_cap.text = "Fatia do Estado: %s" % UiKit.money(state_value)
+	_listed.text = tr("%d grandes listadas") % listed.size()
+	_state_cap.text = tr("Fatia do Estado: %s") % UiKit.money(state_value)
 	listed.sort_custom(func(a, b): return float(a.ch) > float(b.ch))
 	var up := listed.filter(func(co): return float(co.ch) > 0.0).slice(0, MOVERS)
 	var down := listed.filter(func(co): return float(co.ch) < 0.0)
@@ -73,14 +75,14 @@ func refresh() -> void:
 	var rows := _pool(_events, events.size())
 	for i in events.size():
 		var e: Dictionary = events[i]
-		_set_row(rows[i], String(e.name), "%s · %s" % [EVENT_LABELS.get(e.kind, e.kind), e.date], UiKit.money(float(e.value)), UiKit.TEXT)
+		_set_row(rows[i], String(e.name), "%s · %s" % [tr(EVENT_LABELS.get(e.kind, e.kind)), e.date], UiKit.money(float(e.value)), UiKit.TEXT)
 	_events_empty.visible = events.is_empty()
 
 
 func _fill_movers(box: VBoxContainer, list: Array) -> void:
 	var rows := _pool(box, maxi(list.size(), 1))
 	if list.is_empty():
-		_set_row(rows[0], "Nenhuma", "", "", UiKit.DIM)
+		_set_row(rows[0], tr("Nenhuma"), "", "", UiKit.DIM)
 		return
 	for i in list.size():
 		var co: Dictionary = list[i]

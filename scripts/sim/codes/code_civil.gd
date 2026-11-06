@@ -117,11 +117,11 @@ func apply(_world: GameWorld, leg: Legislation, op: String, values: Dictionary, 
 		"cv_usury":
 			var rate := clampf(float(values.get("rate", 24.0)), 0.0, 100.0)
 			leg.stand("civil:juros_max", {"rate": rate / 100.0}, norm_id, prio)
-			return "juros limitados a %s%% ao ano" % UiKit.num(rate)
+			return tr("juros limitados a %s%% ao ano") % UiKit.num(rate)
 		"cv_business":
 			var days := clampf(float(values.get("days", 15.0)), 1.0, 365.0)
 			leg.stand("civil:abertura_empresa", {"days": days, "steps": clampf(float(values.get("steps", 6.0)), 1.0, 40.0)}, norm_id, prio)
-			return "empresa aberta em até %d dias" % roundi(days)
+			return tr("empresa aberta em até %d dias") % roundi(days)
 		"cv_bankruptcy":
 			leg.stand("civil:falencia", {"mode": String(values.get("mode", "recuperacao")), "days": clampf(float(values.get("days", 180.0)), 30.0, 1000.0)}, norm_id, prio)
 		"cv_prescription":

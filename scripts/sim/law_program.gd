@@ -176,63 +176,65 @@ static func all_blocks(program: Dictionary) -> Array:
 
 
 # --- Texto jurídico ----------------------------------------------------------------------
+# O texto guardado na norma (LawCompiler) fica sempre em português, o idioma original, para não mudar
+# com o idioma do jogador. Com localized, sai traduzido, para mostrar na tela.
 
-static func block_text(block: Dictionary) -> String:
+static func block_text(block: Dictionary, localized := false) -> String:
 	var def := LawCatalog.get_def(block.type)
 	if def.is_empty():
-		return "[bloco desconhecido]"
+		return Lang.tr_if("[bloco desconhecido]", localized)
 	var out := ""
-	for seg: Dictionary in LawCatalog.segments(def):
+	for seg: Dictionary in LawCatalog.segments(def, localized):
 		if seg.has("text"):
 			out += seg.text
 		else:
-			out += field_text(block, seg.field)
+			out += field_text(block, seg.field, localized)
 	return out
 
 
-static func field_text(block: Dictionary, field: String) -> String:
+static func field_text(block: Dictionary, field: String, localized := false) -> String:
 	if block.plugs.has(field):
-		return block_text(block.plugs[field])
+		return block_text(block.plugs[field], localized)
 	var spec: Dictionary = LawCatalog.get_def(block.type).get("fields", {}).get(field, {})
 	if not block.fields.has(field):
 		return "(...)"
 	var value: Variant = block.fields[field]
 	match spec.get("t", ""):
 		"choice":
-			return String(LawCatalog.choice_list(spec.of).get(value, value))
+			return Lang.tr_if(String(LawCatalog.choice_list(spec.of).get(value, value)), localized)
 		"money":
-			return "%s moedas" % UiKit.thousand(float(value))
+			return Lang.tr_if("%s moedas", localized) % UiKit.thousand(float(value))
 		"unit":
-			return "o território escolhido" if int(value) >= 0 else "qualquer parte do país"
+			return Lang.tr_if("o território escolhido", localized) if int(value) >= 0 else Lang.tr_if("qualquer parte do país", localized)
 		"bool":
-			return "verdadeiro" if value else "falso"
+			return Lang.tr_if("verdadeiro", localized) if value else Lang.tr_if("falso", localized)
 	if value is float or value is int:
 		return UiKit.num(float(value), 0) if is_equal_approx(float(value), roundf(float(value))) else UiKit.num(float(value), 2)
 	return str(value)
 
 
 ## Texto da norma: cada pilha vira um artigo, com os blocos internos em alíneas.
-static func legal_text(program: Dictionary) -> String:
+static func legal_text(program: Dictionary, localized := false) -> String:
 	var lines := []
 	var number := 0
 	for stack: Dictionary in program.stacks:
 		number += 1
-		var head := "Art. %dº" % number
+		var head := Lang.tr_if("Art. %dº", localized) % number
 		if stack.get("repealed", false):
-			lines.append("%s (Revogado.)" % head)
+			lines.append(Lang.tr_if("%s (Revogado.)", localized) % head)
 			continue
 		var blocks: Array = stack.blocks
 		var first: Dictionary = blocks[0]
-		lines.append("%s %s:" % [head, block_text(first)])
-		_legal_list(blocks.slice(1), 1, lines)
+		lines.append("%s %s:" % [head, block_text(first, localized)])
+		_legal_list(blocks.slice(1), 1, lines, localized)
 	return "\n".join(lines)
 
 
-static func _legal_list(blocks: Array, depth: int, lines: Array) -> void:
+static func _legal_list(blocks: Array, depth: int, lines: Array, localized: bool) -> void:
 	var pad := "    ".repeat(depth)
 	for block: Dictionary in blocks:
-		lines.append("%s%s;" % [pad, block_text(block)])
+		lines.append("%s%s;" % [pad, block_text(block, localized)])
 		for slot: String in block.slots:
 			if slot == "else":
-				lines.append("%sCaso contrário:" % pad)
-			_legal_list(block.slots[slot], depth + 1, lines)
+				lines.append(Lang.tr_if("%sCaso contrário:", localized) % pad)
+			_legal_list(block.slots[slot], depth + 1, lines, localized)

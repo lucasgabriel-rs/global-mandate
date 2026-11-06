@@ -38,7 +38,7 @@ func run(code: Array, state := {}) -> Dictionary:
 	while pc < code.size() and error == "":
 		_steps += 1
 		if _steps > MAX_STEPS:
-			error = "Limite de %d passos: a norma foi interrompida." % MAX_STEPS
+			error = tr("Limite de %d passos: a norma foi interrompida.") % MAX_STEPS
 			break
 		var ins: Array = code[pc]
 		match ins[0]:
@@ -48,7 +48,7 @@ func run(code: Array, state := {}) -> Dictionary:
 				var share := clampf(_number(ins[1]), 0.0, 1.0)
 				_frames.append({"w": _weight, "s": share, "else": ins[2], "end": ins[3]})
 				if tracing:
-					_note("Condição: %s" % _share_text(share))
+					_note(tr("Condição: %s") % _share_text(share))
 				if share > 0.0:
 					_weight *= share
 					pc += 1
@@ -73,7 +73,7 @@ func run(code: Array, state := {}) -> Dictionary:
 			"repeat":
 				var times := int(_number(ins[1]))
 				if times < 0 or times > MAX_REPEAT:
-					error = "Repetição fora do limite: %d vezes." % times
+					error = tr("Repetição fora do limite: %d vezes.") % times
 					break
 				if times == 0:
 					pc = int(ins[2])
@@ -109,14 +109,14 @@ func run(code: Array, state := {}) -> Dictionary:
 			"wait":
 				var days := int(_number(ins[1]))
 				if tracing:
-					_note("Aguarda %d dias." % days)
+					_note(tr("Aguarda %d dias.") % days)
 				waiting = {"days": days, "pc": pc + 1, "weight": _weight, "frames": _frames, "loops": _loops}
 				pc = code.size()
 			"act":
 				_act(ins[1], ins[2], int(ins[3]))
 				pc += 1
 			_:
-				error = "Instrução desconhecida: %s." % ins[0]
+				error = tr("Instrução desconhecida: %s.") % ins[0]
 	return {"ok": error == "", "error": error, "effects": effects if error == "" else [], "trace": trace, "vars": vars, "waiting": waiting, "steps": _steps}
 
 
@@ -142,7 +142,7 @@ func _enter_unit(unit: Variant) -> void:
 	view.count = float(loop.count) * float(view.unit_shares[unit])
 	vars["unidade"] = unit
 	if tracing:
-		_note("Para a unidade %s" % unit)
+		_note(tr("Para a unidade %s") % unit)
 
 
 func _leave_loop() -> void:
@@ -158,7 +158,7 @@ static func _share_text(share: float) -> String:
 		return "verdadeira"
 	if share <= 0.0:
 		return "falsa"
-	return "vale para %s do grupo" % UiKit.pct(share)
+	return TranslationServer.translate("vale para %s do grupo") % UiKit.pct(share)
 
 
 static func _show(value: Variant) -> String:
@@ -176,9 +176,9 @@ func _number(expr: Array) -> float:
 	if value is bool:
 		return 1.0 if value else 0.0
 	if value == null:
-		error = "Variável sem valor."
+		error = tr("Variável sem valor.")
 		return 0.0
-	error = "Tipos incompatíveis: \"%s\" não é um número." % value
+	error = tr("Tipos incompatíveis: \"%s\" não é um número.") % value
 	return 0.0
 
 
@@ -192,7 +192,7 @@ func _eval(expr: Array) -> Variant:
 			return float(view.game.get(expr[1], 0.0))
 		"var":
 			if not vars.has(expr[1]):
-				error = "Variável não inicializada: %s." % expr[1]
+				error = tr("Variável não inicializada: %s.") % expr[1]
 				return 0.0
 			return vars[expr[1]]
 		"math":
@@ -205,7 +205,7 @@ func _eval(expr: Array) -> Variant:
 				"*": out = a * b
 				"/":
 					if is_zero_approx(b):
-						error = "Divisão por zero."
+						error = tr("Divisão por zero.")
 						return 0.0
 					out = a / b
 			if tracing:
@@ -216,9 +216,9 @@ func _eval(expr: Array) -> Variant:
 			var base := _number(expr[2])
 			var out := base * rate / 100.0
 			if tracing:
-				_note("Valor tributável: %s moedas" % _show(base))
-				_note("Alíquota: %s%%" % _show(rate))
-				_note("Calculado: %s moedas" % _show(out))
+				_note(tr("Valor tributável: %s moedas") % _show(base))
+				_note(tr("Alíquota: %s%%") % _show(rate))
+				_note(tr("Calculado: %s moedas") % _show(out))
 			return out
 		"cmp":
 			return _compare(expr)
@@ -265,7 +265,7 @@ func _eval(expr: Array) -> Variant:
 			return 1.0 if view.get("institutions", {}).has(expr[1]) else 0.0
 		"norm":
 			return 1.0 if view.get("norms_in_force", {}).has(int(expr[1])) else 0.0
-	error = "Expressão desconhecida: %s." % expr[0]
+	error = tr("Expressão desconhecida: %s.") % expr[0]
 	return 0.0
 
 
@@ -361,15 +361,15 @@ func _describe(op: String, values: Dictionary, count: float) -> String:
 	var scale := _weight * count
 	match op:
 		"ac_obligation":
-			return "Obrigação tributária criada: %s moedas, vence em %d dias." % [_show(amount * scale), int(values.get("days", 0))]
+			return tr("Obrigação tributária criada: %s moedas, vence em %d dias.") % [_show(amount * scale), int(values.get("days", 0))]
 		"ac_fine":
-			return "Multa aplicada: %s moedas." % _show(amount * scale)
+			return tr("Multa aplicada: %s moedas.") % _show(amount * scale)
 		"ac_benefit":
-			return "Benefício concedido: %s moedas." % _show(amount * scale)
+			return tr("Benefício concedido: %s moedas.") % _show(amount * scale)
 		"ec_charge", "ec_fee", "ec_contribution":
-			return "%s cobrado: %s moedas." % [values.get("name", "Tributo"), _show(amount * scale)]
+			return tr("%s cobrado: %s moedas.") % [values.get("name", tr("Tributo")), _show(amount * scale)]
 	var def := LawCatalog.get_def(op)
-	return "Executado: %s." % def.get("text", op).format(_plain(values), "{_}")
+	return tr("Executado: %s.") % tr(def.get("text", op)).format(_plain(values), "{_}")
 
 
 static func _plain(values: Dictionary) -> Dictionary:

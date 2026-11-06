@@ -99,14 +99,14 @@ func apply(_world: GameWorld, leg: Legislation, op: String, values: Dictionary, 
 		"el_system":
 			var fixed := String(leg.param("electoral_system", ""))
 			if fixed != "" and fixed != String(values.system):
-				return "sistema sem efeito: a Constituição (Art. 18) fixa %s" % String(Elections.SYSTEMS.get(fixed, fixed)).to_lower()
+				return tr("sistema sem efeito: a Constituição (Art. 18) fixa %s") % tr(Elections.SYSTEMS.get(fixed, fixed)).to_lower()
 		"el_threshold":
 			var floor_pct := float(leg.param("threshold", 0))
 			if float(values.pct) < floor_pct:
-				return "barreira abaixo do piso constitucional de %d%%: vale a Constituição" % roundi(floor_pct)
+				return tr("barreira abaixo do piso constitucional de %d%%: vale a Constituição") % roundi(floor_pct)
 		"el_term":
 			if roundi(float(values.years)) != roundi(leg.mandate_years()):
-				return "mandato sem efeito: a Constituição (Art. 4º) fixa %d anos" % roundi(leg.mandate_years())
+				return tr("mandato sem efeito: a Constituição (Art. 4º) fixa %d anos") % roundi(leg.mandate_years())
 	return ""
 
 

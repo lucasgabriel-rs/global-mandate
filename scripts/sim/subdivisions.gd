@@ -154,12 +154,12 @@ func holders_of(id: int) -> Array:
 ## Define ou troca a capital. A de uma unidade precisa estar dentro dela; a de um país, ser uma unidade dele.
 func set_capital(holder: Variant, id: int) -> Dictionary:
 	if not units.has(id):
-		return {"ok": false, "msg": "Essa unidade não existe mais."}
+		return {"ok": false, "msg": tr("Essa unidade não existe mais.")}
 	if holder is int:
 		if not units.has(holder):
-			return {"ok": false, "msg": "Essa unidade não existe mais."}
+			return {"ok": false, "msg": tr("Essa unidade não existe mais.")}
 		if holder == id or not holder in chain_of(id):
-			return {"ok": false, "msg": "%s não fica dentro de %s." % [units[id].name, units[holder].name]}
+			return {"ok": false, "msg": tr("%s não fica dentro de %s.") % [units[id].name, units[holder].name]}
 	capitals[holder] = id
 	return {"ok": true, "msg": ""}
 
@@ -188,7 +188,7 @@ func add_type(type_name: String, owner: String) -> int:
 	var existing := types_of(owner).size()
 	var n := existing + 1
 	while final_name == "" or has_type_name(final_name, owner, -1):
-		final_name = "Tipo %d" % n
+		final_name = tr("Tipo %d") % n
 		n += 1
 	types[id] = {"id": id, "name": final_name, "owner": owner, "color": PALETTE[existing % PALETTE.size()]}
 	return id
@@ -216,9 +216,9 @@ func get_type(id: int) -> Dictionary:
 func rename_type(id: int, type_name: String) -> Dictionary:
 	var clean := type_name.strip_edges()
 	if clean == "":
-		return {"ok": false, "msg": "O tipo precisa de um nome."}
+		return {"ok": false, "msg": tr("O tipo precisa de um nome.")}
 	if has_type_name(clean, types[id].owner, id):
-		return {"ok": false, "msg": "Já existe um tipo chamado %s." % clean}
+		return {"ok": false, "msg": tr("Já existe um tipo chamado %s.") % clean}
 	types[id].name = clean
 	return {"ok": true, "msg": ""}
 
@@ -241,10 +241,10 @@ func units_of_type(id: int) -> int:
 
 func remove_type(id: int) -> Dictionary:
 	if types_of(types[id].owner).size() <= 1:
-		return {"ok": false, "msg": "É preciso manter pelo menos um tipo."}
+		return {"ok": false, "msg": tr("É preciso manter pelo menos um tipo.")}
 	var used := units_of_type(id)
 	if used > 0:
-		return {"ok": false, "msg": "%s ainda tem %d unidade(s). Mude o tipo delas ou apague-as antes." % [types[id].name, used]}
+		return {"ok": false, "msg": tr("%s ainda tem %d unidade(s). Mude o tipo delas ou apague-as antes.") % [types[id].name, used]}
 	types.erase(id)
 	return {"ok": true, "msg": ""}
 
@@ -357,7 +357,7 @@ func delete_unit(id: int) -> void:
 func rename_unit(id: int, unit_name: String) -> Dictionary:
 	var clean := unit_name.strip_edges()
 	if clean == "":
-		return {"ok": false, "msg": "A unidade precisa de um nome."}
+		return {"ok": false, "msg": tr("A unidade precisa de um nome.")}
 	units[id].name = clean
 	return {"ok": true, "msg": ""}
 
@@ -366,13 +366,13 @@ func rename_unit(id: int, unit_name: String) -> Dictionary:
 ## e as filhas de todas passam para ela.
 func merge_units(ids: Array) -> Dictionary:
 	if ids.size() < 2:
-		return {"ok": false, "msg": "Escolha pelo menos duas unidades."}
+		return {"ok": false, "msg": tr("Escolha pelo menos duas unidades.")}
 	var first: Dictionary = units[ids[0]]
 	for id: int in ids:
 		if units[id].parent != first.parent or units[id].owner != first.owner:
-			return {"ok": false, "msg": "Só é possível fundir unidades do mesmo nível, dentro da mesma mãe."}
+			return {"ok": false, "msg": tr("Só é possível fundir unidades do mesmo nível, dentro da mesma mãe.")}
 	if not _all_connected(ids):
-		return {"ok": false, "msg": "As unidades precisam fazer divisa entre si."}
+		return {"ok": false, "msg": tr("As unidades precisam fazer divisa entre si.")}
 	var pieces := []
 	var plain := true
 	var share := 0.0
@@ -511,9 +511,9 @@ func split_unit(id: int, points: PackedVector2Array, region: String, dry_run := 
 	var outside: Array = u.pieces
 	outside = _clean(subtract(outside, points))
 	if total_area(inside) < MIN_UNIT_AREA:
-		return {"ok": false, "msg": "O polígono não cobre uma parte de %s." % u.name}
+		return {"ok": false, "msg": tr("O polígono não cobre uma parte de %s.") % u.name}
 	if total_area(outside) < MIN_UNIT_AREA:
-		return {"ok": false, "msg": "O polígono cobre %s inteira: não sobra nada para desmembrar." % u.name}
+		return {"ok": false, "msg": tr("O polígono cobre %s inteira: não sobra nada para desmembrar.") % u.name}
 	if dry_run:
 		return {"ok": true, "msg": ""}
 	var new_id := _split_off(u, inside, outside, _generate_name(region), u.owner, u.type)
@@ -666,11 +666,11 @@ static func crosses(points: PackedVector2Array, from: Vector2, to: Vector2, clos
 ## territory: {"rings": [...], "holes": [...]}, os contornos do país do jogador.
 func create_unit(points: PackedVector2Array, type_id: int, parent_id: int, territory: Dictionary, region: String, owner: String, dry_run := false) -> Dictionary:
 	if points.size() < 3:
-		return {"ok": false, "msg": "São necessários pelo menos 3 vértices."}
+		return {"ok": false, "msg": tr("São necessários pelo menos 3 vértices.")}
 	if get_type(type_id).is_empty():
-		return {"ok": false, "msg": "Escolha um tipo de unidade."}
+		return {"ok": false, "msg": tr("Escolha um tipo de unidade.")}
 	if parent_id >= 0 and not units.has(parent_id):
-		return {"ok": false, "msg": "A unidade-mãe não existe mais."}
+		return {"ok": false, "msg": tr("A unidade-mãe não existe mais.")}
 	var pieces := intersect_all(points, territory.rings)
 	if parent_id >= 0:
 		pieces = _intersect_pieces(pieces, units[parent_id].pieces)
@@ -683,10 +683,10 @@ func create_unit(points: PackedVector2Array, type_id: int, parent_id: int, terri
 	pieces = _clean(pieces)
 	var total := total_area(pieces)
 	if total < MIN_UNIT_AREA:
-		var where: String = units[parent_id].name if parent_id >= 0 else "seu território"
-		var msg := "O polígono não cobre área livre dentro de %s." % where
+		var where: String = units[parent_id].name if parent_id >= 0 else tr("seu território")
+		var msg := tr("O polígono não cobre área livre dentro de %s.") % where
 		if not siblings.is_empty():
-			msg += " Selecione uma unidade para desenhar dentro dela ou apague as que ocupam a área."
+			msg += tr(" Selecione uma unidade para desenhar dentro dela ou apague as que ocupam a área.")
 		return {"ok": false, "msg": msg}
 	if dry_run:
 		return {"ok": true, "msg": ""}

@@ -187,7 +187,7 @@ func refresh_clock() -> void:
 
 
 func set_rate_display(rate: float, expected: float) -> void:
-	_rate_label.text = "parado" if expected <= 0.0 else "%d min/s" % roundi(rate)
+	_rate_label.text = tr("parado") if expected <= 0.0 else tr("%d min/s") % roundi(rate)
 	_rate_label.add_theme_color_override("font_color", UiKit.RED if expected > 0.0 and absf(rate - expected) > expected * 0.25 else UiKit.DIM)
 
 
@@ -210,24 +210,24 @@ func set_skipping(on: bool) -> void:
 func show_skip_summary(days: int, before: Dictionary, news: Array) -> void:
 	var c := world.player
 	var lines := [
-		"PIB: %s → %s" % [UiKit.money(before.gdp), UiKit.money(c.y_usd())],
-		"Crescimento: %s → %s  ·  Inflação: %s → %s" % [UiKit.pct(before.growth), UiKit.pct(c.growth_yoy()), UiKit.pct(before.infl), UiKit.pct(c.pi_yoy)],
-		"Desemprego: %s → %s  ·  Dívida/PIB: %s → %s" % [UiKit.pct(before.unemp), UiKit.pct(c.unemp), UiKit.pct(before.debt, 0), UiKit.pct(c.debt_ratio, 0)],
-		"Aprovação: %d%% → %d%%  ·  Estabilidade: %d%% → %d%%" % [int(before.approval * 100.0), int(c.approval * 100.0), int(before.stability * 100.0), int(c.stability * 100.0)],
-		"Fundo do partido: %s → %s  ·  Petróleo: $%.0f → $%.0f" % [UiKit.millions(before.fund), UiKit.millions(world.politics.party_fund(world)), before.oil, world.markets.price[Markets.OIL]],
+		tr("PIB: %s → %s") % [UiKit.money(before.gdp), UiKit.money(c.y_usd())],
+		tr("Crescimento: %s → %s  ·  Inflação: %s → %s") % [UiKit.pct(before.growth), UiKit.pct(c.growth_yoy()), UiKit.pct(before.infl), UiKit.pct(c.pi_yoy)],
+		tr("Desemprego: %s → %s  ·  Dívida/PIB: %s → %s") % [UiKit.pct(before.unemp), UiKit.pct(c.unemp), UiKit.pct(before.debt, 0), UiKit.pct(c.debt_ratio, 0)],
+		tr("Aprovação: %d%% → %d%%  ·  Estabilidade: %d%% → %d%%") % [int(before.approval * 100.0), int(c.approval * 100.0), int(before.stability * 100.0), int(c.stability * 100.0)],
+		tr("Fundo do partido: %s → %s  ·  Petróleo: $%.0f → $%.0f") % [UiKit.millions(before.fund), UiKit.millions(world.politics.party_fund(world)), before.oil, world.markets.price[Markets.OIL]],
 	]
-	_skip_title.text = "Resumo de %d dias" % days
+	_skip_title.text = tr("Resumo de %d dias") % days
 	lines.append("")
 	if news.is_empty():
-		lines.append("Nenhum acontecimento no noticiário.")
+		lines.append(tr("Nenhum acontecimento no noticiário."))
 	else:
-		lines.append("%d acontecimento(s) no noticiário:" % news.size())
+		lines.append(tr("%d acontecimento(s) no noticiário:") % news.size())
 		# Guerras e crises primeiro: são o que muda o rumo do jogo.
 		var ordered := news.filter(func(n): return n[1] in ["guerra", "crise"]) + news.filter(func(n): return not n[1] in ["guerra", "crise"])
 		for n: Array in ordered.slice(0, 6):
 			lines.append("• " + String(n[0]))
 		if ordered.size() > 6:
-			lines.append("e mais %d no noticiário." % (ordered.size() - 6))
+			lines.append(tr("e mais %d no noticiário.") % (ordered.size() - 6))
 	_skip_body.text = "\n".join(lines)
 	_skip_card.visible = true
 
@@ -247,7 +247,7 @@ func refresh_leader() -> void:
 	_portrait.show_person(world.leader, world.player.iso)
 	_leader_view.show_person(world.leader, world.player.iso)
 	var sick: Dictionary = world.leader.get("illness", {})
-	_leader_name.text = "%s, %d anos%s" % [world.leader.get("name", ""), People.age_of(world.leader, world), "" if sick.is_empty() else " (enfrenta %s)" % sick.name]
+	_leader_name.text = tr("%s, %d anos%s") % [world.leader.get("name", ""), People.age_of(world.leader, world), "" if sick.is_empty() else tr(" (enfrenta %s)") % tr(sick.name)]
 	_portrait.tooltip_text = _leader_name.text
 
 
@@ -342,7 +342,7 @@ func _on_slider(v: float, key: String) -> void:
 func _label_slider(key: String, value: float) -> void:
 	var label: Label = _slider_labels[key]
 	var fixed: bool = world != null and world.player != null and Politics.BUDGET_LABELS.has(key) and not world.legislation.budget_lock(key).is_empty()
-	label.text = ("Por lei: " if fixed else "") + UiKit.num(value * 100.0, 1) + "%"
+	label.text = (tr("Por lei: ") if fixed else "") + UiKit.num(value * 100.0, 1) + "%"
 	label.add_theme_color_override("font_color", UiKit.ACCENT if fixed else UiKit.TEXT)
 
 
@@ -368,16 +368,16 @@ func _on_toggle_peg() -> void:
 	if c == world.usa:
 		return
 	if c.peg == 2:
-		world.emit_news("Membros do euro não têm moeda própria.", "economia", c)
+		world.emit_news(tr("Membros do euro não têm moeda própria."), "economia", c)
 	elif c.peg == 1:
 		c.peg = 0
-		world.emit_news("%s adota câmbio flutuante." % c.name, "economia", c)
+		world.emit_news(tr("%s adota câmbio flutuante.") % c.name, "economia", c)
 	elif c.reserves > c.imports / 12.0 * 4.0:
 		c.peg = 1
 		c.rate_manual = false
-		world.emit_news("%s ancora a moeda no dólar." % c.name, "economia", c)
+		world.emit_news(tr("%s ancora a moeda no dólar.") % c.name, "economia", c)
 	else:
-		world.emit_news("Reservas insuficientes para sustentar uma âncora (mínimo de 4 meses de importação).", "economia", c)
+		world.emit_news(tr("Reservas insuficientes para sustentar uma âncora (mínimo de 4 meses de importação)."), "economia", c)
 	_sync_sliders()
 	refresh(true)
 
@@ -411,7 +411,7 @@ func _on_action(act: String) -> void:
 		return
 	if act == "war":
 		var pl := world.player
-		var msg := "Declarar guerra a %s? O mundo vai reagir e pactos de defesa podem ser acionados." % selected.name
+		var msg := tr("Declarar guerra a %s? O mundo vai reagir e pactos de defesa podem ser acionados.") % selected.name
 		var target := selected
 		confirm_requested.emit(msg, func():
 			var r := world.do_action("war", target)
@@ -440,12 +440,12 @@ func _refresh_dossier() -> void:
 		show_country(null)
 		return
 	var d := world.diplomacy
-	var regime := "Democracia" if c.dem >= 6.0 else ("Regime híbrido" if c.dem >= 4.0 else "Regime autoritário")
+	var regime := tr("Democracia") if c.dem >= 6.0 else (tr("Regime híbrido") if c.dem >= 4.0 else tr("Regime autoritário"))
 	var blocs := " · ".join(c.blocs)
 	_dossier_dyn.sub.text = regime + ("  ·  " + blocs if blocs != "" else "")
 	_dossier_dyn.gdp.text = UiKit.money(c.y_usd())
-	_dossier_dyn.pc.text = "US$ " + UiKit.thousand(c.gdp_pc())
-	_dossier_dyn.pop.text = UiKit.num(c.pop, 1) + " mi"
+	_dossier_dyn.pc.text = tr("US$ %s") % UiKit.thousand(c.gdp_pc())
+	_dossier_dyn.pop.text = tr("%s mi") % UiKit.num(c.pop, 1)
 	var g := c.growth_yoy()
 	_dossier_dyn.growth.text = UiKit.pct(g)
 	_dossier_dyn.growth.add_theme_color_override("font_color", UiKit.good_bad(g))
@@ -453,7 +453,7 @@ func _refresh_dossier() -> void:
 	_dossier_dyn.unemp.text = UiKit.pct(c.unemp)
 	_dossier_dyn.rate.text = UiKit.pct(c.rate, 2)
 	_dossier_dyn.debt.text = UiKit.pct(c.debt_ratio, 0)
-	_dossier_dyn.rating.text = "D (moratória)" if world.year_float() < c.default_until else c.rating
+	_dossier_dyn.rating.text = tr("D (moratória)") if world.year_float() < c.default_until else c.rating
 	_dossier_dyn.stability.text = "%d%%" % int(c.stability * 100.0)
 	_dossier_dyn.approval.text = "%d%%" % int(c.approval * 100.0)
 	_dossier_dyn.power.text = UiKit.num(100.0 * c.military_power() / maxf(world.usa.military_power(), 0.01), 1)
@@ -467,11 +467,11 @@ func _refresh_dossier() -> void:
 		var talk: Button = _dossier_dyn.talk
 		var wait: int = Dialogue.wait_months(world, c)
 		talk.disabled = not world.in_office or wait > 0
-		talk.text = "Falar com %s" % String(world.politics.leader_of(c.iso).get("name", "o líder")) if wait == 0 else "Nova conversa no mês que vem"
+		talk.text = tr("Falar com %s") % String(world.politics.leader_of(c.iso).get("name", tr("o líder"))) if wait == 0 else tr("Nova conversa no mês que vem")
 	_dossier_dyn.gov_party.text = String(ruling.get("short", "—"))
 	_dossier_dyn.gov_party.tooltip_text = String(ruling.get("name", ""))
 	var seats_total: int = world.politics.data_of(c.iso).get("seats_total", 0)
-	_dossier_dyn.gov_seats.text = "%d de %d" % [world.politics.government_seats(c.iso), seats_total]
+	_dossier_dyn.gov_seats.text = tr("%d de %d") % [world.politics.government_seats(c.iso), seats_total]
 	_dossier_dyn.parliament.text = _parliament_text(c)
 	_dossier_dyn.ch_growth.set_data(c.hist.get("growth", PackedFloat32Array()))
 	_dossier_dyn.ch_infl.set_data(c.hist.get("infl", PackedFloat32Array()))
@@ -486,31 +486,31 @@ func _refresh_dossier() -> void:
 	var at_war := d.at_war(pl.idx, c.idx)
 	var allied := d.allied(pl.idx, c.idx)
 	if at_war:
-		flags.append("EM GUERRA")
+		flags.append(tr("EM GUERRA"))
 	if allied:
-		flags.append("Aliado de defesa")
+		flags.append(tr("Aliado de defesa"))
 	if d.has_fta(pl.idx, c.idx, world):
-		flags.append("Livre comércio")
+		flags.append(tr("Livre comércio"))
 	var lvl := d.sanction_level(pl.idx, c.idx)
 	if lvl > 0:
-		flags.append("Você aplica " + ("embargo" if lvl >= 2 else "sanções"))
+		flags.append(tr("Você aplica embargo") if lvl >= 2 else tr("Você aplica sanções"))
 	var lvl2 := d.sanction_level(c.idx, pl.idx)
 	if lvl2 > 0:
-		flags.append("Sancionado por este país")
+		flags.append(tr("Sancionado por este país"))
 	var share := d.shares[pl.idx * d.n + c.idx] * d.factor[pl.idx * d.n + c.idx]
-	flags.append("%s das suas exportações" % UiKit.pct(share))
+	flags.append(tr("%s das suas exportações") % UiKit.pct(share))
 	_dossier_dyn.status.text = "  ·  ".join(flags)
 	var labels := {
-		"alliance": "Cancelar pacto" if allied else "Pacto de defesa",
-		"sanction": "Suspender sanções" if lvl >= 1 else "Sanções",
-		"embargo": "Reduzir embargo" if lvl >= 2 else "Embargo total",
-		"tariff": "Remover tarifa" if d.tariffs.has(d.key(pl.idx, c.idx)) else "Tarifa de 20%",
+		"alliance": tr("Cancelar pacto") if allied else tr("Pacto de defesa"),
+		"sanction": tr("Suspender sanções") if lvl >= 1 else tr("Sanções"),
+		"embargo": tr("Reduzir embargo") if lvl >= 2 else tr("Embargo total"),
+		"tariff": tr("Remover tarifa") if d.tariffs.has(d.key(pl.idx, c.idx)) else tr("Tarifa de 20%"),
 	}
 	for act: String in _action_buttons:
 		var b: Button = _action_buttons[act]
 		var base: String = labels.get(act, _action_names[act])
 		var pause := world.action_wait(act, c)
-		b.text = base if pause == 0 else "%s (%d dias)" % [base, pause]
+		b.text = base if pause == 0 else tr("%s (%d dias)") % [base, pause]
 		var off: bool = pause > 0 or not world.in_office
 		if act == "peace":
 			off = off or not at_war
@@ -537,10 +537,10 @@ func _set_mode_style(key: String) -> void:
 		b.add_theme_color_override("font_color", UiKit.ACCENT if on else UiKit.TEXT)
 		b.add_theme_stylebox_override("normal", UiKit.panel_style(Color(0.08, 0.13, 0.17, 0.95), UiKit.ACCENT if on else UiKit.LINE, 3, 5))
 	var legends := {
-		"politico": "", "relacoes": "vermelho hostil · verde amigo · azul aliado",
+		"politico": "", "relacoes": tr("vermelho hostil · verde amigo · azul aliado"),
 		"crescimento": "-3% a +8%", "inflacao": "0% a 30%+", "desemprego": "2% a 22%",
-		"divida": "relativa ao limite do país", "renda": "US$ 300 a 90 mil per capita",
-		"estabilidade": "vermelho instável", "militar": "em relação aos EUA",
+		"divida": tr("relativa ao limite do país"), "renda": tr("US$ 300 a 90 mil per capita"),
+		"estabilidade": tr("vermelho instável"), "militar": tr("em relação aos EUA"),
 	}
 	_legend.text = "  " + str(legends.get(key, ""))
 
@@ -560,18 +560,18 @@ func _update_hover() -> void:
 	if subs.units.has(_hover_unit):
 		var u: Dictionary = subs.units[_hover_unit]
 		var land: Country = world.by_iso.get(u.owner)
-		var text := "%s  ·  %s  ·  %s  ·  cerca de %s mi de habitantes" % [subs.path_of(_hover_unit), subs.get_type(u.type).name, land.name if land else "", UiKit.num((land.pop if land else 0.0) * subs.pop_share(_hover_unit), 2)]
+		var text := tr("%s  ·  %s  ·  %s  ·  cerca de %s mi de habitantes") % [subs.path_of(_hover_unit), tr(subs.get_type(u.type).name), land.name if land else "", UiKit.num((land.pop if land else 0.0) * subs.pop_share(_hover_unit), 2)]
 		for holder: Variant in subs.holders_of(_hover_unit):
-			text += "  ·  capital de %s" % (world.by_iso[holder].name if holder is String else subs.units[holder].name)
+			text += tr("  ·  capital de %s") % (world.by_iso[holder].name if holder is String else subs.units[holder].name)
 		_hover_label.text = text
 		return
 	var c := _hover_country
 	if c == null:
 		_hover_label.text = ""
 		return
-	var txt := "%s  ·  PIB %s  ·  cresc. %s  ·  infl. %s" % [c.name, UiKit.money(c.y_usd()), UiKit.pct(c.growth_yoy()), UiKit.pct(c.pi_yoy)]
+	var txt := tr("%s  ·  PIB %s  ·  cresc. %s  ·  infl. %s") % [c.name, UiKit.money(c.y_usd()), UiKit.pct(c.growth_yoy()), UiKit.pct(c.pi_yoy)]
 	if world.player and c != world.player:
-		txt += "  ·  relação %+d" % int(world.diplomacy.relation(world.player.idx, c.idx))
+		txt += tr("  ·  relação %+d") % int(world.diplomacy.relation(world.player.idx, c.idx))
 	_hover_label.text = txt
 
 
@@ -640,7 +640,7 @@ func _sync_budget_sliders(c: Country) -> void:
 		var lock: Dictionary = world.legislation.budget_lock(f)
 		slider.set_value_no_signal(float(c.get(f)) * 100.0)
 		slider.editable = world.in_office and lock.is_empty()
-		slider.tooltip_text = "Fixado por lei em vigor. Para mudar, altere ou revogue a lei." if not lock.is_empty() else String(slider.get_meta("tip", slider.tooltip_text))
+		slider.tooltip_text = tr("Fixado por lei em vigor. Para mudar, altere ou revogue a lei.") if not lock.is_empty() else String(slider.get_meta("tip", slider.tooltip_text))
 		_label_slider(f, float(c.get(f)))
 	_syncing = was_syncing
 
@@ -649,7 +649,7 @@ func _sync_budget_sliders(c: Country) -> void:
 func _refresh_office() -> void:
 	var office := world.in_office
 	if world.player:
-		_player_name.text = world.player.name if office else "%s · oposição" % world.player.name
+		_player_name.text = world.player.name if office else tr("%s · oposição") % world.player.name
 	if office == _office_shown:
 		return
 	_office_shown = office
@@ -742,20 +742,20 @@ func _leader_text(leader: Dictionary) -> String:
 	if leader.is_empty():
 		return "—"
 	var sick: Dictionary = leader.get("illness", {})
-	return "%s, %d anos, %s%s" % [leader.name, People.age_of(leader, world), Dialogue.temper(leader), "" if sick.is_empty() else ", doente"]
+	return tr("%s, %d anos, %s%s") % [leader.name, People.age_of(leader, world), Dialogue.temper(leader), "" if sick.is_empty() else tr(", doente")]
 
 
 func _parliament_text(c: Country) -> String:
 	if c.dem < Politics.FREE_PARLIAMENT_DEM:
-		return "Sem parlamento livre: o líder governa por decreto."
+		return tr("Sem parlamento livre: o líder governa por decreto.")
 	var data: Dictionary = world.politics.data_of(c.iso)
 	var lines := []
 	var pending: Dictionary = data.get("pending_bill", {})
 	if not pending.is_empty():
-		lines.append("Em debate: %s" % Politics._world_bill(String(pending.id)).get("name", ""))
+		lines.append(tr("Em debate: %s") % tr(Politics._world_bill(String(pending.id)).get("name", "")))
 	for law: Dictionary in data.get("recent_laws", []):
-		lines.append("%s  %s: %s (%s), %d a %d" % [law.date, "aprovado" if law.passed else "rejeitado", law.title, law.party, int(law.yes), int(law.total) - int(law.yes)])
-	return "\n".join(lines) if not lines.is_empty() else "Nenhuma votação recente."
+		lines.append("%s  %s: %s (%s), %d a %d" % [law.date, tr("aprovado") if law.passed else tr("rejeitado"), tr(law.title), law.party, int(law.yes), int(law.total) - int(law.yes)])
+	return "\n".join(lines) if not lines.is_empty() else tr("Nenhuma votação recente.")
 
 
 func _capital_name(c: Country) -> String:
@@ -767,22 +767,22 @@ func _refresh_overview(c: Country) -> void:
 	_dyn.o_capital.text = _capital_name(c)
 	_dyn.o_party.text = String(world.politics.player_party(world).get("short", "—"))
 	_dyn.o_seats.text = UiKit.pct(world.politics.government_share(c.iso), 0)
-	_dyn.o_regime.text = "Democracia" if c.dem >= 6.0 else ("Regime híbrido" if c.dem >= 4.0 else "Autoritário")
+	_dyn.o_regime.text = tr("Democracia") if c.dem >= 6.0 else (tr("Regime híbrido") if c.dem >= 4.0 else tr("Autoritário"))
 	if c.dem >= 4.0:
 		var left := c.next_election - world.year_float()
-		_dyn.o_next.text = "em %s anos" % UiKit.num(maxf(left, 0.0), 1)
+		_dyn.o_next.text = tr("em %s anos") % UiKit.num(maxf(left, 0.0), 1)
 		_dyn.o_next.add_theme_color_override("font_color", UiKit.ACCENT if left < 0.75 else UiKit.TEXT)
 	else:
-		_dyn.o_next.text = "sem eleições: cuide da estabilidade"
+		_dyn.o_next.text = tr("sem eleições: cuide da estabilidade")
 	var rank := world.rank_of(c, func(x: Country): return x.influence)
-	_dyn.o_rank.text = "%dº  (%s pts)" % [rank, UiKit.num(c.influence, 1)]
+	_dyn.o_rank.text = tr("%dº  (%s pts)") % [rank, UiKit.num(c.influence, 1)]
 	for key in ["c_growth", "c_infl", "c_unemp", "c_debt", "c_approval", "c_stability"]:
 		_set_chart(key, c)
-	_dyn.o_gdp_pc.text = "US$ " + UiKit.thousand(c.gdp_pc())
-	_dyn.o_pop.text = UiKit.num(c.pop, 1) + " mi"
+	_dyn.o_gdp_pc.text = tr("US$ %s") % UiKit.thousand(c.gdp_pc())
+	_dyn.o_pop.text = tr("%s mi") % UiKit.num(c.pop, 1)
 	_dyn.o_ca.text = UiKit.pct(c.ca_ratio)
 	_dyn.o_res.text = UiKit.money(c.reserves)
-	_dyn.o_rating.text = "D (moratória)" if world.year_float() < c.default_until else c.rating
+	_dyn.o_rating.text = tr("D (moratória)") if world.year_float() < c.default_until else c.rating
 	_dyn.o_yield.text = UiKit.pct(c.yield_gov, 2)
 	_dyn.o_stock.text = UiKit.num(c.stock, 0)
 
@@ -808,13 +808,13 @@ func _can_set_rate(c: Country) -> bool:
 
 
 func _refresh_monetary(c: Country) -> void:
-	var status := "Banco central independente" if c.cb_independent else "Banco central subordinado, regra de Taylor"
+	var status := tr("Banco central independente") if c.cb_independent else tr("Banco central subordinado, regra de Taylor")
 	if c.peg == 2:
-		status = "Zona do euro: decisão do BCE"
+		status = tr("Zona do euro: decisão do BCE")
 	elif c.peg == 1:
-		status = "Âncora no dólar: segue o Fed"
+		status = tr("Âncora no dólar: segue o Fed")
 	elif c.rate_manual:
-		status = "Juro definido pelo governo"
+		status = tr("Juro definido pelo governo")
 	_dyn.m_status.text = status
 	var rate_slider: HSlider = _sliders.rate_set
 	rate_slider.editable = _can_set_rate(c)
@@ -826,7 +826,7 @@ func _refresh_monetary(c: Country) -> void:
 	peg_toggle.disabled = c == world.usa or c.peg == 2 or not world.in_office
 	var toggle: Button = %AlternarRegraDeTaylorJuro
 	toggle.disabled = c.cb_independent or c.peg != 0 or not world.in_office
-	toggle.tooltip_text = "O banco central é independente: o governo não escolhe o juro. A Constituição pode mudar isso por emenda." if c.cb_independent else "Manual dá controle direto, mas interferência reduz a credibilidade do banco central."
+	toggle.tooltip_text = tr("O banco central é independente: o governo não escolhe o juro. A Constituição pode mudar isso por emenda.") if c.cb_independent else tr("Manual dá controle direto, mas interferência reduz a credibilidade do banco central.")
 	_dyn.m_rate.text = UiKit.pct(c.rate, 2)
 	_dyn.m_real.text = UiKit.pct(c.rate - c.pi_e, 2)
 	_dyn.m_neutral.text = UiKit.pct(c.r_n, 2)
@@ -869,15 +869,15 @@ func _refresh_trade(c: Country) -> void:
 func _refresh_military(c: Country) -> void:
 	_dyn.w_power.text = UiKit.num(100.0 * c.military_power() / maxf(world.usa.military_power(), 0.01), 1)
 	_dyn.w_rank.text = "%dº" % world.rank_of(c, func(x: Country): return x.military_power())
-	_dyn.w_troops.text = UiKit.thousand(c.troops) + " mil"
+	_dyn.w_troops.text = tr("%s mil") % UiKit.thousand(c.troops)
 	_dyn.w_stock.text = UiKit.money(c.mil_stock)
-	_dyn.w_nukes.text = UiKit.thousand(c.nukes) if c.nukes > 0 else "nenhuma"
+	_dyn.w_nukes.text = UiKit.thousand(c.nukes) if c.nukes > 0 else tr("nenhuma")
 	_dyn.w_exhaust.text = "%d%%" % int(c.war_exhaustion * 100.0)
 	var allies := []
 	for o: Country in world.countries:
 		if o != c and o.alive and world.diplomacy.allied(c.idx, o.idx):
 			allies.append(o.name)
-	_dyn.w_allies.text = ", ".join(allies) if not allies.is_empty() else "Nenhum"
+	_dyn.w_allies.text = ", ".join(allies) if not allies.is_empty() else tr("Nenhum")
 	_refresh_wars(c)
 
 
@@ -896,9 +896,9 @@ func _refresh_wars(c: Country) -> void:
 			var card: Control = WAR_CARD.instantiate()
 			var att: bool = c.idx in w.a
 			var enemy: Country = world.countries[w.main_d if att else w.main_a]
-			(card.get_node("%enemy") as Label).text = "Contra " + enemy.name
+			(card.get_node("%enemy") as Label).text = tr("Contra %s") % enemy.name
 			var stance: Button = card.get_node("%stance")
-			stance.text = "Postura: ofensiva" if c.stance_offensive else "Postura: defensiva"
+			stance.text = tr("Postura: ofensiva") if c.stance_offensive else tr("Postura: defensiva")
 			stance.pressed.connect(func():
 				if world.in_office:
 					c.stance_offensive = not c.stance_offensive
@@ -916,7 +916,7 @@ func _refresh_wars(c: Country) -> void:
 				(card.get_node("%bar") as ProgressBar).value = w.front
 				var att: bool = c.idx in w.a
 				var front: float = w.front
-				(card.get_node("%txt") as Label).text = "Frente: %s do território de %s ocupado · baixas: %s / %s mil" % [
+				(card.get_node("%txt") as Label).text = tr("Frente: %s do território de %s ocupado · baixas: %s / %s mil") % [
 					UiKit.num(absf(front), 0) + "%",
 					world.countries[w.main_d if front >= 0.0 else w.main_a].name,
 					UiKit.num(float(w.loss_a) if att else float(w.loss_d), 0),

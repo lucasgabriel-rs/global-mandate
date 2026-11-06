@@ -46,12 +46,12 @@ func refresh() -> void:
 func _row(portfolio: Dictionary) -> Control:
 	var box: Control = MINISTER_ROW.instantiate()
 	var title: Label = box.get_node("%title")
-	title.text = portfolio.label
+	title.text = tr(portfolio.label)
 	title.tooltip_text = portfolio.desc
 	var who := world.politics.minister(world, portfolio.id)
 	var vacant_post := who.is_empty()
 	var change: Button = box.get_node("%change")
-	change.text = "Escolher" if vacant_post else "Trocar"
+	change.text = tr("Escolher") if vacant_post else tr("Trocar")
 	change.name = "pick_" + String(portfolio.id)
 	change.pressed.connect(pick_requested.emit.bind(portfolio.id))
 	var fire: Button = box.get_node("%fire")
@@ -62,12 +62,12 @@ func _row(portfolio: Dictionary) -> Control:
 		refresh())
 	var vacant: Label = box.get_node("%vacant")
 	vacant.visible = vacant_post
-	vacant.text = "Pasta vaga. %s" % portfolio.desc
+	vacant.text = tr("Pasta vaga. %s") % tr(portfolio.desc)
 	var person: Control = box.get_node("%person")
 	person.visible = not vacant_post
 	if not vacant_post:
 		(box.get_node("%face") as Countryball).show_person(Character.for_politician(who), world.player.iso)
 		var party: Dictionary = world.politics.party_of(world.player.iso, world.politics.data_of(world.player.iso).cabinet[portfolio.id].party)
-		(box.get_node("%who") as Label).text = "%s, %d anos  ·  %s\nCompetência: %d%%%s" % [who.name, People.age_of(who, world), party.short, int(float(who.competence) * 100.0), "" if not who.has("illness") else "  ·  doente"]
+		(box.get_node("%who") as Label).text = tr("%s, %d anos  ·  %s\nCompetência: %d%%%s") % [who.name, People.age_of(who, world), party.short, int(float(who.competence) * 100.0), "" if not who.has("illness") else tr("  ·  doente")]
 		(box.get_node("%compass") as CompassView).points = [{"econ": who.econ, "social": who.social, "color": Color.WHITE, "big": true}]
 	return box

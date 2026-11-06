@@ -119,13 +119,13 @@ func apply(_world: GameWorld, leg: Legislation, op: String, values: Dictionary, 
 			var low := clampf(float(values.get("min", 0.0)), 0.0, 100.0)
 			var high := clampf(float(values.get("max", 0.0)), low, 100.0)
 			leg.stand("penal:crime:%s" % values.conduct, {"mode": "prisao", "min": low, "max": high}, norm_id, prio)
-			return "%s é crime (%d a %d anos)" % [_upper_first(_conduct(values.conduct)), roundi(low), roundi(high)]
+			return tr("%s é crime (%d a %d anos)") % [_upper_first(_conduct(values.conduct)), roundi(low), roundi(high)]
 		"pn_fine":
 			leg.stand("penal:crime:%s" % values.conduct, {"mode": "multa", "amount": maxf(float(values.get("amount", 0.0)), 0.0)}, norm_id, prio)
-			return "%s só dá multa" % _upper_first(_conduct(values.conduct))
+			return tr("%s só dá multa") % _upper_first(_conduct(values.conduct))
 		"pn_decrim":
 			leg.stand("penal:crime:%s" % values.conduct, {"mode": "livre"}, norm_id, prio)
-			return "%s deixa de ser crime" % _upper_first(_conduct(values.conduct))
+			return tr("%s deixa de ser crime") % _upper_first(_conduct(values.conduct))
 		"pn_age":
 			leg.stand("penal:maioridade", {"age": clampf(float(values.get("age", 18.0)), 7.0, 25.0)}, norm_id, prio)
 		"pn_guns":
@@ -139,7 +139,7 @@ func apply(_world: GameWorld, leg: Legislation, op: String, values: Dictionary, 
 		"pn_budget":
 			var area := String(values.get("area", "policia"))
 			leg.stand("penal:orcamento_%s" % area, {"share": clampf(float(values.get("value", 0.0)), 0.0, 10.0) / 100.0}, norm_id, prio)
-			return "%s%% do PIB para %s" % [UiKit.num(float(values.get("value", 0.0)), 2), choices().security_area.get(area, area)]
+			return tr("%s%% do PIB para %s") % [UiKit.num(float(values.get("value", 0.0)), 2), tr(choices().security_area.get(area, area))]
 		"pn_alternative":
 			leg.stand("penal:alternativas", {"years": clampf(float(values.get("years", 0.0)), 0.0, 20.0)}, norm_id, prio)
 	return ""
@@ -241,7 +241,7 @@ func _enact_seed(world: GameWorld, leg: Legislation) -> void:
 
 
 func _conduct(key: Variant) -> String:
-	return String(choices().penal_conduct.get(String(key), String(key)))
+	return tr(choices().penal_conduct.get(String(key), String(key)))
 
 
 static func _upper_first(text: String) -> String:

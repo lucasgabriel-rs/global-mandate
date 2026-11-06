@@ -39,7 +39,7 @@ func _refresh_sectors(c: Country) -> void:
 		for i in Sectors.COUNT:
 			var row: Control = SECTOR_ROW.instantiate()
 			_rows_box.add_child(row)
-			(row.get_node("%sector_name") as Label).text = Sectors.NAMES[i]
+			(row.get_node("%sector_name") as Label).text = tr(Sectors.NAMES[i])
 			_sector_rows.append(row)
 	var biggest := 0.0
 	for i in Sectors.COUNT:

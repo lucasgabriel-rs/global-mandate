@@ -71,7 +71,7 @@ static func _central_bank(c: Country, world: GameWorld, mind: Dictionary) -> voi
 		c.rate_manual = true
 		c.rate_set = maxf(c.pi_yoy + c.r_n - 0.01, 0.0)
 		if NationAI._notable(c, null, world):
-			world.emit_news("O governo de %s pressiona o banco central e segura os juros." % c.name, "economia", c)
+			world.emit_news(TranslationServer.translate("O governo de %s pressiona o banco central e segura os juros.") % c.name, "economia", c)
 
 
 ## Sem parlamento livre, o líder muda as regras sozinho.
@@ -81,14 +81,14 @@ static func _decree(c: Country, world: GameWorld, mind: Dictionary) -> void:
 	if float(mind.hawk) > 0.45 and pick < 0.5:
 		c.sp_defense = minf(c.sp_defense * 1.08, 0.2)
 		c.stability = minf(c.stability + 0.01, 0.97)
-		text = "%s reforça as forças armadas por decreto."
+		text = TranslationServer.translate("%s reforça as forças armadas por decreto.")
 	elif float(mind.econ) < 0.0:
 		c.sp_social = minf(c.sp_social * 1.05, 0.3)
 		c.approval = minf(c.approval + 0.01, 0.95)
-		text = "%s amplia subsídios à população por decreto."
+		text = TranslationServer.translate("%s amplia subsídios à população por decreto.")
 	else:
 		c.tax_corporate = maxf(c.tax_corporate * 0.95, 0.005)
-		text = "%s corta impostos de empresas por decreto."
+		text = TranslationServer.translate("%s corta impostos de empresas por decreto.")
 	if _notable(c, null, world):
 		world.emit_news(text % c.name, "politica", c)
 
@@ -138,26 +138,26 @@ static func _foreign_agenda(c: Country, world: GameWorld, mind: Dictionary) -> v
 	var level := d.sanction_level(c.idx, o.idx)
 	if level > 0 and rel > -15.0:
 		d.set_sanction(c, o, 0, world)
-		_say(c, o, world, "%s suspende as sanções contra %s.", "diplomacia")
+		_say(c, o, world, TranslationServer.translate("%s suspende as sanções contra %s."), "diplomacia")
 	elif rel > 55.0 and affinity > 0.55 and not d.allied(c.idx, o.idx) and o != player and rng.randf() < 0.25:
 		world.treaties.ai_sign(world, c, o, "defense")
 	elif rel > 20.0 and affinity > 0.35 and float(mind.econ) > -0.5 and not d.has_fta(c.idx, o.idx, world) and o != player and rng.randf() < 0.3:
 		if world.treaties.ai_sign(world, c, o, "fta"):
-			_say(c, o, world, "%s e %s fecham acordo de livre comércio.", "diplomacia")
+			_say(c, o, world, TranslationServer.translate("%s e %s fecham acordo de livre comércio."), "diplomacia")
 	elif rel > 5.0 or affinity > 0.65:
 		d.add_relation(c.idx, o.idx, rng.randf_range(2.0, 5.0))
 		if rng.randf() < 0.15:
-			_say(c, o, world, "%s recebe uma missão de %s e estreita os laços.", "diplomacia", true)
+			_say(c, o, world, TranslationServer.translate("%s recebe uma missão de %s e estreita os laços."), "diplomacia", true)
 	elif rel < -45.0 and level == 0 and c.y_usd() > 40.0 and not d.at_war(c.idx, o.idx) and rng.randf() < 0.3 + float(mind.hawk) * 0.4:
 		d.set_sanction(c, o, 2 if rel < -70.0 else 1, world)
-		_say(c, o, world, "%s impõe sanções a %s.", "crise" if o == player else "diplomacia")
+		_say(c, o, world, TranslationServer.translate("%s impõe sanções a %s."), "crise" if o == player else "diplomacia")
 	elif rel < -15.0 and float(mind.econ) < 0.2 and rng.randf() < 0.2 and not d.tariffs.has(d.key(c.idx, o.idx)):
 		d.set_tariff_on(c, o, 0.15, world)
-		_say(c, o, world, "%s impõe tarifa de 15%% aos produtos de %s.", "economia")
+		_say(c, o, world, TranslationServer.translate("%s impõe tarifa de 15%% aos produtos de %s."), "economia")
 	elif rel < 0.0 or affinity < 0.35:
 		d.add_relation(c.idx, o.idx, -rng.randf_range(2.0, 4.0 + float(mind.hawk) * 6.0))
 		if rng.randf() < 0.4:
-			_say(c, o, world, "%s critica publicamente o governo de %s.", "diplomacia")
+			_say(c, o, world, TranslationServer.translate("%s critica publicamente o governo de %s."), "diplomacia")
 
 
 ## O líder decide procurar outro líder por conta própria: outro governo da IA, ou o jogador.
@@ -250,7 +250,7 @@ static func _foreign_policy(c: Country, world: GameWorld) -> void:
 	if rel > 25.0 and not d.has_fta(c.idx, j, world) and world.rng.randf() < 0.05 and o != world.governed():
 		world.treaties.ai_sign(world, c, o, "fta")
 		if c.y_usd() + o.y_usd() > world.world_gdp() * 0.03:
-			world.emit_news("%s e %s fecham acordo de livre comércio." % [c.name, o.name], "diplomacia", c)
+			world.emit_news(TranslationServer.translate("%s e %s fecham acordo de livre comércio.") % [c.name, o.name], "diplomacia", c)
 	# Oferta ao jogador.
 	var player := world.governed()
 	if player and c != player:

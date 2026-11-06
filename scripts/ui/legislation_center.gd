@@ -23,25 +23,29 @@ var leg: Legislation
 @onready var _feedback: Label = %feedback
 
 
+func current_tab() -> int:
+	return _tabs.current_tab
+
+
 func setup(owner_main: Node, tab := 0, message := "") -> void:
 	main = owner_main
 	world = main.world
 	leg = world.legislation
 	_tabs.current_tab = tab
 	_feedback.text = message
-	(%role_note as Label).text = "Você atua como %s. Fundo de %s: %s." % [Legislation.ROLE_LABELS[leg.role(world)], world.politics.player_party(world).get("short", "seu partido"), UiKit.millions(world.politics.party_fund(world))]
+	(%role_note as Label).text = tr("Você atua como %s. Fundo de %s: %s.") % [tr(Legislation.ROLE_LABELS[leg.role(world)]), world.politics.player_party(world).get("short", tr("seu partido")), UiKit.millions(world.politics.party_fund(world))]
 	%close.pressed.connect(func(): main.close_legislation())
 	var types: OptionButton = %new_type
 	for key: String in Legislation.NORM_TYPES:
 		if key != "constituicao" and key != "emenda" and leg.can(world, "present", key):
-			types.add_item(Legislation.NORM_TYPES[key].label)
+			types.add_item(tr(Legislation.NORM_TYPES[key].label))
 			types.set_item_metadata(types.item_count - 1, key)
 			if key == "ordinaria":
 				types.select(types.item_count - 1)
 	%new_norm.pressed.connect(func(): main.open_law_editor(leg.new_norm(world, types.get_item_metadata(types.selected))))
 	var templates: OptionButton = %template_pick
 	for template: Dictionary in LawTemplates.all():
-		templates.add_item(template.title)
+		templates.add_item(tr(template.title))
 	%new_template.pressed.connect(_use_template)
 	(%new_amendment as Button).disabled = not leg.can(world, "present", "emenda")
 	%new_amendment.pressed.connect(func(): main.open_amendment_editor(leg.new_norm(world, "emenda")))
@@ -51,9 +55,12 @@ func setup(owner_main: Node, tab := 0, message := "") -> void:
 	(%import_norm as Button).disabled = imports.item_count == 0
 	%import_norm.pressed.connect(_import)
 	var filter: OptionButton = %state_filter
-	filter.add_item("Todas")
+	filter.add_item(tr("Todas"))
+	# O texto do item vem traduzido; o estado (em português, como fica na norma) vai na metadata.
+	filter.set_item_metadata(0, "")
 	for state: String in STATE_COLORS:
-		filter.add_item(state)
+		filter.add_item(tr(state))
+		filter.set_item_metadata(filter.item_count - 1, state)
 		if state == Legislation.STATE_IN_FORCE:
 			filter.select(filter.item_count - 1)
 	filter.item_selected.connect(func(_i): _fill_norms())
@@ -64,12 +71,14 @@ func setup(owner_main: Node, tab := 0, message := "") -> void:
 	_fill_institutions()
 	_fill_treaties()
 	var audit_filter: OptionButton = %audit_filter
-	audit_filter.add_item("Tudo")
+	audit_filter.add_item(tr("Tudo"))
+	audit_filter.set_item_metadata(0, "")
 	var kinds := {}
 	for entry: Dictionary in leg.audit:
 		kinds[entry.kind] = true
 	for kind: String in kinds:
-		audit_filter.add_item(kind)
+		audit_filter.add_item(tr(kind))
+		audit_filter.set_item_metadata(audit_filter.item_count - 1, kind)
 	audit_filter.item_selected.connect(func(_i): _fill_audit())
 	_fill_audit()
 
@@ -81,15 +90,16 @@ func _fill_codes() -> void:
 		card.name = "code_%s" % code.id
 		var info := leg.code_card(code.id)
 		(card.get_node("%swatch") as ColorRect).color = code.category.get("color", Color.GRAY)
-		(card.get_node("%code_name") as Label).text = code.title
+		(card.get_node("%code_name") as Label).text = tr(code.title)
 		var norm: Dictionary = info.norm
 		var articles: int = info.articles
-		(card.get_node("%articles") as Label).text = ("%s  ·  %d artigo%s" % [leg.norm_label(norm), articles, "" if articles == 1 else "s"]) if not norm.is_empty() else "Ainda não existe: alterar cria o código."
+		var count_text := tr("%s  ·  %d artigo") if articles == 1 else tr("%s  ·  %d artigos")
+		(card.get_node("%articles") as Label).text = (count_text % [leg.norm_label(norm), articles]) if not norm.is_empty() else tr("Ainda não existe: alterar cria o código.")
 		var status: Label = card.get_node("%status")
-		status.text = "%d alteração(ões) em tramitação" % int(info.pending) if int(info.pending) > 0 else ""
+		status.text = tr("%d alteração(ões) em tramitação") % int(info.pending) if int(info.pending) > 0 else ""
 		var alter: Button = card.get_node("%alter")
 		alter.disabled = not leg.can(world, "present", code.norm_type)
-		alter.tooltip_text = code.ementa if not alter.disabled else "%s não pode apresentar %s." % [Legislation.ROLE_LABELS[leg.role(world)], Legislation.NORM_TYPES[code.norm_type].label]
+		alter.tooltip_text = tr(code.ementa) if not alter.disabled else tr("%s não pode apresentar %s.") % [tr(Legislation.ROLE_LABELS[leg.role(world)]), tr(Legislation.NORM_TYPES[code.norm_type].label)]
 		alter.pressed.connect(_alter_code.bind(code.id))
 		var read: Button = card.get_node("%read")
 		read.visible = not norm.is_empty()
@@ -111,8 +121,8 @@ func _use_template() -> void:
 	var type := "ordinaria" if leg.can(world, "present", "ordinaria") else "decreto"
 	var norm := leg.new_norm(world, type)
 	norm.program = template.build.call()
-	norm.title = template.title
-	norm.ementa = template.ementa
+	norm.title = tr(template.title)
+	norm.ementa = tr(template.ementa)
 	main.open_law_editor(norm)
 
 
@@ -130,19 +140,19 @@ func _fill_norms() -> void:
 		box.remove_child(child)
 		child.queue_free()
 	var filter: OptionButton = %state_filter
-	var state := "" if filter.selected <= 0 else filter.get_item_text(filter.selected)
+	var state: String = "" if filter.selected <= 0 else filter.get_item_metadata(filter.selected)
 	var list := leg.list_norms(state)
-	(%norm_count as Label).text = "%d norma(s)" % list.size()
-	(%norms_title as Label).text = "Normas em vigor" if state == Legislation.STATE_IN_FORCE else ("Todas as normas" if state == "" else "Normas: %s" % state.to_lower())
+	(%norm_count as Label).text = tr("%d norma(s)") % list.size()
+	(%norms_title as Label).text = tr("Normas em vigor") if state == Legislation.STATE_IN_FORCE else (tr("Todas as normas") if state == "" else tr("Normas: %s") % tr(state).to_lower())
 	for norm: Dictionary in list:
 		var row: Control = NORM_ROW.instantiate()
 		(row.get_node("%state_chip") as ColorRect).color = STATE_COLORS.get(norm.state, Color.GRAY)
 		var open: Button = row.get_node("%open")
 		open.name = "norm_%d" % int(norm.id)
-		open.text = "%s  ·  %s" % [leg.norm_label(norm), norm.title if norm.title != "" else "(sem título)"]
-		open.tooltip_text = String(norm.ementa)
+		open.text = "%s  ·  %s" % [leg.norm_label(norm), tr(norm.title) if norm.title != "" else tr("(sem título)")]
+		open.tooltip_text = tr(norm.ementa)
 		open.pressed.connect(func(): main.open_norm(norm))
-		(row.get_node("%state") as Label).text = norm.state
+		(row.get_node("%state") as Label).text = tr(norm.state)
 		box.add_child(row)
 
 
@@ -150,17 +160,17 @@ func _fill_process() -> void:
 	var box: Control = %process_rows
 	var list := leg.in_process()
 	(%process_empty as Control).visible = list.is_empty()
-	(%process_count as Label).text = "%d projeto(s)" % list.size() if not list.is_empty() else ""
+	(%process_count as Label).text = tr("%d projeto(s)") % list.size() if not list.is_empty() else ""
 	for norm: Dictionary in list:
 		var row: Control = PROCESS_ROW.instantiate()
 		row.name = "process_%d" % int(norm.id)
-		(row.get_node("%name_label") as Label).text = "%s  ·  %s" % [leg.norm_label(norm), norm.title]
+		(row.get_node("%name_label") as Label).text = "%s  ·  %s" % [leg.norm_label(norm), tr(norm.title)]
 		var process: Dictionary = norm.process
 		var waiting: bool = process.get("waiting_player", false)
-		(row.get_node("%step_label") as Label).text = "Aguardando sua sanção" if waiting else String(norm.state)
+		(row.get_node("%step_label") as Label).text = tr("Aguardando sua sanção") if waiting else tr(norm.state)
 		(row.get_node("%track") as ProcessTrack).setup(world, norm)
 		var last: String = process.log[-1].result if not process.log.is_empty() else ""
-		(row.get_node("%forecast") as Label).text = "Último passo: %s" % last if last != "" else ""
+		(row.get_node("%forecast") as Label).text = tr("Último passo: %s") % last if last != "" else ""
 		row.get_node("%open").pressed.connect(func(): main.open_norm(norm))
 		var deal: Button = row.get_node("%negotiate")
 		deal.visible = leg.can_negotiate(norm)
@@ -183,8 +193,8 @@ func _fill_treaties() -> void:
 	for t: Dictionary in world.treaties.of_country(leg.iso):
 		var row: Control = TREATY_ROW.instantiate()
 		var others: int = t.parties.size() - 1
-		(row.get_node("%title") as Label).text = "%s  ·  %s, assinado em %s%s" % [t.title, Treaties.TYPES[t.type].label, t.signed, "" if others <= 1 else "  ·  %d outros países" % others]
-		(row.get_node("%state") as Label).text = t.state
+		(row.get_node("%title") as Label).text = tr("%s  ·  %s, assinado em %s%s") % [tr(t.title), tr(Treaties.TYPES[t.type].label), t.signed, "" if others <= 1 else tr("  ·  %d outros países") % others]
+		(row.get_node("%state") as Label).text = tr(t.state)
 		var out: Button = row.get_node("%denounce")
 		out.visible = t.state == Treaties.STATE_FORCE and world.in_office
 		out.pressed.connect(func():
@@ -204,11 +214,11 @@ func _sanction(norm: Dictionary, approve: bool) -> void:
 func _fill_constitution_versions() -> void:
 	var pick: OptionButton = %version_pick
 	var other: OptionButton = %compare_pick
-	other.add_item("Sem comparação")
+	other.add_item(tr("Sem comparação"))
 	other.set_item_metadata(0, -1)
 	var versions: Array = leg.constitution.versions
 	for v: Dictionary in versions:
-		var label := "Versão %d (%s)" % [int(v.n), "original" if int(v.n) == 0 else "emenda nº %d" % int(v.emenda)]
+		var label := tr("Versão %d (%s)") % [int(v.n), tr("original") if int(v.n) == 0 else tr("emenda nº %d") % int(v.emenda)]
 		pick.add_item(label)
 		pick.set_item_metadata(pick.item_count - 1, int(v.n))
 		other.add_item(label)
@@ -221,11 +231,11 @@ func _fill_constitution_versions() -> void:
 	for v: Dictionary in versions:
 		if int(v.n) == 0:
 			continue
-		lines.append("[color=#f2b33d]Emenda nº %d[/color]  ·  versão %d  ·  %s  ·  %s" % [int(v.emenda), int(v.n), v.date, v.approvers])
+		lines.append(tr("[color=#f2b33d]Emenda nº %d[/color]  ·  versão %d  ·  %s  ·  %s") % [int(v.emenda), int(v.n), v.date, v.approvers])
 		for change: Dictionary in v.changes:
-			lines.append("%s: %s" % [change.label, Legislation.word_diff(change.before, change.after)])
+			lines.append("%s: %s" % [tr(change.label), Legislation.word_diff(change.before, change.after)])
 		lines.append("")
-	(%amend_history as RichTextLabel).text = "\n".join(lines) if not lines.is_empty() else "Nenhuma emenda até agora."
+	(%amend_history as RichTextLabel).text = "\n".join(lines) if not lines.is_empty() else tr("Nenhuma emenda até agora.")
 
 
 func _show_constitution() -> void:
@@ -237,12 +247,12 @@ func _show_constitution() -> void:
 	var previous := {}
 	if base_id >= 0:
 		for a: Dictionary in leg.constitution_version(base_id).articles:
-			previous[int(a.id)] = a.text
+			previous[int(a.id)] = Legislation.article_text(a, true)
 	for a: Dictionary in version.articles:
-		var mark := " [color=#8ba2af](cláusula pétrea)[/color]" if a.get("petrea", false) else ""
-		var text: String = a.text
+		var mark := tr(" [color=#8ba2af](cláusula pétrea)[/color]") if a.get("petrea", false) else ""
+		var text := Legislation.article_text(a, true)
 		if base_id >= 0:
-			text = Legislation.word_diff(String(previous.get(int(a.id), "")), a.text)
+			text = Legislation.word_diff(String(previous.get(int(a.id), "")), text)
 		lines.append(text + mark)
 	(%constitution_text as RichTextLabel).text = "\n\n".join(lines)
 
@@ -253,10 +263,10 @@ func _fill_institutions() -> void:
 	var rules := []
 	for key: String in Legislation.NORM_TYPES:
 		var def: Dictionary = Legislation.NORM_TYPES[key]
-		var vote: String = {"none": "sem votação", "simple": "maioria simples", "absolute": "maioria absoluta", "qualified": "maioria qualificada", "amendment": "%d%% em %d votação(ões)" % [int(leg.param("amend_quorum", 60)), int(leg.param("amend_votes", 1))]}[def.vote]
-		var upper := ", duas casas" if leg.param("bicameral", false) and int(def.rank) >= 60 and def.vote != "none" and key != "emenda" else ""
-		var sanction := ", com sanção e veto" if def.sanction and leg.param("veto", true) else ""
-		rules.append("[color=#f2b33d]%s[/color] (hierarquia %d): %s, %s%s%s." % [def.label, int(def.rank), def.organ, vote, upper, sanction])
+		var vote: String = {"none": tr("sem votação"), "simple": tr("maioria simples"), "absolute": tr("maioria absoluta"), "qualified": tr("maioria qualificada"), "amendment": tr("%d%% em %d votação(ões)") % [int(leg.param("amend_quorum", 60)), int(leg.param("amend_votes", 1))]}[def.vote]
+		var upper := tr(", duas casas") if leg.param("bicameral", false) and int(def.rank) >= 60 and def.vote != "none" and key != "emenda" else ""
+		var sanction := tr(", com sanção e veto") if def.sanction and leg.param("veto", true) else ""
+		rules.append(tr("[color=#f2b33d]%s[/color] (hierarquia %d): %s, %s%s%s.") % [tr(def.label), int(def.rank), tr(def.organ), vote, upper, sanction])
 	(%rules_text as RichTextLabel).text = "\n".join(rules)
 	var table: Dictionary = leg.permission_table()
 	var perms := []
@@ -264,14 +274,14 @@ func _fill_institutions() -> void:
 		var allowed := []
 		for action: String in Legislation.ACTIONS:
 			if table[who][action]:
-				allowed.append(Legislation.ACTIONS[action])
-		perms.append("[color=#4fb3d9]%s[/color]: %s." % [Legislation.ROLE_LABELS[who], ", ".join(allowed) if not allowed.is_empty() else "nada"])
+				allowed.append(tr(Legislation.ACTIONS[action]))
+		perms.append("[color=#4fb3d9]%s[/color]: %s." % [tr(Legislation.ROLE_LABELS[who]), ", ".join(allowed) if not allowed.is_empty() else tr("nada")])
 	(%permissions_text as RichTextLabel).text = "\n".join(perms)
 	var standing := []
 	var c := world.player
-	standing.append("Receita das normas nos últimos 12 meses: %s do PIB. Despesa: %s do PIB." % [UiKit.pct(c.law_tax), UiKit.pct(c.law_spend)])
-	standing.append("Efeito na aprovação: %+.1f p.p. Na estabilidade: %+.1f p.p." % [c.law_approval * 100.0, c.law_stability * 100.0])
-	var titles := {"rights": "Direitos", "minwage": "Salário mínimo", "posts": "Cargos", "institutions": "Instituições", "subsidies": "Subsídios", "spends": "Despesas permanentes", "duties": "Obrigações", "restrictions": "Restrições", "requirements": "Requisitos", "exemptions": "Isenções", "caps": "Limites de cobrança", "penalties": "Penalidades", "deadlines": "Prazos", "exceptions": "Exceções"}
+	standing.append(tr("Receita das normas nos últimos 12 meses: %s do PIB. Despesa: %s do PIB.") % [UiKit.pct(c.law_tax), UiKit.pct(c.law_spend)])
+	standing.append(tr("Efeito na aprovação: %+.1f p.p. Na estabilidade: %+.1f p.p.") % [c.law_approval * 100.0, c.law_stability * 100.0])
+	var titles := {"rights": tr("Direitos"), "minwage": tr("Salário mínimo"), "posts": tr("Cargos"), "institutions": tr("Instituições"), "subsidies": tr("Subsídios"), "spends": tr("Despesas permanentes"), "duties": tr("Obrigações"), "restrictions": tr("Restrições"), "requirements": tr("Requisitos"), "exemptions": tr("Isenções"), "caps": tr("Limites de cobrança"), "penalties": tr("Penalidades"), "deadlines": tr("Prazos"), "exceptions": tr("Exceções")}
 	for kind: String in titles:
 		var names: Array = leg.standing[kind].keys()
 		if not names.is_empty():
@@ -279,15 +289,15 @@ func _fill_institutions() -> void:
 	if not leg.licenses.is_empty():
 		var parts := []
 		for key: String in leg.licenses:
-			parts.append("%s (%s da população)" % [key, UiKit.pct(float(leg.licenses[key]), 0)])
-		standing.append("Licenças: %s." % ", ".join(parts))
-	standing.append("Pessoas no cadastro: %s mi. Obrigações a vencer: %d." % [UiKit.num(float(leg.registry.registered), 1), leg.obligations.size()])
+			parts.append(tr("%s (%s da população)") % [key, UiKit.pct(float(leg.licenses[key]), 0)])
+		standing.append(tr("Licenças: %s.") % ", ".join(parts))
+	standing.append(tr("Pessoas no cadastro: %s mi. Obrigações a vencer: %d.") % [UiKit.num(float(leg.registry.registered), 1), leg.obligations.size()])
 	(%registry_text as RichTextLabel).text = "\n".join(standing)
 
 
 func _fill_audit() -> void:
 	var filter: OptionButton = %audit_filter
-	var kind := "" if filter.selected <= 0 else filter.get_item_text(filter.selected)
+	var kind: String = "" if filter.selected <= 0 else filter.get_item_metadata(filter.selected)
 	var lines := []
 	for i in range(leg.audit.size() - 1, -1, -1):
 		var e: Dictionary = leg.audit[i]
@@ -295,11 +305,11 @@ func _fill_audit() -> void:
 			continue
 		var detail := String(e.result)
 		if String(e.before) != "" or String(e.after) != "":
-			detail += "  (antes: %s; depois: %s)" % [String(e.before).left(60), String(e.after).left(60)]
+			detail += tr("  (antes: %s; depois: %s)") % [tr(e.before).left(60), tr(e.after).left(60)]
 		if String(e.event) != "":
-			detail += "  [evento: %s]" % String(LawCatalog.get_def(e.event).get("text", e.event))
-		lines.append("[color=#8ba2af]%s[/color]  %s  [color=#f2b33d]%s[/color]  %s: %s" % [e.date, e.who, e.label, e.kind, detail])
+			detail += tr("  [evento: %s]") % tr(LawCatalog.get_def(e.event).get("text", e.event))
+		lines.append("[color=#8ba2af]%s[/color]  %s  [color=#f2b33d]%s[/color]  %s: %s" % [e.date, e.who, e.label, tr(e.kind), detail])
 		if lines.size() >= 400:
 			break
-	(%audit_count as Label).text = "%d registro(s) guardado(s)" % leg.audit.size()
+	(%audit_count as Label).text = tr("%d registro(s) guardado(s)") % leg.audit.size()
 	(%audit_text as RichTextLabel).text = "\n".join(lines)

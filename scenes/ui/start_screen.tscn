@@ -1,6 +1,7 @@
 [gd_scene format=3]
 
 [ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="1_aqjl8"]
+[ext_resource type="PackedScene" path="res://scenes/ui/rows/language_picker.tscn" id="9_lang"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m7t1o"]
 content_margin_left = 16.0
@@ -283,3 +284,6 @@ layout_mode = 2
 focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "Continuar partida salva"
+
+[node name="LanguagePicker" parent="Painel/Coluna" instance=ExtResource("9_lang")]
+layout_mode = 2

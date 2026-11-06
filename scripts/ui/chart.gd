@@ -18,12 +18,17 @@ func set_data(s: PackedFloat32Array) -> void:
 	queue_redraw()
 
 
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_TRANSLATION_CHANGED:
+		queue_redraw()
+
+
 func _draw() -> void:
 	var font := ThemeDB.fallback_font
 	var w := size.x
 	var h := size.y
 	draw_rect(Rect2(0, 0, w, h), Color(1, 1, 1, 0.025))
-	draw_string(font, Vector2(6, 13), title, HORIZONTAL_ALIGNMENT_LEFT, -1, 11, UiKit.DIM)
+	draw_string(font, Vector2(6, 13), tr(title), HORIZONTAL_ALIGNMENT_LEFT, -1, 11, UiKit.DIM)
 	if series.is_empty():
 		return
 	var start := maxi(series.size() - window, 0)

@@ -17,6 +17,7 @@ const PARLIAMENT_PROPOSAL_CHANCE := 0.12
 const PARLIAMENT_RECENT := 6
 const PARLIAMENT_REPEAT_MONTHS := 18
 ## Pautas dos parlamentos dos outros países, além dos projetos da aba Política.
+# i18n-begin
 const WORLD_BILLS := [
 	{"id": "w_tax_up", "name": "Aumento do imposto de renda", "econ": -0.6, "social": 0.1, "tax_income": 0.012, "approval": -0.01},
 	{"id": "w_tax_down", "name": "Corte do imposto de renda", "econ": 0.7, "social": 0.1, "tax_income": -0.012, "approval": 0.012},
@@ -31,11 +32,14 @@ const WORLD_BILLS := [
 	{"id": "w_rights", "name": "Lei de liberdades civis", "econ": 0.0, "social": 0.8, "stability": -0.004, "approval": 0.01},
 	{"id": "w_order", "name": "Lei de ordem pública", "econ": 0.2, "social": -0.8, "stability": 0.01, "approval": -0.005},
 ]
+# i18n-end
 const SWITCH_COOLDOWN_MONTHS := 12
 ## Preço de cada gasto do fundo do partido, em múltiplos da "unidade" do país (ver fund_unit).
 ## A pesquisa de popularidade ouve o eleitorado todo e por isso é a mais cara.
 const FUND_PRICES := {"poll_popularity": 1.0, "poll_support": 0.35, "campaign": 0.8, "censure": 0.5, "criticize": 0.3, "invite": 0.2}
+# i18n-begin
 const FUND_LABELS := {"poll_popularity": "Pesquisa de popularidade", "poll_support": "Pesquisa de apoio no parlamento", "campaign": "Campanha", "censure": "Moção de censura", "criticize": "Crítica ao governo", "invite": "Convite a um partido"}
+# i18n-end
 const FUND_START_MONTHS := 3.0
 ## Acima disso, um partido da IA gasta em campanha por conta própria.
 const FUND_AI_SPEND_UNITS := 8.0
@@ -44,6 +48,7 @@ const UPPER_HOUSE_MIN := 20
 const MEMBER_SPREAD := 0.3
 const PARTNER_WITHOUT_POST_LEAVE_CHANCE := 0.04
 ## Ministérios. Quanto mais acima de 50% for a competência, maior o ganho; abaixo disso, a perda.
+# i18n-begin
 const PORTFOLIOS := [
 	{"id": "finance", "label": "Fazenda", "desc": "Sobe a credibilidade do banco central."},
 	{"id": "foreign", "label": "Relações Exteriores", "desc": "Melhores conversas com líderes."},
@@ -53,6 +58,7 @@ const PORTFOLIOS := [
 	{"id": "infrastructure", "label": "Infraestrutura", "desc": "Faz o capital do país render mais."},
 	{"id": "justice", "label": "Justiça", "desc": "Mantém a estabilidade."},
 ]
+# i18n-end
 ## Ministério a mais custa dinheiro, e ministério a menos economiza, mas a área dele fica sem titular.
 const MINISTRY_COST_SHARE := 0.0005
 const MERGED_MINISTRY_FACTOR := 0.9
@@ -60,6 +66,7 @@ const START_FOUNDED_SUPPORT := 0.05
 const MID_TERM_FOUNDED_SUPPORT := 0.02
 
 ## econ: -1 esquerda a +1 direita. social: -1 autoritário a +1 libertário.
+# i18n-begin
 const FAMILIES := {
 	"socialista": {"label": "Socialista", "econ": -0.8, "social": 0.3, "color": Color("c0392b"), "names": ["Partido Socialista", "Frente de Esquerda", "Movimento Popular"]},
 	"trabalhista": {"label": "Trabalhista", "econ": -0.5, "social": 0.1, "color": Color("e74c3c"), "names": ["Partido Trabalhista", "União dos Trabalhadores", "Partido do Povo Trabalhador"]},
@@ -71,9 +78,11 @@ const FAMILIES := {
 	"conservador": {"label": "Conservador", "econ": 0.6, "social": -0.4, "color": Color("34495e"), "names": ["Partido Conservador", "União Conservadora", "Partido da Ordem"]},
 	"nacionalista": {"label": "Nacionalista", "econ": 0.2, "social": -0.8, "color": Color("8e44ad"), "names": ["Frente Nacional", "Partido da Pátria", "Movimento Soberano"]},
 }
+# i18n-end
 const RULING_REGIME_NAME := "Partido da União Nacional"
 
 ## Projetos que o governo pode levar a voto. Os campos valem o que muda ao ser aprovado.
+# i18n-begin
 const BILLS := [
 	{"id": "welfare", "name": "Ampliação da previdência", "desc": "Gastos sociais +1 p.p. do PIB. Aprovação sobe, déficit também.", "econ": -0.6, "social": 0.1, "sp_social": 0.01, "approval": 0.015},
 	{"id": "austerity", "name": "Teto de gastos", "desc": "Gastos sociais -0,8 p.p. e administração -0,4 p.p. Reduz o déficit e custa aprovação.", "econ": 0.7, "social": -0.1, "sp_social": -0.008, "sp_admin": -0.004, "approval": -0.015},
@@ -82,6 +91,7 @@ const BILLS := [
 	{"id": "defense", "name": "Reforço da defesa", "desc": "Defesa +0,5 p.p. do PIB.", "econ": 0.3, "social": -0.6, "sp_defense": 0.005},
 	{"id": "early", "name": "Eleições antecipadas", "desc": "Precisa de 3/5 dos assentos. Convoca eleições agora.", "econ": 0.0, "social": 0.0, "share": 0.6, "election": true},
 ]
+# i18n-end
 const BILL_LIMITS := {
 	"tax_income": [0.0, 0.32], "sp_social": [0.0, 0.30], "sp_admin": [0.0, 0.12], "sp_education": [0.0, 0.12],
 	"sp_infra": [0.0, 0.10], "sp_defense": [0.0, 0.20], "tariff": [0.0, 0.5],
@@ -89,10 +99,12 @@ const BILL_LIMITS := {
 
 ## O governo define os gastos sem passar pelo parlamento, salvo se uma lei em vigor fixar o valor. Os tributos
 ## só mudam por lei no editor de blocos.
+# i18n-begin
 const BUDGET_LABELS := {
 	"sp_social": "Previdência e assistência", "sp_health": "Saúde", "sp_education": "Educação e ciência",
 	"sp_infra": "Infraestrutura", "sp_defense": "Defesa", "sp_admin": "Administração",
 }
+# i18n-end
 
 ## Por país: {parties, seats_total, ruling, coalition, player_party, bills_used, next_id}.
 var countries := {}
@@ -248,7 +260,7 @@ func _seat_player(world: GameWorld, data: Dictionary, party: Dictionary) -> void
 	if me.is_empty():
 		me = {"id": data.next_member, "player": true, "competence": 0.7, "seed": 1}
 		data.next_member = int(data.next_member) + 1
-	me["name"] = world.leader.get("name", "Você")
+	me["name"] = world.leader.get("name", tr("Você"))
 	me["gender"] = world.leader.get("gender", "m")
 	me["birth_year"] = int(world.leader.get("birth_year", world.start_year - 50))
 	me["econ"] = float(world.leader.get("econ", party.econ))
@@ -285,7 +297,7 @@ func portfolios(world: GameWorld) -> Array:
 			"create":
 				if not _named(out, String(op.name)).is_empty():
 					continue
-				out.append({"id": "m_%d" % absi(hash(String(op.name))), "label": op.name, "desc": "Cuida de %s." % String(LawCatalog.CHOICES.ministry_area.get(op.area, op.area)).to_lower(), "areas": [op.area]})
+				out.append({"id": "m_%d" % absi(hash(String(op.name))), "label": op.name, "desc": tr("Cuida de %s.") % tr(LawCatalog.CHOICES.ministry_area.get(op.area, op.area)).to_lower(), "areas": [op.area]})
 			"merge":
 				var a := _named(out, String(op.a))
 				var b := _named(out, String(op.b))
@@ -294,7 +306,7 @@ func portfolios(world: GameWorld) -> Array:
 				out.erase(a)
 				out.erase(b)
 				var areas: Array = a.areas + b.areas
-				out.append({"id": "m_%d" % absi(hash(String(op.name))), "label": op.name, "desc": "Fusão de %s e %s." % [a.label, b.label], "areas": areas, "merged": [a.id, b.id]})
+				out.append({"id": "m_%d" % absi(hash(String(op.name))), "label": op.name, "desc": tr("Fusão de %s e %s.") % [tr(a.label), tr(b.label)], "areas": areas, "merged": [a.id, b.id]})
 			"abolish":
 				out.erase(_named(out, String(op.a)))
 	return out
@@ -377,14 +389,14 @@ func eligible_ministers(world: GameWorld, post: String) -> Array:
 
 func appoint(world: GameWorld, post: String, party_id: int, member_id: int) -> Dictionary:
 	if not world.in_office:
-		return {"ok": false, "msg": "Na oposição, você não nomeia ministros."}
+		return {"ok": false, "msg": tr("Na oposição, você não nomeia ministros.")}
 	var data := data_of(world.player.iso)
 	var found := false
 	for e: Dictionary in eligible_ministers(world, post):
 		if e.party.id == party_id and e.member.id == member_id:
 			found = true
 	if not found:
-		return {"ok": false, "msg": "Esse político não pode assumir a pasta."}
+		return {"ok": false, "msg": tr("Esse político não pode assumir a pasta.")}
 	data.get_or_add("cabinet", {})[post] = {"party": party_id, "member": member_id}
 	revision += 1
 	return {"ok": true, "msg": ""}
@@ -452,7 +464,7 @@ func _step_cabinet(world: GameWorld, data: Dictionary) -> void:
 	for id: int in data.coalition.duplicate():
 		if id != int(data.ruling) and not with_post.has(id) and world.rng.randf() < PARTNER_WITHOUT_POST_LEAVE_CHANCE:
 			data.coalition.erase(id)
-			world.emit_news("%s deixa o governo: sem nenhum ministério, não vê motivo para ficar." % _find(data, id).name, "politica", c)
+			world.emit_news(tr("%s deixa o governo: sem nenhum ministério, não vê motivo para ficar.") % _find(data, id).name, "politica", c)
 
 
 # --- Fundo dos partidos --------------------------------------------------------------
@@ -486,7 +498,7 @@ func spend_fund(world: GameWorld, kind: String) -> Dictionary:
 	var mine := player_party(world)
 	var price := fund_price(world, kind)
 	if float(mine.get("funds", 0.0)) < price:
-		return {"ok": false, "msg": "%s custa %s, e o fundo de %s tem %s." % [FUND_LABELS[kind], UiKit.millions(price), mine.get("short", "seu partido"), UiKit.millions(float(mine.get("funds", 0.0)))]}
+		return {"ok": false, "msg": tr("%s custa %s, e o fundo de %s tem %s.") % [tr(FUND_LABELS[kind]), UiKit.millions(price), mine.get("short", tr("seu partido")), UiKit.millions(float(mine.get("funds", 0.0)))]}
 	mine.funds = float(mine.funds) - price
 	revision += 1
 	return {"ok": true, "msg": ""}
@@ -511,11 +523,11 @@ func _step_funds(world: GameWorld, data: Dictionary) -> void:
 func houses(world: GameWorld) -> Array:
 	var data := data_of(world.player.iso)
 	if not world.legislation.param("bicameral", false):
-		return [{"id": "lower", "name": "Parlamento", "total": int(data.seats_total), "parties": data.parties}]
+		return [{"id": "lower", "name": tr("Parlamento"), "total": int(data.seats_total), "parties": data.parties}]
 	var upper := upper_house(data)
 	return [
-		{"id": "lower", "name": "Câmara", "total": int(data.seats_total), "parties": data.parties},
-		{"id": "upper", "name": "Senado", "total": _count_seats(upper), "parties": upper},
+		{"id": "lower", "name": tr("Câmara"), "total": int(data.seats_total), "parties": data.parties},
+		{"id": "upper", "name": tr("Senado"), "total": _count_seats(upper), "parties": upper},
 	]
 
 
@@ -563,7 +575,7 @@ static func _count_seats(parties: Array) -> int:
 
 func _opposition_guard(world: GameWorld, kind: String) -> Dictionary:
 	if world.in_office:
-		return {"ok": false, "msg": "Você está no governo."}
+		return {"ok": false, "msg": tr("Você está no governo.")}
 	return spend_fund(world, kind)
 
 
@@ -582,7 +594,7 @@ func criticize(world: GameWorld) -> Dictionary:
 		return guard
 	world.player.approval = clampf(world.player.approval - 0.012, 0.02, 0.95)
 	_boost_player_party(world, 1.03)
-	return {"ok": true, "msg": "Sua crítica repercute, e a aprovação do governo cai."}
+	return {"ok": true, "msg": tr("Sua crítica repercute, e a aprovação do governo cai.")}
 
 
 func campaign(world: GameWorld) -> Dictionary:
@@ -590,7 +602,7 @@ func campaign(world: GameWorld) -> Dictionary:
 	if not guard.ok:
 		return guard
 	_boost_player_party(world, 1.08)
-	return {"ok": true, "msg": "A campanha percorre o país, e o partido cresce nas pesquisas."}
+	return {"ok": true, "msg": tr("A campanha percorre o país, e o partido cresce nas pesquisas.")}
 
 
 ## Moção de censura: se a oposição somar a maioria dos assentos, o governo cai e há eleição agora.
@@ -603,11 +615,11 @@ func censure(world: GameWorld) -> Dictionary:
 	var total: int = data.seats_total
 	var opposition := total - government_seats(c.iso)
 	if opposition * 2 <= total:
-		return {"ok": true, "passed": false, "msg": "Moção de censura rejeitada: a oposição tem %d de %d assentos." % [opposition, total]}
-	world.emit_news("Moção de censura derruba o governo em %s: novas eleições." % c.name, "politica", c)
+		return {"ok": true, "passed": false, "msg": tr("Moção de censura rejeitada: a oposição tem %d de %d assentos.") % [opposition, total]}
+	world.emit_news(tr("Moção de censura derruba o governo em %s: novas eleições.") % c.name, "politica", c)
 	c.next_election = world.year_float()
 	world.check_player_politics(c)
-	return {"ok": true, "passed": true, "msg": "Moção aprovada: o governo caiu, e o país vai às urnas."}
+	return {"ok": true, "passed": true, "msg": tr("Moção aprovada: o governo caiu, e o país vai às urnas.")}
 
 
 ## Força de cada partido no dia da eleição: quem governa colhe a aprovação; os outros, o contrário.
@@ -757,12 +769,12 @@ func join_party(world: GameWorld, id: int, at_start := false, keep_ideas := fals
 	var data := data_of(c.iso)
 	var party := _find(data, id)
 	if party.is_empty():
-		return {"ok": false, "msg": "Esse partido não existe."}
+		return {"ok": false, "msg": tr("Esse partido não existe.")}
 	if int(data.player_party) == id:
-		return {"ok": false, "msg": "Você já é de %s." % party.name}
+		return {"ok": false, "msg": tr("Você já é de %s.") % party.name}
 	if not at_start:
 		if switch_wait(world) > 0:
-			return {"ok": false, "msg": "Você mudou de partido há pouco. Tente em %d mês(es)." % switch_wait(world)}
+			return {"ok": false, "msg": tr("Você mudou de partido há pouco. Tente em %d mês(es).") % switch_wait(world)}
 		data["last_switch"] = world.months_elapsed
 		if world.in_office:
 			c.approval = clampf(c.approval - 0.04, 0.02, 0.95)
@@ -779,8 +791,8 @@ func join_party(world: GameWorld, id: int, at_start := false, keep_ideas := fals
 		form_coalition(data)
 		_prune_cabinet(data)
 	if not at_start:
-		var verb := "agora governa por" if world.in_office else "agora lidera"
-		world.emit_news("%s troca de partido e %s %s." % [world.leader.get("name", "O líder"), verb, party.name], "politica", c)
+		var verb := tr("agora governa por") if world.in_office else tr("agora lidera")
+		world.emit_news(tr("%s troca de partido e %s %s.") % [world.leader.get("name", tr("O líder")), verb, party.name], "politica", c)
 	return {"ok": true, "msg": ""}
 
 
@@ -801,17 +813,17 @@ func _give_dominance(data: Dictionary, party: Dictionary) -> void:
 func found_party(world: GameWorld, party_name: String, family: String, color: Color, at_start := false) -> Dictionary:
 	var clean := party_name.strip_edges()
 	if clean == "":
-		return {"ok": false, "msg": "O partido precisa de um nome."}
+		return {"ok": false, "msg": tr("O partido precisa de um nome.")}
 	if not FAMILIES.has(family):
-		return {"ok": false, "msg": "Escolha uma família política."}
+		return {"ok": false, "msg": tr("Escolha uma família política.")}
 	var c := world.player
 	var data := data_of(c.iso)
 	for p: Dictionary in data.parties:
 		if String(p.name).to_lower() == clean.to_lower():
-			return {"ok": false, "msg": "Já existe um partido com esse nome."}
+			return {"ok": false, "msg": tr("Já existe um partido com esse nome.")}
 	if not at_start:
 		if switch_wait(world) > 0:
-			return {"ok": false, "msg": "Você mudou de partido há pouco. Tente em %d mês(es)." % switch_wait(world)}
+			return {"ok": false, "msg": tr("Você mudou de partido há pouco. Tente em %d mês(es).") % switch_wait(world)}
 		data["last_switch"] = world.months_elapsed
 		if world.in_office:
 			c.approval = clampf(c.approval - 0.04, 0.02, 0.95)
@@ -826,40 +838,40 @@ func found_party(world: GameWorld, party_name: String, family: String, color: Co
 		_allocate_seats(data)
 	var joined := join_party(world, party.id, true, true)
 	if not at_start:
-		world.emit_news("%s funda %s." % [world.leader.get("name", "O líder"), party.name], "politica", c)
+		world.emit_news(tr("%s funda %s.") % [world.leader.get("name", tr("O líder")), party.name], "politica", c)
 	return joined
 
 
 ## Convida ou expulsa um partido da coalizão.
 func invite(world: GameWorld, id: int) -> Dictionary:
 	if not world.in_office:
-		return {"ok": false, "msg": "Na oposição, você não monta o governo."}
+		return {"ok": false, "msg": tr("Na oposição, você não monta o governo.")}
 	var c := world.player
 	var data := data_of(c.iso)
 	var party := _find(data, id)
 	if party.is_empty() or id in data.coalition:
-		return {"ok": false, "msg": "Esse partido já está no governo."}
+		return {"ok": false, "msg": tr("Esse partido já está no governo.")}
 	var paid := spend_fund(world, "invite")
 	if not paid.ok:
 		return paid
 	if distance(_find(data, data.ruling), party) > COALITION_MAX_DISTANCE:
-		return {"ok": false, "msg": "%s recusou: as ideias são distantes demais." % party.name}
+		return {"ok": false, "msg": tr("%s recusou: as ideias são distantes demais.") % party.name}
 	if c.approval < 0.25:
-		return {"ok": false, "msg": "%s recusou: seu governo está impopular demais." % party.name}
+		return {"ok": false, "msg": tr("%s recusou: seu governo está impopular demais.") % party.name}
 	data.coalition.append(id)
 	revision += 1
-	return {"ok": true, "msg": "%s entra no governo. Lembre de dar um ministério ao novo aliado." % party.name}
+	return {"ok": true, "msg": tr("%s entra no governo. Lembre de dar um ministério ao novo aliado.") % party.name}
 
 
 func dismiss(world: GameWorld, id: int) -> Dictionary:
 	if not world.in_office:
-		return {"ok": false, "msg": "Na oposição, você não monta o governo."}
+		return {"ok": false, "msg": tr("Na oposição, você não monta o governo.")}
 	var data := data_of(world.player.iso)
 	if id == int(data.ruling) or not id in data.coalition:
-		return {"ok": false, "msg": "Esse partido não pode sair do governo."}
+		return {"ok": false, "msg": tr("Esse partido não pode sair do governo.")}
 	data.coalition.erase(id)
 	_prune_cabinet(data)
-	return {"ok": true, "msg": "%s deixa o governo e leva os ministros." % _find(data, id).name}
+	return {"ok": true, "msg": tr("%s deixa o governo e leva os ministros.") % _find(data, id).name}
 
 
 # --- Parlamento ----------------------------------------------------------------------
@@ -880,16 +892,16 @@ func bill_wait(world: GameWorld, id: String) -> int:
 ## cada casa, como qualquer norma, e só então produz efeito.
 func vote(world: GameWorld, id: String) -> Dictionary:
 	if not world.in_office:
-		return {"ok": false, "msg": "Na oposição, você não propõe projetos do governo."}
+		return {"ok": false, "msg": tr("Na oposição, você não propõe projetos do governo.")}
 	var c := world.player
 	var data := data_of(c.iso)
 	var b := bill(id)
 	if b.is_empty():
-		return {"ok": false, "msg": "Projeto desconhecido."}
+		return {"ok": false, "msg": tr("Projeto desconhecido.")}
 	if bill_wait(world, id) > 0:
-		return {"ok": false, "msg": "Esse tema só volta à pauta em %d mês(es)." % bill_wait(world, id)}
+		return {"ok": false, "msg": tr("Esse tema só volta à pauta em %d mês(es).") % bill_wait(world, id)}
 	if b.get("election", false) and c.dem < 4.0:
-		return {"ok": false, "msg": "Este regime não realiza eleições."}
+		return {"ok": false, "msg": tr("Este regime não realiza eleições.")}
 	data.bills_used[id] = world.months_elapsed
 	revision += 1
 	return world.legislation.present_payload(world, {"kind": "bill", "id": id, "share": float(b.get("share", 0.0))}, b.name, b.desc, {"econ": b.econ, "social": b.social})
@@ -914,12 +926,12 @@ static func _votes_needed(data: Dictionary, share: float) -> int:
 ## O governo define o gasto na hora, a não ser que uma lei em vigor obrigue aquele valor.
 func set_budget(world: GameWorld, field: String, value: float) -> Dictionary:
 	if not world.in_office:
-		return {"ok": false, "msg": "Na oposição, o orçamento é do governo."}
+		return {"ok": false, "msg": tr("Na oposição, o orçamento é do governo.")}
 	if not BUDGET_LABELS.has(field):
-		return {"ok": false, "msg": "Esse campo não faz parte do orçamento."}
+		return {"ok": false, "msg": tr("Esse campo não faz parte do orçamento.")}
 	var lock: Dictionary = world.legislation.budget_lock(field)
 	if not lock.is_empty():
-		return {"ok": false, "msg": "%s é fixado em %s por lei." % [BUDGET_LABELS[field], UiKit.pct(lock.value)]}
+		return {"ok": false, "msg": tr("%s é fixado em %s por lei.") % [tr(BUDGET_LABELS[field]), UiKit.pct(lock.value)]}
 	_apply_budget_change(world.player, field, value)
 	revision += 1
 	return {"ok": true, "msg": ""}
@@ -1049,7 +1061,8 @@ func _decide_world_bill(world: GameWorld, c: Country, data: Dictionary, pending:
 		laws.resize(PARLIAMENT_RECENT)
 	revision += 1
 	if c.y_usd() > world.world_gdp() * NationAI.NEWS_SHARE:
-		world.emit_news("Parlamento de %s %s: %s (%s), por %d a %d." % [c.name, "aprova" if passed else "rejeita", b.name, author.short, yes, total - yes], "politica", c)
+		var verdict := tr("Parlamento de %s aprova: %s (%s), por %d a %d.") if passed else tr("Parlamento de %s rejeita: %s (%s), por %d a %d.")
+		world.emit_news(verdict % [c.name, tr(b.name), author.short, yes, total - yes], "politica", c)
 
 
 # --- Eleições ------------------------------------------------------------------------
@@ -1068,7 +1081,7 @@ func player_election(world: GameWorld) -> Dictionary:
 	if report.head.is_empty() and not won:
 		won = government_seats(c.iso) * 2 > int(data.seats_total)
 	if barred:
-		world.emit_news("O Código Eleitoral de %s não permite outro mandato: o chefe de governo deixa o cargo, e %s assume." % [c.name, winner.name], "politica", c)
+		world.emit_news(tr("O Código Eleitoral de %s não permite outro mandato: o chefe de governo deixa o cargo, e %s assume.") % [c.name, winner.name], "politica", c)
 		won = false
 	if not won:
 		data.ruling = winner.id

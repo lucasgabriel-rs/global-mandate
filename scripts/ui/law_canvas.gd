@@ -26,7 +26,7 @@ func rebuild() -> void:
 		# O tamanho da pilha só existe depois do layout: a área se ajusta quando ela muda.
 		view.resized.connect(_fit)
 		var repealed: bool = stack.get("repealed", false)
-		(view.get_node("%article") as Label).text = "Art. %dº%s" % [number, " (revogado)" if repealed else ""]
+		(view.get_node("%article") as Label).text = tr("Art. %dº%s") % [number, tr(" (revogado)") if repealed else ""]
 		if repealed:
 			view.modulate.a = 0.45
 		var list: Control = view.get_node("%blocks")

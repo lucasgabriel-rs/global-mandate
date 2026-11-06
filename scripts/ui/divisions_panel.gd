@@ -134,11 +134,11 @@ func _update_banner() -> void:
 		return
 	var t: Dictionary = world.subdivisions.get_type(active_type)
 	var n := map.draft.size()
-	var tail := "clique no primeiro ponto para fechar" if n >= 3 else "clique no mapa para colocar os vértices"
+	var tail := tr("clique no primeiro ponto para fechar") if n >= 3 else tr("clique no mapa para colocar os vértices")
 	if _splitting:
-		banner_changed.emit("Desmembrar %s: contorne a parte que vai se separar  ·  %d vértice(s)  ·  %s  ·  Esc cancela" % [_parent_name(_draft_parent), n, tail], false)
+		banner_changed.emit(tr("Desmembrar %s: contorne a parte que vai se separar  ·  %d vértice(s)  ·  %s  ·  Esc cancela") % [_parent_name(_draft_parent), n, tail], false)
 		return
-	banner_changed.emit("%s em %s  ·  %d vértice(s)  ·  %s  ·  botão direito desfaz  ·  Esc cancela" % [t.name, _parent_name(_draft_parent), n, tail], false)
+	banner_changed.emit(tr("%s em %s  ·  %d vértice(s)  ·  %s  ·  botão direito desfaz  ·  Esc cancela") % [tr(t.name), _parent_name(_draft_parent), n, tail], false)
 
 
 func _on_draft_closed(points: PackedVector2Array) -> void:
@@ -153,8 +153,8 @@ func _on_draft_closed(points: PackedVector2Array) -> void:
 	var r: Dictionary = world.subdivisions.create_unit(points, active_type, _draft_parent, map.territory_of(world.player), world.player.region, world.player.iso)
 	if r.ok:
 		var u: Dictionary = world.subdivisions.units[r.id]
-		var clip_note := ", recortada pelos limites existentes" if r.clipped else ""
-		_say("%s (%s) criada em %s%s." % [u.name, world.subdivisions.get_type(u.type).name, _parent_name(u.parent), clip_note])
+		var clip_note := tr(", recortada pelos limites existentes") if r.clipped else ""
+		_say(tr("%s (%s) criada em %s%s.") % [u.name, tr(world.subdivisions.get_type(u.type).name), _parent_name(u.parent), clip_note])
 	else:
 		_say(r.msg, true)
 	map.refresh_units()
@@ -168,9 +168,9 @@ func _send_unit_to_parliament(points: PackedVector2Array) -> void:
 	if not check.ok:
 		_say(check.msg, true)
 	elif not world.in_office:
-		_say("Na oposição, você não propõe novas unidades.", true)
+		_say(tr("Na oposição, você não propõe novas unidades."), true)
 	else:
-		var r: Dictionary = world.legislation.present_unit(world, {"kind": "new_unit", "points": points, "type": active_type, "parent": _draft_parent}, "Criação de %s em %s" % [world.subdivisions.get_type(active_type).name, _parent_name(_draft_parent)])
+		var r: Dictionary = world.legislation.present_unit(world, {"kind": "new_unit", "points": points, "type": active_type, "parent": _draft_parent}, tr("Criação de %s em %s") % [tr(world.subdivisions.get_type(active_type).name), _parent_name(_draft_parent)])
 		_say(r.msg)
 	_rebuild()
 	banner_changed.emit("", false)
@@ -283,7 +283,7 @@ func _toggle_merge(id: int) -> void:
 		if _merge_ids.size() > 1:
 			_merge_ids.erase(id)
 	elif subs.units[id].parent != subs.units[_merge_ids[0]].parent:
-		_say("%s está em outro nível da hierarquia." % subs.units[id].name, true)
+		_say(tr("%s está em outro nível da hierarquia.") % subs.units[id].name, true)
 		return
 	else:
 		_merge_ids.append(id)
@@ -302,7 +302,7 @@ func confirm_merge() -> void:
 		_say(r.msg, true)
 		return
 	_end_merge()
-	_say("%s agora formam %s." % [", ".join(names), subs.units[r.id].name])
+	_say(tr("%s agora formam %s.") % [", ".join(names), subs.units[r.id].name])
 	select_unit(r.id)
 	map.refresh_units()
 
@@ -333,15 +333,15 @@ func _finish_split(points: PackedVector2Array) -> void:
 		if not check.ok:
 			_say(check.msg, true)
 		elif not world.in_office:
-			_say("Na oposição, você não propõe novas unidades.", true)
+			_say(tr("Na oposição, você não propõe novas unidades."), true)
 		else:
-			_say(world.legislation.present_unit(world, {"kind": "split_unit", "unit": _draft_parent, "points": points}, "Desmembramento de %s" % subs.units[_draft_parent].name).msg)
+			_say(world.legislation.present_unit(world, {"kind": "split_unit", "unit": _draft_parent, "points": points}, tr("Desmembramento de %s") % subs.units[_draft_parent].name).msg)
 		_rebuild()
 		banner_changed.emit("", false)
 		return
 	var r: Dictionary = subs.split_unit(_draft_parent, points, world.player.region)
 	if r.ok:
-		_say("%s se separou de %s." % [subs.units[r.id].name, subs.units[_draft_parent].name])
+		_say(tr("%s se separou de %s.") % [subs.units[r.id].name, subs.units[_draft_parent].name])
 		map.refresh_units()
 	else:
 		_say(r.msg, true)
@@ -370,14 +370,14 @@ func _commit_unit(id: int, edit: LineEdit) -> void:
 func _ask_delete(id: int) -> void:
 	var u: Dictionary = world.subdivisions.units[id]
 	var below: int = world.subdivisions.count_descendants(id)
-	var text := "Apagar %s?" % u.name
+	var text := tr("Apagar %s?") % u.name
 	if below > 0:
-		text = "Apagar %s e as %d unidade(s) dentro dela?" % [u.name, below]
+		text = tr("Apagar %s e as %d unidade(s) dentro dela?") % [u.name, below]
 	confirm_requested.emit(text, func():
 		if map.drawing:
 			map.cancel_draft()
 		world.subdivisions.delete_unit(id)
-		_say("%s apagada." % u.name)
+		_say(tr("%s apagada.") % u.name)
 		select_unit(-1)
 		map.refresh_units())
 
@@ -409,8 +409,8 @@ func _rebuild() -> void:
 	_rebuild_tree()
 	_rebuild_detail()
 	var t: Dictionary = subs.get_type(active_type)
-	_context.text = "Próxima unidade: %s em %s" % [t.get("name", ""), _parent_name(selected_unit)]
-	_draw_button.text = "Cancelar desenho (Esc)" if map.drawing else "Desenhar unidade (N)"
+	_context.text = tr("Próxima unidade: %s em %s") % [tr(t.get("name", "")), _parent_name(selected_unit)]
+	_draw_button.text = tr("Cancelar desenho (Esc)") if map.drawing else tr("Desenhar unidade (N)")
 
 
 func _rebuild_types() -> void:
@@ -455,7 +455,7 @@ func _tree_row(text: String, depth: int, id: int, color: Color) -> void:
 	if kids > 0:
 		var open: bool = _expanded.has(id)
 		arrow.text = "▾" if open else "▸"
-		arrow.tooltip_text = "Recolher" if open else "Mostrar %d unidade(s) dentro desta" % kids
+		arrow.tooltip_text = tr("Recolher") if open else tr("Mostrar %d unidade(s) dentro desta") % kids
 		arrow.pressed.connect(_toggle_expanded.bind(id))
 	var b: Button = row.get_node("%unit")
 	b.text = text
@@ -500,9 +500,9 @@ func _search_rows(query: String) -> void:
 	for u: Dictionary in found:
 		_tree_row("%s%s  ·  %s" % ["★ " if subs.is_capital(u.id) else "", subs.path_of(u.id), subs.get_type(u.type).name], 0, u.id, subs.unit_color(u).lightened(0.25))
 	if total > found.size():
-		_hint(_tree_box, "Mostrando %d de %d resultados." % [found.size(), total])
+		_hint(_tree_box, tr("Mostrando %d de %d resultados.") % [found.size(), total])
 	elif total == 0:
-		_hint(_tree_box, "Nenhuma unidade com esse nome.")
+		_hint(_tree_box, tr("Nenhuma unidade com esse nome."))
 
 
 func _rebuild_tree() -> void:
@@ -512,7 +512,7 @@ func _rebuild_tree() -> void:
 	if query != "":
 		_search_rows(query)
 		return
-	_tree_row("%s  ·  país" % _country_name(), 0, -1, UiKit.TEXT)
+	_tree_row(tr("%s  ·  país") % _country_name(), 0, -1, UiKit.TEXT)
 	var roots := []
 	for iso: String in world.owned_isos(world.player):
 		roots.append_array(subs.roots_of(iso))
@@ -523,7 +523,7 @@ func _rebuild_tree() -> void:
 		var u: Dictionary = e.unit
 		_tree_row("%s%s  ·  %s" % ["★ " if subs.is_capital(u.id) else "", u.name, subs.get_type(u.type).name], int(e.depth) + 1, u.id, subs.unit_color(u).lightened(0.25))
 	if subs.units.is_empty():
-		_hint(_tree_box, "Nenhuma unidade criada ainda.")
+		_hint(_tree_box, tr("Nenhuma unidade criada ainda."))
 
 
 func _rebuild_detail() -> void:
@@ -555,7 +555,7 @@ func _rebuild_detail() -> void:
 		map.refresh_units()
 		_dirty = true)
 	var share := float(u.area) / world.territories.area_of(world.player, world)
-	(box.get_node("%info") as Label).text = "≈ %s do território nacional  ·  cerca de %s mi de habitantes  ·  %d subunidade(s)" % [UiKit.pct(share), UiKit.num(world.player.pop * subs.pop_share(id), 2), subs.count_descendants(id)]
+	(box.get_node("%info") as Label).text = tr("≈ %s do território nacional  ·  cerca de %s mi de habitantes  ·  %d subunidade(s)") % [UiKit.pct(share), UiKit.num(world.player.pop * subs.pop_share(id), 2), subs.count_descendants(id)]
 	_add_capital_controls(box, id)
 	box.get_node("%focus").pressed.connect(func(): map.focus_on_point(u.center))
 	box.get_node("%delete").pressed.connect(_ask_delete.bind(id))
@@ -582,7 +582,7 @@ func _add_country_capital() -> void:
 	if capital >= 0:
 		_capital_link(link, "★ %s" % subs.path_of(capital), capital)
 	else:
-		note.text = "%s está sem capital. Selecione uma unidade para escolher." % _country_name()
+		note.text = tr("%s está sem capital. Selecione uma unidade para escolher.") % _country_name()
 	_detail_box.add_child(box)
 
 
@@ -594,7 +594,7 @@ func _add_capital_controls(box: Control, id: int) -> void:
 	(box.get_node("%no_capital") as Label).visible = own < 0 and not subs.children_of(id).is_empty()
 	if own >= 0:
 		var link: Button = CAPITAL_LINK.instantiate()
-		_capital_link(link, "★ Capital desta unidade: %s" % subs.units[own].name, own)
+		_capital_link(link, tr("★ Capital desta unidade: %s") % subs.units[own].name, own)
 		list.add_child(link)
 	var holders: Array = [_iso()]
 	var chain := subs.chain_of(id).slice(0, -1)
@@ -604,7 +604,7 @@ func _add_capital_controls(box: Control, id: int) -> void:
 		var holder_name: String = _country_name() if holder is String else String(subs.units[holder].name)
 		var on: bool = subs.capital_of(holder) == id
 		var b: Button = CAPITAL_TOGGLE.instantiate()
-		b.text = "★ Capital de %s: remover" % holder_name if on else "Tornar capital de %s" % holder_name
+		b.text = tr("★ Capital de %s: remover") % holder_name if on else tr("Tornar capital de %s") % holder_name
 		b.pressed.connect(_toggle_capital.bind(holder, id))
 		if on:
 			b.add_theme_color_override("font_color", UiKit.ACCENT)
@@ -616,13 +616,13 @@ func _toggle_capital(holder: Variant, id: int) -> void:
 	var holder_name: String = _country_name() if holder is String else String(subs.units[holder].name)
 	if subs.capital_of(holder) == id:
 		subs.clear_capital(holder)
-		_say("%s deixou de ser capital de %s." % [subs.units[id].name, holder_name])
+		_say(tr("%s deixou de ser capital de %s.") % [subs.units[id].name, holder_name])
 	else:
 		var r: Dictionary = subs.set_capital(holder, id)
 		if not r.ok:
 			_say(r.msg, true)
 			return
-		_say("%s agora é capital de %s." % [subs.units[id].name, holder_name])
+		_say(tr("%s agora é capital de %s.") % [subs.units[id].name, holder_name])
 	map.refresh_units()
 	_rebuild()
 

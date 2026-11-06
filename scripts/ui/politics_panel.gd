@@ -79,13 +79,13 @@ func _rebuild() -> void:
 	var iso := world.player.iso
 	var data := politics.data_of(iso)
 	var mine := politics.player_party(world)
-	_party_label.text = "%s (%s)  ·  %s" % [mine.name, mine.short, Politics.FAMILIES[mine.family].label]
+	_party_label.text = "%s (%s)  ·  %s" % [mine.name, mine.short, tr(Politics.FAMILIES[mine.family].label)]
 	_fill_houses(data)
 	var fund := politics.party_fund(world)
-	_fund.text = "Fundo de %s: %s  ·  entra %s por mês" % [mine.short, UiKit.millions(fund), UiKit.millions(politics.fund_income(world, mine))]
-	(%CriticarOGoverno6 as Button).text = "Criticar o governo (%s)" % UiKit.millions(politics.fund_price(world, "criticize"))
-	(%FazerCampanha10 as Button).text = "Fazer campanha (%s)" % UiKit.millions(politics.fund_price(world, "campaign"))
-	(%MocaoDeCensura15 as Button).text = "Moção de censura (%s)" % UiKit.millions(politics.fund_price(world, "censure"))
+	_fund.text = tr("Fundo de %s: %s  ·  entra %s por mês") % [mine.short, UiKit.millions(fund), UiKit.millions(politics.fund_income(world, mine))]
+	(%CriticarOGoverno6 as Button).text = tr("Criticar o governo (%s)") % UiKit.millions(politics.fund_price(world, "criticize"))
+	(%FazerCampanha10 as Button).text = tr("Fazer campanha (%s)") % UiKit.millions(politics.fund_price(world, "campaign"))
+	(%MocaoDeCensura15 as Button).text = tr("Moção de censura (%s)") % UiKit.millions(politics.fund_price(world, "censure"))
 	(%poll as PollBox).refresh()
 	(%UltimaEleicao as Button).disabled = not data.has("last_election")
 	var dots := []
@@ -99,7 +99,7 @@ func _rebuild() -> void:
 	var seats := politics.government_seats(iso)
 	var total: int = data.seats_total
 	var majority := seats * 2 > total
-	_majority.text = "Governo: %d de %d assentos (%s), %s" % [seats, total, UiKit.pct(float(seats) / total, 0), "com maioria" if majority else "sem maioria"]
+	_majority.text = tr("Governo: %d de %d assentos (%s), %s") % [seats, total, UiKit.pct(float(seats) / total, 0), tr("com maioria") if majority else tr("sem maioria")]
 	_majority.add_theme_color_override("font_color", UiKit.GREEN if majority else UiKit.RED)
 	for child in _rows.get_children():
 		_rows.remove_child(child)
@@ -131,7 +131,7 @@ func _fill_houses(data: Dictionary) -> void:
 		for p: Dictionary in house.parties:
 			if p.id in data.coalition:
 				seats += int(p.seats)
-		views[i][1].text = "%d assentos  ·  governo com %d" % [int(house.total), seats]
+		views[i][1].text = tr("%d assentos  ·  governo com %d") % [int(house.total), seats]
 	_house_tabs.tabs_visible = houses.size() > 1
 	if houses.size() == 1:
 		_house_tabs.current_tab = 0
@@ -143,7 +143,7 @@ func _party_row(p: Dictionary, data: Dictionary) -> Control:
 	var in_gov: bool = p.id in data.coalition
 	var name_button: Button = row.get_node("%name_button")
 	name_button.text = "%s  ·  %d  ·  %s" % [p.short, int(p.seats), UiKit.pct(p.support, 0)]
-	name_button.tooltip_text = "%s. %s. Fundo: %s. Clique para ver os políticos e a bússola." % [p.name, Politics.FAMILIES[p.family].label, UiKit.millions(float(p.get("funds", 0.0)))]
+	name_button.tooltip_text = tr("%s. %s. Fundo: %s. Clique para ver os políticos e a bússola.") % [p.name, tr(Politics.FAMILIES[p.family].label), UiKit.millions(float(p.get("funds", 0.0)))]
 	name_button.name = "party_%d" % int(p.id)
 	name_button.pressed.connect(func(): party_detail_requested.emit(p.id))
 	name_button.add_theme_color_override("font_color", UiKit.ACCENT if p.id == int(data.player_party) else UiKit.TEXT)
@@ -155,11 +155,11 @@ func _party_row(p: Dictionary, data: Dictionary) -> Control:
 	dismiss.visible = not ruling and world.in_office and in_gov
 	invite.visible = not ruling and world.in_office and not in_gov
 	if ruling:
-		tag.text = "seu governo" if world.in_office else "governo"
+		tag.text = tr("seu governo") if world.in_office else tr("governo")
 	elif not world.in_office:
-		tag.text = "seu partido" if p.id == int(data.player_party) else ("aliado do governo" if in_gov else "oposição")
+		tag.text = tr("seu partido") if p.id == int(data.player_party) else (tr("aliado do governo") if in_gov else tr("oposição"))
 	dismiss.pressed.connect(_on_dismiss.bind(p.id))
-	invite.text = "Convidar (%s)" % UiKit.millions(world.politics.fund_price(world, "invite"))
+	invite.text = tr("Convidar (%s)") % UiKit.millions(world.politics.fund_price(world, "invite"))
 	invite.pressed.connect(_on_invite.bind(p.id))
 	return row
 
@@ -167,7 +167,7 @@ func _party_row(p: Dictionary, data: Dictionary) -> Control:
 func _bill_row(b: Dictionary) -> Control:
 	var wait := world.politics.bill_wait(world, b.id)
 	var button: Button = BILL_ROW.instantiate()
-	button.text = b.name if wait == 0 else "%s (%d meses)" % [b.name, wait]
+	button.text = tr(b.name) if wait == 0 else tr("%s (%d meses)") % [tr(b.name), wait]
 	button.tooltip_text = b.desc
 	button.pressed.connect(_on_vote.bind(b.id))
 	button.disabled = not world.in_office or wait > 0 or (b.get("election", false) and world.player.dem < 4.0)

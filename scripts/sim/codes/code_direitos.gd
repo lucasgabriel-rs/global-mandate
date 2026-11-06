@@ -11,6 +11,7 @@ extends LawCode
 const RANK_LAW := 60
 const RANK_COMPLEMENTARY := 70
 
+# i18n-begin
 const RIGHTS := {
 	"expressao": "a liberdade de expressão", "imprensa": "a liberdade de imprensa", "associacao": "a liberdade de reunião e associação",
 	"culto": "a liberdade de culto", "privacidade": "a privacidade e o sigilo das comunicações", "greve": "o direito de greve",
@@ -18,9 +19,12 @@ const RIGHTS := {
 	"saude": "a saúde pública gratuita", "moradia": "a moradia digna", "internet": "o acesso à internet", "voto": "o voto",
 	"arma": "o porte de arma", "aborto": "o aborto legal",
 }
+# i18n-end
 ## Direitos civis e políticos: entram no índice de liberdades.
 const CIVIL := ["expressao", "imprensa", "associacao", "culto", "privacidade", "ir_vir", "internet", "voto"]
+# i18n-begin
 const SCOPES := {"todos": "todas as pessoas", "adultos": "os maiores de 18 anos", "cidadaos": "os cidadãos"}
+# i18n-end
 ## Quanto do efeito de um direito vale para cada alcance: restringir aos cidadãos deixa estrangeiros de fora.
 const SCOPE_WEIGHT := {"todos": 1.0, "adultos": 0.85, "cidadaos": 0.7}
 ## Efeito próprio de cada direito, por mês, além do peso geral na aprovação e na estabilidade.
@@ -36,20 +40,28 @@ const RIGHT_EFFECTS := {
 	"arma": {"stability": -0.003},
 	"aborto": {"stability": -0.001},
 }
+# i18n-begin
 const DUTIES := {
 	"tributos": "pagar os tributos", "vacinacao": "vacinar-se e vacinar os filhos", "alistamento": "alistar-se nas Forças Armadas aos 18 anos",
 	"voto": "votar nas eleições",
 }
+# i18n-end
 const DUTY_EFFECTS := {
 	"tributos": {"evasion": -0.01},
 	"vacinacao": {"approval": -0.002, "tfp": 0.0002},
 	"alistamento": {"approval": -0.001},
 	"voto": {"approval": -0.002, "stability": 0.001},
 }
+# i18n-begin
 const DRAFTEES := {"homens": "os homens", "todos": "homens e mulheres"}
+# i18n-end
+# i18n-begin
 const OUTLETS := {"imprensa": "a imprensa", "internet": "a internet", "artes": "as artes e os espetáculos"}
+# i18n-end
 const LEVELS := {"1": "leve", "2": "moderado", "3": "rigoroso"}
+# i18n-begin
 const SERVICES := {"redes": "as redes sociais estrangeiras", "noticias": "os sites de notícias estrangeiros", "vpn": "as VPNs e ferramentas de anonimato"}
+# i18n-end
 
 ## Parte de cada geração de 18 anos convocada de fato, e o tamanho de uma geração de homens na população.
 const DRAFT_RATE := 0.15
@@ -208,37 +220,37 @@ func apply(world: GameWorld, leg: Legislation, op: String, values: Dictionary, _
 		"dr_right":
 			var r := String(values.get("right", ""))
 			leg.stand("direitos:right:" + r, {"on": true, "scope": String(values.get("scope", "todos"))}, norm_id, prio)
-			return "garante %s" % RIGHTS.get(r, r)
+			return tr("garante %s") % tr(RIGHTS.get(r, r))
 		"dr_suspend":
 			var r := String(values.get("right", ""))
 			leg.stand("direitos:right:" + r, {"on": false, "scope": "todos"}, norm_id, prio)
-			return "suspende %s" % RIGHTS.get(r, r)
+			return tr("suspende %s") % tr(RIGHTS.get(r, r))
 		"dr_duty":
 			var d := String(values.get("duty", ""))
 			leg.stand("direitos:duty:" + d, {"on": true}, norm_id, prio)
-			return "dever de %s" % DUTIES.get(d, d)
+			return tr("dever de %s") % tr(DUTIES.get(d, d))
 		"dr_military":
 			var months := clampi(roundi(float(values.get("months", 12))), 1, 60)
 			leg.stand("direitos:military", {"months": months, "who": String(values.get("who", "homens"))}, norm_id, prio)
-			return "serviço militar de %d meses" % months
+			return tr("serviço militar de %d meses") % months
 		"dr_school":
 			var age := clampi(roundi(float(values.get("age", 17))), 6, 21)
 			leg.stand("direitos:school", {"age": age}, norm_id, prio)
-			return "escola obrigatória até os %d anos" % age
+			return tr("escola obrigatória até os %d anos") % age
 		"dr_censor":
 			leg.stand("direitos:censor:" + String(values.get("outlet", "")), {"on": true}, norm_id, prio)
-			return "censura prévia"
+			return tr("censura prévia")
 		"dr_regulate":
 			leg.stand("direitos:regulate:" + String(values.get("outlet", "")), {"level": int(String(values.get("level", "1")))}, norm_id, prio)
-			return "conselho de regulação"
+			return tr("conselho de regulação")
 		"dr_block":
 			leg.stand("direitos:block:" + String(values.get("service", "")), {"on": true}, norm_id, prio)
-			return "bloqueio na internet"
+			return tr("bloqueio na internet")
 		"dr_emergency":
 			var days := clampi(roundi(float(values.get("days", 30))), 1, 365)
 			leg.stand("direitos:emergency", {"until": world.day_index + days, "days": days}, norm_id, prio)
-			world.emit_news("Estado de emergência decretado por %d dias." % days, "crise", world.player)
-			return "estado de emergência por %d dias" % days
+			world.emit_news(tr("Estado de emergência decretado por %d dias.") % days, "crise", world.player)
+			return tr("estado de emergência por %d dias") % days
 	return ""
 
 

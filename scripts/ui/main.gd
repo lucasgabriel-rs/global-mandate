@@ -69,9 +69,13 @@ var _skip_left := 0
 var _skip_total := 0
 var _skip_before := {}
 var _skip_news: Array = []
+## A troca de idioma só refaz a tela depois que o mundo existe; antes disso não há o que refazer.
+var _lang_ready := false
+var _lang_pending := false
 
 
 func _ready() -> void:
+	Lang.startup()
 	map.country_clicked.connect(_on_country_clicked)
 	map.country_hovered.connect(_on_country_hovered)
 	hud.debug.main = self
@@ -106,6 +110,7 @@ func _ready() -> void:
 	await _boot()
 	_build_start_screen()
 	_hide_loading()
+	_lang_ready = true
 	var autotest := load("res://tests/ui_drive.gd") if OS.get_cmdline_user_args().has("--ui-test") else null
 	if OS.get_cmdline_user_args().has("--ui-divisions"):
 		autotest = load("res://tests/ui_divisions.gd")
@@ -247,7 +252,7 @@ func _wait_task(id: int) -> void:
 
 ## Abertura do jogo: o mapa e o mundo se montam ao mesmo tempo, em outras threads.
 func _boot() -> void:
-	_show_loading("Preparando o mundo...")
+	_show_loading(tr("Preparando o mundo..."))
 	await get_tree().process_frame
 	var fresh := GameWorld.new()
 	var world_task := WorkerThreadPool.add_task(fresh.setup.bind(0), true, "mundo")
@@ -257,7 +262,7 @@ func _boot() -> void:
 	while not WorkerThreadPool.is_group_task_completed(shapes):
 		await get_tree().process_frame
 	WorkerThreadPool.wait_for_group_task_completion(shapes)
-	(_loading_screen.get_node("%status") as Label).text = "Desenhando o mapa..."
+	(_loading_screen.get_node("%status") as Label).text = tr("Desenhando o mapa...")
 	while not map.build_features_slice(BOOT_SLICE_USEC):
 		await get_tree().process_frame
 	await _wait_task(world_task)
@@ -269,6 +274,32 @@ func idle() -> void:
 	join_sim()
 	while loading:
 		await get_tree().process_frame
+
+
+# --- Idioma ---------------------------------------------------------------------
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_TRANSLATION_CHANGED and _lang_ready and not _lang_pending:
+		# Todos os nós recebem o aviso de uma vez; refaz a tela uma vez só, no fim do quadro.
+		_lang_pending = true
+		_on_language_changed.call_deferred()
+
+
+## Cenas se traduzem sozinhas; aqui se refaz o que é montado em código com textos já traduzidos.
+func _on_language_changed() -> void:
+	_lang_pending = false
+	join_sim()
+	world.localize_country_names()
+	if start_screen and _start_pick:
+		_pick_start(_start_pick)
+	if playing:
+		hud.refresh_leader()
+		hud.refresh(true)
+		if hud.selected:
+			hud.show_country(hud.selected)
+		var center := legislation_center()
+		if center:
+			open_legislation(center.current_tab())
 
 
 # --- Tela inicial --------------------------------------------------------------
@@ -307,21 +338,21 @@ func _pick_start(c: Country) -> void:
 	map.select(c)
 	_start_title.text = c.name
 	_start_button.disabled = false
-	var regime := "Democracia: eleição a cada 4 anos" if c.dem >= 6.0 else ("Regime híbrido: eleição a cada 4 anos" if c.dem >= 4.0 else "Regime autoritário: risco de golpe e revolta")
+	var regime := tr("Democracia: eleição a cada 4 anos") if c.dem >= 6.0 else (tr("Regime híbrido: eleição a cada 4 anos") if c.dem >= 4.0 else tr("Regime autoritário: risco de golpe e revolta"))
 	var lines := [
 		regime,
-		"PIB: %s  ·  per capita: US$ %s" % [UiKit.money(c.y_usd()), UiKit.thousand(c.gdp_pc())],
-		"População: %s mi  ·  crescimento potencial: %s" % [UiKit.num(c.pop, 1), UiKit.pct(c.g0)],
-		"Inflação: %s  ·  juro: %s  ·  desemprego: %s" % [UiKit.pct(c.pi_yoy), UiKit.pct(c.rate), UiKit.pct(c.unemp)],
-		"Dívida/PIB: %s  ·  juros da dívida: %s do PIB" % [UiKit.pct(c.debt_ratio, 0), UiKit.pct(c.avg_rate * c.debt_ratio)],
-		"Tropas: %s mil  ·  ogivas: %s" % [UiKit.thousand(c.troops), UiKit.thousand(c.nukes)],
+		tr("PIB: %s  ·  per capita: US$ %s") % [UiKit.money(c.y_usd()), UiKit.thousand(c.gdp_pc())],
+		tr("População: %s mi  ·  crescimento potencial: %s") % [UiKit.num(c.pop, 1), UiKit.pct(c.g0)],
+		tr("Inflação: %s  ·  juro: %s  ·  desemprego: %s") % [UiKit.pct(c.pi_yoy), UiKit.pct(c.rate), UiKit.pct(c.unemp)],
+		tr("Dívida/PIB: %s  ·  juros da dívida: %s do PIB") % [UiKit.pct(c.debt_ratio, 0), UiKit.pct(c.avg_rate * c.debt_ratio)],
+		tr("Tropas: %s mil  ·  ogivas: %s") % [UiKit.thousand(c.troops), UiKit.thousand(c.nukes)],
 	]
 	if c.peg == 2:
-		lines.append("Moeda: euro (juros definidos pelo BCE)")
+		lines.append(tr("Moeda: euro (juros definidos pelo BCE)"))
 	elif c.peg == 1:
-		lines.append("Moeda ancorada no dólar")
+		lines.append(tr("Moeda ancorada no dólar"))
 	if world.diplomacy.in_war(c.idx):
-		lines.append("EM GUERRA no início da partida")
+		lines.append(tr("EM GUERRA no início da partida"))
 	_start_info.text = "\n".join(lines)
 
 
@@ -337,9 +368,9 @@ func _begin(character := {}, choice := {}) -> void:
 	map.reset_view()
 	map.focus_on(_start_pick)
 	if world.in_office:
-		world.emit_news("%s toma posse em %s. O mundo observa." % [world.leader.name, _start_pick.name], "politica", _start_pick)
+		world.emit_news(tr("%s toma posse em %s. O mundo observa.") % [world.leader.name, _start_pick.name], "politica", _start_pick)
 	else:
-		world.emit_news("%s lidera a oposição em %s contra o governo de %s." % [world.leader.name, _start_pick.name, world.politics.ruling_party(_start_pick.iso).get("name", "")], "politica", _start_pick)
+		world.emit_news(tr("%s lidera a oposição em %s contra o governo de %s.") % [world.leader.name, _start_pick.name, world.politics.ruling_party(_start_pick.iso).get("name", "")], "politica", _start_pick)
 
 
 func _enter_game() -> void:
@@ -587,7 +618,7 @@ func _member_row(member: Dictionary, party: Dictionary, on_press := Callable()) 
 	var row: Control = MEMBER_ROW.instantiate()
 	var face: Countryball = row.get_node("%face")
 	face.show_person(world.leader if member.get("player", false) else Character.for_politician(member), world.player.iso)
-	var text := "%s, %d anos  ·  %s  ·  competência %d%%%s" % [member.name, People.age_of(member, world), party.short, int(float(member.competence) * 100.0), "  ·  doente" if member.has("illness") else ""]
+	var text := tr("%s, %d anos  ·  %s  ·  competência %d%%%s") % [member.name, People.age_of(member, world), party.short, int(float(member.competence) * 100.0), tr("  ·  doente") if member.has("illness") else ""]
 	var pick: Button = row.get_node("%pick")
 	var label: Label = row.get_node("%label")
 	pick.visible = on_press.is_valid()
@@ -596,7 +627,7 @@ func _member_row(member: Dictionary, party: Dictionary, on_press := Callable()) 
 		pick.text = text
 		pick.pressed.connect(on_press)
 	else:
-		label.text = ("Você: " if member.get("player", false) else "") + text
+		label.text = (tr("Você: ") if member.get("player", false) else "") + text
 	var compass: CompassView = row.get_node("%compass")
 	compass.points = [{"econ": member.econ, "social": member.social, "color": Color.WHITE, "big": true}]
 	return row
@@ -604,7 +635,7 @@ func _member_row(member: Dictionary, party: Dictionary, on_press := Callable()) 
 
 func _open_party_detail(id: int) -> void:
 	var party: Dictionary = world.politics.party_of(world.player.iso, id)
-	var dim := _modal(PARTY_DETAIL, party.name, "%s  ·  %d assentos  ·  %s dos votos. A bússola do partido é a média dos políticos." % [Politics.FAMILIES[party.family].label, int(party.seats), UiKit.pct(party.support, 0)])
+	var dim := _modal(PARTY_DETAIL, party.name, tr("%s  ·  %d assentos  ·  %s dos votos. A bússola do partido é a média dos políticos.") % [tr(Politics.FAMILIES[party.family].label), int(party.seats), UiKit.pct(party.support, 0)])
 	var compass: CompassView = dim.get_node("%party_compass")
 	var dots := []
 	for m: Dictionary in party.members:
@@ -622,12 +653,12 @@ func _open_minister_picker(post: String) -> void:
 	for p: Dictionary in world.politics.portfolios(world):
 		if p.id == post:
 			portfolio = p
-	var dim := _modal(MINISTER_PICKER, "Ministério: %s" % portfolio.label, String(portfolio.desc))
+	var dim := _modal(MINISTER_PICKER, tr("Ministério: %s") % tr(portfolio.label), tr(portfolio.desc))
 	var rows: Control = dim.get_node("%rows")
 	for e: Dictionary in world.politics.eligible_ministers(world, post):
 		rows.add_child(_member_row(e.member, e.party, func():
 			var r: Dictionary = world.politics.appoint(world, post, e.party.id, e.member.id)
-			hud._cabinet.say(("%s assume a pasta." % e.member.name) if r.ok else r.msg, not r.ok)
+			hud._cabinet.say((tr("%s assume a pasta.") % e.member.name) if r.ok else r.msg, not r.ok)
 			_close_modal(dim)))
 	dim.get_node("%Cancelar").pressed.connect(func(): _close_modal(dim))
 
@@ -641,11 +672,11 @@ func _open_talk(target: Country, invited := false) -> void:
 		return
 	var theirs := Dialogue.leader_of(world, target)
 	var party_now: Dictionary = world.politics.player_party(world)
-	var dim := _modal(TALK, "Conversa com %s" % theirs.get("name", "o líder"), "%s  ·  %s  ·  %s, %d anos, %s" % [target.name, world.politics.ruling_party(target.iso).get("name", ""), theirs.get("name", ""), People.age_of(theirs, world), Dialogue.temper(theirs)])
+	var dim := _modal(TALK, tr("Conversa com %s") % theirs.get("name", tr("o líder")), tr("%s  ·  %s  ·  %s, %d anos, %s") % [target.name, world.politics.ruling_party(target.iso).get("name", ""), theirs.get("name", ""), People.age_of(theirs, world), Dialogue.temper(theirs)])
 	(dim.get_node("%face") as Countryball).show_person(Character.for_politician(theirs), target.iso)
 	var compass: CompassView = dim.get_node("%talk_compass")
 	compass.points = [{"econ": theirs.get("econ", 0.0), "social": theirs.get("social", 0.0), "color": Color("f2b33d"), "big": true}, {"econ": party_now.get("econ", 0.0), "social": party_now.get("social", 0.0), "color": Color.WHITE, "big": true}]
-	(dim.get_node("%legend") as Label).text = "Dourado: %s. Branco: seu partido." % theirs.get("name", "líder")
+	(dim.get_node("%legend") as Label).text = tr("Dourado: %s. Branco: seu partido.") % theirs.get("name", tr("líder"))
 	(dim.get_node("%talk_reply") as Label).text = "“%s”" % opened.greeting
 	dim.get_node("%say_end").pressed.connect(func(): _close_modal(dim))
 	_fill_talk(dim, target, Dialogue.TURNS_PER_MEETING)
@@ -660,7 +691,7 @@ func _fill_talk(dim: Control, target: Country, turns: int) -> void:
 		child.queue_free()
 	var going: bool = turns > 0 and target.alive and prompts.is_empty()
 	box.visible = going
-	remaining.text = "Falas restantes: %d" % turns if going else "A conversa terminou."
+	remaining.text = tr("Falas restantes: %d") % turns if going else tr("A conversa terminou.")
 	if not going:
 		return
 	for option: Dictionary in Dialogue.options(world, target):
@@ -679,8 +710,8 @@ func _fill_talk(dim: Control, target: Country, turns: int) -> void:
 
 func _open_party_picker(country: Country, at_start: bool, on_done: Callable) -> void:
 	var data: Dictionary = world.politics.data_of(country.iso)
-	var body := "Todo político pertence a um partido. Escolha um deles ou crie o seu, e decida se começa no governo ou na oposição." if at_start else "Só é possível mudar de partido uma vez por ano. O partido novo só ganha assentos na próxima eleição."
-	var dim := _modal(PARTY_PICKER, "Escolha seu partido em %s" % country.name, body)
+	var body := tr("Todo político pertence a um partido. Escolha um deles ou crie o seu, e decida se começa no governo ou na oposição.") if at_start else tr("Só é possível mudar de partido uma vez por ano. O partido novo só ganha assentos na próxima eleição.")
+	var dim := _modal(PARTY_PICKER, tr("Escolha seu partido em %s") % country.name, body)
 	var picker: CompassView = dim.get_node("%my_compass")
 	var first_family: Dictionary = Politics.FAMILIES[Politics.FAMILIES.keys()[0]]
 	var idea := {"econ": float(first_family.econ), "social": float(first_family.social)}
@@ -717,9 +748,9 @@ func _open_party_picker(country: Country, at_start: bool, on_done: Callable) -> 
 				apply_role.call())
 		if closed:
 			role_buttons.opposition.disabled = true
-			role_buttons.opposition.tooltip_text = "Regimes fechados não têm eleições."
+			role_buttons.opposition.tooltip_text = tr("Regimes fechados não têm eleições.")
 		var ruling_name: String = world.politics.ruling_party(country.iso).get("name", "")
-		(dim.get_node("%ruling_info") as Label).text = "Hoje governa: %s." % ruling_name if not closed else "Regime fechado, sem eleições: só é possível governar."
+		(dim.get_node("%ruling_info") as Label).text = tr("Hoje governa: %s.") % ruling_name if not closed else tr("Regime fechado, sem eleições: só é possível governar.")
 	var ordered: Array = data.parties.duplicate()
 	ordered.sort_custom(func(a, b): return int(a.seats) > int(b.seats))
 	for p: Dictionary in ordered:
@@ -727,8 +758,8 @@ func _open_party_picker(country: Country, at_start: bool, on_done: Callable) -> 
 		(row.get_node("%chip") as ColorRect).color = p.color
 		var mine: bool = int(data.player_party) == p.id and not at_start
 		var b: Button = row.get_node("%pick")
-		b.text = "%s%s  ·  %s  ·  %s dos votos  ·  %d de %d assentos" % ["Ficar em " if mine else "", p.name, Politics.FAMILIES[p.family].label, UiKit.pct(p.support, 0), int(p.seats), int(data.seats_total)]
-		b.tooltip_text = "%s. Clique para escolher." % p.name
+		b.text = (tr("Ficar em %s  ·  %s  ·  %s dos votos  ·  %d de %d assentos") if mine else tr("%s  ·  %s  ·  %s dos votos  ·  %d de %d assentos")) % [p.name, tr(Politics.FAMILIES[p.family].label), UiKit.pct(p.support, 0), int(p.seats), int(data.seats_total)]
+		b.tooltip_text = tr("%s. Clique para escolher.") % p.name
 		b.pressed.connect(func():
 			_close_modal(dim)
 			on_done.call({"id": p.id, "role": role.value}))
@@ -737,7 +768,7 @@ func _open_party_picker(country: Country, at_start: bool, on_done: Callable) -> 
 	var name_edit: LineEdit = dim.get_node("%party_name")
 	var family: OptionButton = dim.get_node("%party_family")
 	for key: String in Politics.FAMILIES:
-		family.add_item(Politics.FAMILIES[key].label)
+		family.add_item(tr(Politics.FAMILIES[key].label))
 		family.set_item_metadata(family.item_count - 1, key)
 	var color: ColorPickerButton = dim.get_node("%party_color")
 	color.color = Politics.FAMILIES[Politics.FAMILIES.keys()[0]].color
@@ -759,11 +790,11 @@ func _open_party_picker(country: Country, at_start: bool, on_done: Callable) -> 
 	dim.get_node("%FundarPartido").pressed.connect(func():
 		var clean := name_edit.text.strip_edges()
 		if clean == "":
-			warn.text = "Dê um nome ao partido."
+			warn.text = tr("Dê um nome ao partido.")
 			return
 		for p: Dictionary in data.parties:
 			if String(p.name).to_lower() == clean.to_lower():
-				warn.text = "Já existe um partido com esse nome."
+				warn.text = tr("Já existe um partido com esse nome.")
 				return
 		_close_modal(dim)
 		on_done.call({"found": clean, "family": family.get_item_metadata(family.selected), "color": color.color, "econ": idea.econ, "social": idea.social, "role": role.value}))
@@ -862,7 +893,7 @@ func _open_creator(character: Dictionary, on_done: Callable) -> void:
 	var group := Names.group_for(country.iso, country.region)
 	var view: Countryball = dim.get_node("%view")
 	view.show_person(character, country.iso)
-	(dim.get_node("%country_label") as Label).text = "Bandeira: %s" % country.name
+	(dim.get_node("%country_label") as Label).text = tr("Bandeira: %s") % country.name
 	var first_edit: LineEdit = dim.get_node("%first_name_edit")
 	var last_edit: LineEdit = dim.get_node("%last_name_edit")
 	var show_name := func():
@@ -894,10 +925,10 @@ func _open_creator(character: Dictionary, on_done: Callable) -> void:
 	var age_label: Label = dim.get_node("%age_label")
 	var year_now: int = world.year
 	age_slider.value = clampf(float(year_now - int(character.get("birth_year", year_now - 50))), age_slider.min_value, age_slider.max_value)
-	age_label.text = "%d anos" % int(age_slider.value)
+	age_label.text = tr("%d anos") % int(age_slider.value)
 	age_slider.value_changed.connect(func(v: float):
 		character["birth_year"] = year_now - int(v)
-		age_label.text = "%d anos" % int(v))
+		age_label.text = tr("%d anos") % int(v))
 	dim.get_node("%Aleatorio").pressed.connect(func():
 		var fresh := Character.random(world.rng, country.iso, country.region)
 		for key: String in fresh:
@@ -975,7 +1006,7 @@ func _open_menu() -> void:
 	quit_office.visible = world.in_office
 	quit_office.pressed.connect(func():
 		_close_modal(dim)
-		_confirm("Renunciar ao cargo? Isso encerra a sua carreira, e depois você escolhe entre um novo jogo e um novo personagem.", world.resign))
+		_confirm(tr("Renunciar ao cargo? Isso encerra a sua carreira, e depois você escolhe entre um novo jogo e um novo personagem."), world.resign))
 
 
 func _show_help() -> void:
@@ -985,13 +1016,13 @@ func _show_help() -> void:
 
 func _on_game_ended(result: Dictionary) -> void:
 	var titles := {
-		"impeachment": "Impeachment", "golpe": "Deposto", "renuncia": "Renúncia", "assassinato": "Assassinato", "morte": "Fim da vida",
+		"impeachment": tr("Impeachment"), "golpe": tr("Deposto"), "renuncia": tr("Renúncia"), "assassinato": tr("Assassinato"), "morte": tr("Fim da vida"),
 	}
-	var dim := _modal(GAME_OVER, titles.get(result.reason, "Fim de jogo"), result.text)
+	var dim := _modal(GAME_OVER, titles.get(result.reason, tr("Fim de jogo")), result.text)
 	var c := world.player
 	var pc_ratio := (c.y / c.pop) / c.pc0
-	(dim.get_node("%score") as Label).text = "Pontuação final: %s" % UiKit.thousand(result.score)
-	(dim.get_node("%stats") as Label).text = "Tempo no poder: %s anos  ·  Reeleições: %d\nPIB per capita real: %s vezes o de 2025\nDívida/PIB: %s  ·  Inflação: %s  ·  Influência: %dº no mundo" % [
+	(dim.get_node("%score") as Label).text = tr("Pontuação final: %s") % UiKit.thousand(result.score)
+	(dim.get_node("%stats") as Label).text = tr("Tempo no poder: %s anos  ·  Reeleições: %d\nPIB per capita real: %s vezes o de 2025\nDívida/PIB: %s  ·  Inflação: %s  ·  Influência: %dº no mundo") % [
 		UiKit.num(result.years, 1), result.mandates, UiKit.num(pc_ratio, 2), UiKit.pct(c.debt_ratio, 0), UiKit.pct(c.pi_yoy),
 		world.rank_of(c, func(x: Country): return x.influence)]
 	dim.get_node("%NovaPartida").pressed.connect(func():
@@ -1021,15 +1052,15 @@ func _new_character() -> void:
 func open_treaty(target: Country) -> void:
 	if target == null or modal_open:
 		return
-	var dim := _modal(TREATY, "Tratado com %s" % target.name, "O líder de lá é %s (%s)." % [world.politics.leader_of(target.iso).get("name", ""), Dialogue.temper(world.politics.leader_of(target.iso))])
+	var dim := _modal(TREATY, tr("Tratado com %s") % target.name, tr("O líder de lá é %s (%s).") % [world.politics.leader_of(target.iso).get("name", ""), Dialogue.temper(world.politics.leader_of(target.iso))])
 	var pick: OptionButton = dim.get_node("%type_pick")
 	var desc: Label = dim.get_node("%desc")
 	for key: String in Treaties.TYPES:
-		pick.add_item(Treaties.TYPES[key].label)
+		pick.add_item(tr(Treaties.TYPES[key].label))
 		pick.set_item_metadata(pick.item_count - 1, key)
 	var show_desc := func(i: int):
 		var def: Dictionary = Treaties.TYPES[pick.get_item_metadata(i)]
-		desc.text = "%s %s" % [def.desc, "Vale por %d anos." % int(def.term) if int(def.term) > 0 else "Sem prazo."]
+		desc.text = "%s %s" % [tr(def.desc), tr("Vale por %d anos.") % int(def.term) if int(def.term) > 0 else tr("Sem prazo.")]
 	pick.item_selected.connect(show_desc)
 	show_desc.call(0)
 	var note: Label = dim.get_node("%feedback")
@@ -1045,21 +1076,21 @@ func open_election_report() -> void:
 	var report: Dictionary = world.politics.data_of(world.player.iso).get("last_election", {})
 	if report.is_empty() or modal_open:
 		return
-	var dim := _modal(ELECTION_REPORT, "Eleição de %s em %s" % [report.date, report.country])
+	var dim := _modal(ELECTION_REPORT, tr("Eleição de %s em %s") % [report.date, report.country])
 	var lines := [
-		"[color=#8ba2af]Sistema:[/color] %s  ·  cláusula de barreira de %d%%" % [Elections.SYSTEMS[report.system], roundi(float(report.threshold) * 100.0)],
-		"[color=#8ba2af]Regime:[/color] %s" % Elections.HEADS[report.head_system],
-		"[color=#8ba2af]Comparecimento:[/color] %s  ·  %d distritos" % [UiKit.pct(float(report.turnout), 0), int(report.district_total)],
+		tr("[color=#8ba2af]Sistema:[/color] %s  ·  cláusula de barreira de %d%%") % [tr(Elections.SYSTEMS[report.system]), roundi(float(report.threshold) * 100.0)],
+		tr("[color=#8ba2af]Regime:[/color] %s") % tr(Elections.HEADS[report.head_system]),
+		tr("[color=#8ba2af]Comparecimento:[/color] %s  ·  %d distritos") % [UiKit.pct(float(report.turnout), 0), int(report.district_total)],
 	]
 	if not report.head.is_empty():
-		lines.append("[color=#8ba2af]Chefe de governo:[/color] %s, com %s, em %d turno(s)" % [report.head.name, UiKit.pct(float(report.head.share), 0), int(report.head.rounds)])
+		lines.append(tr("[color=#8ba2af]Chefe de governo:[/color] %s, com %s, em %d turno(s)") % [report.head.name, UiKit.pct(float(report.head.share), 0), int(report.head.rounds)])
 	lines.append("")
 	for p: Dictionary in report.parties:
-		lines.append("[color=#%s]■[/color] %s: %s dos votos, %d deputados, %d senadores" % [p.color.to_html(false), p.name, UiKit.pct(float(p.vote), 0), int(p.seats), int(p.upper)])
+		lines.append(tr("[color=#%s]■[/color] %s: %s dos votos, %d deputados, %d senadores") % [p.color.to_html(false), p.name, UiKit.pct(float(p.vote), 0), int(p.seats), int(p.upper)])
 	lines.append("")
 	lines.append("[color=#f2b33d]Distritos[/color]")
 	for d: Dictionary in report.districts:
-		lines.append("%s: %d cadeiras, %s mi de habitantes, maioria de %s" % [d.name, int(d.seats), UiKit.num(float(d.population), 1), d.winner])
+		lines.append(tr("%s: %d cadeiras, %s mi de habitantes, maioria de %s") % [d.name, int(d.seats), UiKit.num(float(d.population), 1), d.winner])
 	(dim.get_node("%report") as RichTextLabel).text = "\n".join(lines)
 	dim.get_node("%close").pressed.connect(func(): _close_modal(dim))
 
@@ -1069,7 +1100,7 @@ func _restart() -> void:
 	playing = false
 	prompts.clear()
 	hud.visible = false
-	_show_loading("Preparando o mundo...")
+	_show_loading(tr("Preparando o mundo..."))
 	var fresh := GameWorld.new()
 	await _wait_task(WorkerThreadPool.add_task(fresh.setup.bind(0), true, "mundo"))
 	_adopt_world(fresh)
@@ -1091,7 +1122,7 @@ func _write_save() -> void:
 	var temp := SAVE_PATH + ".tmp"
 	var f := FileAccess.open(temp, FileAccess.WRITE)
 	if f == null:
-		world.emit_news("Não foi possível salvar: erro %d." % FileAccess.get_open_error(), "crise", null)
+		world.emit_news(tr("Não foi possível salvar: erro %d.") % FileAccess.get_open_error(), "crise", null)
 		return
 	f.store_var(world.to_dict())
 	f.close()
@@ -1100,13 +1131,13 @@ func _write_save() -> void:
 	if check:
 		check.close()
 	if not readable:
-		world.emit_news("Não foi possível salvar: o arquivo não pôde ser conferido.", "crise", null)
+		world.emit_news(tr("Não foi possível salvar: o arquivo não pôde ser conferido."), "crise", null)
 		return
 	var folder := DirAccess.open("user://")
 	if FileAccess.file_exists(SAVE_PATH):
 		folder.rename(SAVE_PATH.get_file(), BACKUP_PATH.get_file())
 	folder.rename(temp.get_file(), SAVE_PATH.get_file())
-	world.emit_news("Partida salva.", "politica", null)
+	world.emit_news(tr("Partida salva."), "politica", null)
 
 
 ## Lê o arquivo e monta o mundo novo em outra thread. O mundo atual só é trocado se tudo der certo.
@@ -1114,7 +1145,7 @@ func _load_game() -> void:
 	join_sim()
 	var was_playing := playing
 	playing = false
-	_show_loading("Carregando a partida...")
+	_show_loading(tr("Carregando a partida..."))
 	var box := {"world": null}
 	await _wait_task(WorkerThreadPool.add_task(_read_save.bind(box), true, "carregar"))
 	var fresh: GameWorld = box.world

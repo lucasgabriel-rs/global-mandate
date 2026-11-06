@@ -93,7 +93,7 @@ func apply(pieces: Array, from: Country, to: Country, world: GameWorld) -> float
 	var capital_name: String = world.subdivisions.units[capital].name if capital >= 0 else ""
 	world.subdivisions.transfer_area(pieces, world.owned_isos(from), to.iso)
 	if capital >= 0 and world.subdivisions.capital_of(from.iso) < 0:
-		world.emit_news("%s perde a capital, %s, para %s." % [from.name, capital_name, to.name], "guerra", from)
+		world.emit_news(tr("%s perde a capital, %s, para %s.") % [from.name, capital_name, to.name], "guerra", from)
 	revision += 1
 	_outlines.clear()
 	world.refresh_map = true

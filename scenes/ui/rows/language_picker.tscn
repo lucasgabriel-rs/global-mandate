@@ -1,0 +1,31 @@
+[gd_scene format=3]
+
+[ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="1_lang"]
+[ext_resource type="Script" path="res://scripts/ui/language_picker.gd" id="2_lang"]
+
+[node name="LanguagePicker" type="HBoxContainer"]
+theme = ExtResource("1_lang")
+theme_override_constants/separation = 8
+
+[node name="Rotulo" type="Label" parent="."]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 12
+text = "Idioma"
+
+[node name="language" type="OptionButton" parent="."]
+unique_name_in_owner = true
+auto_translate_mode = 2
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+mouse_default_cursor_shape = 2
+selected = 0
+item_count = 3
+popup/item_0/text = "Português"
+popup/item_0/id = 0
+popup/item_1/text = "English"
+popup/item_1/id = 1
+popup/item_2/text = "Español"
+popup/item_2/id = 2
+script = ExtResource("2_lang")

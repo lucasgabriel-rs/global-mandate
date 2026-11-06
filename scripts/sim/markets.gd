@@ -8,8 +8,12 @@ const GAS := 1
 const GRAIN := 2
 const METAL := 3
 const CHIP := 4
+# i18n-begin
 const NAMES := ["Petróleo", "Gás", "Grãos", "Metais", "Chips"]
+# i18n-end
+# i18n-begin
 const UNITS := ["US$/bbl", "US$/MMBtu", "US$/t", "índice", "índice"]
+# i18n-end
 const P0 := [78.0, 9.0, 260.0, 100.0, 100.0]
 # Fator de conversão de unidade física/ano em US$ bi/ano ao preço-base.
 # Petróleo: mb/d * 365 * US$78 / 1000. Gás: bcm * 36 MMBtu/mil m³ * US$9 / 1000.

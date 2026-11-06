@@ -25,17 +25,17 @@ func setup(owner_main: Node, target: Dictionary) -> void:
 	world = main.world
 	leg = world.legislation
 	norm = target
-	(%title as Label).text = "Emenda constitucional nº %d" % int(norm.number)
+	(%title as Label).text = tr("Emenda constitucional nº %d") % int(norm.number)
 	(%doc_name as LineEdit).text = norm.title
 	(%doc_ementa as TextEdit).text = norm.ementa
 	%doc_name.text_changed.connect(func(t): norm.title = t)
 	%doc_ementa.text_changed.connect(func(): norm.ementa = %doc_ementa.text)
 	for key: String in Legislation.AMENDMENT_OPS:
-		_op.add_item(Legislation.AMENDMENT_OPS[key])
+		_op.add_item(tr(Legislation.AMENDMENT_OPS[key]))
 		_op.set_item_metadata(_op.item_count - 1, key)
 	_op.item_selected.connect(func(_i): _refresh_form())
 	for key: String in Legislation.ADD_KINDS:
-		_kind.add_item(Legislation.ADD_KINDS[key])
+		_kind.add_item(tr(Legislation.ADD_KINDS[key]))
 		_kind.set_item_metadata(_kind.item_count - 1, key)
 	%add_op.pressed.connect(_add_op)
 	%new_article.pressed.connect(func():
@@ -66,15 +66,15 @@ func _fill_articles() -> void:
 		var row: Control = ARTICLE_ROW.instantiate()
 		row.name = "article_%d" % abs(int(article.id))
 		var select: Button = row.get_node("%select")
-		select.text = ("★ " if article.petrea else "") + String(article.text)
-		select.tooltip_text = "Cláusula pétrea: não pode ser alterada." if article.petrea else String(article.text)
+		select.text = ("★ " if article.petrea else "") + Legislation.article_text(article, true)
+		select.tooltip_text = tr("Cláusula pétrea: não pode ser alterada.") if article.petrea else Legislation.article_text(article, true)
 		select.pressed.connect(func():
 			_article = article
 			_choose_op("alter"))
 		var remove: Button = row.get_node("%delete")
 		remove.disabled = article.petrea
 		if article.petrea:
-			remove.tooltip_text = "Cláusula pétrea: não pode ser excluída."
+			remove.tooltip_text = tr("Cláusula pétrea: não pode ser excluída.")
 		remove.pressed.connect(func():
 			norm.ops = norm.ops.filter(func(o): return int(o.get("article", 0)) != int(article.id))
 			norm.ops.append({"op": "suppress", "article": article.id})
@@ -96,14 +96,14 @@ func _selected_op() -> String:
 func _refresh_form() -> void:
 	var op := _selected_op()
 	var adding := op == "add"
-	(%article_text as Label).text = "Novo dispositivo." if adding else (String(_article.text) if not _article.is_empty() else "Escolha um dispositivo ao lado.")
+	(%article_text as Label).text = tr("Novo dispositivo.") if adding else (Legislation.article_text(_article, true) if not _article.is_empty() else tr("Escolha um dispositivo ao lado."))
 	# Num artigo com parâmetro, "alteração" muda o valor; "substituição" permite reescrever a redação.
 	var is_param: bool = op == "alter" and not _article.is_empty() and String(_article.get("param", "")) != ""
 	(_kind.get_parent() as Control).visible = adding
 	(%new_petrea as Control).visible = adding
 	_text.visible = not is_param and op != "suppress"
 	if not adding and not _article.is_empty() and _text.visible:
-		_text.text = String(_article.text)
+		_text.text = Legislation.article_text(_article, true)
 	elif adding:
 		_text.text = ""
 	var value_row: Control = (%value_edit as Control).get_parent()
@@ -125,7 +125,7 @@ func _refresh_form() -> void:
 				options.clear()
 				var choices: Dictionary = Elections.SYSTEMS if String(_article.param) == "electoral_system" else Elections.HEADS
 				for key: String in choices:
-					options.add_item(choices[key])
+					options.add_item(tr(choices[key]))
 					options.set_item_metadata(options.item_count - 1, key)
 					if key == value:
 						options.select(options.item_count - 1)
@@ -145,7 +145,7 @@ func _fill_rights(current: Array) -> void:
 	var all: Dictionary = LawCatalog.CHOICES.right
 	for key: String in all:
 		var check: CheckBox = CHECK_ROW.instantiate()
-		check.text = all[key]
+		check.text = tr(all[key])
 		check.button_pressed = key in current
 		box.add_child(check)
 		_rights[key] = check
@@ -157,17 +157,17 @@ func _add_op() -> void:
 	if kind == "add":
 		var text := _text.text.strip_edges()
 		if text == "":
-			_note.text = "Escreva o texto do novo dispositivo."
+			_note.text = tr("Escreva o texto do novo dispositivo.")
 			return
 		op["kind"] = _kind.get_item_metadata(_kind.selected)
 		op["text"] = text
 		op["petrea"] = (%new_petrea as CheckBox).button_pressed
 	else:
 		if _article.is_empty():
-			_note.text = "Escolha um dispositivo."
+			_note.text = tr("Escolha um dispositivo.")
 			return
 		if _article.petrea:
-			_note.text = "%s é cláusula pétrea: não pode ser alterado." % _article.label
+			_note.text = tr("%s é cláusula pétrea: não pode ser alterado.") % _article.label
 			return
 		op["article"] = _article.id
 		if kind != "suppress":
@@ -187,13 +187,13 @@ func _add_op() -> void:
 				else:
 					var number := (%value_edit as LineEdit).text.to_int()
 					if number < 0:
-						_note.text = "O valor não pode ser negativo."
+						_note.text = tr("O valor não pode ser negativo.")
 						return
 					op["value"] = number
 			else:
 				var text := _text.text.strip_edges()
-				if text == "" or text == String(_article.text):
-					_note.text = "Mude o texto do dispositivo."
+				if text == "" or text == Legislation.article_text(_article, true):
+					_note.text = tr("Mude o texto do dispositivo.")
 					return
 				op["text"] = text
 	norm.ops.append(op)
@@ -207,8 +207,8 @@ func _fill_ops() -> void:
 		child.queue_free()
 	for op: Dictionary in norm.ops:
 		var row: Control = OP_ROW.instantiate()
-		var shown := leg.preview_op(op)
-		(row.get_node("%op_label") as Label).text = Legislation.AMENDMENT_OPS[op.op]
+		var shown := leg.preview_op(op, true)
+		(row.get_node("%op_label") as Label).text = tr(Legislation.AMENDMENT_OPS[op.op])
 		(row.get_node("%diff") as RichTextLabel).text = Legislation.word_diff(shown.before, shown.after)
 		row.get_node("%remove").pressed.connect(func():
 			norm.ops.erase(op)
@@ -216,8 +216,8 @@ func _fill_ops() -> void:
 		list.add_child(row)
 	if not norm.program.stacks.is_empty():
 		var row: Control = OP_ROW.instantiate()
-		(row.get_node("%op_label") as Label).text = "Artigos programados com blocos"
-		(row.get_node("%diff") as RichTextLabel).text = LawProgram.legal_text(norm.program)
+		(row.get_node("%op_label") as Label).text = tr("Artigos programados com blocos")
+		(row.get_node("%diff") as RichTextLabel).text = LawProgram.legal_text(norm.program, true)
 		row.get_node("%remove").pressed.connect(func():
 			norm.program = LawProgram.empty()
 			_fill_ops())

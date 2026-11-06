@@ -3,8 +3,12 @@ extends RefCounted
 ## Sistema eleitoral: cada país vota por distritos, nas suas unidades subnacionais, com cadeiras repartidas pela
 ## população. O sistema decide como votos viram cadeiras; o regime decide se o chefe de governo é eleito direto.
 
+# i18n-begin
 const SYSTEMS := {"pr": "Proporcional por distritos", "fptp": "Distrital de maioria simples", "two_round": "Distrital em dois turnos", "mixed": "Misto: distrital e proporcional"}
+# i18n-end
+# i18n-begin
 const HEADS := {"presidential": "Presidencialismo: voto direto em dois turnos", "parliamentary": "Parlamentarismo: governa quem forma maioria"}
+# i18n-end
 const FPTP_COUNTRIES := ["USA", "GBR", "CAN", "IND", "NGA", "BGD", "PAK", "MYS", "GHA", "KEN"]
 const TWO_ROUND_COUNTRIES := ["FRA", "EGY", "VNM", "HTI"]
 const MIXED_COUNTRIES := ["DEU", "JPN", "KOR", "MEX", "NZL", "HUN", "ITA", "TWN", "THA", "PHL", "RUS", "UKR"]

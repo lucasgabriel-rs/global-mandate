@@ -15,7 +15,7 @@ func setup(owner_view: LawBlockView, name_: String) -> void:
 	var hint: Label = get_node("%hint")
 	var inner: Array = view.block.slots.get(slot_name, [])
 	if slot_name == "else":
-		hint.text = "caso contrário: solte blocos aqui"
+		hint.text = tr("caso contrário: solte blocos aqui")
 	hint.visible = inner.is_empty()
 	for child: Dictionary in inner:
 		var block_view: LawBlockView = load(BLOCK_PATH).instantiate()
