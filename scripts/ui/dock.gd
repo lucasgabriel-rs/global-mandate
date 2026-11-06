@@ -86,7 +86,7 @@ func _process(_delta: float) -> void:
 
 
 func _show_tip(item: DockItem) -> void:
-	_tip_label.text = item.label
+	_tip_label.text = tr(item.label)
 	_tip.set_meta("item", item)
 	_tip.reset_size()
 	_tip.visible = true

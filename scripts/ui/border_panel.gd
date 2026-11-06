@@ -53,15 +53,15 @@ func begin(session: Dictionary) -> void:
 	visible = true
 	var rival: Country = session.rival
 	if session.kind == "victory":
-		_title.text = "Demarcar conquistas"
-		_info.text = "Você venceu %s. Desenhe as áreas que ficam com o seu país: clique no mapa para colocar vértices e no primeiro ponto para fechar. Pode desenhar várias. O que não for marcado volta para %s." % [rival.name, rival.name]
-		_send.text = "Confirmar novas fronteiras"
-		_old.text = "Não ficar com território"
+		_title.text = tr("Demarcar conquistas")
+		_info.text = tr("Você venceu %s. Desenhe as áreas que ficam com o seu país: clique no mapa para colocar vértices e no primeiro ponto para fechar. Pode desenhar várias. O que não for marcado volta para %s.") % [rival.name, rival.name]
+		_send.text = tr("Confirmar novas fronteiras")
+		_old.text = tr("Não ficar com território")
 	else:
-		_title.text = "Negociar fronteiras"
-		_info.text = "A guerra terminou sem vencedor. Desenhe sobre %s o que pede e sobre o seu país o que oferece. %s decide com base na frente de batalha e no cansaço da guerra." % [rival.name, rival.name]
-		_send.text = "Enviar proposta"
-		_old.text = "Restabelecer fronteiras antigas"
+		_title.text = tr("Negociar fronteiras")
+		_info.text = tr("A guerra terminou sem vencedor. Desenhe sobre %s o que pede e sobre o seu país o que oferece. %s decide com base na frente de batalha e no cansaço da guerra.") % [rival.name, rival.name]
+		_send.text = tr("Enviar proposta")
+		_old.text = tr("Restabelecer fronteiras antigas")
 	_feedback.text = ""
 	_refresh()
 	_start_draft()
@@ -76,8 +76,8 @@ func _update_banner() -> void:
 	if not active or map.draft_owner != "border":
 		return
 	var n := map.draft.size()
-	var tail := "clique no primeiro ponto para fechar" if n >= 3 else "clique no mapa para colocar os vértices"
-	banner_changed.emit("%s  ·  %d vértice(s)  ·  %s  ·  botão direito desfaz" % [_title.text, n, tail], false)
+	var tail := tr("clique no primeiro ponto para fechar") if n >= 3 else tr("clique no mapa para colocar os vértices")
+	banner_changed.emit(tr("%s  ·  %d vértice(s)  ·  %s  ·  botão direito desfaz") % [_title.text, n, tail], false)
 
 
 func _on_closed(points: PackedVector2Array) -> void:
@@ -95,9 +95,9 @@ func _on_closed(points: PackedVector2Array) -> void:
 		else:
 			offer = []
 	if claim.is_empty() and offer.is_empty():
-		_feedback.text = "A área não cobre nenhum território disponível." if _session.kind == "negotiation" else "Marque áreas dentro de %s." % rival.name
+		_feedback.text = tr("A área não cobre nenhum território disponível.") if _session.kind == "negotiation" else tr("Marque áreas dentro de %s.") % rival.name
 	elif _session.kind == "victory" and _claim_share(claim) > float(_session.budget):
-		_feedback.text = "Essa área passa do limite conquistado na guerra (%s)." % UiKit.pct(_session.budget)
+		_feedback.text = tr("Essa área passa do limite conquistado na guerra (%s).") % UiKit.pct(_session.budget)
 	else:
 		_feedback.text = ""
 		_areas.append({"claim": claim, "offer": offer})
@@ -128,10 +128,10 @@ func _refresh() -> void:
 	var rival: Country = _session.rival
 	var claim := _claim_share([])
 	if _session.kind == "victory":
-		_usage.text = "Marcado: %s de %s  ·  limite %s" % [UiKit.pct(claim), rival.name, UiKit.pct(_session.budget)]
+		_usage.text = tr("Marcado: %s de %s  ·  limite %s") % [UiKit.pct(claim), rival.name, UiKit.pct(_session.budget)]
 	else:
 		var offer := Subdivisions.total_area(_all("offer")) / world.territories.area_of(world.player, world)
-		_usage.text = "Pedido: %s de %s\nOferecido: %s de %s" % [UiKit.pct(claim), rival.name, UiKit.pct(offer), world.player.name]
+		_usage.text = tr("Pedido: %s de %s\nOferecido: %s de %s") % [UiKit.pct(claim), rival.name, UiKit.pct(offer), world.player.name]
 	_undo.disabled = _areas.is_empty()
 	_send.disabled = _areas.is_empty()
 	map.set_pending(_all("claim"), _all("offer"))
@@ -155,7 +155,7 @@ func _on_send() -> void:
 	_feedback.text = r.msg
 	_session["attempts"] = int(_session.get("attempts", 0)) + 1
 	if int(_session.attempts) >= GameWorld.MAX_BORDER_PROPOSALS:
-		world.settle_old_borders(_session.war, rival, "Sem acordo sobre novas fronteiras: as antigas voltam a valer.")
+		world.settle_old_borders(_session.war, rival, tr("Sem acordo sobre novas fronteiras: as antigas voltam a valer."))
 		_close()
 
 

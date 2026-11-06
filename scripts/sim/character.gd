@@ -5,7 +5,9 @@ extends RefCounted
 ## "name" guarda o nome inteiro, sempre igual a prenome + sobrenome, para quem só lê o nome.
 
 const GENDERS := ["m", "f"]
+# i18n-begin
 const GENDER_LABELS := {"m": "Masculino", "f": "Feminino"}
+# i18n-end
 
 
 static func random(rng: RandomNumberGenerator, iso := "", region := "") -> Dictionary:
@@ -83,4 +85,4 @@ static func for_politician(member: Dictionary) -> Dictionary:
 
 ## Título de governo conforme o regime do país.
 static func title_for(c: Country) -> String:
-	return "Chefe de governo" if c.dem >= 4.0 else "Líder supremo"
+	return TranslationServer.translate("Chefe de governo") if c.dem >= 4.0 else TranslationServer.translate("Líder supremo")

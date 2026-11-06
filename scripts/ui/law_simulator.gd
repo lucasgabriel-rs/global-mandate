@@ -19,7 +19,7 @@ func setup(owner_editor: LawEditor) -> void:
 		_profession.set_item_metadata(_profession.item_count - 1, key)
 	_profession.select(2)
 	var unit: OptionButton = %sim_unit
-	unit.add_item("Outro lugar")
+	unit.add_item(tr("Outro lugar"))
 	unit.set_item_metadata(0, -1)
 	var world := editor.world
 	for id: int in world.subdivisions.roots_of(world.legislation.iso):
@@ -29,7 +29,7 @@ func setup(owner_editor: LawEditor) -> void:
 
 func open() -> void:
 	_event.clear()
-	_event.add_item("Todos os artigos")
+	_event.add_item(tr("Todos os artigos"))
 	_event.set_item_metadata(0, "")
 	var seen := {}
 	for stack: Dictionary in editor.norm_program().stacks:
@@ -37,7 +37,7 @@ func open() -> void:
 		var def := LawCatalog.get_def(type)
 		if def.get("kind", "") == "event" and not seen.has(type):
 			seen[type] = true
-			_event.add_item(String(def.text).replace("{age}", "N").replace("{date}", "certa data"))
+			_event.add_item(tr(def.text).replace("{age}", "N").replace("{date}", tr("certa data")))
 			_event.set_item_metadata(_event.item_count - 1, type)
 	visible = true
 
@@ -70,7 +70,7 @@ func run() -> void:
 		lines.append(("[color=#ec5a43]%s[/color]" % line) if line.begins_with("ERRO") else (("[color=#f2b33d]%s[/color]" % line) if line.begins_with("Art.") else line))
 	if result.errors.is_empty():
 		lines.append("")
-		lines.append("[color=#4cc794]%d ação(ões) simulada(s). Nada foi cobrado de verdade.[/color]" % result.get("effects", []).size())
+		lines.append(tr("[color=#4cc794]%d ação(ões) simulada(s). Nada foi cobrado de verdade.[/color]") % result.get("effects", []).size())
 	var text := "\n".join(lines)
 	(%sim_previous as RichTextLabel).text = _previous
 	(%sim_result as RichTextLabel).text = text

@@ -142,7 +142,7 @@ func apply(_world: GameWorld, leg: Legislation, op: String, values: Dictionary, 
 	if op == "tb_minwage":
 		# O mesmo lugar do bloco avançado: quem tiver a prioridade maior fica com a vaga, e o efeito não soma duas vezes.
 		leg._stand("minwage", "valor", {"value": float(values.amount)}, norm_id, prio)
-		return "salário mínimo de US$ %d" % roundi(float(values.amount))
+		return tr("salário mínimo de US$ %d") % roundi(float(values.amount))
 	leg.stand(id + ":" + item, values.duplicate(), norm_id, prio)
 	return ""
 

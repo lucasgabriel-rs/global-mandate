@@ -17,10 +17,16 @@ static var _admin1_cache := {}
 static var _native_cache := {}
 static var _native_rects := {}
 static var _enclave_cache := {}
+## Nome de cada país em português, o original, por código ISO: a base da tradução dos nomes.
+static var _pt_names := {}
 
 
 static func load_countries() -> Array:
 	var f := FileAccess.open("res://data/countries.csv", FileAccess.READ)
+	# Sem o CSV não há países: melhor um erro claro que uma queda na thread do mundo.
+	if f == null:
+		push_error("Dados dos países ausentes: res://data/countries.csv (%s)" % error_string(FileAccess.get_open_error()))
+		return []
 	var header := f.get_csv_line()
 	var rows := []
 	while not f.eof_reached():
@@ -37,7 +43,19 @@ static func load_countries() -> Array:
 			else:
 				row[k] = line[i].to_float()
 		rows.append(row)
+	if _pt_names.is_empty():
+		var names := {}
+		for row: Dictionary in rows:
+			names[row.iso] = row.name
+		_pt_names = names
 	return rows
+
+
+## Nome do país em português (o msgid da tradução), ou o código, para um país que não está na tabela.
+static func country_name_pt(iso: String) -> String:
+	if _pt_names.is_empty():
+		load_countries()
+	return _pt_names.get(iso, iso)
 
 
 ## O resultado é compartilhado: quem precisar mudar a lista deve trabalhar em uma cópia.
@@ -182,7 +200,7 @@ static func _load_municipios(units: Array) -> Array:
 			pieces.append(_flat_points(flat))
 		var b: Array = src.b
 		units.append({
-			"name": src.n, "owner": "BRA", "type": "Município", "pieces": pieces, "area": float(src.a),
+			"name": src.n, "owner": "BRA", "type": "Município", "pieces": pieces, "area": float(src.a),  # i18n
 			"parent": states[src.uf], "center": Vector2(src.c[0], src.c[1]),
 			"rect": Rect2(b[0], b[1], float(b[2]) - float(b[0]), float(b[3]) - float(b[1])),
 		})

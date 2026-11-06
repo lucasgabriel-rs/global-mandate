@@ -157,7 +157,7 @@ func _generate(c: Country, m: Dictionary, world: GameWorld) -> void:
 	var n := clampi(int(roundf(2.0 + log(maxf(yusd, 1.0)) / log(10.0) * 1.6)), 2, 8)
 	var has_exchange := yusd > 25.0
 	if has_exchange:
-		m.exchange = "Bolsa de Valores de %s" % c.name
+		m.exchange = tr("Bolsa de Valores de %s") % c.name
 	var order := range(Sectors.COUNT)
 	order.sort_custom(func(a, b): return c.sector_share[a] > c.sector_share[b])
 	for pos in mini(n, order.size()):
@@ -347,7 +347,7 @@ func _step_country(c: Country, m: Dictionary, world: GameWorld, growth: float, s
 		c.stock *= ret
 		m.change = ret - 1.0
 		if crisis and (mine or big):
-			world.emit_news("Bolsa de %s despenca %d%% com a crise bancária." % [c.name, int(roundf((1.0 - ret) * 100.0))], "crise", c)
+			world.emit_news(tr("Bolsa de %s despenca %d%% com a crise bancária.") % [c.name, int(roundf((1.0 - ret) * 100.0))], "crise", c)
 	else:
 		_macro_index(c, world, growth, shock)
 	m.cap = named + float(m.rest)
@@ -393,13 +393,13 @@ func _rescue_or_fail(c: Country, m: Dictionary, co: Dictionary, world: GameWorld
 			co.prem = float(co.prem) - 0.7
 		_log(m, world, "socorro", co, cost)
 		if mine or big:
-			world.emit_news("Governo de %s socorre %s com %s." % [c.name, co.name, UiKit.money(cost)], "economia", c)
+			world.emit_news(tr("Governo de %s socorre %s com %s.") % [c.name, co.name, UiKit.money(cost)], "economia", c)
 		return false
 	var weight := float(co.value) / maxf(float(m.cap), 0.001)
 	m.mood = float(m.mood) - clampf(weight * 3.0, 0.0, 0.12)
 	_log(m, world, "falencia", co, float(co.value))
 	if mine or (big and float(co.rev) > yusd * 0.004):
-		world.emit_news("%s quebra em %s: %s em receita somem do mercado." % [co.name, c.name, UiKit.money(float(co.rev))], "crise", c)
+		world.emit_news(tr("%s quebra em %s: %s em receita somem do mercado.") % [co.name, c.name, UiKit.money(float(co.rev))], "crise", c)
 	return true
 
 
@@ -426,7 +426,7 @@ func _lifecycle(c: Country, m: Dictionary, world: GameWorld, market: float, mine
 	if (count < n0 and rng.randf() < 0.04) or (count < n0 + 6 and rng.randf() < 0.004):
 		var co := _birth(c, m, world)
 		if mine and not co.is_empty():
-			world.emit_news("Nasce uma nova empresa em %s: %s, em %s." % [c.name, co.name, String(Sectors.NAMES[co.sector]).to_lower()], "economia", c)
+			world.emit_news(tr("Nasce uma nova empresa em %s: %s, em %s.") % [c.name, co.name, tr(Sectors.NAMES[co.sector]).to_lower()], "economia", c)
 	if m.exchange == "":
 		return
 	if m.list.is_empty():
@@ -443,7 +443,7 @@ func _lifecycle(c: Country, m: Dictionary, world: GameWorld, market: float, mine
 		co.listed = false
 		_log(m, world, "fechamento", co, float(co.value))
 		if mine:
-			world.emit_news("%s fecha o capital: investidores compram as ações e a empresa sai da bolsa." % co.name, "economia", c)
+			world.emit_news(tr("%s fecha o capital: investidores compram as ações e a empresa sai da bolsa.") % co.name, "economia", c)
 
 
 func _list(c: Country, m: Dictionary, co: Dictionary, world: GameWorld, announce: bool) -> void:
@@ -453,7 +453,7 @@ func _list(c: Country, m: Dictionary, co: Dictionary, world: GameWorld, announce
 	co.local = float(co.value) * c.e
 	_log(m, world, "ipo", co, float(co.value))
 	if announce:
-		world.emit_news("IPO: %s estreia na %s valendo %s." % [co.name, m.exchange, UiKit.money(float(co.value))], "economia", c)
+		world.emit_news(tr("IPO: %s estreia na %s valendo %s.") % [co.name, m.exchange, UiKit.money(float(co.value))], "economia", c)
 
 
 func _birth(c: Country, m: Dictionary, world: GameWorld) -> Dictionary:
@@ -495,7 +495,7 @@ func _summary(m: Dictionary) -> void:
 
 func _log(m: Dictionary, world: GameWorld, kind: String, co: Dictionary, value: float) -> void:
 	var events: Array = m.events
-	events.push_front({"kind": kind, "name": co.name, "value": value, "date": "%s/%d" % [GameWorld.MONTHS[world.month], world.year]})
+	events.push_front({"kind": kind, "name": co.name, "value": value, "date": "%s/%d" % [tr(GameWorld.MONTHS[world.month]), world.year]})
 	if events.size() > MAX_EVENTS:
 		events.resize(MAX_EVENTS)
 
@@ -553,14 +553,14 @@ func privatize(world: GameWorld, c: Country, name_: String, fraction: float) -> 
 		co.state = 0.0
 	if not co.listed:
 		if m.exchange == "":
-			m.exchange = "Bolsa de Valores de %s" % c.name
+			m.exchange = tr("Bolsa de Valores de %s") % c.name
 		_list(c, m, co, world, false)
 	c.extra_rev_bucket += proceeds
 	m.mood = float(m.mood) + 0.02
 	_log(m, world, "privatizacao", co, proceeds)
 	if c == world.player or c.y_usd() > world.world_gdp() * 0.01:
-		world.emit_news("%s privatiza %d%% de %s e arrecada %s." % [c.name, int(roundf(sold * 100.0)), co.name, UiKit.money(proceeds)], "economia", c)
-	return "privatizou %s de %s" % [UiKit.pct(sold, 0), co.name]
+		world.emit_news(tr("%s privatiza %d%% de %s e arrecada %s.") % [c.name, int(roundf(sold * 100.0)), co.name, UiKit.money(proceeds)], "economia", c)
+	return tr("privatizou %s de %s") % [UiKit.pct(sold, 0), co.name]
 
 
 ## Compra ações até o Estado ter share do capital, pagando prêmio aos acionistas. Com tudo, sai da bolsa.
@@ -579,8 +579,8 @@ func nationalize(world: GameWorld, c: Country, name_: String, share: float) -> S
 		co.listed = false
 	_log(m, world, "estatizacao", co, cost)
 	if c == world.player or c.y_usd() > world.world_gdp() * 0.01:
-		world.emit_news("%s estatiza %s: o Estado passa a ter %d%% do capital, a um custo de %s." % [c.name, co.name, int(roundf(target * 100.0)), UiKit.money(cost)], "economia", c)
-	return "estatizou %s de %s" % [UiKit.pct(bought, 0), co.name]
+		world.emit_news(tr("%s estatiza %s: o Estado passa a ter %d%% do capital, a um custo de %s.") % [c.name, co.name, int(roundf(target * 100.0)), UiKit.money(cost)], "economia", c)
+	return tr("estatizou %s de %s") % [UiKit.pct(bought, 0), co.name]
 
 
 # --- Consultas ------------------------------------------------------------------------------
@@ -611,8 +611,8 @@ func state_shares(iso: String) -> Dictionary:
 static func control_of(co: Dictionary) -> String:
 	var s: float = co.state
 	if s <= 0.0:
-		return "Privada"
-	return "Estatal" if s >= 0.5 else "Mista"
+		return TranslationServer.translate("Privada")
+	return TranslationServer.translate("Estatal") if s >= 0.5 else TranslationServer.translate("Mista")
 
 
 static func price_of(co: Dictionary) -> float:

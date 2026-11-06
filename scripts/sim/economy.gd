@@ -406,7 +406,7 @@ static func _break_peg(c: Country, world: GameWorld) -> void:
 	c.e *= devaluation
 	c.conf = maxf(c.conf - 0.2, 0.1)
 	c.demand_shock -= 0.03
-	world.emit_news("%s abandona a âncora cambial: moeda desvaloriza %d%%." % [c.name, int((devaluation - 1.0) * 100.0)], "crise", c)
+	world.emit_news(TranslationServer.translate("%s abandona a âncora cambial: moeda desvaloriza %d%%.") % [c.name, int((devaluation - 1.0) * 100.0)], "crise", c)
 
 
 static func _fiscal(c: Country, world: GameWorld) -> void:
@@ -438,7 +438,8 @@ static func _fiscal(c: Country, world: GameWorld) -> void:
 	c.rating = _rating_for(c)
 	if c.rating != old_rating and old_rating != "D" and world.year_float() >= c.default_until and _newsworthy(c, world):
 		var down := RATINGS.find(c.rating) > RATINGS.find(old_rating)
-		world.emit_news("Agências %s a nota de crédito de %s de %s para %s." % ["rebaixam" if down else "elevam", c.name, old_rating, c.rating], "crise" if down and c == world.player else "economia", c)
+		var rating_news: String = TranslationServer.translate("Agências rebaixam a nota de crédito de %s de %s para %s.") if down else TranslationServer.translate("Agências elevam a nota de crédito de %s de %s para %s.")
+		world.emit_news(rating_news % [c.name, old_rating, c.rating], "crise" if down and c == world.player else "economia", c)
 	_check_default(c, world)
 
 
@@ -549,7 +550,7 @@ static func apply_default(c: Country, world: GameWorld) -> void:
 	c.stability = maxf(c.stability - 0.12, 0.03)
 	c.rating = "D"
 	world.global_risk = clampf(world.global_risk + 0.25 * sqrt(c.y_usd() / world.world_gdp()) + 0.02, 0.0, 1.0)
-	world.emit_news("%s declara moratória da dívida soberana; credores aceitam corte de 45%%." % c.name, "crise", c)
+	world.emit_news(TranslationServer.translate("%s declara moratória da dívida soberana; credores aceitam corte de 45%%.") % c.name, "crise", c)
 
 
 static func apply_imf(c: Country, world: GameWorld) -> void:
@@ -570,7 +571,7 @@ static func apply_imf(c: Country, world: GameWorld) -> void:
 	c.mon_fin = 0.0
 	c.conf = minf(c.conf + 0.08, 1.0)
 	c.approval = maxf(c.approval - 0.08, 0.03)
-	world.emit_news("FMI aprova pacote de US$ %.0f bi para %s, com ajuste fiscal." % [loan, c.name], "economia", c)
+	world.emit_news(TranslationServer.translate("FMI aprova pacote de US$ %.0f bi para %s, com ajuste fiscal.") % [loan, c.name], "economia", c)
 
 
 static func _labor_and_politics(c: Country, world: GameWorld) -> void:
@@ -630,7 +631,7 @@ static func _ai_election(c: Country, world: GameWorld) -> void:
 	if not incumbent_wins:
 		c.approval = clampf(0.55 + world.rng.randf_range(-0.05, 0.08), 0.3, 0.75)
 		if c.y_usd() > world.world_gdp() * 0.008:
-			world.emit_news("Eleições em %s: oposição vence e promete mudar o rumo." % c.name, "politica", c)
+			world.emit_news(TranslationServer.translate("Eleições em %s: oposição vence e promete mudar o rumo.") % c.name, "politica", c)
 		world.diplomacy.on_government_change(c, world)
 
 
@@ -639,7 +640,7 @@ static func _ai_coup(c: Country, world: GameWorld) -> void:
 	c.approval = 0.45
 	c.conf = maxf(c.conf - 0.15, 0.05)
 	c.demand_shock -= 0.03
-	world.emit_news("Golpe de Estado em %s: junta militar assume o poder." % c.name, "crise", c)
+	world.emit_news(TranslationServer.translate("Golpe de Estado em %s: junta militar assume o poder.") % c.name, "crise", c)
 	world.diplomacy.on_government_change(c, world)
 
 
@@ -663,7 +664,7 @@ static func banking_crisis(c: Country, world: GameWorld) -> void:
 	c.conf = maxf(c.conf - 0.2, 0.05)
 	c.debt_loc += c.y_nominal() * severity * 1.2  # socorro aos bancos entra na dívida pública
 	world.global_risk = clampf(world.global_risk + 0.5 * sqrt(c.y_usd() / world.world_gdp()), 0.0, 1.0)
-	world.emit_news("Crise bancária em %s: crédito congela e o Tesouro socorre bancos." % c.name, "crise", c)
+	world.emit_news(TranslationServer.translate("Crise bancária em %s: crédito congela e o Tesouro socorre bancos.") % c.name, "crise", c)
 
 
 static func _newsworthy(c: Country, world: GameWorld) -> bool:
@@ -677,22 +678,23 @@ static func _macro_news(c: Country, world: GameWorld) -> void:
 	if s.size() >= 13 and _newsworthy(c, world):
 		var before := s[s.size() - 1]
 		if g < 0.0 and before >= 0.0:
-			world.emit_news("%s entra em recessão: o PIB encolhe %s em 12 meses." % [c.name, UiKit.pct(-g)], "crise" if c == world.player else "economia", c)
+			world.emit_news(TranslationServer.translate("%s entra em recessão: o PIB encolhe %s em 12 meses.") % [c.name, UiKit.pct(-g)], "crise" if c == world.player else "economia", c)
 		elif g >= 0.005 and before < 0.0:
-			world.emit_news("%s sai da recessão: o PIB volta a crescer." % c.name, "economia", c)
+			world.emit_news(TranslationServer.translate("%s sai da recessão: o PIB volta a crescer.") % c.name, "economia", c)
 	if c != world.player:
 		return
 	var infl: PackedFloat32Array = c.hist.get("infl", PackedFloat32Array())
 	if infl.size() >= 1:
 		for limit: float in [0.1, 0.25, 0.5, 1.0]:
 			if c.pi_yoy > limit and infl[infl.size() - 1] <= limit:
-				world.emit_news("Inflação em %s passa de %s ao ano." % [c.name, UiKit.pct(limit, 0)], "crise" if limit >= 0.25 else "economia", c)
+				world.emit_news(TranslationServer.translate("Inflação em %s passa de %s ao ano.") % [c.name, UiKit.pct(limit, 0)], "crise" if limit >= 0.25 else "economia", c)
 	# O banco central anuncia quando o juro já andou meio ponto desde o último anúncio.
 	if c.rate_said < 0.0:
 		c.rate_said = c.rate
 	elif absf(c.rate - c.rate_said) >= 0.005:
-		var who := "O BCE" if c.peg == 2 else "O banco central de %s" % c.name
-		world.emit_news("%s %s o juro básico para %s ao ano." % [who, "eleva" if c.rate > c.rate_said else "reduz", UiKit.pct(c.rate, 2)], "economia", c)
+		var who: String = TranslationServer.translate("O BCE") if c.peg == 2 else TranslationServer.translate("O banco central de %s") % c.name
+		var rate_news: String = TranslationServer.translate("%s eleva o juro básico para %s ao ano.") if c.rate > c.rate_said else TranslationServer.translate("%s reduz o juro básico para %s ao ano.")
+		world.emit_news(rate_news % [who, UiKit.pct(c.rate, 2)], "economia", c)
 		c.rate_said = c.rate
 
 

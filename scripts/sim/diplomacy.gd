@@ -341,7 +341,7 @@ func set_tariff_on(a: Country, b: Country, rate: float, world: GameWorld) -> voi
 	if rate > before and b.y_usd() > a.y_usd() * 0.05 and world.rng.randf() < 0.65:
 		tariffs[key(b.idx, a.idx)] = rate * 0.8
 		refresh_pair(a.idx, b.idx, world)
-		world.emit_news("%s retalia com tarifa de %d%% contra %s." % [b.name, int(rate * 80.0), a.name], "economia", b)
+		world.emit_news(tr("%s retalia com tarifa de %d%% contra %s.") % [b.name, int(rate * 80.0), a.name], "economia", b)
 
 
 func sign_fta(a: Country, b: Country, world: GameWorld) -> void:
@@ -353,7 +353,7 @@ func sign_fta(a: Country, b: Country, world: GameWorld) -> void:
 func sign_alliance(a: Country, b: Country, world: GameWorld) -> void:
 	alliances[pair(a.idx, b.idx)] = true
 	add_relation(a.idx, b.idx, 12.0)
-	world.emit_news("%s e %s assinam pacto de defesa mútua." % [a.name, b.name], "diplomacia", a)
+	world.emit_news(tr("%s e %s assinam pacto de defesa mútua.") % [a.name, b.name], "diplomacia", a)
 	# Inimigos do novo aliado desconfiam.
 	for c: Country in world.countries:
 		if c != a and c != b and c.alive and relation(c.idx, b.idx) < -50.0:
@@ -399,7 +399,7 @@ func _new_war(att: Country, def: Country, world: GameWorld, announce := true) ->
 func declare_war(att: Country, def: Country, world: GameWorld) -> Dictionary:
 	world.treaties.on_war(world, att, def)
 	var w := _new_war(att, def, world)
-	world.emit_news("GUERRA: %s invade %s." % [att.name, def.name], "guerra", att)
+	world.emit_news(tr("GUERRA: %s invade %s.") % [att.name, def.name], "guerra", att)
 	# Efeito de união nacional: curto no agressor, forte em quem é atacado.
 	att.approval = minf(att.approval + 0.04, 0.95)
 	def.approval = minf(def.approval + 0.12, 0.95)
@@ -438,7 +438,7 @@ func join_war(c: Country, w: Dictionary, on_defense: bool, world: GameWorld) -> 
 		w.a.append(c.idx)
 		_mark_enemies(c.idx, w.d, world)
 	c.mobilization = maxf(c.mobilization, 0.25)
-	world.emit_news("%s entra na guerra entre %s e %s." % [c.name, world.countries[w.main_a].name, world.countries[w.main_d].name], "guerra", c)
+	world.emit_news(tr("%s entra na guerra entre %s e %s.") % [c.name, world.countries[w.main_a].name, world.countries[w.main_d].name], "guerra", c)
 
 
 func _mark_enemies(idx: int, enemies: Array, world: GameWorld) -> void:
@@ -551,7 +551,7 @@ func _step_war(w: Dictionary, world: GameWorld) -> void:
 		if def == world.governed():
 			world.player_repelled(w, att)
 			return
-		_end_war(w, world, "%s expulsa os invasores e força %s a recuar." % [def.name, att.name], def, att, 0.0)
+		_end_war(w, world, tr("%s expulsa os invasores e força %s a recuar.") % [def.name, att.name], def, att, 0.0)
 		return
 	# Dissuasão falha: potência nuclear à beira da derrota total.
 	if world.nuclear_check(w, att, def):
@@ -588,14 +588,14 @@ func _ai_peace_check(w: Dictionary, att: Country, def: Country, world: GameWorld
 	var def_want := def.war_exhaustion * 0.6 + front * 0.008
 	if att_want > 0.8 and def_want > 0.7 and world.rng.randf() < 0.1:
 		var share := clampf(front * 0.004, 0.0, 0.35) if front > 10.0 else 0.0
-		var msg := "Cessar-fogo entre %s e %s: as fronteiras antigas voltam a valer." % [att.name, def.name]
+		var msg := tr("Cessar-fogo entre %s e %s: as fronteiras antigas voltam a valer.") % [att.name, def.name]
 		if share > 0.0:
-			msg = "Tratado de paz: %s cede {pct} do território a %s." % [def.name, att.name]
+			msg = tr("Tratado de paz: %s cede {pct} do território a %s.") % [def.name, att.name]
 		elif absf(front) > 3.0 and world.rng.randf() < 0.35:
 			# Paz sem vencedor em que os dois lados negociam uma nova linha de fronteira.
 			var gainer := att if front > 0.0 else def
 			var yielder := def if front > 0.0 else att
-			_end_war(w, world, "Negociação entre %s e %s: %s cede {pct} do território." % [att.name, def.name, yielder.name], gainer, yielder, absf(front) * 0.004)
+			_end_war(w, world, tr("Negociação entre %s e %s: %s cede {pct} do território.") % [att.name, def.name, yielder.name], gainer, yielder, absf(front) * 0.004)
 			return
 		_end_war(w, world, msg, att, def, share)
 
@@ -610,10 +610,10 @@ func _capitulation(w: Dictionary, att: Country, def: Country, world: GameWorld) 
 		return
 	if att.dem < 4.0 or att.aggression > 0.4:
 		annex(att, def, world)
-		_end_war(w, world, "%s capitula e é anexado por %s." % [def.name, att.name], att, def, 0.0)
+		_end_war(w, world, tr("%s capitula e é anexado por %s.") % [def.name, att.name], att, def, 0.0)
 	else:
 		make_client(att, def, world)
-		_end_war(w, world, "%s capitula; %s instala governo aliado." % [def.name, att.name], att, def, 0.0)
+		_end_war(w, world, tr("%s capitula; %s instala governo aliado.") % [def.name, att.name], att, def, 0.0)
 
 
 func end_war_by_player(w: Dictionary, winner: Country, loser: Country, world: GameWorld, share: float, msg: String) -> void:
@@ -629,7 +629,7 @@ func _end_war(w: Dictionary, world: GameWorld, msg: String, gainer: Country, los
 			transfer(loser, gainer, ceded, world)
 			text = msg.replace("{pct}", "%d%%" % int(ceded * 100.0))
 		else:
-			text = "Cessar-fogo entre %s e %s: nenhuma área do tamanho negociado, as fronteiras não mudam." % [gainer.name, loser.name]
+			text = tr("Cessar-fogo entre %s e %s: nenhuma área do tamanho negociado, as fronteiras não mudam.") % [gainer.name, loser.name]
 	world.emit_news(text, "guerra", gainer)
 	for i: int in w.a + w.d:
 		var c: Country = world.countries[i]

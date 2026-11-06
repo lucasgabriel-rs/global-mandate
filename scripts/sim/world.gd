@@ -19,7 +19,9 @@ const MAX_BORDER_PROPOSALS := 3
 ## Líderes não procuram o jogador nos primeiros meses, nem mais que uma vez nesse intervalo.
 const TALK_FIRST_MONTH := 6
 const TALK_COOLDOWN_MONTHS := 4
+# i18n-begin
 const MONTHS := ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"]
+# i18n-end
 const MONTH_DAYS := [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 const DIFFICULTY := {
 	"facil": {"fund": 1.4, "approval": 0.04},
@@ -93,7 +95,7 @@ func setup(seed_value: int = 0) -> void:
 		var c := Country.new()
 		c.idx = countries.size()
 		c.iso = row.iso
-		c.name = row.name
+		c.name = TranslationServer.translate(row.name)
 		c.region = row.region
 		c.blocs = row.blocs
 		var info: Dictionary = map_info.get(c.iso, {})
@@ -180,7 +182,7 @@ func tick_minute() -> void:
 
 
 func date_string() -> String:
-	return "%02d %s %d  %02d:%02d" % [day, MONTHS[month], year, minute / 60, minute % 60]
+	return "%02d %s %d  %02d:%02d" % [day, tr(MONTHS[month]), year, minute / 60, minute % 60]
 
 
 func set_player(c: Country, diff: String) -> void:
@@ -260,7 +262,7 @@ func _on_month() -> void:
 		diplomacy._compute_shares(self)
 	if player and not in_office:
 		if not player.alive:
-			_finish("golpe", "%s deixou de existir, e sua carreira política acabou junto com o país." % player.name)
+			_finish("golpe", tr("%s deixou de existir, e sua carreira política acabou junto com o país.") % player.name)
 	_send(month_passed)
 
 
@@ -343,14 +345,20 @@ func rank_of(c: Country, key: Callable) -> int:
 	return r
 
 
+## Nomes dos países no idioma atual. Chamado ao abrir e ao trocar de idioma, na thread principal.
+func localize_country_names() -> void:
+	for c: Country in countries:
+		c.name = TranslationServer.translate(GameData.country_name_pt(c.iso))
+
+
 func emit_news(text: String, kind: String, country: Country) -> void:
 	_send(news_posted, [_decimal_comma(text), kind, country])
 
 
+## Números nos textos seguem o formato pt-BR (1,5 e não 1.5), salvo em inglês.
 static var _decimal_re: RegEx
 
 
-## Números nos textos seguem o formato pt-BR (1,5 e não 1.5).
 func _send(event: Signal, args := []) -> void:
 	if defer_events:
 		_events.append([event, args])
@@ -375,6 +383,9 @@ func has_urgent_event() -> bool:
 
 
 func _decimal_comma(text: String) -> String:
+	# Em inglês, o ponto decimal fica.
+	if Lang.english_numbers:
+		return text
 	if _decimal_re == null:
 		_decimal_re = RegEx.create_from_string("(\\d)\\.(\\d)")
 	return _decimal_re.sub(text, "$1,$2", true)
@@ -397,7 +408,7 @@ func check_player_politics(c: Country) -> void:
 	var yf := year_float()
 	if c.dem >= 4.0 and yf >= c.next_election - 0.25 and yf < c.next_election and not campaign_noticed:
 		campaign_noticed = true
-		emit_news("Começa a campanha eleitoral em %s. Faltam cerca de três meses para a votação." % c.name, "politica", c)
+		emit_news(tr("Começa a campanha eleitoral em %s. Faltam cerca de três meses para a votação.") % c.name, "politica", c)
 	if not in_office:
 		if c.dem >= 4.0 and yf >= c.next_election:
 			_opposition_election(c)
@@ -406,12 +417,12 @@ func check_player_politics(c: Country) -> void:
 		_player_election(c)
 	elif c.dem >= 4.0 and c.approval < 0.2 and politics.government_share(c.iso) < 1.0 / 3.0 and rng.randf() < 0.04:
 		var next_party: Dictionary = politics.hand_over(c)
-		_finish("impeachment", "Sem apoio no parlamento e com a aprovação em %d%%, %s sofreu impeachment. %s assume o governo." % [int(c.approval * 100.0), leader.get("name", "o governo"), next_party.get("name", "Outro partido")])
+		_finish("impeachment", tr("Sem apoio no parlamento e com a aprovação em %d%%, %s sofreu impeachment. %s assume o governo.") % [int(c.approval * 100.0), leader.get("name", tr("o governo")), next_party.get("name", tr("Outro partido"))])
 	elif c.dem < 4.0:
 		if c.stability < 0.1 and rng.randf() < 0.08:
-			_finish("golpe", "Generais e a elite política perderam a paciência. Um golpe encerrou seu governo.")
+			_finish("golpe", tr("Generais e a elite política perderam a paciência. Um golpe encerrou seu governo."))
 		elif c.approval < 0.1 and c.unrest > 0.3 and rng.randf() < 0.05:
-			_finish("golpe", "Multidões tomaram o palácio, e os militares não defenderam o regime. Você foi deposto.")
+			_finish("golpe", tr("Multidões tomaram o palácio, e os militares não defenderam o regime. Você foi deposto."))
 
 
 func _player_election(c: Country) -> void:
@@ -423,19 +434,19 @@ func _player_election(c: Country) -> void:
 		mandates += 1
 		c.approval = clampf(c.approval + 0.04, 0.0, 0.95)
 		ask_player({
-			"title": "Reeleito!",
-			"text": "Seu partido fez %.1f%% dos votos e %d de %d assentos. Você conquista seu %dº mandato consecutivo em %s." % [float(result.vote) * 100.0, int(result.seats), int(result.total), mandates + 1, c.name],
-			"options": [{"label": "Seguir governando", "hint": "", "fn": func(): pass}],
+			"title": tr("Reeleito!"),
+			"text": tr("Seu partido fez %.1f%% dos votos e %d de %d assentos. Você conquista seu %dº mandato consecutivo em %s.") % [float(result.vote) * 100.0, int(result.seats), int(result.total), mandates + 1, c.name],
+			"options": [{"label": tr("Seguir governando"), "hint": "", "fn": func(): pass}],
 		})
 	else:
-		enter_opposition("%s venceu a eleição com %d de %d assentos. Sua aprovação de %d%% não bastou. Você passa a liderar a oposição até a próxima eleição." % [result.winner.name, int(result.winner.seats), int(result.total), int(c.approval * 100.0)], "Derrotado nas urnas")
+		enter_opposition(tr("%s venceu a eleição com %d de %d assentos. Sua aprovação de %d%% não bastou. Você passa a liderar a oposição até a próxima eleição.") % [result.winner.name, int(result.winner.seats), int(result.total), int(c.approval * 100.0)], tr("Derrotado nas urnas"))
 
 
 ## Começa a partida fora do governo: quem já governa continua, e o jogador disputa a próxima eleição.
 ## Regimes fechados não têm eleição, então não há oposição jogável neles.
 func start_in_opposition() -> Dictionary:
 	if player == null or player.dem < 4.0:
-		return {"ok": false, "msg": "Este regime não tem eleições: não há como disputar o poder pela oposição."}
+		return {"ok": false, "msg": tr("Este regime não tem eleições: não há como disputar o poder pela oposição.")}
 	in_office = false
 	player.rate_manual = false
 	politics.clear_cabinet(player.iso)
@@ -453,10 +464,10 @@ func enter_opposition(text: String, title: String) -> void:
 	player.approval = clampf(0.55 + rng.randf_range(-0.05, 0.08), 0.3, 0.75)
 	politics.clear_cabinet(player.iso)
 	legislation.drop_government_bills(self)
-	emit_news("%s deixa o governo de %s." % [leader.get("name", "O líder"), player.name], "politica", player)
+	emit_news(tr("%s deixa o governo de %s.") % [leader.get("name", tr("O líder")), player.name], "politica", player)
 	ask_player({
 		"title": title, "text": text, "always": true,
-		"options": [{"label": "Liderar a oposição", "hint": "Critique o governo, faça campanha e dispute a próxima eleição", "fn": func(): pass}],
+		"options": [{"label": tr("Liderar a oposição"), "hint": tr("Critique o governo, faça campanha e dispute a próxima eleição"), "fn": func(): pass}],
 	})
 
 
@@ -471,15 +482,15 @@ func _opposition_election(c: Country) -> void:
 		c.approval = clampf(0.55 + rng.randf_range(-0.03, 0.05), 0.3, 0.8)
 		politics.auto_cabinet(self)
 		diplomacy.on_government_change(c, self)
-		emit_news("%s vence a eleição em %s e volta ao poder." % [leader.get("name", "O líder"), c.name], "politica", c)
+		emit_news(tr("%s vence a eleição em %s e volta ao poder.") % [leader.get("name", tr("O líder")), c.name], "politica", c)
 		ask_player({
-			"title": "De volta ao poder!", "text": "Seu partido fez %.1f%% dos votos e %d de %d assentos. O governo é seu novamente." % [float(result.vote) * 100.0, int(result.seats), int(result.total)],
-			"always": true, "options": [{"label": "Assumir o governo", "hint": "Revise o orçamento e escolha os ministros", "fn": func(): pass}],
+			"title": tr("De volta ao poder!"), "text": tr("Seu partido fez %.1f%% dos votos e %d de %d assentos. O governo é seu novamente.") % [float(result.vote) * 100.0, int(result.seats), int(result.total)],
+			"always": true, "options": [{"label": tr("Assumir o governo"), "hint": tr("Revise o orçamento e escolha os ministros"), "fn": func(): pass}],
 		})
 	else:
 		ask_player({
-			"title": "Oposição mais quatro anos", "text": "%s venceu com %d de %d assentos. Seu partido fez %.1f%% dos votos e ficou com %d." % [result.winner.name, int(result.winner.seats), int(result.total), float(result.vote) * 100.0, int(result.seats)],
-			"always": true, "options": [{"label": "Seguir na oposição", "hint": "", "fn": func(): pass}],
+			"title": tr("Oposição mais quatro anos"), "text": tr("%s venceu com %d de %d assentos. Seu partido fez %.1f%% dos votos e ficou com %d.") % [result.winner.name, int(result.winner.seats), int(result.total), float(result.vote) * 100.0, int(result.seats)],
+			"always": true, "options": [{"label": tr("Seguir na oposição"), "hint": "", "fn": func(): pass}],
 		})
 
 
@@ -488,7 +499,7 @@ func resign() -> void:
 	if not in_office or over:
 		return
 	var next_party: Dictionary = politics.hand_over(player) if player.dem >= Politics.FREE_PARLIAMENT_DEM else {}
-	_finish("renuncia", "%s renunciou ao cargo.%s" % [leader.get("name", "O líder"), " %s assume o governo." % next_party.name if not next_party.is_empty() else ""])
+	_finish("renuncia", tr("%s renunciou ao cargo.%s") % [leader.get("name", tr("O líder")), tr(" %s assume o governo.") % next_party.name if not next_party.is_empty() else ""])
 
 
 ## Depois do fim da carreira, o jogador assume outra pessoa no mesmo país. Se o país acabou, vai para quem o tomou.
@@ -527,7 +538,7 @@ func assume_new_character(character: Dictionary) -> void:
 		politics.join_party(self, int(pick.get("id", data.ruling)), true)
 	if c.next_election <= year_float():
 		c.next_election = year_float() + legislation.mandate_years()
-	emit_news("%s entra na política de %s." % [leader.get("name", "Um novo nome"), c.name], "politica", c)
+	emit_news(tr("%s entra na política de %s.") % [leader.get("name", tr("Um novo nome")), c.name], "politica", c)
 
 
 ## Um líder quer conversar com o jogador. Ele decide se atende.
@@ -537,20 +548,20 @@ func request_talk(c: Country) -> void:
 	next_talk_month = months_elapsed + TALK_COOLDOWN_MONTHS
 	var theirs: Dictionary = politics.leader_of(c.iso)
 	var rel: float = diplomacy.relation(player.idx, c.idx)
-	var subject := "aproximar os dois países"
+	var subject := tr("aproximar os dois países")
 	if diplomacy.at_war(player.idx, c.idx):
-		subject = "discutir a guerra"
+		subject = tr("discutir a guerra")
 	elif rel < -20.0:
-		subject = "cobrar explicações sobre o seu governo"
+		subject = tr("cobrar explicações sobre o seu governo")
 	elif rel > 30.0:
-		subject = "propor um novo acordo"
+		subject = tr("propor um novo acordo")
 	var pl := player
 	ask_player({
-		"title": "%s quer falar com você" % theirs.get("name", "Um líder"),
-		"text": "O líder de %s (%s) pede uma conversa para %s." % [c.name, Dialogue.temper(theirs), subject],
+		"title": tr("%s quer falar com você") % theirs.get("name", tr("Um líder")),
+		"text": tr("O líder de %s (%s) pede uma conversa para %s.") % [c.name, Dialogue.temper(theirs), subject],
 		"options": [
-			{"label": "Atender", "hint": "Abre a conversa agora.", "fn": func(): _send(talk_requested, [c])},
-			{"label": "Não atender", "hint": "Relação -3.", "fn": func(): diplomacy.add_relation(pl.idx, c.idx, -3.0)},
+			{"label": tr("Atender"), "hint": tr("Abre a conversa agora."), "fn": func(): _send(talk_requested, [c])},
+			{"label": tr("Não atender"), "hint": tr("Relação -3."), "fn": func(): diplomacy.add_relation(pl.idx, c.idx, -3.0)},
 		],
 	})
 
@@ -579,12 +590,12 @@ func offer_imf(c: Country) -> void:
 		return
 	c.imf_program = 12.0
 	ask_player({
-		"title": "Colapso do financiamento",
-		"text": "Os credores não rolam mais a dívida de %s. O juro chegou a %.1f%% e as reservas estão em US$ %.1f bi." % [c.name, c.yield_gov * 100.0, c.reserves],
+		"title": tr("Colapso do financiamento"),
+		"text": tr("Os credores não rolam mais a dívida de %s. O juro chegou a %.1f%% e as reservas estão em US$ %.1f bi.") % [c.name, c.yield_gov * 100.0, c.reserves],
 		"options": [
-			{"label": "Aceitar pacote do FMI", "hint": "US$ %.0f bi, com corte de gastos e aumento de impostos" % (c.y_usd() * 0.08), "fn": func():
+			{"label": tr("Aceitar pacote do FMI"), "hint": tr("US$ %.0f bi, com corte de gastos e aumento de impostos") % (c.y_usd() * 0.08), "fn": func():
 				Economy.apply_imf(c, self)},
-			{"label": "Declarar moratória", "hint": "Corta 45% da dívida; 3 anos sem mercado, recessão severa", "fn": func():
+			{"label": tr("Declarar moratória"), "hint": tr("Corta 45% da dívida; 3 anos sem mercado, recessão severa"), "fn": func():
 				c.imf_program = 0.0
 				Economy.apply_default(c, self)},
 		],
@@ -594,12 +605,12 @@ func offer_imf(c: Country) -> void:
 func offer_fta(c: Country) -> void:
 	var pl := player
 	ask_player({
-		"title": "Proposta comercial de %s" % c.name,
-		"text": "O governo de %s propõe um acordo de livre comércio. Hoje ele responde por %.1f%% das suas exportações." % [c.name, diplomacy.shares[pl.idx * diplomacy.n + c.idx] * 100.0],
+		"title": tr("Proposta comercial de %s") % c.name,
+		"text": tr("O governo de %s propõe um acordo de livre comércio. Hoje ele responde por %.1f%% das suas exportações.") % [c.name, diplomacy.shares[pl.idx * diplomacy.n + c.idx] * 100.0],
 		"options": [
-			{"label": "Assinar", "hint": "Vale depois de ratificado pelos dois parlamentos", "fn": func():
+			{"label": tr("Assinar"), "hint": tr("Vale depois de ratificado pelos dois parlamentos"), "fn": func():
 				treaties.sign_with_player(self, c, "fta")},
-			{"label": "Recusar", "hint": "Relação -5", "fn": func():
+			{"label": tr("Recusar"), "hint": tr("Relação -5"), "fn": func():
 				diplomacy.add_relation(pl.idx, c.idx, -5.0)},
 		],
 	})
@@ -608,12 +619,12 @@ func offer_fta(c: Country) -> void:
 func offer_alliance(c: Country) -> void:
 	var pl := player
 	ask_player({
-		"title": "Pacto de defesa",
-		"text": "%s propõe um pacto de defesa mútua. Se um dos dois for atacado, o outro entra na guerra." % c.name,
+		"title": tr("Pacto de defesa"),
+		"text": tr("%s propõe um pacto de defesa mútua. Se um dos dois for atacado, o outro entra na guerra.") % c.name,
 		"options": [
-			{"label": "Assinar", "hint": "Vale depois de ratificado. Proteção mútua; arrisca arrastar você para guerras alheias", "fn": func():
+			{"label": tr("Assinar"), "hint": tr("Vale depois de ratificado. Proteção mútua; arrisca arrastar você para guerras alheias"), "fn": func():
 				treaties.sign_with_player(self, c, "defense")},
-			{"label": "Recusar educadamente", "hint": "Relação -3", "fn": func():
+			{"label": tr("Recusar educadamente"), "hint": tr("Relação -3"), "fn": func():
 				diplomacy.add_relation(pl.idx, c.idx, -3.0)},
 		],
 	})
@@ -622,13 +633,13 @@ func offer_alliance(c: Country) -> void:
 func receive_threat(c: Country) -> void:
 	var pl := player
 	ask_player({
-		"title": "Ultimato de %s" % c.name,
-		"text": "%s concentra forças e exige que você reduza a presença militar e retire apoio aos rivais dele." % c.name,
+		"title": tr("Ultimato de %s") % c.name,
+		"text": tr("%s concentra forças e exige que você reduza a presença militar e retire apoio aos rivais dele.") % c.name,
 		"options": [
-			{"label": "Ceder para ganhar tempo", "hint": "Relação +15; aprovação -6 pontos", "fn": func():
+			{"label": tr("Ceder para ganhar tempo"), "hint": tr("Relação +15; aprovação -6 pontos"), "fn": func():
 				diplomacy.add_relation(pl.idx, c.idx, 15.0)
 				pl.approval = maxf(pl.approval - 0.06, 0.02)},
-			{"label": "Rejeitar publicamente", "hint": "Aprovação +3 pontos; relação -12 e tensão maior", "fn": func():
+			{"label": tr("Rejeitar publicamente"), "hint": tr("Aprovação +3 pontos; relação -12 e tensão maior"), "fn": func():
 				diplomacy.add_relation(pl.idx, c.idx, -12.0)
 				pl.approval = minf(pl.approval + 0.03, 0.95)
 				global_risk = clampf(global_risk + 0.04, 0.0, 1.0)},
@@ -641,9 +652,9 @@ func war_declared(w: Dictionary, att: Country, def: Country) -> void:
 		return
 	if def == player:
 		ask_player({
-			"title": "Fomos invadidos!",
-			"text": "Tropas de %s cruzaram a fronteira. A guerra começou e a economia sente o choque." % att.name,
-			"options": [{"label": "Mobilizar o país", "hint": "Mobilização a 60%", "fn": func():
+			"title": tr("Fomos invadidos!"),
+			"text": tr("Tropas de %s cruzaram a fronteira. A guerra começou e a economia sente o choque.") % att.name,
+			"options": [{"label": tr("Mobilizar o país"), "hint": tr("Mobilização a 60%"), "fn": func():
 				player.mobilization = maxf(player.mobilization, 0.6)}],
 		})
 
@@ -651,13 +662,13 @@ func war_declared(w: Dictionary, att: Country, def: Country) -> void:
 func ally_attacked(w: Dictionary, ally: Country, enemy: Country) -> void:
 	var pl := player
 	ask_player({
-		"title": "Aliado sob ataque",
-		"text": "%s invocou o pacto de defesa: %s atacou. Se honrar o tratado, seu país entra em guerra." % [ally.name, enemy.name],
+		"title": tr("Aliado sob ataque"),
+		"text": tr("%s invocou o pacto de defesa: %s atacou. Se honrar o tratado, seu país entra em guerra.") % [ally.name, enemy.name],
 		"options": [
-			{"label": "Honrar o pacto e entrar na guerra", "hint": "Mobilização 25%; alta de gastos", "fn": func():
+			{"label": tr("Honrar o pacto e entrar na guerra"), "hint": tr("Mobilização 25%; alta de gastos"), "fn": func():
 				if diplomacy.wars.has(w):
 					diplomacy.join_war(pl, w, true, self)},
-			{"label": "Quebrar o pacto", "hint": "Pacto cancelado; relações com aliados despencam", "fn": func():
+			{"label": tr("Quebrar o pacto"), "hint": tr("Pacto cancelado; relações com aliados despencam"), "fn": func():
 				diplomacy.break_alliance(pl, ally, self)
 				for c: Country in countries:
 					if c.alive and c != pl and diplomacy.allied(c.idx, pl.idx):
@@ -670,10 +681,10 @@ func ally_attacked(w: Dictionary, ally: Country, enemy: Country) -> void:
 ## Sem eleições para disputar, o regime cai e o líder é deposto.
 func player_lost_war(enemy: Country) -> void:
 	if not player.alive or player.dem < Politics.FREE_PARLIAMENT_DEM:
-		_finish("golpe", "As tropas de %s tomaram a capital, e o regime caiu com a rendição." % enemy.name)
+		_finish("golpe", tr("As tropas de %s tomaram a capital, e o regime caiu com a rendição.") % enemy.name)
 		return
 	var next_party: Dictionary = politics.hand_over(player)
-	enter_opposition("As tropas de %s tomaram a capital, e seu governo assinou a rendição. %s assume, e você passa a liderar a oposição." % [enemy.name, next_party.get("name", "Outro partido")], "Rendição")
+	enter_opposition(tr("As tropas de %s tomaram a capital, e seu governo assinou a rendição. %s assume, e você passa a liderar a oposição.") % [enemy.name, next_party.get("name", tr("Outro partido"))], tr("Rendição"))
 
 
 func player_won_war(w: Dictionary, def: Country) -> void:
@@ -682,18 +693,18 @@ func player_won_war(w: Dictionary, def: Country) -> void:
 	# Evita reentrar até a decisão: congela a frente abaixo da capitulação.
 	w.front = 96.0
 	ask_player({
-		"title": "%s capitulou" % def.name,
-		"text": "As forças de %s se renderam. Qual será o futuro do país?" % def.name,
+		"title": tr("%s capitulou") % def.name,
+		"text": tr("As forças de %s se renderam. Qual será o futuro do país?") % def.name,
 		"options": [
-			{"label": "Anexar", "hint": "Ganha população e recursos; reputação global despenca", "fn": func():
+			{"label": tr("Anexar"), "hint": tr("Ganha população e recursos; reputação global despenca"), "fn": func():
 				d.annex(pl, def, self)
-				d.end_war_by_player(w, pl, def, self, 0.0, "%s anexa %s depois de vencer a guerra." % [pl.name, def.name])},
-			{"label": "Instalar governo aliado", "hint": "Vira Estado-cliente e aliado militar", "fn": func():
+				d.end_war_by_player(w, pl, def, self, 0.0, tr("%s anexa %s depois de vencer a guerra.") % [pl.name, def.name])},
+			{"label": tr("Instalar governo aliado"), "hint": tr("Vira Estado-cliente e aliado militar"), "fn": func():
 				d.make_client(pl, def, self)
-				d.end_war_by_player(w, pl, def, self, 0.0, "%s vence e instala governo aliado em %s." % [pl.name, def.name])},
-			{"label": "Demarcar novas fronteiras", "hint": "Você desenha no mapa as áreas que ficam com o seu país", "fn": func():
+				d.end_war_by_player(w, pl, def, self, 0.0, tr("%s vence e instala governo aliado em %s.") % [pl.name, def.name])},
+			{"label": tr("Demarcar novas fronteiras"), "hint": tr("Você desenha no mapa as áreas que ficam com o seu país"), "fn": func():
 				_send(demarcation_requested, [{"kind": "victory", "war": w, "rival": def, "budget": 0.9}])},
-			{"label": "Não ficar com território", "hint": "Retira as tropas e melhora a reputação internacional", "fn": func():
+			{"label": tr("Não ficar com território"), "hint": tr("Retira as tropas e melhora a reputação internacional"), "fn": func():
 				settle_victory(w, def, [])},
 		],
 	})
@@ -707,12 +718,12 @@ func player_repelled(w: Dictionary, att: Country) -> void:
 
 func _offer_victory(w: Dictionary, rival: Country, budget: float) -> void:
 	ask_player({
-		"title": "Vitória sobre %s" % rival.name,
-		"text": "Suas tropas controlam cerca de %s do território de %s. Fica com alguma parte?" % [UiKit.pct(budget), rival.name],
+		"title": tr("Vitória sobre %s") % rival.name,
+		"text": tr("Suas tropas controlam cerca de %s do território de %s. Fica com alguma parte?") % [UiKit.pct(budget), rival.name],
 		"options": [
-			{"label": "Demarcar novas fronteiras", "hint": "Você desenha no mapa as áreas que ficam com o seu país", "fn": func():
+			{"label": tr("Demarcar novas fronteiras"), "hint": tr("Você desenha no mapa as áreas que ficam com o seu país"), "fn": func():
 				_send(demarcation_requested, [{"kind": "victory", "war": w, "rival": rival, "budget": budget}])},
-			{"label": "Não ficar com território", "hint": "Retira as tropas e melhora a reputação internacional", "fn": func():
+			{"label": tr("Não ficar com território"), "hint": tr("Retira as tropas e melhora a reputação internacional"), "fn": func():
 				settle_victory(w, rival, [])},
 		],
 	})
@@ -720,12 +731,12 @@ func _offer_victory(w: Dictionary, rival: Country, budget: float) -> void:
 
 func _offer_negotiation(w: Dictionary, rival: Country) -> void:
 	ask_player({
-		"title": "Negociação de fronteiras",
-		"text": "O cessar-fogo com %s saiu sem vencedor. Como ficam as fronteiras?" % rival.name,
+		"title": tr("Negociação de fronteiras"),
+		"text": tr("O cessar-fogo com %s saiu sem vencedor. Como ficam as fronteiras?") % rival.name,
 		"options": [
-			{"label": "Restabelecer fronteiras antigas", "hint": "Cada lado volta para onde estava antes da guerra", "fn": func():
+			{"label": tr("Restabelecer fronteiras antigas"), "hint": tr("Cada lado volta para onde estava antes da guerra"), "fn": func():
 				settle_old_borders(w, rival)},
-			{"label": "Propor novas fronteiras", "hint": "Desenhe o que pede e o que oferece. %s pode recusar" % rival.name, "fn": func():
+			{"label": tr("Propor novas fronteiras"), "hint": tr("Desenhe o que pede e o que oferece. %s pode recusar") % rival.name, "fn": func():
 				_send(demarcation_requested, [{"kind": "negotiation", "war": w, "rival": rival, "budget": 1.0}])},
 		],
 	})
@@ -740,19 +751,19 @@ func settle_victory(w: Dictionary, rival: Country, pieces: Array) -> void:
 		for c: Country in countries:
 			if c.alive and c != pl and c != rival:
 				d.add_relation(c.idx, pl.idx, 3.0)
-		d.end_war_by_player(w, pl, rival, self, 0.0, "%s vence a guerra, retira as tropas e não fica com território de %s." % [pl.name, rival.name])
+		d.end_war_by_player(w, pl, rival, self, 0.0, tr("%s vence a guerra, retira as tropas e não fica com território de %s.") % [pl.name, rival.name])
 		return
 	var share := territories.apply(pieces, rival, pl, self)
 	d.transfer(rival, pl, share, self)
 	for c: Country in countries:
 		if c.alive and c != pl:
 			d.add_relation(c.idx, pl.idx, -clampf(share * 30.0, 1.0, 10.0))
-	d.end_war_by_player(w, pl, rival, self, 0.0, "Novas fronteiras: %s fica com %s do território de %s." % [pl.name, UiKit.pct(share), rival.name])
+	d.end_war_by_player(w, pl, rival, self, 0.0, tr("Novas fronteiras: %s fica com %s do território de %s.") % [pl.name, UiKit.pct(share), rival.name])
 
 
 func settle_old_borders(w: Dictionary, rival: Country, msg := "") -> void:
 	diplomacy.add_relation(rival.idx, player.idx, 6.0)
-	var text := msg if msg != "" else "%s e %s restabelecem as fronteiras de antes da guerra." % [player.name, rival.name]
+	var text := msg if msg != "" else tr("%s e %s restabelecem as fronteiras de antes da guerra.") % [player.name, rival.name]
 	diplomacy.end_war_by_player(w, player, rival, self, 0.0, text)
 
 
@@ -769,13 +780,13 @@ func propose_borders(w: Dictionary, rival: Country, claims: Array, offers: Array
 	var tolerance := 0.02 + maxf(f, 0.0) / 100.0 * 0.6 + rival.war_exhaustion * 0.12 - maxf(-f, 0.0) / 100.0 * 0.3
 	if net > tolerance:
 		diplomacy.add_relation(rival.idx, pl.idx, -2.0)
-		return {"ok": false, "msg": "%s recusou: a troca tira território demais. O saldo aceitável é cerca de %s do país." % [rival.name, UiKit.pct(maxf(tolerance, 0.0))]}
+		return {"ok": false, "msg": tr("%s recusou: a troca tira território demais. O saldo aceitável é cerca de %s do país.") % [rival.name, UiKit.pct(maxf(tolerance, 0.0))]}
 	var gained := t.apply(claims, rival, pl, self)
 	diplomacy.transfer(rival, pl, gained, self)
 	var given := t.apply(offers, pl, rival, self)
 	diplomacy.transfer(pl, rival, given, self)
 	diplomacy.add_relation(rival.idx, pl.idx, 4.0)
-	diplomacy.end_war_by_player(w, pl, rival, self, 0.0, "Acordo de paz: %s e %s estabelecem novas fronteiras." % [pl.name, rival.name])
+	diplomacy.end_war_by_player(w, pl, rival, self, 0.0, tr("Acordo de paz: %s e %s estabelecem novas fronteiras.") % [pl.name, rival.name])
 	return {"ok": true, "msg": ""}
 
 
@@ -791,14 +802,14 @@ func nuclear_check(w: Dictionary, att: Country, def: Country, force := false) ->
 	nuke_used = true
 	global_tension = 1.0
 	global_risk = 1.0
-	emit_news("ATAQUE NUCLEAR: %s usa armas atômicas diante da derrota." % losing.name, "guerra", losing)
+	emit_news(tr("ATAQUE NUCLEAR: %s usa armas atômicas diante da derrota.") % losing.name, "guerra", losing)
 	var other := att if losing == def else def
 	other.damage = 0.5
 	other.capital *= 0.7
 	if player:
 		player.stability = maxf(player.stability - 0.2, 0.03)
 		player.approval = maxf(player.approval - 0.1, 0.02)
-		emit_news("%s lançou armas nucleares. O mundo inteiro entra em choque." % losing.name, "crise", losing)
+		emit_news(tr("%s lançou armas nucleares. O mundo inteiro entra em choque.") % losing.name, "crise", losing)
 	return true
 
 
@@ -817,29 +828,29 @@ func do_action(action: String, target: Country) -> Dictionary:
 	var pl := player
 	var d := diplomacy
 	if pl == null or target == pl or not target.alive:
-		return {"ok": false, "msg": "Ação inválida."}
+		return {"ok": false, "msg": tr("Ação inválida.")}
 	if not in_office:
-		return {"ok": false, "msg": "Na oposição, você não fala em nome do país."}
+		return {"ok": false, "msg": tr("Na oposição, você não fala em nome do país.")}
 	if action_wait(action, target) > 0:
-		return {"ok": false, "msg": "Essa ação com %s só pode ser repetida em %d dia(s)." % [target.name, action_wait(action, target)]}
+		return {"ok": false, "msg": tr("Essa ação com %s só pode ser repetida em %d dia(s).") % [target.name, action_wait(action, target)]}
 	var rel := d.relation(pl.idx, target.idx)
 	var msg := ""
 	match action:
 		"mission":
 			d.add_relation(pl.idx, target.idx, rng.randf_range(4.0, 9.0))
-			msg = "Missão diplomática melhora relações com %s." % target.name
+			msg = tr("Missão diplomática melhora relações com %s.") % target.name
 		"aid":
 			var amount := pl.y_usd() * 0.001
 			pl.debt_loc += amount * pl.e
 			target.reserves += amount
 			target.demand_shock += amount / maxf(target.y_usd(), 0.01) * 0.6
 			d.add_relation(pl.idx, target.idx, clampf(10.0 * sqrt(amount / maxf(target.y_usd() * 0.002, 0.01)), 2.0, 16.0))
-			msg = "Pacote de ajuda de US$ %.1f bi enviado a %s." % [amount, target.name]
+			msg = tr("Pacote de ajuda de US$ %.1f bi enviado a %s.") % [amount, target.name]
 		"fta":
 			if d.has_fta(pl.idx, target.idx, self):
-				return {"ok": false, "msg": "Já existe acordo comercial."}
+				return {"ok": false, "msg": tr("Já existe acordo comercial.")}
 			if rel < 15.0:
-				return {"ok": false, "msg": "%s não negocia: relação abaixo de +15." % target.name}
+				return {"ok": false, "msg": tr("%s não negocia: relação abaixo de +15.") % target.name}
 			var deal: Dictionary = treaties.propose(self, target, "fta")
 			msg = String(deal.msg)
 			if not deal.get("accepted", false):
@@ -851,10 +862,10 @@ func do_action(action: String, target: Country) -> Dictionary:
 					msg = String(treaties.denounce(self, int(existing.id)).msg)
 				else:
 					d.break_alliance(pl, target, self)
-					msg = "Pacto de defesa com %s cancelado." % target.name
+					msg = tr("Pacto de defesa com %s cancelado.") % target.name
 			else:
 				if rel < 55.0:
-					return {"ok": false, "msg": "%s recusa: relação abaixo de +55." % target.name}
+					return {"ok": false, "msg": tr("%s recusa: relação abaixo de +55.") % target.name}
 				var pact: Dictionary = treaties.propose(self, target, "defense")
 				msg = String(pact.msg)
 				if not pact.get("accepted", false):
@@ -862,61 +873,61 @@ func do_action(action: String, target: Country) -> Dictionary:
 		"denounce":
 			d.add_relation(pl.idx, target.idx, -10.0)
 			pl.approval = minf(pl.approval + 0.005, 0.95)
-			msg = "Seu governo condena %s publicamente." % target.name
+			msg = tr("Seu governo condena %s publicamente.") % target.name
 		"sanction":
 			var lvl := d.sanction_level(pl.idx, target.idx)
 			if lvl >= 1:
 				d.set_sanction(pl, target, 0, self)
-				msg = "Sanções contra %s suspensas." % target.name
+				msg = tr("Sanções contra %s suspensas.") % target.name
 			else:
 				d.set_sanction(pl, target, 1, self)
-				msg = "Sanções financeiras contra %s em vigor." % target.name
+				msg = tr("Sanções financeiras contra %s em vigor.") % target.name
 		"embargo":
 			var lvl2 := d.sanction_level(pl.idx, target.idx)
 			if lvl2 >= 2:
 				d.set_sanction(pl, target, 1, self)
-				msg = "Embargo contra %s reduzido a sanções." % target.name
+				msg = tr("Embargo contra %s reduzido a sanções.") % target.name
 			else:
 				d.set_sanction(pl, target, 2, self)
-				msg = "Embargo total contra %s decretado." % target.name
+				msg = tr("Embargo total contra %s decretado.") % target.name
 		"tariff":
 			var cur := float(d.tariffs.get(d.key(pl.idx, target.idx), 0.0))
 			if cur > 0.0:
 				d.set_tariff_on(pl, target, 0.0, self)
-				msg = "Tarifa contra %s removida." % target.name
+				msg = tr("Tarifa contra %s removida.") % target.name
 			else:
 				d.set_tariff_on(pl, target, 0.2, self)
-				msg = "Tarifa de 20%% sobre produtos de %s." % target.name
+				msg = tr("Tarifa de 20%% sobre produtos de %s.") % target.name
 		"covert":
 			var defense := target.stability * 0.35 + clampf(target.gdp_pc() / 90000.0, 0.0, 0.3)
 			if rng.randf() < defense:
 				d.add_relation(pl.idx, target.idx, -22.0)
 				pl.approval = maxf(pl.approval - 0.02, 0.02)
-				msg = "Operação secreta descoberta em %s: escândalo internacional." % target.name
+				msg = tr("Operação secreta descoberta em %s: escândalo internacional.") % target.name
 			else:
 				target.stability = maxf(target.stability - 0.08, 0.02)
 				target.unrest = minf(target.unrest + 0.3, 1.0)
 				target.conf = maxf(target.conf - 0.06, 0.05)
-				msg = "Operação secreta desestabiliza %s." % target.name
+				msg = tr("Operação secreta desestabiliza %s.") % target.name
 		"arms":
 			if rel < 10.0:
-				return {"ok": false, "msg": "%s não compra de você: relação abaixo de +10." % target.name}
+				return {"ok": false, "msg": tr("%s não compra de você: relação abaixo de +10.") % target.name}
 			var value := minf(target.y_usd() * 0.003, pl.y_usd() * 0.001)
 			target.mil_stock += value * 0.6
 			pl.demand_shock += value / maxf(pl.y_usd(), 0.01) * 0.5
 			d.add_relation(pl.idx, target.idx, 5.0)
-			msg = "Venda de armas de US$ %.1f bi para %s." % [value, target.name]
+			msg = tr("Venda de armas de US$ %.1f bi para %s.") % [value, target.name]
 		"war":
 			if d.allied(pl.idx, target.idx):
-				return {"ok": false, "msg": "Cancele o pacto com %s antes." % target.name}
+				return {"ok": false, "msg": tr("Cancele o pacto com %s antes.") % target.name}
 			if d.at_war(pl.idx, target.idx):
-				return {"ok": false, "msg": "Já em guerra."}
+				return {"ok": false, "msg": tr("Já em guerra.")}
 			d.declare_war(pl, target, self)
 			return {"ok": true, "msg": ""}
 		"peace":
 			return _propose_peace(target)
 		_:
-			return {"ok": false, "msg": "Ação desconhecida."}
+			return {"ok": false, "msg": tr("Ação desconhecida.")}
 	action_used["%s:%s" % [action, target.iso]] = day_index
 	if msg != "":
 		emit_news(msg, "diplomacia", target)
@@ -928,7 +939,7 @@ func _propose_peace(target: Country) -> Dictionary:
 	var d := diplomacy
 	var w := d.war_between(pl.idx, target.idx)
 	if w.is_empty():
-		return {"ok": false, "msg": "Vocês não estão em guerra."}
+		return {"ok": false, "msg": tr("Vocês não estão em guerra.")}
 	var pl_att: bool = pl.idx in w.a
 	var f: float = w.front if pl_att else -float(w.front)  # >0 favorece o jogador
 	var enemy: Country = countries[w.main_d] if pl_att else countries[w.main_a]
@@ -937,14 +948,14 @@ func _propose_peace(target: Country) -> Dictionary:
 		accepts -= 0.25 + (-f) * 0.008  # inimigo vencendo não aceita fácil
 	action_used["peace:%s" % target.iso] = day_index
 	if rng.randf() > clampf(accepts, 0.02, 0.97):
-		return {"ok": false, "msg": "%s rejeitou a proposta de paz." % enemy.name}
+		return {"ok": false, "msg": tr("%s rejeitou a proposta de paz.") % enemy.name}
 	if f > 15.0:
 		_offer_victory(w, enemy, clampf(f / 100.0, 0.02, 0.9))
 	elif f >= -15.0:
 		_offer_negotiation(w, enemy)
 	else:
 		# O inimigo venceu: é ele quem escolhe o que fica com ele.
-		d.end_war_by_player(w, enemy, pl, self, clampf(-f * 0.004, 0.0, 0.3), "Paz assinada: %s cede {pct} do território a %s." % [pl.name, enemy.name])
+		d.end_war_by_player(w, enemy, pl, self, clampf(-f * 0.004, 0.0, 0.3), tr("Paz assinada: %s cede {pct} do território a %s.") % [pl.name, enemy.name])
 	return {"ok": true, "msg": ""}
 
 
@@ -975,6 +986,8 @@ func load_dict(d: Dictionary) -> void:
 		var c := Country.from_dict(cd)
 		countries.append(c)
 		by_iso[c.iso] = c
+	# O save guarda o nome no idioma de quando foi gravado.
+	localize_country_names()
 	usa = by_iso["USA"]
 	markets.from_dict(d.markets)
 	diplomacy.from_dict(d.diplomacy)

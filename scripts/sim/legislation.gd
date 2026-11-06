@@ -13,6 +13,7 @@ const COMPLIANCE := 0.88
 const EXPORT_DIR := "user://legislacao/"
 const EXPORT_FORMAT := 1
 
+# i18n-begin
 const STATE_DRAFT := "Em elaboração"
 const STATE_PROCESS := "Em tramitação"
 const STATE_APPROVED := "Aprovada"
@@ -24,8 +25,10 @@ const STATE_REVOKED := "Revogada"
 const STATE_EXPIRED := "Expirada"
 const STATE_INVALID := "Declarada inválida"
 const STATE_REJECTED := "Rejeitada"
+# i18n-end
 
 ## vote: none, simple, absolute ou qualified. needs: papéis que podem apresentar.
+# i18n-begin
 const NORM_TYPES := {
 	"constituicao": {"label": "Constituição", "short": "CF", "rank": 100, "organ": "Assembleia Constituinte", "vote": "qualified", "sanction": false, "needs": []},
 	"emenda": {"label": "Emenda constitucional", "short": "EC", "rank": 90, "organ": "Parlamento", "vote": "amendment", "sanction": false, "needs": ["head", "opposition"]},
@@ -38,6 +41,7 @@ const NORM_TYPES := {
 	"regulamento": {"label": "Regulamento", "short": "Reg.", "rank": 30, "organ": "Ministério", "vote": "none", "sanction": false, "needs": ["head"]},
 	"portaria": {"label": "Portaria", "short": "Port.", "rank": 20, "organ": "Ministério", "vote": "none", "sanction": false, "needs": ["head"]},
 }
+# i18n-end
 ## Dias que cada etapa leva depois da anterior: o parlamento precisa de tempo para deliberar.
 const STEP_DAYS := {
 	"present": 2, "admissibility": 7, "constitutional": 7, "discussion": 21, "vote": 3, "vote_upper": 21, "interval": 0,
@@ -58,18 +62,24 @@ const DEAL_SEAT_PRICE := 1.2
 const DEAL_GENEROUS_BONUS := 0.25
 const DEAL_POST_BONUS := 0.2
 const TAX_FIELDS := ["tax_income", "tax_consumption", "tax_corporate", "tariff"]
+# i18n-begin
 const STEP_LABELS := {
 	"present": "Apresentação", "admissibility": "Admissibilidade", "constitutional": "Análise constitucional", "discussion": "Discussão",
 	"vote": "Votação", "vote_upper": "Votação na segunda casa", "vote_2": "Segunda votação", "interval": "Intervalo entre votações",
 	"quorum": "Verificação do quórum", "sanction": "Sanção", "override": "Veto em análise", "promulgate": "Promulgação",
 	"plebiscite": "Plebiscito", "publish": "Publicação", "sign": "Assinatura", "apply": "Atualização da Constituição",
 }
+# i18n-end
+# i18n-begin
 const ACTIONS := {
 	"create": "Criar normas", "edit": "Editar propostas", "present": "Apresentar projetos", "analyze": "Analisar propostas",
 	"vote": "Participar de votações", "approve": "Aprovar normas", "veto": "Exercer veto", "promulgate": "Promulgar normas",
 	"publish": "Publicar normas", "revoke": "Revogar normas", "admin": "Administrar o sistema legislativo",
 }
+# i18n-end
+# i18n-begin
 const ROLE_LABELS := {"head": "Chefe de governo", "opposition": "Líder da oposição", "parliament": "Parlamento", "court": "Corte constitucional"}
+# i18n-end
 const ROLE_ACTIONS := {
 	"head": ["create", "edit", "present", "veto", "promulgate", "publish", "revoke", "admin"],
 	"opposition": ["create", "edit", "present"],
@@ -80,8 +90,12 @@ const PROTECTED_RIGHTS := ["expressao", "voto", "associacao", "propriedade"]
 ## Peso de cada direito na aprovação e na estabilidade. Autoritários ganham estabilidade ao restringir.
 const RIGHT_APPROVAL := 0.006
 const RIGHT_STABILITY := 0.004
+# i18n-begin
 const AMENDMENT_OPS := {"alter": "Alteração", "add": "Acréscimo", "suppress": "Supressão", "replace": "Substituição"}
+# i18n-end
+# i18n-begin
 const ADD_KINDS := {"artigo": "Artigo", "paragrafo": "Parágrafo", "inciso": "Inciso", "transitoria": "Disposição transitória"}
+# i18n-end
 
 var iso := ""
 var norms := {}
@@ -119,8 +133,8 @@ func setup(world: GameWorld) -> void:
 	constitution = _seed_constitution(c, world.politics.data_of(c.iso))
 	norms = {}
 	norms[1] = {
-		"id": 1, "type": "constituicao", "number": 1, "year": world.start_year, "title": "Constituição de %s" % c.name,
-		"ementa": "Estrutura fundamental do Estado.", "author": "Assembleia Constituinte", "organ": "Assembleia Constituinte",
+		"id": 1, "type": "constituicao", "number": 1, "year": world.start_year, "title": tr("Constituição de %s") % c.name,
+		"ementa": tr("Estrutura fundamental do Estado."), "author": tr("Assembleia Constituinte"), "organ": tr("Assembleia Constituinte"),
 		"dates": {"published": world.date_string(), "in_force": world.date_string()}, "state": STATE_IN_FORCE, "program": LawProgram.empty(),
 		"versions": [], "current_v": 0, "votes": [], "process": {}, "history": [],
 	}
@@ -136,7 +150,7 @@ func _seed_codes(world: GameWorld) -> void:
 		var program := code.seed_program(world, world.player)
 		if program.is_empty():
 			continue
-		var norm := new_norm(world, code.norm_type, "Parlamento")
+		var norm := new_norm(world, code.norm_type, "Parlamento")  # i18n
 		norm.by_player = false
 		norm.title = code.title
 		norm.ementa = code.ementa
@@ -144,7 +158,7 @@ func _seed_codes(world: GameWorld) -> void:
 		norm["code"] = code.id
 		norm.program = program
 		var compiled := LawCompiler.compile(program, compile_context(code.norm_type))
-		norm.versions.append(_make_version(world, program, compiled, "Texto original"))
+		norm.versions.append(_make_version(world, program, compiled, tr("Texto original")))
 		norm.current_v = 0
 		norm.state = STATE_IN_FORCE
 		norm.dates["published"] = world.date_string()
@@ -191,14 +205,15 @@ func start_code_bill(world: GameWorld, id: String) -> Dictionary:
 
 ## Os tributos do início da partida já são lei: mudá-los é alterar ou substituir esta norma.
 func _seed_tax_code(world: GameWorld) -> void:
-	var norm := new_norm(world, "ordinaria", "Parlamento")
+	# Título, ementa e órgão ficam em português, como os dos códigos: a tela traduz.
+	var norm := new_norm(world, "ordinaria", "Parlamento")  # i18n
 	norm.by_player = false
-	norm.title = "Código Tributário"
-	norm.ementa = "Define as alíquotas de renda, consumo, empresas e importação."
+	norm.title = "Código Tributário"  # i18n
+	norm.ementa = "Define as alíquotas de renda, consumo, empresas e importação."  # i18n
 	norm["base_code"] = true
 	norm.program = tax_program(world)
 	var compiled := LawCompiler.compile(norm.program, compile_context("ordinaria"))
-	norm.versions.append(_make_version(world, norm.program, compiled, "Texto original"))
+	norm.versions.append(_make_version(world, norm.program, compiled, tr("Texto original")))
 	norm.current_v = 0
 	norm.state = STATE_IN_FORCE
 	norm.dates["published"] = world.date_string()
@@ -223,8 +238,8 @@ func start_tax_bill(world: GameWorld) -> Dictionary:
 		return start_code_bill(world, "tributario")
 	var norm := new_norm(world, "ordinaria")
 	norm.program = tax_program(world)
-	norm.title = "Reforma tributária"
-	norm.ementa = "Altera as alíquotas dos tributos."
+	norm.title = tr("Reforma tributária")
+	norm.ementa = tr("Altera as alíquotas dos tributos.")
 	return norm
 
 
@@ -235,30 +250,30 @@ func _seed_constitution(c: Country, data: Dictionary) -> Dictionary:
 	var free := c.dem >= 6.0
 	var open := c.dem >= 4.0
 	var articles := [
-		_article("Art. 1º", "%s é um Estado soberano, organizado em governo, parlamento e tribunais." % c.name, "", null, true),
-		_article("Art. 2º", "Os poderes são independentes e harmônicos entre si." if open else "O chefe de governo dirige o Estado e responde por todos os poderes.", "", null, free),
-		_article("Art. 3º", "São garantidos os direitos: {v}.", "rights", PROTECTED_RIGHTS.duplicate() if free else (["propriedade"] if not open else ["voto", "propriedade"]), free),
-		_article("Art. 4º", "O mandato do chefe de governo terá duração de {v} anos.", "mandate", 4, false),
-		_article("Art. 5º", "O parlamento terá duas casas: {v}.", "bicameral", free and c.pop >= 50.0, false),
-		_article("Art. 6º", "O chefe de governo poderá vetar projetos aprovados: {v}.", "veto", open, false),
-		_article("Art. 7º", "O veto só cai com {v}% dos votos do parlamento.", "override_pct", 50, false),
-		_article("Art. 8º", "O chefe de governo poderá editar decreto autônomo: {v}.", "autonomous_decree", not free, false),
-		_article("Art. 9º", "A corte constitucional controla a validade das normas: {v}.", "judicial_review", open, false),
-		_article("Art. 10.", "A oposição poderá apresentar projetos: {v}.", "opposition_present", open, false),
-		_article("Art. 11.", "Emendas exigem apoio inicial de {v}% dos assentos.", "amend_proposers", 33 if free else 20, false),
-		_article("Art. 12.", "Emendas exigem {v}% dos votos do parlamento.", "amend_quorum", 60, false),
-		_article("Art. 13.", "Emendas passam por {v} votações.", "amend_votes", 2 if free else 1, false),
-		_article("Art. 14.", "Entre as votações de uma emenda haverá intervalo de {v} dias.", "amend_interval", 10 if free else 0, false),
-		_article("Art. 15.", "A Constituição não será emendada em tempo de guerra: {v}.", "amend_no_war", free, false),
-		_article("Art. 16.", "Tramitarão ao mesmo tempo, no máximo, {v} emendas.", "amend_max", 2, false),
-		_article("Art. 17.", "O banco central é independente do governo: {v}.", "cb_independent", c.cb_independent, false),
-		_article("Art. 18.", "O parlamento é eleito pelo sistema: {v}.", "electoral_system", String(rule.system), false),
-		_article("Art. 19.", "O regime de governo é: {v}.", "head_system", String(rule.head), false),
-		_article("Art. 20.", "Partidos abaixo de {v}% dos votos não entram por lista.", "threshold", roundi(float(rule.threshold) * 100.0), false),
+		_article("Art. 1º", "%s é um Estado soberano, organizado em governo, parlamento e tribunais.", "", c.iso, true),  # i18n
+		_article("Art. 2º", "Os poderes são independentes e harmônicos entre si." if open else "O chefe de governo dirige o Estado e responde por todos os poderes.", "", null, free),  # i18n
+		_article("Art. 3º", "São garantidos os direitos: {v}.", "rights", PROTECTED_RIGHTS.duplicate() if free else (["propriedade"] if not open else ["voto", "propriedade"]), free),  # i18n
+		_article("Art. 4º", "O mandato do chefe de governo terá duração de {v} anos.", "mandate", 4, false),  # i18n
+		_article("Art. 5º", "O parlamento terá duas casas: {v}.", "bicameral", free and c.pop >= 50.0, false),  # i18n
+		_article("Art. 6º", "O chefe de governo poderá vetar projetos aprovados: {v}.", "veto", open, false),  # i18n
+		_article("Art. 7º", "O veto só cai com {v}% dos votos do parlamento.", "override_pct", 50, false),  # i18n
+		_article("Art. 8º", "O chefe de governo poderá editar decreto autônomo: {v}.", "autonomous_decree", not free, false),  # i18n
+		_article("Art. 9º", "A corte constitucional controla a validade das normas: {v}.", "judicial_review", open, false),  # i18n
+		_article("Art. 10.", "A oposição poderá apresentar projetos: {v}.", "opposition_present", open, false),  # i18n
+		_article("Art. 11.", "Emendas exigem apoio inicial de {v}% dos assentos.", "amend_proposers", 33 if free else 20, false),  # i18n
+		_article("Art. 12.", "Emendas exigem {v}% dos votos do parlamento.", "amend_quorum", 60, false),  # i18n
+		_article("Art. 13.", "Emendas passam por {v} votações.", "amend_votes", 2 if free else 1, false),  # i18n
+		_article("Art. 14.", "Entre as votações de uma emenda haverá intervalo de {v} dias.", "amend_interval", 10 if free else 0, false),  # i18n
+		_article("Art. 15.", "A Constituição não será emendada em tempo de guerra: {v}.", "amend_no_war", free, false),  # i18n
+		_article("Art. 16.", "Tramitarão ao mesmo tempo, no máximo, {v} emendas.", "amend_max", 2, false),  # i18n
+		_article("Art. 17.", "O banco central é independente do governo: {v}.", "cb_independent", c.cb_independent, false),  # i18n
+		_article("Art. 18.", "O parlamento é eleito pelo sistema: {v}.", "electoral_system", String(rule.system), false),  # i18n
+		_article("Art. 19.", "O regime de governo é: {v}.", "head_system", String(rule.head), false),  # i18n
+		_article("Art. 20.", "Partidos abaixo de {v}% dos votos não entram por lista.", "threshold", roundi(float(rule.threshold) * 100.0), false),  # i18n
 	]
 	return {
 		"articles": articles, "next_article": 100, "version": 0, "next_emenda": 1,
-		"versions": [{"n": 0, "emenda": 0, "date": "Texto original", "articles": articles.duplicate(true), "changes": [], "approvers": "Assembleia Constituinte", "votes": []}],
+		"versions": [{"n": 0, "emenda": 0, "date": tr("Texto original"), "articles": articles.duplicate(true), "changes": [], "approvers": tr("Assembleia Constituinte"), "votes": []}],
 	}
 
 
@@ -269,23 +284,33 @@ func _article(label: String, template: String, param: String, value: Variant, pe
 	return a
 
 
-static func article_text(a: Dictionary) -> String:
+## O texto guardado fica em português; com localized, sai no idioma do jogo (para a tela).
+static func article_text(a: Dictionary, localized := false) -> String:
 	var template: String = a.get("template", "")
+	var label: String = a.label
+	if localized:
+		template = TranslationServer.translate(template)
+		label = TranslationServer.translate(label)
 	if String(a.get("param", "")) == "":
+		# Art. 1º: o valor é o código do país, para o nome entrar no idioma certo.
+		if a.get("value") is String and "%s" in template:
+			var country := GameData.country_name_pt(a.value)
+			return template % (TranslationServer.translate(country) if localized else country)
 		return template
-	return "%s %s" % [a.label, template.replace("{v}", _value_text(a.value))] if not template.begins_with(String(a.label)) else template.replace("{v}", _value_text(a.value))
+	var value := _value_text(a.value, localized)
+	return "%s %s" % [label, template.replace("{v}", value)] if not template.begins_with(label) else template.replace("{v}", value)
 
 
-static func _value_text(value: Variant) -> String:
+static func _value_text(value: Variant, localized := false) -> String:
 	if value is String:
-		return String(Elections.SYSTEMS.get(value, Elections.HEADS.get(value, value)))
+		return Lang.tr_if(String(Elections.SYSTEMS.get(value, Elections.HEADS.get(value, value))), localized)
 	if value is bool:
-		return "sim" if value else "não"
+		return Lang.tr_if("sim", localized) if value else Lang.tr_if("não", localized)
 	if value is Array:
 		var names := []
 		for r: String in value:
-			names.append(String(LawCatalog.CHOICES.right.get(r, r)))
-		return ", ".join(names) if not names.is_empty() else "nenhum"
+			names.append(Lang.tr_if(String(LawCatalog.CHOICES.right.get(r, r)), localized))
+		return ", ".join(names) if not names.is_empty() else Lang.tr_if("nenhum", localized)
 	return str(int(value)) if value is float or value is int else str(value)
 
 
@@ -385,13 +410,13 @@ func permission_table() -> Dictionary:
 func new_norm(world: GameWorld, type: String, author := "") -> Dictionary:
 	var norm := {
 		"id": next_id, "type": type, "number": next_id, "year": world.year, "title": "", "ementa": "",
-		"author": author if author != "" else String(world.leader.get("name", "Jogador")), "by_player": author == "",
+		"author": author if author != "" else String(world.leader.get("name", tr("Jogador"))), "by_player": author == "",
 		"organ": String(NORM_TYPES[type].organ), "dates": {}, "state": STATE_DRAFT, "program": LawProgram.empty(), "vacatio": 0, "expires": "",
 		"versions": [], "current_v": -1, "votes": [], "process": {}, "history": [], "amends": -1, "revokes": {}, "ops": [],
 	}
 	next_id += 1
 	norms[norm.id] = norm
-	_log(world, norm, "Criação", "", norm.title, "Rascunho criado", norm.author)
+	_log(world, norm, "Criação", "", norm.title, tr("Rascunho criado"), norm.author)  # i18n
 	revision += 1
 	return norm
 
@@ -403,7 +428,7 @@ func delete_draft(id: int) -> void:
 
 
 func norm_label(norm: Dictionary) -> String:
-	return "%s nº %d/%d" % [NORM_TYPES[norm.type].short, int(norm.number), int(norm.year)]
+	return tr("%s nº %d/%d") % [tr(NORM_TYPES[norm.type].short), int(norm.number), int(norm.year)]
 
 
 func list_norms(state_filter := "") -> Array:
@@ -453,11 +478,11 @@ func find_conflicts(norm: Dictionary) -> Array:
 		for key: String in mine:
 			if theirs.has(key):
 				var low: bool = int(NORM_TYPES[other.type].rank) > int(NORM_TYPES[norm.type].rank)
-				out.append({"block": -1, "text": "Conflito com %s sobre %s: %s." % [norm_label(other), theirs[key], "a outra norma prevalece por ter hierarquia maior" if low else "vale a hierarquia, a especialidade e a data de vigência"]})
+				out.append({"block": -1, "text": tr("Conflito com %s sobre %s: %s.") % [norm_label(other), theirs[key], tr("a outra norma prevalece por ter hierarquia maior") if low else tr("vale a hierarquia, a especialidade e a data de vigência")]})
 	# Direito protegido pela Constituição.
 	for block: Dictionary in LawProgram.all_blocks(norm.program):
 		if block.type in ["rg_remove", "dr_suspend"] and block.fields.get("right") in param("rights", []):
-			out.append({"block": int(block.id), "text": "A Constituição garante esse direito: a corte pode declarar a norma inválida."})
+			out.append({"block": int(block.id), "text": tr("A Constituição garante esse direito: a corte pode declarar a norma inválida.")})
 	return out
 
 
@@ -468,9 +493,9 @@ func _claims(program: Dictionary) -> Dictionary:
 			"ec_rate", "ec_budget", "ac_param":
 				out[String(b.fields.get("field"))] = LawProgram.block_text(b)
 			"ec_minwage":
-				out["minwage"] = "salário mínimo"
+				out["minwage"] = tr("salário mínimo")
 			"rg_grant", "rg_remove", "dr_right", "dr_suspend":
-				out["right:" + String(b.fields.get("right"))] = "o direito %s" % LawProgram.field_text(b, "right")
+				out["right:" + String(b.fields.get("right"))] = tr("o direito %s") % LawProgram.field_text(b, "right")
 	return out
 
 
@@ -531,29 +556,29 @@ func _steps_for(norm: Dictionary) -> Array:
 ## Manda a norma para a tramitação, depois de compilar. Rascunho com erro não sai do editor.
 func present(world: GameWorld, norm: Dictionary) -> Dictionary:
 	if not can(world, "present", norm.type):
-		return {"ok": false, "msg": "%s não pode apresentar %s." % [ROLE_LABELS[role(world)], NORM_TYPES[norm.type].label]}
+		return {"ok": false, "msg": tr("%s não pode apresentar %s.") % [tr(ROLE_LABELS[role(world)]), tr(NORM_TYPES[norm.type].label)]}
 	if String(norm.title).strip_edges() == "" or String(norm.ementa).strip_edges() == "":
-		return {"ok": false, "msg": "Preencha o título e a ementa da norma."}
+		return {"ok": false, "msg": tr("Preencha o título e a ementa da norma.")}
 	if norm.type == "emenda":
 		var check := check_amendment(world, norm)
 		if not check.ok:
 			return check
 		if not norm.program.stacks.is_empty() and not compile_norm(norm).ok:
-			return {"ok": false, "msg": "Os blocos da emenda têm erros: corrija antes de apresentar."}
+			return {"ok": false, "msg": tr("Os blocos da emenda têm erros: corrija antes de apresentar.")}
 	else:
 		var compiled := compile_norm(norm)
 		if not compiled.ok:
-			return {"ok": false, "msg": "A norma tem %d erro(s): corrija antes de apresentar." % compiled.errors.size()}
+			return {"ok": false, "msg": tr("A norma tem %d erro(s): corrija antes de apresentar.") % compiled.errors.size()}
 	var position := position_for(world, norm)
 	norm["position"] = position
 	norm["popularity"] = popularity_of(world, norm)
 	norm.state = STATE_PROCESS
 	norm.dates["presented"] = world.date_string()
 	norm.process = {"steps": _steps_for(norm), "at": 0, "due": world.day_index + _days_of("present"), "log": []}
-	_log(world, norm, "Apresentação", "", norm_label(norm), "Entrou em tramitação", norm.author)
-	world.emit_news("%s: %s entra em tramitação." % [norm_label(norm), norm.title], "politica", world.player)
+	_log(world, norm, "Apresentação", "", norm_label(norm), tr("Entrou em tramitação"), norm.author)  # i18n
+	world.emit_news(tr("%s: %s entra em tramitação.") % [norm_label(norm), norm.title], "politica", world.player)
 	revision += 1
-	return {"ok": true, "msg": "%s apresentada." % norm_label(norm)}
+	return {"ok": true, "msg": tr("%s apresentada.") % norm_label(norm)}
 
 
 ## Projeto pronto ou orçamento: sem blocos, mas com o mesmo rito no parlamento.
@@ -568,10 +593,10 @@ func present_payload(world: GameWorld, payload: Dictionary, title: String, ement
 	norm.state = STATE_PROCESS
 	norm.dates["presented"] = world.date_string()
 	norm.process = {"steps": _steps_for(norm), "at": 0, "due": world.day_index + _days_of("present"), "log": []}
-	_log(world, norm, "Apresentação", "", norm_label(norm), "Entrou em tramitação", norm.author)
-	world.emit_news("%s: %s vai ao parlamento." % [norm_label(norm), title], "politica", world.player)
+	_log(world, norm, "Apresentação", "", norm_label(norm), tr("Entrou em tramitação"), norm.author)  # i18n
+	world.emit_news(tr("%s: %s vai ao parlamento.") % [norm_label(norm), title], "politica", world.player)
 	revision += 1
-	return {"ok": true, "pending": true, "norm": norm, "msg": "%s foi ao parlamento: o rito leva cerca de %d dias." % [title, _total_days(norm)]}
+	return {"ok": true, "pending": true, "norm": norm, "msg": tr("%s foi ao parlamento: o rito leva cerca de %d dias.") % [title, _total_days(norm)]}
 
 
 ## Em país democrático, unidade nova passa pelo parlamento e por plebiscito. O traçado já foi validado.
@@ -580,7 +605,7 @@ func units_need_approval(world: GameWorld) -> bool:
 
 
 func present_unit(world: GameWorld, payload: Dictionary, title: String) -> Dictionary:
-	return present_payload(world, payload, title, "Criação de unidade: vale se o parlamento e o plebiscito aprovarem.", {"econ": 0.0, "social": 0.0}, true)
+	return present_payload(world, payload, title, tr("Criação de unidade: vale se o parlamento e o plebiscito aprovarem."), {"econ": 0.0, "social": 0.0}, true)
 
 
 func _total_days(norm: Dictionary) -> int:
@@ -594,7 +619,7 @@ func _total_days(norm: Dictionary) -> int:
 func drop_government_bills(world: GameWorld) -> void:
 	for norm: Dictionary in in_process():
 		if norm.has("payload"):
-			_fail(world, norm, STATE_REJECTED, "arquivado com a queda do governo.")
+			_fail(world, norm, STATE_REJECTED, tr("arquivado com a queda do governo."))
 
 
 func _days_of(step: String) -> int:
@@ -628,7 +653,7 @@ func _advance_norm(world: GameWorld, norm: Dictionary) -> void:
 			return
 		if process.get("waiting_player", false):
 			process.erase("waiting_player")
-			_record_step(world, norm, "sanction", "Sanção tácita: o prazo acabou sem veto.", ROLE_LABELS.head)
+			_record_step(world, norm, "sanction", tr("Sanção tácita: o prazo acabou sem veto."), ROLE_LABELS.head)
 			_next_step(world, norm)
 			return
 		_run_step(world, norm)
@@ -663,55 +688,55 @@ func _run_step(world: GameWorld, norm: Dictionary) -> void:
 	var step: String = process.steps[int(process.at)]
 	match step:
 		"present":
-			_record_step(world, norm, step, "Protocolada em %s." % norm.organ, "Mesa do parlamento")
+			_record_step(world, norm, step, tr("Protocolada em %s.") % tr(norm.organ), tr("Mesa do parlamento"))
 		"sign":
-			_record_step(world, norm, step, "Assinada por %s." % norm.author, norm.organ)
+			_record_step(world, norm, step, tr("Assinada por %s.") % norm.author, tr(norm.organ))
 		"admissibility":
 			var why := _admissibility(world, norm)
 			if why != "":
-				_record_step(world, norm, step, "Inadmitida: %s" % why, "Comissão de Justiça")
-				_fail(world, norm, STATE_REJECTED, "inadmitida. %s" % why)
+				_record_step(world, norm, step, tr("Inadmitida: %s") % why, tr("Comissão de Justiça"))
+				_fail(world, norm, STATE_REJECTED, tr("inadmitida. %s") % why)
 				return
-			_record_step(world, norm, step, "Admitida.", "Comissão de Justiça")
+			_record_step(world, norm, step, tr("Admitida."), tr("Comissão de Justiça"))
 		"constitutional":
 			var problem := _court_problem(norm)
 			if problem != "" and _court_acts(world):
-				_record_step(world, norm, step, "Inconstitucional: %s" % problem, ROLE_LABELS.court)
-				_fail(world, norm, STATE_INVALID, "declarada inválida pela corte. %s" % problem)
+				_record_step(world, norm, step, tr("Inconstitucional: %s") % problem, ROLE_LABELS.court)
+				_fail(world, norm, STATE_INVALID, tr("declarada inválida pela corte. %s") % problem)
 				return
-			_record_step(world, norm, step, "Sem impedimento." if problem == "" else "Dúvida arquivada: %s" % problem, ROLE_LABELS.court)
+			_record_step(world, norm, step, tr("Sem impedimento.") if problem == "" else tr("Dúvida arquivada: %s") % problem, ROLE_LABELS.court)
 		"discussion":
-			_record_step(world, norm, step, "Debate encerrado.", "Parlamento")
+			_record_step(world, norm, step, tr("Debate encerrado."), tr("Parlamento"))
 		"vote", "vote_2", "vote_upper":
 			var result := roll_call(world, norm, step == "vote_upper", _required_share(norm))
 			result["step"] = step
 			result["date"] = world.date_string()
 			norm.votes.append(result)
-			var text := "%d a %d (precisava de %d)." % [int(result.yes), int(result.no), int(result.needed)]
+			var text := tr("%d a %d (precisava de %d).") % [int(result.yes), int(result.no), int(result.needed)]
 			if not result.passed:
-				_record_step(world, norm, step, "Rejeitada por %s" % text, "Parlamento")
-				_fail(world, norm, STATE_REJECTED, "rejeitada por %s" % text)
+				_record_step(world, norm, step, tr("Rejeitada por %s") % text, tr("Parlamento"))
+				_fail(world, norm, STATE_REJECTED, tr("rejeitada por %s") % text)
 				return
-			_record_step(world, norm, step, "Aprovada por %s" % text, "Parlamento")
+			_record_step(world, norm, step, tr("Aprovada por %s") % text, tr("Parlamento"))
 			norm.dates["approved"] = world.date_string()
 		"plebiscite":
 			var result := _hold_plebiscite(world, norm)
-			var plebiscite_text := "Sim %d%%, não %d%%, com %d%% de comparecimento." % [roundi(float(result.yes) * 100.0), roundi((1.0 - float(result.yes)) * 100.0), roundi(float(result.turnout) * 100.0)]
+			var plebiscite_text := tr("Sim %d%%, não %d%%, com %d%% de comparecimento.") % [roundi(float(result.yes) * 100.0), roundi((1.0 - float(result.yes)) * 100.0), roundi(float(result.turnout) * 100.0)]
 			if float(result.yes) <= 0.5:
-				_record_step(world, norm, step, "Rejeitado nas urnas. %s" % plebiscite_text, "Eleitorado")
-				_fail(world, norm, STATE_REJECTED, "rejeitado em plebiscito. %s" % plebiscite_text)
+				_record_step(world, norm, step, tr("Rejeitado nas urnas. %s") % plebiscite_text, tr("Eleitorado"))
+				_fail(world, norm, STATE_REJECTED, tr("rejeitado em plebiscito. %s") % plebiscite_text)
 				return
-			_record_step(world, norm, step, "Aprovado nas urnas. %s" % plebiscite_text, "Eleitorado")
-			world.emit_news("%s: aprovado em plebiscito. %s" % [norm_label(norm), plebiscite_text], "politica", world.player)
+			_record_step(world, norm, step, tr("Aprovado nas urnas. %s") % plebiscite_text, tr("Eleitorado"))
+			world.emit_news(tr("%s: aprovado em plebiscito. %s") % [norm_label(norm), plebiscite_text], "politica", world.player)
 		"interval":
-			_record_step(world, norm, step, "Intervalo cumprido.", "Mesa do parlamento")
+			_record_step(world, norm, step, tr("Intervalo cumprido."), tr("Mesa do parlamento"))
 		"quorum":
 			var last: Dictionary = norm.votes[-1]
 			if int(last.yes) < ceili(float(last.total) * float(param("amend_quorum", 60)) / 100.0):
-				_record_step(world, norm, step, "Quórum insuficiente.", "Mesa do parlamento")
-				_fail(world, norm, STATE_REJECTED, "sem o quórum qualificado.")
+				_record_step(world, norm, step, tr("Quórum insuficiente."), tr("Mesa do parlamento"))
+				_fail(world, norm, STATE_REJECTED, tr("sem o quórum qualificado."))
 				return
-			_record_step(world, norm, step, "Quórum qualificado alcançado.", "Mesa do parlamento")
+			_record_step(world, norm, step, tr("Quórum qualificado alcançado."), tr("Mesa do parlamento"))
 			norm.state = STATE_APPROVED
 		"sanction":
 			norm.state = STATE_APPROVED
@@ -723,13 +748,13 @@ func _run_step(world: GameWorld, norm: Dictionary) -> void:
 			result["date"] = world.date_string()
 			norm.votes.append(result)
 			if not result.passed:
-				_record_step(world, norm, step, "Veto mantido: %d de %d votos." % [int(result.yes), int(result.needed)], "Parlamento")
-				_fail(world, norm, STATE_REJECTED, "o veto foi mantido.")
+				_record_step(world, norm, step, tr("Veto mantido: %d de %d votos.") % [int(result.yes), int(result.needed)], tr("Parlamento"))
+				_fail(world, norm, STATE_REJECTED, tr("o veto foi mantido."))
 				return
-			_record_step(world, norm, step, "Veto derrubado por %d votos." % int(result.yes), "Parlamento")
+			_record_step(world, norm, step, tr("Veto derrubado por %d votos.") % int(result.yes), tr("Parlamento"))
 		"promulgate":
 			norm.dates["promulgated"] = world.date_string()
-			_record_step(world, norm, step, "Promulgada.", "Presidência do parlamento" if norm.type == "emenda" else ROLE_LABELS.head)
+			_record_step(world, norm, step, tr("Promulgada."), tr("Presidência do parlamento") if norm.type == "emenda" else ROLE_LABELS.head)
 			norm.state = STATE_AWAITING
 		"publish":
 			_publish(world, norm)
@@ -745,20 +770,20 @@ func _run_step(world: GameWorld, norm: Dictionary) -> void:
 func _run_sanction(world: GameWorld, norm: Dictionary) -> bool:
 	if world.in_office:
 		if norm.get("by_player", false):
-			_record_step(world, norm, "sanction", "Sancionada pelo autor.", ROLE_LABELS.head)
+			_record_step(world, norm, "sanction", tr("Sancionada pelo autor."), ROLE_LABELS.head)
 			return false
 		norm.process["waiting_player"] = true
 		norm.process["tacit"] = world.day_index + TACIT_SANCTION_DAYS
-		world.emit_news("%s aprovada: você tem %d dias para sancionar ou vetar." % [norm_label(norm), TACIT_SANCTION_DAYS], "politica", world.player)
+		world.emit_news(tr("%s aprovada: você tem %d dias para sancionar ou vetar.") % [norm_label(norm), TACIT_SANCTION_DAYS], "politica", world.player)
 		revision += 1
 		return true
 	var ruling: Dictionary = world.politics.ruling_party(iso)
 	var veto: bool = Politics.distance(ruling, norm.position) > Politics.COALITION_REBEL_DISTANCE * 0.7
 	if veto:
-		_record_step(world, norm, "sanction", "Vetada pelo governo.", String(world.politics.leader_of(iso).get("name", ROLE_LABELS.head)))
+		_record_step(world, norm, "sanction", tr("Vetada pelo governo."), String(world.politics.leader_of(iso).get("name", ROLE_LABELS.head)))
 		_insert_override(world, norm)
 		return true
-	_record_step(world, norm, "sanction", "Sancionada pelo governo.", String(world.politics.leader_of(iso).get("name", ROLE_LABELS.head)))
+	_record_step(world, norm, "sanction", tr("Sancionada pelo governo."), String(world.politics.leader_of(iso).get("name", ROLE_LABELS.head)))
 	return false
 
 
@@ -771,18 +796,18 @@ func _insert_override(world: GameWorld, norm: Dictionary) -> void:
 ## O jogador no governo decide sobre um projeto que não é dele.
 func sanction(world: GameWorld, norm: Dictionary, approve: bool) -> Dictionary:
 	if not norm.process.get("waiting_player", false):
-		return {"ok": false, "msg": "Esse projeto não aguarda sanção."}
+		return {"ok": false, "msg": tr("Esse projeto não aguarda sanção.")}
 	if not can(world, "veto"):
-		return {"ok": false, "msg": "Só o chefe de governo sanciona ou veta."}
+		return {"ok": false, "msg": tr("Só o chefe de governo sanciona ou veta.")}
 	norm.process.erase("waiting_player")
 	var who: String = String(world.leader.get("name", ROLE_LABELS.head))
 	if approve:
-		_record_step(world, norm, "sanction", "Sancionada.", who)
+		_record_step(world, norm, "sanction", tr("Sancionada."), who)
 		_next_step(world, norm)
-		return {"ok": true, "msg": "%s sancionada." % norm_label(norm)}
-	_record_step(world, norm, "sanction", "Vetada.", who)
+		return {"ok": true, "msg": tr("%s sancionada.") % norm_label(norm)}
+	_record_step(world, norm, "sanction", tr("Vetada."), who)
 	_insert_override(world, norm)
-	return {"ok": true, "msg": "%s vetada: o parlamento pode derrubar o veto." % norm_label(norm)}
+	return {"ok": true, "msg": tr("%s vetada: o parlamento pode derrubar o veto.") % norm_label(norm)}
 
 
 func _required_share(norm: Dictionary) -> float:
@@ -836,7 +861,7 @@ func roll_call(world: GameWorld, norm: Dictionary, upper := false, share := 0.0,
 		yes += party_yes
 		tally.append({"party": party.short, "yes": party_yes, "no": seats - party_yes})
 	var needed: int = ceili(float(total) * share) if share > 0.0 else total / 2 + 1
-	return {"passed": yes >= needed, "yes": yes, "no": total - yes, "needed": needed, "total": total, "tally": tally, "house": "Senado" if upper else ("Câmara" if param("bicameral", false) else "Parlamento")}
+	return {"passed": yes >= needed, "yes": yes, "no": total - yes, "needed": needed, "total": total, "tally": tally, "house": tr("Senado") if upper else (tr("Câmara") if param("bicameral", false) else tr("Parlamento"))}
 
 
 # --- Negociação de votos ----------------------------------------------------------------
@@ -873,64 +898,64 @@ func deal_chance(world: GameWorld, norm: Dictionary, party: Dictionary, want_yes
 ## com aquele partido sobre esta proposta. A própria bancada segue a orientação de graça.
 func negotiate(world: GameWorld, norm: Dictionary, party_id: int, want_yes: bool, generous := false) -> Dictionary:
 	if not can_negotiate(norm):
-		return {"ok": false, "msg": "Não há mais votação a negociar nesta proposta."}
+		return {"ok": false, "msg": tr("Não há mais votação a negociar nesta proposta.")}
 	var data: Dictionary = world.politics.data_of(iso)
 	var party: Dictionary = Politics._find(data, party_id)
 	if party.is_empty():
-		return {"ok": false, "msg": "Esse partido não existe."}
-	var who: String = String(world.leader.get("name", "Jogador"))
+		return {"ok": false, "msg": tr("Esse partido não existe.")}
+	var who: String = String(world.leader.get("name", tr("Jogador")))
 	var deals: Dictionary = norm.get_or_add("deals", {})
 	if party_id == int(data.player_party):
 		deals[str(party_id)] = want_yes
 		revision += 1
-		return {"ok": true, "accepted": true, "msg": "Sua bancada foi orientada a votar %s." % ("a favor" if want_yes else "contra")}
+		return {"ok": true, "accepted": true, "msg": tr("Sua bancada foi orientada a votar %s.") % (tr("a favor") if want_yes else tr("contra"))}
 	var asked: Dictionary = norm.get_or_add("asked", {})
 	if asked.has(str(party_id)):
-		return {"ok": false, "msg": "%s já deu a resposta sobre esta proposta." % party.short}
+		return {"ok": false, "msg": tr("%s já deu a resposta sobre esta proposta.") % party.short}
 	var price := deal_price(world, party, generous)
 	var fund: float = world.politics.party_fund(world)
 	if fund < price:
-		return {"ok": false, "msg": "O acordo custa %s, e o fundo tem %s." % [UiKit.millions(price), UiKit.millions(fund)]}
+		return {"ok": false, "msg": tr("O acordo custa %s, e o fundo tem %s.") % [UiKit.millions(price), UiKit.millions(fund)]}
 	asked[str(party_id)] = true
 	var chance := deal_chance(world, norm, party, want_yes, DEAL_GENEROUS_BONUS if generous else 0.0)
 	if _rng.randf() >= chance:
-		_log(world, norm, "Negociação", "", "", "%s recusou votar %s" % [party.short, "a favor" if want_yes else "contra"], who)
+		_log(world, norm, "Negociação", "", "", tr("%s recusou votar %s") % [party.short, tr("a favor") if want_yes else tr("contra")], who)  # i18n
 		revision += 1
-		return {"ok": true, "accepted": false, "msg": "%s recusou. Nada foi pago." % party.short}
+		return {"ok": true, "accepted": false, "msg": tr("%s recusou. Nada foi pago.") % party.short}
 	var mine: Dictionary = world.politics.player_party(world)
 	mine.funds = float(mine.funds) - price
 	deals[str(party_id)] = want_yes
-	_log(world, norm, "Negociação", "", "", "%s fechou voto %s por %s" % [party.short, "a favor" if want_yes else "contra", UiKit.millions(price)], who)
+	_log(world, norm, "Negociação", "", "", tr("%s fechou voto %s por %s") % [party.short, tr("a favor") if want_yes else tr("contra"), UiKit.millions(price)], who)  # i18n
 	revision += 1
-	return {"ok": true, "accepted": true, "msg": "%s vai votar %s. Pago: %s." % [party.short, "a favor" if want_yes else "contra", UiKit.millions(price)]}
+	return {"ok": true, "accepted": true, "msg": tr("%s vai votar %s. Pago: %s.") % [party.short, tr("a favor") if want_yes else tr("contra"), UiKit.millions(price)]}
 
 
 ## Oferece entrada no governo em troca do voto a favor. Sem custo no fundo, mas o partido passa a cobrar
 ## ministérios como qualquer aliado.
 func offer_post(world: GameWorld, norm: Dictionary, party_id: int) -> Dictionary:
 	if not world.in_office:
-		return {"ok": false, "msg": "Na oposição, você não tem cargos a oferecer."}
+		return {"ok": false, "msg": tr("Na oposição, você não tem cargos a oferecer.")}
 	if not can_negotiate(norm):
-		return {"ok": false, "msg": "Não há mais votação a negociar nesta proposta."}
+		return {"ok": false, "msg": tr("Não há mais votação a negociar nesta proposta.")}
 	var data: Dictionary = world.politics.data_of(iso)
 	var party: Dictionary = Politics._find(data, party_id)
 	if party.is_empty() or party_id in data.coalition:
-		return {"ok": false, "msg": "Esse partido já está no governo."}
+		return {"ok": false, "msg": tr("Esse partido já está no governo.")}
 	var asked: Dictionary = norm.get_or_add("asked", {})
 	if asked.has(str(party_id)):
-		return {"ok": false, "msg": "%s já deu a resposta sobre esta proposta." % party.short}
+		return {"ok": false, "msg": tr("%s já deu a resposta sobre esta proposta.") % party.short}
 	asked[str(party_id)] = true
-	var who: String = String(world.leader.get("name", "Jogador"))
+	var who: String = String(world.leader.get("name", tr("Jogador")))
 	if Politics.distance(Politics._find(data, data.ruling), party) > Politics.COALITION_MAX_DISTANCE or _rng.randf() >= deal_chance(world, norm, party, true, DEAL_POST_BONUS):
-		_log(world, norm, "Negociação", "", "", "%s recusou entrar no governo" % party.short, who)
+		_log(world, norm, "Negociação", "", "", tr("%s recusou entrar no governo") % party.short, who)  # i18n
 		revision += 1
-		return {"ok": true, "accepted": false, "msg": "%s recusou entrar no governo." % party.short}
+		return {"ok": true, "accepted": false, "msg": tr("%s recusou entrar no governo.") % party.short}
 	data.coalition.append(party_id)
 	norm.get_or_add("deals", {})[str(party_id)] = true
 	world.politics.revision += 1
-	_log(world, norm, "Negociação", "", "", "%s entrou no governo e votará a favor" % party.short, who)
+	_log(world, norm, "Negociação", "", "", tr("%s entrou no governo e votará a favor") % party.short, who)  # i18n
 	revision += 1
-	return {"ok": true, "accepted": true, "msg": "%s entra no governo e vota a favor. Lembre de dar um ministério ao novo aliado." % party.short}
+	return {"ok": true, "accepted": true, "msg": tr("%s entra no governo e vota a favor. Lembre de dar um ministério ao novo aliado.") % party.short}
 
 
 ## Onde a norma cai na bússola. Tributos valem pelo que mudam: cortar puxa para a direita, subir para a esquerda.
@@ -1065,7 +1090,7 @@ func _estimate_house(world: GameWorld, parties: Array, probe: Dictionary) -> Dic
 		var favor := _party_votes_yes(world, party, probe, false)
 		if favor:
 			yes += seats
-		rows.append("%s (%d): %s" % [party.short, seats, "a favor" if favor else "contra"])
+		rows.append("%s (%d): %s" % [party.short, seats, tr("a favor") if favor else tr("contra")])
 	return {"yes": yes, "total": total, "rows": rows}
 
 
@@ -1084,12 +1109,12 @@ func poll(world: GameWorld, kind: String, norm: Dictionary) -> Dictionary:
 			var margin := maxi(ceili(float(total) * POLL_MARGIN_SUPPORT), 1)
 			var seen := clampi(int(estimate.yes) + _rng.randi_range(-margin, margin), 0, total)
 			var needed: int = ceili(float(total) * share) if share > 0.0 else total / 2 + 1
-			lines.append("%s: cerca de %d de %d votos (margem de %d), precisa de %d. %s" % [house.name, seen, total, margin, needed, "Deve passar." if seen >= needed else "Deve cair."])
+			lines.append(tr("%s: cerca de %d de %d votos (margem de %d), precisa de %d. %s") % [house.name, seen, total, margin, needed, tr("Deve passar.") if seen >= needed else tr("Deve cair.")])
 			lines.append("  ".join(estimate.rows))
 	else:
 		var seen := clampf(popularity_of(world, norm) * 100.0 + _rng.randf_range(-POLL_MARGIN_POPULARITY, POLL_MARGIN_POPULARITY), 0.0, 100.0)
-		var mood := "A maioria aprova." if seen >= 55.0 else ("A maioria rejeita." if seen <= 45.0 else "O eleitorado está dividido.")
-		lines.append("Favoráveis: %d%% (margem de %d pontos). %s" % [roundi(seen), int(POLL_MARGIN_POPULARITY), mood])
+		var mood := tr("A maioria aprova.") if seen >= 55.0 else (tr("A maioria rejeita.") if seen <= 45.0 else tr("O eleitorado está dividido."))
+		lines.append(tr("Favoráveis: %d%% (margem de %d pontos). %s") % [roundi(seen), int(POLL_MARGIN_POPULARITY), mood])
 	revision += 1
 	return {"ok": true, "msg": "", "text": "\n".join(lines)}
 
@@ -1103,6 +1128,7 @@ func bill_probe(id: String) -> Dictionary:
 # --- Consultas para a tela ---------------------------------------------------------------
 
 ## Fases da tramitação em linguagem simples, cada uma juntando etapas do rito.
+# i18n-begin
 const PHASES := [
 	{"id": "comissao", "label": "Comissão", "steps": ["present", "admissibility", "constitutional"]},
 	{"id": "plenario", "label": "Plenário", "steps": ["discussion", "vote", "interval", "vote_2", "quorum"]},
@@ -1112,7 +1138,9 @@ const PHASES := [
 	{"id": "publicacao", "label": "Publicação", "steps": ["promulgate", "publish", "apply"]},
 	{"id": "vigencia", "label": "Vigência", "steps": []},
 ]
+# i18n-end
 ## Grupos sociais da bússola, para a reação esperada a uma proposta.
+# i18n-begin
 const SOCIAL_GROUPS := [
 	{"label": "Trabalhadores", "econ": -0.6, "social": 0.1},
 	{"label": "Empresários", "econ": 0.7, "social": 0.1},
@@ -1121,7 +1149,10 @@ const SOCIAL_GROUPS := [
 	{"label": "Jovens", "econ": -0.2, "social": 0.7},
 	{"label": "Aposentados", "econ": -0.3, "social": -0.3},
 ]
+# i18n-end
+# i18n-begin
 const VOTE_WORDS := {"none": "sem votação", "simple": "maioria simples", "absolute": "maioria absoluta", "qualified": "maioria qualificada", "amendment": "quórum de emenda"}
+# i18n-end
 
 
 ## O código de uma norma: o dela, o da norma que ela altera, ou "".
@@ -1162,16 +1193,16 @@ func code_card(id: String) -> Dictionary:
 func type_rule_text(world: GameWorld, type: String) -> String:
 	var def: Dictionary = NORM_TYPES[type]
 	if def.vote == "none":
-		return "%s: assinada por %s, sem votação no parlamento." % [def.label, String(def.organ).to_lower()]
+		return tr("%s: assinada por %s, sem votação no parlamento.") % [tr(def.label), tr(def.organ).to_lower()]
 	var share := _required_share({"type": type})
 	var houses := []
 	for house: Dictionary in world.politics.houses(world):
 		var total: int = house.total
 		var needed: int = ceili(float(total) * share) if share > 0.0 else total / 2 + 1
-		houses.append("%d de %d votos %s" % [needed, total, "na " + String(house.name) if world.politics.houses(world).size() > 1 else "no Parlamento"])
-	var text := "%s exige %s: %s." % [def.label, VOTE_WORDS[def.vote], " e ".join(houses)]
+		houses.append(tr("%d de %d votos %s") % [needed, total, tr("na %s") % house.name if world.politics.houses(world).size() > 1 else tr("no Parlamento")])
+	var text := tr("%s exige %s: %s.") % [tr(def.label), tr(VOTE_WORDS[def.vote]), tr(" e ").join(houses)]
 	if def.sanction and param("veto", true):
-		text += " Depois vai à sanção, e o chefe de governo pode vetar."
+		text += tr(" Depois vai à sanção, e o chefe de governo pode vetar.")
 	return text
 
 
@@ -1191,16 +1222,16 @@ func process_track(world: GameWorld, norm: Dictionary) -> Array:
 				mine.append(i)
 		if mine.is_empty() and phase.id != "vigencia":
 			continue
-		var entry := {"label": phase.label, "state": "todo", "days": 0, "detail": ""}
+		var entry := {"label": tr(phase.label), "state": "todo", "days": 0, "detail": ""}
 		if phase.id == "vigencia":
 			entry.days = int(norm.get("vacatio", 0))
 			if norm.state == STATE_PUBLISHED:
 				entry.state = "current"
 				entry.days = maxi(int(norm.get("force_due", world.day_index)) - world.day_index, 0)
-				entry.detail = "Publicada, aguardando a vigência"
+				entry.detail = tr("Publicada, aguardando a vigência")
 			elif norm.state == STATE_IN_FORCE:
 				entry.state = "done"
-				entry.detail = "Em vigor desde %s" % String(norm.dates.get("in_force", ""))
+				entry.detail = tr("Em vigor desde %s") % String(norm.dates.get("in_force", ""))
 			out.append(entry)
 			continue
 		for i: int in mine:
@@ -1211,14 +1242,14 @@ func process_track(world: GameWorld, norm: Dictionary) -> Array:
 		elif at >= 0 and at >= int(mine[0]):
 			entry.state = "failed" if failed else "current"
 			var step: String = steps[at]
-			entry.detail = String(STEP_LABELS.get(step, step))
+			entry.detail = tr(STEP_LABELS.get(step, step))
 			var left: int = (int(process.get("tacit", 0)) if process.get("waiting_player", false) else int(process.get("due", 0))) - world.day_index
 			entry.days = maxi(left, 0)
 			for i: int in mine:
 				if i > at:
 					entry.days += _days_of(steps[i])
 			if process.get("waiting_player", false):
-				entry.detail = "Aguardando sua sanção"
+				entry.detail = tr("Aguardando sua sanção")
 		out.append(entry)
 	if failed and not out.any(func(e): return e.state == "failed"):
 		for entry: Dictionary in out:
@@ -1276,16 +1307,16 @@ func pass_chance(world: GameWorld, norm: Dictionary) -> float:
 ## Palavra para a chance: o jogador lê "provável", não 0,73.
 static func chance_word(chance: float) -> String:
 	if chance < 0.0:
-		return "sem votação"
+		return TranslationServer.translate("sem votação")
 	if chance >= 0.85:
-		return "muito provável"
+		return TranslationServer.translate("muito provável")
 	if chance >= 0.6:
-		return "provável"
+		return TranslationServer.translate("provável")
 	if chance >= 0.4:
 		return "incerta"
 	if chance >= 0.15:
-		return "difícil"
-	return "muito difícil"
+		return TranslationServer.translate("difícil")
+	return TranslationServer.translate("muito difícil")
 
 
 ## Efeito esperado de uma proposta, para o painel antes de enviar: aprovação, orçamento, grupos e partidos.
@@ -1329,7 +1360,7 @@ func expected_effects(world: GameWorld, norm: Dictionary) -> Dictionary:
 	var groups := []
 	for g: Dictionary in SOCIAL_GROUPS:
 		var score := clampf(0.8 - Politics.distance(position, g) * 0.45 + (popularity - 0.5) * 0.5, 0.0, 1.0)
-		groups.append({"label": g.label, "score": score, "mood": "a favor" if score >= 0.58 else ("contra" if score <= 0.42 else "dividido")})
+		groups.append({"label": tr(g.label), "score": score, "mood": tr("a favor") if score >= 0.58 else (tr("contra") if score <= 0.42 else tr("dividido"))})
 	var parties := []
 	var probe := {"position": position, "by_player": norm.get("by_player", true), "deals": norm.get("deals", {}), "author_party": norm.get("author_party", -1)}
 	for party: Dictionary in world.politics.data_of(iso).parties:
@@ -1380,7 +1411,7 @@ func _admissibility(world: GameWorld, norm: Dictionary) -> String:
 		var check := check_amendment(world, norm, true)
 		return "" if check.ok else String(check.msg)
 	var compiled := compile_norm(norm)
-	return "" if compiled.ok else "a programação tem erros."
+	return "" if compiled.ok else tr("a programação tem erros.")
 
 
 ## Cada eleitor pesa a popularidade da proposta, com a incerteza de uma campanha de verdade. Regime fechado
@@ -1401,13 +1432,13 @@ func _court_problem(norm: Dictionary) -> String:
 		return ""
 	for block: Dictionary in LawProgram.all_blocks(norm.program):
 		if block.type in ["rg_remove", "dr_suspend"] and block.fields.get("right") in param("rights", []):
-			return "remove um direito garantido no Art. 3º."
+			return tr("remove um direito garantido no Art. 3º.")
 		if block.type == "ec_rate" and float(block.fields.get("value", 0.0)) > 35.0:
-			return "tributo com efeito de confisco."
+			return tr("tributo com efeito de confisco.")
 	if not norm.get("revokes", {}).is_empty():
 		var target: Dictionary = norms.get(int(norm.revokes.id), {})
 		if not target.is_empty() and int(NORM_TYPES[target.type].rank) > int(NORM_TYPES[norm.type].rank):
-			return "norma inferior não revoga norma superior."
+			return tr("norma inferior não revoga norma superior.")
 	return ""
 
 
@@ -1418,19 +1449,19 @@ func _court_acts(world: GameWorld) -> bool:
 
 func _publish(world: GameWorld, norm: Dictionary) -> void:
 	norm.dates["published"] = world.date_string()
-	_record_step(world, norm, "publish", "Publicada no diário oficial.", "Imprensa Oficial")
+	_record_step(world, norm, "publish", tr("Publicada no diário oficial."), tr("Imprensa Oficial"))
 	if norm.type == "emenda":
 		return
 	if norm.has("payload"):
-		norm.versions.append({"program": LawProgram.empty(), "text": "Art. 1º %s" % norm.ementa, "code": {}, "position": norm.position, "date": world.date_string(), "change": "Texto original", "hash": hash(var_to_str(LawProgram.empty()))})
+		norm.versions.append({"program": LawProgram.empty(), "text": tr("Art. 1º %s") % norm.ementa, "code": {}, "position": norm.position, "date": world.date_string(), "change": tr("Texto original"), "hash": hash(var_to_str(LawProgram.empty()))})
 		norm.current_v = 0
 		_enter_force(world, norm)
 		return
 	var compiled := LawCompiler.compile(norm.program, compile_context(norm.type))
 	if not compiled.ok:
-		_fail(world, norm, STATE_INVALID, "a programação deixou de ser válida.")
+		_fail(world, norm, STATE_INVALID, tr("a programação deixou de ser válida."))
 		return
-	norm.versions.append(_make_version(world, norm.program, compiled, "Texto original"))
+	norm.versions.append(_make_version(world, norm.program, compiled, tr("Texto original")))
 	norm.current_v = norm.versions.size() - 1
 	norm.state = STATE_PUBLISHED
 	norm.force_due = world.day_index + int(norm.get("vacatio", 0))
@@ -1448,8 +1479,8 @@ func _enter_force(world: GameWorld, norm: Dictionary) -> void:
 	norm.dates["in_force"] = world.date_string()
 	norm.state = STATE_IN_FORCE
 	norm["force_day"] = world.day_index
-	_log(world, norm, "Entrada em vigor", "", STATE_IN_FORCE, "Em vigor", norm.organ)
-	world.emit_news("%s entra em vigor: %s." % [norm_label(norm), norm.title], "politica", world.player)
+	_log(world, norm, "Entrada em vigor", "", STATE_IN_FORCE, tr("Em vigor"), norm.organ)  # i18n
+	world.emit_news(tr("%s entra em vigor: %s.") % [norm_label(norm), norm.title], "politica", world.player)
 	_apply_payload(world, norm)
 	_popular_effect(world, norm)
 	if int(norm.get("amends", -1)) >= 0:
@@ -1470,13 +1501,13 @@ func _apply_payload(world: GameWorld, norm: Dictionary) -> void:
 		"new_unit":
 			var c := world.player
 			var made: Dictionary = world.subdivisions.create_unit(payload.points, int(payload.type), int(payload.parent), world.territories.territory_of(c, world), c.region, c.iso)
-			world.emit_news(("%s vira realidade." % world.subdivisions.units[made.id].name) if made.ok else String(made.msg), "politica", c)
+			world.emit_news((tr("%s vira realidade.") % world.subdivisions.units[made.id].name) if made.ok else String(made.msg), "politica", c)
 			world.refresh_map = true
 		"split_unit":
-			var made: Dictionary = {"ok": false, "msg": "A unidade não existe mais."}
+			var made: Dictionary = {"ok": false, "msg": tr("A unidade não existe mais.")}
 			if world.subdivisions.units.has(int(payload.unit)):
 				made = world.subdivisions.split_unit(int(payload.unit), payload.points, world.player.region)
-			world.emit_news(("%s se separa e vira unidade própria." % world.subdivisions.units[made.id].name) if made.ok else String(made.msg), "politica", world.player)
+			world.emit_news((tr("%s se separa e vira unidade própria.") % world.subdivisions.units[made.id].name) if made.ok else String(made.msg), "politica", world.player)
 			world.refresh_map = true
 
 
@@ -1497,10 +1528,10 @@ func _apply_change(world: GameWorld, norm: Dictionary) -> void:
 	if not compiled.ok:
 		return
 	var before: String = target.versions[int(target.current_v)].text if not target.versions.is_empty() else ""
-	target.versions.append(_make_version(world, norm.program, compiled, "Alterada por %s" % norm_label(norm)))
+	target.versions.append(_make_version(world, norm.program, compiled, tr("Alterada por %s") % norm_label(norm)))
 	target.current_v = target.versions.size() - 1
 	_purge_norm(target.id)
-	_log(world, target, "Alteração", before, compiled.text, "Nova versão %d" % int(target.current_v), norm.author)
+	_log(world, target, "Alteração", before, compiled.text, tr("Nova versão %d") % int(target.current_v), norm.author)  # i18n
 	fire(world, "ev_enact", {"only": target.id})
 
 
@@ -1510,7 +1541,7 @@ func _apply_revocation(world: GameWorld, norm: Dictionary) -> void:
 		return
 	var articles: Array = norm.revokes.get("articles", [])
 	if articles.is_empty():
-		revoke_now(world, target, "Revogada por %s" % norm_label(norm), norm.author)
+		revoke_now(world, target, tr("Revogada por %s") % norm_label(norm), norm.author)
 		return
 	var program: Dictionary = _current_program(target).duplicate(true)
 	for number: int in articles:
@@ -1518,10 +1549,10 @@ func _apply_revocation(world: GameWorld, norm: Dictionary) -> void:
 			program.stacks[number - 1].repealed = true
 	var compiled := LawCompiler.compile(program, compile_context(target.type))
 	var before: String = target.versions[int(target.current_v)].text
-	target.versions.append(_make_version(world, program, compiled, "Revogação parcial por %s" % norm_label(norm)))
+	target.versions.append(_make_version(world, program, compiled, tr("Revogação parcial por %s") % norm_label(norm)))
 	target.current_v = target.versions.size() - 1
 	_purge_norm(target.id)
-	_log(world, target, "Revogação parcial", before, compiled.text, "Artigos %s" % str(articles), norm.author)
+	_log(world, target, "Revogação parcial", before, compiled.text, tr("Artigos %s") % str(articles), norm.author)  # i18n
 
 
 func revoke_now(world: GameWorld, target: Dictionary, why: String, who: String) -> void:
@@ -1529,8 +1560,8 @@ func revoke_now(world: GameWorld, target: Dictionary, why: String, who: String) 
 	target.state = STATE_REVOKED
 	_purge_norm(target.id)
 	pending = pending.filter(func(p): return int(p.norm) != int(target.id))
-	_log(world, target, "Revogação", before, STATE_REVOKED, why, who)
-	world.emit_news("%s revogada." % norm_label(target), "politica", world.player)
+	_log(world, target, "Revogação", before, STATE_REVOKED, why, who)  # i18n
+	world.emit_news(tr("%s revogada.") % norm_label(target), "politica", world.player)
 	revision += 1
 
 
@@ -1539,8 +1570,8 @@ func start_change(world: GameWorld, target: Dictionary) -> Dictionary:
 	var norm := new_norm(world, target.type)
 	norm.program = _current_program(target).duplicate(true)
 	norm.amends = target.id
-	norm.title = "Altera %s" % norm_label(target)
-	norm.ementa = "Altera %s: %s." % [norm_label(target), target.title]
+	norm.title = tr("Altera %s") % norm_label(target)
+	norm.ementa = tr("Altera %s: %s.") % [norm_label(target), tr(target.title)]
 	return norm
 
 
@@ -1549,21 +1580,21 @@ func start_revocation(world: GameWorld, target: Dictionary, articles: Array) -> 
 	norm.revokes = {"id": target.id, "articles": articles}
 	var block := LawProgram.new_block(norm.program, "ev_enact")
 	LawProgram.add_stack(norm.program, block, Vector2(20, 20))
-	norm.title = "Revoga %s" % norm_label(target)
-	norm.ementa = ("Revoga os artigos %s de %s." % [str(articles), norm_label(target)]) if not articles.is_empty() else "Revoga %s." % norm_label(target)
+	norm.title = tr("Revoga %s") % norm_label(target)
+	norm.ementa = (tr("Revoga os artigos %s de %s.") % [str(articles), norm_label(target)]) if not articles.is_empty() else tr("Revoga %s.") % norm_label(target)
 	return norm
 
 
 func suspend(world: GameWorld, norm: Dictionary, on: bool) -> Dictionary:
 	if not can(world, "admin"):
-		return {"ok": false, "msg": "Só o chefe de governo suspende normas."}
+		return {"ok": false, "msg": tr("Só o chefe de governo suspende normas.")}
 	if int(NORM_TYPES[norm.type].rank) >= 60:
-		return {"ok": false, "msg": "Só norma de hierarquia igual ou a corte suspende uma lei."}
+		return {"ok": false, "msg": tr("Só norma de hierarquia igual ou a corte suspende uma lei.")}
 	var before: String = norm.state
 	norm.state = STATE_SUSPENDED if on else STATE_IN_FORCE
 	if on:
 		_purge_norm(norm.id)
-	_log(world, norm, "Suspensão" if on else "Reativação", before, norm.state, "", String(world.leader.get("name", "")))
+	_log(world, norm, "Suspensão" if on else "Reativação", before, norm.state, "", String(world.leader.get("name", "")))  # i18n
 	revision += 1
 	return {"ok": true, "msg": "%s: %s." % [norm_label(norm), norm.state]}
 
@@ -1574,8 +1605,8 @@ func _check_expiry(world: GameWorld) -> void:
 		if norm.state == STATE_IN_FORCE and String(norm.get("expires", "")) != "" and today > String(norm.expires):
 			norm.state = STATE_EXPIRED
 			_purge_norm(norm.id)
-			_log(world, norm, "Expiração", STATE_IN_FORCE, STATE_EXPIRED, "Prazo de vigência terminou", "Sistema")
-			world.emit_news("%s expirou." % norm_label(norm), "politica", world.player)
+			_log(world, norm, "Expiração", STATE_IN_FORCE, STATE_EXPIRED, tr("Prazo de vigência terminou"), tr("Sistema"))  # i18n
+			world.emit_news(tr("%s expirou.") % norm_label(norm), "politica", world.player)
 			revision += 1
 
 
@@ -1589,25 +1620,25 @@ static func _today(world: GameWorld) -> String:
 func check_amendment(world: GameWorld, norm: Dictionary, in_process_now := false) -> Dictionary:
 	var ops: Array = norm.get("ops", [])
 	if ops.is_empty() and norm.program.stacks.is_empty():
-		return {"ok": false, "msg": "A emenda não muda nenhum dispositivo."}
+		return {"ok": false, "msg": tr("A emenda não muda nenhum dispositivo.")}
 	if param("amend_no_war", false) and world.diplomacy.in_war(world.player.idx):
-		return {"ok": false, "msg": "A Constituição proíbe emendas em tempo de guerra."}
+		return {"ok": false, "msg": tr("A Constituição proíbe emendas em tempo de guerra.")}
 	var open_now := in_process().filter(func(n): return n.type == "emenda" and n.id != norm.id).size()
 	if open_now >= int(param("amend_max", 2)):
-		return {"ok": false, "msg": "Já tramitam %d emendas, o máximo permitido." % open_now}
+		return {"ok": false, "msg": tr("Já tramitam %d emendas, o máximo permitido.") % open_now}
 	for op: Dictionary in ops:
 		if op.op == "add":
 			continue
 		var article := article_by_id(int(op.article))
 		if article.is_empty():
-			return {"ok": false, "msg": "Esse dispositivo não existe mais."}
+			return {"ok": false, "msg": tr("Esse dispositivo não existe mais.")}
 		if article.petrea:
-			return {"ok": false, "msg": "%s é cláusula pétrea e não pode ser alterado." % article.label}
+			return {"ok": false, "msg": tr("%s é cláusula pétrea e não pode ser alterado.") % article.label}
 	var data: Dictionary = world.politics.data_of(iso)
 	var backers: int = world.politics.government_seats(iso) if not norm.get("by_player", false) or world.in_office else int(world.politics.player_party(world).get("seats", 0))
 	var needed := ceili(float(data.seats_total) * float(param("amend_proposers", 33)) / 100.0)
 	if backers < needed:
-		return {"ok": false, "msg": "A emenda precisa do apoio inicial de %d assentos; você tem %d." % [needed, backers]}
+		return {"ok": false, "msg": tr("A emenda precisa do apoio inicial de %d assentos; você tem %d.") % [needed, backers]}
 	return {"ok": true, "msg": ""}
 
 
@@ -1629,17 +1660,18 @@ func _amendment_position(norm: Dictionary) -> Dictionary:
 
 
 ## Texto novo de um dispositivo depois da operação: serve para a comparação e para a promulgação.
-func preview_op(op: Dictionary) -> Dictionary:
+## Com localized, os textos guardados em português saem no idioma do jogo (para a tela).
+func preview_op(op: Dictionary, localized := false) -> Dictionary:
 	if op.op == "add":
 		return {"before": "", "after": "%s %s" % [_next_label(String(op.get("kind", "artigo"))), op.get("text", "")]}
 	var article := article_by_id(int(op.article))
-	var before: String = article.get("text", "")
+	var before: String = article_text(article, true) if localized and not article.is_empty() else article.get("text", "")
 	if op.op == "suppress":
 		return {"before": before, "after": ""}
 	if String(article.get("param", "")) != "" and op.has("value"):
 		var probe: Dictionary = article.duplicate()
 		probe.value = op.value
-		return {"before": before, "after": article_text(probe)}
+		return {"before": before, "after": article_text(probe, localized)}
 	return {"before": before, "after": String(op.get("text", before))}
 
 
@@ -1650,9 +1682,9 @@ func _next_label(kind: String) -> String:
 			used += 1
 	match kind:
 		"paragrafo": return "§ %dº" % (used + 1)
-		"inciso": return "Inciso %d." % (used + 1)
-		"transitoria": return "ADT %dº" % (used + 1)
-	return "Art. %d." % (used + 1)
+		"inciso": return tr("Inciso %d.") % (used + 1)
+		"transitoria": return tr("ADT %dº") % (used + 1)
+	return tr("Art. %d.") % (used + 1)
 
 
 ## Só aqui a Constituição muda: depois da promulgação, gerando uma nova versão e guardando a anterior.
@@ -1670,7 +1702,7 @@ func _apply_amendment(world: GameWorld, norm: Dictionary) -> void:
 			"suppress":
 				var gone := article_by_id(int(op.article))
 				gone["suppressed"] = true
-				gone["text"] = "%s (Suprimido.)" % gone.label
+				gone["text"] = tr("%s (Suprimido.)") % gone.label
 				_repeal_block_article(world, gone)
 			_:
 				var article := article_by_id(int(op.article))
@@ -1696,15 +1728,15 @@ func _apply_amendment(world: GameWorld, norm: Dictionary) -> void:
 	constitution.next_emenda = int(constitution.next_emenda) + 1
 	constitution.versions.append({
 		"n": constitution.version, "emenda": norm.number, "date": world.date_string(), "articles": constitution.articles.duplicate(true),
-		"changes": changes, "approvers": "%d votos em %d" % [int(last.get("yes", 0)), int(last.get("total", 0))], "votes": norm.votes.duplicate(true),
+		"changes": changes, "approvers": tr("%d votos em %d") % [int(last.get("yes", 0)), int(last.get("total", 0))], "votes": norm.votes.duplicate(true),
 	})
-	norm.versions.append({"program": norm.program.duplicate(true), "text": "\n".join(changes.map(func(ch): return "%s: %s" % [ch.label, ch.after if ch.after != "" else ch.before])), "code": compiled.get("code", {}), "position": norm.get("position", {}), "date": world.date_string(), "change": "Texto promulgado", "hash": 0})
+	norm.versions.append({"program": norm.program.duplicate(true), "text": "\n".join(changes.map(func(ch): return "%s: %s" % [ch.label, ch.after if ch.after != "" else ch.before])), "code": compiled.get("code", {}), "position": norm.get("position", {}), "date": world.date_string(), "change": tr("Texto promulgado"), "hash": 0})
 	norm.current_v = 0
 	norm.state = STATE_IN_FORCE
 	norm["force_day"] = world.day_index
 	norm.dates["in_force"] = world.date_string()
-	_record_step(world, norm, "apply", "Constituição atualizada para a versão %d." % int(constitution.version), "Presidência do parlamento")
-	world.emit_news("%s promulgada: a Constituição mudou." % norm_label(norm), "politica", world.player)
+	_record_step(world, norm, "apply", tr("Constituição atualizada para a versão %d.") % int(constitution.version), tr("Presidência do parlamento"))
+	world.emit_news(tr("%s promulgada: a Constituição mudou.") % norm_label(norm), "politica", world.player)
 	_popular_effect(world, norm)
 	fire(world, "ev_enact", {"only": norm.id})
 	revision += 1
@@ -1733,7 +1765,7 @@ func _repeal_block_article(world: GameWorld, article: Dictionary) -> void:
 	var program: Dictionary = _current_program(source).duplicate(true)
 	program.stacks[int(article.stack)].repealed = true
 	var compiled := LawCompiler.compile(program, compile_context("emenda"))
-	source.versions.append(_make_version(world, program, compiled, "Artigo suprimido por emenda"))
+	source.versions.append(_make_version(world, program, compiled, tr("Artigo suprimido por emenda")))
 	source.current_v = source.versions.size() - 1
 	_purge_norm(source.id)
 
@@ -1785,19 +1817,19 @@ func _run_article(world: GameWorld, norm: Dictionary, number: int, article: Dict
 func _finish_run(world: GameWorld, norm: Dictionary, number: int, event: String, engine: LawEngine, result: Dictionary) -> void:
 	if not result.ok:
 		failures[norm.id] = int(failures.get(norm.id, 0)) + 1
-		_log(world, norm, "Execução", "", "", "Falha no art. %d: %s" % [number, result.error], "Motor", event)
+		_log(world, norm, "Execução", "", "", tr("Falha no art. %d: %s") % [number, result.error], tr("Motor"), event)  # i18n
 		if int(failures[norm.id]) >= MAX_FAILURES:
 			norm.state = STATE_SUSPENDED
 			_purge_norm(norm.id)
-			_log(world, norm, "Suspensão automática", STATE_IN_FORCE, STATE_SUSPENDED, "Falhou %d vezes" % MAX_FAILURES, "Motor", event)
-			world.emit_news("%s foi suspensa: a execução falhou repetidas vezes." % norm_label(norm), "crise", world.player)
+			_log(world, norm, "Suspensão automática", STATE_IN_FORCE, STATE_SUSPENDED, tr("Falhou %d vezes") % MAX_FAILURES, tr("Motor"), event)  # i18n
+			world.emit_news(tr("%s foi suspensa: a execução falhou repetidas vezes.") % norm_label(norm), "crise", world.player)
 		revision += 1
 		return
 	var summary := _commit(world, norm, result.effects, engine.view)
 	if not result.waiting.is_empty():
 		var w: Dictionary = result.waiting
 		pending.append({"norm": norm.id, "version": norm.current_v, "number": number, "event": event, "due": world.day_index + int(w.days), "state": {"pc": w.pc, "weight": w.weight, "frames": w.frames, "loops": w.loops}})
-	_log(world, norm, "Execução", "", "", "Art. %d: %s" % [number, summary if summary != "" else "sem efeitos"], "Motor", event)
+	_log(world, norm, "Execução", "", "", tr("Art. %d: %s") % [number, summary if summary != "" else tr("sem efeitos")], tr("Motor"), event)  # i18n
 
 
 func _run_pending(world: GameWorld) -> void:
@@ -1941,7 +1973,7 @@ func _commit(world: GameWorld, norm: Dictionary, effects: Array, _view: Dictiona
 			"ac_obligation":
 				var usd := minf(amount * scale, limit)
 				obligations.append({"norm": who, "usd": usd, "due": world.day_index + int(v.get("days", 30))})
-				notes.append("obrigação de %s" % UiKit.money(usd))
+				notes.append(tr("obrigação de %s") % UiKit.money(usd))
 			"ac_fine", "ec_charge", "ec_fee", "ec_contribution":
 				var usd := minf(amount * scale, limit - collected) * COMPLIANCE
 				collected += maxf(usd, 0.0)
@@ -1993,7 +2025,7 @@ func _commit(world: GameWorld, norm: Dictionary, effects: Array, _view: Dictiona
 				var usd := minf(float(v.amount) * w, maxf(c.reserves * 0.5, 0.0))
 				c.reserves -= usd
 				_collect(c, usd)
-				notes.append("%s das reservas" % UiKit.money(usd))
+				notes.append(tr("%s das reservas") % UiKit.money(usd))
 			"ec_subsidy":
 				_stand("subsidies", String(v.sector), {"annual": float(v.amount) * w, "sector": v.sector}, who, prio)
 			"ec_spend":
@@ -2024,12 +2056,12 @@ func _commit(world: GameWorld, norm: Dictionary, effects: Array, _view: Dictiona
 						notes.append(note)
 	if collected > 0.0:
 		_collect(c, collected)
-		notes.append("arrecadou %s" % UiKit.money(collected))
+		notes.append(tr("arrecadou %s") % UiKit.money(collected))
 	if paid > 0.0:
 		_pay(c, paid)
-		notes.append("pagou %s" % UiKit.money(paid))
+		notes.append(tr("pagou %s") % UiKit.money(paid))
 	if notes.is_empty() and not effects.is_empty():
-		notes.append("%d ação(ões)" % effects.size())
+		notes.append(tr("%d ação(ões)") % effects.size())
 	return ", ".join(notes)
 
 
@@ -2089,7 +2121,7 @@ func _ministry_op(world: GameWorld, block: String, data: Dictionary, norm: int, 
 	_stand("ministry_ops", key, data, norm, prio)
 	world.politics.sync_cabinet(world)
 	var label: String = data.get("name", data.get("a", ""))
-	world.emit_news({"create": "Criado o ministério %s.", "merge": "Ministérios fundidos em %s.", "abolish": "Extinto o ministério %s."}[data.op] % label, "politica", world.player)
+	world.emit_news({"create": tr("Criado o ministério %s."), "merge": tr("Ministérios fundidos em %s."), "abolish": tr("Extinto o ministério %s.")}[data.op] % label, "politica", world.player)
 
 
 func ministry_ops() -> Array:
@@ -2259,7 +2291,7 @@ func _log(world: GameWorld, norm: Dictionary, kind: String, before: String, afte
 func simulate(world: GameWorld, program: Dictionary, type: String, event: String, citizen: Dictionary, economy := {}) -> Dictionary:
 	var compiled := LawCompiler.compile(program, compile_context(type))
 	if not compiled.ok:
-		return {"ok": false, "error": "A norma tem erros: corrija antes de simular.", "trace": [], "errors": compiled.errors, "ran": 0}
+		return {"ok": false, "error": tr("A norma tem erros: corrija antes de simular."), "trace": [], "errors": compiled.errors, "ran": 0}
 	var trace := []
 	var ran := 0
 	var effects := []
@@ -2280,16 +2312,16 @@ func simulate(world: GameWorld, program: Dictionary, type: String, event: String
 		engine.view = view
 		engine.vars = {}
 		var result := engine.run(article.code)
-		trace.append("Art. %d: %s" % [int(number), LawCatalog.get_def(article.event).text])
+		trace.append(tr("Art. %d: %s") % [int(number), tr(LawCatalog.get_def(article.event).text)])
 		trace.append_array(result.trace)
 		if not result.ok:
 			failure = String(result.error)
-			trace.append("ERRO: %s" % failure)
+			trace.append(tr("ERRO: %s") % failure)
 		effects.append_array(result.effects)
 		if not result.waiting.is_empty():
-			trace.append("O restante roda depois da espera.")
+			trace.append(tr("O restante roda depois da espera."))
 	if ran == 0:
-		trace.append("Nenhum artigo responde a esse evento.")
+		trace.append(tr("Nenhum artigo responde a esse evento."))
 	return {"ok": failure == "", "error": failure, "trace": trace, "effects": effects, "ran": ran, "errors": []}
 
 
@@ -2317,20 +2349,20 @@ static func export_files() -> PackedStringArray:
 func import_norm(world: GameWorld, file_name: String) -> Dictionary:
 	var f := FileAccess.open(EXPORT_DIR + file_name, FileAccess.READ)
 	if f == null:
-		return {"ok": false, "msg": "Arquivo não encontrado."}
+		return {"ok": false, "msg": tr("Arquivo não encontrado.")}
 	var data: Variant = JSON.parse_string(f.get_as_text())
 	if not data is Dictionary or int(data.get("format", 0)) != EXPORT_FORMAT or not NORM_TYPES.has(String(data.get("type", ""))) or not data.get("program") is Dictionary:
-		return {"ok": false, "msg": "Arquivo incompatível."}
+		return {"ok": false, "msg": tr("Arquivo incompatível.")}
 	if String(data.type) in ["constituicao", "emenda"]:
-		return {"ok": false, "msg": "A Constituição é de cada país e não pode ser importada."}
+		return {"ok": false, "msg": tr("A Constituição é de cada país e não pode ser importada.")}
 	var norm := new_norm(world, String(data.type))
 	norm.title = String(data.get("title", ""))
 	norm.ementa = String(data.get("ementa", ""))
 	norm.program = data.program
 	norm.program.next_id = int(norm.program.get("next_id", 1))
 	var compiled := compile_norm(norm)
-	var note := "" if compiled.ok else " Há %d erro(s) de compatibilidade para corrigir." % compiled.errors.size()
-	return {"ok": true, "norm": norm, "msg": "%s importada como rascunho.%s" % [norm_label(norm), note]}
+	var note := "" if compiled.ok else tr(" Há %d erro(s) de compatibilidade para corrigir.") % compiled.errors.size()
+	return {"ok": true, "norm": norm, "msg": tr("%s importada como rascunho.%s") % [norm_label(norm), note]}
 
 
 # --- Salvar e carregar -----------------------------------------------------------------
@@ -2354,7 +2386,7 @@ func from_dict(d: Dictionary, world: GameWorld) -> void:
 	next_ministry_seq = int(d.get("next_ministry_seq", 1))
 	# Saves antigos: a Constituição ganha o artigo do banco central, com a situação que o país já tinha.
 	if world.player and constitution.has("articles") and not constitution.articles.any(func(a): return a.param == "cb_independent"):
-		constitution.articles.append(_article("Art. %d." % (constitution.articles.size() + 1), "O banco central é independente do governo: {v}.", "cb_independent", world.player.cb_independent, false))
+		constitution.articles.append(_article(tr("Art. %d.") % (constitution.articles.size() + 1), tr("O banco central é independente do governo: {v}."), "cb_independent", world.player.cb_independent, false))
 	_rng.seed = int(d.get("rng_seed", 1))
 	_rng.state = int(d.get("rng_state", 0))
 	# Norma publicada não muda em silêncio: versão adulterada no arquivo suspende a norma.
@@ -2364,5 +2396,5 @@ func from_dict(d: Dictionary, world: GameWorld) -> void:
 				if norm.state == STATE_IN_FORCE:
 					norm.state = STATE_SUSPENDED
 					_purge_norm(norm.id)
-				_log(world, norm, "Integridade", "", "", "Versão publicada não confere: norma suspensa", "Sistema")
+				_log(world, norm, "Integridade", "", "", tr("Versão publicada não confere: norma suspensa"), tr("Sistema"))  # i18n
 	revision += 1

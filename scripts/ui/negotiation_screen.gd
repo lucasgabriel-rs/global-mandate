@@ -19,7 +19,7 @@ func setup(owner_main: Node, target: Dictionary) -> void:
 	world = main.world
 	leg = world.legislation
 	norm = target
-	(%title as Label).text = "Negociar votos  ·  %s: %s" % [leg.norm_label(norm), norm.title]
+	(%title as Label).text = tr("Negociar votos  ·  %s: %s") % [leg.norm_label(norm), tr(norm.title)]
 	%close.pressed.connect(func(): main.reopen_legislation(0))
 	_generous.toggled.connect(func(_on): _fill())
 	(%poll as PollBox).setup(world, func(): return norm)
@@ -32,7 +32,7 @@ func _fill() -> void:
 		child.queue_free()
 	var politics := world.politics
 	var data: Dictionary = politics.data_of(leg.iso)
-	(%fund as Label).text = "Fundo de %s: %s" % [politics.player_party(world).get("short", "seu partido"), UiKit.millions(politics.party_fund(world))]
+	(%fund as Label).text = tr("Fundo de %s: %s") % [politics.player_party(world).get("short", tr("seu partido")), UiKit.millions(politics.party_fund(world))]
 	var deals: Dictionary = norm.get("deals", {})
 	var asked: Dictionary = norm.get("asked", {})
 	var open := leg.can_negotiate(norm)
@@ -43,24 +43,24 @@ func _fill() -> void:
 		var id: int = party.id
 		var mine: bool = id == int(data.player_party)
 		(row.get_node("%chip") as ColorRect).color = party.color
-		(row.get_node("%party") as Label).text = "%s%s  ·  %d assentos" % [party.short, " (seu partido)" if mine else "", int(party.seats)]
+		(row.get_node("%party") as Label).text = tr("%s%s  ·  %d assentos") % [party.short, tr(" (seu partido)") if mine else "", int(party.seats)]
 		var state: Label = row.get_node("%state")
 		if deals.has(str(id)):
-			state.text = "Acordo: vota a favor" if deals[str(id)] else "Acordo: vota contra"
+			state.text = tr("Acordo: vota a favor") if deals[str(id)] else tr("Acordo: vota contra")
 			state.add_theme_color_override("font_color", UiKit.GREEN)
 		elif asked.has(str(id)):
-			state.text = "Recusou negociar"
+			state.text = tr("Recusou negociar")
 			state.add_theme_color_override("font_color", UiKit.RED)
 		else:
-			state.text = "Sem acordo"
+			state.text = tr("Sem acordo")
 		var yes: Button = row.get_node("%ask_yes")
 		var no: Button = row.get_node("%ask_no")
 		var post: Button = row.get_node("%offer_post")
 		var price := leg.deal_price(world, party, _generous.button_pressed)
 		yes.name = "yes_%d" % id
 		no.name = "no_%d" % id
-		yes.text = "Votar a favor" if mine else "A favor (%s)" % UiKit.millions(price)
-		no.text = "Votar contra" if mine else "Contra (%s)" % UiKit.millions(price)
+		yes.text = tr("Votar a favor") if mine else tr("A favor (%s)") % UiKit.millions(price)
+		no.text = tr("Votar contra") if mine else tr("Contra (%s)") % UiKit.millions(price)
 		var closed: bool = not open or (not mine and (asked.has(str(id)) or deals.has(str(id))))
 		var poor: bool = not mine and politics.party_fund(world) < price
 		yes.disabled = closed or poor

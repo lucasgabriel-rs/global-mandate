@@ -3,18 +3,33 @@ extends RefCounted
 ## Tratados como na vida real: negociação, assinatura, ratificação em cada país, vigência por um prazo, e denúncia
 ## com aviso prévio. Só depois de ratificado por todos o tratado produz efeito.
 
+# i18n-begin
 const STATE_RATIFYING := "Em ratificação"
+# i18n-end
+# i18n-begin
 const STATE_FORCE := "Em vigor"
+# i18n-end
+# i18n-begin
 const STATE_DENOUNCED := "Denunciado"
+# i18n-end
+# i18n-begin
 const STATE_ENDED := "Encerrado"
+# i18n-end
+# i18n-begin
 const STATE_EXPIRED := "Expirado"
+# i18n-end
+# i18n-begin
 const STATE_REJECTED := "Não ratificado"
+# i18n-end
+# i18n-begin
 const STATE_BROKEN := "Rompido"
+# i18n-end
 const NOTICE_MONTHS := 6
 const PARTNER_RATIFY_MONTHS := [1, 3]
 
 ## need: quanto de boa vontade o outro lado exige. econ e social: onde o tratado cai na bússola, para os parlamentos
 ## e para o líder da outra parte. term: duração em anos, 0 para indefinido.
+# i18n-begin
 const TYPES := {
 	"fta": {"label": "Livre comércio", "desc": "Elimina barreiras ao comércio entre as partes.", "need": 15.0, "econ": 0.6, "social": 0.3, "term": 0},
 	"customs": {"label": "União aduaneira", "desc": "Livre comércio e tarifa comum. Exige muita confiança.", "need": 40.0, "econ": 0.3, "social": 0.2, "term": 0},
@@ -25,13 +40,16 @@ const TYPES := {
 	"extradition": {"label": "Extradição", "desc": "Criminosos deixam de ter refúgio. Dá estabilidade às duas partes.", "need": 5.0, "econ": 0.0, "social": -0.3, "term": 0},
 	"investment": {"label": "Proteção de investimentos", "desc": "Garantias para o capital estrangeiro, que passa a render mais.", "need": 10.0, "econ": 0.7, "social": 0.1, "term": 20},
 }
+# i18n-end
 ## Tratados multilaterais que já existem, pelos blocos do cenário.
+# i18n-begin
 const FOUNDING := {
 	"NATO": {"title": "Tratado do Atlântico Norte", "type": "defense"}, "EU": {"title": "Tratado da União Europeia", "type": "customs"},
 	"USMCA": {"title": "Acordo Estados Unidos, México e Canadá", "type": "fta"}, "MERCO": {"title": "Tratado de Assunção (Mercosul)", "type": "customs"},
 	"MERCOSUR": {"title": "Tratado de Assunção (Mercosul)", "type": "customs"}, "ASEAN": {"title": "Carta da ASEAN", "type": "fta"},
 	"SCO": {"title": "Carta de Xangai", "type": "extradition"}, "AUKUS": {"title": "Pacto AUKUS", "type": "defense"},
 }
+# i18n-end
 
 var items: Array = []
 var next_id := 1
@@ -113,35 +131,35 @@ func goodwill(world: GameWorld, proposer: Dictionary, target: Country, type: Str
 ## O jogador propõe. Aceito, o tratado é assinado e vai à ratificação nos dois países.
 func propose(world: GameWorld, target: Country, type: String) -> Dictionary:
 	if not world.in_office:
-		return {"ok": false, "msg": "Na oposição, você não negocia em nome do país."}
+		return {"ok": false, "msg": tr("Na oposição, você não negocia em nome do país.")}
 	if target == world.player or not target.alive:
-		return {"ok": false, "msg": "Não há com quem negociar."}
+		return {"ok": false, "msg": tr("Não há com quem negociar.")}
 	if not TYPES.has(type):
-		return {"ok": false, "msg": "Tipo de tratado desconhecido."}
+		return {"ok": false, "msg": tr("Tipo de tratado desconhecido.")}
 	if not between(world.player, target, type).is_empty():
-		return {"ok": false, "msg": "Já existe um tratado desse tipo com %s." % target.name}
+		return {"ok": false, "msg": tr("Já existe um tratado desse tipo com %s.") % target.name}
 	var def: Dictionary = TYPES[type]
 	var score := goodwill(world, world.politics.player_party(world), target, type, world.player)
 	if world.diplomacy.at_war(world.player.idx, target.idx):
 		score -= 200.0
 	score += (world.politics.minister_competence(world, "foreign") - 0.5) * 20.0 + world.rng.randf_range(-5.0, 5.0)
 	if score < float(def.need):
-		return {"ok": true, "accepted": false, "msg": "%s recusou negociar: %s." % [target.name, "falta confiança" if world.diplomacy.relation(world.player.idx, target.idx) < float(def.need) else "as ideias do governo de lá são outras"]}
+		return {"ok": true, "accepted": false, "msg": tr("%s recusou negociar: %s.") % [target.name, tr("falta confiança") if world.diplomacy.relation(world.player.idx, target.idx) < float(def.need) else tr("as ideias do governo de lá são outras")]}
 	return sign_with_player(world, target, type)
 
 
 ## Assinatura com o jogador: o tratado só vale depois do parlamento dos dois lados.
 func sign_with_player(world: GameWorld, target: Country, type: String) -> Dictionary:
 	var def: Dictionary = TYPES[type]
-	var title := "Tratado de %s entre %s e %s" % [String(def.label).to_lower(), world.player.name, target.name]
+	var title := tr("Tratado de %s entre %s e %s") % [tr(def.label).to_lower(), world.player.name, target.name]
 	var t := _add(title, type, [world.player.iso, target.iso], STATE_RATIFYING, world, int(def.term))
 	t.partner_due = world.months_elapsed + world.rng.randi_range(PARTNER_RATIFY_MONTHS[0], PARTNER_RATIFY_MONTHS[1])
-	world.emit_news("%s e %s assinam: %s. Falta ratificar." % [world.player.name, target.name, def.label], "diplomacia", target)
+	world.emit_news(tr("%s e %s assinam: %s. Falta ratificar.") % [world.player.name, target.name, tr(def.label)], "diplomacia", target)
 	if world.player.dem >= Politics.FREE_PARLIAMENT_DEM:
-		world.legislation.present_payload(world, {"kind": "treaty", "treaty": t.id}, "Ratificação: %s" % title, String(def.desc), {"econ": def.econ, "social": def.social})
+		world.legislation.present_payload(world, {"kind": "treaty", "treaty": t.id}, tr("Ratificação: %s") % title, tr(def.desc), {"econ": def.econ, "social": def.social})
 	else:
 		t.ratified[world.player.iso] = true
-	return {"ok": true, "accepted": true, "treaty": t, "msg": "Assinado. Agora precisa ser ratificado pelos parlamentos."}
+	return {"ok": true, "accepted": true, "treaty": t, "msg": tr("Assinado. Agora precisa ser ratificado pelos parlamentos.")}
 
 
 ## Parlamento do jogador decidiu.
@@ -155,7 +173,7 @@ func on_player_ratification(world: GameWorld, id: int, approved: bool) -> void:
 			if iso != world.player.iso:
 				var other: Country = world.by_iso[iso]
 				world.diplomacy.add_relation(world.player.idx, other.idx, -8.0)
-		world.emit_news("O parlamento rejeita: %s." % t.title, "diplomacia", world.player)
+		world.emit_news(tr("O parlamento rejeita: %s.") % t.title, "diplomacia", world.player)
 		return
 	t.ratified[world.player.iso] = true
 	_check_force(world, t)
@@ -170,7 +188,7 @@ func _check_force(world: GameWorld, t: Dictionary) -> void:
 		t.expires_month = world.months_elapsed + int(t.term) * 12
 	_apply(world, t, true)
 	if world.player and world.player.iso in t.parties:
-		world.emit_news("Entra em vigor: %s." % t.title, "diplomacia", world.player)
+		world.emit_news(tr("Entra em vigor: %s.") % t.title, "diplomacia", world.player)
 
 
 ## Dois governos da IA fecham um tratado direto: ratificação sem drama, salvo se o parlamento de lá recusar.
@@ -181,7 +199,7 @@ func ai_sign(world: GameWorld, a: Country, b: Country, type: String) -> bool:
 	for c: Country in [a, b]:
 		if c != world.player and not _parliament_accepts(world, c, def):
 			return false
-	var t := _add("Tratado de %s entre %s e %s" % [String(def.label).to_lower(), a.name, b.name], type, [a.iso, b.iso], STATE_FORCE, world, int(def.term))
+	var t := _add(tr("Tratado de %s entre %s e %s") % [tr(def.label).to_lower(), a.name, b.name], type, [a.iso, b.iso], STATE_FORCE, world, int(def.term))
 	_apply(world, t, true)
 	return true
 
@@ -242,13 +260,13 @@ func step_month(world: GameWorld) -> void:
 					t.state = STATE_ENDED
 					_apply(world, t, false)
 					if world.player and world.player.iso in t.parties:
-						world.emit_news("Deixa de valer: %s." % t.title, "diplomacia", world.player)
+						world.emit_news(tr("Deixa de valer: %s.") % t.title, "diplomacia", world.player)
 			STATE_FORCE:
 				if int(t.expires_month) >= 0 and world.months_elapsed >= int(t.expires_month):
 					t.state = STATE_EXPIRED
 					_apply(world, t, false)
 					if world.player and world.player.iso in t.parties:
-						world.emit_news("Venceu o prazo: %s." % t.title, "diplomacia", world.player)
+						world.emit_news(tr("Venceu o prazo: %s.") % t.title, "diplomacia", world.player)
 				else:
 					_monthly_effect(world, t)
 
@@ -261,7 +279,7 @@ func _partner_decides(world: GameWorld, t: Dictionary) -> void:
 		var c: Country = world.by_iso[iso]
 		if not _parliament_accepts(world, c, def):
 			t.state = STATE_REJECTED
-			world.emit_news("O parlamento de %s rejeita: %s." % [c.name, t.title], "diplomacia", c)
+			world.emit_news(tr("O parlamento de %s rejeita: %s.") % [c.name, t.title], "diplomacia", c)
 			return
 		t.ratified[iso] = true
 	_check_force(world, t)
@@ -290,20 +308,20 @@ func denounce(world: GameWorld, id: int) -> Dictionary:
 	var t := get_by_id(id)
 	var pl := world.player
 	if t.is_empty() or t.state != STATE_FORCE or not pl.iso in t.parties:
-		return {"ok": false, "msg": "Esse tratado não está em vigor para o seu país."}
+		return {"ok": false, "msg": tr("Esse tratado não está em vigor para o seu país.")}
 	if not world.in_office:
-		return {"ok": false, "msg": "Na oposição, você não denuncia tratados."}
+		return {"ok": false, "msg": tr("Na oposição, você não denuncia tratados.")}
 	for iso: String in t.parties:
 		if iso != pl.iso:
 			world.diplomacy.add_relation(pl.idx, world.by_iso[iso].idx, -10.0)
 	if t.parties.size() > 2:
 		# Multilateral: sai só quem denunciou; os outros seguem. Não há efeito para eles.
 		_leave(world, t, pl)
-		return {"ok": true, "msg": "Seu país deixa: %s." % t.title}
+		return {"ok": true, "msg": tr("Seu país deixa: %s.") % t.title}
 	t.state = STATE_DENOUNCED
 	t.ended_month = world.months_elapsed + NOTICE_MONTHS
-	world.emit_news("%s denuncia: %s. Deixa de valer em %d meses." % [pl.name, t.title, NOTICE_MONTHS], "diplomacia", pl)
-	return {"ok": true, "msg": "Denúncia registrada. O tratado deixa de valer em %d meses." % NOTICE_MONTHS}
+	world.emit_news(tr("%s denuncia: %s. Deixa de valer em %d meses.") % [pl.name, t.title, NOTICE_MONTHS], "diplomacia", pl)
+	return {"ok": true, "msg": tr("Denúncia registrada. O tratado deixa de valer em %d meses.") % NOTICE_MONTHS}
 
 
 func _leave(world: GameWorld, t: Dictionary, c: Country) -> void:
@@ -313,7 +331,7 @@ func _leave(world: GameWorld, t: Dictionary, c: Country) -> void:
 			if world.diplomacy.allied(c.idx, other.idx):
 				world.diplomacy.break_alliance(c, other, world)
 	t.parties = t.parties.filter(func(x): return x != c.iso)
-	world.emit_news("%s deixa: %s." % [c.name, t.title], "diplomacia", c)
+	world.emit_news(tr("%s deixa: %s.") % [c.name, t.title], "diplomacia", c)
 
 
 ## Guerra entre partes rompe o que havia. Atacar quem assinou não agressão pesa no mundo inteiro.
@@ -322,7 +340,7 @@ func on_war(world: GameWorld, att: Country, def: Country) -> void:
 		if t.state in [STATE_FORCE, STATE_RATIFYING, STATE_DENOUNCED] and att.iso in t.parties and def.iso in t.parties and t.parties.size() == 2:
 			if t.type == "nonaggression":
 				att.approval = maxf(att.approval - 0.03, 0.02)
-				world.emit_news("%s rasga o tratado de não agressão com %s." % [att.name, def.name], "crise", att)
+				world.emit_news(tr("%s rasga o tratado de não agressão com %s.") % [att.name, def.name], "crise", att)
 				for other: Country in world.countries:
 					if other != att and other != def and other.alive:
 						world.diplomacy.add_relation(other.idx, att.idx, -2.0)

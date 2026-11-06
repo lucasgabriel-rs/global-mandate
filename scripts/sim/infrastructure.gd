@@ -19,8 +19,12 @@ const TEU_TONS := 12.0
 ## passageiros), nos preços de um país rico. Países mais pobres constroem mais barato (ver cost_factor).
 const UNIT_COST := {"TEU": 0.9, "t": 0.07, "pax": 0.2}
 const EXPAND_OPTIONS := [0.25, 0.5, 1.0]
+# i18n-begin
 const NEW_SIZES := [["Pequeno", 0.08], ["Médio", 0.15], ["Grande", 0.3]]
+# i18n-end
+# i18n-begin
 const OWNER_NAMES := {"public": "Público", "private": "Privado", "concession": "Concessão"}
+# i18n-end
 ## Uma concessão roda um pouco mais que o mesmo ativo nas mãos do Estado.
 const CONCESSION_EFFICIENCY := 1.05
 ## Quanto o país recebe ao conceder um ativo: fração do custo de reposição.
@@ -130,13 +134,13 @@ func _generate(c: Country, world: GameWorld) -> void:
 		var unit: Dictionary = subs.units[subs.capitals[c.iso]]
 		city = String(unit.name)
 		pos = unit.center
-	var air := _facility(c.iso, AIR, "Aeroporto Internacional de %s" % city, city, snappedf(maxf(generated_capacity(c, AIR), 0.2), 0.1), "pax", "public")
+	var air := _facility(c.iso, AIR, tr("Aeroporto Internacional de %s") % city, city, snappedf(maxf(generated_capacity(c, AIR), 0.2), 0.1), "pax", "public")
 	air.pos = pos
 	air.base = cap_eq(air) * 0.8
 	air.attract = air.base
 	facilities.append(air)
 	if not c.iso in LANDLOCKED:
-		var port := _facility(c.iso, PORT, "Porto de %s" % c.name, city, snappedf(maxf(generated_capacity(c, PORT), 0.5), 0.5), "t", "public")
+		var port := _facility(c.iso, PORT, tr("Porto de %s") % c.name, city, snappedf(maxf(generated_capacity(c, PORT), 0.5), 0.5), "t", "public")
 		port.pos = pos + Vector2(4.0, 3.0)
 		port.base = cap_eq(port) * 0.8
 		port.attract = port.base
@@ -341,33 +345,33 @@ func cities_of(c: Country, world: GameWorld) -> Array:
 func start_expansion(world: GameWorld, c: Country, id: int, pct: float, public := true) -> Dictionary:
 	var f := facility(id)
 	if f.is_empty() or world.resolve_owner(f.iso) != c:
-		return {"ok": false, "msg": "Instalação não encontrada."}
+		return {"ok": false, "msg": tr("Instalação não encontrada.")}
 	if public and f.owner != "public":
-		return {"ok": false, "msg": "%s é operado pela iniciativa privada: quem amplia é a concessionária." % f.name}
+		return {"ok": false, "msg": tr("%s é operado pela iniciativa privada: quem amplia é a concessionária.") % f.name}
 	if not project_on(id).is_empty():
-		return {"ok": false, "msg": "Já há uma obra em %s." % f.name}
+		return {"ok": false, "msg": tr("Já há uma obra em %s.") % f.name}
 	if f.closed:
-		return {"ok": false, "msg": "%s está fechado." % f.name}
+		return {"ok": false, "msg": tr("%s está fechado.") % f.name}
 	var q := expansion_quote(f, c, pct)
 	projects.append({
 		"id": next_id, "payer": c.idx, "fac": id, "kind": f.kind, "public": public, "add": q.add,
-		"cost": q.cost if public else 0.0, "months": q.months, "left": q.months, "label": "Ampliação de %s" % f.name,
+		"cost": q.cost if public else 0.0, "months": q.months, "left": q.months, "label": tr("Ampliação de %s") % f.name,
 	})
 	next_id += 1
 	revision += 1
 	if c == world.player:
-		var who := "O governo" if public else "A operadora"
-		world.emit_news("%s começa a ampliar %s: +%d%% de capacidade em %s." % [who, f.name, int(round(pct * 100.0)), years_text(q.months)], "economia", c)
-	return {"ok": true, "msg": "Obra iniciada: %s, %s." % [_money(q.cost), years_text(q.months)] if public else "A operadora amplia %s." % f.name}
+		var who := tr("O governo") if public else tr("A operadora")
+		world.emit_news(tr("%s começa a ampliar %s: +%d%% de capacidade em %s.") % [who, f.name, int(round(pct * 100.0)), years_text(q.months)], "economia", c)
+	return {"ok": true, "msg": tr("Obra iniciada: %s, %s.") % [_money(q.cost), years_text(q.months)] if public else tr("A operadora amplia %s.") % f.name}
 
 
 ## Constrói uma instalação nova perto de `near` (outra instalação do país, cuja cidade empresta o local).
 func start_new(world: GameWorld, c: Country, kind: String, near_id: int, size: int) -> Dictionary:
 	var near := facility(near_id)
 	if near.is_empty() or world.resolve_owner(near.iso) != c:
-		return {"ok": false, "msg": "Escolha uma cidade do país."}
+		return {"ok": false, "msg": tr("Escolha uma cidade do país.")}
 	if kind == PORT and not can_build_port(c):
-		return {"ok": false, "msg": "%s não tem litoral." % c.name}
+		return {"ok": false, "msg": tr("%s não tem litoral.") % c.name}
 	var count := 0
 	for f: Dictionary in facilities_of(c, world):
 		if f.kind == kind:
@@ -376,9 +380,9 @@ func start_new(world: GameWorld, c: Country, kind: String, near_id: int, size: i
 		if int(p.payer) == c.idx and int(p.fac) < 0 and p.kind == kind:
 			count += 1
 	if count >= MAX_PER_KIND:
-		return {"ok": false, "msg": "O país já tem instalações demais desse tipo."}
+		return {"ok": false, "msg": tr("O país já tem instalações demais desse tipo.")}
 	var q := new_quote(c, world, kind, size)
-	var label := ("Novo porto de %s" if kind == PORT else "Novo aeroporto de %s") % near.city
+	var label := (tr("Novo porto de %s") if kind == PORT else tr("Novo aeroporto de %s")) % near.city
 	var spec := {"city": near.city, "lat": float(near.lat) + 0.12, "lon": float(near.lon) + 0.12, "unit": q.unit, "iso": c.iso}
 	if near.has("pos"):
 		spec.pos = (near.pos as Vector2) + Vector2(3.0, -3.0)
@@ -389,32 +393,32 @@ func start_new(world: GameWorld, c: Country, kind: String, near_id: int, size: i
 	next_id += 1
 	revision += 1
 	if c == world.player:
-		world.emit_news("Começa a construção do %s: %s em %s." % [_lower_first(label), _money(q.cost), years_text(q.months)], "economia", c)
-	return {"ok": true, "msg": "Obra iniciada: %s, %s." % [_money(q.cost), years_text(q.months)]}
+		world.emit_news(tr("Começa a construção do %s: %s em %s.") % [_lower_first(label), _money(q.cost), years_text(q.months)], "economia", c)
+	return {"ok": true, "msg": tr("Obra iniciada: %s, %s.") % [_money(q.cost), years_text(q.months)]}
 
 
 func concede(world: GameWorld, c: Country, id: int) -> Dictionary:
 	var f := facility(id)
 	if f.is_empty() or world.resolve_owner(f.iso) != c:
-		return {"ok": false, "msg": "Instalação não encontrada."}
+		return {"ok": false, "msg": tr("Instalação não encontrada.")}
 	if f.owner != "public":
-		return {"ok": false, "msg": "%s já é operado pela iniciativa privada." % f.name}
+		return {"ok": false, "msg": tr("%s já é operado pela iniciativa privada.") % f.name}
 	if not project_on(id).is_empty():
-		return {"ok": false, "msg": "Espere a obra em %s terminar." % f.name}
+		return {"ok": false, "msg": tr("Espere a obra em %s terminar.") % f.name}
 	if f.closed:
-		return {"ok": false, "msg": "Ninguém compra a concessão de um ativo fechado."}
+		return {"ok": false, "msg": tr("Ninguém compra a concessão de um ativo fechado.")}
 	var value := concession_value(f, c)
 	f.owner = "concession"
 	_dirty[c.idx] = true
 	c.extra_rev_bucket += value
 	revision += 1
 	if c == world.player:
-		world.emit_news("%s é concedido à iniciativa privada por %s." % [f.name, _money(value)], "economia", c)
-	return {"ok": true, "msg": "Concessão assinada: %s entram no Tesouro." % _money(value), "value": value}
+		world.emit_news(tr("%s é concedido à iniciativa privada por %s.") % [f.name, _money(value)], "economia", c)
+	return {"ok": true, "msg": tr("Concessão assinada: %s entram no Tesouro.") % _money(value), "value": value}
 
 
 static func _money(b: float) -> String:
-	return ("US$ %.1f bi" % b).replace(".", ",") if b < 10.0 else "US$ %d bi" % int(round(b))
+	return TranslationServer.translate("US$ %s bi") % (UiKit.num(b, 1) if b < 10.0 else str(int(round(b))))
 
 
 static func _lower_first(s: String) -> String:
@@ -423,8 +427,8 @@ static func _lower_first(s: String) -> String:
 
 static func years_text(months: int) -> String:
 	if months % 12 == 0:
-		return "%d anos" % int(months / 12.0) if months >= 24 else "1 ano"
-	return ("%.1f anos" % (months / 12.0)).replace(".", ",")
+		return TranslationServer.translate("%d anos") % int(months / 12.0) if months >= 24 else TranslationServer.translate("1 ano")
+	return TranslationServer.translate("%s anos") % UiKit.num(months / 12.0, 1)
 
 
 # --- Etapa mensal ----------------------------------------------------------------
@@ -496,25 +500,25 @@ func _step_projects(world: GameWorld) -> void:
 			fresh.since = world.year_float()
 			facilities.append(fresh)
 			if c == world.player:
-				world.emit_news("Inaugurado o %s, com capacidade para %s por ano." % [_lower_first(String(p.label)), capacity_text(fresh)], "economia", c)
+				world.emit_news(tr("Inaugurado o %s, com capacidade para %s por ano.") % [_lower_first(String(p.label)), capacity_text(fresh)], "economia", c)
 		else:
 			f.cap = float(f.cap) + float(p.add)
 			var owner := world.resolve_owner(f.iso)
 			if owner:
 				_dirty[owner.idx] = true
 			if c == world.player:
-				world.emit_news("Concluída a ampliação de %s: agora %s por ano." % [f.name, capacity_text(f)], "economia", c)
+				world.emit_news(tr("Concluída a ampliação de %s: agora %s por ano.") % [f.name, capacity_text(f)], "economia", c)
 	projects = keep
 	_ensure_index(world)
 
 
 static func capacity_text(f: Dictionary) -> String:
 	var v := float(f.cap)
-	var txt := ("%.1f" % v).replace(".", ",") if v < 10.0 else str(int(round(v)))
+	var txt := UiKit.num(v, 1) if v < 10.0 else str(int(round(v)))
 	match String(f.unit):
-		"TEU": return "%s mi TEU" % txt
-		"t": return "%s mi t" % txt
-	return "%s mi passageiros" % txt
+		"TEU": return TranslationServer.translate("%s mi TEU") % txt
+		"t": return TranslationServer.translate("%s mi t") % txt
+	return TranslationServer.translate("%s mi passageiros") % txt
 
 
 ## Guerra danifica, ocupação fecha, paz conserta (o Estado paga o reparo do que é dele).
@@ -541,7 +545,7 @@ func _hazards(c: Country, world: GameWorld, facs: Array, war: bool) -> void:
 			revision += 1
 			_dirty[c.idx] = true
 			if c == world.player:
-				world.emit_news("Ataque danifica %s: a capacidade cai para %d%%." % [f.name, int(float(f.cond) * 100.0)], "guerra", c)
+				world.emit_news(tr("Ataque danifica %s: a capacidade cai para %d%%.") % [f.name, int(float(f.cond) * 100.0)], "guerra", c)
 		elif float(f.cond) < 1.0 and not closed:
 			var rate := 0.01 if war else 0.04
 			f.cond = minf(float(f.cond) + rate, 1.0)
@@ -556,9 +560,9 @@ func _hazards(c: Country, world: GameWorld, facs: Array, war: bool) -> void:
 		_hurt.erase(c.idx)
 	if c == world.player:
 		if not shut.is_empty():
-			world.emit_news("%s: a região está ocupada pelo inimigo." % _closing_text(shut, "fecha", "fecham"), "guerra", c)
+			world.emit_news(tr("%s: a região está ocupada pelo inimigo.") % _closing_text(shut, tr("fecha"), tr("fecham")), "guerra", c)
 		if not reopened.is_empty():
-			world.emit_news("%s." % _closing_text(reopened, "volta a operar", "voltam a operar"), "economia", c)
+			world.emit_news("%s." % _closing_text(reopened, tr("volta a operar"), tr("voltam a operar")), "economia", c)
 
 
 ## "Porto de Santos fecha", "Santos e Galeão fecham", "Santos, Galeão e mais 3 fecham".
@@ -566,8 +570,8 @@ static func _closing_text(names: Array, one: String, many: String) -> String:
 	if names.size() == 1:
 		return "%s %s" % [names[0], one]
 	if names.size() == 2:
-		return "%s e %s %s" % [names[0], names[1], many]
-	return "%s, %s e mais %d instalações %s" % [names[0], names[1], names.size() - 2, many]
+		return TranslationServer.translate("%s e %s %s") % [names[0], names[1], many]
+	return TranslationServer.translate("%s, %s e mais %d instalações %s") % [names[0], names[1], names.size() - 2, many]
 
 
 ## Reparte a demanda do país entre as instalações de um tipo e mede a saturação.

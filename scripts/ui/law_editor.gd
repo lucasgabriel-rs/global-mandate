@@ -56,7 +56,7 @@ func setup(owner_main: Node, target: Dictionary, version := -1) -> void:
 		button.visible = not read_only and not emenda
 	if emenda:
 		(%save_close as Control).visible = not read_only
-		(%save_close as Button).text = "Voltar à emenda"
+		(%save_close as Button).text = tr("Voltar à emenda")
 	refresh()
 
 
@@ -108,26 +108,27 @@ func _poll_target() -> Dictionary:
 
 func _fill_document() -> void:
 	var leg: Legislation = world.legislation
-	(%doc_number as Label).text = "%s  ·  autor: %s  ·  %s" % [leg.norm_label(norm), norm.author, norm.state]
-	(%doc_title as Label).text = "Editor legislativo" if not read_only else "Programação de %s" % leg.norm_label(norm)
+	(%doc_number as Label).text = tr("%s  ·  autor: %s  ·  %s") % [leg.norm_label(norm), norm.author, tr(norm.state)]
+	(%doc_title as Label).text = tr("Editor legislativo") if not read_only else tr("Programação de %s") % leg.norm_label(norm)
 	var code := LawCodes.get_code(code_id)
 	var badge: Label = %code_badge
 	badge.visible = code != null
 	if code:
-		(%doc_title as Label).text = code.title if read_only else "Alterar: %s" % code.title
-		badge.text = "%s · blocos de %s" % [Legislation.NORM_TYPES[norm.type].label, String(code.category.label).to_lower()]
+		(%doc_title as Label).text = tr(code.title) if read_only else tr("Alterar: %s") % tr(code.title)
+		badge.text = tr("%s · blocos de %s") % [tr(Legislation.NORM_TYPES[norm.type].label), tr(code.category.label).to_lower()]
 	for key: String in Legislation.NORM_TYPES:
 		if key == "constituicao" or (key == "emenda" and norm.type != "emenda"):
 			continue
 		if norm.type == "emenda" and key != "emenda":
 			continue
 		if read_only or leg.can(world, "present", key):
-			_doc_type.add_item(Legislation.NORM_TYPES[key].label)
+			_doc_type.add_item(tr(Legislation.NORM_TYPES[key].label))
 			_doc_type.set_item_metadata(_doc_type.item_count - 1, key)
 			if key == norm.type:
 				_doc_type.select(_doc_type.item_count - 1)
-	(%doc_name as LineEdit).text = norm.title
-	(%doc_ementa as TextEdit).text = norm.ementa
+	# Títulos dos códigos e dos modelos ficam em português na norma: o campo mostra a tradução.
+	(%doc_name as LineEdit).text = tr(norm.title)
+	(%doc_ementa as TextEdit).text = tr(norm.ementa)
 	(%doc_vacatio as LineEdit).text = str(int(norm.get("vacatio", 0)))
 	(%doc_expires as LineEdit).text = String(norm.get("expires", ""))
 	for field: Control in [%doc_name, %doc_vacatio, %doc_expires]:
@@ -141,14 +142,14 @@ func _fill_document() -> void:
 func _build_library() -> void:
 	var cats := LawCatalog.categories()
 	var others: Control = null
-	var advanced: Control = _library_group("Avançado", "Blocos genéricos para regras próprias: condições, cálculos, variáveis e ações administrativas.", code_id == "")
+	var advanced: Control = _library_group(tr("Avançado"), tr("Blocos genéricos para regras próprias: condições, cálculos, variáveis e ações administrativas."), code_id == "")
 	for cat: Dictionary in cats:
 		var mine: bool = String(cat.get("code", "")) == code_id or (code_id != "" and cat.id == "events")
 		var target: Control = _library
 		if code_id != "" and not mine:
 			if cat.has("code"):
 				if others == null:
-					others = _library_group("Outros códigos", "Blocos de outras áreas. Prefira alterar o código de cada área.", false)
+					others = _library_group(tr("Outros códigos"), tr("Blocos de outras áreas. Prefira alterar o código de cada área."), false)
 				target = others.get_node("%items")
 			else:
 				target = advanced.get_node("%items")
@@ -157,12 +158,12 @@ func _build_library() -> void:
 		var blocks := LawCatalog.in_category(cat.id)
 		var heading: Label = LIBRARY_HEADING.instantiate()
 		heading.name = "cat_%s" % cat.id
-		heading.text = String(cat.label).to_upper()
+		heading.text = tr(cat.label).to_upper()
 		target.add_child(heading)
 		if blocks.is_empty():
 			var empty: Label = LIBRARY_HEADING.instantiate()
 			empty.name = "empty_%s" % cat.id
-			empty.text = "Os blocos desta área ainda não foram feitos."
+			empty.text = tr("Os blocos desta área ainda não foram feitos.")
 			target.add_child(empty)
 		for def: Dictionary in blocks:
 			var view: LawBlockView = BLOCK.instantiate()
@@ -219,12 +220,12 @@ func _compile_now() -> void:
 	for entry: Dictionary in last_compile.warnings:
 		_add_validation(entry, false)
 	if last_compile.errors.is_empty() and last_compile.warnings.is_empty():
-		_summary.text = "Nenhum problema encontrado."
+		_summary.text = tr("Nenhum problema encontrado.")
 		_summary.add_theme_color_override("font_color", UiKit.GREEN)
 	else:
-		_summary.text = "%d erro(s), %d aviso(s)" % [last_compile.errors.size(), last_compile.warnings.size()]
+		_summary.text = tr("%d erro(s), %d aviso(s)") % [last_compile.errors.size(), last_compile.warnings.size()]
 		_summary.add_theme_color_override("font_color", UiKit.RED if not last_compile.errors.is_empty() else UiKit.ACCENT)
-	_legal.text = LawProgram.legal_text(_shown_program)
+	_legal.text = LawProgram.legal_text(_shown_program, true)
 	(%present as Button).disabled = not last_compile.ok
 	(%poll as PollBox).refresh()
 	(%poll as PollBox).clear_result()
@@ -234,7 +235,7 @@ func _compile_now() -> void:
 
 func _add_validation(entry: Dictionary, is_error: bool) -> void:
 	var row: Button = VALIDATION_ROW.instantiate()
-	row.text = ("Erro: " if is_error else "Aviso: ") + String(entry.text)
+	row.text = (tr("Erro: ") if is_error else tr("Aviso: ")) + String(entry.text)
 	row.tooltip_text = String(entry.text)
 	row.add_theme_color_override("font_color", UiKit.RED if is_error else UiKit.ACCENT)
 	if int(entry.block) >= 0:
@@ -245,7 +246,7 @@ func _add_validation(entry: Dictionary, is_error: bool) -> void:
 ## Apresentar abre primeiro o painel de efeitos esperados; quem envia é o botão de lá.
 func _on_present() -> void:
 	if String(norm.title).strip_edges() == "" or String(norm.ementa).strip_edges() == "":
-		_feedback.text = "Preencha o título e a ementa da norma."
+		_feedback.text = tr("Preencha o título e a ementa da norma.")
 		_feedback.add_theme_color_override("font_color", UiKit.RED)
 		return
 	(%review as LawReview).open()
@@ -284,16 +285,16 @@ func _show_props() -> void:
 		return
 	var block: Dictionary = where.block
 	var def := LawCatalog.get_def(block.type)
-	_props_title.text = LawProgram.block_text(block)
+	_props_title.text = LawProgram.block_text(block, true)
 	for key: String in def.get("fields", {}):
 		_props.add_child(_field_row(block, key, def.fields[key]))
 
 
 func _field_row(block: Dictionary, key: String, spec: Dictionary) -> Control:
 	var row: Control = FIELD_ROW.instantiate()
-	(row.get_node("%label") as Label).text = key.capitalize() if not FIELD_NAMES.has(key) else FIELD_NAMES[key]
+	(row.get_node("%label") as Label).text = key.capitalize() if not FIELD_NAMES.has(key) else tr(FIELD_NAMES[key])
 	if spec.get("t", "") == "ref":
-		(row.get_node("%label") as Label).text = REF_LABELS.get(String(spec.get("of", "")), "Nome")
+		(row.get_node("%label") as Label).text = tr(REF_LABELS.get(String(spec.get("of", "")), tr("Nome")))
 	var edit: LineEdit = row.get_node("%edit")
 	var option: OptionButton = row.get_node("%option")
 	var check: CheckBox = row.get_node("%check")
@@ -307,7 +308,7 @@ func _field_row(block: Dictionary, key: String, spec: Dictionary) -> Control:
 	check.disabled = read_only
 	if block.plugs.has(key):
 		plugged.visible = true
-		(row.get_node("%plugged") as Label).text = LawProgram.block_text(block.plugs[key])
+		(row.get_node("%plugged") as Label).text = LawProgram.block_text(block.plugs[key], true)
 		var unplug: Button = row.get_node("%unplug")
 		unplug.visible = not read_only
 		unplug.pressed.connect(func():
@@ -319,7 +320,7 @@ func _field_row(block: Dictionary, key: String, spec: Dictionary) -> Control:
 			option.visible = true
 			var choices: Dictionary = LawCatalog.choice_list(spec.of)
 			for value: String in choices:
-				option.add_item(choices[value])
+				option.add_item(tr(choices[value]))
 				option.set_item_metadata(option.item_count - 1, value)
 				if value == block.fields.get(key):
 					option.select(option.item_count - 1)
@@ -334,10 +335,10 @@ func _field_row(block: Dictionary, key: String, spec: Dictionary) -> Control:
 			for b: Dictionary in LawProgram.all_blocks(_shown_program):
 				if b.type in ["ad_min_create", "ad_min_merge"] and not String(b.fields.get("name", "")) in names:
 					names.append(String(b.fields.get("name", "")))
-			option.add_item("Escolha o ministério")
+			option.add_item(tr("Escolha o ministério"))
 			option.set_item_metadata(0, "")
 			for label: String in names:
-				option.add_item(label)
+				option.add_item(tr(label))
 				option.set_item_metadata(option.item_count - 1, label)
 				if label == String(block.fields.get(key, "")):
 					option.select(option.item_count - 1)
@@ -348,14 +349,14 @@ func _field_row(block: Dictionary, key: String, spec: Dictionary) -> Control:
 			_ref_field(block, key, spec, option, edit)
 		"company":
 			option.visible = true
-			option.add_item("Escolha a empresa")
+			option.add_item(tr("Escolha a empresa"))
 			option.set_item_metadata(0, "")
 			var listing: Array = world.corporate.companies_of(world.legislation.iso).duplicate()
 			listing.sort_custom(func(a, b): return float(a.value) > float(b.value))
 			for co: Dictionary in listing:
 				var label := String(co.name)
 				if float(co.state) > 0.0:
-					label += " (Estado: %d%%)" % int(roundf(float(co.state) * 100.0))
+					label += tr(" (Estado: %d%%)") % int(roundf(float(co.state) * 100.0))
 				option.add_item(label)
 				option.set_item_metadata(option.item_count - 1, String(co.name))
 				if String(co.name) == String(block.fields.get(key, "")):
@@ -365,7 +366,7 @@ func _field_row(block: Dictionary, key: String, spec: Dictionary) -> Control:
 				_after_edit())
 		"unit":
 			option.visible = true
-			option.add_item("Qualquer parte do país")
+			option.add_item(tr("Qualquer parte do país"))
 			option.set_item_metadata(0, -1)
 			for id: int in world.subdivisions.roots_of(world.legislation.iso):
 				option.add_item(world.subdivisions.units[id].name)
@@ -378,7 +379,7 @@ func _field_row(block: Dictionary, key: String, spec: Dictionary) -> Control:
 		"bool":
 			if not block.fields.has(key) and not spec.has("d"):
 				plugged.visible = true
-				(row.get_node("%plugged") as Label).text = "Arraste uma condição para este campo."
+				(row.get_node("%plugged") as Label).text = tr("Arraste uma condição para este campo.")
 				(row.get_node("%unplug") as Control).visible = false
 			else:
 				check.visible = true
@@ -409,9 +410,9 @@ func _ref_field(block: Dictionary, key: String, spec: Dictionary, option: Option
 		option.set_item_metadata(option.item_count - 1, label)
 		if label == current:
 			option.select(option.item_count - 1)
-	option.add_item(REF_NEW)
+	option.add_item(tr(REF_NEW))
 	option.set_item_metadata(option.item_count - 1, "")
-	edit.placeholder_text = "Nome do que esta norma cria"
+	edit.placeholder_text = tr("Nome do que esta norma cria")
 	edit.text = current
 	edit.text_changed.connect(func(t: String):
 		block.fields[key] = t.strip_edges()
@@ -428,9 +429,14 @@ func _ref_field(block: Dictionary, key: String, spec: Dictionary, option: Option
 			edit.grab_focus())
 
 
+# i18n-begin
 const REF_NEW := "Outro nome…"
+# i18n-end
+# i18n-begin
 const REF_LABELS := {"tax": "Tributo", "license": "Licença", "institution": "Instituição", "duty": "Obrigação"}
+# i18n-end
 
+# i18n-begin
 const FIELD_NAMES := {
 	"amount": "Valor", "days": "Dias", "name": "Nome", "rate": "Alíquota (%)", "base": "Base", "value": "Valor", "field": "Campo", "age": "Idade",
 	"date": "Data (aaaa-mm-dd)", "from": "De (aaaa-mm-dd)", "to": "Até (aaaa-mm-dd)", "license": "Licença", "institution": "Instituição", "norm": "Número da norma",
@@ -440,11 +446,12 @@ const FIELD_NAMES := {
 	"company": "Empresa", "stake": "Participação (%)",
 	"scope": "Para quem", "duty": "Dever", "months": "Duração (meses)", "who": "Quem serve", "outlet": "Meio", "level": "Rigor", "service": "Serviço",
 }
+# i18n-end
 
 
 static func _edit_text(value: Variant) -> String:
 	if value is float or value is int:
-		return str(value).replace(".", ",")
+		return str(value) if Lang.english_numbers else str(value).replace(".", ",")
 	return str(value)
 
 

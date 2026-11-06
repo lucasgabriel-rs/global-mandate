@@ -70,11 +70,11 @@ func _warn(block: Variant, text: String) -> void:
 func _check_program(articles: Array) -> void:
 	var active := articles.filter(func(a): return not a.repealed)
 	if active.is_empty():
-		_err(null, "A norma não tem nenhum artigo: coloque um bloco de evento na área de programação.")
+		_err(null, tr("A norma não tem nenhum artigo: coloque um bloco de evento na área de programação."))
 		return
 	var count := LawProgram.all_blocks(_program).size()
 	if count > MAX_BLOCKS:
-		_err(null, "A norma tem %d blocos; o limite é %d." % [count, MAX_BLOCKS])
+		_err(null, tr("A norma tem %d blocos; o limite é %d.") % [count, MAX_BLOCKS])
 	# Variáveis definidas em qualquer artigo persistem entre execuções.
 	for block: Dictionary in LawProgram.all_blocks(_program):
 		if block.type == "var_set":
@@ -88,47 +88,47 @@ func _check_program(articles: Array) -> void:
 		var first: Dictionary = a.blocks[0]
 		var def := LawCatalog.get_def(first.type)
 		if def.is_empty():
-			_err(first, "Art. %d: evento inexistente (%s)." % [a.number, first.type])
+			_err(first, tr("Art. %d: evento inexistente (%s).") % [a.number, first.type])
 			continue
 		if def.kind != "event":
-			_err(first, "Art. %d: bloco solto. Todo artigo precisa começar com um evento." % a.number)
+			_err(first, tr("Art. %d: bloco solto. Todo artigo precisa começar com um evento.") % a.number)
 		_check_block_fields(first)
 		_check_rank(first)
 		var set_here := {}
 		_check_list(a.blocks.slice(1), 0, set_here)
 		if a.blocks.size() == 1:
-			_warn(first, "Art. %d: o evento não dispara nenhuma ação." % a.number)
+			_warn(first, tr("Art. %d: o evento não dispara nenhuma ação.") % a.number)
 
 
 func _check_list(blocks: Array, loops: int, set_here: Dictionary) -> void:
 	var dead := false
 	for block: Dictionary in blocks:
 		if dead:
-			_warn(block, "Este bloco nunca será executado: há um encerramento antes dele.")
+			_warn(block, tr("Este bloco nunca será executado: há um encerramento antes dele."))
 			dead = false
 		var def := LawCatalog.get_def(block.type)
 		if def.is_empty():
-			_err(block, "Bloco inexistente: %s." % block.type)
+			_err(block, tr("Bloco inexistente: %s.") % block.type)
 			continue
 		if def.kind == "event":
-			_err(block, "Um evento só pode iniciar um artigo.")
+			_err(block, tr("Um evento só pode iniciar um artigo."))
 			continue
 		if def.kind == "value" or def.kind == "bool":
-			_err(block, "Conexão inválida: \"%s\" é um valor e precisa entrar em um campo." % LawProgram.block_text(block))
+			_err(block, tr("Conexão inválida: \"%s\" é um valor e precisa entrar em um campo.") % LawProgram.block_text(block, true))
 			continue
 		_check_rank(block)
 		_check_block_fields(block, set_here)
 		if block.type == "var_set":
 			set_here[String(block.fields.get("name", ""))] = true
 		if block.type == "fl_break" and loops == 0:
-			_err(block, "Fluxo inválido: \"Interromper\" só funciona dentro de uma repetição.")
+			_err(block, tr("Fluxo inválido: \"Interromper\" só funciona dentro de uma repetição."))
 		if block.type == "fl_end" or block.type == "fl_break":
 			dead = true
 		if block.type == "fl_while":
 			_check_loop(block)
 		for slot: String in block.slots:
 			if block.slots[slot].is_empty():
-				_warn(block, "\"%s\" tem uma parte vazia." % LawProgram.block_text(block))
+				_warn(block, tr("\"%s\" tem uma parte vazia.") % LawProgram.block_text(block, true))
 			_check_list(block.slots[slot], loops + (1 if block.type in LOOPS else 0), set_here.duplicate())
 
 
@@ -137,7 +137,7 @@ func _check_loop(block: Dictionary) -> void:
 	if cond == null:
 		return
 	if not _has_variable(cond) and not _contains_type(block.slots.get("do", []), "fl_wait"):
-		_warn(block, "Esta repetição pode não terminar. O motor interrompe depois de %d passos." % LawEngine.MAX_STEPS)
+		_warn(block, tr("Esta repetição pode não terminar. O motor interrompe depois de %d passos.") % LawEngine.MAX_STEPS)
 
 
 func _has_variable(block: Dictionary) -> bool:
@@ -155,7 +155,7 @@ func _contains_type(blocks: Array, type: String) -> bool:
 func _check_rank(block: Dictionary) -> void:
 	var def := LawCatalog.get_def(block.type)
 	if int(def.get("rank", 0)) > _rank:
-		_err(block, "Ação não autorizada: \"%s\" exige uma norma de hierarquia maior." % LawProgram.block_text(block))
+		_err(block, tr("Ação não autorizada: \"%s\" exige uma norma de hierarquia maior.") % LawProgram.block_text(block, true))
 
 
 func _check_block_fields(block: Dictionary, set_here := {}) -> void:
@@ -167,17 +167,17 @@ func _check_block_fields(block: Dictionary, set_here := {}) -> void:
 			var plug: Dictionary = block.plugs[key]
 			var pdef := LawCatalog.get_def(plug.type)
 			if pdef.is_empty():
-				_err(plug, "Bloco inexistente: %s." % plug.type)
+				_err(plug, tr("Bloco inexistente: %s.") % plug.type)
 				continue
 			if not LawProgram.accepts(spec, plug):
-				_err(plug, "Tipos incompatíveis: \"%s\" não serve para este campo." % LawProgram.block_text(plug))
+				_err(plug, tr("Tipos incompatíveis: \"%s\" não serve para este campo.") % LawProgram.block_text(plug, true))
 				continue
 			_check_rank(plug)
 			_check_block_fields(plug, set_here)
 			continue
 		if not block.fields.has(key):
 			if block.type not in ["fl_if", "fl_ifelse", "fl_while", "op_and", "op_or", "op_not"]:
-				_err(block, "Parâmetro ausente em \"%s\"." % LawProgram.block_text(block))
+				_err(block, tr("Parâmetro ausente em \"%s\".") % LawProgram.block_text(block, true))
 			continue
 		_check_literal(block, key, spec, block.fields[key])
 	_check_block_logic(block, set_here)
@@ -187,39 +187,39 @@ func _check_literal(block: Dictionary, key: String, spec: Dictionary, value: Var
 	match spec.t:
 		"text", "var", "ref":
 			if String(value).strip_edges() == "":
-				_err(block, "Parâmetro ausente: preencha o texto em \"%s\"." % LawProgram.block_text(block))
+				_err(block, tr("Parâmetro ausente: preencha o texto em \"%s\".") % LawProgram.block_text(block, true))
 		"date":
 			if not LawEngine.valid_date(String(value)):
-				_err(block, "Data inválida (%s). Use o formato aaaa-mm-dd." % value)
+				_err(block, tr("Data inválida (%s). Use o formato aaaa-mm-dd.") % value)
 		"choice":
 			if not LawCatalog.choice_list(spec.of).has(value):
-				_err(block, "Opção inexistente: %s." % value)
+				_err(block, tr("Opção inexistente: %s.") % value)
 		"money", "days":
 			if not (value is float or value is int):
-				_err(block, "Tipos incompatíveis: era esperado um número em \"%s\"." % key)
+				_err(block, tr("Tipos incompatíveis: era esperado um número em \"%s\".") % key)
 			elif float(value) < 0.0:
-				_err(block, "Operação impossível: valor negativo em \"%s\"." % LawProgram.block_text(block))
+				_err(block, tr("Operação impossível: valor negativo em \"%s\".") % LawProgram.block_text(block, true))
 		"pct":
 			if not (value is float or value is int):
-				_err(block, "Tipos incompatíveis: era esperado um número em \"%s\"." % key)
+				_err(block, tr("Tipos incompatíveis: era esperado um número em \"%s\".") % key)
 			elif float(value) < 0.0 or float(value) > 100.0:
-				_err(block, "Operação impossível: porcentagem fora de 0 a 100.")
+				_err(block, tr("Operação impossível: porcentagem fora de 0 a 100."))
 		"num":
 			if not (value is float or value is int):
-				_err(block, "Tipos incompatíveis: era esperado um número em \"%s\"." % key)
+				_err(block, tr("Tipos incompatíveis: era esperado um número em \"%s\".") % key)
 		"ministry":
 			if String(value) == "":
-				_err(block, "Parâmetro ausente: escolha o ministério em \"%s\"." % LawProgram.block_text(block))
+				_err(block, tr("Parâmetro ausente: escolha o ministério em \"%s\".") % LawProgram.block_text(block, true))
 			elif _context.has("ministries") and not _context.ministries.has(String(value)) and not _will_create(String(value)):
-				_err(block, "Referência inexistente: não há ministério \"%s\"." % value)
+				_err(block, tr("Referência inexistente: não há ministério \"%s\".") % value)
 		"company":
 			if String(value) == "":
-				_err(block, "Parâmetro ausente: escolha a empresa em \"%s\"." % LawProgram.block_text(block))
+				_err(block, tr("Parâmetro ausente: escolha a empresa em \"%s\".") % LawProgram.block_text(block, true))
 			elif _context.has("companies") and not _context.companies.has(String(value)):
-				_err(block, "Referência inexistente: não há empresa \"%s\" no país." % value)
+				_err(block, tr("Referência inexistente: não há empresa \"%s\" no país.") % value)
 		"unit":
 			if int(value) >= 0 and _context.has("units") and not _context.units.has(int(value)):
-				_err(block, "Referência inexistente: essa unidade do território não existe mais.")
+				_err(block, tr("Referência inexistente: essa unidade do território não existe mais."))
 
 
 func _literal_number(block: Dictionary, key: String) -> Variant:
@@ -234,48 +234,48 @@ func _check_block_logic(block: Dictionary, set_here: Dictionary) -> void:
 		"m_div":
 			var divisor: Variant = _literal_number(block, "b")
 			if divisor != null and is_zero_approx(divisor):
-				_err(block, "Operação impossível: divisão por zero.")
+				_err(block, tr("Operação impossível: divisão por zero."))
 		"fl_repeat":
 			var times: Variant = _literal_number(block, "times")
 			if times != null and (times < 1.0 or times > LawEngine.MAX_REPEAT):
-				_err(block, "Operação impossível: repetir de 1 a %d vezes." % LawEngine.MAX_REPEAT)
+				_err(block, tr("Operação impossível: repetir de 1 a %d vezes.") % LawEngine.MAX_REPEAT)
 		"op_between":
 			var lo: Variant = _literal_number(block, "lo")
 			var hi: Variant = _literal_number(block, "hi")
 			if lo != null and hi != null and lo > hi:
-				_err(block, "Condição contraditória: o intervalo começa depois de terminar.")
+				_err(block, tr("Condição contraditória: o intervalo começa depois de terminar."))
 		"cd_period":
 			if String(block.fields.get("from", "")) > String(block.fields.get("to", "")):
-				_err(block, "Condição contraditória: o período começa depois de terminar.")
+				_err(block, tr("Condição contraditória: o período começa depois de terminar."))
 		"op_and":
 			_check_contradiction(block)
 		"var_get", "var_change":
 			var name_ := String(block.fields.get("name", ""))
 			if not _defined.has(name_):
-				_err(block, "Variável não inicializada: \"%s\" nunca é definida nesta norma." % name_)
+				_err(block, tr("Variável não inicializada: \"%s\" nunca é definida nesta norma.") % name_)
 			elif not set_here.has(name_) and _var_articles.get(name_, {}).keys() == [_article]:
-				_err(block, "Variável não inicializada: \"%s\" é usada antes de ser definida." % name_)
+				_err(block, tr("Variável não inicializada: \"%s\" é usada antes de ser definida.") % name_)
 		"ec_privatize":
 			var name_ := String(block.fields.get("company", ""))
 			if _context.has("companies") and _context.companies.has(name_) and float(_context.companies[name_]) <= 0.0:
-				_err(block, "Operação impossível: o Estado não tem participação em %s." % name_)
+				_err(block, tr("Operação impossível: o Estado não tem participação em %s.") % name_)
 		"ec_nationalize":
 			var name_ := String(block.fields.get("company", ""))
 			var share: Variant = _literal_number(block, "stake")
 			if share != null and _context.has("companies") and _context.companies.has(name_) and float(_context.companies[name_]) * 100.0 >= share - 0.1:
-				_warn(block, "O Estado já tem %d%% de %s: nada a comprar." % [int(roundf(float(_context.companies[name_]) * 100.0)), name_])
+				_warn(block, tr("O Estado já tem %d%% de %s: nada a comprar.") % [int(roundf(float(_context.companies[name_]) * 100.0)), name_])
 		"cd_norm":
 			if _context.has("norms") and not _context.norms.has(int(block.fields.get("norm", -1))):
-				_err(block, "Referência inexistente: não há norma nº %s." % block.fields.get("norm", ""))
+				_err(block, tr("Referência inexistente: não há norma nº %s.") % block.fields.get("norm", ""))
 		"cd_institution":
 			if _context.has("institutions") and not _context.institutions.has(String(block.fields.get("institution", ""))) and not _creates_institution(String(block.fields.get("institution", ""))):
-				_warn(block, "A instituição \"%s\" ainda não existe." % block.fields.get("institution", ""))
+				_warn(block, tr("A instituição \"%s\" ainda não existe.") % block.fields.get("institution", ""))
 		"fl_if", "fl_ifelse", "fl_while":
 			if not block.plugs.has("cond"):
-				_err(block, "Parâmetro ausente: encaixe uma condição em \"%s\"." % LawProgram.block_text(block))
+				_err(block, tr("Parâmetro ausente: encaixe uma condição em \"%s\".") % LawProgram.block_text(block, true))
 		"op_or", "op_not":
 			if not block.plugs.has("a") or (block.type == "op_or" and not block.plugs.has("b")):
-				_err(block, "Parâmetro ausente: encaixe as condições do operador.")
+				_err(block, tr("Parâmetro ausente: encaixe as condições do operador."))
 
 
 func _will_create(name_: String) -> bool:
@@ -297,12 +297,12 @@ func _check_contradiction(block: Dictionary) -> void:
 	var a: Variant = block.plugs.get("a")
 	var b: Variant = block.plugs.get("b")
 	if a == null or b == null:
-		_err(block, "Parâmetro ausente: encaixe as duas condições do operador E.")
+		_err(block, tr("Parâmetro ausente: encaixe as duas condições do operador E."))
 		return
 	if b.type == "op_not" and b.plugs.has("a") and _same(a, b.plugs.a):
-		_err(block, "Condição contraditória: \"%s\" nunca é verdadeira." % LawProgram.block_text(block))
+		_err(block, tr("Condição contraditória: \"%s\" nunca é verdadeira.") % LawProgram.block_text(block, true))
 	elif a.type == "op_not" and a.plugs.has("a") and _same(a.plugs.a, b):
-		_err(block, "Condição contraditória: \"%s\" nunca é verdadeira." % LawProgram.block_text(block))
+		_err(block, tr("Condição contraditória: \"%s\" nunca é verdadeira.") % LawProgram.block_text(block, true))
 	if a.type in COMPARE and b.type in COMPARE and a.plugs.has("a") and b.plugs.has("a") and _same(a.plugs.a, b.plugs.a):
 		var av: Variant = _literal_number(a, "b")
 		var bv: Variant = _literal_number(b, "b")
@@ -312,7 +312,7 @@ func _check_contradiction(block: Dictionary) -> void:
 			var high_a: bool = a.type in ["op_lt", "op_le"]
 			var high_b: bool = b.type in ["op_lt", "op_le"]
 			if (low_a and high_b and av >= bv) or (high_a and low_b and bv >= av):
-				_err(block, "Condição contraditória: \"%s\" nunca é verdadeira." % LawProgram.block_text(block))
+				_err(block, tr("Condição contraditória: \"%s\" nunca é verdadeira.") % LawProgram.block_text(block, true))
 
 
 static func _same(a: Dictionary, b: Dictionary) -> bool:

@@ -32,6 +32,7 @@ const ROB_X := [1, 0.9986, 0.9954, 0.99, 0.9822, 0.973, 0.96, 0.9427, 0.9216, 0.
 const ROB_Y := [0, 0.062, 0.124, 0.186, 0.248, 0.31, 0.372, 0.434, 0.4958, 0.5571, 0.6176, 0.6769, 0.7346, 0.7903, 0.8435, 0.8936, 0.9394, 0.9761, 1]
 
 ## Modos: chave -> [rótulo, baixo, alto, cor-baixa, cor-alta, descrição do intervalo]
+# i18n-begin
 const MODES := {
 	"politico": ["Político"],
 	"relacoes": ["Relações"],
@@ -43,6 +44,7 @@ const MODES := {
 	"estabilidade": ["Estabilidade"],
 	"militar": ["Militar"],
 }
+# i18n-end
 
 var world: GameWorld
 var mode := "politico"
@@ -676,6 +678,12 @@ func bind(w: GameWorld) -> void:
 	_labels.queue_redraw()
 
 
+## Os nomes dos países no mapa mudam com o idioma.
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_TRANSLATION_CHANGED and _labels:
+		_labels.queue_redraw()
+
+
 func set_mode(m: String) -> void:
 	mode = m
 	refresh_colors()
@@ -859,10 +867,10 @@ func _near_first(pos: Vector2) -> bool:
 func _draft_click(pos: Vector2) -> void:
 	if _near_first(pos):
 		if draft.size() < 3:
-			draft_rejected.emit("São necessários pelo menos 3 vértices para fechar o polígono.")
+			draft_rejected.emit(tr("São necessários pelo menos 3 vértices para fechar o polígono."))
 			return
 		if Subdivisions.crosses(draft, draft[draft.size() - 1], draft[0], true):
-			draft_rejected.emit("O fechamento cruzaria o próprio traçado.")
+			draft_rejected.emit(tr("O fechamento cruzaria o próprio traçado."))
 			return
 		var closed := draft.duplicate()
 		drawing = false
@@ -875,7 +883,7 @@ func _draft_click(pos: Vector2) -> void:
 		if last.distance_to(pos) * _camera.zoom.x < 3.0:
 			return
 		if Subdivisions.crosses(draft, last, pos):
-			draft_rejected.emit("As arestas não podem se cruzar. Escolha outro ponto.")
+			draft_rejected.emit(tr("As arestas não podem se cruzar. Escolha outro ponto."))
 			return
 	draft.append(pos)
 	_draft_layer.queue_redraw()

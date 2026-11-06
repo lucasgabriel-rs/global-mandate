@@ -1,6 +1,7 @@
 [gd_scene format=3]
 
 [ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="1_ksgnp"]
+[ext_resource type="PackedScene" path="res://scenes/ui/rows/language_picker.tscn" id="9_lang"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m8vrg"]
 content_margin_left = 20.0
@@ -112,3 +113,6 @@ layout_mode = 2
 focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "Sair"
+
+[node name="LanguagePicker" parent="Centro/Painel/col" instance=ExtResource("9_lang")]
+layout_mode = 2

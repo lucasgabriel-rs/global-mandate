@@ -28,8 +28,8 @@ func refresh() -> void:
 	var politics := world.politics
 	var empty: bool = target.call().is_empty()
 	var fund := politics.party_fund(world)
-	_support.text = "Pesquisar apoios no parlamento (%s)" % UiKit.millions(politics.fund_price(world, "poll_support"))
-	_popularity.text = "Pesquisar popularidade (%s)" % UiKit.millions(politics.fund_price(world, "poll_popularity"))
+	_support.text = tr("Pesquisar apoios no parlamento (%s)") % UiKit.millions(politics.fund_price(world, "poll_support"))
+	_popularity.text = tr("Pesquisar popularidade (%s)") % UiKit.millions(politics.fund_price(world, "poll_popularity"))
 	_support.disabled = empty or fund < politics.fund_price(world, "poll_support")
 	_popularity.disabled = empty or fund < politics.fund_price(world, "poll_popularity")
 

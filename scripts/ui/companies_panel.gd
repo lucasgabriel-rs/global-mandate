@@ -19,12 +19,12 @@ var _rows: Array = []
 
 
 func _ready() -> void:
-	_sector_filter.add_item("Todos os setores")
+	_sector_filter.add_item(tr("Todos os setores"))
 	_sector_filter.set_item_metadata(0, -1)
 	for i in Sectors.COUNT:
-		_sector_filter.add_item(Sectors.NAMES[i])
+		_sector_filter.add_item(tr(Sectors.NAMES[i]))
 		_sector_filter.set_item_metadata(_sector_filter.item_count - 1, i)
-	for label: String in ["Capital aberto e fechado", "Só capital aberto", "Só capital fechado", "Com participação do Estado"]:
+	for label: String in [tr("Capital aberto e fechado"), tr("Só capital aberto"), tr("Só capital fechado"), tr("Com participação do Estado")]:
 		_capital_filter.add_item(label)
 	_sector_filter.item_selected.connect(func(_i): refresh())
 	_capital_filter.item_selected.connect(func(_i): refresh())
@@ -60,7 +60,7 @@ func refresh() -> void:
 		total_rev += float(co.rev)
 		if co.listed:
 			open += 1
-	_summary.text = "%d empresas (%d abertas) · receita %s · valor %s" % [shown.size(), open, UiKit.money(total_rev), UiKit.money(total_value)]
+	_summary.text = tr("%d empresas (%d abertas) · receita %s · valor %s") % [shown.size(), open, UiKit.money(total_rev), UiKit.money(total_value)]
 	while _rows.size() < shown.size():
 		var row: Control = COMPANY_ROW.instantiate()
 		_rows_box.add_child(row)
@@ -88,13 +88,13 @@ func _fill(row: Control, co: Dictionary, c: Country) -> void:
 	(row.get_node("%company_value") as Label).text = UiKit.money(float(co.value))
 	var control := Corporate.control_of(co)
 	if float(co.state) > 0.0 and float(co.state) < 1.0:
-		control += " (Estado: %s)" % UiKit.pct(float(co.state), 0)
+		control += tr(" (Estado: %s)") % UiKit.pct(float(co.state), 0)
 	var exchange: String = world.corporate.market_of(c.iso).get("exchange", "")
-	var capital := "Capital aberto · %s" % exchange if co.listed else "Capital fechado"
-	(row.get_node("%company_info") as Label).text = "%s · %s · %s" % [Sectors.NAMES[int(co.sector)], control, capital]
-	(row.get_node("%company_rev") as Label).text = "Receita %s" % UiKit.money(float(co.rev))
+	var capital := tr("Capital aberto · %s") % exchange if co.listed else tr("Capital fechado")
+	(row.get_node("%company_info") as Label).text = "%s · %s · %s" % [tr(Sectors.NAMES[int(co.sector)]), control, capital]
+	(row.get_node("%company_rev") as Label).text = tr("Receita %s") % UiKit.money(float(co.rev))
 	var profit: Label = row.get_node("%company_profit")
-	profit.text = "Lucro %s" % UiKit.money(float(co.profit))
+	profit.text = tr("Lucro %s") % UiKit.money(float(co.profit))
 	profit.add_theme_color_override("font_color", UiKit.GREEN if float(co.profit) > 0.0 else UiKit.RED)
 	var change: Label = row.get_node("%company_change")
 	var extra: Label = row.get_node("%company_extra")
@@ -104,10 +104,10 @@ func _fill(row: Control, co: Dictionary, c: Country) -> void:
 		change.add_theme_color_override("font_color", UiKit.good_bad(float(co.ch)))
 		var pe := Corporate.pe_of(co)
 		var dy := float(co.div) / maxf(float(co.value), 0.001)
-		extra.text = "P/L %s · div. %s" % [UiKit.num(pe, 0) if pe > 0.0 else "—", UiKit.pct(dy)]
+		extra.text = tr("P/L %s · div. %s") % [UiKit.num(pe, 0) if pe > 0.0 else "—", UiKit.pct(dy)]
 	else:
 		change.visible = false
-		extra.text = "valor estimado"
+		extra.text = tr("valor estimado")
 
 
 static func _signed(v: float) -> String:

@@ -16,8 +16,8 @@ func setup(owner_main: Node, target: Dictionary) -> void:
 	world = main.world
 	leg = world.legislation
 	norm = target
-	(%title as Label).text = "%s  ·  %s" % [leg.norm_label(norm), norm.title]
-	(%state as Label).text = norm.state
+	(%title as Label).text = "%s  ·  %s" % [leg.norm_label(norm), tr(norm.title)]
+	(%state as Label).text = tr(norm.state)
 	%close.pressed.connect(func(): main.reopen_legislation(0))
 	_fill_document()
 	_fill_versions()
@@ -29,32 +29,32 @@ func setup(owner_main: Node, target: Dictionary) -> void:
 func _fill_document() -> void:
 	var dates: Dictionary = norm.dates
 	var lines := [
-		"[color=#8ba2af]Tipo:[/color] %s" % Legislation.NORM_TYPES[norm.type].label,
-		"[color=#8ba2af]Número e ano:[/color] %d/%d" % [int(norm.number), int(norm.year)],
-		"[color=#8ba2af]Autor:[/color] %s" % norm.author,
-		"[color=#8ba2af]Órgão responsável:[/color] %s" % norm.organ,
-		"[color=#8ba2af]Ementa:[/color] %s" % norm.ementa,
-		"[color=#8ba2af]Apresentação:[/color] %s  ·  [color=#8ba2af]Aprovação:[/color] %s" % [dates.get("presented", "—"), dates.get("approved", "—")],
-		"[color=#8ba2af]Promulgação:[/color] %s  ·  [color=#8ba2af]Publicação:[/color] %s" % [dates.get("promulgated", "—"), dates.get("published", "—")],
-		"[color=#8ba2af]Entrada em vigor:[/color] %s  ·  [color=#8ba2af]Situação:[/color] %s" % [dates.get("in_force", "—"), norm.state],
+		tr("[color=#8ba2af]Tipo:[/color] %s") % tr(Legislation.NORM_TYPES[norm.type].label),
+		tr("[color=#8ba2af]Número e ano:[/color] %d/%d") % [int(norm.number), int(norm.year)],
+		tr("[color=#8ba2af]Autor:[/color] %s") % norm.author,
+		tr("[color=#8ba2af]Órgão responsável:[/color] %s") % tr(norm.organ),
+		tr("[color=#8ba2af]Ementa:[/color] %s") % tr(norm.ementa),
+		tr("[color=#8ba2af]Apresentação:[/color] %s  ·  [color=#8ba2af]Aprovação:[/color] %s") % [dates.get("presented", "—"), dates.get("approved", "—")],
+		tr("[color=#8ba2af]Promulgação:[/color] %s  ·  [color=#8ba2af]Publicação:[/color] %s") % [dates.get("promulgated", "—"), dates.get("published", "—")],
+		tr("[color=#8ba2af]Entrada em vigor:[/color] %s  ·  [color=#8ba2af]Situação:[/color] %s") % [dates.get("in_force", "—"), tr(norm.state)],
 	]
 	if String(norm.get("expires", "")) != "":
-		lines.append("[color=#8ba2af]Vale até:[/color] %s" % norm.expires)
+		lines.append(tr("[color=#8ba2af]Vale até:[/color] %s") % norm.expires)
 	(%doc_text as RichTextLabel).text = "\n".join(lines)
 
 
 func _fill_versions() -> void:
 	if norm.type == "constituicao":
-		_version.add_item("Texto em vigor")
-		(%law_text as RichTextLabel).text = "\n\n".join(leg.constitution.articles.map(func(a): return a.text))
+		_version.add_item(tr("Texto em vigor"))
+		(%law_text as RichTextLabel).text = "\n\n".join(leg.constitution.articles.map(func(a): return Legislation.article_text(a, true)))
 		return
 	var versions: Array = norm.versions
 	if versions.is_empty():
-		_version.add_item("Rascunho")
-		(%law_text as RichTextLabel).text = LawProgram.legal_text(norm.program) if norm.type != "emenda" else _ops_text()
+		_version.add_item(tr("Rascunho"))
+		(%law_text as RichTextLabel).text = LawProgram.legal_text(norm.program, true) if norm.type != "emenda" else _ops_text()
 		return
 	for i in versions.size():
-		_version.add_item("Versão %d: %s (%s)" % [i + 1, versions[i].change, versions[i].date])
+		_version.add_item(tr("Versão %d: %s (%s)") % [i + 1, tr(versions[i].change), versions[i].date])
 	_version.select(int(norm.current_v))
 	_version.item_selected.connect(_show_version)
 	_show_version(int(norm.current_v))
@@ -63,38 +63,45 @@ func _fill_versions() -> void:
 func _ops_text() -> String:
 	var lines := []
 	for op: Dictionary in norm.get("ops", []):
-		var shown := leg.preview_op(op)
-		lines.append("%s: %s" % [Legislation.AMENDMENT_OPS[op.op], Legislation.word_diff(shown.before, shown.after)])
+		var shown := leg.preview_op(op, true)
+		lines.append("%s: %s" % [tr(Legislation.AMENDMENT_OPS[op.op]), Legislation.word_diff(shown.before, shown.after)])
 	return "\n\n".join(lines)
 
 
 func _show_version(index: int) -> void:
-	var version: Dictionary = norm.versions[index]
-	var text: String = version.text
+	var text := _version_text(norm.versions[index])
 	if index > 0:
-		text = Legislation.word_diff(String(norm.versions[index - 1].text), text).replace("\n", " ")
+		text = Legislation.word_diff(_version_text(norm.versions[index - 1]), text).replace("\n", " ")
 	(%law_text as RichTextLabel).text = text
+
+
+## O texto guardado na versão fica em português; o programa, quando há, é mostrado no idioma do jogo.
+func _version_text(version: Dictionary) -> String:
+	var program: Dictionary = version.get("program", {})
+	if norm.type != "emenda" and not program.get("stacks", []).is_empty():
+		return LawProgram.legal_text(program, true)
+	return String(version.text)
 
 
 func _fill_votes() -> void:
 	var lines := []
 	for vote: Dictionary in norm.votes:
-		lines.append("[color=#f2b33d]%s[/color]  %s  ·  %d a %d (precisava de %d)  %s" % [vote.get("house", "Plenário"), vote.get("date", ""), int(vote.yes), int(vote.no), int(vote.needed), "aprovado" if vote.get("passed", false) else "rejeitado"])
+		lines.append(tr("[color=#f2b33d]%s[/color]  %s  ·  %d a %d (precisava de %d)  %s") % [tr(vote.get("house", "Plenário")), vote.get("date", ""), int(vote.yes), int(vote.no), int(vote.needed), tr("aprovado") if vote.get("passed", false) else tr("rejeitado")])
 		var parties := []
 		for row: Dictionary in vote.get("tally", []):
 			parties.append("%s %d/%d" % [row.party, int(row.yes), int(row.no)])
 		lines.append("  ".join(parties))
-	(%votes_text as RichTextLabel).text = "\n".join(lines) if not lines.is_empty() else "Sem votação."
+	(%votes_text as RichTextLabel).text = "\n".join(lines) if not lines.is_empty() else tr("Sem votação.")
 
 
 func _fill_history() -> void:
 	var lines := []
 	for step: Dictionary in norm.process.get("log", []):
-		lines.append("[color=#8ba2af]%s[/color]  [color=#4fb3d9]%s[/color]  %s: %s" % [step.date, step.label, step.by, step.result])
+		lines.append("[color=#8ba2af]%s[/color]  [color=#4fb3d9]%s[/color]  %s: %s" % [step.date, tr(step.label), tr(step.by), step.result])
 	for entry: Dictionary in leg.audit:
 		if int(entry.norm) == int(norm.id) and entry.kind != "Execução" and not entry.kind in Legislation.STEP_LABELS.values():
-			lines.append("[color=#8ba2af]%s[/color]  [color=#f2b33d]%s[/color]  %s: %s" % [entry.date, entry.kind, entry.who, entry.result])
-	(%history_text as RichTextLabel).text = "\n".join(lines) if not lines.is_empty() else "Sem registros."
+			lines.append("[color=#8ba2af]%s[/color]  [color=#f2b33d]%s[/color]  %s: %s" % [entry.date, tr(entry.kind), entry.who, entry.result])
+	(%history_text as RichTextLabel).text = "\n".join(lines) if not lines.is_empty() else tr("Sem registros.")
 
 
 func _fill_actions() -> void:
@@ -118,14 +125,14 @@ func _fill_actions() -> void:
 	%revoke.pressed.connect(_propose_revocation)
 	var low: bool = int(Legislation.NORM_TYPES[norm.type].rank) < 60
 	(%suspend as Button).visible = regular and low and leg.can(world, "admin") and (in_force or norm.state == Legislation.STATE_SUSPENDED)
-	(%suspend as Button).text = "Reativar" if norm.state == Legislation.STATE_SUSPENDED else "Suspender"
+	(%suspend as Button).text = tr("Reativar") if norm.state == Legislation.STATE_SUSPENDED else tr("Suspender")
 	%suspend.pressed.connect(func():
 		var r: Dictionary = leg.suspend(world, norm, norm.state == Legislation.STATE_IN_FORCE)
 		main.open_norm(norm, r.msg))
 	(%export as Control).visible = regular and has_program
 	%export.pressed.connect(func():
 		var path: String = leg.export_norm(norm)
-		_feedback.text = "Exportada para %s" % ProjectSettings.globalize_path(path) if path != "" else "Não foi possível exportar.")
+		_feedback.text = tr("Exportada para %s") % ProjectSettings.globalize_path(path) if path != "" else tr("Não foi possível exportar."))
 	(%negotiate as Control).visible = leg.can_negotiate(norm)
 	%negotiate.pressed.connect(func(): main.open_negotiation(norm))
 	var waiting: bool = norm.process.get("waiting_player", false)
@@ -145,7 +152,7 @@ func _propose_revocation() -> void:
 	for piece: String in (%revoke_articles as LineEdit).text.split(",", false):
 		var number := piece.strip_edges().to_int()
 		if number < 1 or number > total:
-			_feedback.text = "A norma tem %d artigo(s)." % total
+			_feedback.text = tr("A norma tem %d artigo(s).") % total
 			_feedback.add_theme_color_override("font_color", UiKit.RED)
 			return
 		articles.append(number)
