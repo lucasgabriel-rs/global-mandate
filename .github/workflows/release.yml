@@ -1,0 +1,70 @@
+# Gera uma release ao subir uma tag de versão (ex.: git tag v0.2.0 && git push origin v0.2.0).
+# O repositório tem releases imutáveis ligadas: depois de publicada, a release não muda mais
+# (nem os arquivos nem a tag). Por isso tudo é anexado com ela ainda em rascunho e só então publicado.
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+env:
+  GODOT_VERSION: "4.7.2"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Instalar Godot e modelos de exportação
+        run: |
+          base="https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable"
+          curl -fsSL -o godot.zip "$base/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip"
+          curl -fsSL -o templates.tpz "$base/Godot_v${GODOT_VERSION}-stable_export_templates.tpz"
+          unzip -q godot.zip -d "$RUNNER_TEMP/godot"
+          sudo install -m 755 "$RUNNER_TEMP/godot/Godot_v${GODOT_VERSION}-stable_linux.x86_64" /usr/local/bin/godot
+          dest="$HOME/.local/share/godot/export_templates/${GODOT_VERSION}.stable"
+          mkdir -p "$dest"
+          unzip -q templates.tpz -d "$RUNNER_TEMP/tpl"
+          mv "$RUNNER_TEMP"/tpl/templates/* "$dest/"
+          rm godot.zip templates.tpz
+
+      - name: Importar o projeto
+        run: godot --headless --import --path .
+
+      - name: Exportar
+        run: |
+          out="$RUNNER_TEMP/build"
+          mkdir -p "$out"
+          godot --headless --path . --export-release "Linux x86_64" "$out/global_mandate.x86_64"
+          godot --headless --path . --export-release "Linux arm64" "$out/global_mandate.arm64"
+          godot --headless --path . --export-release "Windows x86_64" "$out/global_mandate_x86_64.exe"
+          godot --headless --path . --export-release "Windows arm64" "$out/global_mandate_arm64.exe"
+          ls -l "$out"
+          for f in global_mandate.x86_64 global_mandate.arm64 global_mandate_x86_64.exe global_mandate_arm64.exe; do
+            test -s "$out/$f" || { echo "::error::$f não foi gerado"; exit 1; }
+          done
+
+      - name: Empacotar
+        run: |
+          tag="${GITHUB_REF_NAME}"
+          b="$RUNNER_TEMP/build"
+          d="$RUNNER_TEMP/dist"
+          mkdir -p "$d"
+          tar -czf "$d/global-mandate-${tag}-linux-x86_64.tar.gz" -C "$b" global_mandate.x86_64
+          tar -czf "$d/global-mandate-${tag}-linux-arm64.tar.gz" -C "$b" global_mandate.arm64
+          (cd "$b" && zip -q "$d/global-mandate-${tag}-windows-x86_64.zip" global_mandate_x86_64.exe)
+          (cd "$b" && zip -q "$d/global-mandate-${tag}-windows-arm64.zip" global_mandate_arm64.exe)
+          (cd "$d" && sha256sum * > SHA256SUMS.txt)
+          ls -l "$d"
+
+      - name: Publicar a release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tag="${GITHUB_REF_NAME}"
+          gh release create "$tag" --draft --verify-tag --title "Global Mandate $tag" --generate-notes "$RUNNER_TEMP"/dist/*
+          gh release edit "$tag" --draft=false --latest
