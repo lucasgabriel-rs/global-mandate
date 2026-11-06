@@ -3,7 +3,7 @@
 A real-time geopolitical game built on a world economic model, made with Godot 4.7.
 You take over the government of a country in January 2025 and play for as long as you like. Losing an election does not end the game: you become the leader of the opposition and can come back to power. The game only ends with a coup, a revolution, a military defeat, a nuclear war or the end of your country.
 
-The game text is currently in Brazilian Portuguese.
+The game is available in Portuguese, English and Spanish. Pick the language on the start screen or in the pause menu (Esc).
 
 ## Running
 
@@ -221,6 +221,24 @@ Foreign actions have no cost: the same action with the same country can only be 
 
 **F12**, or **Menu debug** in the pause menu, opens a panel that triggers the game systems by hand: time, player, economy, markets, events and dilemmas, diplomacy, war, borders, units, interface and game endings. Commands act on the player or on the target country, chosen in the list or with a click on the map. The target starts on your country; commands that need another country, such as declaring war, stay grayed out until you pick one. The filter field finds a command by name. The menu is always available and its commands count as cheating: the game is not scored.
 
+## Languages
+
+The game is written in Brazilian Portuguese, and English and Spanish come from gettext catalogs. The language is chosen in the **Idioma** / **Language** list on the start screen or in the pause menu (Esc), applies immediately and is saved in `user://settings.cfg`. On first launch the game uses the system language if it is English or Spanish, and Portuguese otherwise. When run from the editor it starts in Portuguese (`locale/test`). To force a language at launch:
+
+```bash
+godot --path . -- --lang=en
+```
+
+The Portuguese text is the msgid. English and Spanish live in `locale/en.po` and `locale/es.po`, registered in `project.godot` with `pt_BR` as fallback, so any missing entry shows in Portuguese. In English, numbers use a decimal point and comma thousands separators. Proper names of people, companies and cities are not translated; country names, sectors and law blocks are.
+
+After changing any player-facing text, update the catalogs:
+
+```bash
+godot --headless --path . --script tools/extract_pot.gd -- --merge
+```
+
+This rewrites `locale/messages.pot` from the scenes (texts, tooltips, placeholders, titles, dock labels and tab names), from `tr()`, `TranslationServer.translate()` and `Lang.tr_if()` calls, from constants marked `# i18n`, `# i18n-all` or `# i18n-begin` / `# i18n-end`, and from the law block catalog, sectors and country names. With `--merge` it runs `msgmerge --update` on each `.po` (requires gettext) and prints how many entries are missing or fuzzy. Translate the empty `msgstr` entries, keeping `%s`, `%d`, `{field}` and `\n`, and check a catalog with `msgfmt --check -o /dev/null locale/en.po`.
+
 ## Editing the interface
 
 All menus are scenes in `scenes/ui/`, opened and edited in Godot:
@@ -313,7 +331,8 @@ godot --path . -- --ui-legislation --shots=/tmp/shots
 | `--ui-desk` | Dock and floating windows: open, bring to front, drag, resize, minimize, centered opening and small screens. |
 | `--ui-legislation`, `--ui-society` | Legislative center, code cards, filtered library, expected effects, step tracker, amendments and society systems. |
 | `--ui-economy`, `--ui-infra`, `--ui-corporate`, `--ui-econ-audit` | Economy windows, infrastructure, companies and stock exchange. |
-| `--ui-creator` | Countryball creator, with male and female portraits and names. |
+| `--ui-creator` | Countryball creator, with male and female portraits and names, and a gallery of every country's countryball (`galeria_bandeiras.png`). |
+| `--ui-locale` | Switches to English and Spanish and takes screenshots of the start screen, HUD, legislative center and block editor. |
 | `--ui-politics`, `--ui-statecraft` | Politics and statecraft through the interface. |
 | `--ui-clock`, `--ui-capitals`, `--ui-divisions`, `--ui-borders` | Clock, capitals, drawing units and borders with clicks on the map. |
 | `--ui-debug` | Presses every debug menu command, one at a time. |
