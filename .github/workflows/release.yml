@@ -60,8 +60,8 @@ jobs:
           d="$RUNNER_TEMP/dist"
           mkdir -p "$d"
           # Windows e Linux vão soltos; o macOS precisa do .zip porque o .app é uma pasta.
-          cp "$b/global_mandate.x86_64" "$d/global-mandate-${tag}-linux-x86_64.x86_64"
-          cp "$b/global_mandate.arm64" "$d/global-mandate-${tag}-linux-arm64.arm64"
+          cp "$b/global_mandate.x86_64" "$d/global-mandate-${tag}-linux.x86_64"
+          cp "$b/global_mandate.arm64" "$d/global-mandate-${tag}-linux.arm64"
           cp "$b/global_mandate_x86_64.exe" "$d/global-mandate-${tag}-windows-x86_64.exe"
           cp "$b/global_mandate_arm64.exe" "$d/global-mandate-${tag}-windows-arm64.exe"
           cp "$b/global_mandate_macos.zip" "$d/global-mandate-${tag}-macos-universal.zip"
