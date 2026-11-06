@@ -313,11 +313,6 @@ func _build_start_screen() -> void:
 	_start_title = start_screen.get_node("%start_title")
 	_start_info = start_screen.get_node("%start_info")
 	_start_button = start_screen.get_node("%start_button")
-	# Cada botão pick_XXX do editor abre o país com aquele código ISO.
-	for b: Node in start_screen.get_node("%pick_BRA").get_parent().get_children():
-		if b.name.begins_with("pick_"):
-			var iso := String(b.name).trim_prefix("pick_")
-			b.pressed.connect(func(): _pick_start(world.by_iso[iso]))
 	var diff_buttons := {"facil": start_screen.get_node("%diff_facil"), "normal": start_screen.get_node("%diff_normal"), "dificil": start_screen.get_node("%diff_dificil")}
 	var style_diff := func(sel: String):
 		_difficulty = sel
@@ -340,22 +335,58 @@ func _pick_start(c: Country) -> void:
 	map.select(c)
 	_start_title.text = c.name
 	_start_button.disabled = false
-	var regime := tr("Democracia: eleição a cada 4 anos") if c.dem >= 6.0 else (tr("Regime híbrido: eleição a cada 4 anos") if c.dem >= 4.0 else tr("Regime autoritário: risco de golpe e revolta"))
-	var lines := [
-		regime,
-		tr("PIB: %s  ·  per capita: US$ %s") % [UiKit.money(c.y_usd()), UiKit.thousand(c.gdp_pc())],
-		tr("População: %s mi  ·  crescimento potencial: %s") % [UiKit.num(c.pop, 1), UiKit.pct(c.g0)],
-		tr("Inflação: %s  ·  juro: %s  ·  desemprego: %s") % [UiKit.pct(c.pi_yoy), UiKit.pct(c.rate), UiKit.pct(c.unemp)],
-		tr("Dívida/PIB: %s  ·  juros da dívida: %s do PIB") % [UiKit.pct(c.debt_ratio, 0), UiKit.pct(c.avg_rate * c.debt_ratio)],
-		tr("Tropas: %s mil  ·  ogivas: %s") % [UiKit.thousand(c.troops), UiKit.thousand(c.nukes)],
-	]
+	var stat := func(key: String, value: String, color := UiKit.TEXT) -> void:
+		var l: Label = start_screen.get_node("%stat_" + key)
+		l.text = value
+		l.add_theme_color_override("font_color", color)
+	# Verde ou vermelho só quando o número foge do comum; no resto, a cor normal do texto.
+	var tone := func(good: bool, bad: bool) -> Color:
+		return UiKit.RED if bad else (UiKit.GREEN if good else UiKit.TEXT)
+	var regions := {"AFR": tr("África"), "ASI": tr("Ásia"), "EUR": tr("Europa"), "LAM": tr("América Latina"),
+		"MEA": tr("Oriente Médio"), "NAM": tr("América do Norte"), "OCE": tr("Oceania")}
+	var regime := tr("Democracia") if c.dem >= 6.0 else (tr("Regime híbrido") if c.dem >= 4.0 else tr("Regime autoritário"))
+	(start_screen.get_node("%start_sub") as Label).text = "%s  ·  %s" % [regions.get(c.region, c.region), regime]
+	start_screen.get_node("%start_stats").visible = true
+	(start_screen.get_node("%cap_gdp") as Label).text = tr("PIB  ·  #%d") % world.rank_of(c, func(x: Country): return x.y_usd())
+	stat.call("gdp", UiKit.money(c.y_usd()))
+	stat.call("gdp_pc", "US$ %s" % UiKit.thousand(c.gdp_pc()))
+	stat.call("pop", tr("%s mi") % UiKit.num(c.pop, 1))
+	stat.call("growth", UiKit.pct(c.g0), tone.call(c.g0 >= 0.04, c.g0 < 0.01))
+	stat.call("inflation", UiKit.pct(c.pi_yoy), tone.call(false, c.pi_yoy > 0.06 or c.pi_yoy < -0.005))
+	stat.call("unemp", UiKit.pct(c.unemp), tone.call(c.unemp < 0.04, c.unemp > 0.10))
+	stat.call("rate", UiKit.pct(c.rate))
+	stat.call("debt", UiKit.pct(c.debt_ratio, 0), tone.call(c.debt_ratio < 0.4, c.debt_ratio > c.debt_tol))
+	stat.call("rating", c.rating, tone.call(c.rating.begins_with("A"), c.rating.begins_with("C") or c.rating.begins_with("D") or c.rating == "B" or c.rating.begins_with("B-")))
+	stat.call("approval", UiKit.pct(c.approval, 0), tone.call(c.approval >= 0.55, c.approval < 0.35))
+	stat.call("stability", UiKit.pct(c.stability, 0), tone.call(c.stability >= 0.7, c.stability < 0.4))
+	stat.call("democracy", "%s / 10" % UiKit.num(c.dem, 1))
+	stat.call("troops", tr("%s mil") % UiKit.thousand(c.troops))
+	stat.call("nukes", UiKit.thousand(c.nukes) if c.nukes > 0 else "—")
+	stat.call("defense", tr("%s do PIB") % UiKit.pct(c.sp_defense))
+	var gov := []
+	var party := world.politics.ruling_party(c.iso)
+	if not party.is_empty():
+		gov.append(tr("Governo: %s (%s das cadeiras)") % [tr(String(party.name)), UiKit.pct(world.politics.government_share(c.iso), 0)])
+	if c.dem >= 4.0:
+		gov.append(tr("Eleição a cada 4 anos"))
+	else:
+		gov.append(tr("Sem eleições livres: risco de golpe e revolta"))
+	(start_screen.get_node("%start_gov") as Label).text = "\n".join(gov)
+	var order := range(Sectors.COUNT)
+	order.sort_custom(func(i: int, j: int): return c.sector_share[i] > c.sector_share[j])
+	var top := []
+	for i: int in order.slice(0, 4):
+		top.append("%s  %s" % [tr(Sectors.NAMES[i]), UiKit.pct(c.sector_share[i], 0)])
+	(start_screen.get_node("%start_sectors") as Label).text = "\n".join(top) if c.sector_share.size() >= Sectors.COUNT else "—"
+	var notes := []
 	if c.peg == 2:
-		lines.append(tr("Moeda: euro (juros definidos pelo BCE)"))
+		notes.append(tr("Moeda: euro (juros definidos pelo BCE)"))
 	elif c.peg == 1:
-		lines.append(tr("Moeda ancorada no dólar"))
+		notes.append(tr("Moeda ancorada no dólar"))
 	if world.diplomacy.in_war(c.idx):
-		lines.append(tr("EM GUERRA no início da partida"))
-	_start_info.text = "\n".join(lines)
+		notes.append(tr("EM GUERRA no início da partida"))
+	_start_info.text = "\n".join(notes)
+	_start_info.visible = not notes.is_empty()
 
 
 func _begin(character := {}, choice := {}) -> void:

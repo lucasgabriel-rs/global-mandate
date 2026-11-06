@@ -79,7 +79,7 @@ const FAMILIES := {
 	"nacionalista": {"label": "Nacionalista", "econ": 0.2, "social": -0.8, "color": Color("8e44ad"), "names": ["Frente Nacional", "Partido da Pátria", "Movimento Soberano"]},
 }
 # i18n-end
-const RULING_REGIME_NAME := "Partido da União Nacional"
+const RULING_REGIME_NAME := "Partido da União Nacional" # i18n
 
 ## Projetos que o governo pode levar a voto. Os campos valem o que muda ao ser aprovado.
 # i18n-begin
