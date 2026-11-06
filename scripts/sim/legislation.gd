@@ -1571,7 +1571,7 @@ func start_change(world: GameWorld, target: Dictionary) -> Dictionary:
 	norm.program = _current_program(target).duplicate(true)
 	norm.amends = target.id
 	norm.title = tr("Altera %s") % norm_label(target)
-	norm.ementa = tr("Altera %s: %s.") % [norm_label(target), target.title]
+	norm.ementa = tr("Altera %s: %s.") % [norm_label(target), tr(target.title)]
 	return norm
 
 

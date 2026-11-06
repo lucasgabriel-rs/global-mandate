@@ -152,6 +152,8 @@ func _ready() -> void:
 		autotest = load("res://tests/ui_layout.gd")
 	if OS.get_cmdline_user_args().has("--ui-creator"):
 		autotest = load("res://tests/ui_creator.gd")
+	if OS.get_cmdline_user_args().has("--ui-locale"):
+		autotest = load("res://tests/ui_locale.gd")
 	if autotest:
 		add_child(autotest.new())
 

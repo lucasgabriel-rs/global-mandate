@@ -376,7 +376,6 @@ msgid "Missão diplomática"
 msgstr "Diplomatic mission"
 
 #: scenes/ui/hud.tscn:1119
-#, c-format
 msgid "Doa 0,1% do seu PIB. Melhora muito a relação com países pobres."
 msgstr "Donates 0.1% of your GDP. Greatly improves relations with poor countries."
 
@@ -418,7 +417,6 @@ msgid "Condenar"
 msgstr "Condemn"
 
 #: scenes/ui/hud.tscn:1179
-#, c-format
 msgid "Liga/desliga. Corta 60% do comércio bilateral."
 msgstr "Toggle. Cuts 60% of bilateral trade."
 
@@ -427,7 +425,6 @@ msgid "Sanções"
 msgstr "Sanctions"
 
 #: scenes/ui/hud.tscn:1191
-#, c-format
 msgid "Corta 88% do comércio. Reduz a oferta de energia do alvo conforme seu peso."
 msgstr "Cuts 88% of trade. Reduces the target's energy supply according to your weight."
 
@@ -652,7 +649,6 @@ msgid "Juros da dívida"
 msgstr "Debt interest"
 
 #: scenes/ui/hud.tscn:2352
-#, c-format
 msgid "Déficit nominal: acima de ~4% do PIB, o mercado cobra mais caro."
 msgstr "Nominal deficit: above ~4% of GDP, the market charges more."
 
@@ -669,7 +665,6 @@ msgid "Limite de tolerância"
 msgstr "Tolerance limit"
 
 #: scenes/ui/hud.tscn:2433 scripts/sim/law_catalog.gd_(escolha_param_field)
-#, c-format
 msgid "Emissão monetária (% do déficit)"
 msgstr "Money printing (% of deficit)"
 
@@ -678,7 +673,6 @@ msgid "Evita dívida, mas gera inflação e destrói a credibilidade do banco ce
 msgstr "Avoids debt, but causes inflation and destroys central bank credibility."
 
 #: scenes/ui/hud.tscn:2457
-#, c-format
 msgid "Empréstimo de 8% do PIB em troca de ajuste fiscal e perda de aprovação."
 msgstr "Loan of 8% of GDP in exchange for fiscal adjustment and lost approval."
 
@@ -827,7 +821,6 @@ msgid "Mobilização"
 msgstr "Mobilization"
 
 #: scenes/ui/hud.tscn:3274
-#, c-format
 msgid "Aumenta o poder de combate. Tira trabalhadores da economia e custa até 3,5% do PIB."
 msgstr "Increases combat power. Takes workers out of the economy and costs up to 3.5% of GDP."
 
@@ -1672,7 +1665,6 @@ msgid "Frente Nacional"
 msgstr "National Front"
 
 #: scenes/ui/modals/party_detail.tscn:57
-#, c-format
 msgid "Nacionalista  ·  144 assentos  ·  24% dos votos. A bússola do partido é a média dos políticos."
 msgstr "Nationalist  ·  144 seats  ·  24% of the vote. The party's compass is the average of its politicians."
 
@@ -1950,7 +1942,6 @@ msgid "PORTOS E AEROPORTOS"
 msgstr "PORTS AND AIRPORTS"
 
 #: scenes/ui/panels/infra_panel.tscn:25
-#, c-format
 msgid "Portos acompanham o comércio exterior; aeroportos, o PIB e o turismo. Acima de 80% de uso, a logística piora: o comércio engasga e transporte e turismo perdem produtividade."
 msgstr "Ports follow foreign trade; airports, GDP and tourism. Above 80% usage, logistics worsen: trade chokes and transport and tourism lose productivity."
 
@@ -1959,7 +1950,6 @@ msgid "Portos"
 msgstr "Ports"
 
 #: scenes/ui/panels/infra_panel.tscn:45
-#, c-format
 msgid "85% da capacidade"
 msgstr "85% of capacity"
 
@@ -1968,7 +1958,6 @@ msgid "Aeroportos"
 msgstr "Airports"
 
 #: scenes/ui/panels/infra_panel.tscn:58
-#, c-format
 msgid "66% da capacidade"
 msgstr "66% of capacity"
 
@@ -2113,7 +2102,6 @@ msgid "Valor de mercado: US$ 0"
 msgstr "Market value: US$ 0"
 
 #: scenes/ui/panels/stock_panel.tscn:96
-#, c-format
 msgid "0% do PIB"
 msgstr "0% of GDP"
 
@@ -2591,7 +2579,6 @@ msgid "Meu governo quer enviar ajuda ao seu povo."
 msgstr "My government wants to send aid to your people."
 
 #: scripts/sim/dialogue.gd:128
-#, c-format
 msgid "Doa 0,1% do seu PIB."
 msgstr "Donates 0.1% of your GDP."
 
@@ -2908,7 +2895,6 @@ msgid "Lockdown rígido e transferências de renda"
 msgstr "Strict lockdown and cash transfers"
 
 #: scripts/sim/events.gd:66
-#, c-format
 msgid "PIB cai forte agora, dívida +4% do PIB, mais aprovação"
 msgstr "GDP falls hard now, debt +4% of GDP, more approval"
 
@@ -3061,7 +3047,6 @@ msgid "Socorro público integral"
 msgstr "Full public bailout"
 
 #: scripts/sim/events.gd:214
-#, c-format
 msgid "Dívida +5% do PIB; evita pânico"
 msgstr "Debt +5% of GDP; avoids panic"
 
@@ -3086,7 +3071,6 @@ msgid "Subsidiar o combustível por um ano"
 msgstr "Subsidize fuel for a year"
 
 #: scripts/sim/events.gd:232
-#, c-format
 msgid "Custo de 1% do PIB; segura a inflação e a aprovação"
 msgstr "Costs 1% of GDP; holds down inflation and approval"
 
@@ -3111,7 +3095,6 @@ msgid "Vale-alimentação emergencial"
 msgstr "Emergency food vouchers"
 
 #: scripts/sim/events.gd:248
-#, c-format
 msgid "Gasto social +0,3% do PIB"
 msgstr "Social spending +0.3% of GDP"
 
@@ -3168,7 +3151,6 @@ msgid "Aprovar o programa"
 msgstr "Approve the program"
 
 #: scripts/sim/events.gd:285
-#, c-format
 msgid "Dívida +1,5% do PIB; produtividade sobe com o tempo"
 msgstr "Debt +1.5% of GDP; productivity rises over time"
 
@@ -3733,7 +3715,6 @@ msgid "Imposto sobre a propriedade"
 msgstr "Property tax"
 
 #: scripts/sim/law_templates.gd:8
-#, c-format
 msgid "Institui imposto anual de 5% sobre o valor das propriedades."
 msgstr "Establishes an annual 5% tax on property values."
 
@@ -3782,7 +3763,6 @@ msgid "Piso da educação"
 msgstr "Education floor"
 
 #: scripts/sim/law_templates.gd:14
-#, c-format
 msgid "Obriga o orçamento de educação em 6% do PIB."
 msgstr "Mandates an education budget of 6% of GDP."
 
@@ -3791,7 +3771,6 @@ msgid "Piso da saúde"
 msgstr "Health floor"
 
 #: scripts/sim/law_templates.gd:15
-#, c-format
 msgid "Obriga o orçamento de saúde em 8% do PIB."
 msgstr "Mandates a health budget of 8% of GDP."
 
@@ -3800,7 +3779,6 @@ msgid "Limite aos gastos militares"
 msgstr "Cap on military spending"
 
 #: scripts/sim/law_templates.gd:16
-#, c-format
 msgid "Obriga o orçamento de defesa em 1,5% do PIB."
 msgstr "Mandates a defense budget of 1.5% of GDP."
 
@@ -4177,7 +4155,6 @@ msgid "Art. 7º"
 msgstr "Art. 7"
 
 #: scripts/sim/legislation.gd:259
-#, c-format
 msgid "O veto só cai com {v}% dos votos do parlamento."
 msgstr "A veto is only overridden with {v}% of parliament's votes."
 
@@ -4210,7 +4187,6 @@ msgid "Art. 11."
 msgstr "Art. 11"
 
 #: scripts/sim/legislation.gd:263
-#, c-format
 msgid "Emendas exigem apoio inicial de {v}% dos assentos."
 msgstr "Amendments require initial support from {v}% of seats."
 
@@ -4219,7 +4195,6 @@ msgid "Art. 12."
 msgstr "Art. 12"
 
 #: scripts/sim/legislation.gd:264
-#, c-format
 msgid "Emendas exigem {v}% dos votos do parlamento."
 msgstr "Amendments require {v}% of parliament's votes."
 
@@ -4284,7 +4259,6 @@ msgid "Art. 20."
 msgstr "Art. 20"
 
 #: scripts/sim/legislation.gd:272
-#, c-format
 msgid "Partidos abaixo de {v}% dos votos não entram por lista."
 msgstr "Parties below {v}% of the vote don't enter by list."
 
@@ -6321,7 +6295,6 @@ msgid "Declarar moratória"
 msgstr "Declare default"
 
 #: scripts/sim/world.gd:598
-#, c-format
 msgid "Corta 45% da dívida; 3 anos sem mercado, recessão severa"
 msgstr "Cuts 45% of the debt; 3 years without market access, severe recession"
 
@@ -7231,7 +7204,6 @@ msgid "Reservas +US$ 500 bi"
 msgstr "Reserves +US$ 500 bn"
 
 #: scripts/ui/debug_menu.gd:145
-#, c-format
 msgid "Dívida +50% do PIB"
 msgstr "Debt +50% of GDP"
 
@@ -7526,7 +7498,6 @@ msgid "Fronteiras"
 msgstr "Borders"
 
 #: scripts/ui/debug_menu.gd:324
-#, c-format
 msgid "Ganhar 10% do alvo"
 msgstr "Gain 10% of the target"
 
@@ -8446,7 +8417,7 @@ msgstr "Amend: %s"
 #: scripts/ui/law_editor.gd:118
 #, c-format
 msgid "%s · blocos de %s"
-msgstr "%s · %s blocks"
+msgstr "%s · blocks: %s"
 
 #: scripts/ui/law_editor.gd:145
 msgid "Avançado"
@@ -9655,27 +9626,22 @@ msgid "IRPF: acima da última faixa, alíquota de {aliquota}%"
 msgstr "Income tax: above the top bracket, rate of {aliquota}%"
 
 #: scripts/sim/law_catalog.gd_(bloco_tr_prev)
-#, c-format
 msgid "Contribuição previdenciária do {quem}: {aliquota}% do salário"
 msgstr "Social security contribution of the {quem}: {aliquota}% of salary"
 
 #: scripts/sim/law_catalog.gd_(bloco_tr_irpj)
-#, c-format
 msgid "IRPJ: {aliquota}% sobre o lucro das empresas"
 msgstr "Corporate tax: {aliquota}% on company profits"
 
 #: scripts/sim/law_catalog.gd_(bloco_tr_csll)
-#, c-format
 msgid "CSLL: {aliquota}% sobre o lucro líquido"
 msgstr "Social contribution on profits: {aliquota}% on net income"
 
 #: scripts/sim/law_catalog.gd_(bloco_tr_simples)
-#, c-format
 msgid "Regime simplificado: empresas com faturamento de até {limite} por ano pagam {aliquota}% do faturamento"
 msgstr "Simplified regime: companies with revenue up to {limite} a year pay {aliquota}% of revenue"
 
 #: scripts/sim/law_catalog.gd_(bloco_tr_isencao_setor)
-#, c-format
 msgid "Isenção de {parcela}% do IRPJ e da CSLL para o setor {setor}"
 msgstr "{parcela}% exemption from corporate taxes for the {setor} sector"
 
@@ -9684,12 +9650,10 @@ msgid "{tributo}: alíquota padrão de {aliquota}%"
 msgstr "{tributo}: standard rate of {aliquota}%"
 
 #: scripts/sim/law_catalog.gd_(bloco_tr_reduzida)
-#, c-format
 msgid "Alíquota reduzida de {aliquota}% sobre {grupo}"
 msgstr "Reduced rate of {aliquota}% on {grupo}"
 
 #: scripts/sim/law_catalog.gd_(bloco_tr_seletivo)
-#, c-format
 msgid "Imposto seletivo de {aliquota}% sobre {produto}"
 msgstr "Excise tax of {aliquota}% on {produto}"
 
@@ -9698,7 +9662,6 @@ msgid "Imposto de importação geral de {aliquota}%"
 msgstr "General import duty of {aliquota}%"
 
 #: scripts/sim/law_catalog.gd_(bloco_tr_iof)
-#, c-format
 msgid "IOF: {aliquota}% sobre crédito, câmbio e seguros"
 msgstr "Financial transactions tax: {aliquota}% on credit, FX and insurance"
 
@@ -9707,7 +9670,6 @@ msgid "{tributo}: {aliquota}% ao ano sobre o valor do bem"
 msgstr "{tributo}: {aliquota}% a year on the asset's value"
 
 #: scripts/sim/law_catalog.gd_(bloco_tr_heranca)
-#, c-format
 msgid "ITCMD: {aliquota}% sobre heranças e doações"
 msgstr "Inheritance tax: {aliquota}% on inheritances and gifts"
 
@@ -9716,7 +9678,6 @@ msgid "Imposto sobre grandes fortunas: {aliquota}% ao ano sobre patrimônios aci
 msgstr "Wealth tax: {aliquota}% a year on fortunes above {limite}"
 
 #: scripts/sim/law_catalog.gd_(bloco_tr_fiscalizacao)
-#, c-format
 msgid "Orçamento da Receita para fiscalização: {verba}% do PIB por ano"
 msgstr "Revenue service enforcement budget: {verba}% of GDP per year"
 
@@ -9741,7 +9702,6 @@ msgid "Décimo terceiro salário obrigatório: {on}"
 msgstr "Mandatory 13th-month salary: {on}"
 
 #: scripts/sim/law_catalog.gd_(bloco_tb_fgts)
-#, c-format
 msgid "Fundo de garantia com depósito de {deposit}% do salário ao mês e multa de {fine}% do saldo na demissão sem justa causa"
 msgstr "Severance fund with a monthly deposit of {deposit}% of salary and a {fine}% penalty on the balance for dismissal without cause"
 
@@ -9750,7 +9710,6 @@ msgid "Indenização de {weeks} semanas de salário por ano trabalhado na demiss
 msgstr "Severance of {weeks} weeks of salary per year worked for dismissal without cause"
 
 #: scripts/sim/law_catalog.gd_(bloco_tb_unemp_ins)
-#, c-format
 msgid "Seguro-desemprego por {months} meses, pagando {pct}% do último salário"
 msgstr "Unemployment insurance for {months} months, paying {pct}% of the last salary"
 
@@ -9815,12 +9774,10 @@ msgid "Prisão perpétua: {status}, com cumprimento máximo de {years} anos nas 
 msgstr "Life imprisonment: {status}, with a maximum of {years} years served for other sentences"
 
 #: scripts/sim/law_catalog.gd_(bloco_pn_regime)
-#, c-format
 msgid "Cumprir as penas em regime {regime}, com progressão após {share}% da pena"
 msgstr "Sentence regime: {regime}, with progression after {share}% of the sentence"
 
 #: scripts/sim/law_catalog.gd_(bloco_pn_budget)
-#, c-format
 msgid "Destinar {value}% do PIB a {area}"
 msgstr "Allocate {value}% of GDP to {area}"
 
@@ -9853,7 +9810,6 @@ msgid "Admitir usucapião após {years} anos de posse mansa e pacífica"
 msgstr "Allow adverse possession after {years} years of peaceful possession"
 
 #: scripts/sim/law_catalog.gd_(bloco_cv_inheritance)
-#, c-format
 msgid "Reservar {share}% da herança aos herdeiros necessários"
 msgstr "Reserve {share}% of the estate for forced heirs"
 
@@ -9890,7 +9846,6 @@ msgid "O parlamento é eleito pelo sistema {system}"
 msgstr "Parliament is elected by the {system} system"
 
 #: scripts/sim/law_catalog.gd_(bloco_el_threshold)
-#, c-format
 msgid "Cláusula de barreira de {pct}% dos votos nacionais"
 msgstr "Electoral threshold of {pct}% of the national vote"
 
@@ -9907,7 +9862,6 @@ msgid "Mandato do parlamento de {years} anos"
 msgstr "Parliamentary term of {years} years"
 
 #: scripts/sim/law_catalog.gd_(bloco_el_quota)
-#, c-format
 msgid "Cota mínima de {pct}% de mulheres nas listas dos partidos"
 msgstr "Minimum quota of {pct}% women on party lists"
 
@@ -10132,7 +10086,6 @@ msgid "{a} ÷ {b}"
 msgstr "{a} ÷ {b}"
 
 #: scripts/sim/law_catalog.gd_(bloco_m_pct)
-#, c-format
 msgid "{rate}% de {base}"
 msgstr "{rate}% of {base}"
 
@@ -10193,12 +10146,10 @@ msgid "Extinguir o ministério {a}"
 msgstr "Abolish the ministry {a}"
 
 #: scripts/sim/law_catalog.gd_(bloco_ec_rate)
-#, c-format
 msgid "Definir alíquota de {field} em {value}% do PIB"
 msgstr "Set the {field} rate at {value}% of GDP"
 
 #: scripts/sim/law_catalog.gd_(bloco_ec_calc)
-#, c-format
 msgid "imposto de {rate}% sobre {base}"
 msgstr "tax of {rate}% on {base}"
 
@@ -10211,7 +10162,6 @@ msgid "Criar a taxa {name} de {amount}"
 msgstr "Create the fee {name} of {amount}"
 
 #: scripts/sim/law_catalog.gd_(bloco_ec_contribution)
-#, c-format
 msgid "Criar a contribuição {name} de {rate}% da renda mensal"
 msgstr "Create the contribution {name} of {rate}% of monthly income"
 
@@ -10240,17 +10190,14 @@ msgid "Criar despesa permanente de {amount} bilhões por ano para {purpose}"
 msgstr "Create permanent spending of {amount} billion a year for {purpose}"
 
 #: scripts/sim/law_catalog.gd_(bloco_ec_privatize)
-#, c-format
 msgid "Privatizar {stake}% da participação do Estado em {company}"
 msgstr "Privatize {stake}% of the state's stake in {company}"
 
 #: scripts/sim/law_catalog.gd_(bloco_ec_nationalize)
-#, c-format
 msgid "Estatizar {company}, levando a participação do Estado a {stake}% do capital"
 msgstr "Nationalize {company}, bringing the state's stake to {stake}% of the capital"
 
 #: scripts/sim/law_catalog.gd_(bloco_ec_budget)
-#, c-format
 msgid "Obrigar o orçamento de {field} a {value}% do PIB"
 msgstr "Mandate the {field} budget at {value}% of GDP"
 

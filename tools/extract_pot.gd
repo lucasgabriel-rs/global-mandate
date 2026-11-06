@@ -230,7 +230,7 @@ func _write_pot() -> void:
 
 
 static func _has_format(s: String) -> bool:
-	return RegEx.create_from_string("%[-+ 0#]*\\d*(?:\\.\\d+)?[sdif]").search(s) != null
+	return RegEx.create_from_string("%[-+0#]*\\d*(?:\\.\\d+)?[sdif]").search(s) != null
 
 
 static func po_escape(s: String) -> String:
