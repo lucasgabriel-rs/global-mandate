@@ -21,6 +21,10 @@ static var _enclave_cache := {}
 
 static func load_countries() -> Array:
 	var f := FileAccess.open("res://data/countries.csv", FileAccess.READ)
+	# Sem o CSV não há países: melhor um erro claro que uma queda na thread do mundo.
+	if f == null:
+		push_error("Dados dos países ausentes: res://data/countries.csv (%s)" % error_string(FileAccess.get_open_error()))
+		return []
 	var header := f.get_csv_line()
 	var rows := []
 	while not f.eof_reached():
