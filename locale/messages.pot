@@ -135,7 +135,7 @@ msgstr ""
 msgid "PIB nominal em dólares correntes."
 msgstr ""
 
-#: scenes/ui/hud.tscn:253 scenes/ui/hud.tscn:581
+#: scenes/ui/hud.tscn:253 scenes/ui/hud.tscn:581 scenes/ui/start_screen.tscn:122
 msgid "PIB"
 msgstr ""
 
@@ -171,7 +171,7 @@ msgstr ""
 msgid "Dívida bruta do governo sobre o PIB."
 msgstr ""
 
-#: scenes/ui/hud.tscn:325 scenes/ui/hud.tscn:1729
+#: scenes/ui/hud.tscn:325 scenes/ui/hud.tscn:1729 scenes/ui/start_screen.tscn:276
 msgid "Dívida/PIB"
 msgstr ""
 
@@ -179,7 +179,7 @@ msgstr ""
 msgid "Aprovação do governo. Em democracias decide a próxima eleição."
 msgstr ""
 
-#: scenes/ui/hud.tscn:343 scenes/ui/hud.tscn:1739
+#: scenes/ui/hud.tscn:343 scenes/ui/hud.tscn:1739 scenes/ui/start_screen.tscn:340
 msgid "Aprovação"
 msgstr ""
 
@@ -251,11 +251,11 @@ msgstr ""
 msgid "Relação"
 msgstr ""
 
-#: scenes/ui/hud.tscn:604 scenes/ui/hud.tscn:1769
+#: scenes/ui/hud.tscn:604 scenes/ui/hud.tscn:1769 scenes/ui/start_screen.tscn:144
 msgid "PIB per capita"
 msgstr ""
 
-#: scenes/ui/hud.tscn:627 scenes/ui/hud.tscn:1792
+#: scenes/ui/hud.tscn:627 scenes/ui/hud.tscn:1792 scenes/ui/start_screen.tscn:166
 msgid "População"
 msgstr ""
 
@@ -263,7 +263,7 @@ msgstr ""
 msgid "Crescimento"
 msgstr ""
 
-#: scenes/ui/hud.tscn:719 scenes/ui/hud.tscn:2767
+#: scenes/ui/hud.tscn:719 scenes/ui/hud.tscn:2767 scenes/ui/start_screen.tscn:254
 msgid "Juro básico"
 msgstr ""
 
@@ -271,11 +271,11 @@ msgstr ""
 msgid "Dívida / PIB"
 msgstr ""
 
-#: scenes/ui/hud.tscn:765 scenes/ui/hud.tscn:1861
+#: scenes/ui/hud.tscn:765 scenes/ui/hud.tscn:1861 scenes/ui/start_screen.tscn:298
 msgid "Nota de crédito"
 msgstr ""
 
-#: scenes/ui/hud.tscn:788 scenes/ui/hud.tscn:1326 scenes/ui/hud.tscn:1750 scripts/ui/map_view.gd:44
+#: scenes/ui/hud.tscn:788 scenes/ui/hud.tscn:1326 scenes/ui/hud.tscn:1750 scenes/ui/start_screen.tscn:362
 msgid "Estabilidade"
 msgstr ""
 
@@ -840,86 +840,66 @@ msgid "Geopolítica em tempo real sobre um modelo econômico mundial"
 msgstr ""
 
 #: scenes/ui/start_screen.tscn:72
-msgid "ASSUMA UM GOVERNO"
-msgstr ""
-
-#: scenes/ui/start_screen.tscn:79
-msgid "Clique em qualquer país no mapa ou escolha um abaixo. Cenário: janeiro de 2025."
-msgstr ""
-
-#: scenes/ui/start_screen.tscn:95 data/countries.csv_(BRA)
-msgid "Brasil"
-msgstr ""
-
-#: scenes/ui/start_screen.tscn:105 data/countries.csv_(USA)
-msgid "Estados Unidos"
-msgstr ""
-
-#: scenes/ui/start_screen.tscn:115 data/countries.csv_(CHN)
-msgid "China"
-msgstr ""
-
-#: scenes/ui/start_screen.tscn:125 data/countries.csv_(IND)
-msgid "Índia"
-msgstr ""
-
-#: scenes/ui/start_screen.tscn:135 data/countries.csv_(DEU)
-msgid "Alemanha"
-msgstr ""
-
-#: scenes/ui/start_screen.tscn:145 data/countries.csv_(RUS)
-msgid "Rússia"
-msgstr ""
-
-#: scenes/ui/start_screen.tscn:155 data/countries.csv_(GBR)
-msgid "Reino Unido"
-msgstr ""
-
-#: scenes/ui/start_screen.tscn:165 data/countries.csv_(JPN)
-msgid "Japão"
-msgstr ""
-
-#: scenes/ui/start_screen.tscn:175 data/countries.csv_(SAU)
-msgid "Arábia Saudita"
-msgstr ""
-
-#: scenes/ui/start_screen.tscn:185 data/countries.csv_(ZAF)
-msgid "África do Sul"
-msgstr ""
-
-#: scenes/ui/start_screen.tscn:195 data/countries.csv_(ARG)
-msgid "Argentina"
-msgstr ""
-
-#: scenes/ui/start_screen.tscn:205 data/countries.csv_(TWN)
-msgid "Taiwan"
-msgstr ""
-
-#: scenes/ui/start_screen.tscn:219
 msgid "Nenhum país selecionado"
 msgstr ""
 
-#: scenes/ui/start_screen.tscn:239
+#: scenes/ui/start_screen.tscn:81
+msgid "Clique em um país no mapa para ver seus dados. Cenário: janeiro de 2025."
+msgstr ""
+
+#: scenes/ui/start_screen.tscn:102
+msgid "ECONOMIA"
+msgstr ""
+
+#: scenes/ui/start_screen.tscn:188
+msgid "Crescimento potencial"
+msgstr ""
+
+#: scenes/ui/start_screen.tscn:320
+msgid "POLÍTICA E DEFESA"
+msgstr ""
+
+#: scenes/ui/start_screen.tscn:384 scripts/ui/hud.gd:443 scripts/ui/hud.gd:770 scripts/ui/main.gd:347
+msgid "Democracia"
+msgstr ""
+
+#: scenes/ui/start_screen.tscn:406
+msgid "Tropas"
+msgstr ""
+
+#: scenes/ui/start_screen.tscn:428
+msgid "Ogivas"
+msgstr ""
+
+#: scenes/ui/start_screen.tscn:450
+msgid "Gasto militar"
+msgstr ""
+
+#: scenes/ui/start_screen.tscn:480
+msgid "PRINCIPAIS SETORES"
+msgstr ""
+
+#: scenes/ui/start_screen.tscn:503
 msgid "DIFICULDADE"
 msgstr ""
 
-#: scenes/ui/start_screen.tscn:252
+#: scenes/ui/start_screen.tscn:516
 msgid "Fácil"
 msgstr ""
 
-#: scenes/ui/start_screen.tscn:260
+#: scenes/ui/start_screen.tscn:524
 msgid "Normal"
 msgstr ""
 
-#: scenes/ui/start_screen.tscn:268
+#: scenes/ui/start_screen.tscn:532
 msgid "Difícil"
 msgstr ""
 
-#: scenes/ui/start_screen.tscn:278 scripts/sim/world.gd:488
+#: scenes/ui/start_screen.tscn:542 scripts/sim/world.gd:488
 msgid "Assumir o governo"
 msgstr ""
 
-#: scenes/ui/start_screen.tscn:286
+#: scenes/ui/start_screen.tscn:550
 msgid "Continuar partida salva"
 msgstr ""
 
@@ -1527,7 +1507,7 @@ msgstr ""
 msgid "Aleatório"
 msgstr ""
 
-#: scenes/ui/modals/game_over.tscn:48 scripts/ui/debug_menu.gd:489 scripts/ui/main.gd:1021
+#: scenes/ui/modals/game_over.tscn:48 scripts/ui/debug_menu.gd:489 scripts/ui/main.gd:1054
 msgid "Fim de jogo"
 msgstr ""
 
@@ -3227,7 +3207,7 @@ msgstr ""
 msgid "US$ %s bi"
 msgstr ""
 
-#: scripts/sim/infrastructure.gd:430 scripts/ui/main.gd:928 scripts/ui/main.gd:931
+#: scripts/sim/infrastructure.gd:430 scripts/ui/main.gd:961 scripts/ui/main.gd:964
 #, c-format
 msgid "%d anos"
 msgstr ""
@@ -5455,6 +5435,10 @@ msgstr ""
 msgid "Movimento Soberano"
 msgstr ""
 
+#: scripts/sim/politics.gd:82
+msgid "Partido da União Nacional"
+msgstr ""
+
 #: scripts/sim/politics.gd:87
 msgid "Gastos sociais +1 p.p. do PIB. Aprovação sobe, déficit também."
 msgstr ""
@@ -5576,7 +5560,7 @@ msgstr ""
 msgid "Escolha uma família política."
 msgstr ""
 
-#: scripts/sim/politics.gd:823 scripts/ui/main.gd:797
+#: scripts/sim/politics.gd:823 scripts/ui/main.gd:830
 msgid "Já existe um partido com esse nome."
 msgstr ""
 
@@ -6922,7 +6906,7 @@ msgid ""
 "Competência: %d%%%s"
 msgstr ""
 
-#: scripts/ui/cabinet_panel.gd:71 scripts/ui/main.gd:621
+#: scripts/ui/cabinet_panel.gd:71 scripts/ui/main.gd:654
 msgid "  ·  doente"
 msgstr ""
 
@@ -7905,15 +7889,11 @@ msgstr ""
 msgid "Declarar guerra a %s? O mundo vai reagir e pactos de defesa podem ser acionados."
 msgstr ""
 
-#: scripts/ui/hud.gd:443 scripts/ui/hud.gd:770
-msgid "Democracia"
-msgstr ""
-
-#: scripts/ui/hud.gd:443 scripts/ui/hud.gd:770
+#: scripts/ui/hud.gd:443 scripts/ui/hud.gd:770 scripts/ui/main.gd:347
 msgid "Regime híbrido"
 msgstr ""
 
-#: scripts/ui/hud.gd:443
+#: scripts/ui/hud.gd:443 scripts/ui/main.gd:347
 msgid "Regime autoritário"
 msgstr ""
 
@@ -7922,7 +7902,7 @@ msgstr ""
 msgid "US$ %s"
 msgstr ""
 
-#: scripts/ui/hud.gd:448 scripts/ui/hud.gd:782
+#: scripts/ui/hud.gd:448 scripts/ui/hud.gd:782 scripts/ui/main.gd:353
 #, c-format
 msgid "%s mi"
 msgstr ""
@@ -7936,7 +7916,7 @@ msgstr ""
 msgid "Falar com %s"
 msgstr ""
 
-#: scripts/ui/hud.gd:470 scripts/ui/main.gd:675
+#: scripts/ui/hud.gd:470 scripts/ui/main.gd:708
 msgid "o líder"
 msgstr ""
 
@@ -8116,7 +8096,7 @@ msgstr ""
 msgid "O banco central é independente: o governo não escolhe o juro. A Constituição pode mudar isso por emenda."
 msgstr ""
 
-#: scripts/ui/hud.gd:872
+#: scripts/ui/hud.gd:872 scripts/ui/main.gd:363
 #, c-format
 msgid "%s mil"
 msgstr ""
@@ -8801,205 +8781,219 @@ msgstr ""
 msgid "%d registro(s) guardado(s)"
 msgstr ""
 
-#: scripts/ui/main.gd:255 scripts/ui/main.gd:1103
+#: scripts/ui/main.gd:257 scripts/ui/main.gd:1136
 msgid "Preparando o mundo..."
 msgstr ""
 
-#: scripts/ui/main.gd:265
+#: scripts/ui/main.gd:267
 msgid "Desenhando o mapa..."
 msgstr ""
 
-#: scripts/ui/main.gd:341
-msgid "Democracia: eleição a cada 4 anos"
-msgstr ""
-
-#: scripts/ui/main.gd:341
-msgid "Regime híbrido: eleição a cada 4 anos"
-msgstr ""
-
-#: scripts/ui/main.gd:341
-msgid "Regime autoritário: risco de golpe e revolta"
-msgstr ""
-
-#: scripts/ui/main.gd:344
-#, c-format
-msgid "PIB: %s  ·  per capita: US$ %s"
+#: scripts/ui/main.gd:345
+msgid "África"
 msgstr ""
 
 #: scripts/ui/main.gd:345
-#, c-format
-msgid "População: %s mi  ·  crescimento potencial: %s"
+msgid "Ásia"
+msgstr ""
+
+#: scripts/ui/main.gd:345
+msgid "Europa"
+msgstr ""
+
+#: scripts/ui/main.gd:345
+msgid "América Latina"
 msgstr ""
 
 #: scripts/ui/main.gd:346
+msgid "Oriente Médio"
+msgstr ""
+
+#: scripts/ui/main.gd:346
+msgid "América do Norte"
+msgstr ""
+
+#: scripts/ui/main.gd:346
+msgid "Oceania"
+msgstr ""
+
+#: scripts/ui/main.gd:350
 #, c-format
-msgid "Inflação: %s  ·  juro: %s  ·  desemprego: %s"
+msgid "PIB  ·  #%d"
 msgstr ""
 
-#: scripts/ui/main.gd:347
+#: scripts/ui/main.gd:365 scripts/ui/stock_panel.gd:57
 #, c-format
-msgid "Dívida/PIB: %s  ·  juros da dívida: %s do PIB"
+msgid "%s do PIB"
 msgstr ""
 
-#: scripts/ui/main.gd:348
+#: scripts/ui/main.gd:369
 #, c-format
-msgid "Tropas: %s mil  ·  ogivas: %s"
-msgstr ""
-
-#: scripts/ui/main.gd:351
-msgid "Moeda: euro (juros definidos pelo BCE)"
-msgstr ""
-
-#: scripts/ui/main.gd:353
-msgid "Moeda ancorada no dólar"
-msgstr ""
-
-#: scripts/ui/main.gd:355
-msgid "EM GUERRA no início da partida"
+msgid "Governo: %s (%s das cadeiras)"
 msgstr ""
 
 #: scripts/ui/main.gd:371
+msgid "Eleição a cada 4 anos"
+msgstr ""
+
+#: scripts/ui/main.gd:373
+msgid "Sem eleições livres: risco de golpe e revolta"
+msgstr ""
+
+#: scripts/ui/main.gd:383
+msgid "Moeda: euro (juros definidos pelo BCE)"
+msgstr ""
+
+#: scripts/ui/main.gd:385
+msgid "Moeda ancorada no dólar"
+msgstr ""
+
+#: scripts/ui/main.gd:387
+msgid "EM GUERRA no início da partida"
+msgstr ""
+
+#: scripts/ui/main.gd:404
 #, c-format
 msgid "%s toma posse em %s. O mundo observa."
 msgstr ""
 
-#: scripts/ui/main.gd:373
+#: scripts/ui/main.gd:406
 #, c-format
 msgid "%s lidera a oposição em %s contra o governo de %s."
 msgstr ""
 
-#: scripts/ui/main.gd:621
+#: scripts/ui/main.gd:654
 #, c-format
 msgid "%s, %d anos  ·  %s  ·  competência %d%%%s"
 msgstr ""
 
-#: scripts/ui/main.gd:630
+#: scripts/ui/main.gd:663
 msgid "Você: "
 msgstr ""
 
-#: scripts/ui/main.gd:638
+#: scripts/ui/main.gd:671
 #, c-format
 msgid "%s  ·  %d assentos  ·  %s dos votos. A bússola do partido é a média dos políticos."
 msgstr ""
 
-#: scripts/ui/main.gd:656
+#: scripts/ui/main.gd:689
 #, c-format
 msgid "Ministério: %s"
 msgstr ""
 
-#: scripts/ui/main.gd:661
+#: scripts/ui/main.gd:694
 #, c-format
 msgid "%s assume a pasta."
 msgstr ""
 
-#: scripts/ui/main.gd:675
+#: scripts/ui/main.gd:708
 #, c-format
 msgid "Conversa com %s"
 msgstr ""
 
-#: scripts/ui/main.gd:675
+#: scripts/ui/main.gd:708
 #, c-format
 msgid "%s  ·  %s  ·  %s, %d anos, %s"
 msgstr ""
 
-#: scripts/ui/main.gd:679
+#: scripts/ui/main.gd:712
 #, c-format
 msgid "Dourado: %s. Branco: seu partido."
 msgstr ""
 
-#: scripts/ui/main.gd:679
+#: scripts/ui/main.gd:712
 msgid "líder"
 msgstr ""
 
-#: scripts/ui/main.gd:694
+#: scripts/ui/main.gd:727
 #, c-format
 msgid "Falas restantes: %d"
 msgstr ""
 
-#: scripts/ui/main.gd:694
+#: scripts/ui/main.gd:727
 msgid "A conversa terminou."
 msgstr ""
 
-#: scripts/ui/main.gd:713
+#: scripts/ui/main.gd:746
 msgid "Todo político pertence a um partido. Escolha um deles ou crie o seu, e decida se começa no governo ou na oposição."
 msgstr ""
 
-#: scripts/ui/main.gd:713
+#: scripts/ui/main.gd:746
 msgid "Só é possível mudar de partido uma vez por ano. O partido novo só ganha assentos na próxima eleição."
 msgstr ""
 
-#: scripts/ui/main.gd:714
+#: scripts/ui/main.gd:747
 #, c-format
 msgid "Escolha seu partido em %s"
 msgstr ""
 
-#: scripts/ui/main.gd:751
+#: scripts/ui/main.gd:784
 msgid "Regimes fechados não têm eleições."
 msgstr ""
 
-#: scripts/ui/main.gd:753
+#: scripts/ui/main.gd:786
 #, c-format
 msgid "Hoje governa: %s."
 msgstr ""
 
-#: scripts/ui/main.gd:753
+#: scripts/ui/main.gd:786
 msgid "Regime fechado, sem eleições: só é possível governar."
 msgstr ""
 
-#: scripts/ui/main.gd:761
+#: scripts/ui/main.gd:794
 #, c-format
 msgid "Ficar em %s  ·  %s  ·  %s dos votos  ·  %d de %d assentos"
 msgstr ""
 
-#: scripts/ui/main.gd:761
+#: scripts/ui/main.gd:794
 #, c-format
 msgid "%s  ·  %s  ·  %s dos votos  ·  %d de %d assentos"
 msgstr ""
 
-#: scripts/ui/main.gd:762
+#: scripts/ui/main.gd:795
 #, c-format
 msgid "%s. Clique para escolher."
 msgstr ""
 
-#: scripts/ui/main.gd:793
+#: scripts/ui/main.gd:826
 msgid "Dê um nome ao partido."
 msgstr ""
 
-#: scripts/ui/main.gd:896
+#: scripts/ui/main.gd:929
 #, c-format
 msgid "Bandeira: %s"
 msgstr ""
 
-#: scripts/ui/main.gd:1009
+#: scripts/ui/main.gd:1042
 msgid "Renunciar ao cargo? Isso encerra a sua carreira, e depois você escolhe entre um novo jogo e um novo personagem."
 msgstr ""
 
-#: scripts/ui/main.gd:1019
+#: scripts/ui/main.gd:1052
 msgid "Impeachment"
 msgstr ""
 
-#: scripts/ui/main.gd:1019
+#: scripts/ui/main.gd:1052
 msgid "Deposto"
 msgstr ""
 
-#: scripts/ui/main.gd:1019
+#: scripts/ui/main.gd:1052
 msgid "Renúncia"
 msgstr ""
 
-#: scripts/ui/main.gd:1019
+#: scripts/ui/main.gd:1052
 msgid "Assassinato"
 msgstr ""
 
-#: scripts/ui/main.gd:1019
+#: scripts/ui/main.gd:1052
 msgid "Fim da vida"
 msgstr ""
 
-#: scripts/ui/main.gd:1024
+#: scripts/ui/main.gd:1057
 #, c-format
 msgid "Pontuação final: %s"
 msgstr ""
 
-#: scripts/ui/main.gd:1025
+#: scripts/ui/main.gd:1058
 #, c-format
 msgid ""
 "Tempo no poder: %s anos  ·  Reeleições: %d\n"
@@ -9007,74 +9001,74 @@ msgid ""
 "Dívida/PIB: %s  ·  Inflação: %s  ·  Influência: %dº no mundo"
 msgstr ""
 
-#: scripts/ui/main.gd:1055
+#: scripts/ui/main.gd:1088
 #, c-format
 msgid "Tratado com %s"
 msgstr ""
 
-#: scripts/ui/main.gd:1055
+#: scripts/ui/main.gd:1088
 #, c-format
 msgid "O líder de lá é %s (%s)."
 msgstr ""
 
-#: scripts/ui/main.gd:1063
+#: scripts/ui/main.gd:1096
 #, c-format
 msgid "Vale por %d anos."
 msgstr ""
 
-#: scripts/ui/main.gd:1063
+#: scripts/ui/main.gd:1096
 msgid "Sem prazo."
 msgstr ""
 
-#: scripts/ui/main.gd:1079
+#: scripts/ui/main.gd:1112
 #, c-format
 msgid "Eleição de %s em %s"
 msgstr ""
 
-#: scripts/ui/main.gd:1081
+#: scripts/ui/main.gd:1114
 #, c-format
 msgid "[color=#8ba2af]Sistema:[/color] %s  ·  cláusula de barreira de %d%%"
 msgstr ""
 
-#: scripts/ui/main.gd:1082
+#: scripts/ui/main.gd:1115
 #, c-format
 msgid "[color=#8ba2af]Regime:[/color] %s"
 msgstr ""
 
-#: scripts/ui/main.gd:1083
+#: scripts/ui/main.gd:1116
 #, c-format
 msgid "[color=#8ba2af]Comparecimento:[/color] %s  ·  %d distritos"
 msgstr ""
 
-#: scripts/ui/main.gd:1086
+#: scripts/ui/main.gd:1119
 #, c-format
 msgid "[color=#8ba2af]Chefe de governo:[/color] %s, com %s, em %d turno(s)"
 msgstr ""
 
-#: scripts/ui/main.gd:1089
+#: scripts/ui/main.gd:1122
 #, c-format
 msgid "[color=#%s]■[/color] %s: %s dos votos, %d deputados, %d senadores"
 msgstr ""
 
-#: scripts/ui/main.gd:1093
+#: scripts/ui/main.gd:1126
 #, c-format
 msgid "%s: %d cadeiras, %s mi de habitantes, maioria de %s"
 msgstr ""
 
-#: scripts/ui/main.gd:1125
+#: scripts/ui/main.gd:1158
 #, c-format
 msgid "Não foi possível salvar: erro %d."
 msgstr ""
 
-#: scripts/ui/main.gd:1134
+#: scripts/ui/main.gd:1167
 msgid "Não foi possível salvar: o arquivo não pôde ser conferido."
 msgstr ""
 
-#: scripts/ui/main.gd:1140
+#: scripts/ui/main.gd:1173
 msgid "Partida salva."
 msgstr ""
 
-#: scripts/ui/main.gd:1148
+#: scripts/ui/main.gd:1181
 msgid "Carregando a partida..."
 msgstr ""
 
@@ -9384,11 +9378,6 @@ msgstr ""
 #: scripts/ui/stock_panel.gd:56
 #, c-format
 msgid "Valor de mercado: %s"
-msgstr ""
-
-#: scripts/ui/stock_panel.gd:57
-#, c-format
-msgid "%s do PIB"
 msgstr ""
 
 #: scripts/ui/stock_panel.gd:59
@@ -10677,6 +10666,30 @@ msgstr ""
 msgid "rigoroso"
 msgstr ""
 
+#: data/countries.csv_(USA)
+msgid "Estados Unidos"
+msgstr ""
+
+#: data/countries.csv_(CHN)
+msgid "China"
+msgstr ""
+
+#: data/countries.csv_(DEU)
+msgid "Alemanha"
+msgstr ""
+
+#: data/countries.csv_(JPN)
+msgid "Japão"
+msgstr ""
+
+#: data/countries.csv_(IND)
+msgid "Índia"
+msgstr ""
+
+#: data/countries.csv_(GBR)
+msgid "Reino Unido"
+msgstr ""
+
 #: data/countries.csv_(FRA)
 msgid "França"
 msgstr ""
@@ -10687,6 +10700,14 @@ msgstr ""
 
 #: data/countries.csv_(CAN)
 msgid "Canadá"
+msgstr ""
+
+#: data/countries.csv_(BRA)
+msgid "Brasil"
+msgstr ""
+
+#: data/countries.csv_(RUS)
+msgid "Rússia"
 msgstr ""
 
 #: data/countries.csv_(KOR)
@@ -10717,12 +10738,20 @@ msgstr ""
 msgid "Países Baixos"
 msgstr ""
 
+#: data/countries.csv_(SAU)
+msgid "Arábia Saudita"
+msgstr ""
+
 #: data/countries.csv_(CHE)
 msgid "Suíça"
 msgstr ""
 
 #: data/countries.csv_(POL)
 msgid "Polônia"
+msgstr ""
+
+#: data/countries.csv_(TWN)
+msgid "Taiwan"
 msgstr ""
 
 #: data/countries.csv_(BEL)
@@ -10735,6 +10764,10 @@ msgstr ""
 
 #: data/countries.csv_(IRL)
 msgid "Irlanda"
+msgstr ""
+
+#: data/countries.csv_(ARG)
+msgid "Argentina"
 msgstr ""
 
 #: data/countries.csv_(THA)
@@ -10787,6 +10820,10 @@ msgstr ""
 
 #: data/countries.csv_(HKG)
 msgid "Hong Kong"
+msgstr ""
+
+#: data/countries.csv_(ZAF)
+msgid "África do Sul"
 msgstr ""
 
 #: data/countries.csv_(ROU)
