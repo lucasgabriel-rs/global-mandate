@@ -89,3 +89,35 @@ jobs:
             gh release create "$tag" --draft --verify-tag --title "Global Mandate $tag" --generate-notes "$RUNNER_TEMP"/dist/*
             gh release edit "$tag" --draft=false --latest
           fi
+
+      # Envia cada sistema para a página do itch.io pelo butler. Precisa do segredo BUTLER_API_KEY
+      # no repositório (Settings > Secrets and variables > Actions); sem ele, o passo é pulado.
+      # Pré-lançamentos (tag com sufixo) não vão para o itch.io.
+      - name: Enviar para o itch.io
+        if: startsWith(github.ref, 'refs/tags/v') && !contains(github.ref_name, '-')
+        env:
+          BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
+          ITCH_TARGET: siriusstardust/global-mandate
+        run: |
+          if [ -z "$BUTLER_API_KEY" ]; then
+            echo "::warning::Segredo BUTLER_API_KEY não configurado; envio ao itch.io pulado."
+            exit 0
+          fi
+          curl -fsSL -o butler.zip https://broth.itch.zone/butler/linux-amd64/LATEST/archive/default
+          unzip -q butler.zip -d "$RUNNER_TEMP/butler"
+          chmod +x "$RUNNER_TEMP/butler/butler"
+          butler="$RUNNER_TEMP/butler/butler"
+          "$butler" -V
+          b="$RUNNER_TEMP/build"
+          i="$RUNNER_TEMP/itch"
+          # Uma pasta por canal; o itch.io reconhece o sistema pelo nome do canal.
+          mkdir -p "$i/windows" "$i/windows-arm64" "$i/linux" "$i/linux-arm64"
+          cp "$b/global_mandate_x86_64.exe" "$i/windows/global_mandate.exe"
+          cp "$b/global_mandate_arm64.exe" "$i/windows-arm64/global_mandate.exe"
+          cp "$b/global_mandate.x86_64" "$i/linux/global_mandate.x86_64"
+          cp "$b/global_mandate.arm64" "$i/linux-arm64/global_mandate.arm64"
+          version="${GITHUB_REF_NAME#v}"
+          for ch in windows windows-arm64 linux linux-arm64; do
+            "$butler" push "$i/$ch" "$ITCH_TARGET:$ch" --userversion "$version"
+          done
+          "$butler" push "$b/global_mandate_macos.zip" "$ITCH_TARGET:mac" --userversion "$version"
