@@ -10,12 +10,12 @@ custom_minimum_size = Vector2(8, 0)
 layout_mode = 2
 mouse_filter = 2
 
-[node name="Textos" type="VBoxContainer" parent="."]
+[node name="Texts" type="VBoxContainer" parent="."]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 0
 
-[node name="name" type="Label" parent="Textos"]
+[node name="name" type="Label" parent="Texts"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 14
@@ -23,7 +23,7 @@ text = "Contato"
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="info" type="Label" parent="Textos"]
+[node name="info" type="Label" parent="Texts"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)

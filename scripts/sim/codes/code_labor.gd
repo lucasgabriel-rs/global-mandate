@@ -1,4 +1,4 @@
-class_name CodeTrabalhista
+class_name CodeLabor
 extends LawCode
 ## Labor Code: Minimum wage, working hours, vacation, unions, strikes and pensions.
 ##
@@ -19,7 +19,7 @@ const STRIKE_SECTORS := ["privado", "publico", "essencial"]
 func _init() -> void:
 	id = "trabalhista"
 	title = "Código Trabalhista"
-	ementa = "Salário mínimo, jornada, férias, sindicatos, greve e previdência."
+	summary = "Salário mínimo, jornada, férias, sindicatos, greve e previdência."
 	category = {"id": "trabalhista", "label": "Trabalho", "color": Color("3a7fb0")}
 
 

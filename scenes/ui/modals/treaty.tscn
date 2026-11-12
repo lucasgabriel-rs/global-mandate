@@ -13,46 +13,46 @@ color = Color(0.01, 0.03, 0.05, 0.62)
 
 theme = ExtResource("e1")
 
-[node name="Centro" type="CenterContainer" parent="."]
+[node name="Center" type="CenterContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="Painel" type="PanelContainer" parent="Centro"]
+[node name="Panel" type="PanelContainer" parent="Center"]
 custom_minimum_size = Vector2(640, 380)
 layout_mode = 2
 
-[node name="col" type="VBoxContainer" parent="Centro/Painel"]
+[node name="col" type="VBoxContainer" parent="Center/Panel"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="title" type="Label" parent="Centro/Painel/col"]
+[node name="title" type="Label" parent="Center/Panel/col"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.9490196, 0.7019608, 0.23921569, 1)
 theme_override_font_sizes/font_size = 24
 
-[node name="body" type="Label" parent="Centro/Painel/col"]
+[node name="body" type="Label" parent="Center/Panel/col"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
 autowrap_mode = 3
 
-[node name="type_pick" type="OptionButton" parent="Centro/Painel/col"]
+[node name="type_pick" type="OptionButton" parent="Center/Panel/col"]
 unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0
 
-[node name="desc" type="Label" parent="Centro/Painel/col"]
+[node name="desc" type="Label" parent="Center/Panel/col"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(60, 40)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 autowrap_mode = 3
 
-[node name="Explica" type="Label" parent="Centro/Painel/col"]
+[node name="Explain" type="Label" parent="Center/Panel/col"]
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
@@ -60,23 +60,23 @@ theme_override_font_sizes/font_size = 12
 text = "Se o outro lado aceitar, o tratado é assinado na hora, mas só vale depois de ratificado pelos dois parlamentos. A resposta depende da relação e das ideias do líder de lá. Você acompanha tudo na aba Tratados do Centro legislativo."
 autowrap_mode = 3
 
-[node name="feedback" type="Label" parent="Centro/Painel/col"]
+[node name="feedback" type="Label" parent="Center/Panel/col"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
 autowrap_mode = 3
 
-[node name="Botoes" type="HBoxContainer" parent="Centro/Painel/col"]
+[node name="Buttons" type="HBoxContainer" parent="Center/Panel/col"]
 layout_mode = 2
 
-[node name="propose" type="Button" parent="Centro/Painel/col/Botoes"]
+[node name="propose" type="Button" parent="Center/Panel/col/Buttons"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
 text = "Propor"
 
-[node name="close" type="Button" parent="Centro/Painel/col/Botoes"]
+[node name="close" type="Button" parent="Center/Panel/col/Buttons"]
 unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0

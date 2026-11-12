@@ -1,4 +1,4 @@
-class_name CodeEleitoral
+class_name CodeElectoral
 extends LawCode
 ## Electoral Code: Voting, electoral age, campaign financing, reelection and quotas.
 ##
@@ -21,7 +21,7 @@ const E_VOTING := ["BRA", "IND", "VEN", "PHL", "BGD", "EST"]
 func _init() -> void:
 	id = "eleitoral"
 	title = "Código Eleitoral"
-	ementa = "Voto, idade eleitoral, financiamento de campanha, reeleição e cotas."
+	summary = "Voto, idade eleitoral, financiamento de campanha, reeleição e cotas."
 	category = {"id": "eleitoral", "label": "Eleições", "color": Color("6a4fa5")}
 
 
@@ -144,7 +144,7 @@ func _read_program(program: Dictionary) -> Dictionary:
 static func rules_for(world: GameWorld, c: Country) -> Dictionary:
 	if world == null or c == null or world.player != c or world.legislation == null or world.legislation.iso != c.iso:
 		return {}
-	var code := LawCodes.get_code("eleitoral") as CodeEleitoral
+	var code := LawCodes.get_code("eleitoral") as CodeElectoral
 	var leg: Legislation = world.legislation
 	var v := code._current(world, c, leg)
 	if v.is_empty():

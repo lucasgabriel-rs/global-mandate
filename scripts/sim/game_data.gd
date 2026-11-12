@@ -25,7 +25,7 @@ static func load_countries() -> Array:
 	var f := FileAccess.open("res://data/countries.csv", FileAccess.READ)
 	# Without the CSV there are no countries: better a clear error than a crash on the world thread.
 	if f == null:
-		push_error("Dados dos países ausentes: res://data/countries.csv (%s)" % error_string(FileAccess.get_open_error()))
+		push_error("Country data missing: res://data/countries.csv (%s)" % error_string(FileAccess.get_open_error()))
 		return []
 	var header := f.get_csv_line()
 	var rows := []
@@ -141,7 +141,7 @@ static func load_admin1() -> Dictionary:
 	var arcs := []
 	for a: Array in raw.arcs:
 		arcs.append([int(a[0]), int(a[1]), _flat_points(a[2])])
-	var mun_arcs := _load_municipios(units)
+	var mun_arcs := _load_municipalities(units)
 	var capitals := _load_capitals(units)
 	# Search grid by point; in each cell, from smallest to largest, so enclaves win on click.
 	var order := range(units.size())
@@ -164,7 +164,7 @@ static func load_admin1() -> Dictionary:
 ## National capitals: {iso: unit id}. When the capital is not a whole province, it becomes a
 ## small unit inside it, after all the others in the list.
 static func _load_capitals(units: Array) -> Dictionary:
-	var f := FileAccess.open("res://data/capitais.json", FileAccess.READ)
+	var f := FileAccess.open("res://data/capitals.json", FileAccess.READ)
 	var raw: Dictionary = JSON.parse_string(f.get_as_text())
 	var out := {}
 	for src: Dictionary in raw.capitals:
@@ -186,8 +186,8 @@ static func _load_capitals(units: Array) -> Dictionary:
 
 
 ## Municipalities of Brazil: they enter the same list, as children of the states. Returns the borders between them.
-static func _load_municipios(units: Array) -> Array:
-	var f := FileAccess.open("res://data/municipios.json", FileAccess.READ)
+static func _load_municipalities(units: Array) -> Array:
+	var f := FileAccess.open("res://data/municipalities.json", FileAccess.READ)
 	var raw: Dictionary = JSON.parse_string(f.get_as_text())
 	var states := {}
 	for i in units.size():

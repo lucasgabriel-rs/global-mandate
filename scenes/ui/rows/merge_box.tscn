@@ -7,20 +7,20 @@ mouse_filter = 2
 theme = ExtResource("1_pe58p")
 theme_override_constants/separation = 5
 
-[node name="Separador" type="ColorRect" parent="." unique_id=800800574]
+[node name="Separator" type="ColorRect" parent="." unique_id=800800574]
 custom_minimum_size = Vector2(0, 1)
 layout_mode = 2
 mouse_filter = 2
 color = Color(0.15294118, 0.2509804, 0.30980393, 1)
 
-[node name="FUNDIRUNIDADES" type="Label" parent="." unique_id=673898648]
+[node name="MergeUnitsHeading" type="Label" parent="." unique_id=673898648]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_constants/line_spacing = 0
 theme_override_font_sizes/font_size = 11
 text = "FUNDIR UNIDADES"
 
-[node name="CliqueNoMapaOuNa" type="Label" parent="." unique_id=42653253]
+[node name="MapClickHint" type="Label" parent="." unique_id=42653253]
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
@@ -36,12 +36,12 @@ theme_override_colors/font_color = Color(0.30980393, 0.7019608, 0.8509804, 1)
 theme_override_font_sizes/font_size = 13
 autowrap_mode = 3
 
-[node name="Linha" type="HBoxContainer" parent="." unique_id=198221758]
+[node name="Row" type="HBoxContainer" parent="." unique_id=198221758]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 4
 
-[node name="confirm" type="Button" parent="Linha" unique_id=1221035089]
+[node name="confirm" type="Button" parent="Row" unique_id=1221035089]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -49,7 +49,7 @@ focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "Confirmar fusão"
 
-[node name="cancel" type="Button" parent="Linha" unique_id=2119562045]
+[node name="cancel" type="Button" parent="Row" unique_id=2119562045]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3

@@ -1,6 +1,6 @@
 extends Node
-## Roteiro do relógio com o jogo rodando: mede as velocidades em tempo real e usa os botões de avanço.
-## Uso: godot --path . -- --ui-clock --shots=/caminho/da/pasta
+## Clock script with the game running: measures the speeds in real time and uses the advance buttons.
+## Usage: godot --path . -- --ui-clock --shots=/path/to/folder
 
 const MEASURE_SECONDS := 4.0
 
@@ -36,12 +36,12 @@ func _check(cond: bool, what: String) -> void:
 	print("ok: " if cond else "FAIL: ", what)
 
 
-## Dias de jogo, com a fração do dia em curso.
+## Game days, with the fraction of the current day.
 func _clock() -> float:
 	return Game.world.day_index + main.accumulator
 
 
-## O que o jogador lê na barra: "07 Fev 2025".
+## What the player reads in the bar: "07 Fev 2025".
 func _shown_date() -> String:
 	return main.hud._date.text
 
@@ -73,10 +73,10 @@ func _rate_ok(expected: float) -> void:
 	_clock_shot("r%d_b" % step)
 	var real := (Time.get_ticks_msec() - start_time) / 1000.0
 	var rate := (_clock() - start_clock) / real
-	_check(absf(rate - expected) <= expected * 0.15, "%.2f dias por segundo (esperado %.0f)" % [rate, expected])
-	_check(_shown_date() != start_shown and _shown_date() == Game.world.date_string(), "data na tela avançou: %s → %s" % [start_shown, _shown_date()])
+	_check(absf(rate - expected) <= expected * 0.15, "%.2f days per second (expected %.0f)" % [rate, expected])
+	_check(_shown_date() != start_shown and _shown_date() == Game.world.date_string(), "date on screen advanced: %s → %s" % [start_shown, _shown_date()])
 	var shown := float(main.hud._rate_label.text.split(" ")[0].replace(",", "."))
-	_check(main.hud._rate_label.text.ends_with("dia/s") and absf(shown - expected) <= expected * 0.2, "indicador mostra: " + main.hud._rate_label.text)
+	_check(main.hud._rate_label.text.ends_with("dia/s") and absf(shown - expected) <= expected * 0.2, "indicator shows:" + main.hud._rate_label.text)
 
 
 ## Recorte só da barra com o relógio, para comparar o que foi desenhado no início e no fim da medição.
@@ -125,13 +125,13 @@ func _process(delta: float) -> void:
 	var hud: Hud = main.hud
 	match step:
 		1:
-			# Mesmo caminho do jogador: botão de assumir e criador de personagem.
+			# Same path as the player: take-office button and character creator.
 			main._pick_start(w.by_iso["BRA"])
 			main._start_button.pressed.emit()
 		2:
 			_confirm_creator()
 		3:
-			_check(main.speed == 1, "partida começa na velocidade normal")
+			_check(main.speed == 1, "match starts at normal speed")
 			_check(hud._speed_buttons.size() == 4, "pausa e 3 velocidades")
 			_begin_measure(KEY_1)
 		4:
@@ -150,7 +150,7 @@ func _process(delta: float) -> void:
 			_click(hud._speed_buttons[3])
 			wait = 0.3
 		8:
-			_check(main.speed == 3, "botão escolhe 4x")
+			_check(main.speed == 3, "button chooses 4x")
 			_start_measure()
 		9:
 			_rate_ok(4.0)
@@ -158,14 +158,14 @@ func _process(delta: float) -> void:
 			_click(hud._speed_buttons[2])
 			wait = 0.3
 		10:
-			_check(main.speed == 2, "botão escolhe 2x")
+			_check(main.speed == 2, "button chooses 2x")
 			_start_measure()
 		11:
 			_rate_ok(2.0)
 			_key(KEY_4)
 			wait = 0.3
 		12:
-			_check(main.speed == 3, "tecla 4 também escolhe 4x")
+			_check(main.speed == 3, "key 4 also chooses 4x")
 			_key(KEY_3)
 			wait = 0.2
 		13:
@@ -173,53 +173,53 @@ func _process(delta: float) -> void:
 			_key(KEY_SPACE)
 			wait = 0.3
 		14:
-			_check(main.speed == 0, "espaço pausa")
+			_check(main.speed == 0, "space pauses")
 			start_clock = _clock()
 			wait = 1.2
 		15:
-			_check(_clock() == start_clock, "relógio parado na pausa")
-			_check(hud._rate_label.text == "parado", "indicador mostra a pausa")
+			_check(_clock() == start_clock, "clock stopped on pause")
+			_check(hud._rate_label.text == "parado", "indicator shows the pause")
 			day0 = w.day_index
 			_click(hud._skip_buttons[0])
 			wait = 0.5
 		16:
-			_check(w.day_index == day0 + 7, "+7 dias avança 7 dias (%d)" % (w.day_index - day0))
+			_check(w.day_index == day0 + 7, "+7 days advances 7 days (%d)" % (w.day_index - day0))
 			_check(hud._skip_card.visible and hud._skip_title.text == "Resumo de 7 dias", "resumo aparece")
-			_check(hud._date.text == w.date_string(), "data atualizada na barra")
+			_check(hud._date.text == w.date_string(), "date updated in the bar")
 			_shot("t2_resumo_7")
 			day0 = w.day_index
 			_click(hud._skip_buttons[1])
 			wait = 0.6
 		17:
-			_check(w.day_index == day0 + 30, "+30 dias avança 30 dias (%d)" % (w.day_index - day0))
-			_check(hud._skip_title.text == "Resumo de 30 dias", "resumo de 30 dias")
+			_check(w.day_index == day0 + 30, "+30 days advances 30 days (%d)" % (w.day_index - day0))
+			_check(hud._skip_title.text == "Resumo de 30 dias", "30-day summary")
 			_shot("t3_resumo_30")
-			_check(_contains_gdp(hud), "resumo traz os indicadores")
-			# Decisão no meio do avanço: para, espera a resposta e completa os dias.
+			_check(_contains_gdp(hud), "summary brings the indicators")
+			# Decision midway through the advance: stops, waits for the answer and completes the days.
 			day0 = w.day_index
 			var answered := {"done": false}
 			main.start_skip(30)
-			_check(hud._skip_buttons[0].disabled, "botões ficam desativados no avanço")
+			_check(hud._skip_buttons[0].disabled, "buttons are disabled during the advance")
 			w.ask_player({"title": "Teste", "text": "Decisão no meio do avanço", "options": [{"label": "Responder", "hint": "", "fn": func(): answered.done = true}]})
 			set_meta("answered", answered)
 			wait = 0.5
 		18:
-			_check(main.modal_open and main._skip_left == 30, "decisão interrompe o avanço (%d dias restantes)" % main._skip_left)
-			_check(w.day_index == day0, "nenhum dia passa enquanto a decisão espera")
+			_check(main.modal_open and main._skip_left == 30, "decision interrupts the advance (%d days left)" % main._skip_left)
+			_check(w.day_index == day0, "no day passes while the decision waits")
 			_shot("t4_decisao")
 			_dismiss()
 			wait = 0.6
 		19:
 			_check(get_meta("answered").done, "resposta foi aplicada")
-			_check(w.day_index == day0 + 30 and main._skip_left == 0, "avanço continua depois da resposta (%d)" % (w.day_index - day0))
-			_check(not hud._skip_buttons[0].disabled, "botões voltam")
+			_check(w.day_index == day0 + 30 and main._skip_left == 0, "advance continues after the answer (%d)" % (w.day_index - day0))
+			_check(not hud._skip_buttons[0].disabled, "buttons come back")
 			main.start_skip(30)
 			_check(main._skip_left == 30, "inicia outro")
 			main.start_skip(7)
-			_check(main._skip_left == 30, "segundo clique não soma enquanto avança")
+			_check(main._skip_left == 30, "second click does not add while advancing")
 			wait = 0.6
 		20:
-			# Salvar e carregar mantém a data.
+			# Saving and loading keeps the date.
 			set_meta("saved_date", w.date_string())
 			main._save_game()
 			main.join_sim()
@@ -244,7 +244,7 @@ func _confirm_creator() -> void:
 			var b := _named(dim, "Confirmar")
 			if b:
 				b.pressed.emit()
-				# O partido é obrigatório: escolhe o primeiro da lista.
+				# The party is mandatory: picks the first on the list.
 				var party := _containing(main.modal_root, "assentos")
 				if party:
 					party.pressed.emit()

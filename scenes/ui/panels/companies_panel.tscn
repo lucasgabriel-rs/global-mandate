@@ -10,13 +10,13 @@ theme = ExtResource("1_theme")
 theme_override_constants/separation = 6
 script = ExtResource("2_script")
 
-[node name="Titulo" type="Label" parent="."]
+[node name="Title" type="Label" parent="."]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_font_sizes/font_size = 11
 text = "EMPRESAS"
 
-[node name="Nota" type="Label" parent="."]
+[node name="Note" type="Label" parent="."]
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
@@ -24,11 +24,11 @@ theme_override_font_sizes/font_size = 12
 text = "As maiores empresas do país. A receita segue o produto do setor; a margem sente o ciclo, o juro e o câmbio. Estatais pagam dividendos ao Tesouro, e privatizar ou estatizar se faz por lei."
 autowrap_mode = 3
 
-[node name="Filtros" type="HBoxContainer" parent="."]
+[node name="Filters" type="HBoxContainer" parent="."]
 layout_mode = 2
 theme_override_constants/separation = 6
 
-[node name="sector_filter" type="OptionButton" parent="Filtros"]
+[node name="sector_filter" type="OptionButton" parent="Filters"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -36,7 +36,7 @@ focus_mode = 0
 theme_override_font_sizes/font_size = 12
 fit_to_longest_item = false
 
-[node name="capital_filter" type="OptionButton" parent="Filtros"]
+[node name="capital_filter" type="OptionButton" parent="Filters"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3

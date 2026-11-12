@@ -149,7 +149,7 @@ func _ready() -> void:
 	if OS.get_cmdline_user_args().has("--ui-corporate"):
 		autotest = load("res://tests/ui_corporate.gd")
 	if OS.get_cmdline_user_args().has("--ui-boot"):
-		print("abertura ok: %d países, %d no mapa, %d ms" % [world.countries.size(), map.features.size(), Time.get_ticks_msec()])
+		print("startup ok: %d countries, %d on the map, %d ms" % [world.countries.size(), map.features.size(), Time.get_ticks_msec()])
 		get_tree().quit()
 		return
 	if OS.get_cmdline_user_args().has("--ui-threads"):
@@ -331,16 +331,16 @@ func _build_main_menu() -> void:
 	modal_root.add_child(main_menu)
 	_sync_modal_state()
 	map.frame_region(10.0, get_viewport().get_visible_rect().size.x)
-	(main_menu.get_node("%versao") as Label).text = String(ProjectSettings.get_setting("application/config/version", ""))
-	main_menu.get_node("%novo_jogo").pressed.connect(func():
+	(main_menu.get_node("%version") as Label).text = String(ProjectSettings.get_setting("application/config/version", ""))
+	main_menu.get_node("%new_game").pressed.connect(func():
 		_close_main_menu()
 		_build_start_screen())
-	var load_button: Button = main_menu.get_node("%carregar_jogo")
+	var load_button: Button = main_menu.get_node("%load_game")
 	load_button.disabled = not SaveService.has_save()
 	# The menu only goes away when the match loads (_enter_game): if the file is bad, it stays there.
 	load_button.pressed.connect(_load_game)
-	main_menu.get_node("%configuracoes").pressed.connect(_open_settings)
-	main_menu.get_node("%sair_do_jogo").pressed.connect(func(): get_tree().quit())
+	main_menu.get_node("%settings").pressed.connect(_open_settings)
+	main_menu.get_node("%quit_game").pressed.connect(func(): get_tree().quit())
 
 
 func _close_main_menu() -> void:
@@ -365,7 +365,7 @@ func _build_start_screen() -> void:
 	_start_title = start_screen.get_node("%start_title")
 	_start_info = start_screen.get_node("%start_info")
 	_start_button = start_screen.get_node("%start_button")
-	var diff_buttons := {"facil": start_screen.get_node("%diff_facil"), "normal": start_screen.get_node("%diff_normal"), "dificil": start_screen.get_node("%diff_dificil")}
+	var diff_buttons := {"facil": start_screen.get_node("%diff_facil"), "normal": start_screen.get_node("%diff_normal"), "dificil": start_screen.get_node("%diff_hard")}
 	var style_diff := func(sel: String):
 		_difficulty = sel
 		for k: String in diff_buttons:
@@ -574,7 +574,7 @@ func _set_speed(s: int) -> void:
 	if s > 0:
 		last_speed = s
 	if s != speed and world:
-		print("velocidade: %s, relógio em %s" % ["pausa" if s == 0 else "%dx" % int(SPEEDS[s]), world.date_string()])
+		print("speed: %s, clock at %s" % ["paused" if s == 0 else "%dx" % int(SPEEDS[s]), world.date_string()])
 		# The lag accumulated at the previous speed is not charged at the new one, and the next rate measurement
 		# does not mix the two.
 		accumulator = fmod(accumulator, 1.0)
@@ -725,7 +725,7 @@ func _open_party_detail(id: int) -> void:
 	var rows: Control = dim.get_node("%rows")
 	for m: Dictionary in party.members:
 		rows.add_child(_member_row(m, party))
-	dim.get_node("%Fechar").pressed.connect(func(): _close_modal(dim))
+	dim.get_node("%Close").pressed.connect(func(): _close_modal(dim))
 
 
 func _open_corruption() -> void:
@@ -749,7 +749,7 @@ func _open_minister_picker(post: String) -> void:
 			var r: Dictionary = world.politics.appoint(world, post, e.party.id, e.member.id)
 			hud._cabinet.say((tr("%s assume a pasta.") % e.member.name) if r.ok else r.msg, not r.ok)
 			_close_modal(dim)))
-	dim.get_node("%Cancelar").pressed.connect(func(): _close_modal(dim))
+	dim.get_node("%Cancel").pressed.connect(func(): _close_modal(dim))
 
 
 # --- Conversation with leaders -----------------------------------------------------------
@@ -865,7 +865,7 @@ func _open_party_picker(country: Country, at_start: bool, on_done: Callable) -> 
 				(n as Control).visible = true
 		name_edit.grab_focus())
 	var warn: Label = dim.get_node("%warn")
-	dim.get_node("%FundarPartido").pressed.connect(func():
+	dim.get_node("%FoundParty").pressed.connect(func():
 		var clean := name_edit.text.strip_edges()
 		if clean == "":
 			warn.text = tr("Dê um nome ao partido.")
@@ -1007,13 +1007,13 @@ func _open_creator(character: Dictionary, on_done: Callable) -> void:
 	age_slider.value_changed.connect(func(v: float):
 		character["birth_year"] = year_now - int(v)
 		age_label.text = tr("%d anos") % int(v))
-	dim.get_node("%Aleatorio").pressed.connect(func():
+	dim.get_node("%Random").pressed.connect(func():
 		var fresh := Character.random(world.rng, country.iso, country.region)
 		for key: String in fresh:
 			character[key] = fresh[key]
 		_close_modal(dim)
 		_open_creator(character, on_done))
-	dim.get_node("%Confirmar").pressed.connect(func():
+	dim.get_node("%Confirm").pressed.connect(func():
 		if Character.full_name(character) == "":
 			Character.reroll_name(character, group, world.rng)
 		elif String(character.first_name) == "":
@@ -1050,40 +1050,40 @@ func _show_prompt(p: Dictionary) -> void:
 
 func _confirm(text: String, fn: Callable) -> void:
 	var dim := _modal(CONFIRM, "", text)
-	dim.get_node("%Confirmar").pressed.connect(func():
+	dim.get_node("%Confirm").pressed.connect(func():
 		fn.call()
 		_close_modal(dim))
-	dim.get_node("%Cancelar").pressed.connect(func(): _close_modal(dim))
+	dim.get_node("%Cancel").pressed.connect(func(): _close_modal(dim))
 
 
 func _open_menu() -> void:
 	if modal_open:
 		return
 	var dim := _modal(PAUSE_MENU)
-	dim.get_node("%VoltarAoJogo").pressed.connect(func(): _close_modal(dim))
-	dim.get_node("%SalvarPartida").pressed.connect(func():
+	dim.get_node("%BackToGame").pressed.connect(func(): _close_modal(dim))
+	dim.get_node("%SaveGame").pressed.connect(func():
 		_save_game()
 		_close_modal(dim))
-	var load_button: Button = dim.get_node("%CarregarPartida")
+	var load_button: Button = dim.get_node("%LoadGame")
 	load_button.visible = SaveService.has_save()
 	load_button.pressed.connect(func():
 		_close_modal(dim)
 		_load_game())
-	dim.get_node("%NovaPartida").pressed.connect(func():
+	dim.get_node("%NewGame").pressed.connect(func():
 		_close_modal(dim)
 		_restart())
 	dim.get_node("%MenuDebugF12").pressed.connect(func():
 		_close_modal(dim)
 		if not hud.debug.visible:
 			hud.debug.toggle())
-	dim.get_node("%ComoJogar").pressed.connect(func():
+	dim.get_node("%HowToPlay").pressed.connect(func():
 		_close_modal(dim)
 		_show_help())
-	dim.get_node("%Configuracoes").pressed.connect(func():
+	dim.get_node("%Settings").pressed.connect(func():
 		_close_modal(dim)
 		_open_settings())
-	dim.get_node("%Sair").pressed.connect(func(): get_tree().quit())
-	var quit_office: Button = dim.get_node("%Renunciar")
+	dim.get_node("%Quit").pressed.connect(func(): get_tree().quit())
+	var quit_office: Button = dim.get_node("%Resign")
 	quit_office.visible = world.in_office
 	quit_office.pressed.connect(func():
 		_close_modal(dim)
@@ -1092,7 +1092,7 @@ func _open_menu() -> void:
 
 func _show_help() -> void:
 	var dim := _modal(HELP)
-	dim.get_node("%Entendi").pressed.connect(func(): _close_modal(dim))
+	dim.get_node("%GotIt").pressed.connect(func(): _close_modal(dim))
 
 
 func _on_game_ended(result: Dictionary) -> void:
@@ -1106,10 +1106,10 @@ func _on_game_ended(result: Dictionary) -> void:
 	(dim.get_node("%stats") as Label).text = tr("Tempo no poder: %s anos  ·  Reeleições: %d\nPIB per capita real: %s vezes o de 2025\nDívida/PIB: %s  ·  Inflação: %s  ·  Influência: %dº no mundo") % [
 		UiKit.num(result.years, 1), result.mandates, UiKit.num(pc_ratio, 2), UiKit.pct(c.debt_ratio, 0), UiKit.pct(c.pi_yoy),
 		world.rank_of(c, func(x: Country): return x.influence)]
-	dim.get_node("%NovaPartida").pressed.connect(func():
+	dim.get_node("%NewGame").pressed.connect(func():
 		_close_modal(dim)
 		_restart())
-	dim.get_node("%NovoPersonagem").pressed.connect(func():
+	dim.get_node("%NewCharacter").pressed.connect(func():
 		_close_modal(dim)
 		_new_character())
 

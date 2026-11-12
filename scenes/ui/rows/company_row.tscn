@@ -18,17 +18,17 @@ mouse_filter = 2
 theme = ExtResource("1_theme")
 theme_override_styles/panel = SubResource("StyleBoxFlat_row")
 
-[node name="Coluna" type="VBoxContainer" parent="."]
+[node name="Column" type="VBoxContainer" parent="."]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 1
 
-[node name="Topo" type="HBoxContainer" parent="Coluna"]
+[node name="Top" type="HBoxContainer" parent="Column"]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 6
 
-[node name="company_name" type="Label" parent="Coluna/Topo"]
+[node name="company_name" type="Label" parent="Column/Top"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -36,14 +36,14 @@ theme_override_font_sizes/font_size = 13
 text = "Empresa"
 text_overrun_behavior = 3
 
-[node name="company_change" type="Label" parent="Coluna/Topo"]
+[node name="company_change" type="Label" parent="Column/Top"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
 text = "+0,0%"
 horizontal_alignment = 2
 
-[node name="company_value" type="Label" parent="Coluna/Topo"]
+[node name="company_value" type="Label" parent="Column/Top"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(76, 0)
 layout_mode = 2
@@ -51,7 +51,7 @@ theme_override_font_sizes/font_size = 12
 text = "US$ 0 bi"
 horizontal_alignment = 2
 
-[node name="company_info" type="Label" parent="Coluna"]
+[node name="company_info" type="Label" parent="Column"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
@@ -59,25 +59,25 @@ theme_override_font_sizes/font_size = 11
 text = "Setor · Privada · Capital aberto"
 text_overrun_behavior = 3
 
-[node name="Numeros" type="HBoxContainer" parent="Coluna"]
+[node name="Numbers" type="HBoxContainer" parent="Column"]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 10
 
-[node name="company_rev" type="Label" parent="Coluna/Numeros"]
+[node name="company_rev" type="Label" parent="Column/Numbers"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_font_sizes/font_size = 11
 text = "Receita US$ 0 bi"
 
-[node name="company_profit" type="Label" parent="Coluna/Numeros"]
+[node name="company_profit" type="Label" parent="Column/Numbers"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 11
 text = "Lucro US$ 0 bi"
 
-[node name="company_extra" type="Label" parent="Coluna/Numeros"]
+[node name="company_extra" type="Label" parent="Column/Numbers"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3

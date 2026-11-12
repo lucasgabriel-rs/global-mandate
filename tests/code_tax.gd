@@ -1,7 +1,7 @@
 extends SceneTree
-## Código Tributário: o texto inicial reproduz a carga de partida, faixas mudam a arrecadação por lei,
-## revogar devolve o que valia e a sonegação responde a alíquotas e fiscalização.
-## Uso: godot --headless --path . --script tests/code_tributario.gd
+## Tax Code: the initial text reproduces the starting burden, brackets change collection by law,
+## repealing restores what applied and evasion responds to rates and enforcement.
+## Uso: godot --headless --path . --script tests/code_tax.gd
 
 var failures := 0
 
@@ -59,7 +59,7 @@ func _init() -> void:
 	quit(1 if failures > 0 else 0)
 
 
-## Começar a partida com o código em blocos não muda nenhuma carga, em países bem diferentes.
+## Starting the match with the block-based code changes no burden, in very different countries.
 func _seed_keeps_totals() -> void:
 	for iso: String in ["BRA", "USA", "SWE", "NGA", "SAU", "IND"]:
 		var probe := GameWorld.new()
@@ -70,36 +70,36 @@ func _seed_keeps_totals() -> void:
 		var c := probe.player
 		var leg: Legislation = probe.legislation
 		var code := leg.code_norm("tributario")
-		_check(not code.is_empty() and code.type == "complementar" and code.get("base_code", false), "%s: Código Tributário é lei complementar" % iso)
-		_check(leg.code_standing("tributario").size() > 15, "%s: o código vale desde o início (%d itens)" % [iso, leg.code_standing("tributario").size()])
+		_check(not code.is_empty() and code.type == "complementar" and code.get("base_code", false), "%s: Tax Code is a complementary law" % iso)
+		_check(leg.code_standing("tributario").size() > 15, "%s: the code is in force since the start (%d items)" % [iso, leg.code_standing("tributario").size()])
 		var after := [c.tax_income, c.tax_consumption, c.tax_corporate, c.tariff]
 		var same := true
 		for i in 4:
 			same = same and absf(float(before[i]) - float(after[i])) < 1e-6
-		_check(same, "%s: cargas iguais às de partida %s -> %s" % [iso, str(before), str(after)])
+		_check(same, "%s: burdens equal to the starting ones %s -> %s" % [iso, str(before), str(after)])
 		var revenue0 := c.tax_total()
 		for m in 3:
 			_to_month_end(probe)
-		_check(absf(c.tax_total() - revenue0) < 1e-6, "%s: três meses depois a carga legal é a mesma" % iso)
-		# Só a parte do Tributário: outros códigos (Penal, Direitos...) também mexem na sonegação.
+		_check(absf(c.tax_total() - revenue0) < 1e-6, "%s: three months later the legal burden is the same" % iso)
+		# Only the Tax part: other codes (Criminal, Rights...) also move evasion.
 		var own: Dictionary = LawCodes.get_code("tributario").monthly(probe, c, leg)
 		var own_evasion := float(own.get("evasion", 0.0))
 		var own_gini := float(own.get("inequality", 0.0))
-		_check(absf(own_evasion) < 1e-6 and absf(own_gini) < 0.02, "%s: sem efeito extra de partida (sonegação %.4f, Gini %.4f)" % [iso, own_evasion, own_gini])
-		_check(c.code_stats.has("carga_tributaria") and c.code_stats.has("progressividade") and c.code_stats.has("sonegacao"), "%s: indicadores do código" % iso)
+		_check(absf(own_evasion) < 1e-6 and absf(own_gini) < 0.02, "%s: no extra starting effect (evasion %.4f, Gini %.4f)" % [iso, own_evasion, own_gini])
+		_check(c.code_stats.has("carga_tributaria") and c.code_stats.has("progressividade") and c.code_stats.has("sonegacao"), "%s: code indicators" % iso)
 		if iso == "BRA":
 			for b: Dictionary in LawProgram.all_blocks(code.program):
 				print("  ", LawProgram.block_text(b))
 
 
-## Subir as faixas do IRPF por alteração do código aumenta a carga sobre a renda.
+## Raising the income tax brackets by amending the code increases the burden on income.
 func _bracket_by_law() -> void:
 	var world := _fresh("BRA")
 	var c := world.player
 	var leg: Legislation = world.legislation
 	var income0 := c.tax_income
 	var bill := leg.start_code_bill(world, "tributario")
-	_check(int(bill.get("amends", -1)) == int(leg.code_norm("tributario").id), "o projeto altera o código em vigor")
+	_check(int(bill.get("amends", -1)) == int(leg.code_norm("tributario").id), "the project amends the code in force")
 	for b: Dictionary in _blocks_of(bill, "tr_irpf_faixa"):
 		b.fields.aliquota = float(b.fields.aliquota) + 10.0
 	for b: Dictionary in _blocks_of(bill, "tr_irpf_topo"):
@@ -107,24 +107,24 @@ func _bracket_by_law() -> void:
 	var cut := leg.start_code_bill(world, "tributario")
 	for b: Dictionary in _blocks_of(cut, "tr_irpf_topo"):
 		b.fields.aliquota = 5.0
-	_check(float(leg.position_for(world, bill).econ) < float(leg.position_for(world, cut).econ), "subir o IRPF fica mais à esquerda que cortar")
-	_check(leg.popularity_of(world, bill) < leg.popularity_of(world, cut), "subir o IRPF é menos popular que cortar")
+	_check(float(leg.position_for(world, bill).econ) < float(leg.position_for(world, cut).econ), "raising income tax goes further left than cutting it")
+	_check(leg.popularity_of(world, bill) < leg.popularity_of(world, cut), "raising income tax is less popular than cutting it")
 	leg.delete_draft(int(cut.id))
 	_force_majority(world)
 	var r := leg.present(world, bill)
 	_check(r.ok, "projeto apresentado: " + str(r.get("msg", "")))
 	_settle(world, bill)
-	_check(bill.state == Legislation.STATE_IN_FORCE, "a alteração entra em vigor: " + bill.state)
+	_check(bill.state == Legislation.STATE_IN_FORCE, "the amendment takes effect:" + bill.state)
 	print("  renda: ", income0, " -> ", c.tax_income)
-	_check(c.tax_income > income0 + 0.005, "faixas mais altas arrecadam mais")
+	_check(c.tax_income > income0 + 0.005, "higher brackets collect more")
 	var top := float(leg.code_standing("tributario").irpf_topo.aliquota)
-	_check(top > 30.0, "o código em vigor tem a alíquota nova: %.1f%%" % top)
+	_check(top > 30.0, "the code in force has the new rate: %.1f%%" % top)
 	var after := c.tax_income
 	_to_month_end(world)
-	_check(absf(c.tax_income - after) < 1e-9, "o fim do mês não desfaz a lei")
+	_check(absf(c.tax_income - after) < 1e-9, "the end of the month does not undo the law")
 
 
-## Uma lei avulsa com faixa nova vale enquanto está em vigor; revogada, volta o texto do código.
+## A standalone law with a new bracket applies while in force; once repealed, the code's text returns.
 func _revoke_restores() -> void:
 	var world := _fresh("BRA")
 	var c := world.player
@@ -141,15 +141,15 @@ func _revoke_restores() -> void:
 	_force_majority(world)
 	leg.present(world, law)
 	_settle(world, law)
-	_check(law.state == Legislation.STATE_IN_FORCE, "a lei avulsa entra em vigor: " + law.state)
-	_check(c.tax_income > income0 + 0.0005, "alíquota do topo maior arrecada mais: %.4f -> %.4f" % [income0, c.tax_income])
+	_check(law.state == Legislation.STATE_IN_FORCE, "the standalone law takes effect:" + law.state)
+	_check(c.tax_income > income0 + 0.0005, "a higher top rate collects more: %.4f -> %.4f" % [income0, c.tax_income])
 	leg.revoke_now(world, law, "Teste", "Teste")
 	_to_month_end(world)
-	_check(absf(c.tax_income - income0) < 1e-6, "revogada, a carga volta ao valor anterior: %.5f" % c.tax_income)
-	_check(is_equal_approx(float(leg.code_standing("tributario").irpf_topo.aliquota), top0), "o topo volta ao do código: %.1f%%" % top0)
+	_check(absf(c.tax_income - income0) < 1e-6, "once repealed, the burden goes back to the previous value: %.5f" % c.tax_income)
+	_check(is_equal_approx(float(leg.code_standing("tributario").irpf_topo.aliquota), top0), "the top goes back to the code's: %.1f%%" % top0)
 
 
-## Alíquota alta sem fiscalização faz a sonegação crescer; mais fiscalização a reduz.
+## A high rate without enforcement makes evasion grow; more enforcement reduces it.
 func _evasion() -> void:
 	var world := _fresh("BRA")
 	var c := world.player
@@ -164,9 +164,9 @@ func _evasion() -> void:
 	tr.apply(world, leg, "tr_fiscalizacao", {"verba": 0.0}, 1.0, int(code.id), prio + 1.0)
 	_to_month_end(world)
 	print("  sonegação: ", stat0, " -> ", c.code_stats.sonegacao, " (law_evasion ", evasion0, " -> ", c.law_evasion, ")")
-	_check(c.law_evasion > evasion0 + 0.02, "alíquota alta sem fiscalização aumenta a sonegação")
+	_check(c.law_evasion > evasion0 + 0.02, "a high rate without enforcement increases evasion")
 	var lax := c.law_evasion
 	tr.apply(world, leg, "tr_fiscalizacao", {"verba": 0.6}, 1.0, int(code.id), prio + 2.0)
 	_to_month_end(world)
-	_check(c.law_evasion < lax, "mais orçamento para a Receita reduz a sonegação: %.4f -> %.4f" % [lax, c.law_evasion])
+	_check(c.law_evasion < lax, "more budget for the Tax Authority reduces evasion: %.4f -> %.4f" % [lax, c.law_evasion])
 	_check(float(c.code_stats.progressividade) > 0.0, "progressividade medida: %.3f" % float(c.code_stats.progressividade))

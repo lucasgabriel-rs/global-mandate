@@ -12,7 +12,7 @@ extends RefCounted
 ## Short identifier ("tributario") and norm name ("Código Tributário").
 var id := ""
 var title := ""
-var ementa := ""
+var summary := ""
 ## Editor palette category: {"id", "label", "color"}.
 var category := {}
 ## Norm type of the code: complementary laws, except for the Constitution.

@@ -1,5 +1,5 @@
-// Converts the Brazilian municipal mesh (IBGE, via tbrugz/geodata-br) into data/municipios.json.
-// Usage: node tools/build_municipios.mjs   (from the project root)
+// Converts the Brazilian municipal mesh (IBGE, via tbrugz/geodata-br) into data/municipalities.json.
+// Usage: node tools/build_municipalities.mjs   (from the project root)
 //
 // The IBGE municipality code starts with the state code. Only the borders between municipalities of the
 // same state go into "arcs": borders between states already come from data/admin1.json.
@@ -64,7 +64,7 @@ for (const { points, owners } of arcCache.values()) {
   if (ids.length === 2 && units[ids[0]].state === units[ids[1]].state) arcs.push([ids[0], ids[1], points.map(project).flat()]);
 }
 const json = JSON.stringify({ units: output, arcs });
-writeFileSync("data/municipios.json", json);
+writeFileSync("data/municipalities.json", json);
 const verts = output.reduce((s, u) => s + u.s.reduce((a, r) => a + r.length / 2, 0), 0);
 const lineVerts = arcs.reduce((s, a) => s + a[2].length / 2, 0);
 console.log(`municípios=${output.length} vértices=${verts} arcos=${arcs.length} vértices de divisa=${lineVerts} bytes=${json.length}`);

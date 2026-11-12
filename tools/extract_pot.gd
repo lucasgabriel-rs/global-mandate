@@ -8,7 +8,7 @@ extends SceneTree
 ##
 ## Where the texts come from:
 ## - scenes (.tscn): text, tooltip_text, placeholder_text, title, label (dock), OptionButton items and the name of the children
-##   of TabContainer (it is the tab title). Nodes with auto_translate_mode off are left out.
+##   of TabContainer (the tab title; `metadata/_tab_name` overrides the node name). Nodes with auto_translate_mode off are left out.
 ## - scripts (.gd): the first literal argument of tr(), tr_n(), atr(), Lang.tr_if() and TranslationServer.translate();
 ##   and all texts on a line that ends in "# i18n" or in a stretch between "# i18n-begin" and
 ##   "# i18n-end", except dictionary keys (text followed by ":") and what looks like an id (lowercase without
@@ -38,7 +38,7 @@ func _init() -> void:
 		_scan_script(path)
 	_scan_data()
 	_write_pot()
-	print("messages.pot: %d entradas" % _order.size())
+	print("messages.pot: %d entries" % _order.size())
 	if OS.get_cmdline_user_args().has("--merge"):
 		_merge()
 	quit()
@@ -78,6 +78,7 @@ func _scan_scene(path: String) -> void:
 	var types := {}  # node path -> type
 	var node_props := []  # [[msgid, line]] of the current node
 	var node_skip := false
+	var tab_slot := -1  # index in node_props of the tab title, for nodes that are tabs
 	var i := 0
 	while i < lines.size():
 		var line: String = lines[i]
@@ -85,6 +86,7 @@ func _scan_scene(path: String) -> void:
 			_flush_node(path, node_props, node_skip)
 			node_props = []
 			node_skip = false
+			tab_slot = -1
 			if line.begins_with("[node "):
 				var name := _attr(line, "name")
 				var parent := _attr(line, "parent")
@@ -94,11 +96,15 @@ func _scan_scene(path: String) -> void:
 					node_path = "."
 				types[node_path] = type
 				if parent != "" and types.get(parent, "") == "TabContainer":
+					tab_slot = node_props.size()
 					node_props.append([name, i + 1])
 			i += 1
 			continue
 		if line.begins_with("auto_translate_mode = 2"):
 			node_skip = true
+		if tab_slot >= 0 and line.begins_with("metadata/_tab_name = \""):
+			# A tab whose node was renamed keeps its Portuguese title in this metadata.
+			node_props[tab_slot] = [_unescape_tscn(line.substr(22, line.length() - 23)), i + 1]
 		var eq := line.find(" = \"")
 		if eq > 0:
 			var key := line.substr(0, eq)
@@ -192,7 +198,7 @@ func _scan_data() -> void:
 	var lists := LawCatalog.CHOICES.duplicate()
 	for code: LawCode in LawCodes.all():
 		_add(code.title, "scripts/sim/codes (%s)" % code.id)
-		_add(code.ementa, "scripts/sim/codes (%s)" % code.id)
+		_add(code.summary, "scripts/sim/codes (%s)" % code.id)
 		lists.merge(code.choices())
 	for of: String in lists:
 		var list: Dictionary = lists[of]
@@ -262,10 +268,10 @@ func _merge() -> void:
 		var output := []
 		var code := OS.execute("msgmerge", ["--quiet", "--update", "--backup=none", "--no-wrap", po, pot], output, true)
 		if code != 0:
-			push_error("msgmerge falhou em %s: %s" % [lang, "".join(output)])
+			push_error("msgmerge failed on %s: %s" % [lang, "".join(output)])
 			continue
 		var missing := _untranslated(po)
-		print("%s.po: %d sem tradução%s" % [lang, missing.size(), "" if missing.is_empty() else " (primeira: %s)" % missing[0]])
+		print("%s.po: %d untranslated%s" % [lang, missing.size(), "" if missing.is_empty() else " (first: %s)" % missing[0]])
 
 
 ## .po entries with an empty msgstr or marked fuzzy (Godot ignores the fuzzy ones).

@@ -1,5 +1,5 @@
 extends SceneTree
-## Roda a simulação sem interface e imprime indicadores para calibrar o modelo.
+## Runs the simulation without the interface and prints indicators to calibrate the model.
 ## Uso: godot --headless --path . -s tests/calibrate.gd -- [anos] [semente] [cenario]
 
 const WATCH := ["USA", "CHN", "DEU", "JPN", "IND", "BRA", "RUS", "UKR", "ARG", "TUR", "SAU", "NGA", "TWN"]

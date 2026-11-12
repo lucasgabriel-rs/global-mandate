@@ -1,6 +1,6 @@
 extends Node
-## Propostas dos líderes que puxam conversa e a agenda de contatos.
-## Uso: godot --path . -- --ui-diplomacy --shots=/caminho/da/pasta
+## Proposals from the leaders who start a conversation and the contact book.
+## Usage: godot --path . -- --ui-diplomacy --shots=/path/to/folder
 
 var main: Node
 var out := "user://shots"
@@ -62,18 +62,18 @@ func _run() -> void:
 	await _every_answer(w, me)
 	await _chat_flow(w)
 	await _agenda_flow(w)
-	_check(w.to_dict().has("offers"), "as propostas em aberto vão para o save")
+	_check(w.to_dict().has("offers"), "open proposals go into the save")
 
 
-## A situação diplomática decide o que o líder traz, e sempre há o que aceitar ou recusar.
+## The diplomatic situation decides what the leader brings, and there is always something to accept or refuse.
 func _situations(w: GameWorld, me: Country) -> void:
 	var usa: Country = w.by_iso["USA"]
 	var d := w.diplomacy
 	d.set_relation(me.idx, usa.idx, -60.0)
-	_check(Proposals.make(w, usa).kind == "threat", "relação péssima traz ultimato")
+	_check(Proposals.make(w, usa).kind == "threat", "a terrible relation brings an ultimatum")
 	d.set_relation(me.idx, usa.idx, 70.0)
 	var friendly := Proposals.make(w, usa)
-	_check(friendly.kind == "treaty" and Treaties.TYPES.has(friendly.type), "relação ótima traz tratado (%s)" % friendly.get("type", ""))
+	_check(friendly.kind == "treaty" and Treaties.TYPES.has(friendly.type), "a great relation brings a treaty (%s)" % friendly.get("type", ""))
 	var poor: Country = null
 	for c: Country in w.countries:
 		if c.alive and c != me and c.y_usd() < me.y_usd() * 0.2:
@@ -85,10 +85,10 @@ func _situations(w: GameWorld, me: Country) -> void:
 			if w.treaties.between(me, poor, t).is_empty():
 				w.treaties._add("teste", t, [me.iso, poor.iso], Treaties.STATE_FORCE, w, 0)
 		var seen := Proposals.make(w, poor)
-		_check(seen.kind == "request" or seen.kind == "offer", "país pobre, sem tratado a propor, pede ajuda ou oferece (%s)" % seen.kind)
+		_check(seen.kind == "request" or seen.kind == "offer", "a poor country, with no treaty to propose, asks for help or offers (%s)" % seen.kind)
 	var enemy: Country = w.by_iso["ARG"]
 	d.declare_war(me, enemy, w)
-	_check(Proposals.make(w, enemy).kind == "peace", "em guerra, o líder propõe paz")
+	_check(Proposals.make(w, enemy).kind == "peace", "at war, the leader proposes peace")
 	d.wars.clear()
 	var ok := 0
 	var total := 0
@@ -100,10 +100,10 @@ func _situations(w: GameWorld, me: Country) -> void:
 		var ids := Proposals.choices(w, c, offer).map(func(x): return x.id)
 		if offer.kind in Proposals.KINDS and Proposals.text(w, c, offer) != "" and "accept" in ids and "refuse" in ids:
 			ok += 1
-	_check(ok == total and total > 20, "todo líder tem proposta utilizável com aceitar e recusar: %d de %d" % [ok, total])
+	_check(ok == total and total > 20, "every leader has a usable proposal with accept and refuse: %d of %d" % [ok, total])
 
 
-## Cada tipo de proposta resolve as três respostas, com efeito real e sem deixar a proposta pendurada.
+## Each type of proposal resolves the three answers, with real effect and without leaving the proposal hanging.
 func _every_answer(w: GameWorld, me: Country) -> void:
 	var d := w.diplomacy
 	for kind: String in Proposals.KINDS:
@@ -136,10 +136,10 @@ func _every_answer(w: GameWorld, me: Country) -> void:
 				moved = rel1 < rel0 and not d.wars.is_empty()
 			_check(moved, label + ": mexe no jogo")
 			d.wars.clear()
-	_check(Dialogue.answer(w, w.by_iso["DEU"], "accept").ok == false, "sem proposta, não há o que responder")
+	_check(Dialogue.answer(w, w.by_iso["DEU"], "accept").ok == false, "with no proposal, there is nothing to answer")
 
 
-## O líder que vem até o jogador chega com a proposta no chat, e os botões respondem a ela.
+## The leader who comes to the player arrives with the proposal in the chat, and the buttons answer it.
 func _chat_flow(w: GameWorld) -> void:
 	var fra: Country = w.by_iso["FRA"]
 	var me: Country = w.player
@@ -156,17 +156,17 @@ func _chat_flow(w: GameWorld) -> void:
 	main._open_talk(fra, true)
 	await _frames(4)
 	var chat := _chat()
-	_check(chat != null and chat.current == "pais:FRA", "a conversa com o líder abre")
+	_check(chat != null and chat.current == "pais:FRA", "the conversation with the leader opens")
 	var thread := ChatLog.thread(w, "pais:FRA")
-	_check(thread.size() >= 2 and String(thread[-1].text).contains("cooperação climática"), "o líder abre com a proposta no chat")
+	_check(thread.size() >= 2 and String(thread[-1].text).contains("cooperação climática"), "the leader opens with the proposal in the chat")
 	for id: String in ["accept", "refuse", "counter"]:
-		_check(chat.find_child("say_offer_" + id, true, false) != null, "botão de resposta: " + id)
+		_check(chat.find_child("say_offer_" + id, true, false) != null, "answer button:" + id)
 	await _shot("d1_proposta")
 	(chat.find_child("say_offer_accept", true, false) as Button).pressed.emit()
 	await _frames(3)
 	_check(not w.treaties.between(me, fra, "climate").is_empty(), "aceitar assina o tratado")
-	_check(chat.find_child("say_offer_accept", true, false) == null, "depois da resposta os botões somem")
-	_check(chat.find_child("say_praise", true, false) != null, "a conversa segue com as falas de sempre")
+	_check(chat.find_child("say_offer_accept", true, false) == null, "after the answer the buttons disappear")
+	_check(chat.find_child("say_praise", true, false) != null, "the conversation continues with the usual lines")
 	await _shot("d2_depois_de_aceitar")
 	main._close_modal(chat)
 	await _frames(2)
@@ -176,43 +176,43 @@ func _agenda_flow(w: GameWorld) -> void:
 	main.open_agenda()
 	await _frames(3)
 	var agenda := _agenda()
-	_check(agenda != null, "a agenda abre")
+	_check(agenda != null, "the contact book opens")
 	var parties := PartyTalk.contacts(w).size()
 	var countries := w.countries.filter(func(c): return c.alive and c != w.player).size()
 	var rows := agenda.find_children("agenda_party_*", "", true, false).size()
-	_check(rows == parties and parties > 0, "a agenda lista os líderes partidários: %d de %d" % [rows, parties])
+	_check(rows == parties and parties > 0, "the contact book lists the party leaders: %d of %d" % [rows, parties])
 	rows = agenda.find_children("agenda_country_*", "", true, false).size()
-	_check(rows == countries, "a agenda lista os líderes de países: %d de %d" % [rows, countries])
+	_check(rows == countries, "the contact book lists the country leaders: %d of %d" % [rows, countries])
 	await _shot("d3_agenda")
 	var search: LineEdit = agenda.find_child("search", true, false)
 	search.text = "ger"
 	search.text_changed.emit("ger")
 	await _frames(2)
 	var found := agenda.find_children("agenda_country_*", "", true, false).size()
-	_check(found > 0 and found < countries, "a busca filtra os contatos: %d" % found)
+	_check(found > 0 and found < countries, "search filters the contacts: %d" % found)
 	search.text = ""
 	search.text_changed.emit("")
 	await _frames(2)
-	# Chama um país sem conversa em curso: a conversa começa e o histórico abre.
+	# Calls a country with no conversation under way: the conversation starts and the history opens.
 	var jpn: Country = w.by_iso["JPN"]
 	w.talks.erase(jpn.iso)
 	w.talk_turns.erase(jpn.iso)
 	(agenda.find_child("agenda_country_JPN", true, false).find_child("talk", true, false) as Button).pressed.emit()
 	await _frames(4)
-	_check(_agenda() == null, "a agenda fecha ao escolher")
+	_check(_agenda() == null, "the contact book closes on choosing")
 	var chat := _chat()
-	_check(chat != null and chat.current == "pais:JPN", "a conversa com o país escolhido abre")
-	_check(Dialogue.turns_left(w, jpn) > 0 and not ChatLog.thread(w, "pais:JPN").is_empty(), "o líder atende e cumprimenta")
-	# Dentro da janela de conversas, a agenda troca de contato sem abrir outra janela.
+	_check(chat != null and chat.current == "pais:JPN", "the conversation with the chosen country opens")
+	_check(Dialogue.turns_left(w, jpn) > 0 and not ChatLog.thread(w, "pais:JPN").is_empty(), "the leader answers and greets")
+	# Inside the conversation window, the contact book swaps contact without opening another window.
 	(chat.find_child("open_agenda", true, false) as Button).pressed.emit()
 	await _frames(3)
 	agenda = _agenda()
-	_check(agenda != null, "a agenda abre de dentro das conversas")
+	_check(agenda != null, "the contact book opens from inside the conversations")
 	var party_id := int(PartyTalk.contacts(w)[0].id)
 	(agenda.find_child("agenda_party_%d" % party_id, true, false).find_child("talk", true, false) as Button).pressed.emit()
 	await _frames(4)
 	var chats: Array = main.modal_root.get_children().filter(func(c): return c is ChatWindow and not c.is_queued_for_deletion())
-	_check(chats.size() == 1 and chat.current == "partido:%d" % party_id, "escolher um partido troca o contato na mesma janela")
+	_check(chats.size() == 1 and chat.current == "partido:%d" % party_id, "choosing a party swaps the contact in the same window")
 	await _shot("d4_partido")
 	main._close_modal(chat)
 	await _frames(2)

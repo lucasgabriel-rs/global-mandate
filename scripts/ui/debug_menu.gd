@@ -42,7 +42,7 @@ var pl: Country:
 
 
 func _ready() -> void:
-	%Fechar.pressed.connect(toggle)
+	%Close.pressed.connect(toggle)
 	_options.item_selected.connect(func(i: int):
 		target = world.countries[_options.get_item_id(i)]
 		_refresh_buttons())

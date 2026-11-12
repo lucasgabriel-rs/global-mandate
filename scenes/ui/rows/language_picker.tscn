@@ -7,7 +7,7 @@
 theme = ExtResource("1_lang")
 theme_override_constants/separation = 8
 
-[node name="Rotulo" type="Label" parent="."]
+[node name="Label" type="Label" parent="."]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_font_sizes/font_size = 12

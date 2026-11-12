@@ -24,30 +24,30 @@ anchor_bottom = 1.0
 theme = ExtResource("1_0vgor")
 color = Color(0.01, 0.03, 0.05, 0.62)
 
-[node name="Centro" type="CenterContainer" parent="." unique_id=1736357639]
+[node name="Center" type="CenterContainer" parent="." unique_id=1736357639]
 layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="Painel" type="PanelContainer" parent="Centro" unique_id=497559844]
+[node name="Panel" type="PanelContainer" parent="Center" unique_id=497559844]
 custom_minimum_size = Vector2(640, 0)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_2iqf4")
 
-[node name="col" type="VBoxContainer" parent="Centro/Painel" unique_id=205011714]
+[node name="col" type="VBoxContainer" parent="Center/Panel" unique_id=205011714]
 unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 10
 
-[node name="title" type="Label" parent="Centro/Painel/col" unique_id=1966232977]
+[node name="title" type="Label" parent="Center/Panel/col" unique_id=1966232977]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.9490196, 0.7019608, 0.23921569, 1)
 theme_override_font_sizes/font_size = 24
 text = "Ministério: Fazenda"
 
-[node name="body" type="Label" parent="Centro/Painel/col" unique_id=243621601]
+[node name="body" type="Label" parent="Center/Panel/col" unique_id=243621601]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
@@ -56,19 +56,19 @@ theme_override_font_sizes/font_size = 15
 text = "Sobe a credibilidade do banco central."
 autowrap_mode = 3
 
-[node name="Rolagem" type="ScrollContainer" parent="Centro/Painel/col" unique_id=1468926038]
+[node name="Scroll" type="ScrollContainer" parent="Center/Panel/col" unique_id=1468926038]
 custom_minimum_size = Vector2(0, 420)
 layout_mode = 2
 horizontal_scroll_mode = 0
 
-[node name="rows" type="VBoxContainer" parent="Centro/Painel/col/Rolagem" unique_id=1622453739]
+[node name="rows" type="VBoxContainer" parent="Center/Panel/col/Scroll" unique_id=1622453739]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 theme_override_constants/separation = 4
 
-[node name="Cancelar" type="Button" parent="Centro/Painel/col" unique_id=1501503979]
+[node name="Cancel" type="Button" parent="Center/Panel/col" unique_id=1501503979]
 unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0

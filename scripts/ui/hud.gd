@@ -85,7 +85,7 @@ var _hover_unit := -1
 @onready var _leader_name: Label = %leader_name
 @onready var _politics: PoliticsPanel = %politics
 @onready var _cabinet: CabinetPanel = %cabinet
-@onready var _oposicao: OppositionPanel = %oposicao
+@onready var _opposition: OppositionPanel = %opposition
 @onready var economy: EconomyPanel = %economy
 @onready var _banner: PanelContainer = %banner
 @onready var _banner_label: Label = %banner_label
@@ -147,13 +147,13 @@ func _connect_buttons() -> void:
 		_commodity_labels.append(get_node("%%commodity_%d" % i))
 	%Menu.pressed.connect(menu_requested.emit)
 	%skip_close.pressed.connect(func(): _skip_card.visible = false)
-	%EditarPersonagem.pressed.connect(character_requested.emit)
+	%EditCharacter.pressed.connect(character_requested.emit)
 	_desk.tab_changed.connect(_on_tab_changed)
 	_dock.desk = _desk
 	_dock.item_pressed.connect(_on_dock_item)
 	_cabinet.pick_requested.connect(func(post): minister_pick_requested.emit(post))
-	_oposicao.politics_requested.connect(func(): _desk.open(_politics_tab))
-	_oposicao.legislation_requested.connect(func(): legislation_requested.emit())
+	_opposition.politics_requested.connect(func(): _desk.open(_politics_tab))
+	_opposition.legislation_requested.connect(func(): legislation_requested.emit())
 	_politics.party_requested.connect(func(): party_requested.emit())
 	_politics.legislation_requested.connect(func(): legislation_requested.emit())
 	_politics.corruption_requested.connect(func(): corruption_requested.emit())
@@ -165,18 +165,18 @@ func _connect_buttons() -> void:
 	for key: String in _sliders:
 		(_sliders[key] as HSlider).value_changed.connect(_on_slider.bind(key))
 		_sliders[key].set_meta("tip", _sliders[key].tooltip_text)
-	%LegislarTributos.pressed.connect(tax_law_requested.emit)
-	%LegislarTarifa.pressed.connect(tax_law_requested.emit)
-	%PedirSocorroAoFMI.pressed.connect(_on_imf)
-	%AlternarRegraDeTaylorJuro.pressed.connect(_on_toggle_taylor)
-	%AlternarFlutuanteAncoraNoDolar.pressed.connect(_on_toggle_peg)
+	%LegislateTaxes.pressed.connect(tax_law_requested.emit)
+	%LegislateTariff.pressed.connect(tax_law_requested.emit)
+	%AskImfBailout.pressed.connect(_on_imf)
+	%ToggleTaylorRule.pressed.connect(_on_toggle_taylor)
+	%TogglePeg.pressed.connect(_on_toggle_peg)
 	for key: String in _mode_buttons:
 		(_mode_buttons[key] as Button).pressed.connect(_on_mode.bind(key))
 	%dossier_close.pressed.connect(func():
 		map.select(null)
 		show_country(null))
 	(_dossier_dyn.talk as Button).pressed.connect(func(): talk_requested.emit(selected))
-	%ProporTratado.pressed.connect(func(): treaty_requested.emit(selected))
+	%ProposeTreaty.pressed.connect(func(): treaty_requested.emit(selected))
 	_politics.election_requested.connect(func(): election_requested.emit())
 	for act: String in _action_buttons:
 		(_action_buttons[act] as Button).pressed.connect(_on_action.bind(act))
@@ -264,7 +264,7 @@ func bind(w: GameWorld, m: MapView) -> void:
 	_divisions.bind(w, m)
 	_politics.bind(w)
 	_cabinet.bind(w)
-	_oposicao.bind(w)
+	_opposition.bind(w)
 	_office_shown = -1
 	economy.bind(w)
 	border.bind(w, m)
@@ -777,7 +777,7 @@ func _refresh_window(i: int, c: Country) -> void:
 		7: _politics.refresh()
 		8: _cabinet.refresh()
 		9: economy.refresh()
-		11: _oposicao.refresh()
+		11: _opposition.refresh()
 
 
 func _leader_text(leader: Dictionary) -> String:
@@ -864,9 +864,9 @@ func _refresh_monetary(c: Country) -> void:
 	if not rate_slider.editable:
 		rate_slider.set_value_no_signal(c.rate * 100.0)
 		_label_slider("rate_set", c.rate)
-	var peg_toggle: Button = %AlternarFlutuanteAncoraNoDolar
+	var peg_toggle: Button = %TogglePeg
 	peg_toggle.disabled = c == world.usa or c.peg == 2 or not world.in_office
-	var toggle: Button = %AlternarRegraDeTaylorJuro
+	var toggle: Button = %ToggleTaylorRule
 	toggle.disabled = c.cb_independent or c.peg != 0 or not world.in_office
 	toggle.tooltip_text = tr("O banco central é independente: o governo não escolhe o juro. A Constituição pode mudar isso por emenda.") if c.cb_independent else tr("Manual dá controle direto, mas interferência reduz a credibilidade do banco central.")
 	_dyn.m_rate.text = UiKit.pct(c.rate, 2)

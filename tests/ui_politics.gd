@@ -1,6 +1,6 @@
 extends Node
-## Roteiro com cliques: criador stickman, roda de cor, pele, escolha de partido e parlamento.
-## Uso: godot --path . -- --ui-politics --shots=/caminho/da/pasta
+## Script with clicks: stickman creator, color wheel, skin, party choice and parliament.
+## Usage: godot --path . -- --ui-politics --shots=/path/to/folder
 
 var main: Node
 var out := "user://shots"
@@ -77,79 +77,79 @@ func _process(delta: float) -> void:
 			_check(main.modal_open, "criador abriu")
 			_shot("p1_criador")
 			for key: String in ["first_name_edit", "last_name_edit", "gender_m", "gender_f", "roll_name", "age_slider"]:
-				_check(_named(root, key) != null, "opção " + key)
+				_check(_named(root, key) != null, "option" + key)
 			var view := _view(root)
 			leader = view.character
-			_check(view.iso == "BRA", "a bola veste a bandeira do país escolhido")
+			_check(view.iso == "BRA", "the ball wears the chosen country's flag")
 			(_named(root, "first_name_edit") as LineEdit).text = "Palito"
 			(_named(root, "first_name_edit") as LineEdit).text_changed.emit("Palito")
 			_click(_named(root, "gender_f"))
 		3:
-			_check(leader.gender == "f" and leader.first_name == "Palito", "gênero troca e o nome digitado fica")
-			_check(_view(root).is_female(), "a bola mostra o laço")
+			_check(leader.gender == "f" and leader.first_name == "Palito", "gender switches and the typed name stays")
+			_check(_view(root).is_female(), "the ball shows the bow")
 		4:
 			_shot("p2_personalizado")
 			_click(_text(root, "Confirmar"))
 		5:
-			_check(main.modal_open and not main.playing, "partido é obrigatório antes de começar")
+			_check(main.modal_open and not main.playing, "a party is required before starting")
 			_shot("p3_partidos")
-			_check(not (_named(root, "my_compass") as Control).is_visible_in_tree(), "sem criar partido, não há bússola para escolher")
+			_check(not (_named(root, "my_compass") as Control).is_visible_in_tree(), "without creating a party, there is no compass to choose")
 			(_named(root, "found_toggle") as Button).pressed.emit()
-			_check((_named(root, "my_compass") as Control).is_visible_in_tree(), "criar partido abre a bússola")
+			_check((_named(root, "my_compass") as Control).is_visible_in_tree(), "creating a party opens the compass")
 			(_named(root, "party_name") as LineEdit).text = ""
 			_text(root, "Fundar partido").pressed.emit()
 		6:
-			_check(not main.playing, "nome vazio não funda")
+			_check(not main.playing, "an empty name does not found")
 			var data: Dictionary = w.politics.data_of("BRA")
 			(_named(root, "party_name") as LineEdit).text = data.parties[0].name
 			_click(_text(root, "Fundar partido"))
 		7:
-			_check(not main.playing, "nome repetido não funda")
+			_check(not main.playing, "a repeated name does not found")
 			(_named(root, "party_name") as LineEdit).text = "Partido do Palito"
 			_click(_text(root, "Fundar partido"))
 		8:
 			_check(main.playing, "fundar inicia a partida")
 			w = Game.world
-			_check(w.politics.player_party(w).name == "Partido do Palito", "jogador pertence ao partido fundado")
-			_check(w.leader.first_name == "Palito" and w.leader.gender == "f", "personagem chega à partida")
+			_check(w.politics.player_party(w).name == "Partido do Palito", "the player belongs to the founded party")
+			_check(w.leader.first_name == "Palito" and w.leader.gender == "f", "character reaches the match")
 			main._set_speed(0)
 			hud._desk.current_tab = hud._politics_tab
 		9:
 			_shot("p4_parlamento")
-			_check(hud._dock.items().filter(func(i): return i.window_index >= 0).size() == hud._desk.get_tab_count(), "o dock tem um ícone por janela")
-			_check(not hud._politics._hemicycle._seats.is_empty(), "plenário desenhado")
+			_check(hud._dock.items().filter(func(i): return i.window_index >= 0).size() == hud._desk.get_tab_count(), "the dock has one icon per window")
+			_check(not hud._politics._hemicycle._seats.is_empty(), "chamber drawn")
 			var total: int = w.politics.data_of("BRA").seats_total
-			_check(hud._politics._hemicycle._seats.size() == total, "um ponto por assento")
-			_check(hud._politics._hemicycle.seat_positions(total).size() == total, "uma posição por assento")
-			# A lista fica abaixo da dobra da aba: na interface real, o jogador rola até ela.
+			_check(hud._politics._hemicycle._seats.size() == total, "one dot per seat")
+			_check(hud._politics._hemicycle.seat_positions(total).size() == total, "one position per seat")
+			# The list stays below the fold of the tab: in the real interface, the player scrolls to it.
 			_text(hud._politics._bills, "Plano nacional").pressed.emit()
 		10:
 			var status: String = hud._politics._status.text
-			_check(status.contains("Plano nacional") and status.contains("parlamento"), "o projeto vai ao parlamento: " + status)
-			_check(_text(hud._politics._bills, "Plano nacional").disabled, "projeto votado sai da pauta")
+			_check(status.contains("Plano nacional") and status.contains("parlamento"), "the project goes to parliament:" + status)
+			_check(_text(hud._politics._bills, "Plano nacional").disabled, "voted project leaves the agenda")
 			hud._politics.party_requested.emit()
 		11:
-			_check(main.modal_open, "trocar partido abre a escolha")
+			_check(main.modal_open, "switching party opens the choice")
 			_shot("p5_trocar")
-			_check(_text(root, "Ficar em Partido do Palito") != null, "partido atual aparece como ficar")
+			_check(_text(root, "Ficar em Partido do Palito") != null, "current party appears as stay")
 			_click(_text(root, "Cancelar"))
 		12:
-			_check(not main.modal_open, "cancelar fecha a janela")
+			_check(not main.modal_open, "cancel closes the window")
 			main.map.select(w.by_iso["ARG"])
 			hud.show_country(w.by_iso["ARG"])
 		13:
-			_check(hud._dossier_dyn.gov_party.text != "—", "dossiê mostra o partido no governo: " + hud._dossier_dyn.gov_party.text)
+			_check(hud._dossier_dyn.gov_party.text != "—", "dossier shows the party in government:" + hud._dossier_dyn.gov_party.text)
 			_shot("p6_dossie")
 			main.map.select(null)
 			hud.show_country(null)
-			# Orçamento direto pelos controles da aba Fiscal.
+			# Direct budget through the Fiscal tab controls.
 			hud._desk.current_tab = 1
 			income0 = w.player.sp_social
 			(hud._sliders.sp_social as HSlider).value = income0 * 100.0 + 2.0
 		14:
-			_check(absf(w.player.sp_social - income0 - 0.02) < 0.002, "o controle muda o gasto na hora: %s" % w.player.sp_social)
-			_check(not hud._sliders.has("tax_income") and not hud._sliders.has("tariff"), "tributos não têm controle deslizante")
-			_check(hud._dyn.f_rate_tax_income.text.ends_with("%"), "a aba mostra a alíquota em vigor: " + hud._dyn.f_rate_tax_income.text)
+			_check(absf(w.player.sp_social - income0 - 0.02) < 0.002, "the control changes spending right away: %s" % w.player.sp_social)
+			_check(not hud._sliders.has("tax_income") and not hud._sliders.has("tariff"), "taxes have no slider")
+			_check(hud._dyn.f_rate_tax_income.text.ends_with("%"), "the tab shows the rate in force:" + hud._dyn.f_rate_tax_income.text)
 			_shot("p7_orcamento")
 		15:
 			# Uma lei obriga o valor e trava o controle.
@@ -162,11 +162,11 @@ func _process(delta: float) -> void:
 			hud._sync_sliders()
 			hud.refresh(true)
 		16:
-			_check(not (hud._sliders.sp_health as HSlider).editable, "lei trava o controle")
-			_check(hud._slider_labels.sp_health.text.begins_with("Por lei"), "controle diz que é por lei: " + hud._slider_labels.sp_health.text)
-			_check(absf(w.player.sp_health - 0.09) < 0.001, "o gasto segue a lei")
+			_check(not (hud._sliders.sp_health as HSlider).editable, "law locks the control")
+			_check(hud._slider_labels.sp_health.text.begins_with("Por lei"), "control says it is by law:" + hud._slider_labels.sp_health.text)
+			_check(absf(w.player.sp_health - 0.09) < 0.001, "spending follows the law")
 			_shot("p8_aprovado")
-			# Projeto de lei aprovado também aparece no controle.
+			# A bill that is approved also appears in the control.
 			hud._desk.current_tab = hud._politics_tab
 		17:
 			infra0 = (hud._sliders.sp_infra as HSlider).value
@@ -176,13 +176,13 @@ func _process(delta: float) -> void:
 				w.player.next_election = 9999.0
 				w.tick_day()
 			hud._sync_sliders()
-			_check((hud._sliders.sp_infra as HSlider).value > infra0, "projeto aprovado aparece no controle")
+			_check((hud._sliders.sp_infra as HSlider).value > infra0, "approved project appears in the control")
 			main._save_game()
 		19:
 			main._load_game()
 		20:
-			_check(Game.world.politics.player_party(Game.world).name == "Partido do Palito", "carregar mantém o partido")
-			_check(Game.world.leader.first_name == "Palito" and Game.world.leader.gender == "f", "carregar mantém o personagem")
+			_check(Game.world.politics.player_party(Game.world).name == "Partido do Palito", "loading keeps the party")
+			_check(Game.world.leader.first_name == "Palito" and Game.world.leader.gender == "f", "loading keeps the character")
 			SaveService.delete_files()
 			print("RESULT: ", failures, " failures")
 			get_tree().quit(1 if failures > 0 else 0)

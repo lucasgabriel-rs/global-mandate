@@ -26,30 +26,30 @@ theme = ExtResource("1_theme")
 color = Color(0.01, 0.03, 0.05, 0.62)
 script = ExtResource("2_script")
 
-[node name="Centro" type="CenterContainer" parent="."]
+[node name="Center" type="CenterContainer" parent="."]
 layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="Painel" type="PanelContainer" parent="Centro"]
+[node name="Panel" type="PanelContainer" parent="Center"]
 custom_minimum_size = Vector2(760, 0)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
 
-[node name="col" type="VBoxContainer" parent="Centro/Painel"]
+[node name="col" type="VBoxContainer" parent="Center/Panel"]
 unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 8
 
-[node name="title" type="Label" parent="Centro/Painel/col"]
+[node name="title" type="Label" parent="Center/Panel/col"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.85, 0.3, 0.25, 1)
 theme_override_font_sizes/font_size = 24
 text = "Caixa dois"
 
-[node name="body" type="Label" parent="Centro/Painel/col"]
+[node name="body" type="Label" parent="Center/Panel/col"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
@@ -58,7 +58,7 @@ theme_override_font_sizes/font_size = 14
 text = "Dinheiro por fora do orçamento oficial. Rende hoje e cobra amanhã."
 autowrap_mode = 3
 
-[node name="status" type="Label" parent="Centro/Painel/col"]
+[node name="status" type="Label" parent="Center/Panel/col"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
@@ -66,30 +66,30 @@ theme_override_font_sizes/font_size = 13
 text = "Percepção: 0"
 autowrap_mode = 3
 
-[node name="Rolagem" type="ScrollContainer" parent="Centro/Painel/col"]
+[node name="Scroll" type="ScrollContainer" parent="Center/Panel/col"]
 custom_minimum_size = Vector2(0, 340)
 layout_mode = 2
 horizontal_scroll_mode = 0
 
-[node name="Conteudo" type="VBoxContainer" parent="Centro/Painel/col/Rolagem"]
+[node name="Content" type="VBoxContainer" parent="Center/Panel/col/Scroll"]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 theme_override_constants/separation = 8
 
-[node name="Votos" type="VBoxContainer" parent="Centro/Painel/col/Rolagem/Conteudo"]
+[node name="Votes" type="VBoxContainer" parent="Center/Panel/col/Scroll/Content"]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 4
 
-[node name="votos_titulo" type="Label" parent="Centro/Painel/col/Rolagem/Conteudo/Votos"]
+[node name="votes_title" type="Label" parent="Center/Panel/col/Scroll/Content/Votes"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.949, 0.702, 0.239, 1)
 theme_override_font_sizes/font_size = 15
 text = "Comprar votos"
 
-[node name="votos_desc" type="Label" parent="Centro/Painel/col/Rolagem/Conteudo/Votos"]
+[node name="votes_desc" type="Label" parent="Center/Panel/col/Scroll/Content/Votes"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
@@ -97,11 +97,11 @@ theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_font_sizes/font_size = 12
 autowrap_mode = 3
 
-[node name="Escolhas" type="HBoxContainer" parent="Centro/Painel/col/Rolagem/Conteudo/Votos"]
+[node name="Choices" type="HBoxContainer" parent="Center/Panel/col/Scroll/Content/Votes"]
 layout_mode = 2
 theme_override_constants/separation = 6
 
-[node name="norm_pick" type="OptionButton" parent="Centro/Painel/col/Rolagem/Conteudo/Votos/Escolhas"]
+[node name="norm_pick" type="OptionButton" parent="Center/Panel/col/Scroll/Content/Votes/Choices"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -109,7 +109,7 @@ focus_mode = 0
 theme_override_font_sizes/font_size = 12
 fit_to_longest_item = false
 
-[node name="party_pick" type="OptionButton" parent="Centro/Painel/col/Rolagem/Conteudo/Votos/Escolhas"]
+[node name="party_pick" type="OptionButton" parent="Center/Panel/col/Scroll/Content/Votes/Choices"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -117,26 +117,26 @@ focus_mode = 0
 theme_override_font_sizes/font_size = 12
 fit_to_longest_item = false
 
-[node name="side_pick" type="OptionButton" parent="Centro/Painel/col/Rolagem/Conteudo/Votos/Escolhas"]
+[node name="side_pick" type="OptionButton" parent="Center/Panel/col/Scroll/Content/Votes/Choices"]
 unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0
 theme_override_font_sizes/font_size = 12
 
-[node name="bribe" type="Button" parent="Centro/Painel/col/Rolagem/Conteudo/Votos"]
+[node name="bribe" type="Button" parent="Center/Panel/col/Scroll/Content/Votes"]
 unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "Comprar voto"
 
-[node name="Acoes" type="VBoxContainer" parent="Centro/Painel/col/Rolagem/Conteudo"]
+[node name="Actions" type="VBoxContainer" parent="Center/Panel/col/Scroll/Content"]
 unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 6
 
-[node name="Historico" type="Label" parent="Centro/Painel/col/Rolagem/Conteudo"]
+[node name="History" type="Label" parent="Center/Panel/col/Scroll/Content"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
@@ -144,14 +144,14 @@ theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_font_sizes/font_size = 12
 autowrap_mode = 3
 
-[node name="feedback" type="Label" parent="Centro/Painel/col"]
+[node name="feedback" type="Label" parent="Center/Panel/col"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 13
 autowrap_mode = 3
 
-[node name="Fechar" type="Button" parent="Centro/Painel/col"]
+[node name="Close" type="Button" parent="Center/Panel/col"]
 unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0

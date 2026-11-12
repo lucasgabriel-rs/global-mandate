@@ -11,7 +11,7 @@ theme = ExtResource("1_theme")
 theme_override_constants/separation = 6
 script = ExtResource("2_script")
 
-[node name="Titulo" type="Label" parent="."]
+[node name="Title" type="Label" parent="."]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_font_sizes/font_size = 11
@@ -25,30 +25,30 @@ theme_override_font_sizes/font_size = 14
 text = "Bolsa"
 autowrap_mode = 3
 
-[node name="Indice" type="HBoxContainer" parent="."]
+[node name="Index" type="HBoxContainer" parent="."]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 10
 
-[node name="index_value" type="Label" parent="Indice"]
+[node name="index_value" type="Label" parent="Index"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 22
 text = "100"
 
-[node name="Variacoes" type="VBoxContainer" parent="Indice"]
+[node name="Changes" type="VBoxContainer" parent="Index"]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 theme_override_constants/separation = 0
 
-[node name="index_month" type="Label" parent="Indice/Variacoes"]
+[node name="index_month" type="Label" parent="Index/Changes"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
 text = "+0,0% no mês"
 
-[node name="index_year" type="Label" parent="Indice/Variacoes"]
+[node name="index_year" type="Label" parent="Index/Changes"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
@@ -75,51 +75,51 @@ title = "Valor de mercado (US$ bi)"
 format = "num0"
 series_key = "mcap"
 
-[node name="Numeros" type="GridContainer" parent="."]
+[node name="Numbers" type="GridContainer" parent="."]
 layout_mode = 2
 theme_override_constants/h_separation = 12
 theme_override_constants/v_separation = 2
 columns = 2
 
-[node name="total_cap" type="Label" parent="Numeros"]
+[node name="total_cap" type="Label" parent="Numbers"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 12
 text = "Valor de mercado: US$ 0"
 
-[node name="cap_gdp" type="Label" parent="Numeros"]
+[node name="cap_gdp" type="Label" parent="Numbers"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 12
 text = "0% do PIB"
 
-[node name="pe" type="Label" parent="Numeros"]
+[node name="pe" type="Label" parent="Numbers"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
 text = "P/L médio: 0"
 
-[node name="dy" type="Label" parent="Numeros"]
+[node name="dy" type="Label" parent="Numbers"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
 text = "Dividendos: 0%"
 
-[node name="listed" type="Label" parent="Numeros"]
+[node name="listed" type="Label" parent="Numbers"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
 text = "0 listadas"
 
-[node name="state_cap" type="Label" parent="Numeros"]
+[node name="state_cap" type="Label" parent="Numbers"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
 text = "Estado: US$ 0"
 
-[node name="ALTAS" type="Label" parent="."]
+[node name="GainersHeading" type="Label" parent="."]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_font_sizes/font_size = 11
@@ -131,7 +131,7 @@ layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 2
 
-[node name="BAIXAS" type="Label" parent="."]
+[node name="Losers" type="Label" parent="."]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_font_sizes/font_size = 11
@@ -143,7 +143,7 @@ layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 2
 
-[node name="MOVIMENTOS" type="Label" parent="."]
+[node name="Moves" type="Label" parent="."]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_font_sizes/font_size = 11

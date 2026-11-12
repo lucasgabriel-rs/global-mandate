@@ -1,9 +1,9 @@
 extends SceneTree
-## Códigos Trabalhista e Eleitoral: semeadura, salário mínimo e desemprego, cláusula de barreira e reeleição.
-## Uso: godot --headless --path . --script tests/code_trabalho_eleicoes.gd
+## Labor and Electoral Codes: seeding, minimum wage and unemployment, electoral threshold and reelection.
+## Uso: godot --headless --path . --script tests/code_labor_electoral.gd
 
 var failures := 0
-## Prioridade acima de qualquer norma: o teste fixa o valor por cima do texto original.
+## Priority above any norm: the test fixes the value on top of the original text.
 const PRIO := 1e12
 
 
@@ -49,20 +49,20 @@ func _seeds() -> void:
 		var leg: Legislation = world.legislation
 		for id: String in ["trabalhista", "eleitoral"]:
 			var norm := leg.code_norm(id)
-			_check(not norm.is_empty() and norm.get("base_code", false) and norm.type == "complementar", "%s começa com o código %s como lei complementar" % [iso, id])
+			_check(not norm.is_empty() and norm.get("base_code", false) and norm.type == "complementar", "%s starts with the code %s as a complementary law" % [iso, id])
 			if norm.is_empty():
 				continue
 			var compiled := LawCompiler.compile(norm.program, leg.compile_context(norm.type))
-			_check(compiled.ok, "o texto inicial do código %s de %s compila" % [id, iso])
+			_check(compiled.ok, "the initial text of the %s code of %s compiles" % [id, iso])
 		_months(world, 2)
 		var stats: Dictionary = world.player.code_stats
 		for key: String in ["cobertura_previdencia", "deficit_previdencia", "rigidez_trabalho", "comparecimento"]:
 			_check(stats.has(key), "%s guarda %s" % [iso, key])
-		_check(leg.code_standing("trabalhista").has("jornada") and leg.code_standing("eleitoral").has("barreira"), "%s: o texto semeado entra em vigor" % iso)
-		_check(absf(world.player.law_unemp) < 0.01, "%s: o código original não mexe no desemprego (%.3f)" % [iso, world.player.law_unemp])
+		_check(leg.code_standing("trabalhista").has("jornada") and leg.code_standing("eleitoral").has("barreira"), "%s: the seeded text takes effect" % iso)
+		_check(absf(world.player.law_unemp) < 0.01, "%s: the original code does not move unemployment (%.3f)" % [iso, world.player.law_unemp])
 
 
-## O mesmo país, com e sem salário mínimo alto: o desemprego sobe com o tempo.
+## The same country, with and without a high minimum wage: unemployment rises over time.
 func _minimum_wage() -> void:
 	var base := _fresh()
 	var high := _fresh()
@@ -70,25 +70,25 @@ func _minimum_wage() -> void:
 	_months(high, 1)
 	var wage := high.player.gdp_pc() * 0.6 / 12.0 * 1.6
 	_put_value(high, "trabalhista", "tb_minwage", {"amount": wage})
-	_check(absf(float(high.legislation.standing.minwage.valor.value) - wage) < 0.01, "o bloco trabalhista grava o salário mínimo no mesmo lugar do avançado")
+	_check(absf(float(high.legislation.standing.minwage.valor.value) - wage) < 0.01, "the labor block writes the minimum wage in the same place as the advanced one")
 	_months(base, 18)
 	_months(high, 18)
 	print("  desemprego: base %.2f%%, mínimo alto %.2f%%" % [base.player.unemp * 100.0, high.player.unemp * 100.0])
-	_check(high.player.unemp > base.player.unemp + 0.01, "salário mínimo alto sobe o desemprego com o tempo")
-	# Aposentadoria mais tarde aumenta a oferta de trabalho e reduz o déficit da previdência.
+	_check(high.player.unemp > base.player.unemp + 0.01, "a high minimum wage raises unemployment over time")
+	# Retiring later increases labor supply and reduces the pension deficit.
 	var deficit0 := float(base.player.code_stats.deficit_previdencia)
 	var labor0 := base.player.law_labor
 	_put_value(base, "trabalhista", "tb_retirement", {"men": 70, "women": 70, "years": 20})
 	_months(base, 1)
-	_check(base.player.law_labor > labor0, "aposentar mais tarde aumenta a oferta de trabalho")
-	_check(float(base.player.code_stats.deficit_previdencia) < deficit0, "aposentar mais tarde reduz o déficit da previdência")
+	_check(base.player.law_labor > labor0, "retiring later increases labor supply")
+	_check(float(base.player.code_stats.deficit_previdencia) < deficit0, "retiring later reduces the pension deficit")
 	var stab0 := base.player.law_stability
 	_put_value(base, "trabalhista", "tb_strike", {"sector": "privado", "mode": "proibida"})
 	_months(base, 1)
 	_check(base.player.law_stability < stab0, "proibir a greve numa democracia tira estabilidade")
 
 
-## A mesma eleição, com o mesmo sorteio, sob duas cláusulas de barreira.
+## The same election, with the same draw, under two electoral thresholds.
 func _threshold() -> void:
 	var world := _fresh()
 	_months(world, 1)
@@ -112,31 +112,31 @@ func _threshold() -> void:
 		if float(p.vote) < 0.12:
 			small_seats += int(p.seats)
 	print("  partidos com cadeiras: barreira original %d, barreira de 12%% %d" % [low_parties, high_parties])
-	_check(is_equal_approx(float(high.threshold), 0.12), "a eleição usa a barreira do Código Eleitoral")
-	_check(high_parties < low_parties and small_seats == 0, "barreira mais alta tira os pequenos do parlamento")
-	# Abaixo do piso constitucional, vale a Constituição.
+	_check(is_equal_approx(float(high.threshold), 0.12), "the election uses the Electoral Code's threshold")
+	_check(high_parties < low_parties and small_seats == 0, "a higher threshold takes the small parties out of parliament")
+	# Below the constitutional floor, the Constitution applies.
 	_put_value(world, "eleitoral", "el_threshold", {"pct": 0})
-	var floor_rules := CodeEleitoral.rules_for(world, c)
-	_check(float(floor_rules.threshold) >= float(world.legislation.param("threshold", 3)) / 100.0 - 0.0001, "o código não desce a barreira abaixo da Constituição")
-	# O sistema é da Constituição.
+	var floor_rules := CodeElectoral.rules_for(world, c)
+	_check(float(floor_rules.threshold) >= float(world.legislation.param("threshold", 3)) / 100.0 - 0.0001, "the code does not lower the threshold below the Constitution's")
+	# The system belongs to the Constitution.
 	_put_value(world, "eleitoral", "el_system", {"system": "fptp"})
-	_check(String(CodeEleitoral.rules_for(world, c).system) == "", "a Constituição define o sistema, não o código")
+	_check(String(CodeElectoral.rules_for(world, c).system) == "", "the Constitution defines the system, not the code")
 	var before := float(c.code_stats.comparecimento)
 	_put_value(world, "eleitoral", "el_vote", {"mode": "facultativo" if String(world.legislation.code_standing("eleitoral").voto.mode) == "obrigatorio" else "obrigatorio"})
 	_months(world, 1)
-	_check(absf(float(c.code_stats.comparecimento) - before) > 0.1, "voto obrigatório muda o comparecimento")
+	_check(absf(float(c.code_stats.comparecimento) - before) > 0.1, "compulsory voting changes turnout")
 
 
 func _reelection() -> void:
 	var world := _fresh()
 	_months(world, 1)
 	_put_value(world, "eleitoral", "el_reelection", {"mode": "ilimitada"})
-	_check(CodeEleitoral.may_run_again(world), "reeleição ilimitada deixa concorrer")
+	_check(CodeElectoral.may_run_again(world), "unlimited reelection lets them run")
 	_put_value(world, "eleitoral", "el_reelection", {"mode": "uma"})
-	_check(CodeEleitoral.may_run_again(world), "no primeiro mandato, a reeleição única deixa concorrer")
+	_check(CodeElectoral.may_run_again(world), "in the first term, a single reelection lets them run")
 	world.mandates = 1
-	_check(not CodeEleitoral.may_run_again(world), "depois de uma reeleição, não há outra")
+	_check(not CodeElectoral.may_run_again(world), "after one reelection, there is no other")
 	world.mandates = 0
 	_put_value(world, "eleitoral", "el_reelection", {"mode": "proibida"})
 	var result: Dictionary = world.politics.player_election(world)
-	_check(result.barred and not result.won, "reeleição proibida: o jogador não continua no cargo")
+	_check(result.barred and not result.won, "reelection banned: the player does not stay in office")

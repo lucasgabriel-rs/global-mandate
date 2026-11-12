@@ -99,7 +99,7 @@ func _fill_codes() -> void:
 		status.text = tr("%d alteração(ões) em tramitação") % int(info.pending) if int(info.pending) > 0 else ""
 		var alter: Button = card.get_node("%alter")
 		alter.disabled = not leg.can(world, "present", code.norm_type)
-		alter.tooltip_text = tr(code.ementa) if not alter.disabled else tr("%s não pode apresentar %s.") % [tr(Legislation.ROLE_LABELS[leg.role(world)]), tr(Legislation.NORM_TYPES[code.norm_type].label)]
+		alter.tooltip_text = tr(code.summary) if not alter.disabled else tr("%s não pode apresentar %s.") % [tr(Legislation.ROLE_LABELS[leg.role(world)]), tr(Legislation.NORM_TYPES[code.norm_type].label)]
 		alter.pressed.connect(_alter_code.bind(code.id))
 		var read: Button = card.get_node("%read")
 		read.visible = not norm.is_empty()

@@ -32,28 +32,28 @@ theme = ExtResource("1_sipjd")
 theme_override_styles/panel = SubResource("StyleBoxFlat_gpqoy")
 script = ExtResource("2_iwxj6")
 
-[node name="Coluna" type="VBoxContainer" parent="." unique_id=289725578]
+[node name="Column" type="VBoxContainer" parent="." unique_id=289725578]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 6
 
-[node name="Linha" type="HBoxContainer" parent="Coluna" unique_id=352305849]
+[node name="Row" type="HBoxContainer" parent="Column" unique_id=352305849]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 6
 
-[node name="MenuDebug" type="Label" parent="Coluna/Linha" unique_id=1107871344]
+[node name="MenuDebug" type="Label" parent="Column/Row" unique_id=1107871344]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.30980393, 0.7019608, 0.8509804, 1)
 theme_override_font_sizes/font_size = 18
 text = "Menu debug"
 
-[node name="Espaco" type="Control" parent="Coluna/Linha" unique_id=878396767]
+[node name="Space" type="Control" parent="Column/Row" unique_id=878396767]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="Fechar" type="Button" parent="Coluna/Linha" unique_id=1853891451]
+[node name="Close" type="Button" parent="Column/Row" unique_id=1853891451]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Fechar (F12)"
@@ -61,29 +61,29 @@ focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "✕"
 
-[node name="Linha2" type="HBoxContainer" parent="Coluna" unique_id=1102778752]
+[node name="Row2" type="HBoxContainer" parent="Column" unique_id=1102778752]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 6
 
-[node name="Alvo" type="Label" parent="Coluna/Linha2" unique_id=165949698]
+[node name="Target" type="Label" parent="Column/Row2" unique_id=165949698]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_font_sizes/font_size = 13
 text = "Alvo"
 
-[node name="options" type="OptionButton" parent="Coluna/Linha2" unique_id=1859243329]
+[node name="options" type="OptionButton" parent="Column/Row2" unique_id=1859243329]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
 
-[node name="search" type="LineEdit" parent="Coluna" unique_id=326134593]
+[node name="search" type="LineEdit" parent="Column" unique_id=326134593]
 unique_name_in_owner = true
 layout_mode = 2
 placeholder_text = "Filtrar comandos"
 
-[node name="status" type="Label" parent="Coluna" unique_id=1956584429]
+[node name="status" type="Label" parent="Column" unique_id=1956584429]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(60, 34)
 layout_mode = 2
@@ -92,18 +92,18 @@ theme_override_font_sizes/font_size = 12
 text = "Clique em um país no mapa para torná-lo o alvo."
 autowrap_mode = 3
 
-[node name="Separador" type="ColorRect" parent="Coluna" unique_id=162666237]
+[node name="Separator" type="ColorRect" parent="Column" unique_id=162666237]
 custom_minimum_size = Vector2(0, 1)
 layout_mode = 2
 mouse_filter = 2
 color = Color(0.15294118, 0.2509804, 0.30980393, 1)
 
-[node name="Rolagem" type="ScrollContainer" parent="Coluna" unique_id=1836723329]
+[node name="Scroll" type="ScrollContainer" parent="Column" unique_id=1836723329]
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
-[node name="body" type="VBoxContainer" parent="Coluna/Rolagem" unique_id=731608916]
+[node name="body" type="VBoxContainer" parent="Column/Scroll" unique_id=731608916]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3

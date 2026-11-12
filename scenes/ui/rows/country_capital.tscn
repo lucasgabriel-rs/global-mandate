@@ -7,13 +7,13 @@ mouse_filter = 2
 theme = ExtResource("1_ocn17")
 theme_override_constants/separation = 5
 
-[node name="Separador" type="ColorRect" parent="." unique_id=62912634]
+[node name="Separator" type="ColorRect" parent="." unique_id=62912634]
 custom_minimum_size = Vector2(0, 1)
 layout_mode = 2
 mouse_filter = 2
 color = Color(0.15294118, 0.2509804, 0.30980393, 1)
 
-[node name="CAPITALDOPAIS" type="Label" parent="." unique_id=1721949322]
+[node name="CountryCapitalHeading" type="Label" parent="." unique_id=1721949322]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_constants/line_spacing = 0

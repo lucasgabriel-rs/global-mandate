@@ -1,6 +1,6 @@
 extends Node
-## Registra a geometria e o estilo de cada controle visível em todas as telas, mais uma captura de
-## cada uma. Rodar antes e depois de mexer nas cenas e comparar mostra se algo mudou de lugar.
+## Records the geometry and style of each visible control on every screen, plus a capture of
+## each one. Running before and after touching the scenes and comparing shows whether something moved.
 ## Uso: godot --path . -- --ui-layout --shots=DIR
 
 const CONTAINERS := ["VBoxContainer", "HBoxContainer", "GridContainer", "CenterContainer", "MarginContainer", "ScrollContainer", "CanvasLayer"]

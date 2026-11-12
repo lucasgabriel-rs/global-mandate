@@ -1,4 +1,4 @@
-class_name CodeTributario
+class_name CodeTax
 extends LawCode
 ## Tax Code: Taxes, rates, brackets, exemptions and contributions.
 ##
@@ -39,7 +39,7 @@ const GROUP_FIELD := {"income": "tax_income", "consumption": "tax_consumption", 
 func _init() -> void:
 	id = "tributario"
 	title = "Código Tributário"
-	ementa = "Tributos, alíquotas, faixas, isenções e contribuições."
+	summary = "Tributos, alíquotas, faixas, isenções e contribuições."
 	category = {"id": "tributario", "label": "Tributos", "color": Color("4f8f3a")}
 
 
@@ -411,10 +411,10 @@ func _stats(items: Dictionary, c: Country, m: float, calib: Dictionary) -> Dicti
 	var load := float(e.income) + float(e.consumption) + float(e.corporate)
 	var avg_irpf := float(e.irpf) / PERSONAL_BASE * float(calib.get("income", 1.0))
 	var prog := clampf(float(e.top) - avg_irpf, 0.0, 1.0) + float(e.wealth) * 3.0
-	var cesta_rel := 1.0
+	var basket_ratio := 1.0
 	if items.has("reduzida_cesta") and float(e.standard) > 0.0:
-		cesta_rel = minf(_rate(items, "reduzida_cesta") / float(e.standard), 1.0)
-	var regressive := float(e.consumption) * (0.7 + 0.3 * cesta_rel)
+		basket_ratio = minf(_rate(items, "reduzida_cesta") / float(e.standard), 1.0)
+	var regressive := float(e.consumption) * (0.7 + 0.3 * basket_ratio)
 	var pressure := maxf(load - 0.3, 0.0) * 0.5 + maxf(float(e.top) - 0.3, 0.0) * 0.25 + maxf(float(e.profit_rate) - 0.3, 0.0) * 0.25
 	pressure += maxf(float(e.standard) - 0.2, 0.0) * 0.2 + _rate(items, "fortunas") * 1.5
 	var verba := float(items.get("fiscalizacao", {}).get("verba", 0.0))
@@ -427,7 +427,7 @@ func _stats(items: Dictionary, c: Country, m: float, calib: Dictionary) -> Dicti
 		"load": load, "prog": prog, "regressive": regressive, "evasion": clampf(evasion, 0.0, 0.5), "verba": verba,
 		"iof": _rate(items, "iof"), "profit_rate": e.profit_rate, "exempt": e.exempt, "small": e.small,
 		"fortune": _rate(items, "fortunas"), "fuel": _rate(items, "seletivo_combustivel"),
-		"isencao": float(items.get("irpf_isencao", {}).get("limite", 0.0)) / maxf(m, 1.0), "cesta_rel": cesta_rel,
+		"isencao": float(items.get("irpf_isencao", {}).get("limite", 0.0)) / maxf(m, 1.0), "cesta_rel": basket_ratio,
 	}
 
 

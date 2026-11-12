@@ -25,30 +25,30 @@ anchor_bottom = 1.0
 theme = ExtResource("1_m8y4e")
 color = Color(0.01, 0.03, 0.05, 0.62)
 
-[node name="Centro" type="CenterContainer" parent="." unique_id=489764932]
+[node name="Center" type="CenterContainer" parent="." unique_id=489764932]
 layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="Painel" type="PanelContainer" parent="Centro" unique_id=1326429800]
+[node name="Panel" type="PanelContainer" parent="Center" unique_id=1326429800]
 custom_minimum_size = Vector2(700, 0)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_6wvsi")
 
-[node name="col" type="VBoxContainer" parent="Centro/Painel" unique_id=1430648824]
+[node name="col" type="VBoxContainer" parent="Center/Panel" unique_id=1430648824]
 unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 10
 
-[node name="title" type="Label" parent="Centro/Painel/col" unique_id=2073436390]
+[node name="title" type="Label" parent="Center/Panel/col" unique_id=2073436390]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.9490196, 0.7019608, 0.23921569, 1)
 theme_override_font_sizes/font_size = 24
 text = "Frente Nacional"
 
-[node name="body" type="Label" parent="Centro/Painel/col" unique_id=307596033]
+[node name="body" type="Label" parent="Center/Panel/col" unique_id=307596033]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
@@ -57,37 +57,37 @@ theme_override_font_sizes/font_size = 15
 text = "Nacionalista  ·  144 assentos  ·  24% dos votos. A bússola do partido é a média dos políticos."
 autowrap_mode = 3
 
-[node name="Linha" type="HBoxContainer" parent="Centro/Painel/col" unique_id=170595772]
+[node name="Row" type="HBoxContainer" parent="Center/Panel/col" unique_id=170595772]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 14
 
-[node name="party_compass" type="Control" parent="Centro/Painel/col/Linha" unique_id=189818420]
+[node name="party_compass" type="Control" parent="Center/Panel/col/Row" unique_id=189818420]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(240, 240)
 layout_mode = 2
 mouse_filter = 2
 script = ExtResource("2_uuaoe")
 
-[node name="Coluna" type="VBoxContainer" parent="Centro/Painel/col/Linha" unique_id=694745106]
+[node name="Column" type="VBoxContainer" parent="Center/Panel/col/Row" unique_id=694745106]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 theme_override_constants/separation = 4
 
-[node name="Rolagem" type="ScrollContainer" parent="Centro/Painel/col/Linha/Coluna" unique_id=687192541]
+[node name="Scroll" type="ScrollContainer" parent="Center/Panel/col/Row/Column" unique_id=687192541]
 custom_minimum_size = Vector2(0, 300)
 layout_mode = 2
 horizontal_scroll_mode = 0
 
-[node name="rows" type="VBoxContainer" parent="Centro/Painel/col/Linha/Coluna/Rolagem" unique_id=293152454]
+[node name="rows" type="VBoxContainer" parent="Center/Panel/col/Row/Column/Scroll" unique_id=293152454]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 theme_override_constants/separation = 4
 
-[node name="Fechar" type="Button" parent="Centro/Painel/col" unique_id=1294412531]
+[node name="Close" type="Button" parent="Center/Panel/col" unique_id=1294412531]
 unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0

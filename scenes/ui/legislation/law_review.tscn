@@ -42,157 +42,157 @@ theme_override_styles/panel = SubResource("s1")
 script = ExtResource("e1")
 theme = ExtResource("e2")
 
-[node name="Coluna" type="VBoxContainer" parent="."]
+[node name="Column" type="VBoxContainer" parent="."]
 theme_override_constants/separation = 8
 
-[node name="Cabeca" type="HBoxContainer" parent="Coluna"]
+[node name="Head" type="HBoxContainer" parent="Column"]
 theme_override_constants/separation = 6
 
-[node name="Titulo" type="Label" parent="Coluna/Cabeca"]
+[node name="Title" type="Label" parent="Column/Head"]
 mouse_filter = 2
 theme_override_font_sizes/font_size = 20
 theme_override_colors/font_color = Color(0.9490196, 0.7019608, 0.23921569, 1)
 text = "Antes de enviar: efeitos esperados"
 
-[node name="Espaco" type="Control" parent="Coluna/Cabeca"]
+[node name="Space" type="Control" parent="Column/Head"]
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="rv_back" type="Button" parent="Coluna/Cabeca"]
+[node name="rv_back" type="Button" parent="Column/Head"]
 unique_name_in_owner = true
 text = "Voltar ao editor"
 focus_mode = 0
 mouse_default_cursor_shape = 2
 
-[node name="rv_send" type="Button" parent="Coluna/Cabeca"]
+[node name="rv_send" type="Button" parent="Column/Head"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 32)
 text = "Enviar ao parlamento"
 focus_mode = 0
 mouse_default_cursor_shape = 2
 
-[node name="rv_norm" type="Label" parent="Coluna"]
+[node name="rv_norm" type="Label" parent="Column"]
 unique_name_in_owner = true
 mouse_filter = 2
 theme_override_font_sizes/font_size = 14
 theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
 autowrap_mode = 3
 
-[node name="Rolagem" type="ScrollContainer" parent="Coluna"]
+[node name="Scroll" type="ScrollContainer" parent="Column"]
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
-[node name="Corpo" type="VBoxContainer" parent="Coluna/Rolagem"]
+[node name="Body" type="VBoxContainer" parent="Column/Scroll"]
 size_flags_horizontal = 3
 theme_override_constants/separation = 10
 
-[node name="Numeros" type="HBoxContainer" parent="Coluna/Rolagem/Corpo"]
+[node name="Numbers" type="HBoxContainer" parent="Column/Scroll/Body"]
 theme_override_constants/separation = 8
 
-[node name="Aprovacao" type="PanelContainer" parent="Coluna/Rolagem/Corpo/Numeros"]
+[node name="Approval" type="PanelContainer" parent="Column/Scroll/Body/Numbers"]
 size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("s2")
 
-[node name="Coluna" type="VBoxContainer" parent="Coluna/Rolagem/Corpo/Numeros/Aprovacao"]
+[node name="Column" type="VBoxContainer" parent="Column/Scroll/Body/Numbers/Approval"]
 theme_override_constants/separation = 2
 
-[node name="AprovacaoTitulo" type="Label" parent="Coluna/Rolagem/Corpo/Numeros/Aprovacao/Coluna"]
+[node name="ApprovalTitle" type="Label" parent="Column/Scroll/Body/Numbers/Approval/Column"]
 mouse_filter = 2
 theme_override_font_sizes/font_size = 11
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 text = "APROVAÇÃO DO GOVERNO"
 
-[node name="rv_approval" type="Label" parent="Coluna/Rolagem/Corpo/Numeros/Aprovacao/Coluna"]
+[node name="rv_approval" type="Label" parent="Column/Scroll/Body/Numbers/Approval/Column"]
 unique_name_in_owner = true
 mouse_filter = 2
 theme_override_font_sizes/font_size = 18
 
-[node name="rv_popularity" type="Label" parent="Coluna/Rolagem/Corpo/Numeros/Aprovacao/Coluna"]
+[node name="rv_popularity" type="Label" parent="Column/Scroll/Body/Numbers/Approval/Column"]
 unique_name_in_owner = true
 mouse_filter = 2
 theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 autowrap_mode = 3
 
-[node name="Orcamento" type="PanelContainer" parent="Coluna/Rolagem/Corpo/Numeros"]
+[node name="Budget" type="PanelContainer" parent="Column/Scroll/Body/Numbers"]
 size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("s2")
 
-[node name="Coluna" type="VBoxContainer" parent="Coluna/Rolagem/Corpo/Numeros/Orcamento"]
+[node name="Column" type="VBoxContainer" parent="Column/Scroll/Body/Numbers/Budget"]
 theme_override_constants/separation = 2
 
-[node name="OrcamentoTitulo" type="Label" parent="Coluna/Rolagem/Corpo/Numeros/Orcamento/Coluna"]
+[node name="BudgetTitle" type="Label" parent="Column/Scroll/Body/Numbers/Budget/Column"]
 mouse_filter = 2
 theme_override_font_sizes/font_size = 11
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 text = "ORÇAMENTO POR ANO"
 
-[node name="rv_budget" type="Label" parent="Coluna/Rolagem/Corpo/Numeros/Orcamento/Coluna"]
+[node name="rv_budget" type="Label" parent="Column/Scroll/Body/Numbers/Budget/Column"]
 unique_name_in_owner = true
 mouse_filter = 2
 theme_override_font_sizes/font_size = 18
 
-[node name="rv_budget_note" type="Label" parent="Coluna/Rolagem/Corpo/Numeros/Orcamento/Coluna"]
+[node name="rv_budget_note" type="Label" parent="Column/Scroll/Body/Numbers/Budget/Column"]
 unique_name_in_owner = true
 mouse_filter = 2
 theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 autowrap_mode = 3
 
-[node name="Grupos" type="HBoxContainer" parent="Coluna/Rolagem/Corpo"]
+[node name="Groups" type="HBoxContainer" parent="Column/Scroll/Body"]
 theme_override_constants/separation = 8
 
-[node name="Sociais" type="PanelContainer" parent="Coluna/Rolagem/Corpo/Grupos"]
+[node name="Social" type="PanelContainer" parent="Column/Scroll/Body/Groups"]
 size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("s2")
 
-[node name="Coluna" type="VBoxContainer" parent="Coluna/Rolagem/Corpo/Grupos/Sociais"]
+[node name="Column" type="VBoxContainer" parent="Column/Scroll/Body/Groups/Social"]
 theme_override_constants/separation = 2
 
-[node name="SociaisTitulo" type="Label" parent="Coluna/Rolagem/Corpo/Grupos/Sociais/Coluna"]
+[node name="SocialTitle" type="Label" parent="Column/Scroll/Body/Groups/Social/Column"]
 mouse_filter = 2
 theme_override_font_sizes/font_size = 11
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 text = "GRUPOS SOCIAIS"
 
-[node name="rv_groups" type="RichTextLabel" parent="Coluna/Rolagem/Corpo/Grupos/Sociais/Coluna"]
+[node name="rv_groups" type="RichTextLabel" parent="Column/Scroll/Body/Groups/Social/Column"]
 unique_name_in_owner = true
 size_flags_horizontal = 3
 theme_override_font_sizes/normal_font_size = 13
 bbcode_enabled = true
 fit_content = true
 
-[node name="Partidos" type="PanelContainer" parent="Coluna/Rolagem/Corpo/Grupos"]
+[node name="Parties" type="PanelContainer" parent="Column/Scroll/Body/Groups"]
 size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("s2")
 
-[node name="Coluna" type="VBoxContainer" parent="Coluna/Rolagem/Corpo/Grupos/Partidos"]
+[node name="Column" type="VBoxContainer" parent="Column/Scroll/Body/Groups/Parties"]
 theme_override_constants/separation = 2
 
-[node name="PartidosTitulo" type="Label" parent="Coluna/Rolagem/Corpo/Grupos/Partidos/Coluna"]
+[node name="PartiesTitle" type="Label" parent="Column/Scroll/Body/Groups/Parties/Column"]
 mouse_filter = 2
 theme_override_font_sizes/font_size = 11
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 text = "REAÇÃO DOS PARTIDOS"
 
-[node name="rv_parties" type="RichTextLabel" parent="Coluna/Rolagem/Corpo/Grupos/Partidos/Coluna"]
+[node name="rv_parties" type="RichTextLabel" parent="Column/Scroll/Body/Groups/Parties/Column"]
 unique_name_in_owner = true
 size_flags_horizontal = 3
 theme_override_font_sizes/normal_font_size = 13
 bbcode_enabled = true
 fit_content = true
 
-[node name="TramitacaoTitulo" type="Label" parent="Coluna/Rolagem/Corpo"]
+[node name="ProcedureTitle" type="Label" parent="Column/Scroll/Body"]
 mouse_filter = 2
 theme_override_font_sizes/font_size = 11
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 text = "CAMINHO NO PARLAMENTO"
 
-[node name="rv_track" parent="Coluna/Rolagem/Corpo" instance=ExtResource("track")]
+[node name="rv_track" parent="Column/Scroll/Body" instance=ExtResource("track")]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="rv_feedback" type="Label" parent="Coluna"]
+[node name="rv_feedback" type="Label" parent="Column"]
 unique_name_in_owner = true
 mouse_filter = 2
 theme_override_font_sizes/font_size = 12

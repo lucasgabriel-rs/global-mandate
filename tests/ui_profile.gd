@@ -1,5 +1,5 @@
 extends Node
-## Mede quanto tempo o quadro fica parado em cada operação pesada do jogo.
+## Measures how long the frame stays stalled in each heavy operation of the game.
 ## Uso: godot --path . -- --ui-profile
 
 var main: Node
@@ -120,7 +120,7 @@ func _run() -> void:
 	_time("novo mundo (GameWorld.setup)", func():
 		var other := GameWorld.new()
 		other.setup())
-	# Quadros reais a 4x, olhando o Brasil de perto, por 20 s.
+	# Real frames at 4x, looking closely at Brazil, for 20 s.
 	main._set_speed(3)
 	main.map.focus_on(w.by_iso["BRA"])
 	w.day = 28

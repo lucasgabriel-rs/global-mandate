@@ -1,7 +1,7 @@
 extends Node
-## Aperta todos os comandos do menu debug, um por vez, avançando alguns dias depois de cada um.
-## Erros de script ficam no log logo depois da linha "debug: <comando>".
-## Uso: godot --path . -- --ui-debug --shots=/caminho/da/pasta
+## Presses every command of the debug menu, one at a time, advancing a few days after each one.
+## Script errors stay in the log right after the line "debug: <command>".
+## Usage: godot --path . -- --ui-debug --shots=/path/to/folder
 
 var main: Node
 var want_start := false
@@ -71,7 +71,7 @@ func _command(label: String) -> int:
 	return 0
 
 
-## Limpa o que o comando abriu, como um jogador faria: janela, demarcação ou desenho.
+## Cleans up what the command opened, as a player would: window, demarcation or drawing.
 func _settle() -> void:
 	var guard := 0
 	while guard < 12:
@@ -94,7 +94,7 @@ func _settle() -> void:
 			main._show_prompt(main.prompts.pop_front())
 
 
-## Fecha a janela de verdade: o criador abre com setas, então "Confirmar" vem antes da primeira opção.
+## Closes the window for real: the creator opens with arrows, so "Confirmar" comes before the first option.
 func _last_choice(dim: Node) -> Button:
 	var confirm := _named(dim, "Confirmar")
 	return confirm if confirm else _first_button(dim)
@@ -143,11 +143,11 @@ func _process(delta: float) -> void:
 			_key(KEY_F12)
 			phase = 2
 		2:
-			_check(not menu.visible, "F12 fecha o menu")
+			_check(not menu.visible, "F12 closes the menu")
 			_key(KEY_F12)
 			phase = 3
 		3:
-			_check(menu.visible, "F12 abre o menu")
+			_check(menu.visible, "F12 opens the menu")
 			_shot("g1_menu")
 			menu._search.text = "dilema"
 			menu._apply_filter("dilema")
@@ -160,24 +160,24 @@ func _process(delta: float) -> void:
 				for b: Button in row.buttons:
 					if b.visible:
 						shown += 1
-			_check(shown == 9, "filtro mostra só os dilemas (%d)" % shown)
+			_check(shown == 9, "filter shows only the dilemmas (%d)" % shown)
 			menu._search.text = ""
 			menu._apply_filter("")
 			phase = 40
 		40:
-			# Clique real em um botão do painel.
+			# Real click on a panel button.
 			menu.set_meta("dp", float(Game.world.politics.party_fund(Game.world)))
 			var b: Button = menu._rows[1].buttons[0]
 			_click(b.get_global_rect().get_center())
 			phase = 41
 			wait = 0.2
 		41:
-			_check(Game.world.politics.party_fund(Game.world) > float(menu.get_meta("dp")), "clique no botão executa o comando")
-			# Clique em um país no mapa muda o alvo, com o menu aberto.
+			_check(Game.world.politics.party_fund(Game.world) > float(menu.get_meta("dp")), "clicking the button executes the command")
+			# Click on a country on the map changes the target, with the menu open.
 			var pos: Vector2 = main.map.get_canvas_transform() * Game.world.by_iso["USA"].center
 			_click(pos)
-			_check(menu.target == Game.world.by_iso["USA"], "clique no mapa troca o alvo para EUA (%s)" % (menu.target.name if menu.target else "nenhum"))
-			_check(menu._options.get_item_text(menu._options.selected) == "Estados Unidos", "lista mostra o alvo")
+			_check(menu.target == Game.world.by_iso["USA"], "clicking the map switches the target to USA (%s)" % (menu.target.name if menu.target else "nenhum"))
+			_check(menu._options.get_item_text(menu._options.selected) == "Estados Unidos", "list shows the target")
 			_shot("g3_alvo")
 			phase = 42
 		42:
@@ -200,25 +200,25 @@ func _process(delta: float) -> void:
 			get_tree().quit(1 if failures > 0 else 0)
 
 
-## O país do próprio jogador é um alvo válido, e cada comando de "Jogador" muda o que promete.
+## The player's own country is a valid target, and each "Jogador" command changes what it promises.
 func _own_country() -> void:
 	var w: GameWorld = Game.world
 	var me: Country = w.player
 	_click(main.map.get_canvas_transform() * me.center)
-	_check(menu.target == me, "clique no próprio país vira o alvo")
-	_check(menu._options.get_item_text(menu._options.selected) == "%s (você)" % me.name, "lista mostra o próprio país")
+	_check(menu.target == me, "clicking your own country makes it the target")
+	_check(menu._options.get_item_text(menu._options.selected) == "%s (você)" % me.name, "list shows your own country")
 	var war: Button = menu._buttons[_command("Declarar guerra ao alvo")]
-	_check(war.disabled, "guerra contra si mesmo fica desativada")
+	_check(war.disabled, "war against yourself is disabled")
 	var relation: Button = menu._buttons[_command("Relação +100")]
-	_check(relation.disabled, "relação consigo mesmo fica desativada")
+	_check(relation.disabled, "relation with yourself is disabled")
 	var wars: int = w.diplomacy.wars.size()
 	menu.run(_command("Declarar guerra ao alvo"))
 	_check(w.diplomacy.wars.size() == wars and menu._status.text.contains("outro país"), "comando recusado explica o motivo")
 	var demand := me.demand_shock
 	menu.run(_command("Recessão: Alvo"))
-	_check(me.demand_shock < demand, "recessão no alvo atinge o próprio país")
+	_check(me.demand_shock < demand, "recession on the target hits your own country")
 	menu.run(_command("Crise bancária: Alvo"))
-	_check(me.crisis_cooldown > 0.0, "crise bancária no alvo atinge o próprio país")
+	_check(me.crisis_cooldown > 0.0, "banking crisis on the target hits your own country")
 	var cases := [
 		["Aprovação 90%", func(): return me.approval == 0.9],
 		["Aprovação 5%", func(): return me.approval == 0.05],
@@ -230,28 +230,28 @@ func _own_country() -> void:
 	]
 	for case: Array in cases:
 		menu.run(_command(case[0]))
-		_check(case[1].call(), "efeito no próprio país: " + String(case[0]))
+		_check(case[1].call(), "effect on your own country:" + String(case[0]))
 	var reserves := me.reserves
 	menu.run(_command("Reservas +US$ 500 bi"))
-	_check(me.reserves == reserves + 500.0, "efeito no próprio país: reservas")
+	_check(me.reserves == reserves + 500.0, "effect on your own country: reserves")
 	var debt := me.debt_loc
 	menu.run(_command("Dívida +50% do PIB"))
-	_check(me.debt_loc > debt, "efeito no próprio país: dívida")
+	_check(me.debt_loc > debt, "effect on your own country: debt")
 	var troops := me.troops
 	menu.run(_command("Tropas e equipamento x2"))
-	_check(me.troops == troops * 2.0, "efeito no próprio país: tropas")
+	_check(me.troops == troops * 2.0, "effect on your own country: troops")
 	var nukes := me.nukes
 	menu.run(_command("Dar 1.000 ogivas"))
-	_check(me.nukes == nukes + 1000, "efeito no próprio país: ogivas")
+	_check(me.nukes == nukes + 1000, "effect on your own country: warheads")
 	menu.run(_command("Aprovação 90%"))
 	menu.run(_command("Estabilidade 90%"))
 	menu.set_target(w.by_iso["ARG"])
-	_check(not war.disabled, "outro país reativa os comandos")
+	_check(not war.disabled, "another country re-enables the commands")
 	main.map.select(null)
 	main.hud.show_country(null)
 
 
-## Confere o efeito real dos comandos principais.
+## Checks the real effect of the main commands.
 func _effects() -> void:
 	var w: GameWorld = Game.world
 	menu.set_target(w.by_iso["ARG"])
@@ -260,30 +260,30 @@ func _effects() -> void:
 	_check(w.politics.party_fund(w) > fund, "o fundo sobe")
 	var day := w.day_index
 	menu.run(_command("Avançar 1 dia"))
-	_check(w.day_index == day + 1, "avança 1 dia")
+	_check(w.day_index == day + 1, "advances 1 day")
 	menu.run(_command("Crise bancária: Alvo"))
-	_check(w.by_iso["ARG"].crisis_cooldown > 0.0, "crise bancária atinge o alvo")
+	_check(w.by_iso["ARG"].crisis_cooldown > 0.0, "banking crisis hits the target")
 	menu.run(_command("Declarar guerra ao alvo"))
-	_check(w.diplomacy.at_war(w.player.idx, w.by_iso["ARG"].idx), "guerra declarada")
+	_check(w.diplomacy.at_war(w.player.idx, w.by_iso["ARG"].idx), "war declared")
 	_settle()
 	menu.run(_command("Vitória por capitulação"))
-	_check(not main.prompts.is_empty() or main.modal_open, "vitória abre a decisão")
+	_check(not main.prompts.is_empty() or main.modal_open, "victory opens the decision")
 	_settle()
-	# A primeira opção da vitória anexa a Argentina: o alvo volta para o próprio país.
+	# The first victory option annexes Argentina: the target goes back to the player's own country.
 	if not w.by_iso["ARG"].alive:
 		menu.run(_command("Reservas +US$ 500 bi"))
-		_check(menu.target == w.player, "alvo anexado volta para o próprio país")
+		_check(menu.target == w.player, "annexed target goes back to your own country")
 	menu.set_target(w.by_iso["URY"])
 	menu.run(_command("Demarcar conquistas"))
-	_check(main.hud.border.active and not menu.visible, "demarcação abre e o menu sai da frente")
+	_check(main.hud.border.active and not menu.visible, "demarcation opens and the menu steps aside")
 	main.hud.border._on_decline()
 	menu.toggle()
 	menu.run(_command("Ganhar 10% do alvo"))
-	_check(not w.territories.cessions.is_empty() or menu._status.text.contains("não tem"), "ganhar território muda o mapa: " + menu._status.text)
+	_check(not w.territories.cessions.is_empty() or menu._status.text.contains("não tem"), "gaining territory changes the map:" + menu._status.text)
 	menu.run(_command("Pandemia"))
 	_settle()
 	menu.run(_command("Fundir duas vizinhas agora"))
-	_check(not w.subdivisions.custom_ids.is_empty(), "fusão direta cria a unidade")
+	_check(not w.subdivisions.custom_ids.is_empty(), "direct merge creates the unit")
 	_settle()
 
 
@@ -292,7 +292,7 @@ func _run_next() -> void:
 		phase = 7
 		return
 	var w: GameWorld = Game.world
-	# Comandos que aceitam o próprio país rodam nele; os outros, em um país estrangeiro.
+	# Commands that accept the player's own country run on it; the others, on a foreign country.
 	var foreign: Country = w.by_iso.get("ARG")
 	if foreign == null or not foreign.alive or foreign == w.player:
 		for c: Country in w.countries:
@@ -303,7 +303,7 @@ func _run_next() -> void:
 	if not menu.visible:
 		menu.toggle()
 	var cmd: Dictionary = menu.commands[index]
-	# Pula a própria repetição do que encerra a sessão de teste; o resto roda de verdade.
+	# Skips the repetition of what ends the test session; the rest really runs.
 	menu.run(index)
 	index += 1
 	if main.loading:
@@ -324,7 +324,7 @@ func _run_next() -> void:
 			return
 		_start_game()
 		return
-	# Alguns dias depois, o sistema precisa continuar de pé.
+	# A few days later, the system must still be standing.
 	for i in 3:
 		if not Game.world.over:
 			Game.world.tick_day()
@@ -338,7 +338,7 @@ func _run_next() -> void:
 		main._restart()
 		want_start = true
 		return
-	_check(_sane(Game.world), "estado numérico válido depois de: " + String(cmd.label))
+	_check(_sane(Game.world), "valid numeric state after:" + String(cmd.label))
 
 
 func _sane(w: GameWorld) -> bool:

@@ -42,7 +42,7 @@ var _expanded := {}
 
 
 func _ready() -> void:
-	%NovoTipo.pressed.connect(_on_new_type)
+	%NewType.pressed.connect(_on_new_type)
 	_draw_button.pressed.connect(toggle_drawing)
 	_search.text_changed.connect(func(_t): _rebuild_tree())
 

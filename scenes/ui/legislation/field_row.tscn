@@ -25,11 +25,11 @@ unique_name_in_owner = true
 focus_mode = 0
 text = "Sim"
 
-[node name="Encaixe" type="HBoxContainer" parent="."]
+[node name="Fit" type="HBoxContainer" parent="."]
 unique_name_in_owner = true
 theme_override_constants/separation = 4
 
-[node name="plugged" type="Label" parent="Encaixe"]
+[node name="plugged" type="Label" parent="Fit"]
 unique_name_in_owner = true
 size_flags_horizontal = 3
 mouse_filter = 2
@@ -37,7 +37,7 @@ theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(0.30980393, 0.7019608, 0.8509804, 1)
 autowrap_mode = 3
 
-[node name="unplug" type="Button" parent="Encaixe"]
+[node name="unplug" type="Button" parent="Fit"]
 unique_name_in_owner = true
 text = "Soltar"
 focus_mode = 0

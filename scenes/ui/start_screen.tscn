@@ -27,7 +27,7 @@ anchor_bottom = 1.0
 mouse_filter = 2
 theme = ExtResource("1_aqjl8")
 
-[node name="Coluna" type="VBoxContainer" parent="." unique_id=715579672]
+[node name="Column" type="VBoxContainer" parent="." unique_id=715579672]
 layout_mode = 0
 offset_left = 36.0
 offset_top = 26.0
@@ -36,19 +36,19 @@ offset_bottom = 26.0
 mouse_filter = 2
 theme_override_constants/separation = 0
 
-[node name="GLOBALMANDATE" type="Label" parent="Coluna" unique_id=1946457759]
+[node name="GlobalMandateTitle" type="Label" parent="Column" unique_id=1946457759]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.9490196, 0.7019608, 0.23921569, 1)
 theme_override_font_sizes/font_size = 40
 text = "GLOBAL MANDATE"
 
-[node name="GeopoliticaEmTempoRealSobre" type="Label" parent="Coluna" unique_id=1422446451]
+[node name="Tagline" type="Label" parent="Column" unique_id=1422446451]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
 theme_override_font_sizes/font_size = 16
 text = "Geopolítica em tempo real sobre um modelo econômico mundial"
 
-[node name="Painel" type="PanelContainer" parent="." unique_id=271621886]
+[node name="Panel" type="PanelContainer" parent="." unique_id=271621886]
 layout_mode = 0
 anchor_left = 1.0
 anchor_right = 1.0
@@ -59,12 +59,12 @@ offset_right = -20.0
 offset_bottom = -24.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_m7t1o")
 
-[node name="Coluna" type="VBoxContainer" parent="Painel" unique_id=1762317609]
+[node name="Column" type="VBoxContainer" parent="Panel" unique_id=1762317609]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 9
 
-[node name="start_title" type="Label" parent="Painel/Coluna" unique_id=1297763678]
+[node name="start_title" type="Label" parent="Panel/Column" unique_id=1297763678]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.9490196, 0.7019608, 0.23921569, 1)
@@ -72,7 +72,7 @@ theme_override_font_sizes/font_size = 22
 text = "Nenhum país selecionado"
 autowrap_mode = 3
 
-[node name="start_sub" type="Label" parent="Painel/Coluna" unique_id=277601600]
+[node name="start_sub" type="Label" parent="Panel/Column" unique_id=277601600]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
@@ -81,12 +81,12 @@ theme_override_font_sizes/font_size = 13
 text = "Clique em um país no mapa para ver seus dados. Cenário: janeiro de 2025."
 autowrap_mode = 3
 
-[node name="Rolagem" type="ScrollContainer" parent="Painel/Coluna" unique_id=1486941377]
+[node name="Scroll" type="ScrollContainer" parent="Panel/Column" unique_id=1486941377]
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
-[node name="start_stats" type="VBoxContainer" parent="Painel/Coluna/Rolagem" unique_id=1898587345]
+[node name="start_stats" type="VBoxContainer" parent="Panel/Column/Scroll" unique_id=1898587345]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
@@ -94,27 +94,27 @@ size_flags_horizontal = 3
 mouse_filter = 2
 theme_override_constants/separation = 6
 
-[node name="ECONOMIA" type="Label" parent="Painel/Coluna/Rolagem/start_stats" unique_id=1125651527]
+[node name="Economy" type="Label" parent="Panel/Column/Scroll/start_stats" unique_id=1125651527]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_constants/line_spacing = 0
 theme_override_font_sizes/font_size = 11
 text = "ECONOMIA"
 
-[node name="GradeEconomia" type="GridContainer" parent="Painel/Coluna/Rolagem/start_stats" unique_id=472126091]
+[node name="GridEconomy" type="GridContainer" parent="Panel/Column/Scroll/start_stats" unique_id=472126091]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/h_separation = 8
 theme_override_constants/v_separation = 8
 columns = 3
 
-[node name="Card_gdp" type="VBoxContainer" parent="Painel/Coluna/Rolagem/start_stats/GradeEconomia" unique_id=1236638937]
+[node name="Card_gdp" type="VBoxContainer" parent="Panel/Column/Scroll/start_stats/GridEconomy" unique_id=1236638937]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 1
 theme_override_constants/separation = 0
 
-[node name="cap_gdp" type="Label" parent="Painel/Coluna/Rolagem/start_stats/GradeEconomia/Card_gdp" unique_id=100960788]
+[node name="cap_gdp" type="Label" parent="Panel/Column/Scroll/start_stats/GridEconomy/Card_gdp" unique_id=100960788]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
@@ -122,7 +122,7 @@ theme_override_font_sizes/font_size = 11
 text = "PIB"
 text_overrun_behavior = 3
 
-[node name="stat_gdp" type="Label" parent="Painel/Coluna/Rolagem/start_stats/GradeEconomia/Card_gdp" unique_id=897275444]
+[node name="stat_gdp" type="Label" parent="Panel/Column/Scroll/start_stats/GridEconomy/Card_gdp" unique_id=897275444]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
@@ -130,13 +130,13 @@ theme_override_font_sizes/font_size = 16
 text = "—"
 text_overrun_behavior = 3
 
-[node name="Card_gdp_pc" type="VBoxContainer" parent="Painel/Coluna/Rolagem/start_stats/GradeEconomia" unique_id=906707501]
+[node name="Card_gdp_pc" type="VBoxContainer" parent="Panel/Column/Scroll/start_stats/GridEconomy" unique_id=906707501]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 1
 theme_override_constants/separation = 0
 
-[node name="cap_gdp_pc" type="Label" parent="Painel/Coluna/Rolagem/start_stats/GradeEconomia/Card_gdp_pc" unique_id=1323440348]
+[node name="cap_gdp_pc" type="Label" parent="Panel/Column/Scroll/start_stats/GridEconomy/Card_gdp_pc" unique_id=1323440348]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
@@ -144,7 +144,7 @@ theme_override_font_sizes/font_size = 11
 text = "PIB per capita"
 text_overrun_behavior = 3
 
-[node name="stat_gdp_pc" type="Label" parent="Painel/Coluna/Rolagem/start_stats/GradeEconomia/Card_gdp_pc" unique_id=598231380]
+[node name="stat_gdp_pc" type="Label" parent="Panel/Column/Scroll/start_stats/GridEconomy/Card_gdp_pc" unique_id=598231380]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
@@ -152,13 +152,13 @@ theme_override_font_sizes/font_size = 16
 text = "—"
 text_overrun_behavior = 3
 
-[node name="Card_pop" type="VBoxContainer" parent="Painel/Coluna/Rolagem/start_stats/GradeEconomia" unique_id=241273629]
+[node name="Card_pop" type="VBoxContainer" parent="Panel/Column/Scroll/start_stats/GridEconomy" unique_id=241273629]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 1
 theme_override_constants/separation = 0
 
-[node name="cap_pop" type="Label" parent="Painel/Coluna/Rolagem/start_stats/GradeEconomia/Card_pop" unique_id=921829809]
+[node name="cap_pop" type="Label" parent="Panel/Column/Scroll/start_stats/GridEconomy/Card_pop" unique_id=921829809]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
@@ -166,7 +166,7 @@ theme_override_font_sizes/font_size = 11
 text = "População"
 text_overrun_behavior = 3
 
-[node name="stat_pop" type="Label" parent="Painel/Coluna/Rolagem/start_stats/GradeEconomia/Card_pop" unique_id=960867839]
+[node name="stat_pop" type="Label" parent="Panel/Column/Scroll/start_stats/GridEconomy/Card_pop" unique_id=960867839]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
@@ -174,13 +174,13 @@ theme_override_font_sizes/font_size = 16
 text = "—"
 text_overrun_behavior = 3
 
-[node name="Card_growth" type="VBoxContainer" parent="Painel/Coluna/Rolagem/start_stats/GradeEconomia" unique_id=309792998]
+[node name="Card_growth" type="VBoxContainer" parent="Panel/Column/Scroll/start_stats/GridEconomy" unique_id=309792998]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 1
 theme_override_constants/separation = 0
 
-[node name="cap_growth" type="Label" parent="Painel/Coluna/Rolagem/start_stats/GradeEconomia/Card_growth" unique_id=193096430]
+[node name="cap_growth" type="Label" parent="Panel/Column/Scroll/start_stats/GridEconomy/Card_growth" unique_id=193096430]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
@@ -188,7 +188,7 @@ theme_override_font_sizes/font_size = 11
 text = "Crescimento potencial"
 text_overrun_behavior = 3
 
-[node name="stat_growth" type="Label" parent="Painel/Coluna/Rolagem/start_stats/GradeEconomia/Card_growth" unique_id=354878723]
+[node name="stat_growth" type="Label" parent="Panel/Column/Scroll/start_stats/GridEconomy/Card_growth" unique_id=354878723]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
@@ -196,13 +196,13 @@ theme_override_font_sizes/font_size = 16
 text = "—"
 text_overrun_behavior = 3
 
-[node name="Card_inflation" type="VBoxContainer" parent="Painel/Coluna/Rolagem/start_stats/GradeEconomia" unique_id=1747698068]
+[node name="Card_inflation" type="VBoxContainer" parent="Panel/Column/Scroll/start_stats/GridEconomy" unique_id=1747698068]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 1
 theme_override_constants/separation = 0
 
-[node name="cap_inflation" type="Label" parent="Painel/Coluna/Rolagem/start_stats/GradeEconomia/Card_inflation" unique_id=554306879]
+[node name="cap_inflation" type="Label" parent="Panel/Column/Scroll/start_stats/GridEconomy/Card_inflation" unique_id=554306879]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
@@ -210,7 +210,7 @@ theme_override_font_sizes/font_size = 11
 text = "Inflação"
 text_overrun_behavior = 3
 
-[node name="stat_inflation" type="Label" parent="Painel/Coluna/Rolagem/start_stats/GradeEconomia/Card_inflation" unique_id=906450068]
+[node name="stat_inflation" type="Label" parent="Panel/Column/Scroll/start_stats/GridEconomy/Card_inflation" unique_id=906450068]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
@@ -218,13 +218,13 @@ theme_override_font_sizes/font_size = 16
 text = "—"
 text_overrun_behavior = 3
 
-[node name="Card_unemp" type="VBoxContainer" parent="Painel/Coluna/Rolagem/start_stats/GradeEconomia" unique_id=313348772]
+[node name="Card_unemp" type="VBoxContainer" parent="Panel/Column/Scroll/start_stats/GridEconomy" unique_id=313348772]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 1
 theme_override_constants/separation = 0
 
-[node name="cap_unemp" type="Label" parent="Painel/Coluna/Rolagem/start_stats/GradeEconomia/Card_unemp" unique_id=983478943]
+[node name="cap_unemp" type="Label" parent="Panel/Column/Scroll/start_stats/GridEconomy/Card_unemp" unique_id=983478943]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
@@ -232,7 +232,7 @@ theme_override_font_sizes/font_size = 11
 text = "Desemprego"
 text_overrun_behavior = 3
 
-[node name="stat_unemp" type="Label" parent="Painel/Coluna/Rolagem/start_stats/GradeEconomia/Card_unemp" unique_id=205720747]
+[node name="stat_unemp" type="Label" parent="Panel/Column/Scroll/start_stats/GridEconomy/Card_unemp" unique_id=205720747]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
@@ -240,13 +240,13 @@ theme_override_font_sizes/font_size = 16
 text = "—"
 text_overrun_behavior = 3
 
-[node name="Card_rate" type="VBoxContainer" parent="Painel/Coluna/Rolagem/start_stats/GradeEconomia" unique_id=1415176609]
+[node name="Card_rate" type="VBoxContainer" parent="Panel/Column/Scroll/start_stats/GridEconomy" unique_id=1415176609]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 1
 theme_override_constants/separation = 0
 
-[node name="cap_rate" type="Label" parent="Painel/Coluna/Rolagem/start_stats/GradeEconomia/Card_rate" unique_id=159849399]
+[node name="cap_rate" type="Label" parent="Panel/Column/Scroll/start_stats/GridEconomy/Card_rate" unique_id=159849399]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
@@ -254,7 +254,7 @@ theme_override_font_sizes/font_size = 11
 text = "Juro básico"
 text_overrun_behavior = 3
 
-[node name="stat_rate" type="Label" parent="Painel/Coluna/Rolagem/start_stats/GradeEconomia/Card_rate" unique_id=1289198923]
+[node name="stat_rate" type="Label" parent="Panel/Column/Scroll/start_stats/GridEconomy/Card_rate" unique_id=1289198923]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
@@ -262,13 +262,13 @@ theme_override_font_sizes/font_size = 16
 text = "—"
 text_overrun_behavior = 3
 
-[node name="Card_debt" type="VBoxContainer" parent="Painel/Coluna/Rolagem/start_stats/GradeEconomia" unique_id=1195688054]
+[node name="Card_debt" type="VBoxContainer" parent="Panel/Column/Scroll/start_stats/GridEconomy" unique_id=1195688054]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 1
 theme_override_constants/separation = 0
 
-[node name="cap_debt" type="Label" parent="Painel/Coluna/Rolagem/start_stats/GradeEconomia/Card_debt" unique_id=243497234]
+[node name="cap_debt" type="Label" parent="Panel/Column/Scroll/start_stats/GridEconomy/Card_debt" unique_id=243497234]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
@@ -276,7 +276,7 @@ theme_override_font_sizes/font_size = 11
 text = "Dívida/PIB"
 text_overrun_behavior = 3
 
-[node name="stat_debt" type="Label" parent="Painel/Coluna/Rolagem/start_stats/GradeEconomia/Card_debt" unique_id=1772628031]
+[node name="stat_debt" type="Label" parent="Panel/Column/Scroll/start_stats/GridEconomy/Card_debt" unique_id=1772628031]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
@@ -284,13 +284,13 @@ theme_override_font_sizes/font_size = 16
 text = "—"
 text_overrun_behavior = 3
 
-[node name="Card_rating" type="VBoxContainer" parent="Painel/Coluna/Rolagem/start_stats/GradeEconomia" unique_id=517177573]
+[node name="Card_rating" type="VBoxContainer" parent="Panel/Column/Scroll/start_stats/GridEconomy" unique_id=517177573]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 1
 theme_override_constants/separation = 0
 
-[node name="cap_rating" type="Label" parent="Painel/Coluna/Rolagem/start_stats/GradeEconomia/Card_rating" unique_id=1752865072]
+[node name="cap_rating" type="Label" parent="Panel/Column/Scroll/start_stats/GridEconomy/Card_rating" unique_id=1752865072]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
@@ -298,7 +298,7 @@ theme_override_font_sizes/font_size = 11
 text = "Nota de crédito"
 text_overrun_behavior = 3
 
-[node name="stat_rating" type="Label" parent="Painel/Coluna/Rolagem/start_stats/GradeEconomia/Card_rating" unique_id=506618029]
+[node name="stat_rating" type="Label" parent="Panel/Column/Scroll/start_stats/GridEconomy/Card_rating" unique_id=506618029]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
@@ -306,33 +306,33 @@ theme_override_font_sizes/font_size = 16
 text = "—"
 text_overrun_behavior = 3
 
-[node name="Separador1" type="ColorRect" parent="Painel/Coluna/Rolagem/start_stats" unique_id=157173382]
+[node name="Separator1" type="ColorRect" parent="Panel/Column/Scroll/start_stats" unique_id=157173382]
 custom_minimum_size = Vector2(0, 1)
 layout_mode = 2
 mouse_filter = 2
 color = Color(0.15294118, 0.2509804, 0.30980393, 1)
 
-[node name="POLITICA" type="Label" parent="Painel/Coluna/Rolagem/start_stats" unique_id=1620912085]
+[node name="Politics" type="Label" parent="Panel/Column/Scroll/start_stats" unique_id=1620912085]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_constants/line_spacing = 0
 theme_override_font_sizes/font_size = 11
 text = "POLÍTICA E DEFESA"
 
-[node name="GradePolitica" type="GridContainer" parent="Painel/Coluna/Rolagem/start_stats" unique_id=589480369]
+[node name="GridPolitics" type="GridContainer" parent="Panel/Column/Scroll/start_stats" unique_id=589480369]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/h_separation = 8
 theme_override_constants/v_separation = 8
 columns = 3
 
-[node name="Card_approval" type="VBoxContainer" parent="Painel/Coluna/Rolagem/start_stats/GradePolitica" unique_id=1788084446]
+[node name="Card_approval" type="VBoxContainer" parent="Panel/Column/Scroll/start_stats/GridPolitics" unique_id=1788084446]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 1
 theme_override_constants/separation = 0
 
-[node name="cap_approval" type="Label" parent="Painel/Coluna/Rolagem/start_stats/GradePolitica/Card_approval" unique_id=1778899720]
+[node name="cap_approval" type="Label" parent="Panel/Column/Scroll/start_stats/GridPolitics/Card_approval" unique_id=1778899720]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
@@ -340,7 +340,7 @@ theme_override_font_sizes/font_size = 11
 text = "Aprovação"
 text_overrun_behavior = 3
 
-[node name="stat_approval" type="Label" parent="Painel/Coluna/Rolagem/start_stats/GradePolitica/Card_approval" unique_id=1471597551]
+[node name="stat_approval" type="Label" parent="Panel/Column/Scroll/start_stats/GridPolitics/Card_approval" unique_id=1471597551]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
@@ -348,13 +348,13 @@ theme_override_font_sizes/font_size = 16
 text = "—"
 text_overrun_behavior = 3
 
-[node name="Card_stability" type="VBoxContainer" parent="Painel/Coluna/Rolagem/start_stats/GradePolitica" unique_id=953837763]
+[node name="Card_stability" type="VBoxContainer" parent="Panel/Column/Scroll/start_stats/GridPolitics" unique_id=953837763]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 1
 theme_override_constants/separation = 0
 
-[node name="cap_stability" type="Label" parent="Painel/Coluna/Rolagem/start_stats/GradePolitica/Card_stability" unique_id=1088473100]
+[node name="cap_stability" type="Label" parent="Panel/Column/Scroll/start_stats/GridPolitics/Card_stability" unique_id=1088473100]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
@@ -362,7 +362,7 @@ theme_override_font_sizes/font_size = 11
 text = "Estabilidade"
 text_overrun_behavior = 3
 
-[node name="stat_stability" type="Label" parent="Painel/Coluna/Rolagem/start_stats/GradePolitica/Card_stability" unique_id=861220147]
+[node name="stat_stability" type="Label" parent="Panel/Column/Scroll/start_stats/GridPolitics/Card_stability" unique_id=861220147]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
@@ -370,13 +370,13 @@ theme_override_font_sizes/font_size = 16
 text = "—"
 text_overrun_behavior = 3
 
-[node name="Card_democracy" type="VBoxContainer" parent="Painel/Coluna/Rolagem/start_stats/GradePolitica" unique_id=1216117112]
+[node name="Card_democracy" type="VBoxContainer" parent="Panel/Column/Scroll/start_stats/GridPolitics" unique_id=1216117112]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 1
 theme_override_constants/separation = 0
 
-[node name="cap_democracy" type="Label" parent="Painel/Coluna/Rolagem/start_stats/GradePolitica/Card_democracy" unique_id=165777143]
+[node name="cap_democracy" type="Label" parent="Panel/Column/Scroll/start_stats/GridPolitics/Card_democracy" unique_id=165777143]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
@@ -384,7 +384,7 @@ theme_override_font_sizes/font_size = 11
 text = "Democracia"
 text_overrun_behavior = 3
 
-[node name="stat_democracy" type="Label" parent="Painel/Coluna/Rolagem/start_stats/GradePolitica/Card_democracy" unique_id=1379194690]
+[node name="stat_democracy" type="Label" parent="Panel/Column/Scroll/start_stats/GridPolitics/Card_democracy" unique_id=1379194690]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
@@ -392,13 +392,13 @@ theme_override_font_sizes/font_size = 16
 text = "—"
 text_overrun_behavior = 3
 
-[node name="Card_troops" type="VBoxContainer" parent="Painel/Coluna/Rolagem/start_stats/GradePolitica" unique_id=337906917]
+[node name="Card_troops" type="VBoxContainer" parent="Panel/Column/Scroll/start_stats/GridPolitics" unique_id=337906917]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 1
 theme_override_constants/separation = 0
 
-[node name="cap_troops" type="Label" parent="Painel/Coluna/Rolagem/start_stats/GradePolitica/Card_troops" unique_id=1272811617]
+[node name="cap_troops" type="Label" parent="Panel/Column/Scroll/start_stats/GridPolitics/Card_troops" unique_id=1272811617]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
@@ -406,7 +406,7 @@ theme_override_font_sizes/font_size = 11
 text = "Tropas"
 text_overrun_behavior = 3
 
-[node name="stat_troops" type="Label" parent="Painel/Coluna/Rolagem/start_stats/GradePolitica/Card_troops" unique_id=525422906]
+[node name="stat_troops" type="Label" parent="Panel/Column/Scroll/start_stats/GridPolitics/Card_troops" unique_id=525422906]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
@@ -414,13 +414,13 @@ theme_override_font_sizes/font_size = 16
 text = "—"
 text_overrun_behavior = 3
 
-[node name="Card_nukes" type="VBoxContainer" parent="Painel/Coluna/Rolagem/start_stats/GradePolitica" unique_id=547057665]
+[node name="Card_nukes" type="VBoxContainer" parent="Panel/Column/Scroll/start_stats/GridPolitics" unique_id=547057665]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 1
 theme_override_constants/separation = 0
 
-[node name="cap_nukes" type="Label" parent="Painel/Coluna/Rolagem/start_stats/GradePolitica/Card_nukes" unique_id=361941197]
+[node name="cap_nukes" type="Label" parent="Panel/Column/Scroll/start_stats/GridPolitics/Card_nukes" unique_id=361941197]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
@@ -428,7 +428,7 @@ theme_override_font_sizes/font_size = 11
 text = "Ogivas"
 text_overrun_behavior = 3
 
-[node name="stat_nukes" type="Label" parent="Painel/Coluna/Rolagem/start_stats/GradePolitica/Card_nukes" unique_id=622809105]
+[node name="stat_nukes" type="Label" parent="Panel/Column/Scroll/start_stats/GridPolitics/Card_nukes" unique_id=622809105]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
@@ -436,13 +436,13 @@ theme_override_font_sizes/font_size = 16
 text = "—"
 text_overrun_behavior = 3
 
-[node name="Card_defense" type="VBoxContainer" parent="Painel/Coluna/Rolagem/start_stats/GradePolitica" unique_id=1400962451]
+[node name="Card_defense" type="VBoxContainer" parent="Panel/Column/Scroll/start_stats/GridPolitics" unique_id=1400962451]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 1
 theme_override_constants/separation = 0
 
-[node name="cap_defense" type="Label" parent="Painel/Coluna/Rolagem/start_stats/GradePolitica/Card_defense" unique_id=169548855]
+[node name="cap_defense" type="Label" parent="Panel/Column/Scroll/start_stats/GridPolitics/Card_defense" unique_id=169548855]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
@@ -450,7 +450,7 @@ theme_override_font_sizes/font_size = 11
 text = "Gasto militar"
 text_overrun_behavior = 3
 
-[node name="stat_defense" type="Label" parent="Painel/Coluna/Rolagem/start_stats/GradePolitica/Card_defense" unique_id=349247725]
+[node name="stat_defense" type="Label" parent="Panel/Column/Scroll/start_stats/GridPolitics/Card_defense" unique_id=349247725]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
@@ -458,7 +458,7 @@ theme_override_font_sizes/font_size = 16
 text = "—"
 text_overrun_behavior = 3
 
-[node name="start_gov" type="Label" parent="Painel/Coluna/Rolagem/start_stats" unique_id=1784607372]
+[node name="start_gov" type="Label" parent="Panel/Column/Scroll/start_stats" unique_id=1784607372]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
@@ -466,20 +466,20 @@ theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
 theme_override_font_sizes/font_size = 13
 autowrap_mode = 3
 
-[node name="Separador2" type="ColorRect" parent="Painel/Coluna/Rolagem/start_stats" unique_id=392300360]
+[node name="Separator2" type="ColorRect" parent="Panel/Column/Scroll/start_stats" unique_id=392300360]
 custom_minimum_size = Vector2(0, 1)
 layout_mode = 2
 mouse_filter = 2
 color = Color(0.15294118, 0.2509804, 0.30980393, 1)
 
-[node name="SETORES" type="Label" parent="Painel/Coluna/Rolagem/start_stats" unique_id=1286965717]
+[node name="Sectors" type="Label" parent="Panel/Column/Scroll/start_stats" unique_id=1286965717]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_constants/line_spacing = 0
 theme_override_font_sizes/font_size = 11
 text = "PRINCIPAIS SETORES"
 
-[node name="start_sectors" type="Label" parent="Painel/Coluna/Rolagem/start_stats" unique_id=890188392]
+[node name="start_sectors" type="Label" parent="Panel/Column/Scroll/start_stats" unique_id=890188392]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
@@ -487,7 +487,7 @@ theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
 theme_override_font_sizes/font_size = 13
 autowrap_mode = 3
 
-[node name="start_info" type="Label" parent="Painel/Coluna/Rolagem/start_stats" unique_id=285961659]
+[node name="start_info" type="Label" parent="Panel/Column/Scroll/start_stats" unique_id=285961659]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
@@ -495,19 +495,19 @@ theme_override_colors/font_color = Color(0.9490196, 0.7019608, 0.23921569, 1)
 theme_override_font_sizes/font_size = 13
 autowrap_mode = 3
 
-[node name="DIFICULDADE" type="Label" parent="Painel/Coluna" unique_id=2102108518]
+[node name="Difficulty" type="Label" parent="Panel/Column" unique_id=2102108518]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_constants/line_spacing = 0
 theme_override_font_sizes/font_size = 11
 text = "DIFICULDADE"
 
-[node name="Linha" type="HBoxContainer" parent="Painel/Coluna" unique_id=1200453497]
+[node name="Row" type="HBoxContainer" parent="Panel/Column" unique_id=1200453497]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 4
 
-[node name="diff_facil" type="Button" parent="Painel/Coluna/Linha" unique_id=216976889]
+[node name="diff_facil" type="Button" parent="Panel/Column/Row" unique_id=216976889]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -515,7 +515,7 @@ focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "Fácil"
 
-[node name="diff_normal" type="Button" parent="Painel/Coluna/Linha" unique_id=317522665]
+[node name="diff_normal" type="Button" parent="Panel/Column/Row" unique_id=317522665]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -523,7 +523,7 @@ focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "Normal"
 
-[node name="diff_dificil" type="Button" parent="Painel/Coluna/Linha" unique_id=1691546808]
+[node name="diff_hard" type="Button" parent="Panel/Column/Row" unique_id=1691546808]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -531,7 +531,7 @@ focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "Difícil"
 
-[node name="start_button" type="Button" parent="Painel/Coluna" unique_id=904970469]
+[node name="start_button" type="Button" parent="Panel/Column" unique_id=904970469]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 44)
 layout_mode = 2
@@ -541,7 +541,7 @@ theme_override_font_sizes/font_size = 16
 disabled = true
 text = "Assumir o governo"
 
-[node name="continue_game" type="Button" parent="Painel/Coluna" unique_id=822030624]
+[node name="continue_game" type="Button" parent="Panel/Column" unique_id=822030624]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
@@ -549,5 +549,5 @@ focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "Continuar partida salva"
 
-[node name="LanguagePicker" parent="Painel/Coluna" instance=ExtResource("9_lang")]
+[node name="LanguagePicker" parent="Panel/Column" instance=ExtResource("9_lang")]
 layout_mode = 2

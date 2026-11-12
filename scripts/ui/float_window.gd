@@ -40,7 +40,7 @@ var _tween: Tween
 
 
 func _ready() -> void:
-	var own := [%Moldura]
+	var own := [%Frame]
 	for child in get_children():
 		if child not in own:
 			child.reparent(_body, false)

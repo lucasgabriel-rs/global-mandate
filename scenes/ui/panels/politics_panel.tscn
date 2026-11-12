@@ -14,7 +14,7 @@ theme = ExtResource("1_054s0")
 theme_override_constants/separation = 6
 script = ExtResource("2_faoui")
 
-[node name="SEUPARTIDO" type="Label" parent="." unique_id=1847869760]
+[node name="YourPartyHeading" type="Label" parent="." unique_id=1847869760]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_constants/line_spacing = 0
@@ -39,7 +39,7 @@ theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
 theme_override_font_sizes/font_size = 13
 autowrap_mode = 3
 
-[node name="SuasIdeiasTrocarOuFundar" type="Button" parent="." unique_id=521562055]
+[node name="SwapOrFoundParty" type="Button" parent="." unique_id=521562055]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Só é possível mudar de partido uma vez por ano e, no governo, isso custa aprovação. Ao entrar em um partido, você adota as ideias dele."
@@ -47,7 +47,7 @@ focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "Trocar ou criar partido"
 
-[node name="CentroLegislativo" type="Button" parent="."]
+[node name="LegislativeCenter" type="Button" parent="."]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Criar normas com blocos, acompanhar a tramitação, emendar a Constituição e consultar a auditoria (tecla L)."
@@ -55,7 +55,7 @@ focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "Centro legislativo (L)"
 
-[node name="CaixaDois" type="Button" parent="."]
+[node name="SlushFund" type="Button" parent="."]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Usar o fundo do partido em ações corruptas: comprar votos, abafar escândalos, favorecer aliados. Rende agora e cobra depois."
@@ -63,7 +63,7 @@ focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "Caixa dois"
 
-[node name="UltimaEleicao" type="Button" parent="."]
+[node name="LastElection" type="Button" parent="."]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Mostra votos, cadeiras e distritos da última eleição."
@@ -77,14 +77,14 @@ layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 4
 
-[node name="NAOPOSIO" type="Label" parent="opposition" unique_id=293945869]
+[node name="InOppositionHeading" type="Label" parent="opposition" unique_id=293945869]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_constants/line_spacing = 0
 theme_override_font_sizes/font_size = 11
 text = "NA OPOSIÇÃO"
 
-[node name="AIAGovernaOPais" type="Label" parent="opposition" unique_id=843959341]
+[node name="AiGovernsCountry" type="Label" parent="opposition" unique_id=843959341]
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
@@ -92,7 +92,7 @@ theme_override_font_sizes/font_size = 12
 text = "A IA governa o país. Você lidera seu partido até a próxima eleição."
 autowrap_mode = 3
 
-[node name="CriticarOGoverno6" type="Button" parent="opposition" unique_id=816768049]
+[node name="CriticizeGovernment6" type="Button" parent="opposition" unique_id=816768049]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Derruba a aprovação do governo e ajuda seu partido."
@@ -100,7 +100,7 @@ focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "Criticar o governo (6)"
 
-[node name="FazerCampanha10" type="Button" parent="opposition" unique_id=1315950836]
+[node name="RunCampaign10" type="Button" parent="opposition" unique_id=1315950836]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Faz seu partido crescer nas pesquisas."
@@ -108,7 +108,7 @@ focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "Fazer campanha (10)"
 
-[node name="MocaoDeCensura15" type="Button" parent="opposition" unique_id=1019243283]
+[node name="CensureMotion15" type="Button" parent="opposition" unique_id=1019243283]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Se a oposição somar a maioria dos assentos, há eleição agora."
@@ -116,13 +116,13 @@ focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "Moção de censura (15)"
 
-[node name="Separador" type="ColorRect" parent="." unique_id=1230006611]
+[node name="Separator" type="ColorRect" parent="." unique_id=1230006611]
 custom_minimum_size = Vector2(0, 1)
 layout_mode = 2
 mouse_filter = 2
 color = Color(0.15294118, 0.2509804, 0.30980393, 1)
 
-[node name="PARLAMENTO" type="Label" parent="." unique_id=1527356757]
+[node name="Parliament" type="Label" parent="." unique_id=1527356757]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_constants/line_spacing = 0
@@ -168,7 +168,7 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_font_sizes/font_size = 12
 
-[node name="BUSSOLAPOLITICADOSPARTIDOS" type="Label" parent="." unique_id=1504995691]
+[node name="PartyCompassHeading" type="Label" parent="." unique_id=1504995691]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_constants/line_spacing = 0
@@ -204,20 +204,20 @@ theme_override_colors/font_color = Color(0.29803923, 0.78039217, 0.5803922, 1)
 theme_override_font_sizes/font_size = 12
 autowrap_mode = 3
 
-[node name="Separador2" type="ColorRect" parent="." unique_id=215247552]
+[node name="Separator2" type="ColorRect" parent="." unique_id=215247552]
 custom_minimum_size = Vector2(0, 1)
 layout_mode = 2
 mouse_filter = 2
 color = Color(0.15294118, 0.2509804, 0.30980393, 1)
 
-[node name="PROJETOSDELEI" type="Label" parent="." unique_id=1612890980 groups=["gov_only"]]
+[node name="BillsHeading" type="Label" parent="." unique_id=1612890980 groups=["gov_only"]]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_constants/line_spacing = 0
 theme_override_font_sizes/font_size = 11
 text = "PROJETOS DE LEI"
 
-[node name="CadaVotacaoCusta5De" type="Label" parent="." unique_id=346016167 groups=["gov_only"]]
+[node name="VoteCostHint" type="Label" parent="." unique_id=346016167 groups=["gov_only"]]
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)

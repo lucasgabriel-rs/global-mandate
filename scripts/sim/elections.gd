@@ -150,7 +150,7 @@ static func run(world: GameWorld, c: Country, data: Dictionary, mood: Callable) 
 	var rng := world.rng
 	var rule := rules(c, data)
 	# The player's Electoral Code adjusts threshold, turnout and the weight of money; the Constitution applies first.
-	var law := CodeEleitoral.rules_for(world, c)
+	var law := CodeElectoral.rules_for(world, c)
 	for p: Dictionary in data.parties:
 		p.support = float(p.support) * float(mood.call(p)) * rng.randf_range(0.92, 1.08)
 		# Compulsory voting brings to the polls those who usually stay away, and this voter leans economically left.

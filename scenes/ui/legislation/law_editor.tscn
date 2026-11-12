@@ -50,7 +50,7 @@ color = Color(0.01, 0.03, 0.05, 0.92)
 script = ExtResource("e1")
 theme = ExtResource("e2")
 
-[node name="Margem" type="MarginContainer" parent="."]
+[node name="Margin" type="MarginContainer" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -59,243 +59,243 @@ theme_override_constants/margin_top = 12
 theme_override_constants/margin_right = 12
 theme_override_constants/margin_bottom = 12
 
-[node name="Coluna" type="VBoxContainer" parent="Margem"]
+[node name="Column" type="VBoxContainer" parent="Margin"]
 theme_override_constants/separation = 6
 
-[node name="Cabeca" type="HBoxContainer" parent="Margem/Coluna"]
+[node name="Head" type="HBoxContainer" parent="Margin/Column"]
 theme_override_constants/separation = 6
 
-[node name="doc_title" type="Label" parent="Margem/Coluna/Cabeca"]
+[node name="doc_title" type="Label" parent="Margin/Column/Head"]
 unique_name_in_owner = true
 mouse_filter = 2
 theme_override_font_sizes/font_size = 20
 theme_override_colors/font_color = Color(0.9490196, 0.7019608, 0.23921569, 1)
 text = "Editor legislativo"
 
-[node name="code_badge" type="Label" parent="Margem/Coluna/Cabeca"]
+[node name="code_badge" type="Label" parent="Margin/Column/Head"]
 unique_name_in_owner = true
 visible = false
 mouse_filter = 2
 theme_override_font_sizes/font_size = 13
 theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
 
-[node name="Espaco" type="Control" parent="Margem/Coluna/Cabeca"]
+[node name="Space" type="Control" parent="Margin/Column/Head"]
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="read_only_note" type="Label" parent="Margem/Coluna/Cabeca"]
+[node name="read_only_note" type="Label" parent="Margin/Column/Head"]
 unique_name_in_owner = true
 mouse_filter = 2
 theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(0.30980393, 0.7019608, 0.8509804, 1)
 text = "Versão somente para leitura"
 
-[node name="simulate" type="Button" parent="Margem/Coluna/Cabeca"]
+[node name="simulate" type="Button" parent="Margin/Column/Head"]
 unique_name_in_owner = true
 text = "Simular"
 focus_mode = 0
 mouse_default_cursor_shape = 2
 
-[node name="save_close" type="Button" parent="Margem/Coluna/Cabeca"]
+[node name="save_close" type="Button" parent="Margin/Column/Head"]
 unique_name_in_owner = true
 text = "Salvar e fechar"
 focus_mode = 0
 mouse_default_cursor_shape = 2
 
-[node name="delete_draft" type="Button" parent="Margem/Coluna/Cabeca"]
+[node name="delete_draft" type="Button" parent="Margin/Column/Head"]
 unique_name_in_owner = true
 theme_override_colors/font_color = Color(0.9254902, 0.3529412, 0.2627451, 1)
 text = "Excluir rascunho"
 focus_mode = 0
 mouse_default_cursor_shape = 2
 
-[node name="present" type="Button" parent="Margem/Coluna/Cabeca"]
+[node name="present" type="Button" parent="Margin/Column/Head"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 32)
 text = "Apresentar"
 focus_mode = 0
 mouse_default_cursor_shape = 2
 
-[node name="feedback" type="Label" parent="Margem/Coluna"]
+[node name="feedback" type="Label" parent="Margin/Column"]
 unique_name_in_owner = true
 mouse_filter = 2
 theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(0.29803923, 0.78039217, 0.5803922, 1)
 autowrap_mode = 3
 
-[node name="Corpo" type="HBoxContainer" parent="Margem/Coluna"]
+[node name="Body" type="HBoxContainer" parent="Margin/Column"]
 size_flags_vertical = 3
 theme_override_constants/separation = 8
 
-[node name="library_panel" type="PanelContainer" parent="Margem/Coluna/Corpo"]
+[node name="library_panel" type="PanelContainer" parent="Margin/Column/Body"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(350, 0)
 theme_override_styles/panel = SubResource("s1")
 script = ExtResource("e3")
 
-[node name="Coluna" type="VBoxContainer" parent="Margem/Coluna/Corpo/library_panel"]
+[node name="Column" type="VBoxContainer" parent="Margin/Column/Body/library_panel"]
 theme_override_constants/separation = 4
 
-[node name="LibTitulo" type="Label" parent="Margem/Coluna/Corpo/library_panel/Coluna"]
+[node name="LibTitle" type="Label" parent="Margin/Column/Body/library_panel/Column"]
 mouse_filter = 2
 theme_override_font_sizes/font_size = 11
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 text = "BIBLIOTECA DE BLOCOS"
 
-[node name="LibDica" type="Label" parent="Margem/Coluna/Corpo/library_panel/Coluna"]
+[node name="LibHint" type="Label" parent="Margin/Column/Body/library_panel/Column"]
 mouse_filter = 2
 theme_override_font_sizes/font_size = 11
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 text = "Arraste um bloco para a área ao lado. Para apagar, arraste de volta para cá."
 autowrap_mode = 3
 
-[node name="Rolagem" type="ScrollContainer" parent="Margem/Coluna/Corpo/library_panel/Coluna"]
+[node name="Scroll" type="ScrollContainer" parent="Margin/Column/Body/library_panel/Column"]
 size_flags_vertical = 3
 
-[node name="library_list" type="VBoxContainer" parent="Margem/Coluna/Corpo/library_panel/Coluna/Rolagem"]
+[node name="library_list" type="VBoxContainer" parent="Margin/Column/Body/library_panel/Column/Scroll"]
 unique_name_in_owner = true
 size_flags_horizontal = 3
 theme_override_constants/separation = 4
 
-[node name="Centro" type="VBoxContainer" parent="Margem/Coluna/Corpo"]
+[node name="Center" type="VBoxContainer" parent="Margin/Column/Body"]
 size_flags_horizontal = 3
 theme_override_constants/separation = 8
 
-[node name="Area" type="PanelContainer" parent="Margem/Coluna/Corpo/Centro"]
+[node name="Area" type="PanelContainer" parent="Margin/Column/Body/Center"]
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("s2")
 
-[node name="canvas_scroll" type="ScrollContainer" parent="Margem/Coluna/Corpo/Centro/Area"]
+[node name="canvas_scroll" type="ScrollContainer" parent="Margin/Column/Body/Center/Area"]
 unique_name_in_owner = true
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="canvas" type="Control" parent="Margem/Coluna/Corpo/Centro/Area/canvas_scroll"]
+[node name="canvas" type="Control" parent="Margin/Column/Body/Center/Area/canvas_scroll"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(900, 500)
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("e4")
 
-[node name="Validacao" type="PanelContainer" parent="Margem/Coluna/Corpo/Centro"]
+[node name="Validation" type="PanelContainer" parent="Margin/Column/Body/Center"]
 custom_minimum_size = Vector2(0, 140)
 theme_override_styles/panel = SubResource("s1")
 
-[node name="Coluna" type="VBoxContainer" parent="Margem/Coluna/Corpo/Centro/Validacao"]
+[node name="Column" type="VBoxContainer" parent="Margin/Column/Body/Center/Validation"]
 theme_override_constants/separation = 3
 
-[node name="Cabeca" type="HBoxContainer" parent="Margem/Coluna/Corpo/Centro/Validacao/Coluna"]
+[node name="Head" type="HBoxContainer" parent="Margin/Column/Body/Center/Validation/Column"]
 theme_override_constants/separation = 6
 
-[node name="ValTitulo" type="Label" parent="Margem/Coluna/Corpo/Centro/Validacao/Coluna/Cabeca"]
+[node name="ValTitle" type="Label" parent="Margin/Column/Body/Center/Validation/Column/Head"]
 mouse_filter = 2
 theme_override_font_sizes/font_size = 11
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 text = "VALIDAÇÃO"
 
-[node name="Espaco" type="Control" parent="Margem/Coluna/Corpo/Centro/Validacao/Coluna/Cabeca"]
+[node name="Space" type="Control" parent="Margin/Column/Body/Center/Validation/Column/Head"]
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="validation_summary" type="Label" parent="Margem/Coluna/Corpo/Centro/Validacao/Coluna/Cabeca"]
+[node name="validation_summary" type="Label" parent="Margin/Column/Body/Center/Validation/Column/Head"]
 unique_name_in_owner = true
 mouse_filter = 2
 theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(0.29803923, 0.78039217, 0.5803922, 1)
 
-[node name="Rolagem" type="ScrollContainer" parent="Margem/Coluna/Corpo/Centro/Validacao/Coluna"]
+[node name="Scroll" type="ScrollContainer" parent="Margin/Column/Body/Center/Validation/Column"]
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
-[node name="validation_list" type="VBoxContainer" parent="Margem/Coluna/Corpo/Centro/Validacao/Coluna/Rolagem"]
+[node name="validation_list" type="VBoxContainer" parent="Margin/Column/Body/Center/Validation/Column/Scroll"]
 unique_name_in_owner = true
 size_flags_horizontal = 3
 theme_override_constants/separation = 1
 
-[node name="Direita" type="PanelContainer" parent="Margem/Coluna/Corpo"]
+[node name="Right" type="PanelContainer" parent="Margin/Column/Body"]
 custom_minimum_size = Vector2(330, 0)
 theme_override_styles/panel = SubResource("s1")
 
-[node name="Rolagem" type="ScrollContainer" parent="Margem/Coluna/Corpo/Direita"]
+[node name="Scroll" type="ScrollContainer" parent="Margin/Column/Body/Right"]
 horizontal_scroll_mode = 0
 
-[node name="Coluna" type="VBoxContainer" parent="Margem/Coluna/Corpo/Direita/Rolagem"]
+[node name="Column" type="VBoxContainer" parent="Margin/Column/Body/Right/Scroll"]
 size_flags_horizontal = 3
 theme_override_constants/separation = 6
 
-[node name="DocTitulo" type="Label" parent="Margem/Coluna/Corpo/Direita/Rolagem/Coluna"]
+[node name="DocTitle" type="Label" parent="Margin/Column/Body/Right/Scroll/Column"]
 mouse_filter = 2
 theme_override_font_sizes/font_size = 11
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 text = "DOCUMENTO"
 
-[node name="doc_number" type="Label" parent="Margem/Coluna/Corpo/Direita/Rolagem/Coluna"]
+[node name="doc_number" type="Label" parent="Margin/Column/Body/Right/Scroll/Column"]
 unique_name_in_owner = true
 mouse_filter = 2
 theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 
-[node name="doc_type" type="OptionButton" parent="Margem/Coluna/Corpo/Direita/Rolagem/Coluna"]
+[node name="doc_type" type="OptionButton" parent="Margin/Column/Body/Right/Scroll/Column"]
 unique_name_in_owner = true
 size_flags_horizontal = 3
 focus_mode = 0
 
-[node name="doc_name" type="LineEdit" parent="Margem/Coluna/Corpo/Direita/Rolagem/Coluna"]
+[node name="doc_name" type="LineEdit" parent="Margin/Column/Body/Right/Scroll/Column"]
 unique_name_in_owner = true
 size_flags_horizontal = 3
 placeholder_text = "Título da norma"
 
-[node name="doc_ementa" type="TextEdit" parent="Margem/Coluna/Corpo/Direita/Rolagem/Coluna"]
+[node name="doc_summary" type="TextEdit" parent="Margin/Column/Body/Right/Scroll/Column"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 62)
 size_flags_horizontal = 3
 placeholder_text = "Ementa: o que a norma faz"
 wrap_mode = 1
 
-[node name="Vacancia" type="HBoxContainer" parent="Margem/Coluna/Corpo/Direita/Rolagem/Coluna"]
+[node name="Vacancy" type="HBoxContainer" parent="Margin/Column/Body/Right/Scroll/Column"]
 theme_override_constants/separation = 4
 
-[node name="VacTexto" type="Label" parent="Margem/Coluna/Corpo/Direita/Rolagem/Coluna/Vacancia"]
+[node name="VacText" type="Label" parent="Margin/Column/Body/Right/Scroll/Column/Vacancy"]
 size_flags_horizontal = 3
 mouse_filter = 2
 theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 text = "Entra em vigor após (dias)"
 
-[node name="doc_vacatio" type="LineEdit" parent="Margem/Coluna/Corpo/Direita/Rolagem/Coluna/Vacancia"]
+[node name="doc_vacatio" type="LineEdit" parent="Margin/Column/Body/Right/Scroll/Column/Vacancy"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(70, 0)
 
-[node name="Validade" type="HBoxContainer" parent="Margem/Coluna/Corpo/Direita/Rolagem/Coluna"]
+[node name="Validity" type="HBoxContainer" parent="Margin/Column/Body/Right/Scroll/Column"]
 theme_override_constants/separation = 4
 
-[node name="ValidadeTexto" type="Label" parent="Margem/Coluna/Corpo/Direita/Rolagem/Coluna/Validade"]
+[node name="ValidityText" type="Label" parent="Margin/Column/Body/Right/Scroll/Column/Validity"]
 size_flags_horizontal = 3
 mouse_filter = 2
 theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 text = "Vale até (aaaa-mm-dd)"
 
-[node name="doc_expires" type="LineEdit" parent="Margem/Coluna/Corpo/Direita/Rolagem/Coluna/Validade"]
+[node name="doc_expires" type="LineEdit" parent="Margin/Column/Body/Right/Scroll/Column/Validity"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(110, 0)
 
-[node name="poll" parent="Margem/Coluna/Corpo/Direita/Rolagem/Coluna" instance=ExtResource("poll_box")]
+[node name="poll" parent="Margin/Column/Body/Right/Scroll/Column" instance=ExtResource("poll_box")]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Separador" type="ColorRect" parent="Margem/Coluna/Corpo/Direita/Rolagem/Coluna"]
+[node name="Separator" type="ColorRect" parent="Margin/Column/Body/Right/Scroll/Column"]
 custom_minimum_size = Vector2(0, 1)
 mouse_filter = 2
 color = Color(0.15294118, 0.2509804, 0.30980393, 1)
 
-[node name="PropTitulo" type="Label" parent="Margem/Coluna/Corpo/Direita/Rolagem/Coluna"]
+[node name="PropTitle" type="Label" parent="Margin/Column/Body/Right/Scroll/Column"]
 mouse_filter = 2
 theme_override_font_sizes/font_size = 11
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 text = "PROPRIEDADES DO BLOCO"
 
-[node name="props_empty" type="Label" parent="Margem/Coluna/Corpo/Direita/Rolagem/Coluna"]
+[node name="props_empty" type="Label" parent="Margin/Column/Body/Right/Scroll/Column"]
 unique_name_in_owner = true
 mouse_filter = 2
 theme_override_font_sizes/font_size = 12
@@ -303,37 +303,37 @@ theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 text = "Clique em um bloco para ver os parâmetros."
 autowrap_mode = 3
 
-[node name="props_title" type="Label" parent="Margem/Coluna/Corpo/Direita/Rolagem/Coluna"]
+[node name="props_title" type="Label" parent="Margin/Column/Body/Right/Scroll/Column"]
 unique_name_in_owner = true
 mouse_filter = 2
 theme_override_font_sizes/font_size = 13
 theme_override_colors/font_color = Color(0.9490196, 0.7019608, 0.23921569, 1)
 autowrap_mode = 3
 
-[node name="props_box" type="VBoxContainer" parent="Margem/Coluna/Corpo/Direita/Rolagem/Coluna"]
+[node name="props_box" type="VBoxContainer" parent="Margin/Column/Body/Right/Scroll/Column"]
 unique_name_in_owner = true
 size_flags_horizontal = 3
 theme_override_constants/separation = 6
 
-[node name="remove_block" type="Button" parent="Margem/Coluna/Corpo/Direita/Rolagem/Coluna"]
+[node name="remove_block" type="Button" parent="Margin/Column/Body/Right/Scroll/Column"]
 unique_name_in_owner = true
 theme_override_colors/font_color = Color(0.9254902, 0.3529412, 0.2627451, 1)
 text = "Apagar este bloco"
 focus_mode = 0
 mouse_default_cursor_shape = 2
 
-[node name="Separador2" type="ColorRect" parent="Margem/Coluna/Corpo/Direita/Rolagem/Coluna"]
+[node name="Separator2" type="ColorRect" parent="Margin/Column/Body/Right/Scroll/Column"]
 custom_minimum_size = Vector2(0, 1)
 mouse_filter = 2
 color = Color(0.15294118, 0.2509804, 0.30980393, 1)
 
-[node name="TextoTitulo" type="Label" parent="Margem/Coluna/Corpo/Direita/Rolagem/Coluna"]
+[node name="TextTitle" type="Label" parent="Margin/Column/Body/Right/Scroll/Column"]
 mouse_filter = 2
 theme_override_font_sizes/font_size = 11
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 text = "TEXTO DA NORMA"
 
-[node name="legal_text" type="Label" parent="Margem/Coluna/Corpo/Direita/Rolagem/Coluna"]
+[node name="legal_text" type="Label" parent="Margin/Column/Body/Right/Scroll/Column"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2

@@ -1,6 +1,6 @@
 extends Node
-## Roteiro de teste da interface: joga sozinho, exercita cada aba e guarda capturas de tela.
-## Uso: godot --path . -- --ui-test --shots=/caminho/da/pasta
+## Interface test script: plays on its own, exercises each tab and saves screenshots.
+## Usage: godot --path . -- --ui-test --shots=/path/to/folder
 
 var main: Node
 var out := "user://shots"
@@ -50,7 +50,7 @@ func _process(delta: float) -> void:
 			main._pick_start(w.by_iso["BRA"])
 		2:
 			_shot("02_escolha")
-			_check(not main._start_button.disabled, "botão de início habilitado")
+			_check(not main._start_button.disabled, "start button enabled")
 			main._begin()
 			main._set_speed(3)
 			main.start_skip(60)
@@ -61,7 +61,7 @@ func _process(delta: float) -> void:
 		5:
 			_dismiss_prompts()
 			_shot("03_painel")
-			# Uma decisão aleatória pode pausar o jogo já no primeiro mês.
+			# A random decision may pause the game already in the first month.
 			_check(w.day_index > 25, "tempo passou (dia %d)" % w.day_index)
 			main.hud._desk.current_tab = 1
 		6:
@@ -91,8 +91,8 @@ func _process(delta: float) -> void:
 			_shot("09_dossie")
 			var rel: float = w.diplomacy.relation(w.player.idx, w.by_iso["CHN"].idx)
 			main.hud._on_action("mission")
-			_check(w.action_wait("mission", w.by_iso["CHN"]) > 0, "a mesma ação só se repete depois de um intervalo")
-			_check(w.diplomacy.relation(w.player.idx, w.by_iso["CHN"].idx) > rel, "missão melhora relação")
+			_check(w.action_wait("mission", w.by_iso["CHN"]) > 0, "the same action only repeats after an interval")
+			_check(w.diplomacy.relation(w.player.idx, w.by_iso["CHN"].idx) > rel, "mission improves relation")
 			main.hud._on_mode("inflacao")
 		12:
 			_dismiss_prompts()
@@ -113,7 +113,7 @@ func _process(delta: float) -> void:
 			_shot("12_guerra_alheia")
 			_dismiss_prompts()
 			var r: Dictionary = w.do_action("war", w.by_iso["ARG"])
-			_check(r.ok, "jogador declara guerra")
+			_check(r.ok, "player declares war")
 		15:
 			wait = 3.0
 		16:
@@ -136,31 +136,31 @@ func _process(delta: float) -> void:
 			wait = 3.0
 		19:
 			_dismiss_prompts()
-			_check(Game.world.day_index > 0, "jogo prossegue depois de carregar")
+			_check(Game.world.day_index > 0, "game goes on after loading")
 			_shot("14_depois_de_carregar")
 			Game.world.player.approval = 0.02
 			Game.world.player.next_election = Game.world.year_float()
 			Game.world.player.dem = 7.0
 			main.start_skip(60)
 		20, 21, 22, 23, 24, 25, 26:
-			# Só o modal de fim de jogo pode permanecer aberto.
+			# Only the game over modal may remain open.
 			wait = 0.8
 			main._set_speed(3)
 			if not Game.world.over:
 				_dismiss_prompts()
 		27:
 			_shot("15_fim")
-			_check(not Game.world.in_office and not Game.world.over, "derrota eleitoral leva à oposição (próxima eleição %.2f, ano %.2f)" % [Game.world.player.next_election, Game.world.year_float()])
+			_check(not Game.world.in_office and not Game.world.over, "electoral defeat leads to opposition (next election %.2f, year %.2f)" % [Game.world.player.next_election, Game.world.year_float()])
 			print("RESULT: ", failures, " failures")
 			get_tree().quit(1 if failures > 0 else 0)
 
 
 func _dismiss_prompts() -> void:
-	# A demarcação para o relógio até o jogador decidir: aqui ele abre mão do território.
+	# The demarcation stops the clock until the player decides: here they give up the territory.
 	if main.hud.border.active:
 		print("demarcação aberta durante o roteiro: encerrando sem território")
 		main.hud.border._on_decline()
-	# Fecha decisões pendentes escolhendo a primeira opção, como um jogador faria.
+	# Closes pending decisions by choosing the first option, as a player would.
 	for dim in main.modal_root.get_children():
 		if dim is ColorRect:
 			var btn := _first_button(dim)

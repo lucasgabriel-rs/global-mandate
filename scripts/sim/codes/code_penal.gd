@@ -23,7 +23,7 @@ const CRIME_PACE := 0.06
 func _init() -> void:
 	id = "penal"
 	title = "Código Penal"
-	ementa = "Crimes, penas, maioridade penal, drogas, armas e sistema prisional."
+	summary = "Crimes, penas, maioridade penal, drogas, armas e sistema prisional."
 	category = {"id": "penal", "label": "Penal", "color": Color("9e3b3b")}
 
 

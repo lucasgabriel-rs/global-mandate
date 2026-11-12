@@ -24,30 +24,30 @@ anchor_bottom = 1.0
 theme = ExtResource("1_ognm5")
 color = Color(0.01, 0.03, 0.05, 0.62)
 
-[node name="Centro" type="CenterContainer" parent="." unique_id=422385408]
+[node name="Center" type="CenterContainer" parent="." unique_id=422385408]
 layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="Painel" type="PanelContainer" parent="Centro" unique_id=1543524707]
+[node name="Panel" type="PanelContainer" parent="Center" unique_id=1543524707]
 custom_minimum_size = Vector2(520, 0)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_vgjvd")
 
-[node name="col" type="VBoxContainer" parent="Centro/Painel" unique_id=1118027982]
+[node name="col" type="VBoxContainer" parent="Center/Panel" unique_id=1118027982]
 unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 10
 
-[node name="title" type="Label" parent="Centro/Painel/col" unique_id=560448588]
+[node name="title" type="Label" parent="Center/Panel/col" unique_id=560448588]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.9490196, 0.7019608, 0.23921569, 1)
 theme_override_font_sizes/font_size = 24
 text = "Título"
 
-[node name="body" type="Label" parent="Centro/Painel/col" unique_id=1031586751]
+[node name="body" type="Label" parent="Center/Panel/col" unique_id=1031586751]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2

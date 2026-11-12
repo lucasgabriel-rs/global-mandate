@@ -22,29 +22,29 @@ corner_radius_bottom_left = 3
 theme_override_styles/panel = SubResource("s1")
 theme = ExtResource("e1")
 
-[node name="Coluna" type="VBoxContainer" parent="."]
+[node name="Column" type="VBoxContainer" parent="."]
 theme_override_constants/separation = 3
 
-[node name="Cabeca" type="HBoxContainer" parent="Coluna"]
+[node name="Head" type="HBoxContainer" parent="Column"]
 theme_override_constants/separation = 6
 
-[node name="op_label" type="Label" parent="Coluna/Cabeca"]
+[node name="op_label" type="Label" parent="Column/Head"]
 unique_name_in_owner = true
 mouse_filter = 2
 theme_override_font_sizes/font_size = 13
 theme_override_colors/font_color = Color(0.9490196, 0.7019608, 0.23921569, 1)
 
-[node name="Espaco" type="Control" parent="Coluna/Cabeca"]
+[node name="Space" type="Control" parent="Column/Head"]
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="remove" type="Button" parent="Coluna/Cabeca"]
+[node name="remove" type="Button" parent="Column/Head"]
 unique_name_in_owner = true
 text = "Retirar"
 focus_mode = 0
 mouse_default_cursor_shape = 2
 
-[node name="diff" type="RichTextLabel" parent="Coluna"]
+[node name="diff" type="RichTextLabel" parent="Column"]
 unique_name_in_owner = true
 bbcode_enabled = true
 fit_content = true

@@ -1,6 +1,6 @@
 extends Node
-## Aba Economia: a subaba Setores com o país do jogador, depois de um ano de jogo.
-## Uso: godot --path . -- --ui-economy --shots=/caminho/da/pasta
+## Economy tab: the Sectors sub-tab with the player's country, after a year of game.
+## Usage: godot --path . -- --ui-economy --shots=/path/to/folder
 
 var main: Node
 var out := "user://shots"
@@ -45,12 +45,12 @@ func _run() -> void:
 	main._pick_start(w.by_iso["BRA"])
 	main._start_button.pressed.emit()
 	await _wait()
-	_top().get_node("%Confirmar").pressed.emit()
+	_top().get_node("%Confirm").pressed.emit()
 	await _wait()
 	_top().get_node("%party_rows").get_child(0).get_node("%pick").pressed.emit()
 	await _wait()
 	main._set_speed(0)
-	_check(main.playing, "a partida começa")
+	_check(main.playing, "the match starts")
 	for i in 400:
 		w.tick_day()
 	var hud: Hud = main.hud
@@ -59,16 +59,16 @@ func _run() -> void:
 	hud.refresh(true)
 	await _wait()
 	var panel: EconomyPanel = hud.economy
-	_check(panel.is_visible_in_tree(), "a aba Economia aparece")
+	_check(panel.is_visible_in_tree(), "the Economy tab shows up")
 	var rows: VBoxContainer = panel.get_node("%sector_rows")
-	_check(rows.get_child_count() == Sectors.COUNT, "uma linha por setor: %d" % rows.get_child_count())
+	_check(rows.get_child_count() == Sectors.COUNT, "one row per sector: %d" % rows.get_child_count())
 	var first: Label = rows.get_child(0).get_node("%sector_name")
 	var top := 0
 	for i in Sectors.COUNT:
 		if w.player.sector_share[i] > w.player.sector_share[top]:
 			top = i
 	_check(first.text == Sectors.NAMES[top], "o maior setor vem primeiro: " + first.text)
-	_check((rows.get_child(0).get_node("%sector_value") as Label).text.contains("US$"), "mostra o valor em dólares")
+	_check((rows.get_child(0).get_node("%sector_value") as Label).text.contains("US$"), "shows the value in dollars")
 	await _shot("e1_setores")
 	for t in [1, 2, 3]:
 		(panel.get_node("%sub_tabs") as TabContainer).current_tab = t
@@ -79,8 +79,8 @@ func _run() -> void:
 	hud.refresh(true)
 	await _wait()
 	var adult_bar: ProgressBar = panel.get_node("%adult_bar")
-	_check(absf(adult_bar.value - w.player.adult) < 0.01 and adult_bar.value > 0.4, "a subaba População mostra a idade ativa")
-	_check((panel.get_node("%pop_total") as Label).text.contains("milh") or (panel.get_node("%pop_total") as Label).text.contains("mill"), "mostra a população total")
+	_check(absf(adult_bar.value - w.player.adult) < 0.01 and adult_bar.value > 0.4, "the Population sub-tab shows the working age")
+	_check((panel.get_node("%pop_total") as Label).text.contains("milh") or (panel.get_node("%pop_total") as Label).text.contains("mill"), "shows the total population")
 	await _shot("e2b_populacao")
 	(panel.get_node("%sub_tabs") as TabContainer).current_tab = 0
 	get_window().size = Vector2i(1100, 700)
@@ -91,19 +91,19 @@ func _run() -> void:
 	await _moeda(hud, tabs, w)
 
 
-## Janela Moeda: reservas, intervenção, capitais, dolarização, paridade e o fundo soberano.
+## Currency window: reserves, intervention, capital, dollarization, parity and the sovereign fund.
 func _moeda(hud: Hud, tabs: WindowDesk, w: GameWorld) -> void:
 	tabs.current_tab = 2
 	hud.refresh(true)
 	await _wait()
 	for key in ["m_res", "m_interv", "m_lean", "m_controls", "m_flight", "m_dollar", "m_uip", "m_swf_status", "m_swf", "m_swf_in", "m_swf_out", "m_swf_rule", "m_swf_ret"]:
 		var label: Label = hud._dyn.get(key)
-		_check(label != null and label.is_visible_in_tree() and label.text != "", "Moeda mostra %s: %s" % [key, label.text if label else "?"])
-	_check((hud._dyn.m_res as Label).text.contains("US$"), "reservas em dólares")
-	_check((hud._dyn.mc_res as MiniChart).is_visible_in_tree() and (hud._dyn.mc_swf as MiniChart).is_visible_in_tree(), "gráficos de reservas e do fundo")
-	_check((hud._dyn.m_swf_status as Label).text == tr("sem fundo: crie pela Lei Cambial"), "o Brasil aparece sem fundo soberano")
+		_check(label != null and label.is_visible_in_tree() and label.text != "", "Currency shows %s: %s" % [key, label.text if label else "?"])
+	_check((hud._dyn.m_res as Label).text.contains("US$"), "reserves in dollars")
+	_check((hud._dyn.mc_res as MiniChart).is_visible_in_tree() and (hud._dyn.mc_swf as MiniChart).is_visible_in_tree(), "charts of reserves and of the fund")
+	_check((hud._dyn.m_swf_status as Label).text == tr("sem fundo: crie pela Lei Cambial"), "Brazil appears without a sovereign fund")
 	await _shot("e4_moeda")
-	# Com um fundo como o norueguês, a janela mostra saldo, fluxos e regra.
+	# With a fund like Norway's, the window shows balance, flows and rule.
 	var c := w.player
 	c.swf = 300.0
 	c.swf_active = true
@@ -111,6 +111,6 @@ func _moeda(hud: Hud, tabs: WindowDesk, w: GameWorld) -> void:
 	c.swf_rent_share = 0.5
 	hud.refresh(true)
 	await _wait()
-	_check((hud._dyn.m_swf as Label).text.contains("US$"), "saldo do fundo: " + (hud._dyn.m_swf as Label).text)
-	_check((hud._dyn.m_swf_rule as Label).text.contains("3"), "regra de saque: " + (hud._dyn.m_swf_rule as Label).text)
+	_check((hud._dyn.m_swf as Label).text.contains("US$"), "fund balance:" + (hud._dyn.m_swf as Label).text)
+	_check((hud._dyn.m_swf_rule as Label).text.contains("3"), "withdrawal rule:" + (hud._dyn.m_swf_rule as Label).text)
 	await _shot("e5_moeda_fundo")

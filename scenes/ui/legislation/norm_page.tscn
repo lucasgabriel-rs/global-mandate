@@ -29,199 +29,199 @@ color = Color(0.01, 0.03, 0.05, 0.62)
 script = ExtResource("e1")
 theme = ExtResource("e2")
 
-[node name="Centro" type="CenterContainer" parent="."]
+[node name="Center" type="CenterContainer" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="Painel" type="PanelContainer" parent="Centro"]
+[node name="Panel" type="PanelContainer" parent="Center"]
 custom_minimum_size = Vector2(1100, 760)
 theme_override_styles/panel = SubResource("s1")
 
-[node name="col" type="VBoxContainer" parent="Centro/Painel"]
+[node name="col" type="VBoxContainer" parent="Center/Panel"]
 unique_name_in_owner = true
 theme_override_constants/separation = 10
 
-[node name="Cabeca" type="HBoxContainer" parent="Centro/Painel/col"]
+[node name="Head" type="HBoxContainer" parent="Center/Panel/col"]
 theme_override_constants/separation = 6
 
-[node name="title" type="Label" parent="Centro/Painel/col/Cabeca"]
+[node name="title" type="Label" parent="Center/Panel/col/Head"]
 unique_name_in_owner = true
 mouse_filter = 2
 theme_override_font_sizes/font_size = 22
 theme_override_colors/font_color = Color(0.9490196, 0.7019608, 0.23921569, 1)
 
-[node name="Espaco" type="Control" parent="Centro/Painel/col/Cabeca"]
+[node name="Space" type="Control" parent="Center/Panel/col/Head"]
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="state" type="Label" parent="Centro/Painel/col/Cabeca"]
+[node name="state" type="Label" parent="Center/Panel/col/Head"]
 unique_name_in_owner = true
 mouse_filter = 2
 theme_override_font_sizes/font_size = 13
 theme_override_colors/font_color = Color(0.30980393, 0.7019608, 0.8509804, 1)
 
-[node name="close" type="Button" parent="Centro/Painel/col/Cabeca"]
+[node name="close" type="Button" parent="Center/Panel/col/Head"]
 unique_name_in_owner = true
 text = "Fechar"
 focus_mode = 0
 mouse_default_cursor_shape = 2
 
-[node name="feedback" type="Label" parent="Centro/Painel/col"]
+[node name="feedback" type="Label" parent="Center/Panel/col"]
 unique_name_in_owner = true
 mouse_filter = 2
 theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(0.29803923, 0.78039217, 0.5803922, 1)
 autowrap_mode = 3
 
-[node name="Corpo" type="HBoxContainer" parent="Centro/Painel/col"]
+[node name="Body" type="HBoxContainer" parent="Center/Panel/col"]
 size_flags_vertical = 3
 theme_override_constants/separation = 12
 
-[node name="Esquerda" type="VBoxContainer" parent="Centro/Painel/col/Corpo"]
+[node name="Left" type="VBoxContainer" parent="Center/Panel/col/Body"]
 size_flags_horizontal = 3
 theme_override_constants/separation = 6
 
-[node name="doc_text" type="RichTextLabel" parent="Centro/Painel/col/Corpo/Esquerda"]
+[node name="doc_text" type="RichTextLabel" parent="Center/Panel/col/Body/Left"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 170)
 size_flags_horizontal = 3
 theme_override_font_sizes/normal_font_size = 13
 bbcode_enabled = true
 
-[node name="Versao" type="HBoxContainer" parent="Centro/Painel/col/Corpo/Esquerda"]
+[node name="Version" type="HBoxContainer" parent="Center/Panel/col/Body/Left"]
 theme_override_constants/separation = 6
 
-[node name="VersaoTitulo" type="Label" parent="Centro/Painel/col/Corpo/Esquerda/Versao"]
+[node name="VersionTitle" type="Label" parent="Center/Panel/col/Body/Left/Version"]
 mouse_filter = 2
 theme_override_font_sizes/font_size = 11
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 text = "TEXTO CONSOLIDADO"
 
-[node name="Espaco" type="Control" parent="Centro/Painel/col/Corpo/Esquerda/Versao"]
+[node name="Space" type="Control" parent="Center/Panel/col/Body/Left/Version"]
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="VersaoTexto" type="Label" parent="Centro/Painel/col/Corpo/Esquerda/Versao"]
+[node name="VersionText" type="Label" parent="Center/Panel/col/Body/Left/Version"]
 mouse_filter = 2
 theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 text = "Versão"
 
-[node name="version_pick" type="OptionButton" parent="Centro/Painel/col/Corpo/Esquerda/Versao"]
+[node name="version_pick" type="OptionButton" parent="Center/Panel/col/Body/Left/Version"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(280, 0)
 focus_mode = 0
 
-[node name="law_text" type="RichTextLabel" parent="Centro/Painel/col/Corpo/Esquerda"]
+[node name="law_text" type="RichTextLabel" parent="Center/Panel/col/Body/Left"]
 unique_name_in_owner = true
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_font_sizes/normal_font_size = 13
 bbcode_enabled = true
 
-[node name="Direita" type="VBoxContainer" parent="Centro/Painel/col/Corpo"]
+[node name="Right" type="VBoxContainer" parent="Center/Panel/col/Body"]
 custom_minimum_size = Vector2(420, 0)
 theme_override_constants/separation = 6
 
-[node name="VotosTitulo" type="Label" parent="Centro/Painel/col/Corpo/Direita"]
+[node name="VotesTitle" type="Label" parent="Center/Panel/col/Body/Right"]
 mouse_filter = 2
 theme_override_font_sizes/font_size = 11
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 text = "VOTAÇÕES"
 
-[node name="votes_text" type="RichTextLabel" parent="Centro/Painel/col/Corpo/Direita"]
+[node name="votes_text" type="RichTextLabel" parent="Center/Panel/col/Body/Right"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 120)
 size_flags_horizontal = 3
 theme_override_font_sizes/normal_font_size = 13
 bbcode_enabled = true
 
-[node name="TramTitulo" type="Label" parent="Centro/Painel/col/Corpo/Direita"]
+[node name="ProcTitle" type="Label" parent="Center/Panel/col/Body/Right"]
 mouse_filter = 2
 theme_override_font_sizes/font_size = 11
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 text = "TRAMITAÇÃO E ALTERAÇÕES"
 
-[node name="history_text" type="RichTextLabel" parent="Centro/Painel/col/Corpo/Direita"]
+[node name="history_text" type="RichTextLabel" parent="Center/Panel/col/Body/Right"]
 unique_name_in_owner = true
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_font_sizes/normal_font_size = 13
 bbcode_enabled = true
 
-[node name="Botoes" type="HBoxContainer" parent="Centro/Painel/col"]
+[node name="Buttons" type="HBoxContainer" parent="Center/Panel/col"]
 theme_override_constants/separation = 6
 
-[node name="edit_draft" type="Button" parent="Centro/Painel/col/Botoes"]
+[node name="edit_draft" type="Button" parent="Center/Panel/col/Buttons"]
 unique_name_in_owner = true
 text = "Abrir no editor"
 focus_mode = 0
 mouse_default_cursor_shape = 2
 
-[node name="view_program" type="Button" parent="Centro/Painel/col/Botoes"]
+[node name="view_program" type="Button" parent="Center/Panel/col/Buttons"]
 unique_name_in_owner = true
 text = "Ver a programação"
 focus_mode = 0
 mouse_default_cursor_shape = 2
 
-[node name="change" type="Button" parent="Centro/Painel/col/Botoes"]
+[node name="change" type="Button" parent="Center/Panel/col/Buttons"]
 unique_name_in_owner = true
 text = "Propor alteração"
 focus_mode = 0
 mouse_default_cursor_shape = 2
 
-[node name="Divisor" type="VSeparator" parent="Centro/Painel/col/Botoes"]
+[node name="Divisor" type="VSeparator" parent="Center/Panel/col/Buttons"]
 
-[node name="ArtigosTexto" type="Label" parent="Centro/Painel/col/Botoes"]
+[node name="ArticlesText" type="Label" parent="Center/Panel/col/Buttons"]
 mouse_filter = 2
 theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 text = "Artigos"
 
-[node name="revoke_articles" type="LineEdit" parent="Centro/Painel/col/Botoes"]
+[node name="revoke_articles" type="LineEdit" parent="Center/Panel/col/Buttons"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(120, 0)
 placeholder_text = "todos, ou 1, 3"
 
-[node name="revoke" type="Button" parent="Centro/Painel/col/Botoes"]
+[node name="revoke" type="Button" parent="Center/Panel/col/Buttons"]
 unique_name_in_owner = true
 text = "Propor revogação"
 focus_mode = 0
 mouse_default_cursor_shape = 2
 
-[node name="Divisor2" type="VSeparator" parent="Centro/Painel/col/Botoes"]
+[node name="Divisor2" type="VSeparator" parent="Center/Panel/col/Buttons"]
 
-[node name="suspend" type="Button" parent="Centro/Painel/col/Botoes"]
+[node name="suspend" type="Button" parent="Center/Panel/col/Buttons"]
 unique_name_in_owner = true
 text = "Suspender"
 focus_mode = 0
 mouse_default_cursor_shape = 2
 
-[node name="export" type="Button" parent="Centro/Painel/col/Botoes"]
+[node name="export" type="Button" parent="Center/Panel/col/Buttons"]
 unique_name_in_owner = true
 text = "Exportar"
 focus_mode = 0
 mouse_default_cursor_shape = 2
 
-[node name="negotiate" type="Button" parent="Centro/Painel/col/Botoes"]
+[node name="negotiate" type="Button" parent="Center/Panel/col/Buttons"]
 unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "Negociar votos"
 
-[node name="Espaco" type="Control" parent="Centro/Painel/col/Botoes"]
+[node name="Space" type="Control" parent="Center/Panel/col/Buttons"]
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="sanction" type="Button" parent="Centro/Painel/col/Botoes"]
+[node name="sanction" type="Button" parent="Center/Panel/col/Buttons"]
 unique_name_in_owner = true
 text = "Sancionar"
 focus_mode = 0
 mouse_default_cursor_shape = 2
 
-[node name="veto" type="Button" parent="Centro/Painel/col/Botoes"]
+[node name="veto" type="Button" parent="Center/Panel/col/Buttons"]
 unique_name_in_owner = true
 text = "Vetar"
 focus_mode = 0

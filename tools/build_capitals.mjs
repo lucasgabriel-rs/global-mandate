@@ -1,5 +1,5 @@
-// Generates data/capitais.json with the Portuguese name and position of the national capitals (Natural Earth).
-// Usage: node tools/build_capitais.mjs   (then run tools/clip_units.gd, which adds the geometry)
+// Generates data/capitals.json with the Portuguese name and position of the national capitals (Natural Earth).
+// Usage: node tools/build_capitals.mjs   (then run tools/clip_units.gd, which adds the geometry)
 //
 // Brazil is left out: its capitals are already municipalities, defined in subdivisions.gd.
 import { readFileSync, writeFileSync } from "node:fs";
@@ -52,5 +52,5 @@ for (const code of iso) {
   const source = place.name.replace(/\s+/g, " ");
   out.push({ iso: code, n: PT[source] ?? source, q: source, x, y });
 }
-writeFileSync("data/capitais.json", JSON.stringify({ capitals: out }));
+writeFileSync("data/capitals.json", JSON.stringify({ capitals: out }));
 console.log(`capitais=${out.length}`);

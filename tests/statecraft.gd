@@ -1,5 +1,5 @@
 extends SceneTree
-## Testes de oposição, políticos, bússola, ministros e conversas, sem interface.
+## Tests of opposition, politicians, compass, ministers and conversations, without the interface.
 ## Uso: godot --headless --path . -s tests/statecraft.gd
 
 var failures := 0
@@ -55,35 +55,35 @@ func _compass() -> void:
 			all += 1
 			if m0.econ == m1.econ and m0.social == m1.social:
 				same += 1
-	_check(bad.is_empty(), "bússola de cada partido é a média dos políticos %s" % str(bad.slice(0, 3)))
-	_check(same == 0, "cada político tem a própria bússola (%d iguais em %d)" % [same, all])
-	_check(not pol.leader_of("ARG").is_empty() and not pol.leader_of("ARG").has("player"), "líder estrangeiro é um político")
-	# O jogador entra, muda a média; sai, a média volta.
+	_check(bad.is_empty(), "each party's compass is the average of its politicians %s" % str(bad.slice(0, 3)))
+	_check(same == 0, "each politician has their own compass (%d equal out of %d)" % [same, all])
+	_check(not pol.leader_of("ARG").is_empty() and not pol.leader_of("ARG").has("player"), "a foreign leader is a politician")
+	# The player enters, changes the average; leaves, the average goes back.
 	var data := pol.data_of("BRA")
 	var mine := pol.player_party(w)
-	_check(mine.members[0].get("player", false), "o jogador lidera o próprio partido")
+	_check(mine.members[0].get("player", false), "the player leads their own party")
 	var other: Dictionary = {}
 	for p: Dictionary in data.parties:
 		if p.id != mine.id:
 			other = p
 			break
 	var before := float(other.econ)
-	_check(pol.join_party(w, other.id).ok, "troca de partido")
-	_check(absf(float(w.leader.econ) - before) < 0.0001, "quem entra adota as ideias do partido")
+	_check(pol.join_party(w, other.id).ok, "party switch")
+	_check(absf(float(w.leader.econ) - before) < 0.0001, "whoever joins adopts the party's ideas")
 	w.leader.econ = 1.0
 	w.leader.social = 1.0
 	pol.sync_player(w)
-	_check(float(other.econ) > before and absf(float(other.econ) - _average(other.members, "econ")) < 0.0001, "a média do partido inclui o jogador")
-	_check(absf(float(mine.econ) - _average(mine.members, "econ")) < 0.0001 and not _has_player(mine), "o partido antigo recalcula sem o jogador")
+	_check(float(other.econ) > before and absf(float(other.econ) - _average(other.members, "econ")) < 0.0001, "the party's average includes the player")
+	_check(absf(float(mine.econ) - _average(mine.members, "econ")) < 0.0001 and not _has_player(mine), "the old party recalculates without the player")
 	w.leader.econ = -1.0
 	var moved := float(other.econ)
 	pol.sync_player(w)
-	_check(float(other.econ) < moved, "mudar de ideias move a bússola do partido")
+	_check(float(other.econ) < moved, "changing ideas moves the party's compass")
 	var again := 0
 	for m: Dictionary in other.members:
 		if m.get("player", false):
 			again += 1
-	_check(again == 1, "o jogador aparece uma só vez")
+	_check(again == 1, "the player appears only once")
 	var old := w.to_dict()
 	for iso: String in old.politics.countries:
 		var d: Dictionary = old.politics.countries[iso]
@@ -93,7 +93,7 @@ func _compass() -> void:
 	var w2 := GameWorld.new()
 	w2.setup(7)
 	w2.load_dict(bytes_to_var(var_to_bytes(old)))
-	_check(not w2.politics.leader_of("ARG").is_empty(), "save antigo ganha políticos")
+	_check(not w2.politics.leader_of("ARG").is_empty(), "old save gets politicians")
 
 
 func _has_player(party: Dictionary) -> bool:
@@ -111,52 +111,52 @@ func _cabinet() -> void:
 	for p: Dictionary in Politics.PORTFOLIOS:
 		if not pol.minister(w, p.id).is_empty():
 			filled += 1
-	_check(filled == Politics.PORTFOLIOS.size(), "gabinete inicial preenche as %d pastas (%d)" % [Politics.PORTFOLIOS.size(), filled])
+	_check(filled == Politics.PORTFOLIOS.size(), "the initial cabinet fills the %d portfolios (%d)" % [Politics.PORTFOLIOS.size(), filled])
 	var parties := {}
 	var outside := 0
 	for e: Dictionary in data.cabinet.values():
 		parties[e.party] = true
 		if not int(e.party) in data.coalition:
 			outside += 1
-	_check(outside == 0, "ministros vêm da coalizão")
-	_check(parties.size() == mini(data.coalition.size(), Politics.PORTFOLIOS.size()), "pastas repartidas entre os aliados")
-	# Regras de nomeação.
+	_check(outside == 0, "ministers come from the coalition")
+	_check(parties.size() == mini(data.coalition.size(), Politics.PORTFOLIOS.size()), "portfolios split among the allies")
+	# Appointment rules.
 	var post := "finance"
 	var options := pol.eligible_ministers(w, post)
-	_check(not options.is_empty(), "há candidatos")
+	_check(not options.is_empty(), "there are candidates")
 	var outsider: Dictionary = {}
 	for p: Dictionary in data.parties:
 		if not p.id in data.coalition:
 			outsider = p
 	if not outsider.is_empty():
-		_check(not pol.appoint(w, post, outsider.id, outsider.members[0].id).ok, "fora da coalizão não vira ministro")
+		_check(not pol.appoint(w, post, outsider.id, outsider.members[0].id).ok, "someone outside the coalition does not become a minister")
 	var me := pol.player_politician(w)
-	_check(not pol.appoint(w, post, pol.player_party(w).id, me.id).ok, "o jogador não é o próprio ministro")
+	_check(not pol.appoint(w, post, pol.player_party(w).id, me.id).ok, "the player is not their own minister")
 	var other_post: Dictionary = data.cabinet.foreign
-	_check(not pol.appoint(w, post, other_post.party, other_post.member).ok, "ninguém acumula pastas")
+	_check(not pol.appoint(w, post, other_post.party, other_post.member).ok, "nobody holds several portfolios")
 	var best: Dictionary = options[0]
 	_check(pol.appoint(w, post, best.party.id, best.member.id).ok and pol.minister(w, post).id == best.member.id, "nomeia")
 	pol.dismiss_minister(w, post)
 	_check(pol.minister(w, post).is_empty() and is_equal_approx(pol.minister_competence(w, post), 0.3), "pasta vaga funciona mal")
-	# Efeito: comparar com bons e ruins, partindo do mesmo estado.
+	# Effect: compare with good and bad ones, starting from the same state.
 	var good := _with_cabinet(0.95)
 	var bad := _with_cabinet(0.1)
-	_check(good.cred > bad.cred and good.stability > bad.stability and good.approval > bad.approval, "competência muda o país (cred %.3f/%.3f, estab %.3f/%.3f, aprov %.3f/%.3f)" % [good.cred, bad.cred, good.stability, bad.stability, good.approval, bad.approval])
-	# Partido que sai leva os ministros.
+	_check(good.cred > bad.cred and good.stability > bad.stability and good.approval > bad.approval, "competence changes the country (cred %.3f/%.3f, stab %.3f/%.3f, appr %.3f/%.3f)" % [good.cred, bad.cred, good.stability, bad.stability, good.approval, bad.approval])
+	# A party that leaves takes the ministers along.
 	var w2 := _world()
 	var d2 := w2.politics.data_of("BRA")
 	var partner: int = -1
 	for id: int in d2.coalition:
 		if id != int(d2.ruling):
 			partner = id
-	_check(partner >= 0, "caso de teste: há aliado na coalizão")
+	_check(partner >= 0, "test case: there is an ally in the coalition")
 	_check(w2.politics.dismiss(w2, partner).ok, "tira aliado")
 	var left := 0
 	for e: Dictionary in d2.cabinet.values():
 		if int(e.party) == partner:
 			left += 1
-	_check(left == 0, "aliado que sai leva os ministros")
-	# Aliado sem pasta acaba saindo.
+	_check(left == 0, "an ally that leaves takes the ministers along")
+	# An ally with no portfolio ends up leaving.
 	var w3 := _world()
 	var d3 := w3.politics.data_of("BRA")
 	for post3: String in d3.cabinet.keys():
@@ -164,14 +164,14 @@ func _cabinet() -> void:
 	var size0: int = d3.coalition.size()
 	for i in 300:
 		w3.politics.step_month(w3)
-	_check(d3.coalition.size() < size0, "aliado sem ministério abandona o governo")
+	_check(d3.coalition.size() < size0, "an ally with no ministry abandons the government")
 	# Salvar.
 	var w4 := _world()
 	w4.politics.dismiss_minister(w4, "health")
 	var w5 := GameWorld.new()
 	w5.setup(7)
 	w5.load_dict(bytes_to_var(var_to_bytes(w4.to_dict())))
-	_check(w5.politics.minister(w5, "health").is_empty() and not w5.politics.minister(w5, "finance").is_empty(), "save guarda o gabinete")
+	_check(w5.politics.minister(w5, "health").is_empty() and not w5.politics.minister(w5, "finance").is_empty(), "save keeps the cabinet")
 
 
 func _with_cabinet(competence: float) -> Country:
@@ -189,7 +189,7 @@ func _with_cabinet(competence: float) -> Country:
 
 
 func _opposition() -> void:
-	# Perder a eleição.
+	# Losing the election.
 	var w := _world()
 	var ended := {}
 	w.game_ended.connect(func(r): ended.merge(r))
@@ -201,42 +201,42 @@ func _opposition() -> void:
 	c.next_election = w.year_float()
 	var party0: int = w.politics.player_party(w).id
 	w.check_player_politics(c)
-	_check(not w.in_office and not w.over and ended.is_empty(), "perder a eleição não encerra o jogo")
-	_check(w.player == c and w.governed() == null, "continua no país, sem governar")
-	_check(w.politics.player_party(w).id == party0, "continua no próprio partido")
-	_check(w.politics.ruling_party(c.iso).id != party0, "outro partido governa")
+	_check(not w.in_office and not w.over and ended.is_empty(), "losing the election does not end the game")
+	_check(w.player == c and w.governed() == null, "stays in the country, without governing")
+	_check(w.politics.player_party(w).id == party0, "stays in their own party")
+	_check(w.politics.ruling_party(c.iso).id != party0, "another party governs")
 	_check(prompts.size() >= 1 and prompts[-1].title == "Derrotado nas urnas", "avisa a derrota")
-	_check(w.politics.data_of(c.iso).get("cabinet", {}).is_empty(), "gabinete cai com o governo")
-	# Sem poderes de governo.
+	_check(w.politics.data_of(c.iso).get("cabinet", {}).is_empty(), "cabinet falls with the government")
+	# Without government powers.
 	var t: Country = w.by_iso["ARG"]
-	_check(not w.do_action("mission", t).ok, "sem diplomacia")
-	_check(not Dialogue.start(w, t).ok, "sem conversas")
-	_check(not w.politics.vote(w, "education").ok, "sem projetos")
-	_check(not w.politics.set_budget(w, "sp_health", c.sp_health + 0.01).ok, "sem orçamento")
-	_check(not w.politics.appoint(w, "finance", party0, 0).ok, "sem ministros")
-	_check(not w.politics.invite(w, party0).ok, "sem coalizão")
-	# A IA governa: 2 anos adiante, sem decisões pendentes.
+	_check(not w.do_action("mission", t).ok, "no diplomacy")
+	_check(not Dialogue.start(w, t).ok, "no conversations")
+	_check(not w.politics.vote(w, "education").ok, "no projects")
+	_check(not w.politics.set_budget(w, "sp_health", c.sp_health + 0.01).ok, "no budget")
+	_check(not w.politics.appoint(w, "finance", party0, 0).ok, "no ministers")
+	_check(not w.politics.invite(w, party0).ok, "no coalition")
+	# The AI governs: 2 years ahead, with no pending decisions.
 	var tax0 := c.tax_income + c.sp_social + c.sp_defense + c.sp_infra
 	var count0 := prompts.size()
 	c.next_election = 9999.0
 	for i in 365 * 2:
 		w.tick_day()
-	_check(prompts.size() == count0, "a IA decide sozinha, sem janelas ao jogador")
-	_check(c.tax_income + c.sp_social + c.sp_defense + c.sp_infra != tax0, "a IA passa a ajustar impostos e gastos do país")
-	# Ações da oposição.
+	_check(prompts.size() == count0, "the AI decides alone, with no windows for the player")
+	_check(c.tax_income + c.sp_social + c.sp_defense + c.sp_infra != tax0, "the AI starts adjusting the country's taxes and spending")
+	# Opposition actions.
 	var approval0 := c.approval
 	var support0 := float(w.politics.player_party(w).support)
 	w.politics.player_party(w).funds = 1000.0
-	_check(w.politics.criticize(w).ok and c.approval < approval0 and float(w.politics.player_party(w).support) > support0, "criticar derruba o governo e ajuda o partido")
+	_check(w.politics.criticize(w).ok and c.approval < approval0 and float(w.politics.player_party(w).support) > support0, "criticizing brings down the government and helps the party")
 	support0 = float(w.politics.player_party(w).support)
-	_check(w.politics.campaign(w).ok and float(w.politics.player_party(w).support) > support0, "campanha faz o partido crescer")
+	_check(w.politics.campaign(w).ok and float(w.politics.player_party(w).support) > support0, "campaigning makes the party grow")
 	var mine := w.politics.player_party(w)
 	mine.funds = 0.0
-	_check(not w.politics.criticize(w).ok, "sem dinheiro no fundo não age")
+	_check(not w.politics.criticize(w).ok, "with no money in the fund it does not act")
 	mine.funds = 1000.0
 	var switch := w.politics.join_party(w, _other_party(w, party0), false)
-	_check(switch.ok and not w.in_office, "pode trocar de partido na oposição, sem voltar ao governo")
-	# Moção de censura.
+	_check(switch.ok and not w.in_office, "can switch party in opposition, without returning to government")
+	# Motion of no confidence.
 	var w2 := _world()
 	var c2 := w2.player
 	c2.dem = 7.0
@@ -249,7 +249,7 @@ func _opposition() -> void:
 	rule.seats = int(d2.seats_total)
 	d2.coalition = [rule.id]
 	var fail := w2.politics.censure(w2)
-	_check(fail.ok and not fail.passed, "governo com maioria resiste à censura: " + str(fail.msg))
+	_check(fail.ok and not fail.passed, "government with a majority resists the censure:" + str(fail.msg))
 	rule.seats = 10
 	var my2 := w2.politics.player_party(w2)
 	my2.seats = int(d2.seats_total) - 10
@@ -258,10 +258,10 @@ func _opposition() -> void:
 	c2.approval = 0.05
 	c2.next_election = 9999.0
 	var pass_ := w2.politics.censure(w2)
-	_check(pass_.ok and pass_.passed, "maioria derruba o governo: " + str(pass_.msg))
-	_check(c2.next_election > w2.year_float(), "censura convoca eleição")
-	_check(w2.in_office, "com o governo impopular, a oposição assume")
-	# Eleição da oposição: aprovação do governo decide. O partido do jogador começa como o maior rival.
+	_check(pass_.ok and pass_.passed, "majority brings down the government:" + str(pass_.msg))
+	_check(c2.next_election > w2.year_float(), "censure calls an election")
+	_check(w2.in_office, "with an unpopular government, the opposition takes over")
+	# Opposition election: the government's approval decides. The player's party starts as the largest rival.
 	var result := {"baixa": 0, "alta": 0}
 	for i in 20:
 		for key: String in result:
@@ -279,8 +279,8 @@ func _opposition() -> void:
 			if e.in_office:
 				result[key] += 1
 	print("voltas ao poder em 20 eleições: ", result)
-	_check(result.baixa >= 15, "governo impopular facilita a volta")
-	_check(result.alta <= 3, "governo popular dificulta a volta")
+	_check(result.baixa >= 15, "an unpopular government makes the comeback easier")
+	_check(result.alta <= 3, "a popular government makes the comeback harder")
 	var back := _world("DEU", 300)
 	back.player.dem = 7.0
 	back.enter_opposition("Teste.", "Teste")
@@ -292,9 +292,9 @@ func _opposition() -> void:
 	back.player.next_election = back.year_float()
 	back.check_player_politics(back.player)
 	_check(back.in_office and back.governed() == back.player, "vence e volta a governar")
-	_check(back.politics.ruling_party("DEU").id == back.politics.player_party(back).id, "o partido do jogador governa")
-	_check(not back.politics.minister(back, "finance").is_empty(), "volta com gabinete")
-	_check(back.do_action("mission", back.by_iso["FRA"]).ok, "volta com diplomacia")
+	_check(back.politics.ruling_party("DEU").id == back.politics.player_party(back).id, "the player's party governs")
+	_check(not back.politics.minister(back, "finance").is_empty(), "returns with a cabinet")
+	_check(back.do_action("mission", back.by_iso["FRA"]).ok, "returns with diplomacy")
 	# Save.
 	var w3 := _world()
 	w3.player.dem = 7.0
@@ -302,8 +302,8 @@ func _opposition() -> void:
 	var w4 := GameWorld.new()
 	w4.setup(7)
 	w4.load_dict(bytes_to_var(var_to_bytes(w3.to_dict())))
-	_check(not w4.in_office, "save guarda a oposição")
-	# País anexado na oposição encerra.
+	_check(not w4.in_office, "save keeps the opposition")
+	# Annexed country in opposition ends it.
 	var w5 := _world()
 	var ended5 := {}
 	w5.game_ended.connect(func(r): ended5.merge(r))
@@ -313,20 +313,20 @@ func _opposition() -> void:
 	w5.diplomacy.annex(w5.by_iso["ARG"], w5.player, w5)
 	for i in 40:
 		w5.tick_day()
-	_check(ended5.get("reason") == "golpe", "país anexado encerra a carreira")
+	_check(ended5.get("reason") == "golpe", "annexed country ends the career")
 	w5.assume_new_character(Character.random(w5.rng))
-	_check(w5.player == w5.by_iso["ARG"] and not w5.over, "o novo personagem continua em quem anexou")
-	# Fim de jogo sem ser eleição continua valendo.
+	_check(w5.player == w5.by_iso["ARG"] and not w5.over, "the new character continues in whoever annexed")
+	# Game over other than an election still applies.
 	var w6 := _world()
 	var ended6 := {}
 	w6.game_ended.connect(func(r): ended6.merge(r))
 	w6.player_lost_war(w6.by_iso["ARG"])
-	_check(ended6.is_empty() and not w6.over and not w6.in_office, "derrota militar em democracia vira oposição")
+	_check(ended6.is_empty() and not w6.over and not w6.in_office, "military defeat in a democracy becomes opposition")
 	var w7 := _world("CHN")
 	var ended7 := {}
 	w7.game_ended.connect(func(r): ended7.merge(r))
 	w7.player_lost_war(w7.by_iso["USA"])
-	_check(ended7.get("reason") == "golpe" and w7.over, "em regime fechado, derrota militar derruba o líder")
+	_check(ended7.get("reason") == "golpe" and w7.over, "in a closed regime, military defeat brings down the leader")
 
 
 func _other_party(w: GameWorld, not_id: int) -> int:
@@ -343,13 +343,13 @@ func _dialogue() -> void:
 	var t: Country = w.by_iso["ARG"]
 	var open := Dialogue.start(w, t)
 	_check(open.ok and String(open.greeting) != "" and true, "abrir conversa: " + str(open.get("greeting", "")))
-	_check(not Dialogue.start(w, t).ok, "uma conversa por mês com cada líder")
-	_check(Dialogue.start(w, w.by_iso["CHL"]).ok, "outro líder pode conversar")
-	_check(not Dialogue.start(w, me).ok, "não conversa consigo mesmo")
-	# Relação alta e baixa decidem.
+	_check(not Dialogue.start(w, t).ok, "one conversation a month with each leader")
+	_check(Dialogue.start(w, w.by_iso["CHL"]).ok, "another leader can talk")
+	_check(not Dialogue.start(w, me).ok, "does not talk to themselves")
+	# High and low relation decide.
 	d.set_relation(me.idx, t.idx, 90.0)
 	var ids := Dialogue.options(w, t).map(func(o): return o.id)
-	_check("praise" in ids and "protest" in ids and "threat" in ids and "alliance" in ids and "aid" in ids, "falas de paz: " + str(ids))
+	_check("praise" in ids and "protest" in ids and "threat" in ids and "alliance" in ids and "aid" in ids, "peace lines:" + str(ids))
 	var yes := Dialogue.choose(w, t, "alliance")
 	_check(yes.accepted and not w.treaties.between(me, t, "defense").is_empty(), "amigo aceita o pacto: " + str(yes.reply))
 	d.sign_alliance(me, t, w)
@@ -359,29 +359,29 @@ func _dialogue() -> void:
 	var no := Dialogue.choose(w2, t2, "alliance")
 	_check(not no.accepted and not w2.diplomacy.allied(w2.player.idx, t2.idx), "hostil recusa o pacto: " + str(no.reply))
 	var rel0: float = w2.diplomacy.relation(w2.player.idx, t2.idx)
-	_check(Dialogue.choose(w2, t2, "praise").accepted and w2.diplomacy.relation(w2.player.idx, t2.idx) > rel0, "elogio melhora a relação")
-	# Bússola: mesmas relações, ideias diferentes.
+	_check(Dialogue.choose(w2, t2, "praise").accepted and w2.diplomacy.relation(w2.player.idx, t2.idx) > rel0, "praise improves the relation")
+	# Compass: same relations, different ideas.
 	var near := _affinity_world(true)
 	var far := _affinity_world(false)
 	_check(Dialogue.affinity(near, near.by_iso["ARG"]) > Dialogue.affinity(far, far.by_iso["ARG"]), "ideias parecidas aproximam")
-	_check(Dialogue.goodwill(near, near.by_iso["ARG"]) > Dialogue.goodwill(far, far.by_iso["ARG"]), "afinidade pesa na boa vontade")
-	# Ameaça: fraco cede, forte reage.
+	_check(Dialogue.goodwill(near, near.by_iso["ARG"]) > Dialogue.goodwill(far, far.by_iso["ARG"]), "affinity weighs on goodwill")
+	# Threat: the weak yields, the strong reacts.
 	var w3 := _world("USA")
 	var weak: Country = w3.by_iso["URY"]
 	var strong: Country = w3.by_iso["CHN"]
 	strong.troops *= 3.0
 	strong.mil_stock *= 3.0
-	_check(Dialogue.choose(w3, weak, "threat").accepted, "fraco cede à ameaça")
+	_check(Dialogue.choose(w3, weak, "threat").accepted, "the weak yields to the threat")
 	var r0: float = w3.diplomacy.relation(w3.player.idx, strong.idx)
 	var mine0 := w3.player.mil_stock
 	w3.player.mil_stock = minf(mine0, strong.mil_stock)
-	_check(not Dialogue.choose(w3, strong, "threat").accepted and w3.diplomacy.relation(w3.player.idx, strong.idx) < r0, "forte reage à ameaça")
-	# Em guerra as falas mudam.
+	_check(not Dialogue.choose(w3, strong, "threat").accepted and w3.diplomacy.relation(w3.player.idx, strong.idx) < r0, "the strong reacts to the threat")
+	# At war the lines change.
 	var w4 := _world()
 	var t4: Country = w4.by_iso["ARG"]
 	w4.diplomacy.declare_war(w4.player, t4, w4)
 	var war_ids := Dialogue.options(w4, t4).map(func(o): return o.id)
-	_check("peace" in war_ids and not "alliance" in war_ids and not "fta" in war_ids, "em guerra, só paz e protesto: " + str(war_ids))
+	_check("peace" in war_ids and not "alliance" in war_ids and not "fta" in war_ids, "at war, only peace and protest:" + str(war_ids))
 	# Chanceler.
 	var bad_c := _world()
 	var good_c := _world()
@@ -397,7 +397,7 @@ func _dialogue() -> void:
 	var w6 := GameWorld.new()
 	w6.setup(7)
 	w6.load_dict(bytes_to_var(var_to_bytes(w5.to_dict())))
-	_check(Dialogue.wait_months(w6, w6.by_iso["ARG"]) > 0, "save guarda a espera")
+	_check(Dialogue.wait_months(w6, w6.by_iso["ARG"]) > 0, "save keeps the wait")
 
 
 func _affinity_world(near: bool) -> GameWorld:
@@ -410,7 +410,7 @@ func _affinity_world(near: bool) -> GameWorld:
 
 
 func _no_time_limit() -> void:
-	# Passa do antigo limite de 2060 sem encerrar o jogo.
+	# Goes past the old 2060 limit without ending the game.
 	var w := _world()
 	var ended := {}
 	w.game_ended.connect(func(r): ended.merge(r))
@@ -420,4 +420,4 @@ func _no_time_limit() -> void:
 	for i in 40:
 		w.player.next_election = 9999.0
 		w.tick_day()
-	_check(w.year == 2060 and ended.is_empty() and not w.over, "2060 não encerra o jogo: " + w.date_string())
+	_check(w.year == 2060 and ended.is_empty() and not w.over, "2060 does not end the game:" + w.date_string())

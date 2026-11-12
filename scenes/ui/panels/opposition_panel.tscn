@@ -3,14 +3,14 @@
 [ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="1_theme"]
 [ext_resource type="Script" path="res://scripts/ui/opposition_panel.gd" id="2_script"]
 
-[node name="oposicao" type="VBoxContainer"]
+[node name="opposition" type="VBoxContainer"]
 size_flags_horizontal = 3
 mouse_filter = 2
 theme = ExtResource("1_theme")
 theme_override_constants/separation = 6
 script = ExtResource("2_script")
 
-[node name="OPOSICAO" type="Label" parent="."]
+[node name="Opposition" type="Label" parent="."]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_constants/line_spacing = 0
@@ -49,20 +49,20 @@ theme_override_font_sizes/font_size = 13
 text = "—"
 autowrap_mode = 3
 
-[node name="Separador1" type="ColorRect" parent="."]
+[node name="Separator1" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(0, 1)
 layout_mode = 2
 mouse_filter = 2
 color = Color(0.15294118, 0.2509804, 0.30980393, 1)
 
-[node name="DESEMPENHODOGOVERNO" type="Label" parent="."]
+[node name="GovernmentPerformanceHeading" type="Label" parent="."]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_constants/line_spacing = 0
 theme_override_font_sizes/font_size = 11
 text = "DESEMPENHO DO GOVERNO"
 
-[node name="DicaDesempenho" type="Label" parent="."]
+[node name="PerformanceHint" type="Label" parent="."]
 layout_mode = 2
 custom_minimum_size = Vector2(60, 0)
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
@@ -70,124 +70,124 @@ theme_override_font_sizes/font_size = 12
 text = "Cada número ruim do governo é munição para a oposição."
 autowrap_mode = 3
 
-[node name="Grade" type="GridContainer" parent="."]
+[node name="Grid" type="GridContainer" parent="."]
 layout_mode = 2
 theme_override_constants/h_separation = 8
 theme_override_constants/v_separation = 4
 columns = 2
 
-[node name="n_approval" type="Label" parent="Grade"]
+[node name="n_approval" type="Label" parent="Grid"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_font_sizes/font_size = 13
 text = "Aprovação do governo"
 
-[node name="v_approval" type="Label" parent="Grade"]
+[node name="v_approval" type="Label" parent="Grid"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 14
 text = "—"
 horizontal_alignment = 2
 
-[node name="n_growth" type="Label" parent="Grade"]
+[node name="n_growth" type="Label" parent="Grid"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_font_sizes/font_size = 13
 text = "Crescimento"
 
-[node name="v_growth" type="Label" parent="Grade"]
+[node name="v_growth" type="Label" parent="Grid"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 14
 text = "—"
 horizontal_alignment = 2
 
-[node name="n_infl" type="Label" parent="Grade"]
+[node name="n_infl" type="Label" parent="Grid"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_font_sizes/font_size = 13
 text = "Inflação"
 
-[node name="v_infl" type="Label" parent="Grade"]
+[node name="v_infl" type="Label" parent="Grid"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 14
 text = "—"
 horizontal_alignment = 2
 
-[node name="n_unemp" type="Label" parent="Grade"]
+[node name="n_unemp" type="Label" parent="Grid"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_font_sizes/font_size = 13
 text = "Desemprego"
 
-[node name="v_unemp" type="Label" parent="Grade"]
+[node name="v_unemp" type="Label" parent="Grid"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 14
 text = "—"
 horizontal_alignment = 2
 
-[node name="n_debt" type="Label" parent="Grade"]
+[node name="n_debt" type="Label" parent="Grid"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_font_sizes/font_size = 13
 text = "Dívida/PIB"
 
-[node name="v_debt" type="Label" parent="Grade"]
+[node name="v_debt" type="Label" parent="Grid"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 14
 text = "—"
 horizontal_alignment = 2
 
-[node name="n_balance" type="Label" parent="Grade"]
+[node name="n_balance" type="Label" parent="Grid"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_font_sizes/font_size = 13
 text = "Resultado fiscal"
 
-[node name="v_balance" type="Label" parent="Grade"]
+[node name="v_balance" type="Label" parent="Grid"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 14
 text = "—"
 horizontal_alignment = 2
 
-[node name="n_rating" type="Label" parent="Grade"]
+[node name="n_rating" type="Label" parent="Grid"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_font_sizes/font_size = 13
 text = "Nota de crédito"
 
-[node name="v_rating" type="Label" parent="Grade"]
+[node name="v_rating" type="Label" parent="Grid"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 14
 text = "—"
 horizontal_alignment = 2
 
-[node name="Separador2" type="ColorRect" parent="."]
+[node name="Separator2" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(0, 1)
 layout_mode = 2
 mouse_filter = 2
 color = Color(0.15294118, 0.2509804, 0.30980393, 1)
 
-[node name="ACOES" type="Label" parent="."]
+[node name="Actions" type="Label" parent="."]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_constants/line_spacing = 0
 theme_override_font_sizes/font_size = 11
 text = "O QUE FAZER"
 
-[node name="DicaAcoes" type="Label" parent="."]
+[node name="ActionsHint" type="Label" parent="."]
 layout_mode = 2
 custom_minimum_size = Vector2(60, 0)
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)

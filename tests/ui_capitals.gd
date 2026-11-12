@@ -1,6 +1,6 @@
 extends Node
-## Roteiro das capitais com cliques reais no mapa e nos botões da aba Divisões.
-## Uso: godot --path . -- --ui-capitals --shots=/caminho/da/pasta
+## Capitals script with real clicks on the map and on the Divisions tab buttons.
+## Usage: godot --path . -- --ui-capitals --shots=/path/to/folder
 
 var main: Node
 var out := "user://shots"
@@ -78,16 +78,16 @@ func _process(delta: float) -> void:
 			hud._desk.current_tab = 0
 		2:
 			_shot("k1_mundo")
-			_check(hud._dyn.o_capital.text == "Brasília", "painel mostra a capital do país")
+			_check(hud._dyn.o_capital.text == "Brasília", "panel shows the country's capital")
 			map._camera.position = s.units[_state(s, "São Paulo")].center
 			map._camera.zoom = Vector2.ONE * 3.2
 			hud._desk.current_tab = hud._divisions_tab
 		3:
 			_shot("k2_estados")
-			_check(_find(panel._detail_box, "Brasília") != null, "aba mostra a capital do país")
-			# Duplo nível: estado e depois o município sob o cursor.
+			_check(_find(panel._detail_box, "Brasília") != null, "tab shows the country's capital")
+			# Double level: state and then the municipality under the cursor.
 			var at: Vector2 = map.get_canvas_transform() * (s.units[_state(s, "São Paulo")].center as Vector2)
-			# As janelas abrem no centro: tira de cima do ponto clicado no mapa as que o cobrem.
+			# Windows open in the center: moves out of the way those that cover the point clicked on the map.
 			for i in hud._desk.open_windows():
 				var win: FloatWindow = hud._desk.window(i)
 				if win.get_global_rect().has_point(at):
@@ -97,22 +97,22 @@ func _process(delta: float) -> void:
 		4:
 			var mun: int = panel.selected_unit
 			var state: int = s.chain_of(mun)[0]
-			_check(s.units[mun].parent == state and s.units[state].name == "São Paulo", "município selecionado: " + String(s.units[mun].name))
-			_check(s.capital_of(state) != mun, "ainda não é a capital")
+			_check(s.units[mun].parent == state and s.units[state].name == "São Paulo", "selected municipality:" + String(s.units[mun].name))
+			_check(s.capital_of(state) != mun, "is not yet the capital")
 			_shot("k3_controles")
 			_click(_find(panel._detail_box, "Tornar capital de São Paulo").get_global_rect().get_center())
 		5:
 			var mun: int = panel.selected_unit
 			var state: int = s.chain_of(mun)[0]
-			_check(s.capital_of(state) == mun, "botão torna capital do estado: " + panel._status.text)
-			_check(_find(panel._detail_box, "Capital de São Paulo: remover") != null, "botão vira remover")
+			_check(s.capital_of(state) == mun, "button makes it the state's capital:" + panel._status.text)
+			_check(_find(panel._detail_box, "Capital de São Paulo: remover") != null, "button becomes remove")
 			_click(_find(panel._detail_box, "Tornar capital de Brasil").get_global_rect().get_center())
 		6:
 			var mun: int = panel.selected_unit
-			_check(s.capital_of("BRA") == mun, "botão torna capital do país")
+			_check(s.capital_of("BRA") == mun, "button makes it the country's capital")
 			main.map.select(w.player)
 			hud.show_country(w.player)
-			_check(hud._dossier_dyn.capital.text == s.units[mun].name, "dossiê mostra a nova capital: " + hud._dossier_dyn.capital.text)
+			_check(hud._dossier_dyn.capital.text == s.units[mun].name, "dossier shows the new capital:" + hud._dossier_dyn.capital.text)
 			main.map.select(null)
 			hud.show_country(null)
 			_shot("k4_nova_capital")
@@ -121,27 +121,27 @@ func _process(delta: float) -> void:
 			move.global_position = move.position
 			get_viewport().push_input(move)
 		7:
-			_check(hud._hover_label.text.contains("capital de Brasil"), "hover informa a função: " + hud._hover_label.text)
+			_check(hud._hover_label.text.contains("capital de Brasil"), "hover reports the role:" + hud._hover_label.text)
 			main._save_game()
 			hud.set_meta("capital", s.capital_of("BRA"))
 		8:
 			main._load_game()
 		9:
-			_check(Game.world.subdivisions.capital_of("BRA") == int(hud.get_meta("capital")), "carregar mantém a capital escolhida")
+			_check(Game.world.subdivisions.capital_of("BRA") == int(hud.get_meta("capital")), "loading keeps the chosen capital")
 			hud._desk.current_tab = hud._divisions_tab
 			panel.select_unit(int(hud.get_meta("capital")))
 		10:
 			_click(_find(panel._detail_box, "Capital de Brasil: remover").get_global_rect().get_center())
 		11:
 			var s2: Subdivisions = Game.world.subdivisions
-			_check(s2.capital_of("BRA") == -1, "botão remove a capital do país")
+			_check(s2.capital_of("BRA") == -1, "button removes the country's capital")
 			panel.select_unit(-1)
 		12:
-			_check(_find(panel._detail_box, "Brasília") == null, "aba indica país sem capital")
+			_check(_find(panel._detail_box, "Brasília") == null, "tab indicates a country with no capital")
 			_shot("k5_sem_capital")
 			main.map.select(Game.world.player)
 			hud.show_country(Game.world.player)
-			_check(hud._dossier_dyn.capital.text == "—", "dossiê indica país sem capital")
+			_check(hud._dossier_dyn.capital.text == "—", "dossier indicates a country with no capital")
 			main._set_speed(3)
 			wait = 2.0
 		13:

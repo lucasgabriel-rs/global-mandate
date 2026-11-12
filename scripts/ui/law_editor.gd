@@ -49,12 +49,12 @@ func setup(owner_main: Node, target: Dictionary, version := -1) -> void:
 	_build_library()
 	_fill_document()
 	_connect()
-	var emenda: bool = norm.type == "emenda"
+	var is_amendment: bool = norm.type == "emenda"
 	(%poll as PollBox).setup(world, func(): return {} if not last_compile.get("ok", false) else _poll_target())
 	(%read_only_note as Control).visible = read_only
 	for button: Control in [%present, %delete_draft, %save_close]:
-		button.visible = not read_only and not emenda
-	if emenda:
+		button.visible = not read_only and not is_amendment
+	if is_amendment:
 		(%save_close as Control).visible = not read_only
 		(%save_close as Button).text = tr("Voltar à emenda")
 	refresh()
@@ -80,7 +80,7 @@ func _connect() -> void:
 		norm.organ = Legislation.NORM_TYPES[norm.type].organ
 		refresh())
 	%doc_name.text_changed.connect(func(t): norm.title = t)
-	%doc_ementa.text_changed.connect(func(): norm.ementa = %doc_ementa.text)
+	%doc_summary.text_changed.connect(func(): norm.ementa = %doc_summary.text)
 	%doc_vacatio.text_changed.connect(func(t: String): norm.vacatio = maxi(t.to_int(), 0))
 	%doc_expires.text_changed.connect(func(t: String): norm.expires = t.strip_edges())
 
@@ -128,12 +128,12 @@ func _fill_document() -> void:
 				_doc_type.select(_doc_type.item_count - 1)
 	# Titles of the codes and templates stay in Portuguese in the norm: the field shows the translation.
 	(%doc_name as LineEdit).text = tr(norm.title)
-	(%doc_ementa as TextEdit).text = tr(norm.ementa)
+	(%doc_summary as TextEdit).text = tr(norm.ementa)
 	(%doc_vacatio as LineEdit).text = str(int(norm.get("vacatio", 0)))
 	(%doc_expires as LineEdit).text = String(norm.get("expires", ""))
 	for field: Control in [%doc_name, %doc_vacatio, %doc_expires]:
 		(field as LineEdit).editable = not read_only
-	(%doc_ementa as TextEdit).editable = not read_only
+	(%doc_summary as TextEdit).editable = not read_only
 	_doc_type.disabled = read_only or norm.type == "emenda" or int(norm.get("amends", -1)) >= 0 or not norm.get("revokes", {}).is_empty()
 
 
@@ -298,7 +298,7 @@ func _field_row(block: Dictionary, key: String, spec: Dictionary) -> Control:
 	var edit: LineEdit = row.get_node("%edit")
 	var option: OptionButton = row.get_node("%option")
 	var check: CheckBox = row.get_node("%check")
-	var plugged: Control = row.get_node("%Encaixe")
+	var plugged: Control = row.get_node("%Fit")
 	edit.visible = false
 	option.visible = false
 	check.visible = false

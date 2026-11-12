@@ -22,19 +22,19 @@ corner_radius_bottom_left = 3
 theme = ExtResource("1_theme")
 theme_override_styles/panel = SubResource("StyleBoxFlat_form")
 
-[node name="Coluna" type="VBoxContainer" parent="."]
+[node name="Column" type="VBoxContainer" parent="."]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 8
 
-[node name="form_title" type="Label" parent="Coluna"]
+[node name="form_title" type="Label" parent="Column"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.9490196, 0.7019608, 0.23921569, 1)
 theme_override_font_sizes/font_size = 15
 text = "Ampliar"
 
-[node name="form_body" type="Label" parent="Coluna"]
+[node name="form_body" type="Label" parent="Column"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
@@ -42,19 +42,19 @@ theme_override_font_sizes/font_size = 12
 text = "Texto do formulário"
 autowrap_mode = 3
 
-[node name="CityLine" type="HBoxContainer" parent="Coluna"]
+[node name="CityLine" type="HBoxContainer" parent="Column"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="CityLabel" type="Label" parent="Coluna/CityLine"]
+[node name="CityLabel" type="Label" parent="Column/CityLine"]
 custom_minimum_size = Vector2(70, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_font_sizes/font_size = 12
 text = "Onde"
 
-[node name="city_pick" type="OptionButton" parent="Coluna/CityLine"]
+[node name="city_pick" type="OptionButton" parent="Column/CityLine"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -62,19 +62,19 @@ focus_mode = 0
 theme_override_font_sizes/font_size = 12
 fit_to_longest_item = false
 
-[node name="SizeLine" type="HBoxContainer" parent="Coluna"]
+[node name="SizeLine" type="HBoxContainer" parent="Column"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="SizeLabel" type="Label" parent="Coluna/SizeLine"]
+[node name="SizeLabel" type="Label" parent="Column/SizeLine"]
 custom_minimum_size = Vector2(70, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_font_sizes/font_size = 12
 text = "Tamanho"
 
-[node name="size_pick" type="OptionButton" parent="Coluna/SizeLine"]
+[node name="size_pick" type="OptionButton" parent="Column/SizeLine"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -82,7 +82,7 @@ focus_mode = 0
 theme_override_font_sizes/font_size = 12
 fit_to_longest_item = false
 
-[node name="quote" type="Label" parent="Coluna"]
+[node name="quote" type="Label" parent="Column"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
@@ -91,12 +91,12 @@ theme_override_font_sizes/font_size = 13
 text = "US$ 1,5 bi em 2,5 anos"
 autowrap_mode = 3
 
-[node name="Botoes" type="HBoxContainer" parent="Coluna"]
+[node name="Buttons" type="HBoxContainer" parent="Column"]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 8
 
-[node name="form_cancel" type="Button" parent="Coluna/Botoes"]
+[node name="form_cancel" type="Button" parent="Column/Buttons"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
@@ -105,7 +105,7 @@ focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "Cancelar"
 
-[node name="form_confirm" type="Button" parent="Coluna/Botoes"]
+[node name="form_confirm" type="Button" parent="Column/Buttons"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2

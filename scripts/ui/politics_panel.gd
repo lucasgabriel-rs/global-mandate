@@ -30,13 +30,13 @@ var _signature := ""
 
 
 func _ready() -> void:
-	%SuasIdeiasTrocarOuFundar.pressed.connect(party_requested.emit)
-	%CentroLegislativo.pressed.connect(legislation_requested.emit)
-	%CaixaDois.pressed.connect(corruption_requested.emit)
-	%UltimaEleicao.pressed.connect(election_requested.emit)
-	_connect_opposition(%CriticarOGoverno6, func(): return world.politics.criticize(world))
-	_connect_opposition(%FazerCampanha10, func(): return world.politics.campaign(world))
-	_connect_opposition(%MocaoDeCensura15, func(): return world.politics.censure(world))
+	%SwapOrFoundParty.pressed.connect(party_requested.emit)
+	%LegislativeCenter.pressed.connect(legislation_requested.emit)
+	%SlushFund.pressed.connect(corruption_requested.emit)
+	%LastElection.pressed.connect(election_requested.emit)
+	_connect_opposition(%CriticizeGovernment6, func(): return world.politics.criticize(world))
+	_connect_opposition(%RunCampaign10, func(): return world.politics.campaign(world))
+	_connect_opposition(%CensureMotion15, func(): return world.politics.censure(world))
 	for b: Dictionary in Politics.BILLS:
 		_bill_pick.add_item(b.name)
 		_bill_pick.set_item_metadata(_bill_pick.item_count - 1, b.id)
@@ -85,11 +85,11 @@ func _rebuild() -> void:
 	_fill_houses(data)
 	var fund := politics.party_fund(world)
 	_fund.text = tr("Fundo de %s: %s  ·  entra %s por mês") % [mine.short, UiKit.millions(fund), UiKit.millions(politics.fund_income(world, mine))]
-	(%CriticarOGoverno6 as Button).text = tr("Criticar o governo (%s)") % UiKit.millions(politics.fund_price(world, "criticize"))
-	(%FazerCampanha10 as Button).text = tr("Fazer campanha (%s)") % UiKit.millions(politics.fund_price(world, "campaign"))
-	(%MocaoDeCensura15 as Button).text = tr("Moção de censura (%s)") % UiKit.millions(politics.fund_price(world, "censure"))
+	(%CriticizeGovernment6 as Button).text = tr("Criticar o governo (%s)") % UiKit.millions(politics.fund_price(world, "criticize"))
+	(%RunCampaign10 as Button).text = tr("Fazer campanha (%s)") % UiKit.millions(politics.fund_price(world, "campaign"))
+	(%CensureMotion15 as Button).text = tr("Moção de censura (%s)") % UiKit.millions(politics.fund_price(world, "censure"))
 	(%poll as PollBox).refresh()
-	(%UltimaEleicao as Button).disabled = not data.has("last_election")
+	(%LastElection as Button).disabled = not data.has("last_election")
 	var dots := []
 	for p: Dictionary in data.parties:
 		dots.append({"econ": p.econ, "social": p.social, "color": p.color, "big": true})

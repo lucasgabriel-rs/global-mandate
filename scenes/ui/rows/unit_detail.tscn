@@ -7,13 +7,13 @@ mouse_filter = 2
 theme = ExtResource("1_0ua32")
 theme_override_constants/separation = 5
 
-[node name="Separador" type="ColorRect" parent="." unique_id=1004389630]
+[node name="Separator" type="ColorRect" parent="." unique_id=1004389630]
 custom_minimum_size = Vector2(0, 1)
 layout_mode = 2
 mouse_filter = 2
 color = Color(0.15294118, 0.2509804, 0.30980393, 1)
 
-[node name="UNIDADESELECIONADA" type="Label" parent="." unique_id=983524319]
+[node name="SelectedUnitHeading" type="Label" parent="." unique_id=983524319]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_constants/line_spacing = 0
@@ -33,18 +33,18 @@ unique_name_in_owner = true
 layout_mode = 2
 max_length = 40
 
-[node name="Linha" type="HBoxContainer" parent="." unique_id=286167440]
+[node name="Row" type="HBoxContainer" parent="." unique_id=286167440]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 6
 
-[node name="Tipo" type="Label" parent="Linha" unique_id=822971234]
+[node name="Type" type="Label" parent="Row" unique_id=822971234]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_font_sizes/font_size = 13
 text = "Tipo"
 
-[node name="kind" type="OptionButton" parent="Linha" unique_id=518797541]
+[node name="kind" type="OptionButton" parent="Row" unique_id=518797541]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -80,12 +80,12 @@ layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 5
 
-[node name="Linha2" type="HBoxContainer" parent="." unique_id=848717452]
+[node name="Row2" type="HBoxContainer" parent="." unique_id=848717452]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 4
 
-[node name="focus" type="Button" parent="Linha2" unique_id=1371436896]
+[node name="focus" type="Button" parent="Row2" unique_id=1371436896]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -93,7 +93,7 @@ focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "Centralizar"
 
-[node name="delete" type="Button" parent="Linha2" unique_id=1505038981]
+[node name="delete" type="Button" parent="Row2" unique_id=1505038981]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -102,12 +102,12 @@ mouse_default_cursor_shape = 2
 theme_override_colors/font_color = Color(0.9254902, 0.3529412, 0.2627451, 1)
 text = "Apagar"
 
-[node name="Linha3" type="HBoxContainer" parent="." unique_id=687497429]
+[node name="Row3" type="HBoxContainer" parent="." unique_id=687497429]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 4
 
-[node name="merge" type="Button" parent="Linha3" unique_id=1049577971]
+[node name="merge" type="Button" parent="Row3" unique_id=1049577971]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -116,7 +116,7 @@ focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "Fundir com..."
 
-[node name="split" type="Button" parent="Linha3" unique_id=1446022679]
+[node name="split" type="Button" parent="Row3" unique_id=1446022679]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3

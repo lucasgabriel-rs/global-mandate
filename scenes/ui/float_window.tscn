@@ -76,23 +76,23 @@ theme = ExtResource("1_theme")
 theme_override_styles/panel = SubResource("Frame")
 script = ExtResource("2_script")
 
-[node name="Moldura" type="VBoxContainer" parent="."]
+[node name="Frame" type="VBoxContainer" parent="."]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="title_bar" type="PanelContainer" parent="Moldura"]
+[node name="title_bar" type="PanelContainer" parent="Frame"]
 unique_name_in_owner = true
 layout_mode = 2
 mouse_default_cursor_shape = 13
 theme_override_styles/panel = SubResource("TitleBar")
 
-[node name="Linha" type="HBoxContainer" parent="Moldura/title_bar"]
+[node name="Row" type="HBoxContainer" parent="Frame/title_bar"]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 8
 
-[node name="close" type="Button" parent="Moldura/title_bar/Linha"]
+[node name="close" type="Button" parent="Frame/title_bar/Row"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(12, 12)
 layout_mode = 2
@@ -104,7 +104,7 @@ theme_override_styles/normal = SubResource("Red")
 theme_override_styles/hover = SubResource("Red_h")
 theme_override_styles/pressed = SubResource("Red_h")
 
-[node name="minimize" type="Button" parent="Moldura/title_bar/Linha"]
+[node name="minimize" type="Button" parent="Frame/title_bar/Row"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(12, 12)
 layout_mode = 2
@@ -116,7 +116,7 @@ theme_override_styles/normal = SubResource("Yellow")
 theme_override_styles/hover = SubResource("Yellow_h")
 theme_override_styles/pressed = SubResource("Yellow_h")
 
-[node name="maximize" type="Button" parent="Moldura/title_bar/Linha"]
+[node name="maximize" type="Button" parent="Frame/title_bar/Row"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(12, 12)
 layout_mode = 2
@@ -128,12 +128,12 @@ theme_override_styles/normal = SubResource("Green")
 theme_override_styles/hover = SubResource("Green_h")
 theme_override_styles/pressed = SubResource("Green_h")
 
-[node name="Espaco" type="Control" parent="Moldura/title_bar/Linha"]
+[node name="Space" type="Control" parent="Frame/title_bar/Row"]
 custom_minimum_size = Vector2(6, 0)
 layout_mode = 2
 mouse_filter = 2
 
-[node name="title_icon" type="TextureRect" parent="Moldura/title_bar/Linha"]
+[node name="title_icon" type="TextureRect" parent="Frame/title_bar/Row"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(18, 18)
 layout_mode = 2
@@ -142,7 +142,7 @@ mouse_filter = 2
 expand_mode = 1
 stretch_mode = 5
 
-[node name="title_label" type="Label" parent="Moldura/title_bar/Linha"]
+[node name="title_label" type="Label" parent="Frame/title_bar/Row"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -151,7 +151,7 @@ theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
 theme_override_font_sizes/font_size = 14
 text = "Janela"
 
-[node name="body" type="MarginContainer" parent="Moldura"]
+[node name="body" type="MarginContainer" parent="Frame"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
@@ -160,16 +160,16 @@ theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 0
 
-[node name="Rodape" type="HBoxContainer" parent="Moldura"]
+[node name="Footer" type="HBoxContainer" parent="Frame"]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="Espaco" type="Control" parent="Moldura/Rodape"]
+[node name="Space" type="Control" parent="Frame/Footer"]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="grip" type="Label" parent="Moldura/Rodape"]
+[node name="grip" type="Label" parent="Frame/Footer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2

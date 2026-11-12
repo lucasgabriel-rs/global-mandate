@@ -30,287 +30,287 @@ anchor_bottom = 0.92
 script = ExtResource("e1")
 theme = ExtResource("e2")
 
-[node name="Coluna" type="VBoxContainer" parent="."]
+[node name="Column" type="VBoxContainer" parent="."]
 theme_override_constants/separation = 8
 
-[node name="Cabeca" type="HBoxContainer" parent="Coluna"]
+[node name="Head" type="HBoxContainer" parent="Column"]
 theme_override_constants/separation = 6
 
-[node name="Titulo" type="Label" parent="Coluna/Cabeca"]
+[node name="Title" type="Label" parent="Column/Head"]
 mouse_filter = 2
 theme_override_font_sizes/font_size = 20
 theme_override_colors/font_color = Color(0.30980393, 0.7019608, 0.8509804, 1)
 text = "Simulador legislativo"
 
-[node name="Espaco" type="Control" parent="Coluna/Cabeca"]
+[node name="Space" type="Control" parent="Column/Head"]
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="Aviso" type="Label" parent="Coluna/Cabeca"]
+[node name="Notice" type="Label" parent="Column/Head"]
 mouse_filter = 2
 theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 text = "Nada aqui muda a partida."
 
-[node name="sim_run" type="Button" parent="Coluna/Cabeca"]
+[node name="sim_run" type="Button" parent="Column/Head"]
 unique_name_in_owner = true
 text = "Simular"
 focus_mode = 0
 mouse_default_cursor_shape = 2
 
-[node name="sim_close" type="Button" parent="Coluna/Cabeca"]
+[node name="sim_close" type="Button" parent="Column/Head"]
 unique_name_in_owner = true
 text = "Fechar"
 focus_mode = 0
 mouse_default_cursor_shape = 2
 
-[node name="Corpo" type="HBoxContainer" parent="Coluna"]
+[node name="Body" type="HBoxContainer" parent="Column"]
 size_flags_vertical = 3
 theme_override_constants/separation = 12
 
-[node name="Rolagem" type="ScrollContainer" parent="Coluna/Corpo"]
+[node name="Scroll" type="ScrollContainer" parent="Column/Body"]
 custom_minimum_size = Vector2(400, 0)
 horizontal_scroll_mode = 0
 
-[node name="Entradas" type="VBoxContainer" parent="Coluna/Corpo/Rolagem"]
+[node name="Inputs" type="VBoxContainer" parent="Column/Body/Scroll"]
 size_flags_horizontal = 3
 theme_override_constants/separation = 5
 
-[node name="EventoTitulo" type="Label" parent="Coluna/Corpo/Rolagem/Entradas"]
+[node name="EventTitle" type="Label" parent="Column/Body/Scroll/Inputs"]
 mouse_filter = 2
 theme_override_font_sizes/font_size = 11
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 text = "EVENTO"
 
-[node name="sim_event" type="OptionButton" parent="Coluna/Corpo/Rolagem/Entradas"]
+[node name="sim_event" type="OptionButton" parent="Column/Body/Scroll/Inputs"]
 unique_name_in_owner = true
 size_flags_horizontal = 3
 focus_mode = 0
 
-[node name="Separador" type="ColorRect" parent="Coluna/Corpo/Rolagem/Entradas"]
+[node name="Separator" type="ColorRect" parent="Column/Body/Scroll/Inputs"]
 custom_minimum_size = Vector2(0, 1)
 mouse_filter = 2
 color = Color(0.15294118, 0.2509804, 0.30980393, 1)
 
-[node name="CidadaoTitulo" type="Label" parent="Coluna/Corpo/Rolagem/Entradas"]
+[node name="CitizenTitle" type="Label" parent="Column/Body/Scroll/Inputs"]
 mouse_filter = 2
 theme_override_font_sizes/font_size = 11
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 text = "CIDADÃO FICTÍCIO"
 
-[node name="sim_age_linha" type="HBoxContainer" parent="Coluna/Corpo/Rolagem/Entradas"]
+[node name="sim_age_row" type="HBoxContainer" parent="Column/Body/Scroll/Inputs"]
 theme_override_constants/separation = 4
 
-[node name="sim_age_texto" type="Label" parent="Coluna/Corpo/Rolagem/Entradas/sim_age_linha"]
+[node name="sim_age_text" type="Label" parent="Column/Body/Scroll/Inputs/sim_age_row"]
 custom_minimum_size = Vector2(170, 0)
 mouse_filter = 2
 theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 text = "Idade"
 
-[node name="sim_age" type="LineEdit" parent="Coluna/Corpo/Rolagem/Entradas/sim_age_linha"]
+[node name="sim_age" type="LineEdit" parent="Column/Body/Scroll/Inputs/sim_age_row"]
 unique_name_in_owner = true
 size_flags_horizontal = 3
 text = "40"
 
-[node name="sim_money_linha" type="HBoxContainer" parent="Coluna/Corpo/Rolagem/Entradas"]
+[node name="sim_money_row" type="HBoxContainer" parent="Column/Body/Scroll/Inputs"]
 theme_override_constants/separation = 4
 
-[node name="sim_money_texto" type="Label" parent="Coluna/Corpo/Rolagem/Entradas/sim_money_linha"]
+[node name="sim_money_text" type="Label" parent="Column/Body/Scroll/Inputs/sim_money_row"]
 custom_minimum_size = Vector2(170, 0)
 mouse_filter = 2
 theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 text = "Dinheiro"
 
-[node name="sim_money" type="LineEdit" parent="Coluna/Corpo/Rolagem/Entradas/sim_money_linha"]
+[node name="sim_money" type="LineEdit" parent="Column/Body/Scroll/Inputs/sim_money_row"]
 unique_name_in_owner = true
 size_flags_horizontal = 3
 text = "5000"
 
-[node name="sim_income_linha" type="HBoxContainer" parent="Coluna/Corpo/Rolagem/Entradas"]
+[node name="sim_income_row" type="HBoxContainer" parent="Column/Body/Scroll/Inputs"]
 theme_override_constants/separation = 4
 
-[node name="sim_income_texto" type="Label" parent="Coluna/Corpo/Rolagem/Entradas/sim_income_linha"]
+[node name="sim_income_text" type="Label" parent="Column/Body/Scroll/Inputs/sim_income_row"]
 custom_minimum_size = Vector2(170, 0)
 mouse_filter = 2
 theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 text = "Renda anual"
 
-[node name="sim_income" type="LineEdit" parent="Coluna/Corpo/Rolagem/Entradas/sim_income_linha"]
+[node name="sim_income" type="LineEdit" parent="Column/Body/Scroll/Inputs/sim_income_row"]
 unique_name_in_owner = true
 size_flags_horizontal = 3
 text = "20000"
 
-[node name="sim_value_linha" type="HBoxContainer" parent="Coluna/Corpo/Rolagem/Entradas"]
+[node name="sim_value_row" type="HBoxContainer" parent="Column/Body/Scroll/Inputs"]
 theme_override_constants/separation = 4
 
-[node name="sim_value_texto" type="Label" parent="Coluna/Corpo/Rolagem/Entradas/sim_value_linha"]
+[node name="sim_value_text" type="Label" parent="Column/Body/Scroll/Inputs/sim_value_row"]
 custom_minimum_size = Vector2(170, 0)
 mouse_filter = 2
 theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 text = "Valor da propriedade"
 
-[node name="sim_value" type="LineEdit" parent="Coluna/Corpo/Rolagem/Entradas/sim_value_linha"]
+[node name="sim_value" type="LineEdit" parent="Column/Body/Scroll/Inputs/sim_value_row"]
 unique_name_in_owner = true
 size_flags_horizontal = 3
 text = "100000"
 
-[node name="sim_tx_linha" type="HBoxContainer" parent="Coluna/Corpo/Rolagem/Entradas"]
+[node name="sim_tx_row" type="HBoxContainer" parent="Column/Body/Scroll/Inputs"]
 theme_override_constants/separation = 4
 
-[node name="sim_tx_texto" type="Label" parent="Coluna/Corpo/Rolagem/Entradas/sim_tx_linha"]
+[node name="sim_tx_text" type="Label" parent="Column/Body/Scroll/Inputs/sim_tx_row"]
 custom_minimum_size = Vector2(170, 0)
 mouse_filter = 2
 theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 text = "Valor da transação"
 
-[node name="sim_tx" type="LineEdit" parent="Coluna/Corpo/Rolagem/Entradas/sim_tx_linha"]
+[node name="sim_tx" type="LineEdit" parent="Column/Body/Scroll/Inputs/sim_tx_row"]
 unique_name_in_owner = true
 size_flags_horizontal = 3
 text = "100"
 
-[node name="Prof" type="HBoxContainer" parent="Coluna/Corpo/Rolagem/Entradas"]
+[node name="Prof" type="HBoxContainer" parent="Column/Body/Scroll/Inputs"]
 theme_override_constants/separation = 4
 
-[node name="ProfTexto" type="Label" parent="Coluna/Corpo/Rolagem/Entradas/Prof"]
+[node name="ProfText" type="Label" parent="Column/Body/Scroll/Inputs/Prof"]
 custom_minimum_size = Vector2(170, 0)
 mouse_filter = 2
 theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 text = "Profissão"
 
-[node name="sim_profession" type="OptionButton" parent="Coluna/Corpo/Rolagem/Entradas/Prof"]
+[node name="sim_profession" type="OptionButton" parent="Column/Body/Scroll/Inputs/Prof"]
 unique_name_in_owner = true
 size_flags_horizontal = 3
 focus_mode = 0
 
-[node name="Terr" type="HBoxContainer" parent="Coluna/Corpo/Rolagem/Entradas"]
+[node name="Terr" type="HBoxContainer" parent="Column/Body/Scroll/Inputs"]
 theme_override_constants/separation = 4
 
-[node name="TerrTexto" type="Label" parent="Coluna/Corpo/Rolagem/Entradas/Terr"]
+[node name="TerrText" type="Label" parent="Column/Body/Scroll/Inputs/Terr"]
 custom_minimum_size = Vector2(170, 0)
 mouse_filter = 2
 theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 text = "Mora em"
 
-[node name="sim_unit" type="OptionButton" parent="Coluna/Corpo/Rolagem/Entradas/Terr"]
+[node name="sim_unit" type="OptionButton" parent="Column/Body/Scroll/Inputs/Terr"]
 unique_name_in_owner = true
 size_flags_horizontal = 3
 focus_mode = 0
 
-[node name="sim_owner" type="CheckBox" parent="Coluna/Corpo/Rolagem/Entradas"]
+[node name="sim_owner" type="CheckBox" parent="Column/Body/Scroll/Inputs"]
 unique_name_in_owner = true
 focus_mode = 0
 text = "É dono da propriedade"
 button_pressed = true
 
-[node name="Lic" type="HBoxContainer" parent="Coluna/Corpo/Rolagem/Entradas"]
+[node name="Lic" type="HBoxContainer" parent="Column/Body/Scroll/Inputs"]
 theme_override_constants/separation = 4
 
-[node name="LicTexto" type="Label" parent="Coluna/Corpo/Rolagem/Entradas/Lic"]
+[node name="LicText" type="Label" parent="Column/Body/Scroll/Inputs/Lic"]
 custom_minimum_size = Vector2(170, 0)
 mouse_filter = 2
 theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 text = "Licenças (vírgulas)"
 
-[node name="sim_licenses" type="LineEdit" parent="Coluna/Corpo/Rolagem/Entradas/Lic"]
+[node name="sim_licenses" type="LineEdit" parent="Column/Body/Scroll/Inputs/Lic"]
 unique_name_in_owner = true
 size_flags_horizontal = 3
 
-[node name="Separador2" type="ColorRect" parent="Coluna/Corpo/Rolagem/Entradas"]
+[node name="Separator2" type="ColorRect" parent="Column/Body/Scroll/Inputs"]
 custom_minimum_size = Vector2(0, 1)
 mouse_filter = 2
 color = Color(0.15294118, 0.2509804, 0.30980393, 1)
 
-[node name="EconomiaTitulo" type="Label" parent="Coluna/Corpo/Rolagem/Entradas"]
+[node name="EconomyTitle" type="Label" parent="Column/Body/Scroll/Inputs"]
 mouse_filter = 2
 theme_override_font_sizes/font_size = 11
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 text = "VALORES ECONÔMICOS"
 
-[node name="sim_inflation_linha" type="HBoxContainer" parent="Coluna/Corpo/Rolagem/Entradas"]
+[node name="sim_inflation_row" type="HBoxContainer" parent="Column/Body/Scroll/Inputs"]
 theme_override_constants/separation = 4
 
-[node name="sim_inflation_texto" type="Label" parent="Coluna/Corpo/Rolagem/Entradas/sim_inflation_linha"]
+[node name="sim_inflation_text" type="Label" parent="Column/Body/Scroll/Inputs/sim_inflation_row"]
 custom_minimum_size = Vector2(170, 0)
 mouse_filter = 2
 theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 text = "Inflação (%)"
 
-[node name="sim_inflation" type="LineEdit" parent="Coluna/Corpo/Rolagem/Entradas/sim_inflation_linha"]
+[node name="sim_inflation" type="LineEdit" parent="Column/Body/Scroll/Inputs/sim_inflation_row"]
 unique_name_in_owner = true
 size_flags_horizontal = 3
 text = "5"
 
-[node name="sim_unemployment_linha" type="HBoxContainer" parent="Coluna/Corpo/Rolagem/Entradas"]
+[node name="sim_unemployment_row" type="HBoxContainer" parent="Column/Body/Scroll/Inputs"]
 theme_override_constants/separation = 4
 
-[node name="sim_unemployment_texto" type="Label" parent="Coluna/Corpo/Rolagem/Entradas/sim_unemployment_linha"]
+[node name="sim_unemployment_text" type="Label" parent="Column/Body/Scroll/Inputs/sim_unemployment_row"]
 custom_minimum_size = Vector2(170, 0)
 mouse_filter = 2
 theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 text = "Desemprego (%)"
 
-[node name="sim_unemployment" type="LineEdit" parent="Coluna/Corpo/Rolagem/Entradas/sim_unemployment_linha"]
+[node name="sim_unemployment" type="LineEdit" parent="Column/Body/Scroll/Inputs/sim_unemployment_row"]
 unique_name_in_owner = true
 size_flags_horizontal = 3
 text = "7"
 
-[node name="sim_debt_linha" type="HBoxContainer" parent="Coluna/Corpo/Rolagem/Entradas"]
+[node name="sim_debt_row" type="HBoxContainer" parent="Column/Body/Scroll/Inputs"]
 theme_override_constants/separation = 4
 
-[node name="sim_debt_texto" type="Label" parent="Coluna/Corpo/Rolagem/Entradas/sim_debt_linha"]
+[node name="sim_debt_text" type="Label" parent="Column/Body/Scroll/Inputs/sim_debt_row"]
 custom_minimum_size = Vector2(170, 0)
 mouse_filter = 2
 theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 text = "Dívida/PIB (%)"
 
-[node name="sim_debt" type="LineEdit" parent="Coluna/Corpo/Rolagem/Entradas/sim_debt_linha"]
+[node name="sim_debt" type="LineEdit" parent="Column/Body/Scroll/Inputs/sim_debt_row"]
 unique_name_in_owner = true
 size_flags_horizontal = 3
 text = "70"
 
-[node name="Resultados" type="HBoxContainer" parent="Coluna/Corpo"]
+[node name="Results" type="HBoxContainer" parent="Column/Body"]
 size_flags_horizontal = 3
 theme_override_constants/separation = 10
 
-[node name="Atual" type="VBoxContainer" parent="Coluna/Corpo/Resultados"]
+[node name="Current" type="VBoxContainer" parent="Column/Body/Results"]
 size_flags_horizontal = 3
 theme_override_constants/separation = 4
 
-[node name="AtualTitulo" type="Label" parent="Coluna/Corpo/Resultados/Atual"]
+[node name="CurrentTitle" type="Label" parent="Column/Body/Results/Current"]
 mouse_filter = 2
 theme_override_font_sizes/font_size = 11
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 text = "RESULTADO"
 
-[node name="sim_result" type="RichTextLabel" parent="Coluna/Corpo/Resultados/Atual"]
+[node name="sim_result" type="RichTextLabel" parent="Column/Body/Results/Current"]
 unique_name_in_owner = true
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_font_sizes/normal_font_size = 13
 bbcode_enabled = true
 
-[node name="Anterior" type="VBoxContainer" parent="Coluna/Corpo/Resultados"]
+[node name="Previous" type="VBoxContainer" parent="Column/Body/Results"]
 size_flags_horizontal = 3
 theme_override_constants/separation = 4
 
-[node name="AnteriorTitulo" type="Label" parent="Coluna/Corpo/Resultados/Anterior"]
+[node name="PreviousTitle" type="Label" parent="Column/Body/Results/Previous"]
 mouse_filter = 2
 theme_override_font_sizes/font_size = 11
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 text = "SIMULAÇÃO ANTERIOR"
 
-[node name="sim_previous" type="RichTextLabel" parent="Coluna/Corpo/Resultados/Anterior"]
+[node name="sim_previous" type="RichTextLabel" parent="Column/Body/Results/Previous"]
 unique_name_in_owner = true
 size_flags_horizontal = 3
 size_flags_vertical = 3

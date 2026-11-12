@@ -255,7 +255,7 @@ func build_features_slice(budget_usec: int) -> bool:
 		var ready: Dictionary = _prepared[_built_features]
 		_built_features += 1
 		if not ready.failed.is_empty():
-			print("MapView: polígonos não triangulados: ", ready.failed)
+			print("MapView: polygons that failed to triangulate: ", ready.failed)
 		_border_points.append_array(ready.border)
 		if not ready.verts.is_empty():
 			var arrays := []

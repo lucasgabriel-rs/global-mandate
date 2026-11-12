@@ -25,30 +25,30 @@ anchor_bottom = 1.0
 theme = ExtResource("1_w28oj")
 color = Color(0.01, 0.03, 0.05, 0.62)
 
-[node name="Centro" type="CenterContainer" parent="." unique_id=581870930]
+[node name="Center" type="CenterContainer" parent="." unique_id=581870930]
 layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="Painel" type="PanelContainer" parent="Centro" unique_id=1122958545]
+[node name="Panel" type="PanelContainer" parent="Center" unique_id=1122958545]
 custom_minimum_size = Vector2(900, 0)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_dwxv4")
 
-[node name="col" type="VBoxContainer" parent="Centro/Painel" unique_id=1867460605]
+[node name="col" type="VBoxContainer" parent="Center/Panel" unique_id=1867460605]
 unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 10
 
-[node name="title" type="Label" parent="Centro/Painel/col" unique_id=878729481]
+[node name="title" type="Label" parent="Center/Panel/col" unique_id=878729481]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.9490196, 0.7019608, 0.23921569, 1)
 theme_override_font_sizes/font_size = 24
 text = "Escolha seu partido em Brasil"
 
-[node name="body" type="Label" parent="Centro/Painel/col" unique_id=1777089864]
+[node name="body" type="Label" parent="Center/Panel/col" unique_id=1777089864]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
@@ -57,33 +57,33 @@ theme_override_font_sizes/font_size = 15
 text = "Todo político pertence a um partido. Escolha um deles ou funde o seu, e decida se começa no governo ou na oposição."
 autowrap_mode = 3
 
-[node name="Linha" type="HBoxContainer" parent="Centro/Painel/col" unique_id=1105199531]
+[node name="Row" type="HBoxContainer" parent="Center/Panel/col" unique_id=1105199531]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 16
 
-[node name="ideas_col" type="VBoxContainer" parent="Centro/Painel/col/Linha" unique_id=20293230]
+[node name="ideas_col" type="VBoxContainer" parent="Center/Panel/col/Row" unique_id=20293230]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 6
 
-[node name="SUASIDEIASCLIQUENABUSSOLA" type="Label" parent="Centro/Painel/col/Linha/ideas_col" unique_id=119014151]
+[node name="YourIdeasClickCompassHeading" type="Label" parent="Center/Panel/col/Row/ideas_col" unique_id=119014151]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_constants/line_spacing = 0
 theme_override_font_sizes/font_size = 11
 text = "IDEIAS DO NOVO PARTIDO: CLIQUE NA BÚSSOLA"
 
-[node name="my_compass" type="Control" parent="Centro/Painel/col/Linha/ideas_col" unique_id=1299499722]
+[node name="my_compass" type="Control" parent="Center/Panel/col/Row/ideas_col" unique_id=1299499722]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(240, 240)
 layout_mode = 2
 script = ExtResource("2_jbwcv")
 interactive = true
 
-[node name="AltoAutoritarioBaixoLibertarioEsquerdaE" type="Label" parent="Centro/Painel/col/Linha/ideas_col" unique_id=213499254]
+[node name="CompassHint" type="Label" parent="Center/Panel/col/Row/ideas_col" unique_id=213499254]
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
@@ -92,25 +92,25 @@ text = "Alto: autoritário. Baixo: libertário.
 Esquerda e direita: economia. Ponto branco: o seu partido."
 autowrap_mode = 3
 
-[node name="Coluna2" type="VBoxContainer" parent="Centro/Painel/col/Linha" unique_id=210931021]
+[node name="Column2" type="VBoxContainer" parent="Center/Panel/col/Row" unique_id=210931021]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 theme_override_constants/separation = 6
 
-[node name="COMOVOCQUERJOGAR" type="Label" parent="Centro/Painel/col/Linha/Coluna2" unique_id=1353210494 groups=["at_start_only"]]
+[node name="HowToPlayHeading" type="Label" parent="Center/Panel/col/Row/Column2" unique_id=1353210494 groups=["at_start_only"]]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_constants/line_spacing = 0
 theme_override_font_sizes/font_size = 11
 text = "COMO VOCÊ QUER JOGAR"
 
-[node name="Linha" type="HBoxContainer" parent="Centro/Painel/col/Linha/Coluna2" unique_id=269571220 groups=["at_start_only"]]
+[node name="Row" type="HBoxContainer" parent="Center/Panel/col/Row/Column2" unique_id=269571220 groups=["at_start_only"]]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 6
 
-[node name="role_government" type="Button" parent="Centro/Painel/col/Linha/Coluna2/Linha" unique_id=247804235]
+[node name="role_government" type="Button" parent="Center/Panel/col/Row/Column2/Row" unique_id=247804235]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 34)
 layout_mode = 2
@@ -120,7 +120,7 @@ focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "Governar"
 
-[node name="role_opposition" type="Button" parent="Centro/Painel/col/Linha/Coluna2/Linha" unique_id=734863535]
+[node name="role_opposition" type="Button" parent="Center/Panel/col/Row/Column2/Row" unique_id=734863535]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 34)
 layout_mode = 2
@@ -130,7 +130,7 @@ focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "Liderar a oposição"
 
-[node name="ruling_info" type="Label" parent="Centro/Painel/col/Linha/Coluna2" unique_id=1783285150 groups=["at_start_only"]]
+[node name="ruling_info" type="Label" parent="Center/Panel/col/Row/Column2" unique_id=1783285150 groups=["at_start_only"]]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
@@ -139,33 +139,33 @@ theme_override_font_sizes/font_size = 12
 text = "Hoje governa: Frente Nacional."
 autowrap_mode = 3
 
-[node name="SEUPARTIDO" type="Label" parent="Centro/Painel/col/Linha/Coluna2" unique_id=1478596973 groups=["at_start_only"]]
+[node name="YourPartyHeading" type="Label" parent="Center/Panel/col/Row/Column2" unique_id=1478596973 groups=["at_start_only"]]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_constants/line_spacing = 0
 theme_override_font_sizes/font_size = 11
 text = "SEU PARTIDO"
 
-[node name="party_rows" type="VBoxContainer" parent="Centro/Painel/col/Linha/Coluna2" unique_id=146537859]
+[node name="party_rows" type="VBoxContainer" parent="Center/Panel/col/Row/Column2" unique_id=146537859]
 unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 6
 
-[node name="Separador" type="ColorRect" parent="Centro/Painel/col/Linha/Coluna2" unique_id=426715439]
+[node name="Separator" type="ColorRect" parent="Center/Panel/col/Row/Column2" unique_id=426715439]
 custom_minimum_size = Vector2(0, 1)
 layout_mode = 2
 mouse_filter = 2
 color = Color(0.15294118, 0.2509804, 0.30980393, 1)
 
-[node name="OUFUNDEOSEU" type="Label" parent="Centro/Painel/col/Linha/Coluna2" unique_id=1634275277]
+[node name="OrFoundYourOwnHeading" type="Label" parent="Center/Panel/col/Row/Column2" unique_id=1634275277]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_constants/line_spacing = 0
 theme_override_font_sizes/font_size = 11
 text = "OU CRIE O SEU"
 
-[node name="found_toggle" type="Button" parent="Centro/Painel/col/Linha/Coluna2"]
+[node name="found_toggle" type="Button" parent="Center/Panel/col/Row/Column2"]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Abre o nome, a família, a cor e a bússola do novo partido."
@@ -173,25 +173,25 @@ focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "Criar meu próprio partido"
 
-[node name="Linha2" type="HBoxContainer" parent="Centro/Painel/col/Linha/Coluna2" unique_id=1676297742 groups=["founding"]]
+[node name="Row2" type="HBoxContainer" parent="Center/Panel/col/Row/Column2" unique_id=1676297742 groups=["founding"]]
 visible = false
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 6
 
-[node name="party_name" type="LineEdit" parent="Centro/Painel/col/Linha/Coluna2/Linha2" unique_id=1020651561]
+[node name="party_name" type="LineEdit" parent="Center/Panel/col/Row/Column2/Row2" unique_id=1020651561]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "Nome do partido"
 max_length = 40
 
-[node name="party_family" type="OptionButton" parent="Centro/Painel/col/Linha/Coluna2/Linha2" unique_id=224558989]
+[node name="party_family" type="OptionButton" parent="Center/Panel/col/Row/Column2/Row2" unique_id=224558989]
 unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0
 
-[node name="party_color" type="ColorPickerButton" parent="Centro/Painel/col/Linha/Coluna2/Linha2" unique_id=1385305111]
+[node name="party_color" type="ColorPickerButton" parent="Center/Panel/col/Row/Column2/Row2" unique_id=1385305111]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(44, 30)
 layout_mode = 2
@@ -199,7 +199,7 @@ tooltip_text = "Cor do partido"
 color = Color(0.7529412, 0.22352941, 0.16862746, 1)
 edit_alpha = false
 
-[node name="warn" type="Label" parent="Centro/Painel/col/Linha/Coluna2" unique_id=655902163 groups=["founding"]]
+[node name="warn" type="Label" parent="Center/Panel/col/Row/Column2" unique_id=655902163 groups=["founding"]]
 visible = false
 unique_name_in_owner = true
 custom_minimum_size = Vector2(60, 0)
@@ -208,7 +208,7 @@ theme_override_colors/font_color = Color(0.9254902, 0.3529412, 0.2627451, 1)
 theme_override_font_sizes/font_size = 12
 autowrap_mode = 3
 
-[node name="FundarPartido" type="Button" parent="Centro/Painel/col/Linha/Coluna2" unique_id=1638340292 groups=["founding"]]
+[node name="FoundParty" type="Button" parent="Center/Panel/col/Row/Column2" unique_id=1638340292 groups=["founding"]]
 visible = false
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 32)
@@ -217,7 +217,7 @@ focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "Fundar partido"
 
-[node name="cancel" type="Button" parent="Centro/Painel/col/Linha/Coluna2" unique_id=828581721]
+[node name="cancel" type="Button" parent="Center/Panel/col/Row/Column2" unique_id=828581721]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2

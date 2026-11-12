@@ -19,7 +19,7 @@ const FREE_STEPS := 6.0
 func _init() -> void:
 	id = "civil"
 	title = "Código Civil"
-	ementa = "Família, casamento, propriedade, contratos, herança e empresas."
+	summary = "Família, casamento, propriedade, contratos, herança e empresas."
 	category = {"id": "civil", "label": "Civil", "color": Color("8a6a2f")}
 
 

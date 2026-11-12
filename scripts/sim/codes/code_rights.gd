@@ -1,4 +1,4 @@
-class_name CodeDireitos
+class_name CodeRights
 extends LawCode
 ## Rights and duties: Fundamental rights and duties of citizens.
 ##
@@ -89,7 +89,7 @@ func _init() -> void:
 	# Rights and duties apply as a complementary law; those the Constitution guarantees stay in Art. 3.
 	id = "direitos"
 	title = "Direitos e deveres"
-	ementa = "Direitos fundamentais e deveres dos cidadãos."
+	summary = "Direitos fundamentais e deveres dos cidadãos."
 	category = {"id": "direitos", "label": "Direitos e deveres", "color": Color("a53f5e")}
 
 

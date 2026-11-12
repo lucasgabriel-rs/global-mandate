@@ -1,5 +1,5 @@
 extends Node
-## Simulação em outra thread: os quadros seguem fluindo, nada se perde, e cliques no meio são seguros.
+## Simulation on another thread: frames keep flowing, nothing is lost, and clicks in the middle are safe.
 ## Uso: godot --path . -- --ui-threads
 
 const FRAME_LIMIT_MS := 50.0
@@ -27,25 +27,25 @@ func _frames(n := 3) -> void:
 
 
 func _run() -> void:
-	_check(not main.loading and Game.world != null, "a abertura termina com o mundo pronto")
-	_check(main.map.features.size() > 150, "o mapa foi montado: %d" % main.map.features.size())
-	_check(not main.map._border_points.is_empty(), "as fronteiras foram montadas")
+	_check(not main.loading and Game.world != null, "the opening ends with the world ready")
+	_check(main.map.features.size() > 150, "the map was built: %d" % main.map.features.size())
+	_check(not main.map._border_points.is_empty(), "the borders were built")
 	main._pick_start(Game.world.by_iso["BRA"])
 	main._begin(Character.random(Game.world.rng), {})
 	main._set_speed(0)
 	await _frames(5)
-	# Banco central independente: a tela não deixa escolher o juro.
+	# Independent central bank: the screen does not let you choose the rate.
 	var c: Country = Game.world.player
 	main.hud._desk.current_tab = 2
 	main.hud.refresh(true)
 	await _frames(2)
-	_check(c.cb_independent, "o Brasil tem banco central independente")
-	_check((main.hud.get_node("%AlternarRegraDeTaylorJuro") as Button).disabled, "o botão de juro manual fica travado")
-	_check(not (main.hud._sliders.rate_set as HSlider).editable, "o controle de juro fica travado")
-	_check(main.hud._dyn.m_status.text.contains("independente"), "a aba diz quem decide: " + main.hud._dyn.m_status.text)
+	_check(c.cb_independent, "Brazil has an independent central bank")
+	_check((main.hud.get_node("%ToggleTaylorRule") as Button).disabled, "the manual rate button stays locked")
+	_check(not (main.hud._sliders.rate_set as HSlider).editable, "the rate control stays locked")
+	_check(main.hud._dyn.m_status.text.contains("independente"), "the tab says who decides:" + main.hud._dyn.m_status.text)
 	var rate0 := c.rate_manual
 	main.hud._on_toggle_taylor()
-	_check(c.rate_manual == rate0, "nem chamando direto o governo muda o regime")
+	_check(c.rate_manual == rate0, "not even calling the government directly changes the regime")
 	main.hud._desk.current_tab = 0
 	await _day_turn()
 	await _month_turn()
@@ -55,7 +55,7 @@ func _run() -> void:
 	await _restart()
 
 
-## A virada do dia acontece mesmo em outra thread, e o relógio não perde tempo.
+## The day turn happens even on another thread, and the clock does not lose time.
 func _day_turn() -> void:
 	var w: GameWorld = Game.world
 	var day := w.day_index
@@ -69,12 +69,12 @@ func _day_turn() -> void:
 			break
 	main._set_speed(0)
 	main.join_sim()
-	_check(w.day_index == day + 1, "o dia virou uma vez: dia %d" % w.day_index)
-	_check(saw_busy, "a virada rodou fora da thread principal")
-	_check(not w.busy and not w.defer_events, "o mundo voltou para a interface")
+	_check(w.day_index == day + 1, "the day turned once: day %d" % w.day_index)
+	_check(saw_busy, "the turn ran off the main thread")
+	_check(not w.busy and not w.defer_events, "the world returned to the interface")
 
 
-## O pior momento do jogo: a virada do mês, com todos os países agindo.
+## The worst moment of the game: the month turn, with all countries acting.
 func _month_turn() -> void:
 	var w: GameWorld = Game.world
 	w.month = 11
@@ -84,11 +84,11 @@ func _month_turn() -> void:
 	var got_month := [false]
 	var news := [0]
 	w.month_passed.connect(func():
-		_check(OS.get_thread_caller_id() == OS.get_main_thread_id(), "o sinal do mês chega na thread principal")
+		_check(OS.get_thread_caller_id() == OS.get_main_thread_id(), "the month's signal arrives on the main thread")
 		got_month[0] = true)
 	w.news_posted.connect(func(_t, _k, _c):
 		news[0] += 1
-		_check(OS.get_thread_caller_id() == OS.get_main_thread_id(), "notícia chega na thread principal") if news[0] == 1 else null)
+		_check(OS.get_thread_caller_id() == OS.get_main_thread_id(), "news arrives on the main thread") if news[0] == 1 else null)
 	main._set_speed(3)
 	var worst := 0.0
 	var stamp := Time.get_ticks_usec()
@@ -102,12 +102,12 @@ func _month_turn() -> void:
 	main._set_speed(0)
 	main.join_sim()
 	print("  pior quadro na virada de mês e de ano: %.1f ms" % worst)
-	_check(w.months_elapsed == month + 1, "o mês virou")
-	_check(got_month[0], "o sinal do mês foi entregue")
-	_check(worst < FRAME_LIMIT_MS, "a tela não trava: %.1f ms" % worst)
+	_check(w.months_elapsed == month + 1, "the month turned")
+	_check(got_month[0], "the month's signal was delivered")
+	_check(worst < FRAME_LIMIT_MS, "the screen does not freeze: %.1f ms" % worst)
 
 
-## Um clique com a simulação no meio espera a thread, em vez de mexer no mundo junto com ela.
+## A click with the simulation in the middle waits for the thread, instead of changing the world along with it.
 func _click_during_work() -> void:
 	var w: GameWorld = Game.world
 	var day := w.day_index
@@ -115,15 +115,15 @@ func _click_during_work() -> void:
 		for i in 40:
 			w.tick_day())
 	await RenderingServer.frame_post_draw
-	_check(w.busy, "a simulação está rodando")
+	_check(w.busy, "the simulation is running")
 	var key := InputEventKey.new()
 	key.keycode = KEY_2
 	key.pressed = true
 	get_viewport().push_input(key)
-	_check(not w.busy and w.day_index == day + 40, "a tecla esperou a simulação acabar: dia %d" % (w.day_index - day))
+	_check(not w.busy and w.day_index == day + 40, "the key waited for the simulation to finish: day %d" % (w.day_index - day))
 	main._set_speed(0)
 	await _frames()
-	# Passar o mouse não espera: a tela continua respondendo.
+	# Moving the mouse does not wait: the screen keeps responding.
 	main._run_on_worker(func():
 		for i in 40:
 			w.tick_day())
@@ -133,10 +133,10 @@ func _click_during_work() -> void:
 	move.global_position = move.position
 	get_viewport().push_input(move)
 	main.join_sim()
-	_check(not w.busy, "mover o mouse no meio não quebra nada")
+	_check(not w.busy, "moving the mouse in the middle breaks nothing")
 
 
-## Uma decisão no meio do avanço de dias para a contagem, e ele continua depois da resposta.
+## A decision in the middle of the day advance stops the count, and it continues after the answer.
 func _skip_and_prompt() -> void:
 	var w: GameWorld = Game.world
 	var day := w.day_index
@@ -147,17 +147,17 @@ func _skip_and_prompt() -> void:
 			w.ask_player({"title": "Teste", "text": "", "options": [{"label": "Ok", "hint": ""}]})
 	w.month_passed.connect(hook)
 	main.prompts.clear()
-	# A decisão é pedida direto na fila, como faz a simulação.
+	# The decision is requested directly in the queue, as the simulation does.
 	w.defer_events = true
 	w.ask_player({"title": "Decisão", "text": "", "options": [{"label": "Ok", "hint": ""}]})
 	w.defer_events = false
-	_check(w.has_urgent_event(), "a decisão fica na fila")
+	_check(w.has_urgent_event(), "the decision stays in the queue")
 	main.start_skip(10)
 	await _frames(4)
 	main.join_sim()
-	_check(main._skip_left == 10, "o avanço para diante de uma decisão: faltam %d" % main._skip_left)
+	_check(main._skip_left == 10, "the advance stops before a decision: %d left" % main._skip_left)
 	await _frames(4)
-	_check(main.modal_open, "a decisão aparece")
+	_check(main.modal_open, "the decision appears")
 	var dim: Control = main.modal_root.get_child(main.modal_root.get_child_count() - 1)
 	dim.get_node("%col").get_child(dim.get_node("%col").get_child_count() - 1).get_node("%pick").pressed.emit()
 	for i in 200:
@@ -165,7 +165,7 @@ func _skip_and_prompt() -> void:
 		if main._skip_left == 0 and not w.busy:
 			break
 	main.join_sim()
-	_check(main._skip_left == 0 and w.day_index >= day + 10, "o avanço termina depois da resposta")
+	_check(main._skip_left == 0 and w.day_index >= day + 10, "the advance ends after the answer")
 	await _frames()
 	_check(main.hud._skip_card.visible, "o resumo aparece")
 	main.hud._skip_card.visible = false
@@ -178,11 +178,11 @@ func _save_and_load() -> void:
 	var day := w.day_index
 	main._save_game()
 	await RenderingServer.frame_post_draw
-	_check(w.busy, "salvar roda em outra thread")
+	_check(w.busy, "saving runs on another thread")
 	main.join_sim()
-	_check(FileAccess.file_exists(SaveService.path), "o save foi escrito")
+	_check(FileAccess.file_exists(SaveService.path), "the save was written")
 	var news := main.hud._news_box.get_child(0) as Button
-	_check(news.text.contains("Partida salva"), "a notícia do save aparece: " + news.text)
+	_check(news.text.contains("Partida salva"), "the save's news appears:" + news.text)
 	w.tick_day()
 	main._load_game()
 	_check(main.loading and Game.world == w, "enquanto carrega, o mundo atual continua inteiro")
@@ -194,10 +194,10 @@ func _save_and_load() -> void:
 		worst = maxf(worst, (now - stamp) / 1000.0)
 		stamp = now
 	print("  pior quadro ao carregar: %.1f ms" % worst)
-	_check(worst < FRAME_LIMIT_MS, "carregar não trava a tela")
-	_check(Game.world != w and Game.world.day_index == day, "o save voltou: dia %d" % Game.world.day_index)
-	_check(main.playing, "o jogo continua depois de carregar")
-	# Arquivo principal estragado: vale a cópia de segurança.
+	_check(worst < FRAME_LIMIT_MS, "loading does not freeze the screen")
+	_check(Game.world != w and Game.world.day_index == day, "the save came back: day %d" % Game.world.day_index)
+	_check(main.playing, "the game continues after loading")
+	# Main file corrupted: the backup copy applies.
 	main._save_game()
 	main.join_sim()
 	main._save_game()
@@ -207,7 +207,7 @@ func _save_and_load() -> void:
 	broken.close()
 	var before: GameWorld = Game.world
 	await main._load_game()
-	_check(Game.world != before and main.playing, "save estragado: carrega a cópia de segurança")
+	_check(Game.world != before and main.playing, "corrupted save: loads the backup copy")
 	SaveService.delete_files()
 	
 
@@ -215,8 +215,8 @@ func _restart() -> void:
 	var old: GameWorld = Game.world
 	await main._restart()
 	_check(Game.world != old and not main.playing and not main.loading, "nova partida monta outro mundo")
-	_check(main.start_screen != null, "volta à tela inicial")
-	# Estresse: jogar, simular, salvar e carregar em sequência, com as threads se revezando.
+	_check(main.start_screen != null, "goes back to the start screen")
+	# Stress: play, simulate, save and load in sequence, with the threads taking turns.
 	for round_ in 4:
 		main._pick_start(Game.world.by_iso["BRA"])
 		main._begin(Character.random(Game.world.rng), {})
@@ -234,6 +234,6 @@ func _restart() -> void:
 		await main._load_game()
 		await _frames(2)
 		await main._restart()
-	_check(not main.loading and main.start_screen != null, "o revezamento das threads termina inteiro")
+	_check(not main.loading and main.start_screen != null, "the thread rotation finishes entirely")
 	SaveService.delete_files()
 	

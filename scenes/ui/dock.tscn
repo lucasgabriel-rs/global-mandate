@@ -72,7 +72,7 @@ mouse_filter = 2
 theme_override_constants/separation = 6
 alignment = 1
 
-[node name="dock_painel" parent="items" instance=ExtResource("2_item") groups=["role_text"]]
+[node name="dock_panel" parent="items" instance=ExtResource("2_item") groups=["role_text"]]
 layout_mode = 2
 label = "Painel do governo"
 icon = ExtResource("ic_painel")
@@ -80,7 +80,7 @@ window_index = 0
 action = ""
 metadata/opposition_text = "Painel da oposição"
 
-[node name="dock_politica" parent="items" instance=ExtResource("2_item") groups=["role_text"]]
+[node name="dock_politics" parent="items" instance=ExtResource("2_item") groups=["role_text"]]
 layout_mode = 2
 label = "Política"
 icon = ExtResource("ic_politica")
@@ -88,14 +88,14 @@ window_index = 7
 action = ""
 metadata/opposition_text = "Partido e pesquisas"
 
-[node name="dock_ministros" parent="items" instance=ExtResource("2_item") groups=["gov_only"]]
+[node name="dock_ministers" parent="items" instance=ExtResource("2_item") groups=["gov_only"]]
 layout_mode = 2
 label = "Ministros"
 icon = ExtResource("ic_ministros")
 window_index = 8
 action = ""
 
-[node name="dock_legislacao" parent="items" instance=ExtResource("2_item") groups=["role_text"]]
+[node name="dock_legislation" parent="items" instance=ExtResource("2_item") groups=["role_text"]]
 layout_mode = 2
 label = "Centro legislativo"
 icon = ExtResource("ic_legislacao")
@@ -103,7 +103,7 @@ window_index = 10
 action = "legislation"
 metadata/opposition_text = "Projetos e emendas"
 
-[node name="dock_oposicao" parent="items" instance=ExtResource("2_item") groups=["opposition_only"]]
+[node name="dock_opposition" parent="items" instance=ExtResource("2_item") groups=["opposition_only"]]
 visible = false
 layout_mode = 2
 label = "Fiscalização do governo"
@@ -111,7 +111,7 @@ icon = ExtResource("ic_oposicao")
 window_index = 11
 action = ""
 
-[node name="Separador1" type="ColorRect" parent="items"]
+[node name="Separator1" type="ColorRect" parent="items"]
 custom_minimum_size = Vector2(1, 40)
 layout_mode = 2
 size_flags_vertical = 8
@@ -125,56 +125,56 @@ icon = ExtResource("ic_fiscal")
 window_index = 1
 action = ""
 
-[node name="dock_moeda" parent="items" instance=ExtResource("2_item") groups=["gov_only"]]
+[node name="dock_currency" parent="items" instance=ExtResource("2_item") groups=["gov_only"]]
 layout_mode = 2
 label = "Moeda e juros"
 icon = ExtResource("ic_moeda")
 window_index = 2
 action = ""
 
-[node name="dock_comercio" parent="items" instance=ExtResource("2_item") groups=["gov_only"]]
+[node name="dock_trade" parent="items" instance=ExtResource("2_item") groups=["gov_only"]]
 layout_mode = 2
 label = "Comércio exterior"
 icon = ExtResource("ic_comercio")
 window_index = 3
 action = ""
 
-[node name="dock_economia" parent="items" instance=ExtResource("2_item")]
+[node name="dock_economy" parent="items" instance=ExtResource("2_item")]
 layout_mode = 2
 label = "Setores, empresas e bolsa"
 icon = ExtResource("ic_economia")
 window_index = 9
 action = ""
 
-[node name="Separador2" type="ColorRect" parent="items" groups=["gov_only"]]
+[node name="Separator2" type="ColorRect" parent="items" groups=["gov_only"]]
 custom_minimum_size = Vector2(1, 40)
 layout_mode = 2
 size_flags_vertical = 8
 mouse_filter = 2
 color = Color(1, 1, 1, 0.18)
 
-[node name="dock_militar" parent="items" instance=ExtResource("2_item") groups=["gov_only"]]
+[node name="dock_military" parent="items" instance=ExtResource("2_item") groups=["gov_only"]]
 layout_mode = 2
 label = "Forças armadas"
 icon = ExtResource("ic_militar")
 window_index = 4
 action = ""
 
-[node name="dock_divisoes" parent="items" instance=ExtResource("2_item") groups=["gov_only"]]
+[node name="dock_divisions" parent="items" instance=ExtResource("2_item") groups=["gov_only"]]
 layout_mode = 2
 label = "Divisões do território"
 icon = ExtResource("ic_divisoes")
 window_index = 6
 action = ""
 
-[node name="Separador3" type="ColorRect" parent="items"]
+[node name="Separator3" type="ColorRect" parent="items"]
 custom_minimum_size = Vector2(1, 40)
 layout_mode = 2
 size_flags_vertical = 8
 mouse_filter = 2
 color = Color(1, 1, 1, 0.18)
 
-[node name="dock_mundo" parent="items" instance=ExtResource("2_item")]
+[node name="dock_world" parent="items" instance=ExtResource("2_item")]
 layout_mode = 2
 label = "Mundo"
 icon = ExtResource("ic_mundo")

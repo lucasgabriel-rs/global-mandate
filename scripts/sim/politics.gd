@@ -1074,7 +1074,7 @@ func player_election(world: GameWorld) -> Dictionary:
 	var data := data_of(c.iso)
 	var me := _find(data, data.ruling)
 	# Without the right to another term under the Electoral Code, the player does not run: the party goes to the polls without them.
-	var barred := not CodeEleitoral.may_run_again(world)
+	var barred := not CodeElectoral.may_run_again(world)
 	var report := Elections.run(world, c, data, _mood_for(world, data))
 	var winner := _winner_of(data, report)
 	var won: bool = winner.id == me.id

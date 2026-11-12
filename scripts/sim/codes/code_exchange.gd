@@ -1,4 +1,4 @@
-class_name CodeCambial
+class_name CodeExchange
 extends LawCode
 ## Exchange and Sovereign Fund Law: central bank intervention, capital controls and the fund.
 ##
@@ -14,7 +14,7 @@ const CONTROLS := {"nenhum": 0.0, "imposto": 0.35, "cotas": 0.75}
 func _init() -> void:
 	id = "cambial"
 	title = "Lei Cambial e do Fundo Soberano"
-	ementa = "Intervenção no câmbio, controle de capitais e fundo soberano."
+	summary = "Intervenção no câmbio, controle de capitais e fundo soberano."
 	category = {"id": "cambial", "label": "Câmbio", "color": Color("2f7a8a")}
 	norm_type = "ordinaria"
 

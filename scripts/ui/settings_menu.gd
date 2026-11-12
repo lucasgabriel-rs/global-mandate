@@ -28,10 +28,10 @@ func _ready() -> void:
 		if changed:
 			GameSettings.ui_scale = _scale.value
 			_changed())
-	%restaurar.pressed.connect(func():
+	%restore.pressed.connect(func():
 		GameSettings.reset()
 		_show_current())
-	%voltar.pressed.connect(func(): closed.emit())
+	%back.pressed.connect(func(): closed.emit())
 
 
 func _show_current() -> void:

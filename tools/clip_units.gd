@@ -1,9 +1,9 @@
 extends SceneTree
 ## Limits the subnational units to whatever contains them: states by the country's outline on the map and
-## municipalities by the state. Runs after build_admin1.mjs and build_municipios.mjs and rewrites
-## data/admin1.json and data/municipios.json. Running it again does not change the result.
+## municipalities by the state. Runs after build_admin1.mjs and build_municipalities.mjs and rewrites
+## data/admin1.json and data/municipalities.json. Running it again does not change the result.
 ## Uso: godot --headless --path . -s tools/clip_units.gd -- [--dry]
-## To generate everything from scratch: build_map.mjs, build_admin1.mjs, build_municipios.mjs and this script.
+## To generate everything from scratch: build_map.mjs, build_admin1.mjs, build_municipalities.mjs and this script.
 ##
 ## A unit that falls entirely outside the outline, like an island that the map omits, becomes a small
 ## marker on the nearest edge: it keeps existing and can be selected, without leaving the limit.
@@ -11,8 +11,8 @@ extends SceneTree
 const MIN_EXTRA_PIECE := 0.01
 const MARKER_RADIUS := 0.12
 const ADMIN1 := "res://data/admin1.json"
-const MUNICIPIOS := "res://data/municipios.json"
-const CAPITAIS := "res://data/capitais.json"
+const MUNICIPALITIES := "res://data/municipalities.json"
+const CAPITALS := "res://data/capitals.json"
 const CITY_RADIUS := 0.35
 ## A unit with the capital's name and up to this area is the city itself (Paris, Berlin), with no extra unit.
 const CITY_UNIT_MAX_AREA := 5.0
@@ -21,7 +21,7 @@ const CITY_UNIT_MAX_AREA := 5.0
 func _init() -> void:
 	var dry := OS.get_cmdline_user_args().has("--dry")
 	var admin1: Dictionary = _read(ADMIN1)
-	var mun: Dictionary = _read(MUNICIPIOS)
+	var mun: Dictionary = _read(MUNICIPALITIES)
 	var rings_by_iso := GameData.native_rings()
 	var enclaves := {}
 	for iso: String in rings_by_iso:
@@ -42,7 +42,7 @@ func _init() -> void:
 		total += stats.y
 		if u.o == "BRA":
 			state_pieces[u.n] = _to_pieces(u.s)
-	print("estados: %d recortados, %.2f%% da área estava fora do país" % [cut_units, 100.0 * lost / maxf(total, 0.001)])
+	print("states: %d clipped, %.2f%% of the area was outside the country" % [cut_units, 100.0 * lost / maxf(total, 0.001)])
 
 	var cut_mun := 0
 	var lost_mun := 0.0
@@ -55,25 +55,25 @@ func _init() -> void:
 		cut_mun += int(stats.x > 0.001)
 		lost_mun += stats.x
 		total_mun += stats.y
-	print("municípios: %d recortados, %.2f%% da área estava fora do estado" % [cut_mun, 100.0 * lost_mun / maxf(total_mun, 0.001)])
-	print("marcadores: %d estados/províncias: %s" % [markers.size(), ", ".join(markers.slice(0, 80))])
-	print("marcadores: %d municípios: %s" % [mun_markers.size(), ", ".join(mun_markers)])
+	print("municipalities: %d clipped, %.2f%% of the area was outside the state" % [cut_mun, 100.0 * lost_mun / maxf(total_mun, 0.001)])
+	print("markers: %d states/provinces: %s" % [markers.size(), ", ".join(markers.slice(0, 80))])
+	print("markers: %d municipalities: %s" % [mun_markers.size(), ", ".join(mun_markers)])
 
 	var arcs_before: int = admin1.arcs.size() + mun.arcs.size()
 	admin1.arcs = _clip_arcs(admin1.arcs, func(arc): return [rings_by_iso.get(admin1.units[arc[0]].o, []), enclaves.get(admin1.units[arc[0]].o, [])])
 	mun.arcs = _clip_arcs(mun.arcs, func(arc): return [state_pieces[mun.units[arc[0]].uf], []])
-	print("divisas: %d trechos antes, %d depois" % [arcs_before, admin1.arcs.size() + mun.arcs.size()])
+	print("borders: %d segments before, %d after" % [arcs_before, admin1.arcs.size() + mun.arcs.size()])
 
-	var capitais: Dictionary = _read(CAPITAIS)
+	var capitais: Dictionary = _read(CAPITALS)
 	_place_capitals(capitais.capitals, admin1.units)
 
 	if dry:
-		print("--dry: nada foi gravado")
+		print("--dry: nothing was written")
 	else:
 		_write(ADMIN1, admin1)
-		_write(MUNICIPIOS, mun)
-		_write(CAPITAIS, capitais)
-		print("gravado")
+		_write(MUNICIPALITIES, mun)
+		_write(CAPITALS, capitais)
+		print("written")
 	quit()
 
 
@@ -109,7 +109,7 @@ func _place_capitals(capitals: Array, units: Array) -> void:
 			pos = nearest_point
 			moved.append("%s (%s, %.1f)" % [cap.n, cap.iso, sqrt(nearest)])
 		if parent < 0:
-			print("capital sem unidade: ", cap.n)
+			print("capital without a unit: ", cap.n)
 			continue
 		cap.erase("s")
 		cap.erase("a")
@@ -131,8 +131,8 @@ func _place_capitals(capitals: Array, units: Array) -> void:
 		if inside.is_empty():
 			inside = [_marker(pos, pieces)]
 		_apply(cap, [shape], inside, pieces, [])
-	print("capitais: %d são a própria unidade, %d viraram unidade nova" % [is_unit, capitals.size() - is_unit])
-	print("capitais fora do contorno, levadas à borda: ", ", ".join(moved))
+	print("capitals: %d are the unit itself, %d became a new unit" % [is_unit, capitals.size() - is_unit])
+	print("capitals outside the outline, moved to the edge: ", ", ".join(moved))
 
 
 func _same_name(a: String, b: String) -> bool:

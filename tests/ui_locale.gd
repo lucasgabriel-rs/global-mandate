@@ -1,10 +1,10 @@
 extends Node
-## Troca o idioma para inglês e espanhol e fotografa a tela inicial, o HUD, o centro legislativo e o
-## editor de blocos. Também procura português nos textos visíveis (ã, õ, ç e palavras comuns).
-## Uso: godot --path . -- --ui-locale --shots=/caminho/da/pasta
+## Switches the language to English and Spanish and photographs the start screen, the HUD, the legislative center and the
+## block editor. Also looks for Portuguese in the visible texts (ã, õ, ç and common words).
+## Usage: godot --path . -- --ui-locale --shots=/path/to/folder
 
 const LANGS := ["en", "es"]
-## Sinais de texto em português que não aparecem em inglês nem em espanhol.
+## Signs of Portuguese text that do not appear in English or Spanish.
 const PT_MARKS := ["ã", "õ", "ç", "Ã", "Õ", "Ç", " não ", " você", " então "]
 
 var main: Node
@@ -41,7 +41,7 @@ func _shot(name_: String) -> void:
 	get_viewport().get_texture().get_image().save_png("%s/%s.png" % [out, name_])
 
 
-## Textos visíveis em português dentro de `root`.
+## Visible texts in Portuguese inside `root`.
 func _portuguese(root: Node) -> Array:
 	var found := []
 	_scan(root, found)
@@ -70,7 +70,7 @@ func _no_portuguese(root: Node, what: String) -> void:
 	var found := _portuguese(root)
 	for text: String in found.slice(0, 8):
 		print("   português: ", text)
-	_check(found.is_empty(), "%s sem português (%d textos)" % [what, found.size()])
+	_check(found.is_empty(), "%s without Portuguese (%d texts)" % [what, found.size()])
 
 
 func _run() -> void:
@@ -83,8 +83,8 @@ func _run() -> void:
 		await _shot("%s_1_inicio" % lang)
 		_no_portuguese(main.start_screen, "tela inicial (%s)" % lang)
 		var picker: OptionButton = main.start_screen.find_child("language", true, false)
-		_check(picker != null and picker.selected == Lang.CODES.find(lang), "o seletor mostra o idioma ativo (%s)" % lang)
-		_check(Game.world.by_iso["DEU"].name == ("Germany" if lang == "en" else "Alemania"), "nomes de país traduzidos (%s)" % lang)
+		_check(picker != null and picker.selected == Lang.CODES.find(lang), "the selector shows the active language (%s)" % lang)
+		_check(Game.world.by_iso["DEU"].name == ("Germany" if lang == "en" else "Alemania"), "country names translated (%s)" % lang)
 	Lang.apply("en", false)
 	await _wait(4)
 	main._begin(Character.random(Game.world.rng, "USA", Game.world.by_iso["USA"].region), {})
@@ -100,7 +100,7 @@ func _run() -> void:
 		main.open_legislation()
 		await _wait(6)
 		var center: LegislationCenter = main.legislation_center()
-		_check(center != null, "centro legislativo abre (%s)" % lang)
+		_check(center != null, "legislative center opens (%s)" % lang)
 		await _shot("%s_3_centro" % lang)
 		if center:
 			_no_portuguese(center, "centro legislativo (%s)" % lang)
@@ -112,22 +112,22 @@ func _run() -> void:
 		for child in main.modal_root.get_children():
 			if child is LawEditor:
 				editor = child
-		_check(editor != null, "editor de blocos abre (%s)" % lang)
+		_check(editor != null, "block editor opens (%s)" % lang)
 		await _shot("%s_4_editor" % lang)
 		if editor:
 			_no_portuguese(editor, "editor de blocos (%s)" % lang)
 			main._drop_law_screens()
 			main._sync_modal_state()
 		await _wait(4)
-	# Troca com o centro aberto: a janela se refaz no idioma novo.
+	# Switches with the center open: the window redoes itself in the new language.
 	main.open_legislation()
 	await _wait(6)
 	Lang.apply("en", false)
 	await _wait(8)
 	var reopened: LegislationCenter = main.legislation_center()
-	_check(reopened != null and (reopened.get_node("%role_note") as Label).text.begins_with("You act as"), "o centro aberto se refaz ao trocar o idioma")
+	_check(reopened != null and (reopened.get_node("%role_note") as Label).text.begins_with("You act as"), "the open center redoes itself when the language switches")
 	await _shot("en_5_troca_com_centro")
 	main.close_legislation()
-	_check(UiKit.thousand(1234567) == "1,234,567", "milhares com vírgula em inglês (%s)" % UiKit.thousand(1234567))
+	_check(UiKit.thousand(1234567) == "1,234,567", "thousands with a comma in English (%s)" % UiKit.thousand(1234567))
 	Lang.apply("es", false)
-	_check(UiKit.thousand(1234567) == "1.234.567", "milhares com ponto em espanhol (%s)" % UiKit.thousand(1234567))
+	_check(UiKit.thousand(1234567) == "1.234.567", "thousands with a dot in Spanish (%s)" % UiKit.thousand(1234567))

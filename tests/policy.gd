@@ -1,6 +1,6 @@
 extends SceneTree
-## Verifica se as alavancas do jogador têm o efeito econômico esperado.
-## Compara cada política com um controle, com a mesma semente e sem eventos do jogador.
+## Checks whether the player's levers have the expected economic effect.
+## Compares each policy with a control, with the same seed and without player events.
 ## Uso: godot --headless --path . -s tests/policy.gd
 
 const YEARS := 4
@@ -12,7 +12,7 @@ func run(iso: String, policy: Callable, years := YEARS) -> Country:
 	w.setup(1234)
 	w.set_player(w.by_iso[iso], "normal")
 	policy.call(w.player, w)
-	# Sem eleição nem fim de jogo (morte do líder, golpe): o que se compara aqui é a economia.
+	# Without elections or game over (leader's death, coup): what is compared here is the economy.
 	for d in 365 * years:
 		w.player.next_election = 9999.0
 		w.over = false
@@ -67,7 +67,7 @@ func _init() -> void:
 	var tariff := run("BRA", func(c, _w): c.tariff = 0.3, 2)
 	check("tarifa reduz importações", tariff.imports < base2.imports, "%.0f vs %.0f" % [tariff.imports, base2.imports])
 
-	# Embargo a um grande exportador de petróleo encarece o barril para todos.
+	# An embargo on a large oil exporter makes the barrel more expensive for everyone.
 	var w1 := GameWorld.new()
 	w1.setup(99)
 	var w2 := GameWorld.new()
@@ -76,7 +76,7 @@ func _init() -> void:
 	for c: Country in w2.countries:
 		if c.iso in ["USA", "CHN", "IND", "JPN", "DEU", "FRA", "GBR", "KOR", "ITA", "CAN"]:
 			w2.diplomacy.set_sanction(c, sau, 2, w2)
-	# O pico vem nos primeiros meses; depois a OPEP+ e a demanda reequilibram o mercado.
+	# The peak comes in the first months; afterwards OPEC+ and demand rebalance the market.
 	for d in 120:
 		w1.tick_day()
 		w2.tick_day()

@@ -30,79 +30,79 @@ color = Color(0.01, 0.03, 0.05, 0.62)
 script = ExtResource("e1")
 theme = ExtResource("e2")
 
-[node name="Centro" type="CenterContainer" parent="."]
+[node name="Center" type="CenterContainer" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="Painel" type="PanelContainer" parent="Centro"]
+[node name="Panel" type="PanelContainer" parent="Center"]
 custom_minimum_size = Vector2(1240, 780)
 theme_override_styles/panel = SubResource("s1")
 
-[node name="col" type="VBoxContainer" parent="Centro/Painel"]
+[node name="col" type="VBoxContainer" parent="Center/Panel"]
 unique_name_in_owner = true
 theme_override_constants/separation = 10
 
-[node name="Cabeca" type="HBoxContainer" parent="Centro/Painel/col"]
+[node name="Head" type="HBoxContainer" parent="Center/Panel/col"]
 theme_override_constants/separation = 6
 
-[node name="title" type="Label" parent="Centro/Painel/col/Cabeca"]
+[node name="title" type="Label" parent="Center/Panel/col/Head"]
 unique_name_in_owner = true
 mouse_filter = 2
 theme_override_font_sizes/font_size = 22
 theme_override_colors/font_color = Color(0.9490196, 0.7019608, 0.23921569, 1)
 text = "Emenda constitucional"
 
-[node name="Espaco" type="Control" parent="Centro/Painel/col/Cabeca"]
+[node name="Space" type="Control" parent="Center/Panel/col/Head"]
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="save_close" type="Button" parent="Centro/Painel/col/Cabeca"]
+[node name="save_close" type="Button" parent="Center/Panel/col/Head"]
 unique_name_in_owner = true
 text = "Salvar e fechar"
 focus_mode = 0
 mouse_default_cursor_shape = 2
 
-[node name="delete_draft" type="Button" parent="Centro/Painel/col/Cabeca"]
+[node name="delete_draft" type="Button" parent="Center/Panel/col/Head"]
 unique_name_in_owner = true
 theme_override_colors/font_color = Color(0.9254902, 0.3529412, 0.2627451, 1)
 text = "Excluir rascunho"
 focus_mode = 0
 mouse_default_cursor_shape = 2
 
-[node name="present" type="Button" parent="Centro/Painel/col/Cabeca"]
+[node name="present" type="Button" parent="Center/Panel/col/Head"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 32)
 text = "Apresentar"
 focus_mode = 0
 mouse_default_cursor_shape = 2
 
-[node name="feedback" type="Label" parent="Centro/Painel/col"]
+[node name="feedback" type="Label" parent="Center/Panel/col"]
 unique_name_in_owner = true
 mouse_filter = 2
 theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(0.29803923, 0.78039217, 0.5803922, 1)
 autowrap_mode = 3
 
-[node name="Corpo" type="HBoxContainer" parent="Centro/Painel/col"]
+[node name="Body" type="HBoxContainer" parent="Center/Panel/col"]
 size_flags_vertical = 3
 theme_override_constants/separation = 12
 
-[node name="Dispositivos" type="VBoxContainer" parent="Centro/Painel/col/Corpo"]
+[node name="Provisions" type="VBoxContainer" parent="Center/Panel/col/Body"]
 custom_minimum_size = Vector2(400, 0)
 theme_override_constants/separation = 4
 
-[node name="DispTitulo" type="Label" parent="Centro/Painel/col/Corpo/Dispositivos"]
+[node name="DispTitle" type="Label" parent="Center/Panel/col/Body/Provisions"]
 mouse_filter = 2
 theme_override_font_sizes/font_size = 11
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 text = "DISPOSITIVOS EM VIGOR"
 
-[node name="NovosBotoes" type="HBoxContainer" parent="Centro/Painel/col/Corpo/Dispositivos"]
+[node name="NewButtons" type="HBoxContainer" parent="Center/Panel/col/Body/Provisions"]
 layout_mode = 2
 theme_override_constants/separation = 4
 
-[node name="new_article" type="Button" parent="Centro/Painel/col/Corpo/Dispositivos/NovosBotoes"]
+[node name="new_article" type="Button" parent="Center/Panel/col/Body/Provisions/NewButtons"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -111,7 +111,7 @@ focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "Novo artigo"
 
-[node name="block_article" type="Button" parent="Centro/Painel/col/Corpo/Dispositivos/NovosBotoes"]
+[node name="block_article" type="Button" parent="Center/Panel/col/Body/Provisions/NewButtons"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -120,26 +120,26 @@ focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "Novo artigo com blocos"
 
-[node name="Rolagem" type="ScrollContainer" parent="Centro/Painel/col/Corpo/Dispositivos"]
+[node name="Scroll" type="ScrollContainer" parent="Center/Panel/col/Body/Provisions"]
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
-[node name="article_list" type="VBoxContainer" parent="Centro/Painel/col/Corpo/Dispositivos/Rolagem"]
+[node name="article_list" type="VBoxContainer" parent="Center/Panel/col/Body/Provisions/Scroll"]
 unique_name_in_owner = true
 size_flags_horizontal = 3
 theme_override_constants/separation = 2
 
-[node name="Mudanca" type="VBoxContainer" parent="Centro/Painel/col/Corpo"]
+[node name="Change" type="VBoxContainer" parent="Center/Panel/col/Body"]
 custom_minimum_size = Vector2(360, 0)
 theme_override_constants/separation = 6
 
-[node name="MudancaTitulo" type="Label" parent="Centro/Painel/col/Corpo/Mudanca"]
+[node name="ChangeTitle" type="Label" parent="Center/Panel/col/Body/Change"]
 mouse_filter = 2
 theme_override_font_sizes/font_size = 11
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 text = "MUDANÇA"
 
-[node name="article_text" type="Label" parent="Centro/Painel/col/Corpo/Mudanca"]
+[node name="article_text" type="Label" parent="Center/Panel/col/Body/Change"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 60)
 mouse_filter = 2
@@ -148,146 +148,146 @@ theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
 text = "Escolha um dispositivo ao lado, ou acrescente um novo."
 autowrap_mode = 3
 
-[node name="Op" type="HBoxContainer" parent="Centro/Painel/col/Corpo/Mudanca"]
+[node name="Op" type="HBoxContainer" parent="Center/Panel/col/Body/Change"]
 theme_override_constants/separation = 4
 
-[node name="OpTexto" type="Label" parent="Centro/Painel/col/Corpo/Mudanca/Op"]
+[node name="OpText" type="Label" parent="Center/Panel/col/Body/Change/Op"]
 custom_minimum_size = Vector2(80, 0)
 mouse_filter = 2
 theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 text = "Operação"
 
-[node name="op_pick" type="OptionButton" parent="Centro/Painel/col/Corpo/Mudanca/Op"]
+[node name="op_pick" type="OptionButton" parent="Center/Panel/col/Body/Change/Op"]
 unique_name_in_owner = true
 size_flags_horizontal = 3
 focus_mode = 0
 
-[node name="Tipo" type="HBoxContainer" parent="Centro/Painel/col/Corpo/Mudanca"]
+[node name="Type" type="HBoxContainer" parent="Center/Panel/col/Body/Change"]
 unique_name_in_owner = true
 theme_override_constants/separation = 4
 
-[node name="TipoTexto" type="Label" parent="Centro/Painel/col/Corpo/Mudanca/Tipo"]
+[node name="TypeText" type="Label" parent="Center/Panel/col/Body/Change/Type"]
 custom_minimum_size = Vector2(80, 0)
 mouse_filter = 2
 theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 text = "Novo"
 
-[node name="kind_pick" type="OptionButton" parent="Centro/Painel/col/Corpo/Mudanca/Tipo"]
+[node name="kind_pick" type="OptionButton" parent="Center/Panel/col/Body/Change/Type"]
 unique_name_in_owner = true
 size_flags_horizontal = 3
 focus_mode = 0
 
-[node name="new_text" type="TextEdit" parent="Centro/Painel/col/Corpo/Mudanca"]
+[node name="new_text" type="TextEdit" parent="Center/Panel/col/Body/Change"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 90)
 wrap_mode = 1
 placeholder_text = "Novo texto do dispositivo"
 
-[node name="Valor" type="HBoxContainer" parent="Centro/Painel/col/Corpo/Mudanca"]
+[node name="Value" type="HBoxContainer" parent="Center/Panel/col/Body/Change"]
 unique_name_in_owner = true
 theme_override_constants/separation = 4
 
-[node name="ValorTexto" type="Label" parent="Centro/Painel/col/Corpo/Mudanca/Valor"]
+[node name="ValueText" type="Label" parent="Center/Panel/col/Body/Change/Value"]
 custom_minimum_size = Vector2(80, 0)
 mouse_filter = 2
 theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 text = "Novo valor"
 
-[node name="value_edit" type="LineEdit" parent="Centro/Painel/col/Corpo/Mudanca/Valor"]
+[node name="value_edit" type="LineEdit" parent="Center/Panel/col/Body/Change/Value"]
 unique_name_in_owner = true
 size_flags_horizontal = 3
 
-[node name="value_check" type="CheckBox" parent="Centro/Painel/col/Corpo/Mudanca/Valor"]
+[node name="value_check" type="CheckBox" parent="Center/Panel/col/Body/Change/Value"]
 unique_name_in_owner = true
 focus_mode = 0
 text = "Sim"
 
-[node name="value_option" type="OptionButton" parent="Centro/Painel/col/Corpo/Mudanca/Valor"]
+[node name="value_option" type="OptionButton" parent="Center/Panel/col/Body/Change/Value"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
 
-[node name="rights_box" type="VBoxContainer" parent="Centro/Painel/col/Corpo/Mudanca"]
+[node name="rights_box" type="VBoxContainer" parent="Center/Panel/col/Body/Change"]
 unique_name_in_owner = true
 theme_override_constants/separation = 2
 
-[node name="new_petrea" type="CheckBox" parent="Centro/Painel/col/Corpo/Mudanca"]
+[node name="new_petrea" type="CheckBox" parent="Center/Panel/col/Body/Change"]
 unique_name_in_owner = true
 focus_mode = 0
 text = "Cláusula pétrea"
 
-[node name="add_op" type="Button" parent="Centro/Painel/col/Corpo/Mudanca"]
+[node name="add_op" type="Button" parent="Center/Panel/col/Body/Change"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 30)
 text = "Incluir na emenda"
 focus_mode = 0
 mouse_default_cursor_shape = 2
 
-[node name="op_note" type="Label" parent="Centro/Painel/col/Corpo/Mudanca"]
+[node name="op_note" type="Label" parent="Center/Panel/col/Body/Change"]
 unique_name_in_owner = true
 mouse_filter = 2
 theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(0.9254902, 0.3529412, 0.2627451, 1)
 autowrap_mode = 3
 
-[node name="Proposta" type="VBoxContainer" parent="Centro/Painel/col/Corpo"]
+[node name="Proposal" type="VBoxContainer" parent="Center/Panel/col/Body"]
 size_flags_horizontal = 3
 theme_override_constants/separation = 6
 
-[node name="PropostaTitulo" type="Label" parent="Centro/Painel/col/Corpo/Proposta"]
+[node name="ProposalTitle" type="Label" parent="Center/Panel/col/Body/Proposal"]
 mouse_filter = 2
 theme_override_font_sizes/font_size = 11
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 text = "PROPOSTA"
 
-[node name="doc_name" type="LineEdit" parent="Centro/Painel/col/Corpo/Proposta"]
+[node name="doc_name" type="LineEdit" parent="Center/Panel/col/Body/Proposal"]
 unique_name_in_owner = true
 placeholder_text = "Título da emenda"
 
-[node name="doc_ementa" type="TextEdit" parent="Centro/Painel/col/Corpo/Proposta"]
+[node name="doc_summary" type="TextEdit" parent="Center/Panel/col/Body/Proposal"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 52)
 wrap_mode = 1
 placeholder_text = "Ementa"
 
-[node name="forecast" type="Label" parent="Centro/Painel/col/Corpo/Proposta"]
+[node name="forecast" type="Label" parent="Center/Panel/col/Body/Proposal"]
 unique_name_in_owner = true
 mouse_filter = 2
 theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
 autowrap_mode = 3
 
-[node name="poll" parent="Centro/Painel/col/Corpo/Proposta" instance=ExtResource("poll_box")]
+[node name="poll" parent="Center/Panel/col/Body/Proposal" instance=ExtResource("poll_box")]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="CompTitulo" type="Label" parent="Centro/Painel/col/Corpo/Proposta"]
+[node name="CompTitle" type="Label" parent="Center/Panel/col/Body/Proposal"]
 mouse_filter = 2
 theme_override_font_sizes/font_size = 11
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 text = "COMPARAÇÃO COM O TEXTO ATUAL"
 
-[node name="Rolagem" type="ScrollContainer" parent="Centro/Painel/col/Corpo/Proposta"]
+[node name="Scroll" type="ScrollContainer" parent="Center/Panel/col/Body/Proposal"]
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
-[node name="op_list" type="VBoxContainer" parent="Centro/Painel/col/Corpo/Proposta/Rolagem"]
+[node name="op_list" type="VBoxContainer" parent="Center/Panel/col/Body/Proposal/Scroll"]
 unique_name_in_owner = true
 size_flags_horizontal = 3
 theme_override_constants/separation = 4
 
-[node name="Rodape" type="HBoxContainer" parent="Centro/Painel/col"]
+[node name="Footer" type="HBoxContainer" parent="Center/Panel/col"]
 theme_override_constants/separation = 6
 
-[node name="Espaco" type="Control" parent="Centro/Painel/col/Rodape"]
+[node name="Space" type="Control" parent="Center/Panel/col/Footer"]
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="close" type="Button" parent="Centro/Painel/col/Rodape"]
+[node name="close" type="Button" parent="Center/Panel/col/Footer"]
 unique_name_in_owner = true
 text = "Cancelar"
 focus_mode = 0

@@ -153,7 +153,7 @@ func _seed_codes(world: GameWorld) -> void:
 		var norm := new_norm(world, code.norm_type, "Parlamento")  # i18n
 		norm.by_player = false
 		norm.title = code.title
-		norm.ementa = code.ementa
+		norm.ementa = code.summary
 		norm["base_code"] = true
 		norm["code"] = code.id
 		norm.program = program
@@ -198,7 +198,7 @@ func start_code_bill(world: GameWorld, id: String) -> Dictionary:
 	if norm.program.is_empty():
 		norm.program = LawProgram.empty()
 	norm.title = code.title
-	norm.ementa = code.ementa
+	norm.ementa = code.summary
 	norm["code"] = id
 	return norm
 

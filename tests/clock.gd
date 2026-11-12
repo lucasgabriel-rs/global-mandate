@@ -1,5 +1,5 @@
 extends SceneTree
-## Testes do relógio em dias e da ausência de eventos aleatórios, sem interface.
+## Tests of the day clock and of the absence of random events, without the interface.
 ## Uso: godot --headless --path . -s tests/clock.gd
 
 var failures := 0
@@ -17,24 +17,24 @@ func _init() -> void:
 	var w := GameWorld.new()
 	w.setup(11)
 	w.set_player(w.by_iso["BRA"], "normal")
-	_check(w.date_string() == "01 Jan 2025", "data sem hora: " + w.date_string())
+	_check(w.date_string() == "01 Jan 2025", "date without hour:" + w.date_string())
 	w.tick_day()
-	_check(w.date_string() == "02 Jan 2025" and w.day_index == 1, "um tick é um dia: " + w.date_string())
+	_check(w.date_string() == "02 Jan 2025" and w.day_index == 1, "a tick is a day:" + w.date_string())
 	for i in 30:
 		w.tick_day()
-	_check(w.date_string() == "01 Fev 2025", "31 dias viram o mês: " + w.date_string())
+	_check(w.date_string() == "01 Fev 2025", "31 days make the month:" + w.date_string())
 
-	# Saves antigos guardavam a hora; ela é ignorada ao carregar.
+	# Old saves stored the hour; it is ignored on loading.
 	var old := w.to_dict()
 	old["minute"] = 333
 	var w3 := GameWorld.new()
 	w3.setup(11)
 	w3.load_dict(bytes_to_var(var_to_bytes(old)))
-	_check(w3.date_string() == w.date_string(), "save antigo com hora abre na mesma data")
+	_check(w3.date_string() == w.date_string(), "old save with hour opens on the same date")
 
-	# Eventos aleatórios: 20 anos sem nenhum choque ou dilema.
-	_check(not WorldEvents.RANDOM_EVENTS, "sorteio de eventos desligado")
-	# Textos copiados de events.gd.
+	# Random events: 20 years with no shock or dilemma.
+	_check(not WorldEvents.RANDOM_EVENTS, "event draw turned off")
+	# Texts copied from events.gd.
 	var banned := ["El Niño e seca derrubam safras; preço de grãos dispara.", "OMS declara pandemia: fronteiras fecham e atividade desaba no mundo inteiro.", "Salto em inteligência artificial eleva produtividade em economias avançadas.", "Protestos em massa tomam as ruas de "]
 	var dilemmas := ["Pandemia global", "Greve geral", "Escândalo de corrupção", "Desastre natural", "Banco sistêmico em risco", "Combustível em alta", "Alimentos caros", "Onda migratória", "Política industrial"]
 	var hits := []
@@ -63,20 +63,20 @@ func _init() -> void:
 	for t: String in all_prompts:
 		titles[t.split(" ")[0]] = int(titles.get(t.split(" ")[0], 0)) + 1
 	print("janelas em 20 anos: ", titles)
-	_check(hits.is_empty(), "nenhum evento aleatório em 20 anos %s" % str(hits.slice(0, 5)))
-	_check(sim.markets.shock[Markets.GRAIN] == 0.0 or sim.markets.shock[Markets.GRAIN] <= prices0 + 0.0001, "sem choque de grãos")
-	# O menu debug continua podendo dispará-los.
+	_check(hits.is_empty(), "no random event in 20 years %s" % str(hits.slice(0, 5)))
+	_check(sim.markets.shock[Markets.GRAIN] == 0.0 or sim.markets.shock[Markets.GRAIN] <= prices0 + 0.0001, "no grain shock")
+	# The debug menu can still fire them.
 	var before := sim.global_risk
 	WorldEvents._pandemic(sim)
-	_check(sim.global_risk > before, "evento continua disponível quando chamado")
+	_check(sim.global_risk > before, "event is still available when called")
 
-	# Sem limite de tempo, nenhum histórico pode crescer para sempre.
+	# With no time limit, no history can grow forever.
 	var hw := GameWorld.new()
 	hw.setup(11)
 	hw.global_hist = {"tension": PackedFloat32Array(), "risk": PackedFloat32Array(), "world_gdp": PackedFloat32Array()}
 	for i in 600:
 		hw._update_global()
-	_check(hw.global_hist.tension.size() <= 480, "histórico global tem teto (%d)" % hw.global_hist.tension.size())
+	_check(hw.global_hist.tension.size() <= 480, "global history has a cap (%d)" % hw.global_hist.tension.size())
 
 	print("RESULT: ", failures, " failures")
 	quit(1 if failures > 0 else 0)

@@ -25,30 +25,30 @@ anchor_bottom = 1.0
 theme = ExtResource("1_ksgnp")
 color = Color(0.01, 0.03, 0.05, 0.62)
 
-[node name="Centro" type="CenterContainer" parent="." unique_id=973910368]
+[node name="Center" type="CenterContainer" parent="." unique_id=973910368]
 layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="Painel" type="PanelContainer" parent="Centro" unique_id=1499120569]
+[node name="Panel" type="PanelContainer" parent="Center" unique_id=1499120569]
 custom_minimum_size = Vector2(520, 0)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_m8vrg")
 
-[node name="col" type="VBoxContainer" parent="Centro/Painel" unique_id=795578491]
+[node name="col" type="VBoxContainer" parent="Center/Panel" unique_id=795578491]
 unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 10
 
-[node name="title" type="Label" parent="Centro/Painel/col" unique_id=1577461309]
+[node name="title" type="Label" parent="Center/Panel/col" unique_id=1577461309]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.9490196, 0.7019608, 0.23921569, 1)
 theme_override_font_sizes/font_size = 24
 text = "Pausa"
 
-[node name="VoltarAoJogo" type="Button" parent="Centro/Painel/col" unique_id=2055454226]
+[node name="BackToGame" type="Button" parent="Center/Panel/col" unique_id=2055454226]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
@@ -56,7 +56,7 @@ focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "Voltar ao jogo"
 
-[node name="SalvarPartida" type="Button" parent="Centro/Painel/col" unique_id=377963380]
+[node name="SaveGame" type="Button" parent="Center/Panel/col" unique_id=377963380]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
@@ -64,7 +64,7 @@ focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "Salvar partida"
 
-[node name="CarregarPartida" type="Button" parent="Centro/Painel/col" unique_id=889101881]
+[node name="LoadGame" type="Button" parent="Center/Panel/col" unique_id=889101881]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
@@ -72,7 +72,7 @@ focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "Carregar partida"
 
-[node name="NovaPartida" type="Button" parent="Centro/Painel/col" unique_id=883508570]
+[node name="NewGame" type="Button" parent="Center/Panel/col" unique_id=883508570]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
@@ -80,7 +80,7 @@ focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "Nova partida"
 
-[node name="MenuDebugF12" type="Button" parent="Centro/Painel/col" unique_id=5843081]
+[node name="MenuDebugF12" type="Button" parent="Center/Panel/col" unique_id=5843081]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
@@ -88,7 +88,7 @@ focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "Menu debug (F12)"
 
-[node name="ComoJogar" type="Button" parent="Centro/Painel/col" unique_id=2135075168]
+[node name="HowToPlay" type="Button" parent="Center/Panel/col" unique_id=2135075168]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
@@ -96,7 +96,7 @@ focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "Como jogar"
 
-[node name="Configuracoes" type="Button" parent="Centro/Painel/col"]
+[node name="Settings" type="Button" parent="Center/Panel/col"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
@@ -104,7 +104,7 @@ focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "Configurações"
 
-[node name="Renunciar" type="Button" parent="Centro/Painel/col"]
+[node name="Resign" type="Button" parent="Center/Panel/col"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
@@ -114,7 +114,7 @@ mouse_default_cursor_shape = 2
 theme_override_colors/font_color = Color(0.9254902, 0.3529412, 0.2627451, 1)
 text = "Renunciar ao cargo"
 
-[node name="Sair" type="Button" parent="Centro/Painel/col" unique_id=2068636533]
+[node name="Quit" type="Button" parent="Center/Panel/col" unique_id=2068636533]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
@@ -122,5 +122,5 @@ focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "Sair"
 
-[node name="LanguagePicker" parent="Centro/Painel/col" instance=ExtResource("9_lang")]
+[node name="LanguagePicker" parent="Center/Panel/col" instance=ExtResource("9_lang")]
 layout_mode = 2

@@ -1,6 +1,6 @@
 extends SceneTree
-## Toda cena de interface precisa abrir sem erro e sem dois nós de mesmo nome sob o mesmo pai: nomes
-## repetidos fazem os containers deixarem nós fora da organização da tela.
+## Every interface scene must open without errors and without two nodes of the same name under the same parent: repeated
+## names make the containers leave nodes out of the screen layout.
 ## Uso: godot --headless --path . --script tests/scenes.gd
 
 var failures := 0

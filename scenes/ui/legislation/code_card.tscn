@@ -23,49 +23,49 @@ custom_minimum_size = Vector2(250, 0)
 theme_override_styles/panel = SubResource("s1")
 theme = ExtResource("e1")
 
-[node name="Linha" type="HBoxContainer" parent="."]
+[node name="Row" type="HBoxContainer" parent="."]
 theme_override_constants/separation = 10
 
-[node name="swatch" type="ColorRect" parent="Linha"]
+[node name="swatch" type="ColorRect" parent="Row"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(6, 0)
 mouse_filter = 2
 
-[node name="Coluna" type="VBoxContainer" parent="Linha"]
+[node name="Column" type="VBoxContainer" parent="Row"]
 size_flags_horizontal = 3
 theme_override_constants/separation = 2
 
-[node name="code_name" type="Label" parent="Linha/Coluna"]
+[node name="code_name" type="Label" parent="Row/Column"]
 unique_name_in_owner = true
 mouse_filter = 2
 theme_override_font_sizes/font_size = 15
 theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
 text = "Código"
 
-[node name="articles" type="Label" parent="Linha/Coluna"]
+[node name="articles" type="Label" parent="Row/Column"]
 unique_name_in_owner = true
 mouse_filter = 2
 theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 text = "0 artigos"
 
-[node name="status" type="Label" parent="Linha/Coluna"]
+[node name="status" type="Label" parent="Row/Column"]
 unique_name_in_owner = true
 mouse_filter = 2
 theme_override_font_sizes/font_size = 11
 theme_override_colors/font_color = Color(0.30980393, 0.7019608, 0.8509804, 1)
 
-[node name="Botoes" type="HBoxContainer" parent="Linha/Coluna"]
+[node name="Buttons" type="HBoxContainer" parent="Row/Column"]
 theme_override_constants/separation = 4
 
-[node name="alter" type="Button" parent="Linha/Coluna/Botoes"]
+[node name="alter" type="Button" parent="Row/Column/Buttons"]
 unique_name_in_owner = true
 text = "Alterar"
 focus_mode = 0
 mouse_default_cursor_shape = 2
 tooltip_text = "Abre o código no editor de blocos como projeto de alteração."
 
-[node name="read" type="Button" parent="Linha/Coluna/Botoes"]
+[node name="read" type="Button" parent="Row/Column/Buttons"]
 unique_name_in_owner = true
 text = "Ler"
 focus_mode = 0

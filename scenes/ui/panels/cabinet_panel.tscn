@@ -10,14 +10,14 @@ theme = ExtResource("1_5u01a")
 theme_override_constants/separation = 6
 script = ExtResource("2_15ien")
 
-[node name="GABINETE" type="Label" parent="." unique_id=1197038418]
+[node name="Cabinet" type="Label" parent="." unique_id=1197038418]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_constants/line_spacing = 0
 theme_override_font_sizes/font_size = 11
 text = "GABINETE"
 
-[node name="MinistrosVemDosPartidosDa" type="Label" parent="." unique_id=1439664898]
+[node name="MinistersFromCoalitionHint" type="Label" parent="." unique_id=1439664898]
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)

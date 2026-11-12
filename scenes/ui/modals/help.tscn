@@ -24,30 +24,30 @@ anchor_bottom = 1.0
 theme = ExtResource("1_tikmp")
 color = Color(0.01, 0.03, 0.05, 0.62)
 
-[node name="Centro" type="CenterContainer" parent="." unique_id=575668611]
+[node name="Center" type="CenterContainer" parent="." unique_id=575668611]
 layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="Painel" type="PanelContainer" parent="Centro" unique_id=1712726971]
+[node name="Panel" type="PanelContainer" parent="Center" unique_id=1712726971]
 custom_minimum_size = Vector2(620, 0)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_f7dxy")
 
-[node name="col" type="VBoxContainer" parent="Centro/Painel" unique_id=961832498]
+[node name="col" type="VBoxContainer" parent="Center/Panel" unique_id=961832498]
 unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 10
 
-[node name="title" type="Label" parent="Centro/Painel/col" unique_id=414614753]
+[node name="title" type="Label" parent="Center/Panel/col" unique_id=414614753]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.9490196, 0.7019608, 0.23921569, 1)
 theme_override_font_sizes/font_size = 24
 text = "Como jogar"
 
-[node name="OMundoCorreEmTempo" type="Label" parent="Centro/Painel/col" unique_id=1313895261]
+[node name="RealTimeHint" type="Label" parent="Center/Panel/col" unique_id=1313895261]
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
@@ -67,7 +67,7 @@ Não há limite de tempo. Se perder uma eleição ou uma guerra, você passa a l
 Todos envelhecem, adoecem e morrem, inclusive você, e novos políticos surgem com o tempo. Em países democráticos, criar uma unidade subnacional passa pelo parlamento e por plebiscito."
 autowrap_mode = 3
 
-[node name="Entendi" type="Button" parent="Centro/Painel/col" unique_id=1671173531]
+[node name="GotIt" type="Button" parent="Center/Panel/col" unique_id=1671173531]
 unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0

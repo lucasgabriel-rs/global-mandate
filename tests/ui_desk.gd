@@ -1,7 +1,7 @@
 extends Node
-## Dock e janelas flutuantes: abrir pelo dock, trazer para a frente, arrastar, redimensionar, minimizar,
-## data sem a hora e janela pequena.
-## Uso: godot --path . -- --ui-desk --shots=/caminho/da/pasta
+## Dock and floating windows: open from the dock, bring to the front, drag, resize, minimize,
+## date without the hour and small window.
+## Usage: godot --path . -- --ui-desk --shots=/path/to/folder
 
 var main: Node
 var out := "user://shots"
@@ -51,7 +51,7 @@ func _run() -> void:
 	main._pick_start(w.by_iso["BRA"])
 	main._start_button.pressed.emit()
 	await _wait()
-	_top().get_node("%Confirmar").pressed.emit()
+	_top().get_node("%Confirm").pressed.emit()
 	await _wait()
 	_top().get_node("%party_rows").get_child(0).get_node("%pick").pressed.emit()
 	await _wait()
@@ -63,31 +63,31 @@ func _run() -> void:
 	var dock: Dock = hud._dock
 	hud.refresh(true)
 	await _wait()
-	_check(not (hud.get_node("%date") as Label).text.contains(":"), "a data aparece sem a hora: " + (hud.get_node("%date") as Label).text)
-	_check(desk.open_count() == 0, "o jogo começa sem janelas abertas, com o mapa livre")
-	_check(dock.items().filter(func(i): return i.window_index >= 0).size() == desk.get_tab_count(), "o dock tem um ícone por janela: %d" % dock.items().size())
+	_check(not (hud.get_node("%date") as Label).text.contains(":"), "the date appears without the hour:" + (hud.get_node("%date") as Label).text)
+	_check(desk.open_count() == 0, "the game starts with no open windows, with the map free")
+	_check(dock.items().filter(func(i): return i.window_index >= 0).size() == desk.get_tab_count(), "the dock has one icon per window: %d" % dock.items().size())
 	await _shot("d1_mapa_livre")
 
-	# Abrir pelo dock.
+	# Open from the dock.
 	await _press(dock.item_for_window(0))
-	_check(desk.is_open(0) and desk.current_tab == 0, "o ícone do Painel abre a janela")
-	_check((desk.window(0).content() as Control).is_visible_in_tree(), "o conteúdo do Painel está dentro da janela")
+	_check(desk.is_open(0) and desk.current_tab == 0, "the Panel icon opens the window")
+	_check((desk.window(0).content() as Control).is_visible_in_tree(), "the Panel content is inside the window")
 	await _press(dock.item_for_window(1))
 	await _press(dock.item_for_window(9))
-	_check(desk.open_count() == 3 and desk.current_tab == 9, "três janelas abertas, a última na frente")
-	_check(dock.item_for_window(1)._dot.visible, "o ponto marca as janelas abertas no dock")
+	_check(desk.open_count() == 3 and desk.current_tab == 9, "three open windows, the last in front")
+	_check(dock.item_for_window(1)._dot.visible, "the dot marks the open windows in the dock")
 	hud.refresh(true)
 	await _shot("d2_tres_janelas")
 
-	# Trazer para a frente e minimizar.
+	# Bring to the front and minimize.
 	await _press(dock.item_for_window(1))
-	_check(desk.current_tab == 1 and desk.open_count() == 3, "clicar no ícone de uma janela de trás a traz para a frente")
+	_check(desk.current_tab == 1 and desk.open_count() == 3, "clicking the icon of a back window brings it to the front")
 	await _press(dock.item_for_window(1))
-	_check(not desk.is_open(1) and desk.current_tab == 9, "clicar de novo minimiza, e a de trás vira a da frente")
+	_check(not desk.is_open(1) and desk.current_tab == 9, "clicking again minimizes, and the one behind becomes the front")
 	await _wait(20)
-	_check(not desk.window(1).visible, "a janela minimizada some depois da animação")
+	_check(not desk.window(1).visible, "the minimized window disappears after the animation")
 
-	# Arrastar e redimensionar pela barra e pelo canto.
+	# Drag and resize by the bar and by the corner.
 	var win := desk.window(0)
 	win.raise()
 	var bar: Control = win.get_node("%title_bar")
@@ -106,44 +106,44 @@ func _run() -> void:
 	bar.gui_input.emit(motion)
 	press.pressed = false
 	bar.gui_input.emit(press)
-	_check(win.position.distance_to(before) > 40.0, "a janela anda ao arrastar a barra: %s → %s" % [str(before), str(win.position)])
+	_check(win.position.distance_to(before) > 40.0, "the window moves when dragging the bar: %s → %s" % [str(before), str(win.position)])
 	win.size = Vector2(5000, 5000)
 	win.fit()
-	_check(win.get_rect().end.x <= desk.size.x + 1.0 and win.get_rect().end.y <= desk.size.y + 1.0, "a janela não passa da área livre")
+	_check(win.get_rect().end.x <= desk.size.x + 1.0 and win.get_rect().end.y <= desk.size.y + 1.0, "the window does not go beyond the free area")
 	win.size = win.default_size
 	(win.get_node("%close") as Button).pressed.emit()
 	await _wait(20)
-	_check(not desk.is_open(0), "o botão vermelho fecha a janela")
+	_check(not desk.is_open(0), "the red button closes the window")
 
-	# Divisões: abrir a janela liga a escolha de unidades no mapa.
+	# Divisions: opening the window turns on unit selection on the map.
 	desk.current_tab = hud._divisions_tab
 	await _wait()
-	_check(main.map.unit_pick, "a janela de Divisões na frente liga a escolha de unidades")
+	_check(main.map.unit_pick, "the Divisions window in front turns on unit selection")
 	desk.close(hud._divisions_tab)
 	await _wait(20)
-	_check(not main.map.unit_pick, "fechada, o mapa volta ao normal")
+	_check(not main.map.unit_pick, "closed, the map goes back to normal")
 
-	# Legislação abre o centro legislativo.
+	# Legislation opens the legislative center.
 	for it in dock.items():
 		if it.action == "legislation":
 			await _press(it)
-	_check(main.legislation_center() != null and desk.current_tab == hud.LEGISLATION_WINDOW, "o ícone da legislação abre o centro legislativo como janela")
-	_check(not main.modal_open, "o centro não bloqueia o resto da tela")
+	_check(main.legislation_center() != null and desk.current_tab == hud.LEGISLATION_WINDOW, "the legislation icon opens the legislative center as a window")
+	_check(not main.modal_open, "the center does not block the rest of the screen")
 	var center_rect := desk.window(hud.LEGISLATION_WINDOW).get_rect()
-	_check(absf(center_rect.get_center().x - desk.size.x * 0.5) < 60.0, "a janela abre no centro da tela")
+	_check(absf(center_rect.get_center().x - desk.size.x * 0.5) < 60.0, "the window opens in the center of the screen")
 	await _shot("d3_legislacao")
 	for it in dock.items():
 		if it.action == "legislation":
 			await _press(it)
-	_check(main.legislation_center() == null, "clicar de novo no ícone minimiza o centro")
+	_check(main.legislation_center() == null, "clicking the icon again minimizes the center")
 
-	# Dock com o mouse em cima: os ícones crescem.
+	# Dock with the mouse over it: the icons grow.
 	desk.current_tab = 7
 	await _wait(14)
 	var target := dock.item_for_window(2)
 	Input.warp_mouse(target.get_global_rect().get_center())
 	await _wait(30)
-	_check(target.magnify > 1.3, "o ícone sob o mouse cresce: %.2f" % target.magnify)
+	_check(target.magnify > 1.3, "the icon under the mouse grows: %.2f" % target.magnify)
 	hud.refresh(true)
 	await _shot("d4_dock_ampliado")
 
@@ -153,5 +153,5 @@ func _run() -> void:
 	for i in desk.get_tab_count():
 		if desk.is_open(i):
 			var r := desk.window(i).get_rect()
-			_check(r.end.x <= desk.size.x + 1.0 and r.end.y <= desk.size.y + 1.0, "a janela %d cabe na tela menor" % i)
+			_check(r.end.x <= desk.size.x + 1.0 and r.end.y <= desk.size.y + 1.0, "window %d fits on the smaller screen" % i)
 	await _shot("d5_tela_menor")

@@ -1,6 +1,6 @@
 extends SceneTree
-## O mundo se mexe sozinho: governos agem conforme a bússola do líder, parlamentos livres votam projetos e
-## a economia continua sã. Imprime o que aconteceu em anos de jogo, sem o jogador fazer nada.
+## The world moves on its own: governments act according to the leader's compass, free parliaments vote on projects and
+## the economy stays sound. Prints what happened over years of play, without the player doing anything.
 ## Uso: godot --headless --path . --script tests/world_ai.gd -- [anos] [semente]
 
 var failures := 0
@@ -40,14 +40,14 @@ func _compass_changes_behavior() -> void:
 		for i in 24:
 			NationAI._ideology_drift(c, NationAI._mind(c, world))
 		results[label] = c.sp_social - social0
-	_check(float(results.esquerda) > float(results.direita), "líder de esquerda gasta mais com o social que o de direita")
+	_check(float(results.esquerda) > float(results.direita), "a left-wing leader spends more on social than a right-wing one")
 	var world := GameWorld.new()
 	world.setup(11)
 	var c: Country = world.by_iso["DEU"]
 	_force_leader(world, "DEU", 0.0, -0.9)
 	var hawk: float = NationAI._mind(c, world).hawk
 	_force_leader(world, "DEU", 0.0, 0.9)
-	_check(hawk > float(NationAI._mind(c, world).hawk), "líder autoritário é mais belicoso que o libertário")
+	_check(hawk > float(NationAI._mind(c, world).hawk), "an authoritarian leader is more warlike than a libertarian")
 
 
 func _run(years: int, seed_value: int) -> void:
@@ -97,14 +97,14 @@ func _run(years: int, seed_value: int) -> void:
 	print("projetos da IA no parlamento do jogador: %d" % player_bills.size())
 	for line: String in news.slice(maxi(news.size() - 12, 0)):
 		print("  · ", line)
-	_check(news.size() > years * 12, "o noticiário tem mais de uma notícia por mês: %d" % news.size())
-	_check(world.diplomacy.sanctions.size() != sanctions0 or world.diplomacy.alliances.size() != alliances0, "as relações entre países mudam")
-	_check(world.diplomacy.fta.size() > fta0, "países fecham acordos sozinhos")
+	_check(news.size() > years * 12, "the news feed has more than one news item per month: %d" % news.size())
+	_check(world.diplomacy.sanctions.size() != sanctions0 or world.diplomacy.alliances.size() != alliances0, "relations between countries change")
+	_check(world.diplomacy.fta.size() > fta0, "countries close agreements on their own")
 	_check(passed > 20, "parlamentos aprovam leis: %d" % passed)
-	_check(rejected > 0, "parlamentos também rejeitam")
-	_check(closed_with_laws == 0, "regimes fechados não têm propostas do parlamento")
-	_check(player_bills.size() >= 3, "partidos propõem projetos no parlamento do jogador")
-	# Economia sã, mesmo com tudo isso.
+	_check(rejected > 0, "parliaments also reject")
+	_check(closed_with_laws == 0, "closed regimes have no proposals from parliament")
+	_check(player_bills.size() >= 3, "parties propose projects in the player's parliament")
+	# Economy stays sound, even with all that.
 	var bad := []
 	var living := 0
 	for c: Country in world.countries:
@@ -117,5 +117,5 @@ func _run(years: int, seed_value: int) -> void:
 		if c.tax_total() > 0.75 or c.spend_total() > 0.85 or c.debt_ratio > 6.0:
 			bad.append("%s imposto %.2f gasto %.2f dívida %.2f" % [c.iso, c.tax_total(), c.spend_total(), c.debt_ratio])
 	print("países vivos: ", living)
-	_check(bad.size() <= 3, "economias sem valores absurdos: %s" % str(bad.slice(0, 6)))
-	_check(living > 120, "o mundo não se destrói: %d países" % living)
+	_check(bad.size() <= 3, "economies without absurd values: %s" % str(bad.slice(0, 6)))
+	_check(living > 120, "the world does not destroy itself: %d countries" % living)

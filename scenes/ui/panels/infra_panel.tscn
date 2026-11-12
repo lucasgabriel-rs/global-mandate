@@ -11,13 +11,13 @@ theme = ExtResource("1_theme")
 theme_override_constants/separation = 6
 script = ExtResource("2_script")
 
-[node name="Titulo" type="Label" parent="."]
+[node name="Title" type="Label" parent="."]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_font_sizes/font_size = 11
 text = "PORTOS E AEROPORTOS"
 
-[node name="Nota" type="Label" parent="."]
+[node name="Note" type="Label" parent="."]
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
@@ -25,59 +25,59 @@ theme_override_font_sizes/font_size = 12
 text = "Portos acompanham o comércio exterior; aeroportos, o PIB e o turismo. Acima de 80% de uso, a logística piora: o comércio engasga e transporte e turismo perdem produtividade."
 autowrap_mode = 3
 
-[node name="Resumo" type="GridContainer" parent="."]
+[node name="Summary" type="GridContainer" parent="."]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/h_separation = 10
 theme_override_constants/v_separation = 2
 columns = 2
 
-[node name="PortosLabel" type="Label" parent="Resumo"]
+[node name="PortsLabel" type="Label" parent="Summary"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 13
 text = "Portos"
 
-[node name="port_sat" type="Label" parent="Resumo"]
+[node name="port_sat" type="Label" parent="Summary"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 13
 text = "85% da capacidade"
 horizontal_alignment = 2
 
-[node name="AeroportosLabel" type="Label" parent="Resumo"]
+[node name="AirportsLabel" type="Label" parent="Summary"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 13
 text = "Aeroportos"
 
-[node name="air_sat" type="Label" parent="Resumo"]
+[node name="air_sat" type="Label" parent="Summary"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 13
 text = "66% da capacidade"
 horizontal_alignment = 2
 
-[node name="LogisticaLabel" type="Label" parent="Resumo"]
+[node name="LogisticsLabel" type="Label" parent="Summary"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 13
 text = "Logística"
 
-[node name="logistics" type="Label" parent="Resumo"]
+[node name="logistics" type="Label" parent="Summary"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 13
 text = "neutra"
 horizontal_alignment = 2
 
-[node name="Acoes" type="HBoxContainer" parent="."]
+[node name="Actions" type="HBoxContainer" parent="."]
 unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 8
 
-[node name="build_port" type="Button" parent="Acoes"]
+[node name="build_port" type="Button" parent="Actions"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
@@ -87,7 +87,7 @@ mouse_default_cursor_shape = 2
 theme_override_font_sizes/font_size = 12
 text = "Construir porto"
 
-[node name="build_air" type="Button" parent="Acoes"]
+[node name="build_air" type="Button" parent="Actions"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
@@ -111,7 +111,7 @@ unique_name_in_owner = true
 visible = false
 layout_mode = 2
 
-[node name="ObrasTitulo" type="Label" parent="."]
+[node name="WorksTitle" type="Label" parent="."]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
@@ -131,7 +131,7 @@ layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 8
 
-[node name="PortosTitulo" type="Label" parent="."]
+[node name="PortsTitle" type="Label" parent="."]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
@@ -144,7 +144,7 @@ layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 6
 
-[node name="AeroportosTitulo" type="Label" parent="."]
+[node name="AirportsTitle" type="Label" parent="."]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_font_sizes/font_size = 11

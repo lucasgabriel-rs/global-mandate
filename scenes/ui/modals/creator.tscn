@@ -27,46 +27,46 @@ anchor_bottom = 1.0
 theme = ExtResource("1_hmfsw")
 color = Color(0.01, 0.03, 0.05, 0.62)
 
-[node name="Centro" type="CenterContainer" parent="." unique_id=1133840040]
+[node name="Center" type="CenterContainer" parent="." unique_id=1133840040]
 layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="Painel" type="PanelContainer" parent="Centro" unique_id=1761024268]
+[node name="Panel" type="PanelContainer" parent="Center" unique_id=1761024268]
 custom_minimum_size = Vector2(760, 0)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_vhtfc")
 
-[node name="col" type="VBoxContainer" parent="Centro/Painel" unique_id=1364831433]
+[node name="col" type="VBoxContainer" parent="Center/Panel" unique_id=1364831433]
 unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 10
 
-[node name="title" type="Label" parent="Centro/Painel/col" unique_id=1936132848]
+[node name="title" type="Label" parent="Center/Panel/col" unique_id=1936132848]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.9490196, 0.7019608, 0.23921569, 1)
 theme_override_font_sizes/font_size = 24
 text = "Crie seu personagem"
 
-[node name="Linha" type="HBoxContainer" parent="Centro/Painel/col" unique_id=981433621]
+[node name="Row" type="HBoxContainer" parent="Center/Panel/col" unique_id=981433621]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 24
 
-[node name="Retrato" type="VBoxContainer" parent="Centro/Painel/col/Linha"]
+[node name="Portrait" type="VBoxContainer" parent="Center/Panel/col/Row"]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 6
 
-[node name="view" parent="Centro/Painel/col/Linha/Retrato" unique_id=946742865 instance=ExtResource("2_r6ifn")]
+[node name="view" parent="Center/Panel/col/Row/Portrait" unique_id=946742865 instance=ExtResource("2_r6ifn")]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(300, 330)
 layout_mode = 2
 mouse_filter = 2
 
-[node name="country_label" type="Label" parent="Centro/Painel/col/Linha/Retrato"]
+[node name="country_label" type="Label" parent="Center/Panel/col/Row/Portrait"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
@@ -74,55 +74,55 @@ theme_override_font_sizes/font_size = 13
 text = "Bandeira do país"
 horizontal_alignment = 1
 
-[node name="Coluna" type="VBoxContainer" parent="Centro/Painel/col/Linha" unique_id=1714398173]
+[node name="Column" type="VBoxContainer" parent="Center/Panel/col/Row" unique_id=1714398173]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 mouse_filter = 2
 theme_override_constants/separation = 8
 
-[node name="NomeLinha" type="HBoxContainer" parent="Centro/Painel/col/Linha/Coluna"]
+[node name="NameRow" type="HBoxContainer" parent="Center/Panel/col/Row/Column"]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 8
 
-[node name="NomeCampo" type="VBoxContainer" parent="Centro/Painel/col/Linha/Coluna/NomeLinha"]
+[node name="NameField" type="VBoxContainer" parent="Center/Panel/col/Row/Column/NameRow"]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 theme_override_constants/separation = 4
 
-[node name="NOME" type="Label" parent="Centro/Painel/col/Linha/Coluna/NomeLinha/NomeCampo" unique_id=263698992]
+[node name="Name" type="Label" parent="Center/Panel/col/Row/Column/NameRow/NameField" unique_id=263698992]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_font_sizes/font_size = 11
 text = "NOME"
 
-[node name="first_name_edit" type="LineEdit" parent="Centro/Painel/col/Linha/Coluna/NomeLinha/NomeCampo" unique_id=1095234065]
+[node name="first_name_edit" type="LineEdit" parent="Center/Panel/col/Row/Column/NameRow/NameField" unique_id=1095234065]
 unique_name_in_owner = true
 layout_mode = 2
 placeholder_text = "Nome"
 max_length = 24
 
-[node name="SobrenomeCampo" type="VBoxContainer" parent="Centro/Painel/col/Linha/Coluna/NomeLinha"]
+[node name="SurnameField" type="VBoxContainer" parent="Center/Panel/col/Row/Column/NameRow"]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 theme_override_constants/separation = 4
 
-[node name="SOBRENOME" type="Label" parent="Centro/Painel/col/Linha/Coluna/NomeLinha/SobrenomeCampo"]
+[node name="Surname" type="Label" parent="Center/Panel/col/Row/Column/NameRow/SurnameField"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_font_sizes/font_size = 11
 text = "SOBRENOME"
 
-[node name="last_name_edit" type="LineEdit" parent="Centro/Painel/col/Linha/Coluna/NomeLinha/SobrenomeCampo"]
+[node name="last_name_edit" type="LineEdit" parent="Center/Panel/col/Row/Column/NameRow/SurnameField"]
 unique_name_in_owner = true
 layout_mode = 2
 placeholder_text = "Sobrenome"
 max_length = 32
 
-[node name="roll_name" type="Button" parent="Centro/Painel/col/Linha/Coluna/NomeLinha"]
+[node name="roll_name" type="Button" parent="Center/Panel/col/Row/Column/NameRow"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 8
@@ -131,18 +131,18 @@ mouse_default_cursor_shape = 2
 tooltip_text = "Sorteia um nome e um sobrenome do país, conforme o gênero escolhido."
 text = "Sortear"
 
-[node name="GENERO" type="Label" parent="Centro/Painel/col/Linha/Coluna"]
+[node name="Gender" type="Label" parent="Center/Panel/col/Row/Column"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_font_sizes/font_size = 11
 text = "GÊNERO"
 
-[node name="GeneroLinha" type="HBoxContainer" parent="Centro/Painel/col/Linha/Coluna"]
+[node name="GenderRow" type="HBoxContainer" parent="Center/Panel/col/Row/Column"]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 6
 
-[node name="gender_m" type="Button" parent="Centro/Painel/col/Linha/Coluna/GeneroLinha"]
+[node name="gender_m" type="Button" parent="Center/Panel/col/Row/Column/GenderRow"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -152,7 +152,7 @@ toggle_mode = true
 button_group = SubResource("ButtonGroup_gender")
 text = "Masculino"
 
-[node name="gender_f" type="Button" parent="Centro/Painel/col/Linha/Coluna/GeneroLinha"]
+[node name="gender_f" type="Button" parent="Center/Panel/col/Row/Column/GenderRow"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -162,17 +162,17 @@ toggle_mode = true
 button_group = SubResource("ButtonGroup_gender")
 text = "Feminino"
 
-[node name="IdadeTitulo" type="Label" parent="Centro/Painel/col/Linha/Coluna"]
+[node name="AgeTitle" type="Label" parent="Center/Panel/col/Row/Column"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_font_sizes/font_size = 11
 text = "IDADE"
 
-[node name="IdadeLinha" type="HBoxContainer" parent="Centro/Painel/col/Linha/Coluna"]
+[node name="AgeRow" type="HBoxContainer" parent="Center/Panel/col/Row/Column"]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="age_slider" type="HSlider" parent="Centro/Painel/col/Linha/Coluna/IdadeLinha"]
+[node name="age_slider" type="HSlider" parent="Center/Panel/col/Row/Column/AgeRow"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -182,13 +182,13 @@ min_value = 25.0
 max_value = 85.0
 value = 50.0
 
-[node name="age_label" type="Label" parent="Centro/Painel/col/Linha/Coluna/IdadeLinha"]
+[node name="age_label" type="Label" parent="Center/Panel/col/Row/Column/AgeRow"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
 text = "50 anos"
 
-[node name="Dica" type="Label" parent="Centro/Painel/col/Linha/Coluna"]
+[node name="Hint" type="Label" parent="Center/Panel/col/Row/Column"]
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
@@ -196,12 +196,12 @@ theme_override_font_sizes/font_size = 12
 text = "Seu personagem é uma countryball com a bandeira do país. Trocar o gênero troca o nome sorteado, não o que você digitou."
 autowrap_mode = 3
 
-[node name="Linha6" type="HBoxContainer" parent="Centro/Painel/col/Linha/Coluna" unique_id=9218043]
+[node name="Row6" type="HBoxContainer" parent="Center/Panel/col/Row/Column" unique_id=9218043]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 6
 
-[node name="Aleatorio" type="Button" parent="Centro/Painel/col/Linha/Coluna/Linha6" unique_id=1193612878]
+[node name="Random" type="Button" parent="Center/Panel/col/Row/Column/Row6" unique_id=1193612878]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -210,7 +210,7 @@ mouse_default_cursor_shape = 2
 tooltip_text = "Sorteia gênero, nome e idade."
 text = "Aleatório"
 
-[node name="Confirmar" type="Button" parent="Centro/Painel/col/Linha/Coluna/Linha6" unique_id=1589138990]
+[node name="Confirm" type="Button" parent="Center/Panel/col/Row/Column/Row6" unique_id=1589138990]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 38)
 layout_mode = 2

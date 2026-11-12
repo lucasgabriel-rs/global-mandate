@@ -1,6 +1,6 @@
 extends Node
-## Roteiro do centro legislativo com arrastar e soltar de verdade no editor de blocos.
-## Uso: godot --path . -- --ui-legislation --shots=/caminho/da/pasta
+## Legislative center script with real drag and drop in the block editor.
+## Usage: godot --path . -- --ui-legislation --shots=/path/to/folder
 
 var main: Node
 var out := "user://shots"
@@ -36,7 +36,7 @@ func _shot(name_: String) -> void:
 
 
 func _mouse(at: Vector2, pressed: Variant = null) -> void:
-	# O motor procura o alvo do arrasto na posição real do cursor, então ele precisa acompanhar.
+	# The engine looks for the drag target at the cursor's real position, so it needs to follow.
 	Input.warp_mouse(at)
 	if pressed == null:
 		var move := InputEventMouseMotion.new()
@@ -61,7 +61,7 @@ var _down := false
 var _last := Vector2.ZERO
 
 
-## Arrasta como o mouse faz: aperta, move em passos e solta.
+## Drags as the mouse does: presses, moves in steps and releases.
 func _drag(from: Vector2, to: Vector2) -> void:
 	await _mouse(from)
 	await _mouse(from, true)
@@ -119,16 +119,16 @@ func _run() -> void:
 	await _wait()
 	var tabs: TabContainer = hud._politics.get_node("%house_tabs")
 	await _shot("l0_parlamento_camara")
-	_check(tabs.tabs_visible and tabs.get_tab_title(0) == "Câmara" and tabs.get_tab_title(1) == "Senado", "o Brasil tem uma aba por casa")
+	_check(tabs.tabs_visible and tabs.get_tab_title(0) == "Câmara" and tabs.get_tab_title(1) == "Senado", "Brazil has one tab per house")
 	tabs.current_tab = 1
 	await _shot("l0_parlamento_senado")
-	_check(not hud._politics.get_node("%hemicycle_upper")._seats.is_empty(), "o senado tem plenário próprio")
+	_check(not hud._politics.get_node("%hemicycle_upper")._seats.is_empty(), "the senate has its own chamber")
 	tabs.current_tab = 0
-	var open_button: Button = hud._politics.get_node("%CentroLegislativo")
+	var open_button: Button = hud._politics.get_node("%LegislativeCenter")
 	await _click(open_button)
 	var center := _top()
-	_check(center is LegislationCenter, "o botão da aba Política abre o centro legislativo")
-	_check(main.legislation_center() != null, "o centro abre como janela flutuante")
+	_check(center is LegislationCenter, "the Politics tab button opens the legislative center")
+	_check(main.legislation_center() != null, "the center opens as a floating window")
 	await _shot("l1_centro")
 	for tab in 5:
 		center.get_node("%tabs").current_tab = tab
@@ -136,30 +136,30 @@ func _run() -> void:
 	center.get_node("%tabs").current_tab = 0
 	await _wait()
 
-	# Códigos: um cartão por código, e "Alterar" abre o editor só com os blocos daquela área.
+	# Codes: one card per code, and "Alterar" opens the editor with only the blocks of that area.
 	var cards: Control = center.get_node("%code_cards")
-	_check(cards.get_child_count() == LawCodes.all().size(), "um cartão por código: %d" % cards.get_child_count())
-	var tax_card: Control = cards.get_node("code_tributario")
-	_check((tax_card.get_node("%articles") as Label).text.contains("artigo"), "o cartão do tributário mostra os artigos: " + (tax_card.get_node("%articles") as Label).text)
+	_check(cards.get_child_count() == LawCodes.all().size(), "one card per code: %d" % cards.get_child_count())
+	var tax_card: Control = cards.get_node("code_tax")
+	_check((tax_card.get_node("%articles") as Label).text.contains("artigo"), "the tax card shows the articles:" + (tax_card.get_node("%articles") as Label).text)
 	await _click(tax_card.get_node("%alter"))
 	var code_editor: LawEditor = _top()
-	_check(code_editor is LawEditor and code_editor.code_id == "tributario", "o cartão abre o editor do Código Tributário")
-	_check(int(code_editor.norm.get("amends", -1)) >= 0, "é um projeto que altera o código em vigor")
+	_check(code_editor is LawEditor and code_editor.code_id == "tributario", "the card opens the Tax Code editor")
+	_check(int(code_editor.norm.get("amends", -1)) >= 0, "it is a project that amends the code in force")
 	var lib: Control = code_editor.get_node("%library_list")
-	_check(lib.has_node("cat_events") and not lib.has_node("cat_flow") and not lib.has_node("cat_direitos"), "a paleta mostra só o código e os eventos")
+	_check(lib.has_node("cat_events") and not lib.has_node("cat_flow") and not lib.has_node("cat_direitos"), "the palette shows only the code and the events")
 	var adv: Control = lib.get_node("group_avançado")
-	_check(not (adv.get_node("%items") as Control).visible, "os avançados começam recolhidos")
+	_check(not (adv.get_node("%items") as Control).visible, "the advanced ones start collapsed")
 	await _shot("l2_codigo_tributario")
-	# A paleta do tributário é longa: rola até o botão do grupo antes de clicar.
+	# The tax palette is long: scrolls to the group's button before clicking.
 	var lib_scroll := lib.get_parent() as ScrollContainer
 	if lib_scroll:
 		lib_scroll.ensure_control_visible(adv.get_node("%toggle"))
 		await _wait()
 	await _click(adv.get_node("%toggle"))
-	_check((adv.get_node("%items") as Control).visible, "um clique abre o grupo Avançado")
+	_check((adv.get_node("%items") as Control).visible, "one click opens the Advanced group")
 	await _shot("l2_codigo_avancado_aberto")
 	await _click(adv.get_node("%toggle"))
-	# Nomes: isenção escolhe o tributo de uma lista, com "Outro nome" só para criar.
+	# Names: exemption picks the tax from a list, with "Outro nome" only to create.
 	var tax_program: Dictionary = code_editor.norm_program()
 	var exempt := LawProgram.new_block(tax_program, "ec_exempt")
 	tax_program.stacks[0].blocks.append(exempt)
@@ -168,146 +168,146 @@ func _run() -> void:
 	await _wait()
 	var ref_row: Control = (code_editor.get_node("%props_box") as Control).get_child(0)
 	var ref_option: OptionButton = ref_row.get_node("%option")
-	_check(ref_option.visible and ref_option.get_item_text(ref_option.item_count - 1) == LawEditor.REF_NEW, "tributo vem de uma lista, com Outro nome no fim")
-	_check(not (ref_row.get_node("%edit") as Control).visible, "sem texto livre até pedir um nome novo")
+	_check(ref_option.visible and ref_option.get_item_text(ref_option.item_count - 1) == LawEditor.REF_NEW, "tax comes from a list, with Another name at the end")
+	_check(not (ref_row.get_node("%edit") as Control).visible, "no free text until asking for a new name")
 	await _shot("l2_lista_de_nomes")
 	tax_program.stacks[0].blocks.erase(exempt)
 	code_editor.selected_id = -1
-	# Sobe o IRPJ em cinco pontos e envia.
+	# Raises the corporate income tax by five points and sends.
 	for b: Dictionary in tax_program.stacks[0].blocks:
 		if b.type == "tr_irpj":
 			b.fields.aliquota = float(b.fields.aliquota) + 5.0
 	code_editor.refresh()
 	await _wait()
-	_check(code_editor.last_compile.ok, "a alteração do código compila: %s" % str(code_editor.last_compile.errors))
+	_check(code_editor.last_compile.ok, "the code amendment compiles: %s" % str(code_editor.last_compile.errors))
 	await _click(code_editor.get_node("%present"))
 	var review: LawReview = code_editor.get_node("%review")
-	_check(review.visible, "apresentar mostra antes os efeitos esperados")
-	_check((review.get_node("%rv_budget") as Label).text.contains("US$"), "o painel mostra o efeito no orçamento: " + (review.get_node("%rv_budget") as Label).text)
-	_check((review.get_node("%rv_groups") as RichTextLabel).text.contains("Trabalhadores"), "e a reação dos grupos sociais")
-	_check((review.get_node("%rv_parties") as RichTextLabel).text.contains("tende a"), "e a dos partidos")
+	_check(review.visible, "presenting first shows the expected effects")
+	_check((review.get_node("%rv_budget") as Label).text.contains("US$"), "the panel shows the effect on the budget:" + (review.get_node("%rv_budget") as Label).text)
+	_check((review.get_node("%rv_groups") as RichTextLabel).text.contains("Trabalhadores"), "and the reaction of the social groups")
+	_check((review.get_node("%rv_parties") as RichTextLabel).text.contains("tende a"), "and that of the parties")
 	var review_track: ProcessTrack = review.get_node("%rv_track")
-	_check((review_track.get_node("%chips") as Control).get_child_count() >= 4, "e o caminho no parlamento")
-	_check((review_track.get_node("%rule") as Label).text.contains("maioria"), "uma linha explica o tipo de norma: " + (review_track.get_node("%rule") as Label).text)
+	_check((review_track.get_node("%chips") as Control).get_child_count() >= 4, "and the path in parliament")
+	_check((review_track.get_node("%rule") as Label).text.contains("maioria"), "a line explains the norm type:" + (review_track.get_node("%rule") as Label).text)
 	await _shot("l2_efeitos_esperados")
 	var tax_bill: Dictionary = code_editor.norm
 	await _click(review.get_node("%rv_send"))
-	_check(tax_bill.state == Legislation.STATE_PROCESS, "a alteração do código entra em tramitação: %s" % tax_bill.state)
+	_check(tax_bill.state == Legislation.STATE_PROCESS, "the code amendment enters procedure: %s" % tax_bill.state)
 	center = _top()
-	_check(center is LegislationCenter, "volta ao centro legislativo")
+	_check(center is LegislationCenter, "goes back to the legislative center")
 	var tax_row: Control = center.get_node("%process_rows").get_node("process_%d" % int(tax_bill.id))
 	var track: ProcessTrack = tax_row.get_node("%track")
 	var chips: Control = track.get_node("%chips")
-	_check((chips.get_child(0).get_node("%chip_name") as Label).text == "Comissão", "o passo a passo começa na comissão")
-	_check((track.get_node("%chance") as Label).text.contains("Chance de aprovação"), "mostra a chance de aprovação: " + (track.get_node("%chance") as Label).text)
-	_check((track.get_node("%now") as Label).text.contains("dias"), "e os dias que faltam: " + (track.get_node("%now") as Label).text)
+	_check((chips.get_child(0).get_node("%chip_name") as Label).text == "Comissão", "the step by step starts at the committee")
+	_check((track.get_node("%chance") as Label).text.contains("Chance de aprovação"), "shows the chance of approval:" + (track.get_node("%chance") as Label).text)
+	_check((track.get_node("%now") as Label).text.contains("dias"), "and the days left:" + (track.get_node("%now") as Label).text)
 	await _shot("l2_tramitacao_passos")
-	# Direitos e deveres: blocos concretos, sem nomes digitados.
-	(center.get_node("%Rolagem") as ScrollContainer).scroll_vertical = 0
+	# Rights and duties: concrete blocks, no typed names.
+	(center.get_node("%Scroll") as ScrollContainer).scroll_vertical = 0
 	await _wait()
-	await _click(center.get_node("%code_cards").get_node("code_direitos").get_node("%alter"))
+	await _click(center.get_node("%code_cards").get_node("code_rights").get_node("%alter"))
 	var rights_editor: LawEditor = _top()
-	_check(rights_editor is LawEditor and rights_editor.code_id == "direitos", "o cartão abre o editor de Direitos e deveres")
-	_check(_library_block(rights_editor, "dr_military") != null and _library_block(rights_editor, "dr_censor") != null, "a paleta tem serviço militar e censura")
+	_check(rights_editor is LawEditor and rights_editor.code_id == "direitos", "the card opens the Rights and duties editor")
+	_check(_library_block(rights_editor, "dr_military") != null and _library_block(rights_editor, "dr_censor") != null, "the palette has military service and censorship")
 	for b: Dictionary in LawProgram.all_blocks(rights_editor.norm_program()):
 		if b.type == "dr_military":
 			rights_editor.select_block(int(b.id))
 	await _shot("l2_codigo_direitos")
 	await _click(rights_editor.get_node("%delete_draft"))
 	center = _top()
-	_check(center is LegislationCenter, "excluir o rascunho volta ao centro")
+	_check(center is LegislationCenter, "deleting the draft goes back to the center")
 
-	# Editor: norma nova, de lei ordinária.
+	# Editor: new norm, of an ordinary law.
 	var types: OptionButton = center.get_node("%new_type")
 	for i in types.item_count:
 		if types.get_item_metadata(i) == "ordinaria":
 			types.select(i)
-	(center.get_node("%Rolagem") as ScrollContainer).ensure_control_visible(center.get_node("%new_norm"))
+	(center.get_node("%Scroll") as ScrollContainer).ensure_control_visible(center.get_node("%new_norm"))
 	await _wait()
 	await _shot("l1_lei_avulsa")
 	await _click(center.get_node("%new_norm"))
 	var editor: LawEditor = _top()
-	_check(editor is LawEditor, "abre o editor de blocos")
-	_check(editor.code_id == "" and (editor.get_node("%library_list").get_node("group_avançado").get_node("%items") as Control).visible, "lei avulsa mostra os avançados abertos")
+	_check(editor is LawEditor, "opens the block editor")
+	_check(editor.code_id == "" and (editor.get_node("%library_list").get_node("group_avançado").get_node("%items") as Control).visible, "standalone law shows the advanced ones open")
 	await _shot("l2_editor_vazio")
-	_check((editor.get_node("%present") as Button).disabled, "norma vazia não pode ser apresentada")
+	_check((editor.get_node("%present") as Button).disabled, "an empty norm cannot be presented")
 	var canvas: LawCanvas = editor.canvas
 	var program: Dictionary = editor.norm_program()
 
-	# Evento: arrasto real da biblioteca para a área.
+	# Event: real drag from the library to the area.
 	var ev := _library_block(editor, "ev_fiscal")
 	await _show_in_library(editor, ev)
 	await _drag(ev.get_global_rect().position + Vector2(20, 10), canvas.get_global_rect().position + Vector2(40, 40))
-	_check(program.stacks.size() == 1 and program.stacks[0].blocks[0].type == "ev_fiscal", "arrastar da biblioteca cria um artigo")
+	_check(program.stacks.size() == 1 and program.stacks[0].blocks[0].type == "ev_fiscal", "dragging from the library creates an article")
 
-	# Para cada: solto abaixo do evento.
+	# For each: dropped below the event.
 	var loop := _library_block(editor, "fl_foreach")
 	await _show_in_library(editor, loop)
 	var target: LawBlockView = _find_view(canvas, "ev_fiscal")
 	await _drag(loop.get_global_rect().position + Vector2(20, 10), target.get_global_rect().get_center() + Vector2(0, 8))
-	_check(program.stacks[0].blocks.size() == 2 and program.stacks[0].blocks[1].type == "fl_foreach", "bloco de controle encaixa embaixo do evento")
+	_check(program.stacks[0].blocks.size() == 2 and program.stacks[0].blocks[1].type == "fl_foreach", "a control block fits below the event")
 
-	# Se: dentro do "para cada".
+	# If: inside the "for each".
 	var cond_block := _library_block(editor, "fl_if")
 	await _show_in_library(editor, cond_block)
 	var slot: LawSlot = _find_slot(_find_view(canvas, "fl_foreach"))
 	await _drag(cond_block.get_global_rect().position + Vector2(10, 10), slot.get_global_rect().get_center())
 	var foreach: Dictionary = program.stacks[0].blocks[1]
-	_check(foreach.slots.do.size() == 1 and foreach.slots.do[0].type == "fl_if", "bloco entra na parte de dentro")
+	_check(foreach.slots.do.size() == 1 and foreach.slots.do[0].type == "fl_if", "block goes into the inside")
 	await _shot("l3_montando")
-	_check(not editor.last_compile.ok, "\"Se\" sem condição é erro na validação")
-	_check((editor.get_node("%validation_list") as Control).get_child_count() >= 1, "a validação lista o problema")
+	_check(not editor.last_compile.ok, "\"If\" with no condition is a validation error")
+	_check((editor.get_node("%validation_list") as Control).get_child_count() >= 1, "the validation lists the problem")
 
-	# Condição no encaixe do "se".
+	# Condition in the "if" fit.
 	var owner := _library_block(editor, "cd_owner")
 	await _show_in_library(editor, owner)
 	var socket: LawSocket = _find_socket(_find_view(canvas, "fl_if"), "cond")
 	await _drag(owner.get_global_rect().position + Vector2(10, 10), socket.get_global_rect().get_center())
 	var if_block: Dictionary = foreach.slots.do[0]
-	_check(if_block.plugs.has("cond") and if_block.plugs.cond.type == "cd_owner", "condição encaixa no campo")
+	_check(if_block.plugs.has("cond") and if_block.plugs.cond.type == "cd_owner", "condition fits into the field")
 
-	# Número não pode entrar em campo de condição: tenta com "idade do cidadão" no campo de outro "se".
+	# A number cannot go into a condition field: tries with "citizen's age" in another "if" field.
 	var charge := _library_block(editor, "ac_obligation")
 	await _show_in_library(editor, charge)
 	slot = _find_slot(_find_view(canvas, "fl_if"))
 	await _drag(charge.get_global_rect().position + Vector2(10, 10), slot.get_global_rect().get_center())
-	_check(if_block.slots.do.size() == 1 and if_block.slots.do[0].type == "ac_obligation", "ação entra no \"se\"")
+	_check(if_block.slots.do.size() == 1 and if_block.slots.do[0].type == "ac_obligation", "action goes into the \"if\"")
 
-	# Imposto de 5% sobre o valor tributável, encaixado no valor da obrigação.
+	# 5% tax on the taxable value, fitted into the value of the obligation.
 	var tax := _library_block(editor, "ec_calc")
 	await _show_in_library(editor, tax)
 	socket = _find_socket(_find_view(canvas, "ac_obligation"), "amount")
 	await _drag(tax.get_global_rect().position + Vector2(10, 10), socket.get_global_rect().get_center())
 	var obligation: Dictionary = if_block.slots.do[0]
-	_check(obligation.plugs.has("amount"), "cálculo encaixa no valor")
+	_check(obligation.plugs.has("amount"), "calculation fits into the value")
 	var value := _library_block(editor, "sb_value")
 	await _show_in_library(editor, value)
 	socket = _find_socket(_find_view(canvas, "ec_calc"), "base")
 	await _drag(value.get_global_rect().position + Vector2(10, 10), socket.get_global_rect().get_center())
-	_check(obligation.plugs.amount.plugs.has("base"), "valor tributável encaixa na base")
+	_check(obligation.plugs.amount.plugs.has("base"), "taxable value fits into the base")
 
-	# Tipo errado é recusado.
+	# Wrong type is refused.
 	var wrong := _library_block(editor, "op_and")
 	await _show_in_library(editor, wrong)
 	socket = _find_socket(_find_view(canvas, "ec_calc"), "rate")
 	await _drag(wrong.get_global_rect().position + Vector2(10, 10), socket.get_global_rect().get_center())
-	_check(not obligation.plugs.amount.plugs.has("rate"), "condição não entra em campo de número")
+	_check(not obligation.plugs.amount.plugs.has("rate"), "condition does not go into a number field")
 	program.stacks = program.stacks.filter(func(s): return s.blocks[0].type == "ev_fiscal")
 	editor.refresh()
 	await _wait()
-	_check(editor.last_compile.ok, "a norma compila: %s" % str(editor.last_compile.errors))
+	_check(editor.last_compile.ok, "the norm compiles: %s" % str(editor.last_compile.errors))
 
-	# Propriedades: clicar em um bloco mostra os parâmetros, e mudar o valor muda a norma.
+	# Properties: clicking a block shows the parameters, and changing the value changes the norm.
 	var calc_view := _find_view(canvas, "ec_calc")
 	await _click(calc_view.get_child(0).get_child(0).get_child(0))
 	_check(editor.selected_id == int(obligation.plugs.amount.id), "clicar seleciona o bloco")
 	var row: Control = (editor.get_node("%props_box") as Control).get_child(0)
 	var edit: LineEdit = row.get_node("%edit")
-	_check(edit.text == "5", "painel mostra a alíquota")
+	_check(edit.text == "5", "panel shows the rate")
 	edit.text = "150"
 	edit.text_changed.emit("150")
 	await _wait()
-	_check(not editor.last_compile.ok, "150% é operação impossível")
+	_check(not editor.last_compile.ok, "150% is an impossible operation")
 	edit.text = "5"
 	edit.text_changed.emit("5")
 	await _wait()
@@ -316,55 +316,55 @@ func _run() -> void:
 	# Documento.
 	(editor.get_node("%doc_name") as LineEdit).text = "IPTU nacional"
 	(editor.get_node("%doc_name") as LineEdit).text_changed.emit("IPTU nacional")
-	(editor.get_node("%doc_ementa") as TextEdit).text = "Imposto anual de 5% sobre propriedades."
-	(editor.get_node("%doc_ementa") as TextEdit).text_changed.emit()
+	(editor.get_node("%doc_summary") as TextEdit).text = "Imposto anual de 5% sobre propriedades."
+	(editor.get_node("%doc_summary") as TextEdit).text_changed.emit()
 	await _shot("l4_norma_pronta")
-	_check((editor.get_node("%legal_text") as Control).size.x > 100.0, "o texto da norma ocupa a largura do painel")
+	_check((editor.get_node("%legal_text") as Control).size.x > 100.0, "the norm's text takes up the panel's width")
 
-	# Simulador do exemplo do documento.
+	# Simulator of the document's example.
 	await _click(editor.get_node("%simulate"))
 	var sim: LawSimulator = editor.get_node("%simulator")
-	_check(sim.visible, "abre o simulador")
+	_check(sim.visible, "opens the simulator")
 	var fund: float = Game.world.politics.party_fund(Game.world)
 	var bucket: float = Game.world.player.law_rev_bucket
 	await _click(sim.get_node("%sim_run"))
 	var result: String = (sim.get_node("%sim_result") as RichTextLabel).text
 	print(result)
-	_check(result.contains("100000,00") and result.contains("5000,00") and result.contains("Obrigação tributária criada"), "simulador mostra o cálculo")
-	_check(Game.world.player.law_rev_bucket == bucket and Game.world.politics.party_fund(Game.world) == fund, "simular não cobra nada")
+	_check(result.contains("100000,00") and result.contains("5000,00") and result.contains("Obrigação tributária criada"), "simulator shows the calculation")
+	_check(Game.world.player.law_rev_bucket == bucket and Game.world.politics.party_fund(Game.world) == fund, "simulating does not charge anything")
 	await _shot("l5_simulador")
 	await _click(sim.get_node("%sim_close"))
 
-	# Apresentar: a norma sai do editor e entra em tramitação.
+	# Present: the norm leaves the editor and enters procedure.
 	var norm: Dictionary = editor.norm
 	await _click(editor.get_node("%present"))
 	await _click(editor.get_node("%review").get_node("%rv_send"))
-	_check(norm.state == Legislation.STATE_PROCESS, "norma apresentada: %s" % norm.state)
+	_check(norm.state == Legislation.STATE_PROCESS, "norm presented: %s" % norm.state)
 	center = _top()
-	_check(center is LegislationCenter and center.get_node("%tabs").current_tab == 0, "volta à primeira aba, com a tramitação")
+	_check(center is LegislationCenter and center.get_node("%tabs").current_tab == 0, "goes back to the first tab, with the procedure")
 	await _shot("l6_tramitacao")
-	# Negociação com as bancadas, pelos botões da tramitação.
+	# Negotiation with the caucuses, through the procedure buttons.
 	var process_row: Control = center.get_node("%process_rows").get_node("process_%d" % int(norm.id))
-	(center.get_node("%Rolagem") as ScrollContainer).ensure_control_visible(process_row)
+	(center.get_node("%Scroll") as ScrollContainer).ensure_control_visible(process_row)
 	await _wait()
-	# Conversa com o líder de um partido: o pedido e a resposta viram balões.
+	# Conversation with a party leader: the request and the answer become bubbles.
 	await _click(process_row.get_node("%chat"))
 	var chat: ChatWindow = main.modal_root.get_child(main.modal_root.get_child_count() - 1)
-	_check(chat is ChatWindow and chat.current.begins_with("partido:"), "abre a conversa com o líder de um partido")
+	_check(chat is ChatWindow and chat.current.begins_with("partido:"), "opens the conversation with a party's leader")
 	var party_chat := PartyTalk.party_by_id(Game.world, int(chat.current.trim_prefix("partido:")))
 	var ask_chat: Button = chat.find_child("say_ask_yes_%d" % int(norm.id), true, false)
-	_check(ask_chat != null, "a conversa oferece pedir apoio à lei")
+	_check(ask_chat != null, "the conversation offers asking for support for the law")
 	(chat.find_child("ChoicesScroll", true, false) as ScrollContainer).ensure_control_visible(ask_chat)
 	await _wait()
 	await _click(ask_chat)
-	_check(ChatLog.thread(Game.world, chat.current).size() == 3 and (chat.get_node("%thread") as Control).get_child_count() == 3, "pedido e resposta aparecem na conversa")
-	_check(norm.get("chat_asked", {}).has(str(party_chat.id)), "o pedido fica registrado na lei")
+	_check(ChatLog.thread(Game.world, chat.current).size() == 3 and (chat.get_node("%thread") as Control).get_child_count() == 3, "request and answer appear in the conversation")
+	_check(norm.get("chat_asked", {}).has(str(party_chat.id)), "the request is recorded in the law")
 	await _shot("l6_conversa_partido")
 	await _click(chat.get_node("%say_end"))
 	await _wait()
 	await _click(process_row.get_node("%negotiate"))
 	var deal: NegotiationScreen = _top()
-	_check(deal is NegotiationScreen, "abre a negociação de votos")
+	_check(deal is NegotiationScreen, "opens the vote negotiation")
 	await _shot("l6_negociacao")
 	var data: Dictionary = Game.world.politics.data_of("BRA")
 	var other_party: int = -1
@@ -374,35 +374,35 @@ func _run() -> void:
 			break
 	var ask: Button = deal.get_node("%rows").find_child("yes_%d" % other_party, true, false)
 	await _click(ask)
-	_check((deal.get_node("%feedback") as Label).text != "", "o partido responde: " + (deal.get_node("%feedback") as Label).text)
-	_check(norm.get("asked", {}).has(str(other_party)), "a resposta fica registrada")
+	_check((deal.get_node("%feedback") as Label).text != "", "the party answers:" + (deal.get_node("%feedback") as Label).text)
+	_check(norm.get("asked", {}).has(str(other_party)), "the answer is recorded")
 	await _shot("l6_negociacao_resposta")
 	await _click(deal.get_node("%close"))
 	center = _top()
-	_check(center is LegislationCenter, "voltar retorna à tramitação")
+	_check(center is LegislationCenter, "back returns to the procedure")
 	center.get_node("%close").pressed.emit()
 	await _wait()
-	_check(main.legislation_center() == null and not main.modal_open, "fechar tira a janela")
+	_check(main.legislation_center() == null and not main.modal_open, "closing removes the window")
 	for i in 150:
 		Game.world.player.next_election = 9999.0
 		Game.world.tick_day()
 		if not norm.state in [Legislation.STATE_PROCESS, Legislation.STATE_APPROVED, Legislation.STATE_AWAITING, Legislation.STATE_PUBLISHED]:
 			break
 	print("  estado: ", norm.state)
-	_check(norm.state == Legislation.STATE_IN_FORCE or norm.state == Legislation.STATE_REJECTED, "a tramitação termina: %s" % norm.state)
+	_check(norm.state == Legislation.STATE_IN_FORCE or norm.state == Legislation.STATE_REJECTED, "the procedure ends: %s" % norm.state)
 	main.open_norm(norm)
 	await _shot("l7_consulta")
 	var page: NormPage = _top()
-	_check(page.get_node("%law_text").text.contains("Art. 1º"), "a consulta mostra o texto")
+	_check(page.get_node("%law_text").text.contains("Art. 1º"), "the consultation shows the text")
 	if norm.state == Legislation.STATE_IN_FORCE:
 		page.get_node("%view_program").pressed.emit()
 		await _wait()
 		var reader: LawEditor = _top()
-		_check(reader.read_only, "versão publicada abre só para leitura")
+		_check(reader.read_only, "published version opens read-only")
 		var before := var_to_str(norm.versions[0].program)
 		reader.drop({"law": true, "new": "ac_register", "kind": "statement"}, {"kind": "canvas", "pos": Vector2(300, 300)})
 		await _wait()
-		_check(var_to_str(norm.versions[0].program) == before, "versão publicada não muda")
+		_check(var_to_str(norm.versions[0].program) == before, "published version does not change")
 		await _shot("l8_leitura")
 		reader.close_editor()
 		await _wait()
@@ -414,7 +414,7 @@ func _run() -> void:
 	center.get_node("%new_amendment").pressed.emit()
 	await _wait()
 	var amendment: AmendmentEditor = _top()
-	_check(amendment is AmendmentEditor, "abre o editor de emendas")
+	_check(amendment is AmendmentEditor, "opens the amendment editor")
 	var mandate := {}
 	for a: Dictionary in Game.world.legislation.constitution.articles:
 		if a.param == "mandate":
@@ -424,21 +424,21 @@ func _run() -> void:
 	(amendment.get_node("%value_edit") as LineEdit).text = "5"
 	amendment.get_node("%add_op").pressed.emit()
 	await _wait()
-	_check(amendment.norm.ops.size() == 1 and int(amendment.norm.ops[0].value) == 5, "a mudança entra na emenda")
+	_check(amendment.norm.ops.size() == 1 and int(amendment.norm.ops[0].value) == 5, "the change enters the amendment")
 	var diff: RichTextLabel = amendment.get_node("%op_list").get_child(0).get_node("%diff")
-	_check(diff.text.contains("[s]4[/s]"), "compara com o texto anterior: %s" % diff.text)
+	_check(diff.text.contains("[s]4[/s]"), "compares with the previous text: %s" % diff.text)
 	await _shot("l9_emenda")
-	# Criar e excluir artigos, com os botões à vista.
+	# Creating and deleting articles, with the buttons in view.
 	amendment.get_node("%new_article").pressed.emit()
 	await _wait()
 	(amendment.get_node("%new_text") as TextEdit).text = "O ensino básico é gratuito."
 	amendment.get_node("%add_op").pressed.emit()
 	await _wait()
-	_check(amendment.norm.ops.size() == 2 and amendment.norm.ops[1].op == "add", "novo artigo entra na emenda")
+	_check(amendment.norm.ops.size() == 2 and amendment.norm.ops[1].op == "add", "new article enters the amendment")
 	amendment.get_node("%article_list").get_child(5).get_node("%delete").pressed.emit()
 	await _wait()
-	_check(amendment.norm.ops.size() == 3 and amendment.norm.ops[2].op == "suppress", "excluir artigo entra na emenda")
-	_check(amendment.get_node("%article_list").get_child(0).get_node("%delete").disabled, "cláusula pétrea não tem exclusão")
+	_check(amendment.norm.ops.size() == 3 and amendment.norm.ops[2].op == "suppress", "deleting an article enters the amendment")
+	_check(amendment.get_node("%article_list").get_child(0).get_node("%delete").disabled, "an entrenched clause has no deletion")
 	await _shot("l9_emenda_criar_excluir")
 	amendment.get_node("%delete_draft").pressed.emit()
 	await _wait()
@@ -451,15 +451,15 @@ func _run() -> void:
 	main.join_sim()
 	var count: int = Game.world.legislation.norms.size()
 	await main._load_game()
-	_check(Game.world.legislation.norms.size() == count, "as normas voltam do save")
-	_check(FileAccess.file_exists(SaveService.path), "o save ficou no lugar")
+	_check(Game.world.legislation.norms.size() == count, "norms come back from the save")
+	_check(FileAccess.file_exists(SaveService.path), "the save stayed in place")
 	main._save_game()
 	main.join_sim()
-	_check(FileAccess.file_exists(SaveService.backup_path), "o save anterior vira cópia de segurança")
+	_check(FileAccess.file_exists(SaveService.backup_path), "the previous save becomes a backup copy")
 	SaveService.delete_files()
 	
 
-## A tela da frente: um modal aberto, ou a janela do centro legislativo.
+## The front screen: an open modal, or the legislative center window.
 func _top() -> Control:
 	var n: int = main.modal_root.get_child_count()
 	if not main.modal_open and main.legislation_center() != null:

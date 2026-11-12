@@ -3,13 +3,13 @@ extends RefCounted
 ## Registry of the legal codes. The order here is the order in the editor palette and in the legislative center.
 
 const SCRIPTS := [
-	preload("res://scripts/sim/codes/code_tributario.gd"),
-	preload("res://scripts/sim/codes/code_trabalhista.gd"),
+	preload("res://scripts/sim/codes/code_tax.gd"),
+	preload("res://scripts/sim/codes/code_labor.gd"),
 	preload("res://scripts/sim/codes/code_penal.gd"),
 	preload("res://scripts/sim/codes/code_civil.gd"),
-	preload("res://scripts/sim/codes/code_eleitoral.gd"),
-	preload("res://scripts/sim/codes/code_direitos.gd"),
-	preload("res://scripts/sim/codes/code_cambial.gd"),
+	preload("res://scripts/sim/codes/code_electoral.gd"),
+	preload("res://scripts/sim/codes/code_rights.gd"),
+	preload("res://scripts/sim/codes/code_exchange.gd"),
 ]
 
 static var _codes: Array = []

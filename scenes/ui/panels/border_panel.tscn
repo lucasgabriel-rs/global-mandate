@@ -32,12 +32,12 @@ theme = ExtResource("1_35fg8")
 theme_override_styles/panel = SubResource("StyleBoxFlat_bcglm")
 script = ExtResource("2_lrso0")
 
-[node name="Coluna" type="VBoxContainer" parent="." unique_id=504860238]
+[node name="Column" type="VBoxContainer" parent="." unique_id=504860238]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 9
 
-[node name="title" type="Label" parent="Coluna" unique_id=1332225241]
+[node name="title" type="Label" parent="Column" unique_id=1332225241]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
@@ -45,7 +45,7 @@ theme_override_colors/font_color = Color(0.9490196, 0.7019608, 0.23921569, 1)
 theme_override_font_sizes/font_size = 20
 autowrap_mode = 3
 
-[node name="info" type="Label" parent="Coluna" unique_id=2024712765]
+[node name="info" type="Label" parent="Column" unique_id=2024712765]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
@@ -53,13 +53,13 @@ theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
 theme_override_font_sizes/font_size = 13
 autowrap_mode = 3
 
-[node name="Separador" type="ColorRect" parent="Coluna" unique_id=968260773]
+[node name="Separator" type="ColorRect" parent="Column" unique_id=968260773]
 custom_minimum_size = Vector2(0, 1)
 layout_mode = 2
 mouse_filter = 2
 color = Color(0.15294118, 0.2509804, 0.30980393, 1)
 
-[node name="usage" type="Label" parent="Coluna" unique_id=1944114962]
+[node name="usage" type="Label" parent="Column" unique_id=1944114962]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
@@ -67,28 +67,28 @@ theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
 theme_override_font_sizes/font_size = 14
 autowrap_mode = 3
 
-[node name="undo" type="Button" parent="Coluna" unique_id=413544431]
+[node name="undo" type="Button" parent="Column" unique_id=413544431]
 unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "Desfazer última área"
 
-[node name="send" type="Button" parent="Coluna" unique_id=1694023569]
+[node name="send" type="Button" parent="Column" unique_id=1694023569]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 38)
 layout_mode = 2
 focus_mode = 0
 mouse_default_cursor_shape = 2
 
-[node name="old" type="Button" parent="Coluna" unique_id=1285482219]
+[node name="old" type="Button" parent="Column" unique_id=1285482219]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 34)
 layout_mode = 2
 focus_mode = 0
 mouse_default_cursor_shape = 2
 
-[node name="feedback" type="Label" parent="Coluna" unique_id=2122275860]
+[node name="feedback" type="Label" parent="Column" unique_id=2122275860]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2

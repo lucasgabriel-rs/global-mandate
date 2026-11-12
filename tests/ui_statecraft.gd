@@ -1,6 +1,6 @@
 extends Node
-## Roteiro com cliques: bússola, ministros, conversa com líder, derrota eleitoral e volta ao poder.
-## Uso: godot --path . -- --ui-statecraft --shots=/caminho/da/pasta
+## Script with clicks: compass, ministers, conversation with a leader, electoral defeat and return to power.
+## Usage: godot --path . -- --ui-statecraft --shots=/path/to/folder
 
 var main: Node
 var out := "user://shots"
@@ -30,7 +30,7 @@ func _check(cond: bool, what: String) -> void:
 
 
 func _click(b: Control) -> void:
-	# Nas janelas o conteúdo rola: traz o alvo para a área visível antes do clique.
+	# In the windows the content scrolls: brings the target into the visible area before the click.
 	var scroll := b.get_parent()
 	while scroll and not scroll is ScrollContainer:
 		scroll = scroll.get_parent()
@@ -93,36 +93,36 @@ func _process(delta: float) -> void:
 		2:
 			_click(_text(root, "Confirmar"))
 		3:
-			# A bússola só aparece para quem vai criar um partido.
+			# The compass only appears for whoever is going to create a party.
 			var compass: CompassView = _named(root, "my_compass")
-			_check(compass != null and not compass.is_visible_in_tree(), "escolher um partido existente não pede bússola")
+			_check(compass != null and not compass.is_visible_in_tree(), "choosing an existing party does not ask for a compass")
 			(_named(root, "found_toggle") as Button).pressed.emit()
 		4:
 			var compass: CompassView = _named(root, "my_compass")
-			_check(compass.is_visible_in_tree() and compass.interactive, "criar partido abre a bússola")
+			_check(compass.is_visible_in_tree() and compass.interactive, "creating a party opens the compass")
 			var r := compass.get_global_rect()
 			_click_at(r.position + Vector2(r.size.x * 0.9, r.size.y * 0.1))
 			var me: Dictionary = compass.points[-1]
-			_check(float(me.econ) > 0.5 and float(me.social) < -0.5, "clique marca direita e autoritário (%.2f, %.2f)" % [me.econ, me.social])
+			_check(float(me.econ) > 0.5 and float(me.social) < -0.5, "click marks right and authoritarian (%.2f, %.2f)" % [me.econ, me.social])
 			_shot("s1_escolha")
 			_click(_text(root, "assentos"))
 		5:
-			_check(main.playing, "partida começa")
+			_check(main.playing, "match starts")
 			main._set_speed(0)
-			_check(absf(float(w.leader.econ) - float(w.politics.player_party(w).econ)) < 0.2, "quem entra em um partido adota as ideias dele")
+			_check(absf(float(w.leader.econ) - float(w.politics.player_party(w).econ)) < 0.2, "whoever joins a party adopts its ideas")
 			var me := w.politics.player_politician(w)
-			_check(me.get("player", false) and absf(float(me.econ) - float(w.leader.econ)) < 0.001, "o jogador é um político do partido")
+			_check(me.get("player", false) and absf(float(me.econ) - float(w.leader.econ)) < 0.001, "the player is a politician of the party")
 			hud._desk.current_tab = hud._cabinet_tab
 		6:
-			_check(hud._dock.items().filter(func(i): return i.window_index >= 0).size() == hud._desk.get_tab_count(), "o dock tem um ícone por janela")
-			_check(hud._cabinet._rows.get_child_count() == Politics.PORTFOLIOS.size(), "uma linha por pasta")
+			_check(hud._dock.items().filter(func(i): return i.window_index >= 0).size() == hud._desk.get_tab_count(), "the dock has one icon per window")
+			_check(hud._cabinet._rows.get_child_count() == Politics.PORTFOLIOS.size(), "one row per portfolio")
 			_shot("s2_ministros")
 			_click(_named(hud._cabinet, "pick_finance"))
 		7:
-			_check(main.modal_open, "escolher abre a lista")
+			_check(main.modal_open, "choosing opens the list")
 			_shot("s3_escolha_ministro")
 			var first := _text(root, "competência")
-			_check(first != null, "lista traz a competência: " + (first.text if first else ""))
+			_check(first != null, "list brings the competence:" + (first.text if first else ""))
 			first.pressed.emit()
 		8:
 			_check(not main.modal_open and not w.politics.minister(w, "finance").is_empty(), "nomeia: " + hud._cabinet._status.text)
@@ -132,89 +132,89 @@ func _process(delta: float) -> void:
 			var party: Dictionary = w.politics.player_party(w)
 			_click(_named(hud._politics, "party_%d" % int(party.id)))
 		10:
-			_check(main.modal_open and _named(root, "party_compass") != null, "partido mostra a bússola")
+			_check(main.modal_open and _named(root, "party_compass") != null, "party shows the compass")
 			_shot("s5_partido")
 			var compass: CompassView = _named(root, "party_compass")
 			var party: Dictionary = w.politics.player_party(w)
-			_check(compass.points.size() == party.members.size() + 1, "um ponto por político, mais a média")
+			_check(compass.points.size() == party.members.size() + 1, "one dot per politician, plus the average")
 			_click(_text(root, "Fechar"))
 		11:
 			main.map.select(w.by_iso["ARG"])
 			hud.show_country(w.by_iso["ARG"])
 		12:
 			_shot("s6_dossie")
-			_check(hud._dossier_dyn.leader.text != "—", "dossiê mostra o líder: " + hud._dossier_dyn.leader.text)
+			_check(hud._dossier_dyn.leader.text != "—", "dossier shows the leader:" + hud._dossier_dyn.leader.text)
 			var talk: Button = hud._dossier_dyn.talk
 			_check(talk.text.begins_with("Falar com"), talk.text)
 			_click(talk)
 		13:
-			_check(main.modal_open and _named(root, "talk_compass") != null, "conversa abre com a bússola do líder")
+			_check(main.modal_open and _named(root, "talk_compass") != null, "conversation opens with the leader's compass")
 			_shot("s7_conversa")
 			mark = w.diplomacy.relation(w.player.idx, w.by_iso["ARG"].idx)
 			_click(_named(root, "say_praise"))
 		14:
-			_check(w.diplomacy.relation(w.player.idx, w.by_iso["ARG"].idx) > mark, "elogiar melhora a relação")
+			_check(w.diplomacy.relation(w.player.idx, w.by_iso["ARG"].idx) > mark, "praising improves the relation")
 			var thread: Array = ChatLog.thread(w, ChatLog.country_key("ARG"))
-			_check(thread.size() == 3 and thread[1].me and not thread[2].me, "a fala e a resposta viram balões: " + str(thread.size()))
-			_check((_named(root, "thread") as Control).get_child_count() == 3, "a conversa mostra um balão por mensagem")
-			_check(_named(root, "contact_party_%d" % int(PartyTalk.contacts(w)[0].id)) != null, "líderes partidários aparecem como contatos")
+			_check(thread.size() == 3 and thread[1].me and not thread[2].me, "the line and the answer become bubbles:" + str(thread.size()))
+			_check((_named(root, "thread") as Control).get_child_count() == 3, "the conversation shows one bubble per message")
+			_check(_named(root, "contact_party_%d" % int(PartyTalk.contacts(w)[0].id)) != null, "party leaders appear as contacts")
 			_shot("s8_resposta")
 			_click(_named(root, "say_protest"))
 		15:
 			_click(_named(root, "say_protest"))
 		16:
-			_check(_named(root, "say_praise") == null, "depois de 3 falas a conversa termina")
+			_check(_named(root, "say_praise") == null, "after 3 lines the conversation ends")
 			_click(_named(root, "say_end"))
 		17:
-			_check(not main.modal_open, "encerrar fecha a conversa")
-			_check((hud._dossier_dyn.talk as Button).disabled, "uma conversa por mês")
+			_check(not main.modal_open, "ending closes the conversation")
+			_check((hud._dossier_dyn.talk as Button).disabled, "one conversation a month")
 			main.map.select(null)
 			hud.show_country(null)
-			# Perder a eleição.
+			# Losing the election.
 			w.player.dem = 7.0
 			w.player.approval = 0.02
 			w.player.next_election = w.year_float()
 			w.check_player_politics(w.player)
 		18:
-			_check(main.modal_open and not w.over, "eleição perdida abre o aviso, sem fim de jogo")
+			_check(main.modal_open and not w.over, "lost election opens the notice, without game over")
 			_shot("s9_derrota")
 			_dismiss()
 		19:
-			_check(not w.in_office and hud._player_name.text.contains("oposição"), "barra mostra a oposição: " + hud._player_name.text)
+			_check(not w.in_office and hud._player_name.text.contains("oposição"), "bar shows the opposition:" + hud._player_name.text)
 			_check(not (hud._sliders.sp_social as HSlider).editable, "controles travados")
 			hud._desk.current_tab = hud._politics_tab
 			w.player.next_election = 9999.0
 		20:
-			_check(hud._politics._opposition.visible, "ações da oposição aparecem")
-			_shot("s10_oposicao")
+			_check(hud._politics._opposition.visible, "opposition actions appear")
+			_shot("s10_opposition")
 			mark = w.player.approval
 			_click(_text(hud._politics._opposition, "Criticar"))
 		21:
-			_check(w.player.approval < mark, "criticar derruba a aprovação: " + hud._politics._status.text)
+			_check(w.player.approval < mark, "criticizing brings down approval:" + hud._politics._status.text)
 			hud._desk.current_tab = hud._cabinet_tab
 		22:
-			_check(_named(hud._cabinet, "pick_finance") == null, "ministros travados na oposição")
+			_check(_named(hud._cabinet, "pick_finance") == null, "ministers locked in opposition")
 			main.map.select(w.by_iso["ARG"])
 			hud.show_country(w.by_iso["ARG"])
 		23:
-			_check((hud._dossier_dyn.talk as Button).disabled, "sem conversa na oposição")
-			_shot("s11_oposicao_dossie")
+			_check((hud._dossier_dyn.talk as Button).disabled, "no conversation in opposition")
+			_shot("s11_opposition_dossie")
 			main.map.select(null)
 			hud.show_country(null)
-			# Avanço com a IA governando.
+			# Advance with the AI governing.
 			mark = w.day_index
 			main.start_skip(30)
 			wait = 0.8
 		24:
-			_check(w.day_index == int(mark) + 30 and not main.modal_open, "tempo avança na oposição, sem janelas")
+			_check(w.day_index == int(mark) + 30 and not main.modal_open, "time advances in opposition, with no windows")
 			main._save_game()
 		25:
 			main._load_game()
 		26:
-			_check(not w.in_office, "carregar mantém a oposição")
-			_check(hud._player_name.text.contains("oposição"), "barra mantém a oposição")
+			_check(not w.in_office, "loading keeps the opposition")
+			_check(hud._player_name.text.contains("oposição"), "bar keeps the opposition")
 			_check(not (hud._sliders.sp_social as HSlider).editable, "controles seguem travados")
-			# Volta ao poder: partido do jogador forte contra um governo impopular.
+			# Return to power: the player's strong party against an unpopular government.
 			var data := w.politics.data_of(w.player.iso)
 			w.politics.player_party(w).support = 0.6
 			Politics._normalize(data)
@@ -223,15 +223,15 @@ func _process(delta: float) -> void:
 			w.check_player_politics(w.player)
 			wait = 0.6
 		27:
-			_check(w.in_office, "eleição devolve o poder")
+			_check(w.in_office, "election returns power")
 			_shot("s12_volta")
 			_dismiss()
 		28:
 			hud.refresh(true)
-			_check(not hud._player_name.text.contains("oposição"), "barra volta ao normal: " + hud._player_name.text)
+			_check(not hud._player_name.text.contains("oposição"), "bar goes back to normal:" + hud._player_name.text)
 			_check((hud._sliders.sp_social as HSlider).editable, "controles voltam")
 			SaveService.delete_files()
-			# Nova partida, já na oposição, com partido existente.
+			# New match, already in opposition, with an existing party.
 			main._restart()
 		29:
 			main._pick_start(w.by_iso["DEU"])
@@ -239,14 +239,14 @@ func _process(delta: float) -> void:
 		30:
 			_click(_text(root, "Confirmar"))
 		31:
-			_check(_named(root, "role_government") != null and _named(root, "role_opposition") != null, "escolha de papel aparece")
+			_check(_named(root, "role_government") != null and _named(root, "role_opposition") != null, "role choice appears")
 			var ruling: Dictionary = w.politics.ruling_party("DEU")
-			_check(not _text(root, ruling.name).disabled, "para governar, qualquer partido serve")
+			_check(not _text(root, ruling.name).disabled, "to govern, any party will do")
 			_click(_named(root, "role_opposition"))
 		32:
 			var ruling: Dictionary = w.politics.ruling_party("DEU")
-			_check(_text(root, ruling.name).disabled, "na oposição, o partido do governo fica indisponível")
-			_shot("s13_papel_oposicao")
+			_check(_text(root, ruling.name).disabled, "in opposition, the government party is unavailable")
+			_shot("s13_papel_opposition")
 			mark = ruling.id
 			var other: Dictionary = {}
 			for p: Dictionary in w.politics.data_of("DEU").parties:
@@ -254,20 +254,20 @@ func _process(delta: float) -> void:
 					other = p
 			_click(_text(root, other.name))
 		33:
-			_check(main.playing and not w.in_office and not w.over, "partida começa na oposição")
-			_check(int(w.politics.ruling_party("DEU").id) == int(mark), "o governo segue o mesmo")
-			_check(int(w.politics.player_party(w).id) != int(mark), "o jogador está em outro partido")
-			_check(w.politics.data_of("DEU").get("cabinet", {}).is_empty(), "sem gabinete na oposição")
-			_check(hud._player_name.text.contains("oposição"), "barra indica a oposição: " + hud._player_name.text)
-			_check(not (hud._sliders.sp_social as HSlider).editable, "controles travados desde o início")
+			_check(main.playing and not w.in_office and not w.over, "match starts in opposition")
+			_check(int(w.politics.ruling_party("DEU").id) == int(mark), "the government stays the same")
+			_check(int(w.politics.player_party(w).id) != int(mark), "the player is in another party")
+			_check(w.politics.data_of("DEU").get("cabinet", {}).is_empty(), "no cabinet in opposition")
+			_check(hud._player_name.text.contains("oposição"), "bar indicates the opposition:" + hud._player_name.text)
+			_check(not (hud._sliders.sp_social as HSlider).editable, "controls locked from the start")
 			main._set_speed(0)
 			hud._desk.current_tab = hud._politics_tab
 		34:
-			_check(hud._politics._opposition.visible, "ações da oposição desde o início")
-			_shot("s14_comeca_oposicao")
+			_check(hud._politics._opposition.visible, "opposition actions from the start")
+			_shot("s14_comeca_opposition")
 			main._restart()
 		35:
-			# Nova partida na oposição, com partido próprio.
+			# New match in opposition, with their own party.
 			main._pick_start(w.by_iso["DEU"])
 			main._start_button.pressed.emit()
 		36:
@@ -278,13 +278,13 @@ func _process(delta: float) -> void:
 			(_named(root, "party_name") as LineEdit).text = "Partido da Oposição Própria"
 			_text(root, "Fundar partido").pressed.emit()
 		38:
-			_check(main.playing and not w.in_office, "partido próprio na oposição")
-			_check(w.politics.player_party(w).name == "Partido da Oposição Própria", "jogador lidera o partido criado")
-			_check(w.politics.ruling_party("DEU").name != "Partido da Oposição Própria", "partido novo não governa")
-			_check(w.politics.player_party(w).members[0].get("player", false), "jogador é o líder do partido novo")
+			_check(main.playing and not w.in_office, "own party in opposition")
+			_check(w.politics.player_party(w).name == "Partido da Oposição Própria", "player leads the created party")
+			_check(w.politics.ruling_party("DEU").name != "Partido da Oposição Própria", "new party does not govern")
+			_check(w.politics.player_party(w).members[0].get("player", false), "player is the leader of the new party")
 			main._restart()
 		39:
-			# Partido próprio governando.
+			# Own party governing.
 			main._pick_start(w.by_iso["DEU"])
 			main._start_button.pressed.emit()
 		40:
@@ -294,18 +294,18 @@ func _process(delta: float) -> void:
 			(_named(root, "party_name") as LineEdit).text = "Partido do Governo Próprio"
 			_text(root, "Fundar partido").pressed.emit()
 		42:
-			_check(main.playing and w.in_office, "partido próprio no governo")
-			_check(w.politics.ruling_party("DEU").name == "Partido do Governo Próprio", "partido criado governa")
-			_check(not w.politics.minister(w, "finance").is_empty(), "com gabinete")
+			_check(main.playing and w.in_office, "own party in government")
+			_check(w.politics.ruling_party("DEU").name == "Partido do Governo Próprio", "created party governs")
+			_check(not w.politics.minister(w, "finance").is_empty(), "with a cabinet")
 			main._restart()
 		43:
-			# Regime fechado só permite governar.
+			# A closed regime only allows governing.
 			main._pick_start(w.by_iso["CHN"])
 			main._start_button.pressed.emit()
 		44:
 			_click(_text(root, "Confirmar"))
 		45:
-			_check((_named(root, "role_opposition") as Button).disabled, "regime fechado não tem oposição jogável")
+			_check((_named(root, "role_opposition") as Button).disabled, "a closed regime has no playable opposition")
 			_shot("s15_regime_fechado")
 			print("RESULT: ", failures, " failures")
 			get_tree().quit(1 if failures > 0 else 0)

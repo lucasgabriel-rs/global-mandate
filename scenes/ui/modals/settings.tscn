@@ -30,7 +30,7 @@ theme = ExtResource("1_set")
 color = Color(0.01, 0.03, 0.05, 0.62)
 script = ExtResource("2_set")
 
-[node name="Centro" type="CenterContainer" parent="."]
+[node name="Center" type="CenterContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -38,38 +38,38 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Painel" type="PanelContainer" parent="Centro"]
+[node name="Panel" type="PanelContainer" parent="Center"]
 custom_minimum_size = Vector2(520, 0)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_set")
 
-[node name="col" type="VBoxContainer" parent="Centro/Painel"]
+[node name="col" type="VBoxContainer" parent="Center/Panel"]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 12
 
-[node name="title" type="Label" parent="Centro/Painel/col"]
+[node name="title" type="Label" parent="Center/Panel/col"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.9490196, 0.7019608, 0.23921569, 1)
 theme_override_font_sizes/font_size = 24
 text = "Configurações"
 
-[node name="LanguagePicker" parent="Centro/Painel/col" instance=ExtResource("3_lang")]
+[node name="LanguagePicker" parent="Center/Panel/col" instance=ExtResource("3_lang")]
 layout_mode = 2
 
-[node name="LinhaJanela" type="HBoxContainer" parent="Centro/Painel/col"]
+[node name="WindowRow" type="HBoxContainer" parent="Center/Panel/col"]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 8
 
-[node name="Rotulo" type="Label" parent="Centro/Painel/col/LinhaJanela"]
+[node name="Label" type="Label" parent="Center/Panel/col/WindowRow"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_font_sizes/font_size = 12
 text = "Modo de janela"
 
-[node name="window_mode" type="OptionButton" parent="Centro/Painel/col/LinhaJanela"]
+[node name="window_mode" type="OptionButton" parent="Center/Panel/col/WindowRow"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -82,38 +82,38 @@ popup/item_0/id = 0
 popup/item_1/text = "Tela cheia"
 popup/item_1/id = 1
 
-[node name="LinhaVsync" type="HBoxContainer" parent="Centro/Painel/col"]
+[node name="VsyncRow" type="HBoxContainer" parent="Center/Panel/col"]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 8
 
-[node name="Rotulo" type="Label" parent="Centro/Painel/col/LinhaVsync"]
+[node name="Label" type="Label" parent="Center/Panel/col/VsyncRow"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_font_sizes/font_size = 12
 text = "Sincronia vertical"
 
-[node name="vsync" type="CheckButton" parent="Centro/Painel/col/LinhaVsync"]
+[node name="vsync" type="CheckButton" parent="Center/Panel/col/VsyncRow"]
 unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0
 mouse_default_cursor_shape = 2
 button_pressed = true
 
-[node name="LinhaEscala" type="HBoxContainer" parent="Centro/Painel/col"]
+[node name="ScaleRow" type="HBoxContainer" parent="Center/Panel/col"]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 8
 
-[node name="Rotulo" type="Label" parent="Centro/Painel/col/LinhaEscala"]
+[node name="Label" type="Label" parent="Center/Panel/col/ScaleRow"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_font_sizes/font_size = 12
 text = "Tamanho da interface"
 
-[node name="ui_scale" type="HSlider" parent="Centro/Painel/col/LinhaEscala"]
+[node name="ui_scale" type="HSlider" parent="Center/Panel/col/ScaleRow"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -124,7 +124,7 @@ max_value = 1.25
 step = 0.05
 value = 1.0
 
-[node name="ui_scale_value" type="Label" parent="Centro/Painel/col/LinhaEscala"]
+[node name="ui_scale_value" type="Label" parent="Center/Panel/col/ScaleRow"]
 unique_name_in_owner = true
 auto_translate_mode = 2
 custom_minimum_size = Vector2(48, 0)
@@ -133,12 +133,12 @@ theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
 text = "100%"
 horizontal_alignment = 2
 
-[node name="Linha" type="HBoxContainer" parent="Centro/Painel/col"]
+[node name="Row" type="HBoxContainer" parent="Center/Panel/col"]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 8
 
-[node name="restaurar" type="Button" parent="Centro/Painel/col/Linha"]
+[node name="restore" type="Button" parent="Center/Panel/col/Row"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
@@ -147,7 +147,7 @@ focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "Restaurar padrões"
 
-[node name="voltar" type="Button" parent="Centro/Painel/col/Linha"]
+[node name="back" type="Button" parent="Center/Panel/col/Row"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2

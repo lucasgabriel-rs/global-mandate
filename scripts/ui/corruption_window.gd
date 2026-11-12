@@ -19,15 +19,15 @@ var _buttons := {}
 @onready var _parties: OptionButton = %party_pick
 @onready var _side: OptionButton = %side_pick
 @onready var _bribe: Button = %bribe
-@onready var _actions: VBoxContainer = %Acoes
-@onready var _history: Label = %Historico
+@onready var _actions: VBoxContainer = %Actions
+@onready var _history: Label = %History
 
 
 func setup(w: GameWorld) -> void:
 	world = w
 	corruption = w.corruption
-	(%votos_titulo as Label).text = tr(Corruption.LABELS.bribe)
-	(%votos_desc as Label).text = tr(Corruption.DESCRIPTIONS.bribe)
+	(%votes_title as Label).text = tr(Corruption.LABELS.bribe)
+	(%votes_desc as Label).text = tr(Corruption.DESCRIPTIONS.bribe)
 	_side.add_item(tr("A favor"))
 	_side.add_item(tr("Contra"))
 	for kind: String in PLAIN:
@@ -40,7 +40,7 @@ func setup(w: GameWorld) -> void:
 		_buttons[kind] = button
 	_bribe.pressed.connect(_buy)
 	_norms.item_selected.connect(func(_i): _fill_parties())
-	%Fechar.pressed.connect(func(): closed.emit())
+	%Close.pressed.connect(func(): closed.emit())
 	_fill_norms()
 	refresh()
 

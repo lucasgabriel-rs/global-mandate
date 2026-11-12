@@ -1,7 +1,7 @@
 extends SceneTree
-## Câmbio e fundo soberano: intervenção do banco central com reservas, controle e fuga de capitais,
-## dolarização, paridade descoberta, saldos de partida dos fundos, retorno, regra de saque, amortecedor
-## de commodities, risco, aprovação e a Lei Cambial no centro legislativo.
+## Exchange and sovereign fund: central bank intervention with reserves, capital controls and flight,
+## dollarization, uncovered parity, starting fund balances, return, withdrawal rule, commodity
+## buffer, risk, approval and the Exchange Law in the legislative center.
 ## Uso: godot --headless --path . --script tests/fx_swf.gd
 
 var failures := 0
@@ -62,21 +62,21 @@ func _init() -> void:
 	quit(1 if failures > 0 else 0)
 
 
-## Os sete fundos grandes começam perto dos saldos reais; quem não tem fundo começa com zero.
+## The seven large funds start near the real balances; those with no fund start at zero.
 func _starting_funds() -> void:
 	var world := GameWorld.new()
 	world.setup(3)
 	var real := {"NOR": 1800.0, "SAU": 940.0, "ARE": 1500.0, "KWT": 970.0, "QAT": 520.0, "CHN": 1330.0, "SGP": 1100.0}
 	for iso: String in real:
 		var c: Country = world.by_iso[iso]
-		_check(c.swf_active and absf(c.swf / float(real[iso]) - 1.0) < 0.25, "%s começa com fundo de US$ %.0f bi (real ~%.0f)" % [iso, c.swf, real[iso]])
-	_check(world.by_iso["BRA"].swf == 0.0 and not world.by_iso["BRA"].swf_active, "o Brasil começa sem fundo soberano")
+		_check(c.swf_active and absf(c.swf / float(real[iso]) - 1.0) < 0.25, "%s starts with a fund of US$ %.0f bn (real ~%.0f)" % [iso, c.swf, real[iso]])
+	_check(world.by_iso["BRA"].swf == 0.0 and not world.by_iso["BRA"].swf_active, "Brazil starts without a sovereign fund")
 	var nor: Country = world.by_iso["NOR"]
-	_check(absf(nor.swf_limit - 0.03) < 0.006, "Noruega segue a regra dos 3%%: %.2f%%" % (nor.swf_limit * 100.0))
-	_check(nor.swf_rent_share > 0.9, "a renda do petróleo norueguês vai toda para o fundo")
+	_check(absf(nor.swf_limit - 0.03) < 0.006, "Norway follows the 3%% rule: %.2f%%" % (nor.swf_limit * 100.0))
+	_check(nor.swf_rent_share > 0.9, "Norwegian oil revenue all goes to the fund")
 
 
-## Sob pressão de depreciação o banco central vende reservas e segura parte do movimento.
+## Under depreciation pressure the central bank sells reserves and holds back part of the move.
 func _intervention() -> void:
 	var results := {}
 	for lean in [0.0, 0.7]:
@@ -92,10 +92,10 @@ func _intervention() -> void:
 			Economy._float_exchange(c, world)
 		results[lean] = [c.e / e0, r0 - c.reserves, c.fx_interv]
 	print("  câmbio sem intervenção x%.3f, com intervenção x%.3f; reservas vendidas %.1f" % [results[0.0][0], results[0.7][0], results[0.7][1]])
-	_check(results[0.7][1] > 1.0 and results[0.7][2] > 0.0, "o banco central vende reservas quando a moeda cai (US$ %.1f bi)" % results[0.7][1])
-	_check(absf(results[0.0][1]) < 0.5, "sem intervenção as reservas ficam paradas")
-	_check(results[0.7][0] < results[0.0][0], "a intervenção segura a depreciação")
-	# Com a moeda subindo, o banco central compra dólares.
+	_check(results[0.7][1] > 1.0 and results[0.7][2] > 0.0, "the central bank sells reserves when the currency falls (US$ %.1f bn)" % results[0.7][1])
+	_check(absf(results[0.0][1]) < 0.5, "with no intervention reserves stay still")
+	_check(results[0.7][0] < results[0.0][0], "the intervention holds back the depreciation")
+	# With the currency rising, the central bank buys dollars.
 	var world2 := GameWorld.new()
 	world2.setup(5)
 	var b: Country = world2.by_iso["BRA"]
@@ -103,15 +103,15 @@ func _intervention() -> void:
 	b.e *= 1.4
 	var r1 := b.reserves
 	Economy._float_exchange(b, world2)
-	_check(b.reserves > r1 and b.fx_interv < 0.0, "com a moeda fraca demais o banco central compra reservas")
-	# Sem reservas não há o que vender.
+	_check(b.reserves > r1 and b.fx_interv < 0.0, "with the currency too weak the central bank buys reserves")
+	# Without reserves there is nothing to sell.
 	b.reserves = 0.0
 	b.risk = b.risk0 + 0.2
 	Economy._float_exchange(b, world2)
 	_check(b.reserves >= 0.0, "reservas nunca ficam negativas")
 
 
-## Risco alto faz o capital fugir; controle de capitais segura a fuga; inflação alta dolariza.
+## High risk makes capital flee; capital controls hold back the flight; high inflation dollarizes.
 func _capital_flows() -> void:
 	var world := GameWorld.new()
 	world.setup(5)
@@ -123,66 +123,66 @@ func _capital_flows() -> void:
 	c.cap_controls = 0.75
 	Economy._capital_flight(c, world, c.y_usd())
 	var closed := c.cap_flight
-	_check(free > 0.0, "risco acima do de partida faz o capital fugir (US$ %.0f bi/ano)" % free)
-	_check(closed < free * 0.5, "cotas de capital cortam a fuga: %.0f -> %.0f" % [free, closed])
+	_check(free > 0.0, "risk above the starting level makes capital flee (US$ %.0f bn/year)" % free)
+	_check(closed < free * 0.5, "capital quotas cut the flight: %.0f -> %.0f" % [free, closed])
 	var dz0 := c.dollarization
 	c.pi_yoy = 0.6
 	for m in 36:
 		Economy._capital_flight(c, world, c.y_usd())
-	_check(c.dollarization > dz0 + 0.2, "inflação de 60%% dolariza a economia: %.0f%% -> %.0f%%" % [dz0 * 100.0, c.dollarization * 100.0])
+	_check(c.dollarization > dz0 + 0.2, "60%% inflation dollarizes the economy: %.0f%% -> %.0f%%" % [dz0 * 100.0, c.dollarization * 100.0])
 	var high := c.dollarization
 	c.pi_yoy = 0.03
 	for m in 12:
 		Economy._capital_flight(c, world, c.y_usd())
-	_check(c.dollarization < high and c.dollarization > high * 0.8, "a dolarização desce devagar quando a inflação cai")
+	_check(c.dollarization < high and c.dollarization > high * 0.8, "dollarization falls slowly when inflation drops")
 
 
-## Paridade descoberta: i - i* = depreciação esperada + prêmio de risco.
+## Uncovered parity: i - i* = expected depreciation + risk premium.
 func _uip() -> void:
 	var world := GameWorld.new()
 	world.setup(5)
 	var c: Country = world.by_iso["BRA"]
 	Economy._float_exchange(c, world)
 	var premium := c.risk + 0.5 * c.cap_flight / maxf(c.y_usd(), 0.001)
-	_check(absf(c.rate - world.usa.rate - (c.uip_dep + premium)) < 1e-6, "i = i* + Δeᵉ + prêmio (Δeᵉ = %.2f%%)" % (c.uip_dep * 100.0))
+	_check(absf(c.rate - world.usa.rate - (c.uip_dep + premium)) < 1e-6, "i = i* + Δeᵉ + premium (Δeᵉ = %.2f%%)" % (c.uip_dep * 100.0))
 	var low := c.uip_dep
 	c.rate += 0.05
 	Economy._float_exchange(c, world)
-	_check(c.uip_dep > low + 0.04, "juro mais alto eleva a depreciação esperada que o mercado aceita")
+	_check(c.uip_dep > low + 0.04, "a higher interest rate raises the expected depreciation the market accepts")
 
 
-## Retorno, aporte, saque, amortecedor de commodities, risco e aprovação.
+## Return, contribution, withdrawal, commodity buffer, risk and approval.
 func _fund_mechanics() -> void:
 	var world := GameWorld.new()
 	world.setup(5)
 	var nor: Country = world.by_iso["NOR"]
 	Economy._fiscal_flows(nor)
 	var out0 := nor.swf_out
-	_check(nor.swf_in > 0.0 and out0 > 0.0, "o fundo norueguês recebe a renda do petróleo e paga o saque")
+	_check(nor.swf_in > 0.0 and out0 > 0.0, "the Norwegian fund receives the oil revenue and pays the withdrawal")
 	var draw := out0 / (nor.swf * nor.e)
-	_check(absf(draw - nor.swf_limit) < 0.005, "saque igual à regra quando a renda está na média: %.2f%%" % (draw * 100.0))
-	# Petróleo despenca: a renda cai abaixo da média e o fundo cobre parte da queda.
+	_check(absf(draw - nor.swf_limit) < 0.005, "withdrawal equal to the rule when revenue is at the average: %.2f%%" % (draw * 100.0))
+	# Oil plunges: revenue falls below the average and the fund covers part of the fall.
 	nor.rent_ref *= 2.0
 	Economy._fiscal_flows(nor)
-	_check(nor.swf_out > out0 * 1.2, "queda das commodities aumenta o saque: %.0f -> %.0f" % [out0, nor.swf_out])
+	_check(nor.swf_out > out0 * 1.2, "a fall in commodities increases the withdrawal: %.0f -> %.0f" % [out0, nor.swf_out])
 	nor.rent_ref /= 2.0
-	# O saldo é colchão de risco.
+	# The balance is a risk cushion.
 	var risk_with := Economy._risk_premium(nor, world)
 	var keep := nor.swf
 	nor.swf = 0.0
 	var risk_without := Economy._risk_premium(nor, world)
 	nor.swf = keep
-	_check(risk_with < risk_without, "fundo grande reduz o prêmio de risco: %.2f%% x %.2f%%" % [risk_with * 100.0, risk_without * 100.0])
-	# Sacar demais tira aprovação.
+	_check(risk_with < risk_without, "a large fund reduces the risk premium: %.2f%% x %.2f%%" % [risk_with * 100.0, risk_without * 100.0])
+	# Withdrawing too much takes away approval.
 	nor.swf_limit = 0.03
 	Economy._fiscal_flows(nor)
 	Economy._fund_month(nor, world)
-	_check(nor.swf_pain == 0.0, "saque de 3% não custa aprovação")
+	_check(nor.swf_pain == 0.0, "a 3% withdrawal does not cost approval")
 	nor.swf_limit = 0.12
 	Economy._fiscal_flows(nor)
 	Economy._fund_month(nor, world)
-	_check(nor.swf_pain > 0.05, "saque de 12%% ao ano tira aprovação (%.1f pp)" % (nor.swf_pain * 100.0))
-	# O fundo aplica fora: guardar mais renda não valoriza a moeda.
+	_check(nor.swf_pain > 0.05, "a 12%% annual withdrawal takes away approval (%.1f pp)" % (nor.swf_pain * 100.0))
+	# The fund invests abroad: keeping more revenue does not appreciate the currency.
 	var es := []
 	for share in [0.0, 1.0]:
 		var w := GameWorld.new()
@@ -194,17 +194,17 @@ func _fund_mechanics() -> void:
 		for m in 3:
 			Economy._float_exchange(n, w)
 		es.append(n.e)
-	_check(es[1] >= es[0] - 1e-9, "aportes ao fundo não valorizam a coroa: %.4f x %.4f" % [es[0], es[1]])
+	_check(es[1] >= es[0] - 1e-9, "fund contributions do not appreciate the krone: %.4f x %.4f" % [es[0], es[1]])
 
 
-## O fundo é criado pela Lei Cambial; o limite de saque muda por lei.
+## The fund is created by the Exchange Law; the withdrawal limit changes by law.
 func _fund_law() -> void:
 	var world := _fresh("BRA")
 	var c := world.player
 	var leg: Legislation = world.legislation
 	_months(world, 1)
-	_check(not leg.code_standing("cambial").is_empty(), "a Lei Cambial vale desde o início")
-	_check(not c.swf_active, "o Brasil não tem fundo na lei de partida")
+	_check(not leg.code_standing("cambial").is_empty(), "the Exchange Law applies from the start")
+	_check(not c.swf_active, "Brazil has no fund in the starting law")
 	var bill := leg.start_code_bill(world, "cambial")
 	var stack: Dictionary = bill.program.stacks[0]
 	var fund := LawProgram.new_block(bill.program, "fs_fundo")
@@ -218,22 +218,22 @@ func _fund_law() -> void:
 		b.fields.nivel = "imposto"
 	_force_majority(world)
 	var r := leg.present(world, bill)
-	_check(r.ok, "projeto do fundo apresentado: " + str(r.get("msg", "")))
+	_check(r.ok, "fund project presented:" + str(r.get("msg", "")))
 	_settle(world, bill)
-	_check(bill.state == Legislation.STATE_IN_FORCE, "a lei do fundo entra em vigor: " + bill.state)
+	_check(bill.state == Legislation.STATE_IN_FORCE, "the fund law takes effect:" + bill.state)
 	_months(world, 2)
-	_check(c.swf_active and is_equal_approx(c.swf_rent_share, 0.8) and is_equal_approx(c.swf_limit, 0.03), "o fundo brasileiro existe com 80%% da renda e saque de 3%%")
-	_check(is_equal_approx(c.cap_controls, 0.35), "o imposto sobre saída de capitais vale: %.2f" % c.cap_controls)
+	_check(c.swf_active and is_equal_approx(c.swf_rent_share, 0.8) and is_equal_approx(c.swf_limit, 0.03), "the Brazilian fund exists with 80%% of the revenue and a 3%% withdrawal")
+	_check(is_equal_approx(c.cap_controls, 0.35), "the tax on capital outflows applies: %.2f" % c.cap_controls)
 	_months(world, 12)
-	_check(c.swf > 1.0, "o fundo acumula com a renda de commodities: US$ %.1f bi" % c.swf)
-	_check(float(c.code_stats.get("fundo_soberano", -1.0)) == c.swf, "o código mostra o saldo do fundo")
+	_check(c.swf > 1.0, "the fund accumulates with commodity revenue: US$ %.1f bn" % c.swf)
+	_check(float(c.code_stats.get("fundo_soberano", -1.0)) == c.swf, "the code shows the fund balance")
 
-	# Noruega: subir o saque para 10% por lei tira aprovação.
+	# Norway: raising the withdrawal to 10% by law takes away approval.
 	var nw := _fresh("NOR")
 	var nor := nw.player
 	var nleg: Legislation = nw.legislation
 	_months(nw, 1)
-	_check(nor.swf_active and nor.swf_limit > 0.02, "a lei de partida da Noruega já tem o fundo e a regra")
+	_check(nor.swf_active and nor.swf_limit > 0.02, "Norway's starting law already has the fund and the rule")
 	var change := nleg.start_code_bill(nw, "cambial")
 	for b: Dictionary in _blocks_of(change, "fs_saque"):
 		b.fields.limite = 10.0
@@ -241,11 +241,11 @@ func _fund_law() -> void:
 	nleg.present(nw, change)
 	_settle(nw, change)
 	_months(nw, 2)
-	_check(is_equal_approx(nor.swf_limit, 0.10), "o limite de saque muda por lei: %.1f%%" % (nor.swf_limit * 100.0))
-	_check(nor.swf_pain > 0.05, "sacar 10%% ao ano pesa na aprovação (%.1f pp)" % (nor.swf_pain * 100.0))
+	_check(is_equal_approx(nor.swf_limit, 0.10), "the withdrawal limit changes by law: %.1f%%" % (nor.swf_limit * 100.0))
+	_check(nor.swf_pain > 0.05, "withdrawing 10%% a year weighs on approval (%.1f pp)" % (nor.swf_pain * 100.0))
 
 
-## Dez anos: reservas, câmbio e fundos finitos e dentro de faixas plausíveis.
+## Ten years: reserves, exchange rate and funds finite and within plausible ranges.
 func _long_run() -> void:
 	var world := _fresh("BRA", 42)
 	var start := {}
@@ -262,12 +262,12 @@ func _long_run() -> void:
 				bad += 1
 		if c.reserves < 0.0 or c.swf < 0.0:
 			bad += 1
-	_check(bad == 0, "nenhum NaN, infinito ou saldo negativo em 10 anos (%d ruins)" % bad)
+	_check(bad == 0, "no NaN, infinity or negative balance in 10 years (%d bad)" % bad)
 	for iso: String in ["NOR", "SAU", "CHN", "SGP"]:
 		var c: Country = world.by_iso[iso]
 		var s0: float = start[iso][0]
-		_check(c.swf > s0 * 0.6 and c.swf < s0 * 4.0, "%s: fundo plausível em 10 anos: %.0f -> %.0f" % [iso, s0, c.swf])
+		_check(c.swf > s0 * 0.6 and c.swf < s0 * 4.0, "%s: plausible fund over 10 years: %.0f -> %.0f" % [iso, s0, c.swf])
 	for iso: String in ["BRA", "IND", "TUR", "ARG"]:
 		var c: Country = world.by_iso[iso]
 		var r0: float = start[iso][1]
-		_check(c.reserves < r0 * 5.0 + 50.0, "%s: reservas sem explodir: %.0f -> %.0f" % [iso, r0, c.reserves])
+		_check(c.reserves < r0 * 5.0 + 50.0, "%s: reserves without blowing up: %.0f -> %.0f" % [iso, r0, c.reserves])

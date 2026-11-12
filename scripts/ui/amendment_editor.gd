@@ -27,9 +27,9 @@ func setup(owner_main: Node, target: Dictionary) -> void:
 	norm = target
 	(%title as Label).text = tr("Emenda constitucional nº %d") % int(norm.number)
 	(%doc_name as LineEdit).text = norm.title
-	(%doc_ementa as TextEdit).text = norm.ementa
+	(%doc_summary as TextEdit).text = norm.ementa
 	%doc_name.text_changed.connect(func(t): norm.title = t)
-	%doc_ementa.text_changed.connect(func(): norm.ementa = %doc_ementa.text)
+	%doc_summary.text_changed.connect(func(): norm.ementa = %doc_summary.text)
 	for key: String in Legislation.AMENDMENT_OPS:
 		_op.add_item(tr(Legislation.AMENDMENT_OPS[key]))
 		_op.set_item_metadata(_op.item_count - 1, key)
