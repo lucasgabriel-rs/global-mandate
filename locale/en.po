@@ -12830,6 +12830,46 @@ msgstr "Mauritius"
 msgid "Bahamas"
 msgstr "Bahamas"
 
+#: scenes/ui/main_menu.tscn:70
+msgid "Novo Jogo"
+msgstr "New Game"
+
+#: scenes/ui/main_menu.tscn:79
+msgid "Carregar Jogo"
+msgstr "Load Game"
+
+#: scenes/ui/main_menu.tscn:96 scenes/ui/modals/pause_menu.tscn scenes/ui/modals/settings.tscn
+msgid "Configurações"
+msgstr "Settings"
+
+#: scenes/ui/main_menu.tscn:105
+msgid "Sair do Jogo"
+msgstr "Quit Game"
+
+#: scenes/ui/main_menu.tscn:82
+msgid "Continua a última partida salva."
+msgstr "Continues the last saved game."
+
+#: scenes/ui/modals/settings.tscn
+msgid "Modo de janela"
+msgstr "Window mode"
+
+#: scenes/ui/modals/settings.tscn
+msgid "Tela cheia"
+msgstr "Fullscreen"
+
+#: scenes/ui/modals/settings.tscn
+msgid "Sincronia vertical"
+msgstr "Vertical sync"
+
+#: scenes/ui/modals/settings.tscn
+msgid "Tamanho da interface"
+msgstr "Interface size"
+
+#: scenes/ui/modals/settings.tscn
+msgid "Restaurar padrões"
+msgstr "Restore defaults"
+
 #~ msgid "Conversa com Robert Johnson"
 #~ msgstr "Talk with Robert Johnson"
 
