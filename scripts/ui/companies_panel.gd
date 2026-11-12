@@ -1,6 +1,6 @@
 class_name CompaniesPanel
 extends VBoxContainer
-## Empresas do país, de capital aberto e fechado, filtráveis por setor e por tipo de capital.
+## Companies of the country, open and closed capital, filterable by sector and by type of capital.
 
 const COMPANY_ROW := preload("res://scenes/ui/rows/company_row.tscn")
 const CAPITAL_ALL := 0
@@ -34,7 +34,7 @@ func bind(w: GameWorld) -> void:
 	world = w
 
 
-## Mostra só as empresas de um setor (-1: todos) e de um tipo de capital (CAPITAL_*).
+## Shows only the companies of one sector (-1: all) and of one type of capital (CAPITAL_*).
 func set_filters(sector: int, capital: int) -> void:
 	for i in _sector_filter.item_count:
 		if int(_sector_filter.get_item_metadata(i)) == sector:

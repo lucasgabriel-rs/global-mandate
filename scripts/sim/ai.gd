@@ -1,15 +1,15 @@
 class_name NationAI
 extends RefCounted
-## Comportamento das nações não controladas pelo jogador. Cada governo age todo mês conforme a bússola do
-## líder: à esquerda gasta e tributa mais, à direita corta e abre o comércio; o autoritário arma o país,
-## briga mais e governa por decreto; o libertário investe em educação e prefere acordos.
+## Behavior of the nations not controlled by the player. Each government acts every month according to the
+## leader's compass: the left spends and taxes more, the right cuts and opens trade; the authoritarian arms the
+## country, picks more fights and governs by decree; the libertarian invests in education and prefers agreements.
 
 const BASE_ACTIVITY := 0.2
 const IDEOLOGY_RATE := 0.012
 const DECREE_CHANCE := 0.06
 const PARTNER_DRAWS := 5
 const INITIATIVE_SHARE := 0.25
-## Só vira notícia o que envolve o jogador ou economias que somam ao menos esta parte do PIB mundial.
+## Only news that involves the player or economies that add up to at least this share of world GDP gets reported.
 const NEWS_SHARE := 0.012
 
 
@@ -32,7 +32,7 @@ static func step_month(c: Country, world: GameWorld) -> void:
 		_foreign_policy(c, world)
 
 
-## econ: -1 esquerda a +1 direita. social: -1 autoritário a +1 libertário. hawk: disposição para o conflito.
+## econ: -1 left to +1 right. social: -1 authoritarian to +1 libertarian. hawk: willingness to fight.
 static func _mind(c: Country, world: GameWorld) -> Dictionary:
 	var leader: Dictionary = world.politics.leader_of(c.iso)
 	var econ := float(leader.get("econ", 0.0))
@@ -40,12 +40,12 @@ static func _mind(c: Country, world: GameWorld) -> Dictionary:
 	return {"econ": econ, "social": social, "hawk": clampf(0.3 - social * 0.5 + (0.15 if c.dem < 4.0 else 0.0), 0.0, 1.0)}
 
 
-## Economias maiores têm mais interesses pelo mundo e agem com mais frequência.
+## Larger economies have more interests around the world and act more often.
 static func _activity(c: Country, world: GameWorld) -> float:
 	return clampf(BASE_ACTIVITY + sqrt(c.y_usd() / maxf(world.world_gdp(), 1.0)) * 1.2, 0.0, 0.8)
 
 
-## Devagar, o orçamento vai para onde as ideias do líder apontam. O ajuste fiscal cuida do que sobrar.
+## Slowly, the budget moves toward where the leader's ideas point. Fiscal adjustment takes care of the rest.
 static func _ideology_drift(c: Country, mind: Dictionary) -> void:
 	var rate := IDEOLOGY_RATE
 	var econ: float = mind.econ
@@ -56,8 +56,8 @@ static func _ideology_drift(c: Country, mind: Dictionary) -> void:
 	c.tariff += (clampf(0.04 - econ * 0.05 - social * 0.03, 0.0, 0.25) - c.tariff) * rate * 0.5
 
 
-## Só quem manda no banco central mexe no juro: um líder de esquerda ou impopular segura a taxa por um tempo,
-## abaixo do que a inflação pediria, e a credibilidade cobra o preço. Banco independente nunca passa por aqui.
+## Only whoever controls the central bank touches the rate: a left-wing or unpopular leader holds the rate for a while,
+## below what inflation would call for, and credibility charges the price. An independent bank never comes through here.
 static func _central_bank(c: Country, world: GameWorld, mind: Dictionary) -> void:
 	if c.cb_independent or c.peg != 0:
 		c.rate_manual = false
@@ -74,7 +74,7 @@ static func _central_bank(c: Country, world: GameWorld, mind: Dictionary) -> voi
 			world.emit_news(TranslationServer.translate("O governo de %s pressiona o banco central e segura os juros.") % c.name, "economia", c)
 
 
-## Sem parlamento livre, o líder muda as regras sozinho.
+## Without a free parliament, the leader changes the rules alone.
 static func _decree(c: Country, world: GameWorld, mind: Dictionary) -> void:
 	var text := ""
 	var pick := world.rng.randf()
@@ -100,14 +100,14 @@ static func _notable(a: Country, b: Variant, world: GameWorld) -> bool:
 	return size > world.world_gdp() * NEWS_SHARE
 
 
-## 0 com ideias opostas e 1 com ideias iguais.
+## 0 with opposite ideas and 1 with equal ideas.
 static func _affinity(mind: Dictionary, o: Country, world: GameWorld) -> float:
 	var other: Dictionary = world.politics.leader_of(o.iso)
 	var gap := Vector2(float(mind.econ) - float(other.get("econ", 0.0)), float(mind.social) - float(other.get("social", 0.0))).length()
 	return clampf(1.0 - gap / 2.0, 0.0, 1.0)
 
 
-## Escolhe com quem lidar: de alguns países sorteados, o que mais desperta amizade ou rivalidade.
+## Picks who to deal with: from a few random countries, the one that most arouses friendship or rivalry.
 static func _pick_partner(c: Country, world: GameWorld, mind: Dictionary) -> Country:
 	var d := world.diplomacy
 	var best: Country = null
@@ -133,7 +133,7 @@ static func _foreign_agenda(c: Country, world: GameWorld, mind: Dictionary) -> v
 	var rng := world.rng
 	var affinity := _affinity(mind, o, world)
 	var rel := d.relation(c.idx, o.idx)
-	# A distância entre as ideias pesa aos poucos na relação.
+	# The distance between ideas slowly weighs on the relationship.
 	d.add_relation(c.idx, o.idx, (affinity - 0.5) * 3.0)
 	var level := d.sanction_level(c.idx, o.idx)
 	if level > 0 and rel > -15.0:
@@ -160,7 +160,7 @@ static func _foreign_agenda(c: Country, world: GameWorld, mind: Dictionary) -> v
 			_say(c, o, world, TranslationServer.translate("%s critica publicamente o governo de %s."), "diplomacia")
 
 
-## O líder decide procurar outro líder por conta própria: outro governo da IA, ou o jogador.
+## The leader decides to approach another leader on their own: another AI government, or the player.
 static func _initiative(c: Country, world: GameWorld, mind: Dictionary) -> void:
 	var o := _pick_partner(c, world, mind)
 	if o == null:
@@ -180,12 +180,12 @@ static func _fiscal(c: Country, world: GameWorld) -> void:
 	var yn := maxf(c.y_nominal(), 0.001)
 	var def_ratio := c.deficit / yn
 	var pressure := c.debt_ratio / c.debt_tol
-	# Déficit que estabiliza a dívida, mais margem anticíclica.
+	# Deficit that stabilizes the debt, plus a countercyclical margin.
 	var nominal_g := c.g0 + minf(c.pi_target, 0.05)
 	var target := nominal_g * minf(c.debt_ratio, c.debt_tol) - 0.45 * c.gap
 	if pressure > 1.05 or c.risk > c.risk0 + 0.012:
 		target -= 0.015 + 0.02 * maxf(pressure - 1.05, 0.0)
-	# Superávit de quem vive de commodities é gasto devagar.
+	# The surplus of commodity-dependent countries is spent slowly.
 	var err := def_ratio - target
 	var step := clampf(err * 0.04, -0.0012, 0.0015 if err < 0.06 else 0.004)
 	if world.year_float() < c.default_until:
@@ -195,7 +195,7 @@ static func _fiscal(c: Country, world: GameWorld) -> void:
 	var total := c.sp_social + c.sp_health + c.sp_education + c.sp_infra + c.sp_admin
 	if total <= 0.02 and step > 0.0:
 		return
-	# Ajuste é 2/3 no gasto e 1/3 em tributos.
+	# Adjustment is 2/3 on spending and 1/3 on taxes.
 	var cut := step * 0.67 / maxf(total, 0.01)
 	c.sp_social = maxf(c.sp_social * (1.0 - cut), 0.005)
 	c.sp_health = maxf(c.sp_health * (1.0 - cut), 0.003)
@@ -210,7 +210,7 @@ static func _fiscal(c: Country, world: GameWorld) -> void:
 
 static func _defense(c: Country, world: GameWorld) -> void:
 	var yusd := c.y_usd()
-	# Estoque de equipamento acompanha o gasto, em parte corrigido por PPC.
+	# Equipment stock follows spending, partly corrected by PPP.
 	var ppp := clampf(pow(60000.0 / maxf(c.gdp_pc(), 500.0), 0.35), 1.0, 3.0)
 	c.mil_stock += (c.sp_defense * yusd * ppp * 0.35 - 0.06 * c.mil_stock) / 12.0
 	c.troops += (c.troops0 * (1.0 + c.mobilization) - c.troops) * 0.03
@@ -228,7 +228,7 @@ static func _defense(c: Country, world: GameWorld) -> void:
 
 
 static func _relation_drift(c: Country, world: GameWorld) -> void:
-	# Só alguns pares por mês: relações voltam devagar ao nível estrutural.
+	# Only a few pairs per month: relations slowly return to the structural level.
 	var d := world.diplomacy
 	for k in 4:
 		var j := world.rng.randi_range(0, d.n - 1)
@@ -246,12 +246,12 @@ static func _foreign_policy(c: Country, world: GameWorld) -> void:
 	if o == c or not o.alive:
 		return
 	var rel := d.relation(c.idx, j)
-	# Acordos entre amigos.
+	# Agreements between friends.
 	if rel > 25.0 and not d.has_fta(c.idx, j, world) and world.rng.randf() < 0.05 and o != world.governed():
 		world.treaties.ai_sign(world, c, o, "fta")
 		if c.y_usd() + o.y_usd() > world.world_gdp() * 0.03:
 			world.emit_news(TranslationServer.translate("%s e %s fecham acordo de livre comércio.") % [c.name, o.name], "diplomacia", c)
-	# Oferta ao jogador.
+	# Offer to the player.
 	var player := world.governed()
 	if player and c != player:
 		var pr := d.relation(c.idx, player.idx)
@@ -281,10 +281,10 @@ static func _maybe_war(c: Country, world: GameWorld) -> void:
 		var rel := d.relation(c.idx, o.idx)
 		if rel > -55.0 + hawk * 20.0:
 			continue
-		# Tratado de não agressão segura quase todo mundo; só os mais belicosos ousam rasgar.
+		# A non-aggression treaty holds almost everyone back; only the most warlike dare tear it up.
 		if hawk < 0.7 and world.treaties.blocks_war(c, o):
 			continue
-		# Dissuasão: alianças e armas nucleares pesam na conta.
+		# Deterrence: alliances and nuclear weapons weigh on the calculation.
 		var defenders := o.military_power()
 		var nuclear_block := o.nukes > 0
 		for a: Country in world.countries:

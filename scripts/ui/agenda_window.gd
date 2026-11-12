@@ -1,7 +1,7 @@
 class_name AgendaWindow
 extends ColorRect
-## Agenda de contatos: líderes de todos os partidos do parlamento e de todos os países, com busca.
-## "Conversar" abre a conversa com o líder escolhido, sem esperar que ele apareça.
+## Contact book: leaders of all parliament parties and of all countries, with search.
+## "Conversar" opens the conversation with the chosen leader, without waiting for them to show up.
 
 const ROW := preload("res://scenes/ui/rows/agenda_row.tscn")
 const HEADING := preload("res://scenes/ui/chat/chat_heading.tscn")
@@ -81,7 +81,7 @@ func _row(key: String, label: String, info: String, color: Color, node_name: Str
 	(row.get_node("%info") as Label).text = info
 	(row.get_node("%chip") as ColorRect).color = color
 	var talk: Button = row.get_node("%talk")
-	# Quem não está no governo ainda pode ler o histórico, só não puxa conversa nova com um país.
+	# Whoever is not in government can still read the history, just cannot start a new conversation with a country.
 	talk.text = tr("Conversar") if enabled else tr("Histórico")
 	talk.pressed.connect(func():
 		main.call_contact(key, chat)

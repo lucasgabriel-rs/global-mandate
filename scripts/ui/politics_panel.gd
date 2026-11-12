@@ -1,6 +1,6 @@
 class_name PoliticsPanel
 extends VBoxContainer
-## Aba "Política": o partido do jogador, o plenário, a coalizão e os projetos em votação.
+## "Política" tab: the player's party, the chamber, the coalition and the projects up for a vote.
 
 signal party_requested
 signal legislation_requested
@@ -119,7 +119,7 @@ func _rebuild() -> void:
 		_bills.add_child(_bill_row(b))
 
 
-## Uma aba por casa. Com uma casa só, as abas somem e fica o plenário.
+## One tab per house. With a single house, the tabs disappear and the chamber stays.
 func _fill_houses(data: Dictionary) -> void:
 	var houses: Array = world.politics.houses(world)
 	var views := [[_hemicycle, %lower_info], [_hemicycle_upper, %upper_info]]

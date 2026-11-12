@@ -1,7 +1,7 @@
 class_name OppositionPanel
 extends VBoxContainer
-## Janela "Fiscalização do governo", só da oposição: quem governa, a bancada do jogador, quanto falta
-## para a maioria, a eleição e o desempenho do governo que ele combate. Só lê o que o sistema político já calcula.
+## "Fiscalização do governo" window, opposition only: who governs, the player's caucus, how much is missing
+## for a majority, the election and the performance of the government they fight. It only reads what the political system already computes.
 
 signal politics_requested
 signal legislation_requested

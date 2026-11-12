@@ -1,6 +1,6 @@
 class_name LawCanvas
 extends Control
-## Área de programação. Cada pilha é um artigo, posicionada onde o jogador a soltou.
+## Programming area. Each stack is an article, positioned where the player dropped it.
 
 const STACK := preload("res://scenes/ui/legislation/law_stack.tscn")
 const BLOCK := preload("res://scenes/ui/legislation/law_block.tscn")
@@ -8,7 +8,7 @@ const MARGIN := 300.0
 const MIN_SIZE := Vector2(900, 500)
 
 var editor: LawEditor
-## Arrastar o fundo move a área, como numa mesa.
+## Dragging the background moves the area, as on a desk.
 var _panning := false
 
 
@@ -23,7 +23,7 @@ func rebuild() -> void:
 		add_child(view)
 		var at := Vector2(float(stack.pos[0]), float(stack.pos[1]))
 		view.position = at
-		# O tamanho da pilha só existe depois do layout: a área se ajusta quando ela muda.
+		# The size of the stack only exists after layout: the area adjusts when it changes.
 		view.resized.connect(_fit)
 		var repealed: bool = stack.get("repealed", false)
 		(view.get_node("%article") as Label).text = tr("Art. %dº%s") % [number, tr(" (revogado)") if repealed else ""]
@@ -32,14 +32,14 @@ func rebuild() -> void:
 		var list: Control = view.get_node("%blocks")
 		for block: Dictionary in stack.blocks:
 			var block_view: LawBlockView = BLOCK.instantiate()
-			# Cada peça tem a largura do próprio texto, como num quebra-cabeça.
+			# Each piece has the width of its own text, like a jigsaw.
 			block_view.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 			list.add_child(block_view)
 			block_view.setup(editor, block)
 	_fit()
 
 
-## A área cobre todas as pilhas inteiras, com folga para arrastar mais blocos para baixo e para o lado.
+## The area covers all the stacks entirely, with room to drag more blocks down and to the side.
 func _fit() -> void:
 	var far := MIN_SIZE
 	for child in get_children():

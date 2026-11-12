@@ -1,7 +1,7 @@
 class_name LawCompiler
 extends RefCounted
-## Transforma os blocos em instruções: lê a estrutura, verifica, gera uma forma intermediária e, dela,
-## o código plano que o motor executa. A interface nunca roda os blocos diretamente.
+## Turns the blocks into instructions: reads the structure, verifies, generates an intermediate form and, from it,
+## the flat code that the engine executes. The interface never runs the blocks directly.
 
 const MAX_BLOCKS := 400
 const NUMERIC := ["num", "money", "pct", "days"]
@@ -20,7 +20,7 @@ var _var_articles := {}
 var _article := 0
 
 
-## context: {"rank": hierarquia da norma, "norms": {numero: true}, "units": {id: true}, "institutions": {nome: true}}.
+## context: {"rank": norm hierarchy, "norms": {number: true}, "units": {id: true}, "institutions": {name: true}}.
 static func compile(program: Dictionary, context := {}) -> Dictionary:
 	return LawCompiler.new()._run(program, context)
 
@@ -46,7 +46,7 @@ func _run(program: Dictionary, context: Dictionary) -> Dictionary:
 	}
 
 
-# --- Etapa 1: leitura ------------------------------------------------------------------
+# --- Stage 1: reading ------------------------------------------------------------------
 
 func _read() -> Array:
 	var articles := []
@@ -65,7 +65,7 @@ func _warn(block: Variant, text: String) -> void:
 	_warnings.append({"block": int(block.id) if block is Dictionary else -1, "text": text})
 
 
-# --- Etapa 2: verificação --------------------------------------------------------------
+# --- Stage 2: verification --------------------------------------------------------------
 
 func _check_program(articles: Array) -> void:
 	var active := articles.filter(func(a): return not a.repealed)
@@ -75,7 +75,7 @@ func _check_program(articles: Array) -> void:
 	var count := LawProgram.all_blocks(_program).size()
 	if count > MAX_BLOCKS:
 		_err(null, tr("A norma tem %d blocos; o limite é %d.") % [count, MAX_BLOCKS])
-	# Variáveis definidas em qualquer artigo persistem entre execuções.
+	# Variables defined in any article persist between executions.
 	for block: Dictionary in LawProgram.all_blocks(_program):
 		if block.type == "var_set":
 			_defined[String(block.fields.get("name", ""))] = true
@@ -292,7 +292,7 @@ func _creates_institution(name_: String) -> bool:
 	return false
 
 
-## "A e não A", "x > 5 e x < 3": nunca são verdadeiras.
+## "A and not A", "x > 5 and x < 3": never true.
 func _check_contradiction(block: Dictionary) -> void:
 	var a: Variant = block.plugs.get("a")
 	var b: Variant = block.plugs.get("b")
@@ -319,7 +319,7 @@ static func _same(a: Dictionary, b: Dictionary) -> bool:
 	return LawProgram.block_text(a) == LawProgram.block_text(b)
 
 
-# --- Etapa 3: forma intermediária --------------------------------------------------------
+# --- Stage 3: intermediate form --------------------------------------------------------
 
 func _event_fields(block: Dictionary) -> Dictionary:
 	return block.fields.duplicate()
@@ -376,7 +376,7 @@ func _ir_expr(block: Dictionary) -> Array:
 	return ["lit", 0.0]
 
 
-# --- Etapa 4: código plano -------------------------------------------------------------
+# --- Stage 4: flat code -------------------------------------------------------------
 
 func _generate(ir: Array) -> Dictionary:
 	var out := {}
@@ -397,7 +397,7 @@ func _count_conditions(body: Array) -> int:
 	return total
 
 
-## breaks recebe os "interromper" da repetição atual; ifs conta os "se" abertos dentro dela.
+## breaks receives the "break" instructions of the current repetition; ifs counts the open "if" blocks inside it.
 func _emit_list(nodes: Array, list: Array, breaks: Array, ifs := 0) -> void:
 	for node: Dictionary in nodes:
 		match node.op:
@@ -443,9 +443,9 @@ func _emit_list(nodes: Array, list: Array, breaks: Array, ifs := 0) -> void:
 				list.append(["act", node.op, node.args, node.block])
 
 
-# --- Posição política -------------------------------------------------------------------
+# --- Political position -------------------------------------------------------------------
 
-## Onde a norma cai na bússola: cada bloco puxa para um lado, como os pesos do orçamento.
+## Where the norm falls on the compass: each block pulls to one side, like the budget weights.
 static func position_of(program: Dictionary) -> Dictionary:
 	var econ := 0.0
 	var social := 0.0

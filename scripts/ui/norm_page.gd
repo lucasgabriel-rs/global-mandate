@@ -1,6 +1,6 @@
 class_name NormPage
 extends ColorRect
-## Consulta pública de uma norma: dados, texto consolidado por versão, votações e histórico.
+## Public consultation of a norm: data, consolidated text by version, votes and history.
 
 var main: Node
 var world: GameWorld
@@ -75,7 +75,7 @@ func _show_version(index: int) -> void:
 	(%law_text as RichTextLabel).text = text
 
 
-## O texto guardado na versão fica em português; o programa, quando há, é mostrado no idioma do jogo.
+## The text stored in the version stays in Portuguese; the program, when there is one, is shown in the game's language.
 func _version_text(version: Dictionary) -> String:
 	var program: Dictionary = version.get("program", {})
 	if norm.type != "emenda" and not program.get("stacks", []).is_empty():

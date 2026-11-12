@@ -1,29 +1,29 @@
 class_name GameData
 extends RefCounted
-## Leitura dos dados estáticos: tabela de países e geometria do mapa.
+## Reading of the static data: country table and map geometry.
 
 const ADMIN1_CELL := 40.0
 
-## População das unidades de primeiro nível, em milhões, onde o número é conhecido: censo do IBGE de 2022 e dos
-## EUA de 2020, arredondados. O resto do mundo usa uma estimativa pela área (ver Subdivisions._population_weight).
+## Population of the first-level units, in millions, where the number is known: IBGE census of 2022 and US
+## census of 2020, rounded. The rest of the world uses an estimate by area (see Subdivisions._population_weight).
 const UNIT_POPULATION := {
 	"BRA": {"São Paulo": 44.4, "Minas Gerais": 20.5, "Rio de Janeiro": 16.1, "Bahia": 14.1, "Paraná": 11.4, "Rio Grande do Sul": 10.9, "Pernambuco": 9.1, "Ceará": 8.8, "Pará": 8.1, "Santa Catarina": 7.6, "Goiás": 7.1, "Maranhão": 6.8, "Paraíba": 4.0, "Amazonas": 3.9, "Espírito Santo": 3.8, "Mato Grosso": 3.7, "Rio Grande do Norte": 3.3, "Piauí": 3.3, "Alagoas": 3.1, "Distrito Federal": 2.8, "Mato Grosso do Sul": 2.8, "Sergipe": 2.2, "Rondônia": 1.6, "Tocantins": 1.5, "Acre": 0.83, "Amapá": 0.73, "Roraima": 0.64},
 	"USA": {"California": 39.5, "Texas": 29.1, "Florida": 21.5, "New York": 20.2, "Pennsylvania": 13.0, "Illinois": 12.8, "Ohio": 11.8, "Georgia": 10.7, "North Carolina": 10.4, "Michigan": 10.1, "New Jersey": 9.3, "Virginia": 8.6, "Washington": 7.7, "Arizona": 7.2, "Massachusetts": 7.0, "Tennessee": 6.9, "Indiana": 6.8, "Maryland": 6.2, "Missouri": 6.2, "Wisconsin": 5.9, "Colorado": 5.8, "Minnesota": 5.7, "South Carolina": 5.1, "Alabama": 5.0, "Louisiana": 4.7, "Kentucky": 4.5, "Oregon": 4.2, "Oklahoma": 4.0, "Connecticut": 3.6, "Utah": 3.3, "Iowa": 3.2, "Nevada": 3.1, "Arkansas": 3.0, "Mississippi": 3.0, "Kansas": 2.9, "New Mexico": 2.1, "Nebraska": 2.0, "Idaho": 1.8, "West Virginia": 1.8, "Hawaii": 1.5, "New Hampshire": 1.4, "Maine": 1.4, "Rhode Island": 1.1, "Montana": 1.1, "Delaware": 1.0, "South Dakota": 0.9, "North Dakota": 0.8, "Alaska": 0.7, "District of Columbia": 0.7, "Vermont": 0.6, "Wyoming": 0.6},
 }
 static var _map_cache := {}
-## O mapa é lido por duas threads na abertura do jogo: a do mundo e a do mapa.
+## The map is read by two threads when the game opens: the world's and the map's.
 static var _map_lock := Mutex.new()
 static var _admin1_cache := {}
 static var _native_cache := {}
 static var _native_rects := {}
 static var _enclave_cache := {}
-## Nome de cada país em português, o original, por código ISO: a base da tradução dos nomes.
+## Name of each country in Portuguese, the original, by ISO code: the basis for translating names.
 static var _pt_names := {}
 
 
 static func load_countries() -> Array:
 	var f := FileAccess.open("res://data/countries.csv", FileAccess.READ)
-	# Sem o CSV não há países: melhor um erro claro que uma queda na thread do mundo.
+	# Without the CSV there are no countries: better a clear error than a crash on the world thread.
 	if f == null:
 		push_error("Dados dos países ausentes: res://data/countries.csv (%s)" % error_string(FileAccess.get_open_error()))
 		return []
@@ -51,14 +51,14 @@ static func load_countries() -> Array:
 	return rows
 
 
-## Nome do país em português (o msgid da tradução), ou o código, para um país que não está na tabela.
+## Country name in Portuguese (the translation msgid), or the code, for a country not in the table.
 static func country_name_pt(iso: String) -> String:
 	if _pt_names.is_empty():
 		load_countries()
 	return _pt_names.get(iso, iso)
 
 
-## O resultado é compartilhado: quem precisar mudar a lista deve trabalhar em uma cópia.
+## The result is shared: whoever needs to change the list must work on a copy.
 static func load_map() -> Dictionary:
 	_map_lock.lock()
 	if _map_cache.is_empty():
@@ -68,7 +68,7 @@ static func load_map() -> Dictionary:
 	return _map_cache
 
 
-## Contorno original de cada país no mapa: {iso: [anéis]}. Áreas neutras ficam em "".
+## Original outline of each country on the map: {iso: [rings]}. Neutral areas stay at "".
 static func native_rings() -> Dictionary:
 	if _native_cache.is_empty():
 		for feat: Dictionary in load_map().features:
@@ -80,8 +80,8 @@ static func native_rings() -> Dictionary:
 	return _native_cache
 
 
-## Anéis de outros países inteiramente dentro deste: [{"iso", "ring"}]. O mapa tem milhares de ilhas,
-## então as caixas ficam guardadas e o resultado de cada país só é calculado uma vez.
+## Rings of other countries entirely inside this one: [{"iso", "ring"}]. The map has thousands of islands,
+## so the boxes are kept and each country's result is only computed once.
 static func native_enclaves(iso: String) -> Array:
 	if _enclave_cache.has(iso):
 		return _enclave_cache[iso]
@@ -121,7 +121,7 @@ static func _flat_points(flat: Array) -> PackedVector2Array:
 	return pts
 
 
-## Unidades subnacionais do cenário. A leitura é única: as geometrias são compartilhadas entre partidas.
+## Subnational units of the scenario. Reading happens once: geometries are shared between matches.
 static func load_admin1() -> Dictionary:
 	if not _admin1_cache.is_empty():
 		return _admin1_cache
@@ -143,7 +143,7 @@ static func load_admin1() -> Dictionary:
 		arcs.append([int(a[0]), int(a[1]), _flat_points(a[2])])
 	var mun_arcs := _load_municipios(units)
 	var capitals := _load_capitals(units)
-	# Grade de busca por ponto; em cada célula, da menor para a maior, para enclaves ganharem no clique.
+	# Search grid by point; in each cell, from smallest to largest, so enclaves win on click.
 	var order := range(units.size())
 	order.sort_custom(func(x, y): return float(units[x].area) < float(units[y].area))
 	var grid := {}
@@ -161,8 +161,8 @@ static func load_admin1() -> Dictionary:
 	return _admin1_cache
 
 
-## Capitais nacionais: {iso: id da unidade}. Quando a capital não é uma província inteira, vira uma
-## unidade pequena dentro dela, depois de todas as outras na lista.
+## National capitals: {iso: unit id}. When the capital is not a whole province, it becomes a
+## small unit inside it, after all the others in the list.
 static func _load_capitals(units: Array) -> Dictionary:
 	var f := FileAccess.open("res://data/capitais.json", FileAccess.READ)
 	var raw: Dictionary = JSON.parse_string(f.get_as_text())
@@ -185,7 +185,7 @@ static func _load_capitals(units: Array) -> Dictionary:
 	return out
 
 
-## Municípios do Brasil: entram na mesma lista, como filhos dos estados. Devolve as divisas entre eles.
+## Municipalities of Brazil: they enter the same list, as children of the states. Returns the borders between them.
 static func _load_municipios(units: Array) -> Array:
 	var f := FileAccess.open("res://data/municipios.json", FileAccess.READ)
 	var raw: Dictionary = JSON.parse_string(f.get_as_text())

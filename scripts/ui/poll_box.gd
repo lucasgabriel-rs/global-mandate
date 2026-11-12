@@ -1,9 +1,9 @@
 class_name PollBox
 extends VBoxContainer
-## Dois botões de pesquisa, cada um com o próprio preço, pagos com o fundo do partido do jogador.
+## Two poll buttons, each with its own price, paid for with the player's party fund.
 
 var world: GameWorld
-## Devolve a proposta a pesquisar, ou um dicionário vazio se ainda não há o que pesquisar.
+## Returns the proposal to poll, or an empty dictionary if there is nothing to poll yet.
 var target: Callable
 var _connected := false
 

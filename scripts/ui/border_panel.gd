@@ -1,8 +1,8 @@
 class_name BorderPanel
 extends PanelContainer
-## Demarcação de fronteiras com o mesmo desenho por vértices das unidades subnacionais.
-## Existe apenas em duas situações: o jogador venceu uma guerra e escolhe o que manter,
-## ou a paz saiu sem vencedor e os dois lados negociam novas fronteiras.
+## Border demarcation with the same vertex drawing as the subnational units.
+## It exists in only two situations: the player won a war and chooses what to keep,
+## or peace came with no winner and both sides negotiate new borders.
 
 signal banner_changed(text: String, is_error: bool)
 signal finished
@@ -15,7 +15,7 @@ var map: MapView
 var active := false
 
 var _session := {}
-## Cada área fechada: {"claim": [peças do rival], "offer": [peças do jogador]}.
+## Each closed area: {"claim": [rival's pieces], "offer": [player's pieces]}.
 var _areas: Array = []
 
 @onready var _info: Label = %info
@@ -89,7 +89,7 @@ func _on_closed(points: PackedVector2Array) -> void:
 	var offer := []
 	if _session.kind == "negotiation":
 		offer = _minus_all(t.clip_to(points, world.player, world), _all("offer"))
-		# Um traçado é pedido ou oferta, nunca os dois: vale o lado onde cai a maior parte.
+		# A path is a claim or an offer, never both: the side where most of it falls counts.
 		if Subdivisions.total_area(offer) > Subdivisions.total_area(claim):
 			claim = []
 		else:
@@ -173,7 +173,7 @@ func _on_rejected(msg: String) -> void:
 		banner_changed.emit(msg, true)
 
 
-## Esc só descarta o polígono em andamento; a sessão continua até o jogador decidir.
+## Esc only discards the polygon in progress; the session continues until the player decides.
 func _on_cancelled() -> void:
 	if active and map.draft_owner == "border":
 		_start_draft()

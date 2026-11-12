@@ -1,18 +1,18 @@
 class_name CodeCivil
 extends LawCode
-## Código Civil: Família, casamento, propriedade, contratos, herança e empresas.
+## Civil Code: Family, marriage, property, contracts, inheritance and companies.
 ##
-## O que vale fica em `standing.codes` como "civil:<item>". Todo mês o código mede a segurança
-## jurídica (`c.code_stats["seguranca_juridica"]`, 0-1): propriedade, contratos, falência e o tempo
-## para abrir uma empresa. Ela puxa o investimento; a burocracia puxa a produtividade.
+## What applies stays in `standing.codes` as "civil:<item>". Every month the code measures legal
+## security (`c.code_stats["seguranca_juridica"]`, 0-1): property, contracts, bankruptcy and the time
+## to open a company. It pulls investment; bureaucracy pulls productivity.
 
-## Nota de cada escolha na segurança jurídica, de 0 a 1.
+## Score of each choice on legal security, from 0 to 1.
 const PROPERTY_SCORE := {"indenizacao_previa": 0.95, "titulos": 0.6, "sem_indenizacao": 0.15}
 const CONTRACT_SCORE := {"ampla": 0.9, "dirigida": 0.7, "restrita": 0.3}
 const BANKRUPTCY_SCORE := {"recuperacao": 0.85, "liquidacao": 0.7, "sem_protecao": 0.35}
-## A segurança jurídica anda esta fração do caminho até o alvo a cada mês: confiança demora.
+## Legal security moves this fraction of the way to the target each month: trust takes time.
 const TRUST_PACE := 0.08
-## Procedimentos para abrir empresa que não pesam na produtividade.
+## Procedures to open a company that do not weigh on productivity.
 const FREE_STEPS := 6.0
 
 
@@ -51,8 +51,8 @@ func choices() -> Dictionary:
 	}
 
 
-## O texto com que o país começa: países ricos abrem empresa rápido e protegem contratos; regimes
-## fechados desapropriam sem pagar; sociedades progressistas casam e divorciam com menos amarras.
+## The text the country starts with: rich countries open companies quickly and protect contracts; closed
+## regimes expropriate without paying; progressive societies marry and divorce with fewer constraints.
 func seed_program(world: GameWorld, c: Country) -> Dictionary:
 	var lean := CodePenal._lean(world, c)
 	var social := float(lean.social)
@@ -87,7 +87,7 @@ func seed_program(world: GameWorld, c: Country) -> Dictionary:
 	CodePenal._add(program, list, "cv_contracts", {"level": contracts})
 	if right < 0.0 or gdp_pc < 8000.0:
 		CodePenal._add(program, list, "cv_usury", {"rate": 12 if right < -0.3 else 24})
-	# Mais rico, mais rápido: de uns 60 dias em países pobres a uma semana nos ricos.
+	# Richer, faster: from about 60 days in poor countries to a week in rich ones.
 	var days := roundi(clampf(70.0 - log(maxf(gdp_pc, 500.0) / 1000.0) * 15.0, 5.0, 90.0))
 	var steps := roundi(clampf(days / 6.0, 3.0, 14.0))
 	CodePenal._add(program, list, "cv_business", {"days": days, "steps": steps})
@@ -139,7 +139,7 @@ func monthly(world: GameWorld, c: Country, leg: Legislation) -> Dictionary:
 	var days := float(business.days)
 	var steps := float(business.steps)
 	var opening := 1.0 - clampf((days - 5.0) / 115.0, 0.0, 1.0)
-	# Juro tabelado baixo demais seca o crédito; usucapião rápido e prescrição curta inseguram o dono.
+	# An interest rate cap that is too low dries up credit; quick adverse possession and short statutes of limitation make the owner insecure.
 	var usury := 1.0
 	if law.has("juros_max"):
 		usury = clampf(float(law.juros_max.rate) / 0.2, 0.3, 1.0)
@@ -152,7 +152,7 @@ func monthly(world: GameWorld, c: Country, leg: Legislation) -> Dictionary:
 	trust = clampf(trust + (target - trust) * TRUST_PACE, 0.0, 1.0)
 	c.code_stats["seguranca_juridica"] = trust
 	c.code_stats["dias_abrir_empresa"] = days
-	# Família: o eleitor gosta de leis próximas do que pensa; quem se afasta perde aprovação.
+	# Family: voters like laws close to what they think; whoever drifts away loses approval.
 	var social := float(CodePenal._lean(world, c).social)
 	var liberal := 0.0
 	liberal += float({"casamento": 1.0, "uniao_civil": 0.4, "proibida": -0.6}.get(String(law.get("mesmo_sexo", {}).get("status", "")), 0.0))

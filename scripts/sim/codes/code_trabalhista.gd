@@ -1,12 +1,12 @@
 class_name CodeTrabalhista
 extends LawCode
-## Código Trabalhista: Salário mínimo, jornada, férias, sindicatos, greve e previdência.
+## Labor Code: Minimum wage, working hours, vacation, unions, strikes and pensions.
 ##
-## O efeito de cada mês é medido contra o texto original do código (a primeira versão da norma): o país
-## começa como o jogo foi calibrado, e só o que o jogador muda pesa. O salário mínimo grava em
-## `standing.minwage`, o mesmo lugar do bloco avançado, e o efeito dele fica em `Legislation._update_macro`.
+## Each month's effect is measured against the code's original text (the first version of the norm): the country
+## starts as the game was calibrated, and only what the player changes weighs. The minimum wage writes to
+## `standing.minwage`, the same place as the advanced block, and its effect lives in `Legislation._update_macro`.
 
-## Bloco → item guardado em `standing.codes` ("trabalhista:item"). A greve tem um item por setor.
+## Block → item stored in `standing.codes` ("trabalhista:item"). Strikes have one item per sector.
 const ITEMS := {
 	"tb_minwage": "salario_minimo", "tb_hours": "jornada", "tb_overtime": "horas_extras", "tb_vacation": "ferias",
 	"tb_13th": "decimo_terceiro", "tb_fgts": "fgts", "tb_severance": "indenizacao", "tb_unemp_ins": "seguro_desemprego",
@@ -56,12 +56,12 @@ func choices() -> Dictionary:
 	}
 
 
-## Quanto o país é rico, de 0 (US$ 1 mil por pessoa) a 1 (US$ 60 mil).
+## How rich the country is, from 0 (US$ 1 thousand per person) to 1 (US$ 60 thousand).
 static func wealth(c: Country) -> float:
 	return clampf(log(maxf(c.gdp_pc(), 1.0) / 1000.0) / log(60.0), 0.0, 1.0)
 
 
-## Os valores com que o país começa: proteções crescem com a renda; regimes fechados controlam sindicatos e greves.
+## The values the country starts with: protections grow with income; closed regimes control unions and strikes.
 func _defaults(c: Country) -> Dictionary:
 	var f := wealth(c)
 	var lam := c.region == "LAM"
@@ -140,16 +140,16 @@ func apply(_world: GameWorld, leg: Legislation, op: String, values: Dictionary, 
 	if item == "" or weight <= 0.0:
 		return ""
 	if op == "tb_minwage":
-		# O mesmo lugar do bloco avançado: quem tiver a prioridade maior fica com a vaga, e o efeito não soma duas vezes.
+		# The same place as the advanced block: whoever has the higher priority takes the slot, and the effect does not add twice.
 		leg._stand("minwage", "valor", {"value": float(values.amount)}, norm_id, prio)
 		return tr("salário mínimo de US$ %d") % roundi(float(values.amount))
 	leg.stand(id + ":" + item, values.duplicate(), norm_id, prio)
 	return ""
 
 
-# --- Efeito mensal -----------------------------------------------------------------------
+# --- Monthly effect -----------------------------------------------------------------------
 
-## Os valores de um programa (a versão original do código, por exemplo), por item.
+## The values of a program (the code's original version, for example), by item.
 func _read_program(program: Dictionary) -> Dictionary:
 	var out := {}
 	for block: Dictionary in LawProgram.all_blocks(program):
@@ -159,12 +159,12 @@ func _read_program(program: Dictionary) -> Dictionary:
 	return out
 
 
-## Base: o texto original do código. Atual: o que está em vigor; o que faltar, vale a base.
+## Base: the code's original text. Current: what is in force; what is missing, the base applies.
 func _base_and_current(world: GameWorld, c: Country, leg: Legislation) -> Array:
 	var norm := leg.code_norm(id)
 	var held := leg.code_standing(id)
 	if held.is_empty() and not norm.is_empty():
-		# O código semeado no começo da partida nunca disparou "ao entrar em vigor": dispara agora, uma vez.
+		# The code seeded at the start of the match never fired "on taking effect": it fires now, once.
 		leg.fire(world, "ev_enact", {"only": int(norm.id)})
 		held = leg.code_standing(id)
 	if norm.is_empty() and held.is_empty():
@@ -179,7 +179,7 @@ func _base_and_current(world: GameWorld, c: Country, leg: Legislation) -> Array:
 	return [base, current]
 
 
-## Rigidez do mercado de trabalho, de 0 (tudo livre) a 1 (tudo protegido).
+## Labor market rigidity, from 0 (everything free) to 1 (everything protected).
 static func rigidity(v: Dictionary) -> float:
 	var r := 0.0
 	r += clampf((48.0 - float(v.jornada.hours)) / 16.0, -0.2, 1.0) * 0.12
@@ -198,16 +198,16 @@ static func rigidity(v: Dictionary) -> float:
 	return clampf(r, 0.0, 1.0)
 
 
-## Proporção de idosos com benefício: contribuição longa, informalidade e app sem vínculo deixam gente de fora.
+## Share of the elderly with a benefit: long contribution, informality and gig work with no bond leave people out.
 static func pension_coverage(c: Country, v: Dictionary) -> float:
 	var cover := 0.25 + 0.65 * wealth(c) - (float(v.aposentadoria.years) - 15.0) * 0.012
 	cover += {"autonomo": -0.03, "hibrido": 0.0, "empregado": 0.03}.get(String(v.aplicativos.mode), 0.0)
 	return clampf(cover, 0.05, 0.98)
 
 
-## Déficit da previdência, em % do PIB: anos de benefício pagos contra anos de contribuição.
+## Pension deficit, in % of GDP: years of benefit paid against years of contribution.
 static func pension_deficit(c: Country, v: Dictionary) -> float:
-	# Expectativa de vida de quem chega aos 60, não a do nascimento.
+	# Life expectancy of those who reach 60, not at birth.
 	var life := 72.0 + 12.0 * wealth(c)
 	var age := (float(v.aposentadoria.men) + float(v.aposentadoria.women)) / 2.0
 	var paid := maxf(life - age, 3.0)
@@ -216,22 +216,22 @@ static func pension_deficit(c: Country, v: Dictionary) -> float:
 	return pension_coverage(c, v) * (paid * 0.55 * generosity - (age - 20.0) * 0.12)
 
 
-## O que um conjunto de valores faz com o país, em níveis; o mês usa a diferença para a base.
+## What a set of values does to the country, in levels; the month uses the difference from the base.
 func _effects(c: Country, v: Dictionary) -> Dictionary:
 	var r := rigidity(v)
 	var free := c.dem >= 4.0
 	var e := {"unemp": r * 0.05, "invest": -r * 0.08, "inequality": -r * 0.03, "approval": r * (0.04 if free else 0.02), "stability": 0.0, "labor": 0.0, "evasion": 0.0}
 	var age := (float(v.aposentadoria.men) + float(v.aposentadoria.women)) / 2.0
 	e.labor = age * 0.004 + float(v.aposentadoria.years) * 0.001 - float(v.idade_minima.age) * 0.002 + float(v.jornada.hours) * 0.002 - float(v.ferias.days) * 0.0003
-	# Aposentar cedo agrada; trabalhar mais cedo não.
+	# Retiring early pleases; working earlier does not.
 	e.approval += -age * 0.002 - maxf(16.0 - float(v.idade_minima.age), 0.0) * 0.002
 	var wage_ratio := float(v.salario_minimo.amount) * 12.0 / maxf(c.gdp_pc() * 0.6, 1.0)
 	e.inequality += -minf(wage_ratio, 1.5) * 0.01
-	# Mínimo muito acima da produtividade empurra gente para a informalidade.
+	# A minimum far above productivity pushes people into informality.
 	e.evasion += maxf(wage_ratio - 0.8, 0.0) * 0.03 + r * 0.02
 	for s: String in STRIKE_SECTORS:
 		if String(v.get("greve_" + s, {}).get("mode", "minimo")) == "proibida" and free:
-			# Greve proibida não some: vira greve selvagem e protesto.
+			# A banned strike does not disappear: it becomes a wildcat strike and protest.
 			e.stability -= 0.008
 			e.approval -= 0.004
 	match String(v.sindicatos.mode):
@@ -258,7 +258,7 @@ func monthly(world: GameWorld, c: Country, leg: Legislation) -> Dictionary:
 	for key: String in e_now:
 		out[key] = float(e_now[key]) - float(e_base[key])
 	var deficit := pension_deficit(c, now)
-	# A previdência mais cara ou mais barata que a original sai do Tesouro todo mês.
+	# A pension more or less expensive than the original comes out of the Treasury every month.
 	var extra := (deficit - pension_deficit(c, base)) / 100.0 * c.y_usd() / 12.0
 	if extra > 0.0:
 		Legislation._pay(c, extra)

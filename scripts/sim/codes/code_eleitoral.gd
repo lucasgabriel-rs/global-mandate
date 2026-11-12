@@ -1,17 +1,17 @@
 class_name CodeEleitoral
 extends LawCode
-## Código Eleitoral: Voto, idade eleitoral, financiamento de campanha, reeleição e cotas.
+## Electoral Code: Voting, electoral age, campaign financing, reelection and quotas.
 ##
-## A Constituição manda: o sistema (Art. 18), a cláusula de barreira mínima (Art. 20) e o mandato (Art. 4º)
-## são dela. O código só escolhe o sistema se a Constituição se cala, pode subir a barreira acima do
-## piso constitucional e registra o mandato do parlamento, que segue o da Constituição. `Elections.run` lê
-## as regras daqui por `rules_for`, e `Politics.player_election` respeita o limite de reeleição.
+## The Constitution rules: the system (Art. 18), the minimum electoral threshold (Art. 20) and the term (Art. 4)
+## are its own. The code only chooses the system if the Constitution is silent, may raise the threshold above the
+## constitutional floor and records parliament's term, which follows the Constitution's. `Elections.run` reads
+## the rules from here through `rules_for`, and `Politics.player_election` respects the reelection limit.
 
 const ITEMS := {
 	"el_vote": "voto", "el_age": "idade", "el_system": "sistema", "el_threshold": "barreira", "el_funding": "financiamento",
 	"el_reelection": "reeleicao", "el_term": "mandato", "el_quota": "cota", "el_ballot": "urna", "el_free_ads": "propaganda",
 }
-## Peso do fundo do partido no voto, por modelo de financiamento.
+## Weight of the party fund in the vote, by financing model.
 const MONEY_WEIGHT := {"publico": 0.0, "misto": 0.06, "privado_teto": 0.08, "privado": 0.15}
 const COMPULSORY := ["ARG", "AUS", "BEL", "BOL", "BRA", "ECU", "EGY", "LUX", "PER", "PRY", "SGP", "TUR", "URY", "THA"]
 const YOUTH_VOTE := ["ARG", "AUT", "BRA", "CUB", "ECU", "NIC", "MLT"]
@@ -110,14 +110,14 @@ func apply(_world: GameWorld, leg: Legislation, op: String, values: Dictionary, 
 	return ""
 
 
-# --- Regras para as eleições --------------------------------------------------------------
+# --- Rules for the elections --------------------------------------------------------------
 
-## O que está em vigor, com o texto original preenchendo o que faltar. Vazio sem código.
+## What is in force, with the original text filling in what is missing. Empty without a code.
 func _current(world: GameWorld, c: Country, leg: Legislation) -> Dictionary:
 	var norm := leg.code_norm(id)
 	var held := leg.code_standing(id)
 	if held.is_empty() and not norm.is_empty():
-		# O código semeado no começo da partida nunca disparou "ao entrar em vigor": dispara agora, uma vez.
+		# The code seeded at the start of the match never fired "on taking effect": it fires now, once.
 		leg.fire(world, "ev_enact", {"only": int(norm.id)})
 		held = leg.code_standing(id)
 	if norm.is_empty() and held.is_empty():
@@ -138,8 +138,8 @@ func _read_program(program: Dictionary) -> Dictionary:
 	return out
 
 
-## Regras do Código Eleitoral para a eleição de `c`, só no país do jogador. Vazio: vale o padrão do jogo.
-## {threshold (fração), system ("" se a Constituição decide), turnout (soma ao comparecimento),
+## Rules of the Electoral Code for the election of `c`, only in the player's country. Empty: the game default applies.
+## {threshold (fraction), system ("" if the Constitution decides), turnout (adds to turnout),
 ## compulsory, money_weight, reelection}.
 static func rules_for(world: GameWorld, c: Country) -> Dictionary:
 	if world == null or c == null or world.player != c or world.legislation == null or world.legislation.iso != c.iso:
@@ -153,12 +153,12 @@ static func rules_for(world: GameWorld, c: Country) -> Dictionary:
 	var turnout := 0.12 if compulsory else 0.0
 	turnout += 0.02 if bool(v.propaganda.on) else 0.0
 	turnout += 0.01 if String(v.urna.mode) == "eletronica" else 0.0
-	# Jovens votam menos: baixar a idade aumenta o eleitorado mais que os votos.
+	# Young people vote less: lowering the age increases the electorate more than the votes.
 	turnout -= clampf(18.0 - float(v.idade.age), 0.0, 4.0) * 0.005
 	var money := float(MONEY_WEIGHT.get(String(v.financiamento.mode), 0.06))
 	if bool(v.propaganda.on):
 		money *= 0.6
-	# A Constituição fixa o sistema; o código só decide se o artigo foi suprimido.
+	# The Constitution fixes the system; the code only decides if the article was suppressed.
 	var system := "" if String(leg.param("electoral_system", "")) != "" else String(v.sistema.system)
 	return {
 		"threshold": maxf(float(v.barreira.pct) / 100.0, float(leg.param("threshold", 0)) / 100.0),
@@ -167,7 +167,7 @@ static func rules_for(world: GameWorld, c: Country) -> Dictionary:
 	}
 
 
-## Pode o jogador disputar mais um mandato? Conta os mandatos que ele já ganhou no país.
+## Can the player run for another term? Counts the terms they have already won in the country.
 static func may_run_again(world: GameWorld) -> bool:
 	var rules := rules_for(world, world.player)
 	match String(rules.get("reelection", "ilimitada")):
@@ -178,7 +178,7 @@ static func may_run_again(world: GameWorld) -> bool:
 	return true
 
 
-# --- Efeito mensal -----------------------------------------------------------------------
+# --- Monthly effect -----------------------------------------------------------------------
 
 func _effects(c: Country, v: Dictionary) -> Dictionary:
 	var free := c.dem >= 4.0
@@ -209,7 +209,7 @@ func _effects(c: Country, v: Dictionary) -> Dictionary:
 	if bool(v.propaganda.on):
 		e.cost += 0.0001
 		e.approval += 0.002
-	# Barreira alta deixa pequenos fora do parlamento: menos partidos, mais queixa de quem ficou de fora.
+	# A high threshold leaves the small parties out of parliament: fewer parties, more complaints from those left out.
 	e.stability -= maxf(float(v.barreira.pct) - 5.0, 0.0) * 0.002
 	return e
 

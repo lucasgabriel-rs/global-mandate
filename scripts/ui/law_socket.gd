@@ -1,6 +1,6 @@
 class_name LawSocket
 extends Button
-## Campo de um bloco: mostra o valor digitado e aceita um bloco de valor ou de condição encaixado.
+## Field of a block: shows the typed value and accepts a value or condition block plugged in.
 
 var view: LawBlockView
 var field := ""
@@ -12,7 +12,7 @@ func setup(owner_view: LawBlockView, field_name: String, field_spec: Dictionary)
 	field = field_name
 	spec = field_spec
 	text = LawProgram.field_text(view.block, field, true) if view.block.fields.has(field) else "?"
-	# Campo de condição é sextavado, do formato da peça que entra nele.
+	# A condition field is hexagonal, in the shape of the piece that goes in it.
 	if spec.t == "bool":
 		for state: String in ["normal", "hover", "pressed"]:
 			var style := get_theme_stylebox(state).duplicate() as StyleBoxFlat

@@ -1,31 +1,31 @@
 class_name Economy
 extends RefCounted
-## Modelo macroeconômico semiestrutural: oferta de Solow (capital, trabalho, capital humano, PTF),
-## hiato do produto com demanda agregada, curva de Phillips com expectativas parcialmente
-## ancoradas, regra de Taylor, paridade de juros/PPC no câmbio, restrição orçamentária e dívida
-## com prêmio de risco endógeno, balanço de pagamentos e ciclo de crédito.
+## Semi-structural macroeconomic model: Solow supply (capital, labor, human capital, TFP),
+## output gap with aggregate demand, Phillips curve with partially anchored expectations,
+## Taylor rule, interest-rate/PPP parity in the exchange rate, budget constraint and debt
+## with endogenous risk premium, balance of payments and credit cycle.
 
 const ALPHA := 0.36
 const DELTA := 0.05
 const DT := 1.0 / 12.0
-## Democracias consolidadas e a zona do euro têm banco central independente; o resto responde ao governo.
+## Consolidated democracies and the euro area have an independent central bank; the rest answer to the government.
 const CB_INDEPENDENT_DEM := 6.0
 const KY := 3.0
 const OKUN := 0.40
 const KAPPA := 0.30
 const MAX_RATE := 1.2
 const RATINGS := ["AAA", "AA", "A", "BBB", "BB", "B", "CCC", "CC"]
-## Economias acima desta fatia do PIB mundial viram notícia quando entram em recessão ou mudam de nota.
+## Economies above this share of world GDP make news when they enter recession or change rating.
 const NEWS_SHARE := 0.02
-## Fundos soberanos de partida: [fração da renda de commodities, fração do superávit, saque anual máximo].
-## Noruega: toda a renda do petróleo e a regra dos 3%. China e Singapura vivem de superávits.
+## Starting sovereign funds: [share of commodity revenue, share of surplus, maximum annual withdrawal].
+## Norway: all the oil revenue and the 3% rule. China and Singapore live on surpluses.
 const SWF_POLICY := {
 	"NOR": [1.0, 0.0, 0.03], "SAU": [0.15, 0.3, 0.01], "ARE": [0.25, 0.3, 0.02], "KWT": [0.1, 0.5, 0.01],
 	"QAT": [0.2, 0.3, 0.02], "CHN": [0.0, 0.0, 0.0], "SGP": [0.0, 0.5, 0.02],
 }
-## Retorno real de longo prazo de uma carteira global; sacar acima disso come o principal.
+## Long-term real return of a global portfolio; withdrawing above it eats the principal.
 const SWF_SAFE_DRAW := 0.04
-## Controle de capitais de partida, 0-1.
+## Starting capital controls, 0-1.
 const CAP_CONTROLS := {"CHN": 0.6, "IND": 0.3, "ARG": 0.5, "VNM": 0.3}
 
 
@@ -43,7 +43,7 @@ static func init_country(c: Country, row: Dictionary, world: GameWorld) -> void:
 	c.gap = 0.0
 	c.tfp = gdp / (pow(c.capital, ALPHA) * pow(c.labor, 1.0 - ALPHA))
 	c.pc0 = gdp / c.pop
-	# PTF inicial implícita na tendência: em estado estacionário K cresce como Y.
+	# Initial TFP implied by the trend: in steady state K grows like Y.
 	c.g_tfp0 = maxf((1.0 - ALPHA) * (c.g0 - c.popg), -0.01)
 	c.inv_share0 = (DELTA + c.g0) * KY
 
@@ -57,7 +57,7 @@ static func init_country(c: Country, row: Dictionary, world: GameWorld) -> void:
 	c.cred = clampf(0.25 + 0.06 * c.dem + (0.2 if advanced else 0.0) - 0.6 * maxf(infl - 0.1, 0.0), 0.15, 0.95)
 	c.rate = row.rate / 100.0
 	c.rate_set = c.rate
-	# Juro neutro: tendência de crescimento, mais o prêmio que cada país já paga hoje.
+	# Neutral rate: trend growth, plus the premium each country already pays today.
 	c.r_n = 0.007 + 0.35 * c.g0 if advanced else 0.012 + 0.35 * c.g0
 	if infl < 0.15:
 		c.r_n = clampf(lerpf(c.r_n, c.rate - c.pi_e, 0.5), 0.003, 0.06)
@@ -71,7 +71,7 @@ static func init_country(c: Country, row: Dictionary, world: GameWorld) -> void:
 	c.dem = row.dem
 	c.peg = row.peg
 	c.cb_independent = c.dem >= CB_INDEPENDENT_DEM or c.peg == 2
-	# Bancos centrais ricos deixam o câmbio flutuar; emergentes seguram parte dos solavancos.
+	# Rich central banks let the exchange rate float; emerging ones hold back part of the jolts.
 	c.fx_lean = 0.05 if c.dem >= 7.5 else 0.3
 	c.reserves = maxf(row.res, 0.1)
 	c.swf = float(row.get("swf", 0.0))
@@ -106,7 +106,7 @@ static func init_country(c: Country, row: Dictionary, world: GameWorld) -> void:
 	c.avg_rate = clampf(c.rate * 0.6 + 0.02, 0.005, 0.25)
 	if c.iso == "JPN":
 		c.avg_rate = 0.008
-	# Dívida concessional: o serviço inicial não passa de ~1/4 da receita.
+	# Concessional debt: the initial service is at most ~1/4 of revenue.
 	c.avg_rate = minf(c.avg_rate, 0.25 * rev / maxf(c.debt_ratio, 0.01))
 
 	var target_deficit: float = row.def / 100.0
@@ -148,12 +148,12 @@ static func init_country(c: Country, row: Dictionary, world: GameWorld) -> void:
 
 
 static func _mil_stock_init(_c: Country, spend: float, pc: float) -> float:
-	# Ajuste PPC: países de renda baixa compram mais poder militar por dólar.
+	# PPP adjustment: low-income countries buy more military power per dollar.
 	var ppp := clampf(pow(60000.0 / maxf(pc, 500.0), 0.35), 1.0, 3.0)
 	return maxf(spend * ppp * 0.35 / 0.06, 0.1)
 
 
-## Completa o setor externo depois que os mercados de commodities foram montados.
+## Completes the external sector after the commodity markets have been set up.
 static func finish_init(c: Country, world: GameWorld) -> void:
 	var m := world.markets
 	var gdp := c.y
@@ -165,7 +165,7 @@ static func finish_init(c: Country, world: GameWorld) -> void:
 			comm_x += m.value_usd(i, net)
 		else:
 			comm_m += m.value_usd(i, -net)
-	# A tabela é aproximada: nunca deixa as exportações não-commodity abaixo de 2% do PIB.
+	# The table is approximate: it never lets non-commodity exports fall below 2% of GDP.
 	var total_x := maxf(c.x_share * gdp, comm_x + 0.02 * gdp)
 	var x_nc := total_x - comm_x
 	var m_total := total_x - c.ca0 * gdp
@@ -180,10 +180,10 @@ static func finish_init(c: Country, world: GameWorld) -> void:
 	c.imports = m_nc + comm_m
 	c.ca = c.ca0 * gdp
 	c.ca_ratio = c.ca0
-	# Parte da receita pública vem de renda de commodities (Golfo, Noruega, Angola...).
+	# Part of public revenue comes from commodity rents (Gulf, Norway, Angola...).
 	var rent := minf(comm_x * 0.55, c.tax0 * gdp * 0.75)
 	c.rent_take = rent / maxf(comm_x, 0.001)
-	# O fundo soberano fica com parte da renda e devolve o saque: o resto dos tributos fecha a conta de partida.
+	# The sovereign fund keeps part of the revenue and returns the withdrawal: the rest of the taxes closes the starting account.
 	var swf_net := c.swf * c.swf_limit - rent * c.swf_rent_share
 	c.rent_ref = rent
 	var new_tax := c.tax0 - rent / gdp - swf_net / gdp
@@ -199,7 +199,7 @@ static func finish_init(c: Country, world: GameWorld) -> void:
 	c.comm_exports = comm_x
 	for i in 5:
 		c.p_ref[i] = 1.0
-	# As contas do ano e a nota já valem no primeiro dia, antes da primeira etapa mensal.
+	# The year's accounts and the rating already apply on the first day, before the first monthly step.
 	_fiscal_flows(c)
 	c.swf_flow0 = (c.swf_in - c.swf_out) / maxf(c.y_usd(), 0.001)
 	c.res_ratio0 = c.reserves / maxf(c.y_usd(), 0.001)
@@ -225,7 +225,7 @@ static func step_month(c: Country, world: GameWorld) -> void:
 
 static func _supply(c: Country, world: GameWorld) -> void:
 	Demography.step_month(c, world)
-	# Oferta de trabalho responde à tributação da renda (elasticidade baixa).
+	# Labor supply responds to income taxation (low elasticity).
 	var tax_wedge := clampf((c.tax_income - c.tax0 * 0.45) * 0.25, -0.03, 0.08)
 	var labor := c.pop * Demography.labor_factor(c) * (1.0 - tax_wedge) * (1.0 - 0.12 * c.mobilization) * (1.0 + clampf(c.law_labor, -0.1, 0.05))
 
@@ -239,7 +239,7 @@ static func _supply(c: Country, world: GameWorld) -> void:
 	c.capital += (inv_share * c.y - DELTA * c.capital) * DT
 	c.capital = maxf(c.capital, c.y_pot * 0.8)
 
-	# Convergência: quanto mais rico em relação à própria base, menor o ganho fácil de PTF.
+	# Convergence: the richer relative to its own base, the smaller the easy TFP gain.
 	var pc_rel := (c.y / c.pop) / maxf(c.pc0, 0.001)
 	var converge := -0.006 * log(maxf(pc_rel, 0.2))
 	var edu_extra: float = c.sp_education - float(c.sp0.get("education", c.sp_education))
@@ -249,7 +249,7 @@ static func _supply(c: Country, world: GameWorld) -> void:
 	g_tfp += 0.012 * clampf(c.trade_loss, -0.3, 0.2)
 	g_tfp -= 0.012 * maxf(0.45 - c.stability, 0.0)
 	g_tfp += clampf(c.law_tfp, -0.01, 0.01)
-	# A desigualdade anda devagar até a base do país mais o que as leis empurram.
+	# Inequality moves slowly toward the country's base plus what the laws push.
 	c.inequality += (clampf(c.inequality0 + c.law_inequality, 0.2, 0.65) - c.inequality) * 0.02
 	c.human *= 1.0 + clampf(0.15 * edu_extra, -0.004, 0.006) * DT
 	c.tfp *= 1.0 + g_tfp * DT
@@ -261,12 +261,12 @@ static func _supply(c: Country, world: GameWorld) -> void:
 
 static func _demand(c: Country, world: GameWorld) -> void:
 	var m := world.markets
-	# Política monetária atua com defasagem (média móvel de ~9 meses do juro real).
+	# Monetary policy acts with a lag (moving average of ~9 months of the real rate).
 	var r := c.rate - c.pi_e
 	c.rgap += (clampf(r - c.r_n, -0.08, 0.15) - c.rgap) * 0.11
 	var monetary := -0.45 * c.rgap
 
-	# Impulso fiscal: efeito da VARIAÇÃO da postura; a referência se adapta em ~2 anos.
+	# Fiscal impulse: effect of the CHANGE in stance; the reference adapts in ~2 years.
 	var g := c.spend_total() + c.mobilization * 0.02 + c.law_spend
 	var t := c.tax_total() + c.law_tax
 	var mult_g := 0.9 if c.gap < -0.01 else 0.5
@@ -275,17 +275,17 @@ static func _demand(c: Country, world: GameWorld) -> void:
 	c.g_ref += (g - c.g_ref) * 0.04
 	c.t_ref += (t - c.t_ref) * 0.04
 
-	# Demanda externa ponderada pelos parceiros reais + atritos de comércio.
+	# External demand weighted by real partners + trade frictions.
 	var trade := world.diplomacy.trade_channel(c, world)
 	c.ext_demand = trade.x
 	c.trade_loss += (float(trade.loss) - c.trade0 - c.trade_loss) * 0.08
 	var openness := clampf(c.x_share, 0.0, 1.0)
-	# Portos e aeroportos saturados (logistics < 1) travam parte do comércio exterior.
+	# Saturated ports and airports (logistics < 1) block part of foreign trade.
 	var ext := openness * (1.1 * c.ext_demand + 0.8 * c.trade_loss + 0.3 * clampf(c.logistics - 1.0, -0.4, 0.2))
 	var rer_effect := clampf(0.5 * openness * log(c.rer / c.rer_ref), -0.06, 0.06)
 	c.rer_ref += (c.rer - c.rer_ref) * 0.01
 
-	# Termos de troca: variação de preço ponderada pela posição líquida em cada commodity.
+	# Terms of trade: price change weighted by the net position in each commodity.
 	var tot := 0.0
 	for i in 5:
 		var rel := m.relative_price(i, world)
@@ -293,7 +293,7 @@ static func _demand(c: Country, world: GameWorld) -> void:
 		c.p_ref[i] += (rel - c.p_ref[i]) * 0.012
 		tot += net_val / maxf(c.y0 * (c.y / c.y0), 0.001) * (rel - c.p_ref[i])
 	tot = clampf(tot * 0.45, -0.08, 0.1)
-	# Escassez de chips e energia é choque de oferta mesmo para quem tem saldo neutro.
+	# Chip and energy shortages are a supply shock even for those with a neutral balance.
 	var shortage := -0.012 * maxf(log(maxf(m.relative_price(Markets.CHIP, world) / c.p_ref[Markets.CHIP], 0.1)), 0.0)
 	shortage -= 0.012 * maxf(log(maxf(m.relative_price(Markets.OIL, world) / c.p_ref[Markets.OIL], 0.1)), 0.0)
 
@@ -304,7 +304,7 @@ static func _demand(c: Country, world: GameWorld) -> void:
 	c.noise += -c.noise * 0.08 + world.rng.randfn(0.0, 0.0022)
 
 	var target := monetary + fiscal + ext + rer_effect + tot + shortage + confidence + credit + risk_drag + c.demand_shock
-	# O juro neutro já inclui a tendência; hiato positivo não se sustenta sem estímulo.
+	# The neutral rate already includes the trend; a positive gap does not sustain itself without stimulus.
 	c.gap += (clampf(target, -0.4, 0.12) - c.gap) * 0.13 + c.noise * 0.35
 	c.gap = clampf(c.gap, -0.45, 0.13)
 	c.y = c.y_pot * (1.0 + c.gap)
@@ -312,7 +312,7 @@ static func _demand(c: Country, world: GameWorld) -> void:
 
 static func _prices(c: Country, world: GameWorld) -> void:
 	var m := world.markets
-	# Âncora de expectativas: mistura meta crível com inflação observada.
+	# Expectations anchor: mixes a credible target with observed inflation.
 	var anchor := c.cred * c.pi_target + (1.0 - c.cred) * c.pi_yoy
 	c.pi_e += (anchor - c.pi_e) * 0.09
 	var mon_push := 0.0
@@ -321,9 +321,9 @@ static func _prices(c: Country, world: GameWorld) -> void:
 		mon_push = 2.2 * financed * maxf(c.deficit / maxf(c.y_nominal(), 0.001), 0.0)
 	var core_target := c.pi_e + KAPPA * c.gap + mon_push + 0.08 * maxf(c.occupied - c.occ0, 0.0) + 0.04 * c.unrest
 	c.pi_core += (clampf(core_target, -0.03, 6.0) - c.pi_core) * 0.11
-	# Inflação em moeda dos insumos importados passa ao índice como choque de nível.
+	# Local-currency inflation of imported inputs passes to the index as a level shock.
 	var poor := clampf(1.0 - c.gdp_pc() / 30000.0, 0.0, 1.0)
-	# Peso da matéria-prima no índice: repasse parcial ao varejo, maior em países pobres.
+	# Weight of raw materials in the index: partial pass-through to retail, larger in poor countries.
 	var w_energy := 0.025
 	var w_food := 0.015 + 0.07 * poor
 	var hist_oil: float = c.hist.get("_poil", m.price[Markets.OIL])
@@ -335,7 +335,7 @@ static func _prices(c: Country, world: GameWorld) -> void:
 	var e_last: float = c.hist.get("_e", c.e)
 	var depr := log(c.e / e_last)
 	c.hist["_e"] = c.e
-	# Só a depreciação acima da paridade de poder de compra gera repasse adicional.
+	# Only depreciation above purchasing power parity generates additional pass-through.
 	var ppp_trend := (log(1.0 + c.pi_core) - log(1.0 + world.usa.pi_core)) * DT
 	var openness := clampf(c.m_share + 0.08, 0.05, 0.7)
 	var passthrough := 0.35 * openness / 0.3
@@ -347,11 +347,11 @@ static func _prices(c: Country, world: GameWorld) -> void:
 	if c.p_hist.size() > 13:
 		c.p_hist = c.p_hist.slice(c.p_hist.size() - 13)
 	c.pi_yoy = c.p / c.p_hist[0] - 1.0
-	# Credibilidade se ganha devagar e se perde rápido.
+	# Credibility is gained slowly and lost fast.
 	var miss := absf(c.pi_yoy - c.pi_target)
 	var d_cred := 0.004 if miss < 0.015 else -clampf((miss - 0.015) * 0.03, 0.0, 0.015)
 	d_cred -= c.mon_fin * 0.015
-	# Plano de estabilização: juro real alto com recessão sinaliza compromisso.
+	# Stabilization plan: high real rate with recession signals commitment.
 	if c.pi_yoy > 0.2 and c.rate - c.pi_e > 0.03:
 		d_cred += 0.012
 	c.cred = clampf(c.cred + d_cred, 0.08, 0.97)
@@ -385,10 +385,10 @@ static func _exchange(c: Country, world: GameWorld) -> void:
 	c.rer = c.e * us.p / c.p
 
 
-## Câmbio flutuante. Paridade descoberta: i = i* + Δeᵉ + prêmio de risco, então a depreciação esperada é
-## i - i* - prêmio. O nível pula para que o retorno esperado em moeda forte se iguale; o banco central
-## vende ou compra reservas para segurar parte do movimento; capital foge quando o risco sobe e a
-## dolarização tira força do juro.
+## Floating exchange rate. Uncovered parity: i = i* + Δeᵉ + risk premium, so expected depreciation is
+## i - i* - premium. The level jumps so that the expected return in hard currency equalizes; the central bank
+## sells or buys reserves to hold back part of the move; capital flees when risk rises and
+## dollarization takes strength away from the interest rate.
 static func _float_exchange(c: Country, world: GameWorld) -> void:
 	var us := world.usa
 	var yusd := c.y_usd()
@@ -397,15 +397,15 @@ static func _float_exchange(c: Country, world: GameWorld) -> void:
 	c.uip_dep = c.rate - us.rate - premium
 	var rd := (c.rate - c.pi_e - c.r_n) - (us.rate - us.pi_e - us.r_n)
 	var ppp := log(c.p / us.p)
-	# O fundo soberano aplica fora: a renda que ele guarda não entra no mercado de câmbio.
+	# The sovereign fund invests abroad: the revenue it keeps does not enter the foreign exchange market.
 	var fund := (c.swf_in - c.swf_out) / maxf(c.e, 0.001) / maxf(yusd, 0.001) - c.swf_flow0
 	var target := ppp - 1.1 * (1.0 - 0.6 * c.dollarization) * clampf(rd, -0.15, 0.2) - 0.7 * clampf(c.ca_ratio - c.ca0 - fund, -0.2, 0.2)
 	target += 1.6 * clampf(c.risk - c.risk0, -0.03, 0.4) + 0.6 * clampf(world.global_risk - 0.2, -0.2, 0.8) * (0.0 if c.debt_tol > 0.9 else 0.25)
 	target += 0.8 * c.cap_flight / maxf(yusd, 0.001)
 	var le := log(c.e)
 	var pressure := (target - le) * 0.10
-	# Intervenção: o banco central segura o desvio, não a tendência que a inflação já explica, e só vende
-	# o que as reservas permitem (3 meses de importação = folga plena).
+	# Intervention: the central bank holds back the deviation, not the trend that inflation already explains, and only sells
+	# what the reserves allow (3 months of imports = full slack).
 	var dev := pressure - (c.pi_yoy - us.pi_yoy) * DT
 	var lean := clampf(c.fx_lean, 0.0, 1.0)
 	var cover := c.reserves / maxf(c.imports / 12.0, 0.001)
@@ -413,8 +413,8 @@ static func _float_exchange(c: Country, world: GameWorld) -> void:
 		lean *= clampf(cover / 3.0, 0.0, 1.0)
 	var held := 0.8 * lean * dev
 	var sold := held * yusd * 0.6 + c.cap_flight * lean * DT
-	# Fora das crises, quem intervém recompõe (ou devolve) devagar o colchão de partida, que cresce com o
-	# PIB em dólar. No câmbio livre o banco central não mexe nas reservas.
+	# Outside crises, whoever intervenes slowly rebuilds (or returns) the starting cushion, which grows with
+	# GDP in dollars. With a free exchange rate the central bank does not touch reserves.
 	sold -= (c.res_ratio0 * yusd - c.reserves) * 0.15 * DT * clampf(c.fx_lean / 0.3, 0.0, 1.0)
 	sold = minf(sold, c.reserves)
 	c.reserves = maxf(c.reserves - sold, 0.0)
@@ -423,7 +423,7 @@ static func _float_exchange(c: Country, world: GameWorld) -> void:
 	c.e = exp(le)
 
 
-## Fuga de capitais (anualizada, US$ bi) e dolarização, que sobe rápido com inflação alta e desce devagar.
+## Capital flight (annualized, US$ bn) and dollarization, which rises fast with high inflation and falls slowly.
 static func _capital_flight(c: Country, world: GameWorld, yusd: float) -> void:
 	var fear := (c.risk - c.risk0) * 8.0 + 3.0 * maxf(c.pi_yoy - 0.15, 0.0) + 0.5 * maxf(world.global_risk - 0.3, 0.0) + 0.5 * maxf(c.uip_dep * -1.0 - 0.05, 0.0)
 	c.cap_flight = clampf(fear, 0.0, 1.0) * 0.06 * yusd * (1.0 - 0.85 * clampf(c.cap_controls, 0.0, 1.0)) * (1.0 + c.dollarization)
@@ -455,16 +455,16 @@ static func _external(c: Country, world: GameWorld) -> void:
 	c.ca = c.exports - c.imports - fx_interest * 0.6 + c.ca_resid * (yusd / maxf(c.y0, 0.001)) + c.aid_flow - c.reparations
 	c.ca_ratio = c.ca / maxf(yusd, 0.001)
 
-	# Reservas: âncora absorve o balanço; flutuante intervém pouco.
+	# Reserves: the peg absorbs the balance; a float intervenes little.
 	var cap_flow := 0.0
 	if c.peg == 1:
 		_capital_flight(c, world, yusd)
 		cap_flow = clampf((c.rate - world.usa.rate - c.risk * 0.5) * 2.0, -0.08, 0.08) * yusd * (1.0 - 0.7 * c.cap_controls)
-		# Na âncora o banco central compra e vende tudo que for preciso ao câmbio fixo.
+		# Under the peg the central bank buys and sells whatever is needed at the fixed rate.
 		c.fx_interv = -(c.ca + cap_flow) * 0.5 + c.cap_flight
 		c.reserves += (c.ca + cap_flow - c.cap_flight * 2.0) * 0.5 * DT
 	elif c.peg == 0:
-		# Flutuante: o câmbio e o capital estrangeiro fecham o balanço; a intervenção sai em `_float_exchange`.
+		# Float: the exchange rate and foreign capital close the balance; the intervention comes out in `_float_exchange`.
 		c.reserves += c.ca * 0.08 * (1.0 if c.ca > 0.0 else 0.0) * DT
 	c.reserves = maxf(c.reserves, 0.0)
 	if c.peg == 1 and c.reserves < c.imports / 12.0 * 0.7 and c.ca < 0.0:
@@ -502,7 +502,7 @@ static func _fiscal(c: Country, world: GameWorld) -> void:
 
 	c.risk = _risk_premium(c, world)
 	c.yield_gov = c.rate + 0.005 + c.risk
-	# Dívida rola em ~6 anos: o custo médio segue o rendimento de mercado com atraso.
+	# Debt rolls over in ~6 years: the average cost follows the market yield with a lag.
 	c.avg_rate += (c.yield_gov * c.yield_mult - c.avg_rate) * DT / 6.0
 	c.avg_fx += ((world.usa.rate + 0.005 + minf(c.risk, 0.25)) * c.yield_mult - c.avg_fx) * DT / 6.0
 	_fund_month(c, world)
@@ -515,13 +515,13 @@ static func _fiscal(c: Country, world: GameWorld) -> void:
 	_check_default(c, world)
 
 
-## Receita, gasto, juros e déficit do ano, a partir das alíquotas e do gasto em vigor. Consome o dinheiro
-## avulso do mês (normas, estatais, obras).
+## Revenue, spending, interest and deficit of the year, from the tax rates and spending in force. Consumes the loose
+## money of the month (norms, state companies, works).
 static func _fiscal_flows(c: Country) -> void:
 	var yn := c.y_nominal()
 	var yn_pot := c.y_pot * c.p
 	var tax_rate := c.tax_total()
-	# Curva de Laffer: acima de ~48% a evasão corrói a arrecadação. Elasticidade cíclica de 1,1.
+	# Laffer curve: above ~48% evasion erodes collection. Cyclical elasticity of 1.1.
 	var collection := clampf(1.0 - 2.2 * maxf(tax_rate - 0.48, 0.0) ** 1.3, 0.55, 1.0) * (1.0 - clampf(c.law_evasion, -0.05, 0.3)) * Corruption.collection_factor(c)
 	var tax_rev := tax_rate * yn * (1.0 + 0.1 * c.gap) * collection
 	var rent := c.comm_exports * c.e * c.rent_take
@@ -529,9 +529,9 @@ static func _fiscal_flows(c: Country) -> void:
 	c.revenue = tax_rev + rent + tariff_rev + c.aid_flow * c.e * 0.85 + (c.law_rev_bucket + c.extra_rev_bucket) * 12.0 * c.e
 
 	var prog := yn_pot * (c.sp_health + c.sp_education + c.sp_infra + c.sp_defense + c.sp_admin)
-	# Estabilizador automático: gasto social sobe quando há desemprego.
+	# Automatic stabilizer: social spending rises when there is unemployment.
 	var social := c.sp_social * yn_pot * (1.0 + 2.0 * clampf(c.unemp - c.unemp_n, -0.03, 0.2))
-	# Aposentadorias: mais idosos que no início pesam no gasto social.
+	# Pensions: more elderly people than at the start weigh on social spending.
 	social += Demography.pension_extra(c) * yn_pot
 	var war_cost := c.mobilization * 0.035 * yn_pot
 	c.interest = c.debt_loc * c.avg_rate + c.debt_fx * c.e * c.avg_fx
@@ -544,8 +544,8 @@ static func _fiscal_flows(c: Country) -> void:
 	_fund_flows(c, rent)
 
 
-## Aportes e saques do fundo soberano no ano, em moeda local. O saque segue a regra (fração do saldo) e,
-## quando a renda de commodities cai abaixo da média, cobre parte da queda até mais meio limite.
+## Sovereign fund contributions and withdrawals in the year, in local currency. The withdrawal follows the rule (share of the balance) and,
+## when commodity revenue falls below the average, covers part of the fall up to another half limit.
 static func _fund_flows(c: Country, rent: float) -> void:
 	c.swf_in = 0.0
 	c.swf_out = 0.0
@@ -560,8 +560,8 @@ static func _fund_flows(c: Country, rent: float) -> void:
 	c.deficit = c.spending - c.revenue
 
 
-## Um mês do fundo: aporte, saque e retorno da carteira global, 60% ações (segue a bolsa americana do
-## mês anterior) e 40% títulos (juro americano). Sacar acima do retorno seguro tira aprovação.
+## One month of the fund: contribution, withdrawal and return of the global portfolio, 60% stocks (follows the US market of
+## the previous month) and 40% bonds (US rate). Withdrawing above the safe return takes away approval.
 static func _fund_month(c: Country, world: GameWorld) -> void:
 	c.rent_ref += (c.comm_exports * c.e * c.rent_take - c.rent_ref) * DT / 3.0
 	if not c.swf_active and c.swf <= 0.0:
@@ -590,7 +590,7 @@ static func _risk_premium(c: Country, world: GameWorld) -> float:
 	r += 0.04 * maxf(0.5 - c.stability, 0.0)
 	var cover := c.reserves / maxf(c.imports / 12.0, 0.001)
 	r += 0.006 * maxf(3.0 - cover, 0.0) * (0.0 if c.peg == 2 else 1.0)
-	# Um fundo soberano grande é colchão: paga a dívida externa se for preciso. Controle de capitais assusta.
+	# A large sovereign fund is a cushion: it pays the external debt if needed. Capital controls scare.
 	r -= 0.02 * clampf(c.swf / maxf(c.y_usd(), 0.001), 0.0, 1.5)
 	r += 0.004 * c.cap_controls
 	r += Corruption.risk_extra(c)
@@ -606,8 +606,8 @@ static func _risk_premium(c: Country, world: GameWorld) -> float:
 	return clampf(r, 0.0, 0.6)
 
 
-## A nota só muda quando o risco passa do limite com folga de 20%: agências não oscilam todo mês, e
-## um país perto de um limite não troca de nota a cada solavanco do risco global.
+## The rating only changes when risk passes the threshold with a 20% margin: agencies do not oscillate every month, and
+## a country near a threshold does not change rating at every jolt of global risk.
 static func _rating_for(c: Country) -> String:
 	var now := RATINGS.find(c.rating)
 	if now < 0:
@@ -635,7 +635,7 @@ static func _rating_from(s: float) -> String:
 static func _check_default(c: Country, world: GameWorld) -> void:
 	if world.year_float() < c.default_until:
 		return
-	# Juro real sobre a receita: inflação corrói a dívida local, e isso conta.
+	# Real interest on revenue: inflation erodes local debt, and that counts.
 	var erosion := maxf(c.pi_yoy, 0.0) * c.debt_loc
 	var burden := maxf(c.interest - erosion, 0.0) / maxf(c.revenue, 0.001)
 	var fx_ratio := c.debt_fx * c.e / maxf(c.y_nominal(), 0.001)
@@ -674,13 +674,13 @@ static func apply_imf(c: Country, world: GameWorld) -> void:
 	var loan := c.y_usd() * 0.08
 	c.reserves += loan
 	c.debt_fx += loan * 0.6
-	# Parte do programa reestrutura dívida antiga e reduz o peso de juros.
+	# Part of the program restructures old debt and reduces the weight of interest.
 	c.debt_loc *= 0.92
 	c.debt_fx *= 0.92
 	c.yield_mult = maxf(c.yield_mult * 0.8, 0.35)
 	c.avg_rate *= 0.85
 	c.imf_program = 36.0
-	# Condicionalidade: ajuste fiscal e câmbio flutuante.
+	# Conditionality: fiscal adjustment and a floating exchange rate.
 	c.sp_social *= 0.94
 	c.sp_admin *= 0.9
 	c.sp_infra *= 0.92
@@ -694,7 +694,7 @@ static func apply_imf(c: Country, world: GameWorld) -> void:
 static func _labor_and_politics(c: Country, world: GameWorld) -> void:
 	var u_target := c.unemp_n + c.law_unemp - OKUN * c.gap + 0.25 * c.mobilization * -0.1
 	c.unemp += (clampf(u_target, 0.005, 0.5) - c.unemp) * 0.1
-	# Histerese: desemprego prolongado eleva a taxa natural.
+	# Hysteresis: prolonged unemployment raises the natural rate.
 	c.unemp_n += (c.unemp - c.unemp_n) * 0.002
 
 	if c.imf_program > 0.0:
@@ -732,9 +732,9 @@ static func _labor_and_politics(c: Country, world: GameWorld) -> void:
 	c.conf += (clampf(0.35 + 0.4 * c.stability + 2.5 * clampf(growth - c.g0, -0.1, 0.05) - 1.2 * clampf(c.risk - c.risk0, 0.0, 0.3), 0.05, 1.0) - c.conf) * 0.08
 	Corporate.update_index(c, world, growth)
 
-	# Regimes fechados podem cair por golpe; democracias vão às urnas.
+	# Closed regimes may fall by coup; democracies go to the polls.
 	var yf := world.year_float()
-	# Na oposição, a eleição do país do jogador continua sendo tratada pelo mundo.
+	# In opposition, the election of the player's country is still handled by the world.
 	if c != world.player:
 		if c.dem >= 4.0 and yf >= c.next_election:
 			_ai_election(c, world)
@@ -763,7 +763,7 @@ static func _ai_coup(c: Country, world: GameWorld) -> void:
 
 
 static func _credit_cycle(c: Country, world: GameWorld) -> void:
-	# Ciclo de crédito (Schularick-Taylor): juro real baixo por muito tempo infla o crédito.
+	# Credit cycle (Schularick-Taylor): a low real rate for too long inflates credit.
 	var push := -0.5 * c.rgap + 0.4 * (c.growth_yoy() - c.g0) + 0.02 * (c.conf - 0.6)
 	c.credit_gap += (push - 0.14 * c.credit_gap) * DT
 	c.crisis_cooldown = maxf(c.crisis_cooldown - DT, 0.0)
@@ -780,7 +780,7 @@ static func banking_crisis(c: Country, world: GameWorld) -> void:
 	c.credit_gap = -0.1
 	c.crisis_cooldown = 8.0
 	c.conf = maxf(c.conf - 0.2, 0.05)
-	c.debt_loc += c.y_nominal() * severity * 1.2  # socorro aos bancos entra na dívida pública
+	c.debt_loc += c.y_nominal() * severity * 1.2  # bank rescue enters public debt
 	world.global_risk = clampf(world.global_risk + 0.5 * sqrt(c.y_usd() / world.world_gdp()), 0.0, 1.0)
 	world.emit_news(TranslationServer.translate("Crise bancária em %s: crédito congela e o Tesouro socorre bancos.") % c.name, "crise", c)
 
@@ -789,7 +789,7 @@ static func _newsworthy(c: Country, world: GameWorld) -> bool:
 	return c == world.player or c.y_usd() > world.world_gdp() * NEWS_SHARE
 
 
-## Recessão, inflação e juros do jogador viram manchete; de outras grandes economias, só a recessão.
+## Recession, inflation and interest of the player make headlines; for other large economies, only recession.
 static func _macro_news(c: Country, world: GameWorld) -> void:
 	var g := c.growth_yoy()
 	var s: PackedFloat32Array = c.hist.get("growth", PackedFloat32Array())
@@ -806,7 +806,7 @@ static func _macro_news(c: Country, world: GameWorld) -> void:
 		for limit: float in [0.1, 0.25, 0.5, 1.0]:
 			if c.pi_yoy > limit and infl[infl.size() - 1] <= limit:
 				world.emit_news(TranslationServer.translate("Inflação em %s passa de %s ao ano.") % [c.name, UiKit.pct(limit, 0)], "crise" if limit >= 0.25 else "economia", c)
-	# O banco central anuncia quando o juro já andou meio ponto desde o último anúncio.
+	# The central bank announces when the rate has moved half a point since the last announcement.
 	if c.rate_said < 0.0:
 		c.rate_said = c.rate
 	elif absf(c.rate - c.rate_said) >= 0.005:
@@ -822,8 +822,8 @@ static func _record(c: Country, world: GameWorld) -> void:
 	_push_series(c)
 
 
-## O ponto de partida de cada gráfico, para nenhum aparecer vazio no primeiro mês. O PIB real ("y") já
-## entra no início e mede o crescimento em 12 meses; não pode repetir.
+## The starting point of each chart, so none appears empty in the first month. Real GDP ("y") already
+## enters at the start and measures growth over 12 months; it must not repeat.
 static func record_start(c: Country) -> void:
 	_push_series(c)
 

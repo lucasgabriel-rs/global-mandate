@@ -1,12 +1,12 @@
 class_name CodeCambial
 extends LawCode
-## Lei Cambial e do Fundo Soberano: intervenção do banco central, controle de capitais e o fundo.
+## Exchange and Sovereign Fund Law: central bank intervention, capital controls and the fund.
 ##
-## O que vale fica em `standing.codes` como "cambial:<item>". Todo mês o código copia o que está em
-## vigor para o país (`fx_lean`, `cap_controls`, `swf_*`), que a economia usa. Sem fundo na lei, o
-## fundo para de receber aportes e de pagar saques, mas o saldo continua aplicado.
+## What applies stays in `standing.codes` as "cambial:<item>". Every month the code copies what is in
+## force to the country (`fx_lean`, `cap_controls`, `swf_*`), which the economy uses. Without a fund in the law, the
+## fund stops receiving contributions and paying withdrawals, but the balance stays invested.
 
-## Quanto o banco central segura do movimento do câmbio em cada escolha.
+## How much the central bank holds back of the exchange rate move in each choice.
 const LEAN := {"livre": 0.0, "suave": 0.3, "forte": 0.7}
 const CONTROLS := {"nenhum": 0.0, "imposto": 0.35, "cotas": 0.75}
 
@@ -36,7 +36,7 @@ func choices() -> Dictionary:
 	}
 
 
-## O texto inicial repete o que o país já faz; o fundo só aparece onde ele existe.
+## The initial text repeats what the country already does; the fund only appears where it exists.
 func seed_program(_world: GameWorld, c: Country) -> Dictionary:
 	var program := LawProgram.empty()
 	var stack := LawProgram.add_stack(program, LawProgram.new_block(program, "ev_enact"), Vector2(30, 30))
@@ -88,10 +88,10 @@ func monthly(world: GameWorld, c: Country, leg: Legislation) -> Dictionary:
 	if c.swf_active:
 		c.swf_rent_share = float(law.fundo.rent)
 		c.swf_surplus_share = float(law.fundo.surplus)
-		# Sem regra de saque na lei, o fundo só acumula.
+		# Without a withdrawal rule in the law, the fund only accumulates.
 		c.swf_limit = float(law.get("saque", {}).get("limit", 0.0))
 	c.code_stats["fundo_soberano"] = c.swf
-	# Controle de capitais afasta investimento estrangeiro.
+	# Capital controls drive away foreign investment.
 	return {"invest": -0.04 * c.cap_controls}
 
 

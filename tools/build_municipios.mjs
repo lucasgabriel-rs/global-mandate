@@ -1,8 +1,8 @@
-// Converte a malha municipal do Brasil (IBGE, via tbrugz/geodata-br) em data/municipios.json.
-// Uso: node tools/build_municipios.mjs   (a partir da raiz do projeto)
+// Converts the Brazilian municipal mesh (IBGE, via tbrugz/geodata-br) into data/municipios.json.
+// Usage: node tools/build_municipios.mjs   (from the project root)
 //
-// O código IBGE do município começa com o código do estado. Só as divisas entre municípios do
-// mesmo estado vão para "arcs": as divisas entre estados já vêm de data/admin1.json.
+// The IBGE municipality code starts with the state code. Only the borders between municipalities of the
+// same state go into "arcs": borders between states already come from data/admin1.json.
 import { readFileSync, writeFileSync } from "node:fs";
 import { project, area, centroid, key, buildArcs } from "./geo.mjs";
 
@@ -24,8 +24,8 @@ function insideRing(p, ring) {
   }
   return inside;
 }
-// A fonte guarda ilhas como anéis do mesmo polígono, e o continente nem sempre vem primeiro.
-// Cada anel é uma peça, exceto os que estão dentro de outro maior, que são furos.
+// The source stores islands as rings of the same polygon, and the mainland does not always come first.
+// Each ring is a piece, except those inside another larger one, which are holes.
 function outerRings(rings) {
   const sorted = [...rings].sort((a, b) => area(b) - area(a));
   const kept = [];
@@ -46,7 +46,7 @@ const output = units.map((u, i) => {
     const ring = simplifyRing(r, i).map(project).filter((p, k, arr) => k === 0 || key(p) !== key(arr[k - 1]));
     if (ring.length >= 3) pieces.push(ring);
   }
-  // Município pequeno demais para a tolerância: usa o anel original, só projetado.
+    // Municipality too small for the tolerance: uses the original ring, only projected.
   if (!pieces.length) pieces = u.rings.filter((r) => r.length >= 3).map((r) => r.map(project));
   const flat = pieces.flat();
   const xs = flat.map((p) => p[0]), ys = flat.map((p) => p[1]);

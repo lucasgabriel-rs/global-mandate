@@ -1,7 +1,7 @@
 class_name SettingsMenu
 extends Control
-## Janela de configurações: idioma, modo de janela, sincronia vertical e escala da interface.
-## Cada mudança vale na hora e fica guardada em GameSettings. Quem abre a janela ouve `closed`.
+## Settings window: language, window mode, vertical sync and interface scale.
+## Each change applies at once and is kept in GameSettings. Whoever opens the window listens to `closed`.
 
 signal closed
 
@@ -22,7 +22,7 @@ func _ready() -> void:
 	_vsync.toggled.connect(func(on: bool):
 		GameSettings.vsync = on
 		_changed())
-	# O valor só vale ao soltar o controle: mudar a escala a cada pixel arrastado refaz a tela inteira.
+	# The value only applies on releasing the control: changing the scale at every dragged pixel redoes the whole screen.
 	_scale.value_changed.connect(func(v: float): _scale_value.text = "%d%%" % roundi(v * 100.0))
 	_scale.drag_ended.connect(func(changed: bool):
 		if changed:

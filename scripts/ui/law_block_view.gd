@@ -1,6 +1,6 @@
 class_name LawBlockView
 extends PanelContainer
-## Um bloco na tela. Só desenha e entrega os gestos ao editor: quem muda o programa é o LawEditor.
+## A block on screen. It only draws and hands the gestures to the editor: whoever changes the program is LawEditor.
 
 const BLOCK_PATH := "res://scenes/ui/legislation/law_block.tscn"
 const TEXT := preload("res://scenes/ui/legislation/law_text.tscn")
@@ -8,7 +8,7 @@ const SOCKET := preload("res://scenes/ui/legislation/law_socket.tscn")
 const SLOT := preload("res://scenes/ui/legislation/law_slot.tscn")
 const SELECTED_BORDER := Color.WHITE
 const ERROR_BORDER := Color("ec5a43")
-## Encaixe das peças: onde começa o dente, largura, profundidade e inclinação das laterais.
+## Fit of the pieces: where the tooth starts, width, depth and slant of the sides.
 const NOTCH_X := 12.0
 const NOTCH_W := 20.0
 const NOTCH_D := 5.0
@@ -18,7 +18,7 @@ const PIECE_RADIUS := 11
 
 var editor: LawEditor
 var block := {}
-## Na biblioteca o bloco é só um molde: arrastar cria uma cópia nova.
+## In the library the block is only a template: dragging creates a new copy.
 var in_library := false
 var _head: HBoxContainer
 var _color := Color("555555")
@@ -31,7 +31,7 @@ func setup(owner_editor: LawEditor, data: Dictionary, library := false) -> void:
 	block = data
 	in_library = library
 	_head = get_node("%head")
-	# A boca dos blocos de controle depende de onde a coluna põe cada parte: redesenha quando ela se arruma.
+	# The mouth of the control blocks depends on where the column puts each part: redraws when it settles.
 	var parts: Container = get_node("%col")
 	if not parts.sort_children.is_connected(queue_redraw):
 		parts.sort_children.connect(queue_redraw)
@@ -74,7 +74,7 @@ func _paint(def: Dictionary) -> void:
 			_border = ERROR_BORDER
 		if int(block.id) == editor.selected_id:
 			_border = SELECTED_BORDER
-	# Valores são peças redondas; condições, sextavadas. As instruções se desenham sozinhas, com encaixe.
+	# Values are round pieces; conditions, hexagonal. Statements draw themselves, with a fit.
 	if _kind == "value" or _kind == "bool":
 		var style := UiKit.panel_style(_color, _border if _border.a > 0.0 else _color.darkened(0.3), PIECE_RADIUS, 5)
 		style.content_margin_left = 10.0
@@ -86,8 +86,8 @@ func _paint(def: Dictionary) -> void:
 	queue_redraw()
 
 
-## Peça de quebra-cabeça: chanfro em cima para receber o bloco anterior, dente embaixo para o próximo.
-## Blocos de controle têm a boca aberta para a direita, onde entram as instruções de dentro.
+## Jigsaw piece: bevel on top to receive the previous block, tooth below for the next one.
+## Control blocks have the mouth open to the right, where the statements inside go in.
 func _draw() -> void:
 	if _kind == "value" or _kind == "bool":
 		return
@@ -111,8 +111,8 @@ func _draw() -> void:
 		draw_rect(Rect2(Vector2.ZERO, size), _border, false, 2.0)
 
 
-## Uma faixa do bloco. `top_notch`: a faixa de cima recebe o dente do bloco anterior (o evento é o
-## topo da pilha e tem chapéu). `inner_x` > 0: a faixa tem uma boca embaixo, e o dente entra nela.
+## A strip of the block. `top_notch`: the top strip receives the previous block's tooth (the event is the
+## top of the stack and has a hat). `inner_x` > 0: the strip has a mouth below, and the tooth goes into it.
 func _band(r: Rect2, top_notch: bool, inner_x: float) -> void:
 	if r.size.y <= 0.0:
 		return
@@ -128,7 +128,7 @@ func _band(r: Rect2, top_notch: bool, inner_x: float) -> void:
 	else:
 		pts.append_array([Vector2(x0, y0), Vector2(x1, y0)])
 	pts.append(Vector2(x1, y1))
-	# Dente embaixo: na boca do bloco de controle, ou para o próximo bloco da pilha.
+	# Tooth below: in the mouth of the control block, or for the next block in the stack.
 	var tx := inner_x + NOTCH_X if inner_x > 0.0 else x0 + NOTCH_X
 	pts.append_array([Vector2(tx + NOTCH_W, y1), Vector2(tx + NOTCH_W - NOTCH_SLOPE, y1 + NOTCH_D), Vector2(tx + NOTCH_SLOPE, y1 + NOTCH_D), Vector2(tx, y1)])
 	pts.append(Vector2(x0, y1))

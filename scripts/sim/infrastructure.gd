@@ -1,22 +1,22 @@
 class_name Infrastructure
 extends RefCounted
-## Portos e aeroportos de cada país.
-## Contrato com o resto do jogo: escreve `Country.logistics` (1 = neutro) e soma em
-## `Country.sector_boost[Sectors.TRANSPORT]`, `[Sectors.TOURISM]` etc. Nunca toca em nós nem emite sinais:
-## roda na thread da simulação (notícias só por `world.emit_news`).
+## Ports and airports of each country.
+## Contract with the rest of the game: writes `Country.logistics` (1 = neutral) and adds to
+## `Country.sector_boost[Sectors.TRANSPORT]`, `[Sectors.TOURISM]` etc. Never touches nodes or emits signals:
+## runs on the simulation thread (news only through `world.emit_news`).
 ##
-## A demanda de um porto segue o comércio exterior do país; a de um aeroporto, o PIB e o turismo. A carga
-## procura primeiro a instalação de costume e transborda para as que têm folga. A saturação do país
-## (demanda / capacidade) define a logística: o efeito é medido contra a saturação do início do jogo, que já
-## está embutida no PIB de partida. Guerra danifica, ocupação fecha, obras ampliam.
+## A port's demand follows the country's foreign trade; an airport's, GDP and tourism. Cargo
+## first looks for its usual facility and spills over to those with spare capacity. The country's saturation
+## (demand / capacity) sets logistics: the effect is measured against the saturation at the start of the game, which is
+## already built into the starting GDP. War damages, occupation closes, works expand.
 
 const PORT := "port"
 const AIR := "air"
 const KINDS := [PORT, AIR]
-## Um TEU carrega, em média, umas 12 toneladas: é assim que portos de contêiner e de granel se somam.
+## A TEU carries, on average, about 12 tonnes: that is how container and bulk ports add up.
 const TEU_TONS := 12.0
-## Custo de reposição em US$ bi por unidade de capacidade anual (milhão de TEU, de toneladas ou de
-## passageiros), nos preços de um país rico. Países mais pobres constroem mais barato (ver cost_factor).
+## Replacement cost in US$ bn per unit of annual capacity (million TEU, tonnes or
+## passengers), at the prices of a rich country. Poorer countries build cheaper (see cost_factor).
 const UNIT_COST := {"TEU": 0.9, "t": 0.07, "pax": 0.2}
 const EXPAND_OPTIONS := [0.25, 0.5, 1.0]
 # i18n-begin
@@ -25,12 +25,12 @@ const NEW_SIZES := [["Pequeno", 0.08], ["Médio", 0.15], ["Grande", 0.3]]
 # i18n-begin
 const OWNER_NAMES := {"public": "Público", "private": "Privado", "concession": "Concessão"}
 # i18n-end
-## Uma concessão roda um pouco mais que o mesmo ativo nas mãos do Estado.
+## A concession runs a little better than the same asset in the State's hands.
 const CONCESSION_EFFICIENCY := 1.05
-## Quanto o país recebe ao conceder um ativo: fração do custo de reposição.
+## How much the country receives when conceding an asset: a fraction of the replacement cost.
 const CONCESSION_SHARE := 0.5
 const MAX_PER_KIND := 16
-## Países sem saída para o mar: não têm porto marítimo.
+## Landlocked countries: they have no seaport.
 const LANDLOCKED := [
 	"AFG", "ARM", "AUT", "AZE", "BDI", "BFA", "BLR", "BOL", "BTN", "BWA", "CAF", "CHE", "CZE", "ETH", "HUN",
 	"KAZ", "KGZ", "LAO", "LSO", "LUX", "MDA", "MKD", "MLI", "MNG", "MWI", "NER", "NPL", "PRY", "RWA", "SRB",
@@ -40,27 +40,27 @@ const LANDLOCKED := [
 var facilities: Array = []
 var projects: Array = []
 var next_id := 1
-## Muda sempre que uma instalação ou obra muda de estado: a interface e o mapa refazem suas listas.
+## Changes whenever a facility or project changes state: the interface and the map redo their lists.
 var revision := 0
 var rng := RandomNumberGenerator.new()
-## Por país (índice): comércio, PIB e turismo reais do início, para medir a demanda.
+## Per country (index): real trade, GDP and tourism at the start, to measure demand.
 var base_trade := PackedFloat32Array()
 var base_gdp := PackedFloat32Array()
 var base_tour := PackedFloat32Array()
-## Por país e tipo (índice * 2 + 0 porto, + 1 aeroporto): saturação do início e a atual (-1 = não tem).
+## Per country and type (index * 2 + 0 port, + 1 airport): saturation at the start and the current one (-1 = none).
 var sat0 := PackedFloat32Array()
 var sat := PackedFloat32Array()
-## Impulsos setoriais que este sistema já somou em cada país, para trocar pelo novo sem tocar nos dos outros.
+## Sector impulses this system has already added in each country, to swap in the new one without touching the others'.
 var applied: Array = []
 var _by_owner := {}
-## Por país e tipo (mesmo índice de `sat`): as instalações que o país controla hoje.
+## Per country and type (same index as `sat`): the facilities the country controls today.
 var _lists: Array = []
 var _by_id := {}
 var _index_key := -1
-## Países com instalação fechada ou danificada: só eles precisam da etapa de reparo fora da guerra.
+## Countries with a closed or damaged facility: only they need the repair step outside war.
 var _hurt := {}
-## Somas de demanda-base e capacidade efetiva por país e tipo, da última repartição completa. Nos meses sem
-## repartição completa, a saturação sai delas; `_dirty` marca os países em que algo mudou desde então.
+## Sums of base demand and effective capacity per country and type, from the last full distribution. In months without
+## a full distribution, saturation comes from them; `_dirty` marks the countries where something changed since.
 var _sum_base := PackedFloat32Array()
 var _sum_eff := PackedFloat32Array()
 var _dirty := {}
@@ -124,8 +124,8 @@ func _facility(iso: String, kind: String, fname: String, city: String, cap: floa
 	return f
 
 
-## Países fora do arquivo de dados: um aeroporto na capital e, se houver litoral, um porto, do tamanho que a
-## economia e a abertura comercial pedem.
+## Countries outside the data file: an airport in the capital and, if there is a coast, a port, of the size that the
+## economy and trade openness call for.
 func _generate(c: Country, world: GameWorld) -> void:
 	var subs := world.subdivisions
 	var city := c.name
@@ -147,7 +147,7 @@ func _generate(c: Country, world: GameWorld) -> void:
 		facilities.append(port)
 
 
-## Capacidade "natural" para o tamanho do país: toneladas por comércio exterior, passageiros por renda e população.
+## "Natural" capacity for the country's size: tonnes per foreign trade, passengers per income and population.
 static func generated_capacity(c: Country, kind: String) -> float:
 	if kind == PORT:
 		var trade := c.y_usd() * clampf(c.x_share + c.m_share, 0.05, 2.0)
@@ -156,25 +156,25 @@ static func generated_capacity(c: Country, kind: String) -> float:
 	return c.pop * trips / 0.82
 
 
-# --- Medidas ---------------------------------------------------------------------
+# --- Measures ---------------------------------------------------------------------
 
 static func eq_factor(unit: String) -> float:
 	return TEU_TONS if unit == "TEU" else 1.0
 
 
-## Capacidade nominal em unidades comparáveis entre portos (toneladas) e entre aeroportos (passageiros).
+## Nominal capacity in units comparable across ports (tonnes) and across airports (passengers).
 static func cap_eq(f: Dictionary) -> float:
 	return float(f.cap) * eq_factor(f.unit)
 
 
-## Capacidade que de fato opera: some com o fechamento, cai com o dano.
+## Capacity that actually operates: disappears with closure, falls with damage.
 static func effective(f: Dictionary) -> float:
 	if f.closed:
 		return 0.0
 	return cap_eq(f) * float(f.cond) * (CONCESSION_EFFICIENCY if f.owner == "concession" else 1.0)
 
 
-## Obras ficam mais baratas onde a mão de obra é barata.
+## Works get cheaper where labor is cheap.
 static func cost_factor(c: Country) -> float:
 	return clampf(pow(c.gdp_pc() / 40000.0, 0.35), 0.45, 1.3)
 
@@ -183,7 +183,7 @@ static func replacement_cost(f: Dictionary, c: Country) -> float:
 	return float(f.cap) * float(UNIT_COST[f.unit]) * cost_factor(c)
 
 
-## Perda de produtividade por saturação: nada até 80%, depois cresce rápido; folga ajuda um pouco.
+## Productivity loss from saturation: nothing up to 80%, then it grows fast; slack helps a little.
 static func penalty(s: float) -> float:
 	if s < 0.0:
 		return 0.0
@@ -209,7 +209,7 @@ func _tour_real(c: Country, world: GameWorld) -> float:
 	return maxf(_gdp_real(c, world) * share, 0.0001)
 
 
-## Quanto a demanda do país cresceu desde o início do jogo, por tipo.
+## How much the country's demand has grown since the start of the game, by type.
 func driver_ratio(c: Country, world: GameWorld, k: int) -> float:
 	var gpi := maxf(world.global_price_index(), 0.01)
 	if k == 0:
@@ -225,9 +225,9 @@ func saturation(c: Country, kind: String) -> float:
 	return sat[c.idx * 2 + KINDS.find(kind)] if c.idx * 2 + 1 < sat.size() else -1.0
 
 
-# --- Consultas da interface ------------------------------------------------------
+# --- Interface queries ------------------------------------------------------
 
-## Quem controla cada instalação só muda quando um país é anexado ou uma obra nova fica pronta.
+## Who controls each facility only changes when a country is annexed or a new project is finished.
 func _index_key_now(world: GameWorld) -> int:
 	var dead := 0
 	for c: Country in world.countries:
@@ -299,7 +299,7 @@ func can_build_port(c: Country) -> bool:
 	return false
 
 
-## Capacidade total do país, nas unidades comparáveis do tipo, para dimensionar obras novas.
+## Total capacity of the country, in the comparable units of the type, to size new projects.
 func total_capacity(c: Country, world: GameWorld, kind: String) -> float:
 	var t := 0.0
 	for f: Dictionary in facilities_of(c, world):
@@ -308,14 +308,14 @@ func total_capacity(c: Country, world: GameWorld, kind: String) -> float:
 	return t
 
 
-## Custo e prazo de ampliar uma instalação em `pct` (0.5 = +50%).
+## Cost and time to expand a facility by `pct` (0.5 = +50%).
 func expansion_quote(f: Dictionary, c: Country, pct: float) -> Dictionary:
 	var add := float(f.cap) * pct
 	var months := int(round((30.0 if f.kind == PORT else 36.0) * (0.8 + 0.4 * pct)))
 	return {"add": add, "cost": add * float(UNIT_COST[f.unit]) * cost_factor(c), "months": months}
 
 
-## Custo e prazo de um porto ou aeroporto novo de tamanho `size` (índice em NEW_SIZES).
+## Cost and time of a new port or airport of size `size` (index in NEW_SIZES).
 func new_quote(c: Country, world: GameWorld, kind: String, size: int) -> Dictionary:
 	var frac: float = NEW_SIZES[size][1]
 	var total := maxf(total_capacity(c, world, kind), generated_capacity(c, kind))
@@ -329,7 +329,7 @@ func concession_value(f: Dictionary, c: Country) -> float:
 	return replacement_cost(f, c) * CONCESSION_SHARE * float(f.cond) * clampf(float(f.util) / 0.8, 0.5, 1.2)
 
 
-## Cidades onde o país já tem instalações (para escolher onde construir), sem repetir.
+## Cities where the country already has facilities (to choose where to build), without repeats.
 func cities_of(c: Country, world: GameWorld) -> Array:
 	var out := []
 	var seen := {}
@@ -340,7 +340,7 @@ func cities_of(c: Country, world: GameWorld) -> Array:
 	return out
 
 
-# --- Ações -----------------------------------------------------------------------
+# --- Actions -----------------------------------------------------------------------
 
 func start_expansion(world: GameWorld, c: Country, id: int, pct: float, public := true) -> Dictionary:
 	var f := facility(id)
@@ -365,7 +365,7 @@ func start_expansion(world: GameWorld, c: Country, id: int, pct: float, public :
 	return {"ok": true, "msg": tr("Obra iniciada: %s, %s.") % [_money(q.cost), years_text(q.months)] if public else tr("A operadora amplia %s.") % f.name}
 
 
-## Constrói uma instalação nova perto de `near` (outra instalação do país, cuja cidade empresta o local).
+## Builds a new facility near `near` (another facility of the country, whose city lends the site).
 func start_new(world: GameWorld, c: Country, kind: String, near_id: int, size: int) -> Dictionary:
 	var near := facility(near_id)
 	if near.is_empty() or world.resolve_owner(near.iso) != c:
@@ -431,9 +431,9 @@ static func years_text(months: int) -> String:
 	return TranslationServer.translate("%s anos") % UiKit.num(months / 12.0, 1)
 
 
-# --- Etapa mensal ----------------------------------------------------------------
+# --- Monthly step ----------------------------------------------------------------
 
-## Chamado uma vez por mês, depois da legislação.
+## Called once a month, after legislation.
 func step_month(world: GameWorld) -> void:
 	if base_gdp.size() != world.countries.size():
 		setup(world)
@@ -449,8 +449,8 @@ func step_month(world: GameWorld) -> void:
 			continue
 		var facs: Array = _by_owner.get(c.idx, [])
 		_hazards(c, world, facs, at_war.has(c.idx))
-		# A repartição por instalação (o que a tela mostra e o que move as decisões de obra) roda a cada
-		# trimestre, todo mês no país do jogador e sempre que algo mudou; no resto, basta a saturação.
+		# The distribution by facility (what the screen shows and what drives the construction decisions) runs every
+		# quarter, every month in the player's country and whenever something changed; for the rest, saturation is enough.
 		var quarter := (world.months_elapsed + c.idx) % 3 == 0
 		var full := quarter or c == world.player or _dirty_all or _dirty.has(c.idx)
 		for k in 2:
@@ -479,7 +479,7 @@ func _step_projects(world: GameWorld) -> void:
 		var f := facility(int(p.fac)) if int(p.fac) >= 0 else {}
 		if int(p.fac) >= 0 and f.is_empty():
 			continue
-		# Obra em instalação fechada fica parada: nem avança, nem custa.
+		# A project at a closed facility stays stopped: it neither advances nor costs.
 		if not f.is_empty() and f.closed:
 			keep.append(p)
 			continue
@@ -521,12 +521,12 @@ static func capacity_text(f: Dictionary) -> String:
 	return TranslationServer.translate("%s mi passageiros") % txt
 
 
-## Guerra danifica, ocupação fecha, paz conserta (o Estado paga o reparo do que é dele).
+## War damages, occupation closes, peace repairs (the State pays for repairing what is its own).
 func _hazards(c: Country, world: GameWorld, facs: Array, war: bool) -> void:
 	if facs.is_empty():
 		return
 	var occ := maxf(c.occupied - c.occ0, 0.0)
-	# Uma vez por semestre, todos passam pela checagem (pega dano vindo de fora deste sistema).
+	# Once per semester, everyone goes through the check (catches damage coming from outside this system).
 	if not war and occ <= 0.0 and not _hurt.has(c.idx) and world.months_elapsed % 6 != 0:
 		return
 	var hurt := false
@@ -565,7 +565,7 @@ func _hazards(c: Country, world: GameWorld, facs: Array, war: bool) -> void:
 			world.emit_news("%s." % _closing_text(reopened, tr("volta a operar"), tr("voltam a operar")), "economia", c)
 
 
-## "Porto de Santos fecha", "Santos e Galeão fecham", "Santos, Galeão e mais 3 fecham".
+## "Port of Santos closes", "Santos and Galeão close", "Santos, Galeão and 3 more close".
 static func _closing_text(names: Array, one: String, many: String) -> String:
 	if names.size() == 1:
 		return "%s %s" % [names[0], one]
@@ -574,7 +574,7 @@ static func _closing_text(names: Array, one: String, many: String) -> String:
 	return TranslationServer.translate("%s, %s e mais %d instalações %s") % [names[0], names[1], names.size() - 2, many]
 
 
-## Reparte a demanda do país entre as instalações de um tipo e mede a saturação.
+## Distributes the country's demand among the facilities of a type and measures saturation.
 func _allocate(c: Country, ratio: float, k: int) -> void:
 	var slot := c.idx * 2 + k
 	var facs: Array = _lists[slot]
@@ -596,7 +596,7 @@ func _allocate(c: Country, ratio: float, k: int) -> void:
 		if not f.closed:
 			e = float(f.cap) * (TEU_TONS if f.unit == "TEU" else 1.0) * float(f.cond) * (CONCESSION_EFFICIENCY if f.owner == "concession" else 1.0)
 		eff[i] = e
-		# A clientela de cada instalação acompanha devagar a capacidade que ela oferece.
+		# Each facility's clientele slowly follows the capacity it offers.
 		var a := float(f.attract)
 		a += (e * 0.8 - a) * 0.03
 		f.attract = a
@@ -613,7 +613,7 @@ func _allocate(c: Country, ratio: float, k: int) -> void:
 			f.util = 0.0
 		sat[slot] = 2.0
 		return
-	# Primeiro, cada uma recebe sua clientela; o que passa da capacidade vai para quem tem folga.
+	# First, each one receives its clientele; what exceeds capacity goes to whoever has slack.
 	var use := PackedFloat32Array()
 	use.resize(n)
 	var excess := 0.0
@@ -645,7 +645,7 @@ func _quick_saturation(c: Country, ratio: float, k: int) -> void:
 	sat[slot] = _sum_base[slot] * ratio / eff if eff > 0.0 else 2.0
 
 
-## Logística e setores, medidos contra a saturação de partida.
+## Logistics and sectors, measured against the starting saturation.
 func _apply_effects(c: Country) -> void:
 	var sp := sat[c.idx * 2]
 	var sa := sat[c.idx * 2 + 1]
@@ -670,7 +670,7 @@ static func _boost(c: Country, done: PackedFloat32Array, i: int, target: float) 
 		done[i] = v
 
 
-## Concessionárias e operadores privados ampliam sozinhos o que lota, sem dinheiro público.
+## Concessionaires and private operators expand on their own what is full, with no public money.
 func _private_investment(c: Country, world: GameWorld, facs: Array) -> void:
 	for f: Dictionary in facs:
 		if float(f.util) < 0.95 or f.owner == "public" or f.closed or rng.randf() > 0.15:
@@ -679,7 +679,7 @@ func _private_investment(c: Country, world: GameWorld, facs: Array) -> void:
 			start_expansion(world, c, int(f.id), 0.4, false)
 
 
-## Governos da IA ampliam ou constroem quando o país satura e as contas permitem.
+## AI governments expand or build when the country saturates and the accounts allow.
 func _state_investment(c: Country, world: GameWorld, facs: Array) -> void:
 	if (world.months_elapsed + c.idx) % 3 != 0:
 		return
@@ -703,7 +703,7 @@ func _state_investment(c: Country, world: GameWorld, facs: Array) -> void:
 			start_expansion(world, c, int(best.id), 0.5)
 
 
-# --- Salvar e carregar -----------------------------------------------------------
+# --- Saving and loading -----------------------------------------------------------
 
 func to_dict() -> Dictionary:
 	return {

@@ -1,8 +1,8 @@
 class_name Proposals
 extends RefCounted
-## Proposta concreta que um líder estrangeiro traz ao jogador quando puxa conversa: tratado, paz, ultimato,
-## pedido de ajuda ou oferta. O jogador aceita, recusa ou contrapropõe, e cada resposta mexe no jogo de verdade.
-## A proposta fica em world.offers[iso] até ser respondida ou vencer.
+## Concrete proposal that a foreign leader brings to the player when starting a conversation: treaty, peace, ultimatum,
+## request for help or offer. The player accepts, refuses or counterproposes, and each answer really moves the game.
+## The proposal stays in world.offers[iso] until it is answered or expires.
 
 const KINDS := ["treaty", "peace", "threat", "request", "offer"]
 const EXPIRE_MONTHS := 6
@@ -11,7 +11,7 @@ const TRADE_ALTERNATIVES := ["fta", "investment", "customs"]
 const SOFT_ALTERNATIVES := ["nonaggression", "arms", "extradition", "climate"]
 
 
-## A proposta em aberto deste líder, ou {} se não há ou se venceu.
+## This leader's open proposal, or {} if there is none or it expired.
 static func pending(world: GameWorld, target: Country) -> Dictionary:
 	var offer: Dictionary = world.offers.get(target.iso, {})
 	if offer.is_empty():
@@ -22,7 +22,7 @@ static func pending(world: GameWorld, target: Country) -> Dictionary:
 	return offer
 
 
-## Escolhe o que o líder traz, conforme guerra, relação, ideias e riqueza relativa. Sempre devolve algo utilizável.
+## Chooses what the leader brings, according to war, relation, ideas and relative wealth. Always returns something usable.
 static func make(world: GameWorld, target: Country) -> Dictionary:
 	var d := world.diplomacy
 	var me := world.player
@@ -66,7 +66,7 @@ static func _type_label(type: String) -> String:
 	return TranslationServer.translate(Treaties.TYPES[type].label).to_lower()
 
 
-## O que o líder diz ao apresentar a proposta.
+## What the leader says when presenting the proposal.
 static func text(world: GameWorld, target: Country, offer: Dictionary) -> String:
 	match String(offer.kind):
 		"treaty":
@@ -82,7 +82,7 @@ static func text(world: GameWorld, target: Country, offer: Dictionary) -> String
 	return ""
 
 
-## Respostas disponíveis: {id: accept|refuse|counter, label, hint}.
+## Available answers: {id: accept|refuse|counter, label, hint}.
 static func choices(world: GameWorld, target: Country, offer: Dictionary) -> Array:
 	var out := []
 	match String(offer.kind):
@@ -113,7 +113,7 @@ static func choices(world: GameWorld, target: Country, offer: Dictionary) -> Arr
 	return out
 
 
-## Tratado alternativo para a contraproposta, ou "" se não há. Em tratado, o mais leve; em pedido, um acordo comercial.
+## Alternative treaty for the counterproposal, or "" if there is none. For a treaty, the lightest; for a request, a trade agreement.
 static func alternative(world: GameWorld, target: Country, offer: Dictionary) -> String:
 	var me := world.player
 	var pool: Array = TRADE_ALTERNATIVES if offer.kind == "request" else Treaties.TYPES.keys()
@@ -128,7 +128,7 @@ static func alternative(world: GameWorld, target: Country, offer: Dictionary) ->
 	return best
 
 
-## Aplica a resposta. Devolve {accepted, reply}.
+## Applies the answer. Returns {accepted, reply}.
 static func resolve(world: GameWorld, target: Country, offer: Dictionary, choice: String) -> Dictionary:
 	var d := world.diplomacy
 	var me := world.player

@@ -1,6 +1,6 @@
 class_name StockPanel
 extends VBoxContainer
-## A bolsa de valores do país: índice, valor de mercado, maiores altas e baixas do mês e movimentos recentes.
+## The country's stock exchange: index, market value, biggest gainers and losers of the month and recent moves.
 
 const STOCK_ROW := preload("res://scenes/ui/rows/stock_row.tscn")
 const MOVERS := 5
@@ -90,7 +90,7 @@ func _fill_movers(box: VBoxContainer, list: Array) -> void:
 		_set_row(rows[i], String(co.name), UiKit.money(float(co.value)), ("+" if ch >= 0.0 else "") + UiKit.pct(ch), UiKit.good_bad(ch))
 
 
-## Linhas reaproveitadas: cria as que faltam e esconde as que sobram.
+## Reused rows: creates the missing ones and hides the extra ones.
 func _pool(box: VBoxContainer, count: int) -> Array:
 	var rows: Array = _pools.get_or_add(box, [])
 	while rows.size() < count:

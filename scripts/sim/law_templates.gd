@@ -1,6 +1,6 @@
 class_name LawTemplates
 extends RefCounted
-## Modelos prontos: aparecem no editor e são os projetos que os partidos da IA apresentam.
+## Ready-made templates: they appear in the editor and are the projects the AI parties present.
 
 
 static func all() -> Array:
@@ -35,7 +35,7 @@ static func _add(program: Dictionary, list: Array, type: String, fields := {}) -
 	return block
 
 
-## O exemplo do documento: identifica a propriedade, confere o dono e cobra 5% do valor tributável.
+## The document's example: identifies the property, checks the owner and charges 5% of the taxable value.
 static func property_tax() -> Dictionary:
 	var program := LawProgram.empty()
 	var stack := LawProgram.add_stack(program, LawProgram.new_block(program, "ev_fiscal"), Vector2(30, 30))

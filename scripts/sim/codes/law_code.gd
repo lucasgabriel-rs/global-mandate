@@ -1,50 +1,50 @@
 class_name LawCode
 extends RefCounted
-## Um código legal (Tributário, Penal, Trabalhista, Civil, Eleitoral, Direitos e deveres): seus blocos
-## concretos, o texto com que o país começa a partida e o efeito de cada bloco no jogo.
+## A legal code (Tax, Criminal, Labor, Civil, Electoral, Rights and duties): its concrete blocks,
+## the text the country starts the match with and each block's effect in the game.
 ##
-## Cada código mora em um arquivo próprio em `scripts/sim/codes/` e é registrado em `LawCodes`.
-## Blocos seguem o formato de `LawCatalog.BLOCKS`, com `cat` igual a `category.id`. Prefira campos
-## de escolha e números a texto livre: o jogador não deve precisar digitar nomes.
+## Each code lives in its own file in `scripts/sim/codes/` and is registered in `LawCodes`.
+## Blocks follow the format of `LawCatalog.BLOCKS`, with `cat` equal to `category.id`. Prefer choice
+## fields and numbers to free text: the player should not have to type names.
 ##
-## Roda na thread da simulação: nada de nós nem sinais; notícias só por `world.emit_news`.
+## Runs on the simulation thread: no nodes or signals; news only through `world.emit_news`.
 
-## Identificador curto ("tributario") e nome da norma ("Código Tributário").
+## Short identifier ("tributario") and norm name ("Código Tributário").
 var id := ""
 var title := ""
 var ementa := ""
-## Categoria da paleta do editor: {"id", "label", "color"}.
+## Editor palette category: {"id", "label", "color"}.
 var category := {}
-## Tipo de norma do código: leis complementares, salvo a Constituição.
+## Norm type of the code: complementary laws, except for the Constitution.
 var norm_type := "complementar"
 
 
-## Blocos do código.
+## Blocks of the code.
 func blocks() -> Array:
 	return []
 
 
-## Listas de escolha extras para os campos {"t": "choice", "of": ...}.
+## Extra choice lists for the fields {"t": "choice", "of": ...}.
 func choices() -> Dictionary:
 	return {}
 
 
-## Programa de blocos com que o país do jogador começa. Vazio: o código não é criado no início.
+## Block program the player's country starts with. Empty: the code is not created at the start.
 func seed_program(_world: GameWorld, _c: Country) -> Dictionary:
 	return {}
 
 
-## Efeito de um bloco deste código quando a norma executa. `weight` é a fração do grupo atingido;
-## `norm_id` e `prio` vão para `leg.stand`, que guarda o efeito enquanto a norma valer.
-## Devolve uma nota curta para o histórico, ou "".
+## Effect of a block of this code when the norm executes. `weight` is the fraction of the group reached;
+## `norm_id` and `prio` go to `leg.stand`, which keeps the effect while the norm applies.
+## Returns a short note for the history, or "".
 func apply(_world: GameWorld, _leg: Legislation, _op: String, _values: Dictionary, _weight: float, _norm_id: int, _prio: float) -> String:
 	return ""
 
 
-## Uma vez por mês, para o país do jogador: o que o código em vigor faz com o país.
-## Devolve contribuições que a legislação soma e repassa à economia e à política:
-## approval, stability, invest, unemp (frações), inequality (variação do Gini, 0-1), labor (oferta
-## de trabalho, fração), tfp (crescimento anual da produtividade), evasion (fração da arrecadação perdida).
-## Indicadores próprios vão em `c.code_stats[chave]`.
+## Once a month, for the player's country: what the code in force does to the country.
+## Returns contributions that legislation adds up and passes on to the economy and politics:
+## approval, stability, invest, unemp (fractions), inequality (Gini change, 0-1), labor (labor
+## supply, fraction), tfp (annual productivity growth), evasion (share of revenue lost).
+## Own indicators go in `c.code_stats[key]`.
 func monthly(_world: GameWorld, _c: Country, _leg: Legislation) -> Dictionary:
 	return {}

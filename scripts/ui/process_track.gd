@@ -1,7 +1,7 @@
 class_name ProcessTrack
 extends VBoxContainer
-## Passo a passo da tramitação: comissão, plenário, outra casa, sanção, publicação e vigência, com a fase
-## atual em destaque, os dias que faltam e a chance estimada de aprovação.
+## Step-by-step procedure: committee, floor, other house, sanction, publication and effect, with the current
+## phase highlighted, the days left and the estimated chance of approval.
 
 const CHIP := preload("res://scenes/ui/legislation/step_chip.tscn")
 const STATE_COLORS := {"done": UiKit.GREEN, "current": UiKit.CYAN, "todo": UiKit.LINE, "failed": UiKit.RED}

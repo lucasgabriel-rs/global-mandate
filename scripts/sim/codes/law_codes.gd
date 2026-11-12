@@ -1,6 +1,6 @@
 class_name LawCodes
 extends RefCounted
-## Registro dos códigos legais. A ordem aqui é a ordem na paleta do editor e no centro legislativo.
+## Registry of the legal codes. The order here is the order in the editor palette and in the legislative center.
 
 const SCRIPTS := [
 	preload("res://scripts/sim/codes/code_tributario.gd"),
@@ -17,7 +17,7 @@ static var _owner := {}
 static var _mutex := Mutex.new()
 
 
-## Monta o registro uma vez. Depois disso tudo é só leitura, seguro entre threads.
+## Builds the registry once. After that everything is read-only, safe between threads.
 static func warm() -> void:
 	_mutex.lock()
 	if _codes.is_empty():
@@ -45,7 +45,7 @@ static func get_code(id: String) -> LawCode:
 	return null
 
 
-## O código dono de um tipo de bloco, ou null para os blocos avançados.
+## The code that owns a block type, or null for the advanced blocks.
 static func owner_of(block_type: String) -> LawCode:
 	warm()
 	return _owner.get(block_type)

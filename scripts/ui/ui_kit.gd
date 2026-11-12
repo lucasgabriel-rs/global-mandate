@@ -1,7 +1,7 @@
 class_name UiKit
 extends RefCounted
-## Cores da interface, estilo dos destaques aplicados durante o jogo e formatação de números.
-## O tema em si fica em scenes/ui/theme.tres.
+## Interface colors, style of the highlights applied during the game and number formatting.
+## The theme itself lives in scenes/ui/theme.tres.
 
 const BG := Color(0.043, 0.075, 0.102, 0.95)
 const BG_SOFT := Color(1, 1, 1, 0.04)
@@ -24,9 +24,9 @@ static func panel_style(bg: Color = BG, border: Color = LINE, radius := 3, margi
 	return s
 
 
-# --- Formatação de números ----------------------------------------------------------
-# Em português e espanhol, vírgula decimal e ponto nos milhares; em inglês, o contrário (Lang.english_numbers).
-# As unidades (tri, bi, mi) passam pela tradução; estas funções rodam também na thread da simulação.
+# --- Number formatting ----------------------------------------------------------
+# In Portuguese and Spanish, decimal comma and dot for thousands; in English, the opposite (Lang.english_numbers).
+# The units (tri, bi, mi) go through translation; these functions also run on the simulation thread.
 
 static func pct(v: float, digits := 1) -> String:
 	if absf(v) >= 10.0:
@@ -44,7 +44,7 @@ static func money(b: float) -> String:
 	return sign_txt + TranslationServer.translate("US$ %s bi") % _comma("%.1f" % a)
 
 
-## Valor do fundo de um partido, em US$ milhões.
+## Value of a party's fund, in US$ millions.
 static func millions(v: float) -> String:
 	if absf(v) >= 1000.0:
 		return TranslationServer.translate("US$ %s bi") % _comma("%.2f" % (v / 1000.0))
@@ -68,7 +68,7 @@ static func num(v: float, digits := 1) -> String:
 	return _comma(("%." + str(digits) + "f") % v)
 
 
-## Troca o ponto decimal do printf pela vírgula, salvo em inglês.
+## Swaps the printf decimal point for a comma, except in English.
 static func _comma(s: String) -> String:
 	return s if Lang.english_numbers else s.replace(".", ",")
 

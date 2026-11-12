@@ -1,7 +1,7 @@
 class_name ChatLog
 extends RefCounted
-## Histórico das conversas do jogador, uma linha do tempo por contato ("pais:ARG", "partido:3"),
-## no formato de mensagens de celular: {me, text, date, ok}. Fica no save junto do mundo.
+## History of the player's conversations, one timeline per contact ("pais:ARG", "partido:3" (persisted keys)),
+## in the format of phone messages: {me, text, date, ok}. Saved along with the world.
 
 const MAX_MESSAGES := 200
 
@@ -18,7 +18,7 @@ static func thread(world: GameWorld, key: String) -> Array:
 	return world.chats.get(key, [])
 
 
-## ok: true/false pinta a resposta (aceitou ou recusou); null deixa neutra.
+## ok: true/false colors the reply (accepted or refused); null leaves it neutral.
 static func add(world: GameWorld, key: String, me: bool, text: String, ok: Variant = null) -> void:
 	var list: Array = world.chats.get_or_add(key, [])
 	list.append({"me": me, "text": text, "date": world.date_string(), "ok": ok})

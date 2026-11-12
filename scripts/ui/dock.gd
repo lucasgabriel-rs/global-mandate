@@ -1,17 +1,17 @@
 class_name Dock
 extends Control
-## Dock no pé da tela, à moda do macOS: ícones agrupados que crescem quando o mouse passa,
-## nome do item em um balão e um ponto embaixo das janelas abertas.
+## Dock at the foot of the screen, macOS style: grouped icons that grow when the mouse passes,
+## the item's name in a bubble and a dot under the open windows.
 
 signal item_pressed(item: DockItem)
 
-## Quanto o ícone sob o mouse cresce, e até que distância (px) os vizinhos crescem junto.
+## How much the icon under the mouse grows, and up to what distance (px) the neighbors grow along.
 const MAGNIFY := 0.55
 const REACH := 110.0
 const BOTTOM_GAP := 8.0
 const SHELF_PAD := 10.0
 
-## Faixa à esquerda que o dock não pode cobrir (o noticiário mora ali).
+## Strip on the left that the dock cannot cover (the news feed lives there).
 @export var left_reserved := 0.0
 
 var desk: WindowDesk
@@ -37,7 +37,7 @@ func items() -> Array[DockItem]:
 	return _items
 
 
-## Centro do ícone em coordenadas globais, de onde a janela sai ao abrir.
+## Center of the icon in global coordinates, where the window comes out from when opening.
 func item_center(item: DockItem) -> Vector2:
 	return item.get_global_rect().get_center()
 
@@ -63,7 +63,7 @@ func _process(_delta: float) -> void:
 		base_w += gap
 	base_w -= gap
 	var cx := maxf(size.x * 0.5, left_reserved + base_w * 0.5 + 24.0)
-	# A ampliação usa as posições de repouso, para os ícones não fugirem do mouse.
+	# The magnification uses the resting positions, so the icons do not run away from the mouse.
 	var near := mouse.y > size.y - 100.0 and mouse.y <= size.y and absf(mouse.x - cx) < base_w * 0.5 + REACH
 	var x := cx - base_w * 0.5
 	for child in _row.get_children():

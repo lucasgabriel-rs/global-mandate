@@ -1,6 +1,6 @@
 class_name AmendmentEditor
 extends ColorRect
-## Editor de emendas: escolhe o dispositivo, a operação e compara com o texto em vigor.
+## Amendment editor: chooses the provision, the operation and compares with the text in force.
 
 const ARTICLE_ROW := preload("res://scenes/ui/legislation/article_row.tscn")
 const OP_ROW := preload("res://scenes/ui/legislation/op_row.tscn")
@@ -97,7 +97,7 @@ func _refresh_form() -> void:
 	var op := _selected_op()
 	var adding := op == "add"
 	(%article_text as Label).text = tr("Novo dispositivo.") if adding else (Legislation.article_text(_article, true) if not _article.is_empty() else tr("Escolha um dispositivo ao lado."))
-	# Num artigo com parâmetro, "alteração" muda o valor; "substituição" permite reescrever a redação.
+	# In an article with a parameter, "alteração" (alter) changes the value; "substituição" (replace) allows rewriting the wording.
 	var is_param: bool = op == "alter" and not _article.is_empty() and String(_article.get("param", "")) != ""
 	(_kind.get_parent() as Control).visible = adding
 	(%new_petrea as Control).visible = adding

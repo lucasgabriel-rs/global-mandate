@@ -1,7 +1,7 @@
 class_name Names
 extends RefCounted
-## Prenomes femininos e masculinos e sobrenomes por idioma, para o jogador e os políticos de cada país.
-## Sobrenomes com forma feminina própria (russo, polonês, tcheco, grego, lituano) vêm como "masculino|feminino".
+## Female and male first names and surnames by language, for the player and the politicians of each country.
+## Surnames with their own feminine form (Russian, Polish, Czech, Greek, Lithuanian) come as "masculine|feminine".
 
 const GROUPS := {
 	"pt": {
@@ -191,7 +191,7 @@ const GROUPS := {
 	},
 }
 
-## Idioma de cada país. Quem não está aqui usa o idioma mais comum da região.
+## Language of each country. Those not here use the most common language of the region.
 const COUNTRY_GROUP := {
 	"BRA": "pt", "PRT": "pt", "AGO": "pt", "MOZ": "pt", "GNB": "pt", "TLS": "pt",
 	"ESP": "es", "MEX": "es", "ARG": "es", "COL": "es", "CHL": "es", "PER": "es", "VEN": "es", "ECU": "es", "GTM": "es",
@@ -247,7 +247,7 @@ static func _form(entry: String, gender: String) -> String:
 	return parts[1] if gender == "f" and parts.size() > 1 else parts[0]
 
 
-## O mesmo sobrenome na forma do outro gênero (Ivanov e Ivanova); os que não têm duas formas ficam iguais.
+## The same surname in the other gender's form (Ivanov and Ivanova); those without two forms stay the same.
 static func regender_last(surname: String, gender: String) -> String:
 	for g: String in GROUPS:
 		for entry: String in GROUPS[g].last:
@@ -256,7 +256,7 @@ static func regender_last(surname: String, gender: String) -> String:
 	return surname
 
 
-## Gênero provável de um prenome, para saves e políticos de antes dos gêneros. Na dúvida, o final em "a".
+## Probable gender of a first name, for saves and politicians from before genders. When in doubt, the ending in "a".
 static func guess_gender(first_name: String) -> String:
 	for g: String in GROUPS:
 		if first_name in GROUPS[g].f:

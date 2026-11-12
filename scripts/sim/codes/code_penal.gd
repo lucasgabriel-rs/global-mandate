@@ -1,22 +1,22 @@
 class_name CodePenal
 extends LawCode
-## Código Penal: Crimes, penas, maioridade penal, drogas, armas e sistema prisional.
+## Criminal Code: Crimes, penalties, age of criminal responsibility, drugs, weapons and the prison system.
 ##
-## O que vale fica em `standing.codes` como "penal:<item>". Todo mês o código recalcula a
-## criminalidade (`c.code_stats["criminalidade"]`, 0-1), que anda devagar em direção ao que a
-## desigualdade, o desemprego, a polícia, as penas e as armas pedem.
+## What applies stays in `standing.codes` as "penal:<item>". Every month the code recalculates
+## crime (`c.code_stats["criminalidade"]`, 0-1), which moves slowly toward what
+## inequality, unemployment, police, penalties and weapons call for.
 
-## Orçamento de partida da polícia e das prisões, em fração do PIB. Já está na despesa calibrada do
-## país: só o que passar disso (ou faltar) vira gasto (ou economia) da lei.
+## Starting budget of police and prisons, as a fraction of GDP. It is already in the country's calibrated
+## spending: only what exceeds that (or falls short) becomes spending (or savings) from the law.
 const BASE_BUDGET := {"policia": 0.009, "prisoes": 0.002}
-## Quanto cada conduta pesa na criminalidade e na lotação das prisões quando é crime.
+## How much each conduct weighs on crime and on prison crowding when it is a crime.
 const CONDUCT_WEIGHT := {
 	"porte_drogas": 0.6, "trafico": 1.0, "aborto": 0.2, "jogos_azar": 0.2, "sonegacao": 0.3, "corrupcao": 0.4,
 	"ambiental": 0.2, "odio": 0.1, "cibernetico": 0.3, "prostituicao": 0.2, "eutanasia": 0.05, "lavagem": 0.3,
 }
-## Condutas cuja criminalização pesa na liberdade individual: aprovação e estabilidade sentem.
+## Conducts whose criminalization weighs on individual freedom: approval and stability feel it.
 const LIBERTY_CONDUCTS := ["porte_drogas", "aborto", "jogos_azar", "odio", "prostituicao", "eutanasia"]
-## A criminalidade anda esta fração do caminho até o alvo a cada mês.
+## Crime moves this fraction of the way to the target each month.
 const CRIME_PACE := 0.06
 
 
@@ -58,8 +58,8 @@ func choices() -> Dictionary:
 	}
 
 
-## O texto com que o país começa: democracias ricas e progressistas punem menos condutas e mais
-## devagar; regimes fechados punem muito, admitem pena de morte e proíbem armas.
+## The text the country starts with: rich, progressive democracies punish fewer conducts and more
+## slowly; closed regimes punish a lot, allow the death penalty and ban weapons.
 func seed_program(world: GameWorld, c: Country) -> Dictionary:
 	var lean := _lean(world, c)
 	var social := float(lean.social)
@@ -89,7 +89,7 @@ func seed_program(world: GameWorld, c: Country) -> Dictionary:
 		_add(program, list, "pn_decrim", {"conduct": "jogos_azar"})
 	else:
 		_add(program, list, "pn_fine", {"conduct": "jogos_azar", "amount": 5000})
-	# Em regime fechado, "discurso de ódio" também serve para calar a oposição.
+	# In a closed regime, "hate speech" also serves to silence the opposition.
 	_add(program, list, "pn_crime", {"conduct": "odio", "min": 1, "max": 3 if free else 8})
 	_add(program, list, "pn_age", {"age": 18 if free or c.gdp_pc() > 8000.0 else 16})
 	var guns := "restrito"
@@ -149,7 +149,7 @@ func monthly(world: GameWorld, c: Country, leg: Legislation) -> Dictionary:
 	_enact_seed(world, leg)
 	var law := leg.code_standing(id)
 	var yusd := maxf(c.y_usd(), 0.001)
-	# Dinheiro: o que a lei manda gastar além (ou aquém) do orçamento de partida.
+	# Money: what the law orders to spend beyond (or below) the starting budget.
 	var police := float(law.get("orcamento_policia", {}).get("share", BASE_BUDGET.policia))
 	var prisons := float(law.get("orcamento_prisoes", {}).get("share", BASE_BUDGET.prisoes))
 	var extra := (police - BASE_BUDGET.policia + prisons - BASE_BUDGET.prisoes) * yusd / 12.0
@@ -157,7 +157,7 @@ func monthly(world: GameWorld, c: Country, leg: Legislation) -> Dictionary:
 		Legislation._pay(c, extra)
 	else:
 		Legislation._collect(c, -extra)
-	# Penas: quantas condutas são crime, com que dureza, e quanta gente vai presa por isso.
+	# Penalties: how many conducts are crimes, how harshly, and how many people go to prison for it.
 	var severity := 0.0
 	var load := 0.0
 	var liberty_hits := 0
@@ -182,7 +182,7 @@ func monthly(world: GameWorld, c: Country, leg: Legislation) -> Dictionary:
 				if conduct == "sonegacao":
 					evasion += 0.03
 				elif conduct == "trafico" or conduct == "corrupcao":
-					# Sem crime para o tráfico ou a corrupção, o crime organizado cresce.
+					# Without a crime for trafficking or corruption, organized crime grows.
 					severity -= weight * 0.5
 	severity /= 3.0
 	var regime: Dictionary = law.get("regime", {})
@@ -190,7 +190,7 @@ func monthly(world: GameWorld, c: Country, leg: Legislation) -> Dictionary:
 	load *= 1.0 + float(regime.get("share", 0.25)) - minf(alternative / 8.0, 0.5)
 	if String(regime.get("regime", "")) == "integral":
 		load *= 1.3
-	# Prisão lotada vira escola do crime: a pressão é a carga dividida pela capacidade paga.
+	# Crowded prisons become a school of crime: the pressure is the load divided by the paid capacity.
 	var capacity := prisons / BASE_BUDGET.prisoes
 	var crowding := clampf(load / 3.0 / maxf(capacity, 0.2), 0.0, 3.0)
 	var guns := String(law.get("armas", {}).get("regime", "restrito"))
@@ -213,7 +213,7 @@ func monthly(world: GameWorld, c: Country, leg: Legislation) -> Dictionary:
 	crime = clampf(crime + (target - crime) * CRIME_PACE, 0.0, 1.0)
 	c.code_stats["criminalidade"] = crime
 	c.code_stats["lotacao_prisional"] = crowding
-	# Medo do crime derruba a aprovação; a dureza do código agrada ou assusta conforme o regime.
+	# Fear of crime brings down approval; the code's harshness pleases or scares depending on the regime.
 	var free := c.dem >= 6.0
 	var harsh := float(liberty_hits) + (1.0 if death == "crimes_graves" else 0.0) + (0.5 if life == "crimes_graves" else 0.0) + (1.0 if guns == "proibido" else 0.0)
 	var approval := -(crime - 0.3) * 0.06 - maxf(crowding - 1.2, 0.0) * 0.005
@@ -231,7 +231,7 @@ func monthly(world: GameWorld, c: Country, leg: Legislation) -> Dictionary:
 	}
 
 
-## Os códigos semeados nascem em vigor sem rodar: na primeira vez, o texto inicial executa.
+## Seeded codes are born in force without running: the first time, the initial text executes.
 func _enact_seed(world: GameWorld, leg: Legislation) -> void:
 	var norm := leg.code_norm(id)
 	if norm.is_empty() or norm.get("seed_run", false) or not leg.code_standing(id).is_empty():
@@ -255,7 +255,7 @@ static func _add(program: Dictionary, list: Array, type: String, fields: Diction
 	list.append(block)
 
 
-## A bússola média do país, pesada pelo apoio de cada partido. Sem dados: o centro.
+## The country's average compass, weighted by each party's support. No data: the center.
 static func _lean(world: GameWorld, c: Country) -> Dictionary:
 	var out := {"econ": 0.0, "social": 0.0}
 	if world.politics == null:

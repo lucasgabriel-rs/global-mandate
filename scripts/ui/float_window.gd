@@ -1,8 +1,8 @@
 class_name FloatWindow
 extends PanelContainer
-## Janela flutuante, como a de um aplicativo: arrasta pela barra de título, redimensiona pelo canto,
-## fecha pelo botão vermelho e minimiza pelo amarelo. O conteúdo vai como filho direto da instância
-## na cena que a usa; ao ficar pronta, a janela o põe dentro do corpo.
+## Floating window, like an application's: drags by the title bar, resizes by the corner,
+## closes with the red button and minimizes with the yellow one. The content goes as a direct child of the instance
+## in the scene that uses it; when ready, the window puts it inside the body.
 
 signal closed
 signal focused
@@ -23,9 +23,9 @@ const ANIM_TIME := 0.16
 @export var default_size := Vector2(460, 600)
 
 var is_open := false
-## Janela do papel que o jogador não tem (governo ou oposição): fica fechada e não abre.
+## Window of a role the player does not have (government or opposition): it stays closed and does not open.
 var locked := false
-## De onde a janela sai e para onde volta ao minimizar (o ícone do dock), em coordenadas globais.
+## Where the window comes out from and where it returns to when minimizing (the dock icon), in global coordinates.
 var origin := Vector2.ZERO
 var _dragging := false
 var _resizing := false
@@ -55,7 +55,7 @@ func _ready() -> void:
 	_grip.gui_input.connect(_on_grip_input)
 
 
-## Troca o conteúdo da janela por outro (o anterior é descartado).
+## Swaps the window's content for another (the previous one is discarded).
 func set_content(node: Control) -> void:
 	for child in _body.get_children():
 		_body.remove_child(child)
@@ -63,7 +63,7 @@ func set_content(node: Control) -> void:
 	_body.add_child(node)
 
 
-## O conteúdo que a janela mostra (o primeiro filho do corpo).
+## The content the window shows (the first child of the body).
 func content() -> Control:
 	return _body.get_child(0) if _body.get_child_count() > 0 else null
 
@@ -95,7 +95,7 @@ func raise() -> void:
 	focused.emit()
 
 
-## Encaixa a janela dentro da área do pai depois de mudar o tamanho da tela.
+## Fits the window inside the parent's area after the screen size changes.
 func fit() -> void:
 	if is_open:
 		_clamp()
@@ -122,7 +122,7 @@ func _animate(opening: bool) -> void:
 				scale = Vector2.ONE)
 
 
-## O botão verde estica a janela até a altura toda da área, ou volta ao tamanho padrão.
+## The green button stretches the window to the full height of the area, or returns to the default size.
 func _toggle_tall() -> void:
 	var area := _area()
 	if size.y >= area.size.y - 2.0:

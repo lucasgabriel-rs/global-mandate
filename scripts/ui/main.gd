@@ -1,18 +1,18 @@
 extends Node
-## Ponto de entrada: tela inicial, relógio em tempo real, decisões, menu e fim de jogo.
+## Entry point: start screen, real-time clock, decisions, menu and game over.
 
 const SAVE_PATH := "user://mandato.save"
 const BACKUP_PATH := "user://mandato.bak"
-## Na velocidade normal passa 1 dia de jogo por segundo real. Os valores multiplicam isso.
+## At normal speed 1 game day passes per real second. The values multiply that.
 const DAYS_PER_SECOND := 1.0
 const SPEEDS := [0.0, 1.0, 2.0, 4.0]
-## Atraso máximo guardado quando a simulação demora: além disso, o tempo perdido não é recuperado.
+## Maximum lag kept when the simulation is slow: beyond that, the lost time is not recovered.
 const MAX_DAYS_BEHIND := 2.0
 const MAIN_MENU := preload("res://scenes/ui/main_menu.tscn")
 const SETTINGS := preload("res://scenes/ui/modals/settings.tscn")
 const START_SCREEN := preload("res://scenes/ui/start_screen.tscn")
 const LOADING_SCREEN := preload("res://scenes/ui/loading_screen.tscn")
-## Tempo por quadro para criar nós do mapa na thread principal, para a animação de carga não engasgar.
+## Time per frame to create map nodes on the main thread, so the loading animation does not stutter.
 const BOOT_SLICE_USEC := 6000
 const PAUSE_MENU := preload("res://scenes/ui/modals/pause_menu.tscn")
 const HELP := preload("res://scenes/ui/modals/help.tscn")
@@ -36,13 +36,13 @@ const AMENDMENT_EDITOR := preload("res://scenes/ui/legislation/amendment_editor.
 const NEGOTIATION := preload("res://scenes/ui/legislation/negotiation.tscn")
 const TREATY := preload("res://scenes/ui/modals/treaty.tscn")
 const ELECTION_REPORT := preload("res://scenes/ui/modals/election_report.tscn")
-## Menor janela que ainda deixa a interface legível.
+## Smallest window that still keeps the interface legible.
 const MIN_WINDOW := Vector2i(1024, 576)
 
 var world: GameWorld
 var start_screen: Control
 var main_menu: Control
-## Abrindo, carregando ou recomeçando: não há mundo pronto para a interface usar.
+## Opening, loading or restarting: there is no world ready for the interface to use.
 var loading := false
 var _loading_screen: Control
 var _sim_task := -1
@@ -74,7 +74,7 @@ var _skip_left := 0
 var _skip_total := 0
 var _skip_before := {}
 var _skip_news: Array = []
-## A troca de idioma só refaz a tela depois que o mundo existe; antes disso não há o que refazer.
+## A language change only redoes the screen after the world exists; before that there is nothing to redo.
 var _lang_ready := false
 var _lang_pending := false
 
@@ -116,7 +116,7 @@ func _ready() -> void:
 	get_window().unresizable = false
 	get_window().min_size = MIN_WINDOW
 	await _boot()
-	# Os testes de interface começam direto na escolha do país.
+	# Interface tests start straight at the country choice.
 	var args := Array(OS.get_cmdline_user_args())
 	if args.any(func(a: String): return a.begins_with("--ui-")) and not args.has("--ui-menu"):
 		_build_start_screen()
@@ -194,12 +194,12 @@ func _adopt_world(fresh: GameWorld) -> void:
 
 # --- Threads --------------------------------------------------------------------------
 #
-# O mundo só tem um dono de cada vez. A interface o usa livremente na thread principal, até _launch_sim
-# entregá-lo a uma thread de trabalho e marcar world.busy. Enquanto isso, os quadros seguem desenhando, mas
-# ninguém lê nem muda o mundo: _process retorna antes, e qualquer clique ou tecla chama join_sim, que espera a
-# thread acabar. Os sinais da simulação ficam na fila e são entregues em join_sim, já de volta à thread principal.
+# The world has only one owner at a time. The interface uses it freely on the main thread, until _launch_sim
+# hands it to a worker thread and marks world.busy. Meanwhile, frames keep drawing, but
+# nobody reads or changes the world: _process returns early, and any click or key calls join_sim, which waits for the
+# thread to finish. The simulation's signals stay queued and are delivered in join_sim, back on the main thread.
 
-## Agenda um trabalho sobre o mundo. Só começa depois que os nós terminam de se desenhar neste quadro.
+## Schedules a job on the world. It only starts after the nodes finish drawing in this frame.
 func _run_on_worker(work: Callable, after := Callable()) -> void:
 	_sim_pending = work
 	_sim_after = after
@@ -214,7 +214,7 @@ func _launch_sim() -> void:
 	_sim_pending = Callable()
 
 
-## Devolve o mundo à thread principal, esperando o que ainda estiver rodando.
+## Returns the world to the main thread, waiting for whatever is still running.
 func join_sim() -> void:
 	if _sim_pending.is_valid():
 		var work := _sim_pending
@@ -236,7 +236,7 @@ func join_sim() -> void:
 
 
 func _input(event: InputEvent) -> void:
-	# Passar o mouse não muda nada no mundo. Clique, arraste e tecla precisam dele de volta primeiro.
+	# Hovering changes nothing in the world. Click, drag and key need it back first.
 	if event is InputEventMouseMotion and event.button_mask == 0:
 		return
 	if _sim_task >= 0:
@@ -264,14 +264,14 @@ func _hide_loading() -> void:
 	loading = false
 
 
-## Espera um trabalho em segundo plano sem parar a tela.
+## Waits for a background job without stopping the screen.
 func _wait_task(id: int) -> void:
 	while not WorkerThreadPool.is_task_completed(id):
 		await get_tree().process_frame
 	WorkerThreadPool.wait_for_task_completion(id)
 
 
-## Abertura do jogo: o mapa e o mundo se montam ao mesmo tempo, em outras threads.
+## Game opening: the map and the world are built at the same time, on other threads.
 func _boot() -> void:
 	_show_loading(tr("Preparando o mundo..."))
 	await get_tree().process_frame
@@ -290,7 +290,7 @@ func _boot() -> void:
 	_adopt_world(fresh)
 
 
-## Espera tudo o que está em segundo plano acabar. Para os testes e para quem precisa do resultado.
+## Waits for everything in the background to finish. For the tests and for whoever needs the result.
 func idle() -> void:
 	join_sim()
 	while loading:
@@ -301,12 +301,12 @@ func idle() -> void:
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_TRANSLATION_CHANGED and _lang_ready and not _lang_pending:
-		# Todos os nós recebem o aviso de uma vez; refaz a tela uma vez só, no fim do quadro.
+		# All nodes receive the notice at once; redoes the screen only once, at the end of the frame.
 		_lang_pending = true
 		_on_language_changed.call_deferred()
 
 
-## Cenas se traduzem sozinhas; aqui se refaz o que é montado em código com textos já traduzidos.
+## Scenes translate themselves; here is redone what is built in code with already translated texts.
 func _on_language_changed() -> void:
 	_lang_pending = false
 	join_sim()
@@ -336,7 +336,7 @@ func _build_main_menu() -> void:
 		_build_start_screen())
 	var load_button: Button = main_menu.get_node("%carregar_jogo")
 	load_button.disabled = not (FileAccess.file_exists(SAVE_PATH) or FileAccess.file_exists(BACKUP_PATH))
-	# O menu só some quando a partida carrega (_enter_game): se o arquivo estiver ruim, ele continua ali.
+	# The menu only goes away when the match loads (_enter_game): if the file is bad, it stays there.
 	load_button.pressed.connect(_load_game)
 	main_menu.get_node("%configuracoes").pressed.connect(_open_settings)
 	main_menu.get_node("%sair_do_jogo").pressed.connect(func(): get_tree().quit())
@@ -390,7 +390,7 @@ func _pick_start(c: Country) -> void:
 		var l: Label = start_screen.get_node("%stat_" + key)
 		l.text = value
 		l.add_theme_color_override("font_color", color)
-	# Verde ou vermelho só quando o número foge do comum; no resto, a cor normal do texto.
+	# Green or red only when the number departs from the usual; otherwise, the normal text color.
 	var tone := func(good: bool, bad: bool) -> Color:
 		return UiKit.RED if bad else (UiKit.GREEN if good else UiKit.TEXT)
 	var regions := {"AFR": tr("África"), "ASI": tr("Ásia"), "EUR": tr("Europa"), "LAM": tr("América Latina"),
@@ -460,7 +460,7 @@ func _begin(character := {}, choice := {}) -> void:
 func _enter_game() -> void:
 	playing = true
 	if world.leader.is_empty():
-		# Save de antes do criador de personagem: gera um líder fixo para aquele país.
+		# Save from before the character creator: generates a fixed leader for that country.
 		var rng := RandomNumberGenerator.new()
 		rng.seed = hash(world.player.iso)
 		world.leader = Character.random(rng, world.player.iso, world.player.region)
@@ -474,14 +474,14 @@ func _enter_game() -> void:
 	_set_speed(1)
 
 
-# --- Relógio -------------------------------------------------------------------
+# --- Clock -------------------------------------------------------------------
 
 func _process(delta: float) -> void:
 	if loading:
 		return
 	if _sim_task >= 0:
 		if not WorkerThreadPool.is_task_completed(_sim_task):
-			# O relógio espera a thread: o tempo não se perde, e a tela continua desenhando.
+			# The clock waits for the thread: time is not lost, and the screen keeps drawing.
 			if speed > 0:
 				accumulator = minf(accumulator + delta * DAYS_PER_SECOND * SPEEDS[speed], MAX_DAYS_BEHIND)
 			return
@@ -494,7 +494,7 @@ func _process(delta: float) -> void:
 		_run_skip()
 	elif speed > 0 and not modal_open and not world.over and not hud.border.active:
 		accumulator = minf(accumulator + delta * DAYS_PER_SECOND * SPEEDS[speed], MAX_DAYS_BEHIND)
-		# Cada dia roda em outra thread; o relógio espera ele terminar antes do próximo.
+		# Each day runs on another thread; the clock waits for it to finish before the next one.
 		if accumulator >= 1.0:
 			accumulator -= 1.0
 			_run_on_worker(world.tick_day)
@@ -511,8 +511,8 @@ func _process(delta: float) -> void:
 			map.refresh_colors()
 
 
-## Avança dias de uma vez: a simulação roda cada dia normalmente, sem esperar o relógio. O horário
-## não muda. Uma decisão no meio do caminho interrompe o avanço, que continua depois da resposta.
+## Advances days at once: the simulation runs each day normally, without waiting for the clock. The time
+## does not change. A decision along the way interrupts the advance, which continues after the answer.
 func start_skip(days: int) -> void:
 	join_sim()
 	if not playing or world.over or modal_open or hud.border.active or _skip_left > 0:
@@ -534,7 +534,7 @@ func _run_skip() -> void:
 	_run_on_worker(_skip_days, _after_skip)
 
 
-## Na thread de trabalho: avança até acabar ou até surgir algo que precise do jogador.
+## On the worker thread: advances until it ends or until something needing the player comes up.
 func _skip_days() -> void:
 	while _skip_left > 0 and not world.over and not world.has_urgent_event():
 		world.tick_day()
@@ -551,7 +551,7 @@ func _after_skip() -> void:
 	map.refresh_colors()
 
 
-## Ritmo real do relógio na tela, medido a cada segundo: mostra se a velocidade escolhida está valendo.
+## Real rate of the clock on screen, measured every second: shows whether the chosen speed is in effect.
 func _measure_rate() -> void:
 	var now := Time.get_ticks_usec()
 	if now - _rate_usec < 1000000:
@@ -564,7 +564,7 @@ func _measure_rate() -> void:
 	hud.set_rate_display(rate if running else 0.0, SPEEDS[speed] * DAYS_PER_SECOND if running else 0.0)
 
 
-## Dias de jogo contados com a fração do dia em curso, para o ritmo medido não oscilar.
+## Game days counted with the fraction of the current day, so the measured rate does not oscillate.
 func _clock_days() -> float:
 	return world.day_index + accumulator
 
@@ -574,8 +574,8 @@ func _set_speed(s: int) -> void:
 		last_speed = s
 	if s != speed and world:
 		print("velocidade: %s, relógio em %s" % ["pausa" if s == 0 else "%dx" % int(SPEEDS[s]), world.date_string()])
-		# O atraso acumulado na velocidade anterior não é cobrado na nova, e a próxima medida do ritmo
-		# não mistura as duas.
+		# The lag accumulated at the previous speed is not charged at the new one, and the next rate measurement
+		# does not mix the two.
 		accumulator = fmod(accumulator, 1.0)
 		_rate_clock = _clock_days()
 		_rate_usec = Time.get_ticks_usec()
@@ -636,7 +636,7 @@ func _on_country_hovered(c: Country) -> void:
 
 # --- Janelas -------------------------------------------------------------------
 
-## Abre uma janela da pasta scenes/ui/modals. Título e texto vazios mantêm o que está na cena.
+## Opens a window from the scenes/ui/modals folder. Empty title and text keep what is in the scene.
 func _modal(scene: PackedScene, title := "", body := "") -> Control:
 	modal_open = true
 	map.interactive = false
@@ -653,29 +653,29 @@ func _modal(scene: PackedScene, title := "", body := "") -> Control:
 
 func _close_modal(dim: Control) -> void:
 	dim.queue_free()
-	# A resposta de uma janela pode ter aberto outra: fim de jogo, conversa, novo personagem.
+	# A window's answer may have opened another: game over, conversation, new character.
 	var another := false
 	for child: Node in modal_root.get_children():
 		if child != dim and child != start_screen and child != _loading_screen and not child.is_queued_for_deletion():
 			another = true
 	modal_open = another
 	map.interactive = not another
-	# Salvar deixa o mundo com outra thread: a tela se atualiza quando ele voltar.
+	# Saving leaves the world with another thread: the screen updates when it comes back.
 	if world.busy or _sim_pending.is_valid():
 		return
 	hud.refresh(true)
 	map.refresh_colors()
 
 
-# --- Escolha de partido -------------------------------------------------------------
+# --- Party choice -------------------------------------------------------------
 
-## choice: {"id": partido existente} ou {"found": nome, "family": família, "color": cor}.
+## choice: {"id": existing party} or {"found": name, "family": family, "color": color}.
 func _apply_party_choice(choice: Dictionary, at_start: bool) -> Dictionary:
-	# Só quem funda um partido escolhe as ideias; quem entra em outro adota as dele.
+	# Only whoever founds a party chooses the ideas; whoever joins another adopts its own.
 	if choice.has("found"):
 		world.leader["econ"] = choice.econ
 		world.leader["social"] = choice.social
-	# O papel vem antes do partido: na oposição, entrar em um partido não o faz governar.
+	# The role comes before the party: in opposition, joining a party does not make it govern.
 	if at_start and choice.get("role", "") == "opposition" and choice.get("id", -1) != int(world.politics.data_of(world.player.iso).ruling):
 		world.start_in_opposition()
 	var result := {"ok": true, "msg": ""}
@@ -751,7 +751,7 @@ func _open_minister_picker(post: String) -> void:
 	dim.get_node("%Cancelar").pressed.connect(func(): _close_modal(dim))
 
 
-# --- Conversa com líderes -----------------------------------------------------------
+# --- Conversation with leaders -----------------------------------------------------------
 
 func _open_talk(target: Country, invited := false) -> void:
 	var opened := Dialogue.start(world, target, invited)
@@ -761,19 +761,19 @@ func _open_talk(target: Country, invited := false) -> void:
 	open_chat(ChatLog.country_key(target.iso))
 
 
-## Abre a janela de conversas já no contato indicado: "pais:ISO" ou "partido:ID".
+## Opens the conversation window already at the indicated contact: "pais:ISO" or "partido:ID".
 func open_chat(key: String) -> void:
 	var dim: ChatWindow = _modal(CHAT, tr("Conversas"))
 	dim.setup(self, key)
 
 
-## Agenda de contatos: todos os líderes partidários e de países. Dentro da janela de conversas, escolhe o contato nela mesma.
+## Contact book: all party and country leaders. Inside the conversation window, chooses the contact in the window itself.
 func open_agenda(chat: ChatWindow = null) -> void:
 	var dim: AgendaWindow = _modal(AGENDA, tr("Agenda"))
 	dim.setup(self, chat)
 
 
-## Chama o contato da agenda ("pais:ISO" ou "partido:ID"): abre uma conversa nova com o líder, se der, e mostra o histórico.
+## Calls the contact from the book ("pais:ISO" or "partido:ID"): opens a new conversation with the leader, if possible, and shows the history.
 func call_contact(key: String, chat: ChatWindow = null) -> void:
 	if key.begins_with("pais:"):
 		var c: Country = world.by_iso.get(key.trim_prefix("pais:"))
@@ -882,9 +882,9 @@ func _open_party_picker(country: Country, at_start: bool, on_done: Callable) -> 
 		apply_role.call()
 
 
-# --- Legislação ---------------------------------------------------------------------------
+# --- Legislation ---------------------------------------------------------------------------
 
-## Uma janela de cada vez: abrir outra troca a que está na frente.
+## One window at a time: opening another swaps the one in front.
 func _swap_law_screen(scene: PackedScene) -> Control:
 	_drop_law_screens()
 	return _modal(scene)
@@ -897,7 +897,7 @@ func _drop_law_screens() -> void:
 			child.queue_free()
 
 
-## O centro legislativo é uma janela flutuante como as outras; editor, norma e emenda continuam por cima, em tela própria.
+## The legislative center is a floating window like the others; editor, norm and amendment stay on top, on their own screen.
 func open_legislation(tab := 0, message := "") -> void:
 	if not playing or (modal_open and not _law_screen_open()):
 		return
@@ -912,7 +912,7 @@ func close_legislation() -> void:
 	hud.close_legislation()
 
 
-## A janela do centro legislativo, se estiver aberta.
+## The legislative center window, if it is open.
 func legislation_center() -> LegislationCenter:
 	return hud.legislation_center()
 
@@ -962,7 +962,7 @@ func open_amendment_editor(norm: Dictionary) -> void:
 	dim.setup(self, norm)
 
 
-# --- Criador de personagem ---------------------------------------------------------
+# --- Character creator ---------------------------------------------------------
 
 func _open_creator(character: Dictionary, on_done: Callable) -> void:
 	var dim := _modal(CREATOR)
@@ -1021,8 +1021,8 @@ func _open_creator(character: Dictionary, on_done: Callable) -> void:
 		on_done.call(character))
 
 
-## País do personagem no criador: o escolhido na tela inicial ou o da partida; se ele deixou de existir,
-## quem o tomou, que é onde o novo personagem vai governar.
+## The character's country in the creator: the one chosen on the start screen or the match's; if it ceased to exist,
+## whoever took it, which is where the new character will govern.
 func _creator_country() -> Country:
 	var c: Country = world.player if playing or _start_pick == null else _start_pick
 	if c != null and not c.alive:
@@ -1113,7 +1113,7 @@ func _on_game_ended(result: Dictionary) -> void:
 		_new_character())
 
 
-## A partida segue com outra pessoa: no mesmo país, ou em quem o tomou se ele deixou de existir.
+## The match continues with another person: in the same country, or in whoever took it if it ceased to exist.
 func _new_character() -> void:
 	var home := _creator_country()
 	_open_creator(Character.random(world.rng, home.iso, home.region), func(ch):
@@ -1191,8 +1191,8 @@ func _restart() -> void:
 
 # --- Salvar / carregar -----------------------------------------------------------
 
-## Escreve em um arquivo temporário, confere a leitura e só então troca: uma falha no meio do caminho
-## não corrompe o save anterior, que ainda fica guardado como cópia de segurança. Roda em outra thread.
+## Writes to a temporary file, checks the reading and only then swaps: a failure midway
+## does not corrupt the previous save, which is still kept as a backup copy. Runs on another thread.
 func _save_game() -> void:
 	join_sim()
 	_run_on_worker(_write_save)
@@ -1220,7 +1220,7 @@ func _write_save() -> void:
 	world.emit_news(tr("Partida salva."), "politica", null)
 
 
-## Lê o arquivo e monta o mundo novo em outra thread. O mundo atual só é trocado se tudo der certo.
+## Reads the file and builds the new world on another thread. The current world is only swapped if everything goes well.
 func _load_game() -> void:
 	join_sim()
 	var was_playing := playing

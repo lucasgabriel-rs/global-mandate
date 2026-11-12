@@ -1,7 +1,7 @@
 class_name LanguagePicker
 extends OptionButton
-## Seletor de idioma da tela inicial e do menu de pausa. Os itens ficam na cena, na ordem de Lang.CODES,
-## com o nome de cada idioma nele mesmo (por isso o nó não traduz o próprio texto).
+## Language selector of the start screen and the pause menu. The items live in the scene, in the order of Lang.CODES,
+## with each language's name in itself (so the node does not translate its own text).
 
 
 func _ready() -> void:
@@ -9,7 +9,7 @@ func _ready() -> void:
 	item_selected.connect(func(i: int): Lang.apply(Lang.CODES[i]))
 
 
-## O idioma pode mudar por fora (o outro seletor, --lang, os testes): o item marcado acompanha.
+## The language may change from outside (the other selector, --lang, the tests): the checked item follows.
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_TRANSLATION_CHANGED and is_node_ready():
 		_sync()

@@ -1,6 +1,6 @@
 class_name ChatBubble
 extends HBoxContainer
-## Balão de mensagem: as do jogador à direita, as do outro lado à esquerda.
+## Message bubble: the player's on the right, the other side's on the left.
 
 const MAX_TEXT_WIDTH := 400.0
 
@@ -19,7 +19,7 @@ func setup(message: Dictionary) -> void:
 	_text.text = String(message.text)
 	_time.text = String(message.get("date", ""))
 	_bubble.add_theme_stylebox_override("panel", style_me if me else style_them)
-	# O texto se ajusta ao balão: largura do que foi escrito, até o limite.
+	# The text fits the bubble: width of what was written, up to the limit.
 	var font := _text.get_theme_font("font")
 	var wide := font.get_multiline_string_size(_text.text, HORIZONTAL_ALIGNMENT_LEFT, -1.0, _text.get_theme_font_size("font_size")).x
 	_text.custom_minimum_size.x = clampf(wide + 4.0, 90.0, MAX_TEXT_WIDTH)

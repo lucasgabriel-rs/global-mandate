@@ -1,37 +1,37 @@
 class_name CodeTributario
 extends LawCode
-## Código Tributário: Tributos, alíquotas, faixas, isenções e contribuições.
+## Tax Code: Taxes, rates, brackets, exemptions and contributions.
 ##
-## Cada bloco é um dispositivo com alíquota legal (IRPF por faixas, IVA, IRPJ...). O código converte o
-## conjunto em vigor nas cargas efetivas que a economia usa (`tax_income`, `tax_consumption`,
-## `tax_corporate`, em fração do PIB, e `tariff`), multiplicando cada alíquota pela base que ela atinge.
-## As bases vêm da renda média e do Gini de partida do país, guardados no item "_ref", junto com a
-## calibração que faz o texto inicial reproduzir exatamente a carga com que o país começa.
+## Each block is a provision with a legal rate (income tax by brackets, VAT, corporate tax...). The code converts the
+## set in force into the effective burdens the economy uses (`tax_income`, `tax_consumption`,
+## `tax_corporate`, as a fraction of GDP, and `tariff`), multiplying each rate by the base it reaches.
+## The bases come from the country's average income and starting Gini, stored in the "_ref" item, together with the
+## calibration that makes the initial text reproduce exactly the burden the country starts with.
 ##
-## Renda e folha: IRPF e previdência. Consumo: tributos sobre consumo, reduzidas e seletivo.
-## Empresas e capital: IRPJ, CSLL, Simples, IOF, IPTU, IPVA, ITCMD e grandes fortunas.
+## Income and payroll: income tax and pensions. Consumption: consumption taxes, reduced and selective.
+## Companies and capital: corporate taxes, Simples, IOF, property taxes, vehicle taxes, inheritance tax and large fortunes.
 
-## Bases em fração do PIB.
+## Bases as a fraction of GDP.
 const PERSONAL_BASE := 0.65
 const PAYROLL_BASE := 0.55
 const CONSUMPTION_BASE := 0.7
 const PROFIT_BASE := 0.14
-## Faturamento das pequenas empresas por unidade de lucro.
+## Revenue of small companies per unit of profit.
 const TURNOVER_PER_PROFIT := 5.0
 const IOF_BASE := 0.3
 const PROPERTY_BASE := {"iptu": 1.6, "ipva": 0.3}
 const INHERITANCE_BASE := 0.05
 const WEALTH_GDP := 3.5
 const WEALTH_ALPHA := 1.5
-## Quanto da base de consumo cada tributo alcança.
+## How much of the consumption base each tax reaches.
 const CONSUMPTION_COVER := {"iva": 1.0, "icms": 0.5, "ipi": 0.15, "iss": 0.4}
-## Parte da base de consumo de cada grupo com alíquota reduzida.
+## Share of each group's consumption base with a reduced rate.
 const REDUCED_SHARE := {"cesta": 0.12, "saude": 0.06, "educacao": 0.05}
 const SELECTIVE_BASE := {"tabaco": 0.008, "alcool": 0.012, "combustivel": 0.035, "acucar": 0.01}
-## Orçamento da Receita (% do PIB) que mantém a sonegação no nível de partida.
+## Tax Authority budget (% of GDP) that keeps evasion at the starting level.
 const ENFORCEMENT_REF := 0.2
 const SECTOR_KEYS := ["agro", "mineracao", "industria", "construcao", "comercio", "transporte", "financas", "tecnologia", "turismo", "publico"]
-## Limites das cargas, os mesmos de `Legislation._set_policy`.
+## Burden limits, the same as `Legislation._set_policy`.
 const LIMITS := {"tax_income": 0.32, "tax_consumption": 0.24, "tax_corporate": 0.16, "tariff": 0.5}
 const GROUP_FIELD := {"income": "tax_income", "consumption": "tax_consumption", "corporate": "tax_corporate"}
 
@@ -82,9 +82,9 @@ func choices() -> Dictionary:
 	}
 
 
-# --- Texto inicial ---------------------------------------------------------------------
+# --- Initial text ---------------------------------------------------------------------
 
-## O país começa com um código completo, em alíquotas redondas, que reproduz a carga de partida.
+## The country starts with a complete code, in round rates, that reproduces the starting burden.
 func seed_program(world: GameWorld, c: Country) -> Dictionary:
 	var program := LawProgram.empty()
 	var stack := LawProgram.add_stack(program, LawProgram.new_block(program, "ev_enact"), Vector2(30, 30))
@@ -95,7 +95,7 @@ func seed_program(world: GameWorld, c: Country) -> Dictionary:
 	return program
 
 
-## Linhas [tipo de bloco, campos] do texto inicial: um modelo de alíquotas escalado por grupo.
+## Lines [block type, fields] of the initial text: a rate template scaled by group.
 func _seed_rows(c: Country, m: float) -> Array:
 	var income := [
 		["tr_irpf_isencao", {"limite": _nice(m)}],
@@ -146,7 +146,7 @@ func _rows_items(rows: Array) -> Dictionary:
 	return items
 
 
-## Valor redondo, com dois algarismos significativos.
+## Round value, with two significant figures.
 static func _nice(x: float) -> float:
 	if x <= 0.0:
 		return 0.0
@@ -154,11 +154,11 @@ static func _nice(x: float) -> float:
 	return roundf(x / step) * step
 
 
-# --- Efeito dos blocos -----------------------------------------------------------------
+# --- Effect of the blocks -----------------------------------------------------------------
 
 func apply(world: GameWorld, leg: Legislation, op: String, values: Dictionary, _weight: float, norm_id: int, prio: float) -> String:
 	var c := world.player
-	# Lei que altera outra: o texto novo já vale pela norma alterada, que roda antes.
+	# Law that amends another: the new text already applies through the amended norm, which runs first.
 	var norm: Dictionary = leg.norms.get(norm_id, {})
 	if int(norm.get("amends", -1)) >= 0 and String(leg.norms.get(int(norm.amends), {}).get("state", "")) == Legislation.STATE_IN_FORCE:
 		return ""
@@ -168,7 +168,7 @@ func apply(world: GameWorld, leg: Legislation, op: String, values: Dictionary, _
 	return ""
 
 
-## Chave do item: um por tributo, por faixa, por grupo, por produto...
+## Item key: one per tax, per bracket, per group, per product...
 func _key(op: String, v: Dictionary) -> String:
 	match op:
 		"tr_irpf_faixa":
@@ -188,7 +188,7 @@ func _key(op: String, v: Dictionary) -> String:
 	return op.trim_prefix("tr_")
 
 
-## Só os números e escolhas do bloco, com o tipo junto.
+## Only the block's numbers and choices, with the type alongside.
 func _clean(op: String, v: Dictionary) -> Dictionary:
 	var out := {"op": op}
 	for k: String in v:
@@ -197,7 +197,7 @@ func _clean(op: String, v: Dictionary) -> Dictionary:
 	return out
 
 
-## Itens tributários em vigor, sem os internos ("_ref").
+## Tax items in force, without the internal ones ("_ref").
 func _items(leg: Legislation) -> Dictionary:
 	var out := {}
 	var all := leg.code_standing(id)
@@ -211,7 +211,7 @@ func _ref(leg: Legislation) -> Dictionary:
 	return leg.standing.codes.get("tributario:_ref", {})
 
 
-## Renda média mensal (US$) que mede as faixas: a do começo, guardada; antes disso, a de hoje.
+## Average monthly income (US$) that measures the brackets: the one from the start, stored; before that, today's.
 func _ref_income(world: GameWorld, c: Country) -> float:
 	var ref := {}
 	if world.legislation:
@@ -221,8 +221,8 @@ func _ref_income(world: GameWorld, c: Country) -> float:
 	return maxf(c.gdp_pc() * 0.6 / 12.0, 1.0)
 
 
-## Na primeira vez: a renda de referência, a calibração por grupo e os indicadores do texto inicial,
-## que são o ponto zero dos efeitos mensais. Fica com a norma 0, que nenhuma revogação apaga.
+## The first time: the reference income, the calibration per group and the indicators of the initial text,
+## which are the zero point of the monthly effects. Stays with norm 0, which no repeal erases.
 func _ensure_ref(world: GameWorld, leg: Legislation, c: Country) -> void:
 	if not _ref(leg).is_empty():
 		return
@@ -239,7 +239,7 @@ func _ensure_ref(world: GameWorld, leg: Legislation, c: Country) -> void:
 	leg.stand("tributario:_ref", ref, 0, -1.0)
 
 
-## Reescreve as cargas com o que está em vigor. Grupo sem nenhum dispositivo fica como está.
+## Rewrites the burdens with what is in force. A group with no provision stays as it is.
 func _recompute(world: GameWorld, leg: Legislation, c: Country) -> void:
 	var ref := _ref(leg)
 	if ref.is_empty():
@@ -263,11 +263,11 @@ func _set_load(world: GameWorld, field: String, value: float, start: float) -> v
 		Politics._apply_budget_change(c, field, v)
 
 
-## Cargas efetivas (fração do PIB) e o que cada grupo tem. Sem calibração, os números crus do modelo.
+## Effective burdens (fraction of GDP) and what each group has. Without calibration, the model's raw numbers.
 func _effective(items: Dictionary, c: Country, m: float, calib: Dictionary) -> Dictionary:
 	var has := {"income": false, "consumption": false, "corporate": false}
 	var sigma := _sigma(c.inequality0)
-	# IRPF: alíquota marginal por faixa sobre a renda que cai em cada faixa.
+	# Income tax: marginal rate per bracket on the income falling in each bracket.
 	var irpf := 0.0
 	var bands := _bands(items)
 	for band: Array in bands:
@@ -281,7 +281,7 @@ func _effective(items: Dictionary, c: Country, m: float, calib: Dictionary) -> D
 		if items.has("prev_" + who):
 			payroll += _rate(items, "prev_" + who) * PAYROLL_BASE * formal
 			has.income = true
-	# Consumo: a soma dos tributos, menor nos grupos com reduzida, mais o seletivo.
+	# Consumption: the sum of the taxes, lower in groups with a reduced rate, plus the selective one.
 	var standard := 0.0
 	for t: String in CONSUMPTION_COVER:
 		if items.has("consumo_" + t):
@@ -301,7 +301,7 @@ func _effective(items: Dictionary, c: Country, m: float, calib: Dictionary) -> D
 			selective += _rate(items, "seletivo_" + p) * float(SELECTIVE_BASE[p])
 			has.consumption = true
 	consumption += selective
-	# Empresas e capital.
+	# Companies and capital.
 	var profit_rate := _rate(items, "irpj") + _rate(items, "csll")
 	var exempt := 0.0
 	for i in SECTOR_KEYS.size():
@@ -336,7 +336,7 @@ func _effective(items: Dictionary, c: Country, m: float, calib: Dictionary) -> D
 	}
 
 
-## Faixas do IRPF como [de, até, alíquota], em ordem; a última vai até o infinito.
+## Income tax brackets as [from, to, rate], in order; the last goes to infinity.
 func _bands(items: Dictionary) -> Array:
 	var lo := float(items.get("irpf_isencao", {}).get("limite", 0.0))
 	var steps := []
@@ -361,7 +361,7 @@ func _rate(items: Dictionary, key: String) -> float:
 	return float(item.get("aliquota", item.get("parcela", 0.0))) * 0.01
 
 
-## Renda log-normal com o Gini do país: parte da renda total acima de `a` (E[(y-a)+] / média).
+## Log-normal income with the country's Gini: share of total income above `a` (E[(y-a)+] / mean).
 static func _above(a: float, m: float, sigma: float) -> float:
 	if a <= 0.0:
 		return 1.0
@@ -373,7 +373,7 @@ static func _above(a: float, m: float, sigma: float) -> float:
 	return maxf(share - a / m * people, 0.0)
 
 
-## Pareto para a riqueza: parte do patrimônio total acima do limite.
+## Pareto for wealth: share of total wealth above the limit.
 static func _wealth_above(limit: float, pc: float) -> float:
 	var mean := WEALTH_GDP * pc
 	var x_min := mean * (WEALTH_ALPHA - 1.0) / WEALTH_ALPHA
@@ -383,13 +383,13 @@ static func _wealth_above(limit: float, pc: float) -> float:
 
 
 static func _phi(x: float) -> float:
-	# Abramowitz e Stegun 7.1.26.
+	# Abramowitz and Stegun 7.1.26.
 	var t := 1.0 / (1.0 + 0.3275911 * absf(x) / sqrt(2.0))
 	var y := 1.0 - (((((1.061405429 * t - 1.453152027) * t) + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t * exp(-x * x / 2.0)
 	return 0.5 * (1.0 + (y if x >= 0.0 else -y))
 
 
-## Desvio do log da renda que dá o Gini: G = 2Φ(σ/√2) − 1.
+## Deviation of the log of income that gives the Gini: G = 2Φ(σ/√2) − 1.
 static func _sigma(gini: float) -> float:
 	var target := (clampf(gini, 0.1, 0.8) + 1.0) * 0.5
 	var lo := 0.0
@@ -403,9 +403,9 @@ static func _sigma(gini: float) -> float:
 	return (lo + hi) * 0.5
 
 
-# --- Indicadores e efeitos mensais -----------------------------------------------------
+# --- Indicators and monthly effects -----------------------------------------------------
 
-## O que pesa nos efeitos: carga, progressividade, sonegação e o que mexe com investimento.
+## What weighs on the effects: burden, progressivity, evasion and what moves investment.
 func _stats(items: Dictionary, c: Country, m: float, calib: Dictionary) -> Dictionary:
 	var e := _effective(items, c, m, calib)
 	var load := float(e.income) + float(e.consumption) + float(e.corporate)
@@ -419,7 +419,7 @@ func _stats(items: Dictionary, c: Country, m: float, calib: Dictionary) -> Dicti
 	pressure += maxf(float(e.standard) - 0.2, 0.0) * 0.2 + _rate(items, "fortunas") * 1.5
 	var verba := float(items.get("fiscalizacao", {}).get("verba", 0.0))
 	var enforcement := verba / ENFORCEMENT_REF
-	# Retorno decrescente: dobrar a Receita não corta a sonegação pela metade.
+	# Diminishing returns: doubling the Tax Authority does not cut evasion by half.
 	var evasion := (0.06 + pressure) / (0.6 + 0.4 * sqrt(clampf(enforcement, 0.0, 4.0)))
 	if items.has("simples"):
 		evasion *= 0.95
@@ -437,7 +437,7 @@ func monthly(world: GameWorld, c: Country, leg: Legislation) -> Dictionary:
 		return {}
 	var items := _items(leg)
 	if hash(items) != int(ref.sig):
-		# Alguma norma saiu de vigor: o texto do código volta a valer onde ela mandava.
+		# Some norm went out of force: the code's text applies again where it ruled.
 		_restore(world, leg)
 		_recompute(world, leg, c)
 		items = _items(leg)
@@ -449,7 +449,7 @@ func monthly(world: GameWorld, c: Country, leg: Legislation) -> Dictionary:
 	c.code_stats["carga_tributaria"] = c.tax_total() + c.tariff * c.m_share
 	c.code_stats["progressividade"] = float(now.prog)
 	c.code_stats["sonegacao"] = float(now.evasion)
-	# A Receita custa: só o que passa do orçamento de partida, que a economia já conta.
+	# The Tax Authority costs: only what exceeds the starting budget, which the economy already counts.
 	var extra := (float(now.verba) - float(base.verba)) * 0.01 * c.y_usd() / 12.0
 	if extra > 0.0:
 		Legislation._pay(c, extra)
@@ -468,7 +468,7 @@ func monthly(world: GameWorld, c: Country, leg: Legislation) -> Dictionary:
 	}
 
 
-## Reaplica o texto em vigor do código: o que outra norma sobrescreveu e perdeu ao sair de vigor volta.
+## Reapplies the code's text in force: what another norm overwrote and lost on going out of force comes back.
 func _restore(world: GameWorld, leg: Legislation) -> void:
 	var norm := leg.code_norm(id)
 	if norm.is_empty() or norm.versions.is_empty():
@@ -479,7 +479,7 @@ func _restore(world: GameWorld, leg: Legislation) -> void:
 		leg.stand("tributario:" + k, items[k].duplicate(), int(norm.id), prio)
 
 
-## Itens que um programa define, artigo por artigo (o posterior prevalece).
+## Items that a program defines, article by article (the later one prevails).
 func _program_items(program: Dictionary) -> Dictionary:
 	var items := {}
 	for stack: Dictionary in program.get("stacks", []):
@@ -491,7 +491,7 @@ func _program_items(program: Dictionary) -> Dictionary:
 	return items
 
 
-## Para a bússola e o eleitor: quanto o projeto muda a carga em relação à de hoje.
+## For the compass and the voter: how much the project changes the burden compared with today's.
 func bill_effect(world: GameWorld, leg: Legislation, norm: Dictionary) -> Dictionary:
 	var ref := _ref(leg)
 	var added := _program_items(norm.get("program", {}))
@@ -512,5 +512,5 @@ func bill_effect(world: GameWorld, leg: Legislation, norm: Dictionary) -> Dictio
 			delta += clampf(float(eff[group]), 0.0, maxf(float(LIMITS[field]), float(ref.start.get(field, 0.0)))) - float(c.get(field))
 	if eff.tariff >= 0.0:
 		delta += (clampf(float(eff.tariff), 0.0, 0.5) - c.tariff) * clampf(c.m_share, 0.05, 0.5)
-	# budget: receita a mais por ano, em US$ bi, para o painel de efeitos esperados.
+	# budget: extra revenue per year, in US$ bn, for the expected effects panel.
 	return {"econ": clampf(-delta * 15.0, -1.0, 1.0), "popularity": -delta * 6.0, "budget": delta * c.y_usd()}

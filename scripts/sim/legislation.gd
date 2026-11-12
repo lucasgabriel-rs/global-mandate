@@ -1,14 +1,14 @@
 class_name Legislation
 extends RefCounted
-## Normas do país do jogador: documentos, versões, tramitação, Constituição, execução e auditoria.
-## Tudo é dicionário simples, salvo junto com a partida. Só o país do jogador tem normas.
+## Norms of the player's country: documents, versions, procedure, Constitution, execution and audit.
+## Everything is a plain dictionary, saved with the match. Only the player's country has norms.
 
 const MAX_AUDIT := 1500
 const MAX_FAILURES := 3
 const MAX_AI_PENDING := 3
 const AI_PROPOSAL_CHANCE := 0.25
 const TACIT_SANCTION_DAYS := 15
-## Parte do tributo que entra de fato: o resto é sonegação.
+## Share of the tax that actually comes in: the rest is evasion.
 const COMPLIANCE := 0.88
 const EXPORT_DIR := "user://legislacao/"
 const EXPORT_FORMAT := 1
@@ -27,7 +27,7 @@ const STATE_INVALID := "Declarada inválida"
 const STATE_REJECTED := "Rejeitada"
 # i18n-end
 
-## vote: none, simple, absolute ou qualified. needs: papéis que podem apresentar.
+## vote: none, simple, absolute or qualified. needs: roles that may submit.
 # i18n-begin
 const NORM_TYPES := {
 	"constituicao": {"label": "Constituição", "short": "CF", "rank": 100, "organ": "Assembleia Constituinte", "vote": "qualified", "sanction": false, "needs": []},
@@ -42,21 +42,21 @@ const NORM_TYPES := {
 	"portaria": {"label": "Portaria", "short": "Port.", "rank": 20, "organ": "Ministério", "vote": "none", "sanction": false, "needs": ["head"]},
 }
 # i18n-end
-## Dias que cada etapa leva depois da anterior: o parlamento precisa de tempo para deliberar.
+## Days each stage takes after the previous one: parliament needs time to deliberate.
 const STEP_DAYS := {
 	"present": 2, "admissibility": 7, "constitutional": 7, "discussion": 21, "vote": 3, "vote_upper": 21, "interval": 0,
 	"plebiscite": 30, "quorum": 1, "sanction": 5, "override": 14, "promulgate": 2, "publish": 1, "sign": 1, "apply": 0,
 }
-## Peso de cada bloco na opinião do eleitor, além da distância das ideias dele.
+## Weight of each block in the voter's opinion, besides the distance from their ideas.
 const POPULARITY_WEIGHTS := {
 	"ec_charge": -0.08, "ec_fee": -0.04, "ec_contribution": -0.08, "ac_obligation": -0.08, "ac_fine": -0.03, "ac_benefit": 0.1, "ec_exempt": 0.05, "ec_cap": 0.04,
 	"ec_minwage": 0.08, "ec_subsidy": 0.02, "ec_spend": 0.03, "rg_grant": 0.06, "rg_remove": -0.12, "rg_restrict": -0.1, "rg_duty": -0.05, "rg_penalty": -0.03, "rg_exception": 0.02,
 }
-## Uma lei popular dá aprovação ao governo ao entrar em vigor; uma impopular tira.
+## A popular law gives the government approval when it takes effect; an unpopular one takes it away.
 const POPULARITY_APPROVAL := 0.05
 const POLL_MARGIN_POPULARITY := 3.0
 const POLL_MARGIN_SUPPORT := 0.04
-## Negociação de votos: preço pelo peso da bancada e chance pela distância entre o partido e a proposta.
+## Vote negotiation: price by the weight of the caucus and chance by the distance between the party and the proposal.
 const DEAL_BASE_PRICE := 0.1
 const DEAL_SEAT_PRICE := 1.2
 const DEAL_GENEROUS_BONUS := 0.25
@@ -87,7 +87,7 @@ const ROLE_ACTIONS := {
 	"court": ["analyze"],
 }
 const PROTECTED_RIGHTS := ["expressao", "voto", "associacao", "propriedade"]
-## Peso de cada direito na aprovação e na estabilidade. Autoritários ganham estabilidade ao restringir.
+## Weight of each right in approval and stability. Authoritarians gain stability by restricting.
 const RIGHT_APPROVAL := 0.006
 const RIGHT_STABILITY := 0.004
 # i18n-begin
@@ -109,7 +109,7 @@ var pending: Array = []
 var variables := {}
 var audit: Array = []
 var fired := {}
-## Só para testes antigos da aba Divisões: unidades novas valem na hora.
+## Only for old tests of the Divisions tab: new units take effect right away.
 static var skip_unit_approval := false
 var next_ministry_seq := 1
 var failures := {}
@@ -118,10 +118,10 @@ var spend_ring: Array = []
 var last_war := false
 var rng_state := 0
 var rng_seed := 0
-## Sobe a cada mudança, para a interface saber quando redesenhar.
+## Goes up with every change, so the interface knows when to redraw.
 var revision := 0
 var _rng := RandomNumberGenerator.new()
-## O mundo, para o compilador consultar as empresas do país (privatizar e estatizar).
+## The world, so the compiler can look up the country's companies (privatize and nationalize).
 var _world: WeakRef
 
 
@@ -142,8 +142,8 @@ func setup(world: GameWorld) -> void:
 	revision += 1
 
 
-## Cada código legal com texto inicial vira uma lei complementar em vigor desde o começo da partida.
-## Sem Código Tributário próprio, fica o antigo, feito só de alíquotas.
+## Each legal code with an initial text becomes a complementary law in force from the start of the match.
+## Without its own Tax Code, the old one stays, made only of tax rates.
 func _seed_codes(world: GameWorld) -> void:
 	var has_tax := false
 	for code: LawCode in LawCodes.all():
@@ -163,14 +163,14 @@ func _seed_codes(world: GameWorld) -> void:
 		norm.state = STATE_IN_FORCE
 		norm.dates["published"] = world.date_string()
 		norm.dates["in_force"] = world.date_string()
-		# O texto já vale: o que o código mantém em vigor (faixas, alíquotas...) fica registrado desde já.
+		# The text already applies: what the code keeps in force (brackets, rates...) is recorded right away.
 		fire(world, "ev_enact", {"only": norm.id})
 		has_tax = has_tax or code.id == "tributario"
 	if not has_tax:
 		_seed_tax_code(world)
 
 
-## A norma em vigor de um código ("tributario", "penal"...), ou vazio.
+## The norm in force of a code ("tributario", "penal"...), or empty.
 func code_norm(id: String) -> Dictionary:
 	for norm: Dictionary in norms.values():
 		if String(norm.get("code", "")) == id and norm.state == STATE_IN_FORCE:
@@ -178,14 +178,14 @@ func code_norm(id: String) -> Dictionary:
 	return {}
 
 
-## O código de uma norma, ou o da norma que ela altera; "" se não é um código.
+## The code of a norm, or that of the norm it amends; "" if it is not a code.
 func norm_code_of(norm: Dictionary) -> String:
 	if String(norm.get("code", "")) != "":
 		return String(norm.code)
 	return String(norms.get(int(norm.get("amends", -1)), {}).get("code", ""))
 
 
-## Rascunho que altera um código em vigor (ou o cria, se o país ainda não tem), para o editor de blocos.
+## Draft that amends a code in force (or creates it, if the country does not have one yet), for the block editor.
 func start_code_bill(world: GameWorld, id: String) -> Dictionary:
 	var target := code_norm(id)
 	if not target.is_empty():
@@ -203,9 +203,9 @@ func start_code_bill(world: GameWorld, id: String) -> Dictionary:
 	return norm
 
 
-## Os tributos do início da partida já são lei: mudá-los é alterar ou substituir esta norma.
+## The taxes at the start of the match are already law: changing them is amending or replacing this norm.
 func _seed_tax_code(world: GameWorld) -> void:
-	# Título, ementa e órgão ficam em português, como os dos códigos: a tela traduz.
+	# Title, summary and body stay in Portuguese, like those of the codes: the screen translates.
 	var norm := new_norm(world, "ordinaria", "Parlamento")  # i18n
 	norm.by_player = false
 	norm.title = "Código Tributário"  # i18n
@@ -220,7 +220,7 @@ func _seed_tax_code(world: GameWorld) -> void:
 	norm.dates["in_force"] = world.date_string()
 
 
-## Programa com as alíquotas em vigor: ponto de partida de qualquer mudança nos tributos.
+## Program with the tax rates in force: starting point of any change to taxes.
 func tax_program(world: GameWorld) -> Dictionary:
 	var program := LawProgram.empty()
 	var stack := LawProgram.add_stack(program, LawProgram.new_block(program, "ev_enact"), Vector2(30, 30))
@@ -232,7 +232,7 @@ func tax_program(world: GameWorld) -> Dictionary:
 	return program
 
 
-## Rascunho de lei tributária, para abrir direto no editor de blocos.
+## Draft tax law, to open straight in the block editor.
 func start_tax_bill(world: GameWorld) -> Dictionary:
 	if not code_norm("tributario").is_empty():
 		return start_code_bill(world, "tributario")
@@ -243,7 +243,7 @@ func start_tax_bill(world: GameWorld) -> Dictionary:
 	return norm
 
 
-# --- Constituição --------------------------------------------------------------------
+# --- Constitution --------------------------------------------------------------------
 
 func _seed_constitution(c: Country, data: Dictionary) -> Dictionary:
 	var rule := Elections.rules(c, data)
@@ -284,7 +284,7 @@ func _article(label: String, template: String, param: String, value: Variant, pe
 	return a
 
 
-## O texto guardado fica em português; com localized, sai no idioma do jogo (para a tela).
+## The stored text stays in Portuguese; with localized, it comes out in the game's language (for the screen).
 static func article_text(a: Dictionary, localized := false) -> String:
 	var template: String = a.get("template", "")
 	var label: String = a.label
@@ -292,7 +292,7 @@ static func article_text(a: Dictionary, localized := false) -> String:
 		template = TranslationServer.translate(template)
 		label = TranslationServer.translate(label)
 	if String(a.get("param", "")) == "":
-		# Art. 1º: o valor é o código do país, para o nome entrar no idioma certo.
+		# Art. 1: the value is the country code, so the name comes out in the right language.
 		if a.get("value") is String and "%s" in template:
 			var country := GameData.country_name_pt(a.value)
 			return template % (TranslationServer.translate(country) if localized else country)
@@ -319,7 +319,7 @@ func param(key: String, fallback: Variant = null) -> Variant:
 		if a.get("param", "") == key:
 			if not a.get("suppressed", false):
 				return a.value
-			# Um poder ou direito suprimido deixa de existir; um número suprimido volta ao padrão.
+			# A suppressed power or right ceases to exist; a suppressed number goes back to the default.
 			if a.value is bool:
 				return false
 			return [] if a.value is Array else fallback
@@ -337,7 +337,7 @@ func article_by_id(id: int) -> Dictionary:
 	return {}
 
 
-## Comparação palavra a palavra, em BBCode: o que saiu em vermelho riscado e o que entrou em verde.
+## Word-by-word comparison, in BBCode: what left in struck-through red and what came in green.
 static func word_diff(before: String, after: String) -> String:
 	var a := before.split(" ", false)
 	var b := after.split(" ", false)
@@ -366,7 +366,7 @@ static func word_diff(before: String, after: String) -> String:
 	return " ".join(out)
 
 
-# --- Permissões ------------------------------------------------------------------------
+# --- Permissions ------------------------------------------------------------------------
 
 func role(world: GameWorld) -> String:
 	return "head" if world.in_office else "opposition"
@@ -388,7 +388,7 @@ func can(world: GameWorld, action: String, type := "") -> bool:
 	return true
 
 
-## Quem pode o quê, segundo a Constituição em vigor. A tela de Instituições mostra esta tabela.
+## Who can do what, according to the Constitution in force. The Institutions screen shows this table.
 func permission_table() -> Dictionary:
 	var out := {}
 	for who: String in ROLE_ACTIONS:
@@ -405,7 +405,7 @@ func permission_table() -> Dictionary:
 	return out
 
 
-# --- Manutenção das normas ---------------------------------------------------------------
+# --- Norm maintenance ---------------------------------------------------------------
 
 func new_norm(world: GameWorld, type: String, author := "") -> Dictionary:
 	var norm := {
@@ -467,7 +467,7 @@ func compile_norm(norm: Dictionary) -> Dictionary:
 	return result
 
 
-## Choques com outras normas em vigor. Só avisam: a prioridade decide na hora de executar.
+## Clashes with other norms in force. They only warn: priority decides at execution time.
 func find_conflicts(norm: Dictionary) -> Array:
 	var mine := _claims(norm.program)
 	var out := []
@@ -479,7 +479,7 @@ func find_conflicts(norm: Dictionary) -> Array:
 			if theirs.has(key):
 				var low: bool = int(NORM_TYPES[other.type].rank) > int(NORM_TYPES[norm.type].rank)
 				out.append({"block": -1, "text": tr("Conflito com %s sobre %s: %s.") % [norm_label(other), theirs[key], tr("a outra norma prevalece por ter hierarquia maior") if low else tr("vale a hierarquia, a especialidade e a data de vigência")]})
-	# Direito protegido pela Constituição.
+	# Right protected by the Constitution.
 	for block: Dictionary in LawProgram.all_blocks(norm.program):
 		if block.type in ["rg_remove", "dr_suspend"] and block.fields.get("right") in param("rights", []):
 			out.append({"block": int(block.id), "text": tr("A Constituição garante esse direito: a corte pode declarar a norma inválida.")})
@@ -505,12 +505,12 @@ func _current_program(norm: Dictionary) -> Dictionary:
 	return norm.versions[int(norm.current_v)].program
 
 
-## Prioridade: hierarquia, depois especialidade (quantas condições), depois a vigência mais recente.
+## Priority: hierarchy, then specialty (how many conditions), then the most recent effective date.
 func _priority(norm: Dictionary, article: Dictionary) -> float:
 	return float(NORM_TYPES[norm.type].rank) * 1e7 + float(article.get("conditions", 0)) * 1e5 + float(norm.get("force_day", 0))
 
 
-# --- Tramitação --------------------------------------------------------------------------
+# --- Procedure --------------------------------------------------------------------------
 
 func _steps_for(norm: Dictionary) -> Array:
 	var def: Dictionary = NORM_TYPES[norm.type]
@@ -553,7 +553,7 @@ func _steps_for(norm: Dictionary) -> Array:
 	return out
 
 
-## Manda a norma para a tramitação, depois de compilar. Rascunho com erro não sai do editor.
+## Sends the norm to procedure, after compiling. A draft with an error does not leave the editor.
 func present(world: GameWorld, norm: Dictionary) -> Dictionary:
 	if not can(world, "present", norm.type):
 		return {"ok": false, "msg": tr("%s não pode apresentar %s.") % [tr(ROLE_LABELS[role(world)]), tr(NORM_TYPES[norm.type].label)]}
@@ -581,7 +581,7 @@ func present(world: GameWorld, norm: Dictionary) -> Dictionary:
 	return {"ok": true, "msg": tr("%s apresentada.") % norm_label(norm)}
 
 
-## Projeto pronto ou orçamento: sem blocos, mas com o mesmo rito no parlamento.
+## Finished project or budget: no blocks, but the same rite in parliament.
 func present_payload(world: GameWorld, payload: Dictionary, title: String, ementa: String, position: Dictionary, plebiscite := false) -> Dictionary:
 	var norm := new_norm(world, "ordinaria")
 	norm["payload"] = payload
@@ -599,7 +599,7 @@ func present_payload(world: GameWorld, payload: Dictionary, title: String, ement
 	return {"ok": true, "pending": true, "norm": norm, "msg": tr("%s foi ao parlamento: o rito leva cerca de %d dias.") % [title, _total_days(norm)]}
 
 
-## Em país democrático, unidade nova passa pelo parlamento e por plebiscito. O traçado já foi validado.
+## In a democratic country, a new unit goes through parliament and a plebiscite. The outline was already validated.
 func units_need_approval(world: GameWorld) -> bool:
 	return not skip_unit_approval and world.player.dem >= Politics.FREE_PARLIAMENT_DEM
 
@@ -615,7 +615,7 @@ func _total_days(norm: Dictionary) -> int:
 	return total
 
 
-## Quem estava no governo perde os projetos que deixou: o novo governo não os defende.
+## Whoever was in government loses the projects they left: the new government does not defend them.
 func drop_government_bills(world: GameWorld) -> void:
 	for norm: Dictionary in in_process():
 		if norm.has("payload"):
@@ -766,7 +766,7 @@ func _run_step(world: GameWorld, norm: Dictionary) -> void:
 	_next_step(world, norm)
 
 
-## true: a sanção ficou com o jogador ou virou veto, então a etapa seguinte não anda agora.
+## true: the sanction stayed with the player or became a veto, so the next stage does not advance now.
 func _run_sanction(world: GameWorld, norm: Dictionary) -> bool:
 	if world.in_office:
 		if norm.get("by_player", false):
@@ -793,7 +793,7 @@ func _insert_override(world: GameWorld, norm: Dictionary) -> void:
 	_next_step(world, norm)
 
 
-## O jogador no governo decide sobre um projeto que não é dele.
+## The player in government decides on a project that is not theirs.
 func sanction(world: GameWorld, norm: Dictionary, approve: bool) -> Dictionary:
 	if not norm.process.get("waiting_player", false):
 		return {"ok": false, "msg": tr("Esse projeto não aguarda sanção.")}
@@ -821,7 +821,7 @@ func _required_share(norm: Dictionary) -> float:
 	return 0.0
 
 
-## Fatores da decisão: ideologia, disciplina de quem governa, popularidade e situação das contas.
+## Decision factors: ideology, discipline of those who govern, popularity and state of the accounts.
 func _party_votes_yes(world: GameWorld, party: Dictionary, norm: Dictionary, against_veto: bool) -> bool:
 	var data: Dictionary = world.politics.data_of(iso)
 	var position: Dictionary = norm.position
@@ -864,9 +864,9 @@ func roll_call(world: GameWorld, norm: Dictionary, upper := false, share := 0.0,
 	return {"passed": yes >= needed, "yes": yes, "no": total - yes, "needed": needed, "total": total, "tally": tally, "house": tr("Senado") if upper else (tr("Câmara") if param("bicameral", false) else tr("Parlamento"))}
 
 
-# --- Negociação de votos ----------------------------------------------------------------
+# --- Vote negotiation ----------------------------------------------------------------
 
-## Ainda há votação pela frente? Só então adianta negociar.
+## Is there still a vote ahead? Only then is it worth negotiating.
 func can_negotiate(norm: Dictionary) -> bool:
 	if not norm.state in [STATE_PROCESS, STATE_APPROVED] or norm.process.is_empty():
 		return false
@@ -882,8 +882,8 @@ func deal_price(world: GameWorld, party: Dictionary, generous: bool) -> float:
 	return price * (2.0 if generous else 1.0)
 
 
-## Chance de o partido aceitar. Quem já tende a votar assim aceita fácil; virar o voto é mais difícil,
-## tanto mais quanto mais longe a proposta estiver do que o partido defende.
+## Chance of the party accepting. Whoever already tends to vote that way accepts easily; turning a vote is harder,
+## the more so the further the proposal is from what the party defends.
 func deal_chance(world: GameWorld, norm: Dictionary, party: Dictionary, want_yes: bool, bonus: float) -> float:
 	var position := position_for(world, norm)
 	var gap := Politics.distance(party, position)
@@ -894,8 +894,8 @@ func deal_chance(world: GameWorld, norm: Dictionary, party: Dictionary, want_yes
 	return clampf(0.75 - resistance * 0.4 + bonus, 0.05, 0.95)
 
 
-## Pede o voto de uma bancada em troca de verba do fundo. A recusa não custa nada, mas encerra a conversa
-## com aquele partido sobre esta proposta. A própria bancada segue a orientação de graça.
+## Asks a caucus for its vote in exchange for fund money. Refusal costs nothing, but ends the conversation
+## with that party about this proposal. The player's own caucus follows the guidance for free.
 func negotiate(world: GameWorld, norm: Dictionary, party_id: int, want_yes: bool, generous := false) -> Dictionary:
 	if not can_negotiate(norm):
 		return {"ok": false, "msg": tr("Não há mais votação a negociar nesta proposta.")}
@@ -930,8 +930,8 @@ func negotiate(world: GameWorld, norm: Dictionary, party_id: int, want_yes: bool
 	return {"ok": true, "accepted": true, "msg": tr("%s vai votar %s. Pago: %s.") % [party.short, tr("a favor") if want_yes else tr("contra"), UiKit.millions(price)]}
 
 
-## Oferece entrada no governo em troca do voto a favor. Sem custo no fundo, mas o partido passa a cobrar
-## ministérios como qualquer aliado.
+## Offers entry into the government in exchange for the vote in favor. No cost to the fund, but the party starts demanding
+## ministries like any ally.
 func offer_post(world: GameWorld, norm: Dictionary, party_id: int) -> Dictionary:
 	if not world.in_office:
 		return {"ok": false, "msg": tr("Na oposição, você não tem cargos a oferecer.")}
@@ -958,21 +958,21 @@ func offer_post(world: GameWorld, norm: Dictionary, party_id: int) -> Dictionary
 	return {"ok": true, "accepted": true, "msg": tr("%s entra no governo e vota a favor. Lembre de dar um ministério ao novo aliado.") % party.short}
 
 
-# --- Conversa com líderes partidários -----------------------------------------------------
-# Pedido informal, sem dinheiro: o líder do partido pondera ideias, afinidade com o seu partido e a
-# popularidade da lei. A resposta vira acordo de voto (norm.deals), o mesmo que a negociação paga usa.
+# --- Conversation with party leaders -----------------------------------------------------
+# Informal request, no money: the party leader weighs ideas, affinity with your party and the
+# law's popularity. The answer becomes a vote agreement (norm.deals), the same one the paid negotiation uses.
 
 const CHAT_MIN_CHANCE := 0.03
 const CHAT_MAX_CHANCE := 0.95
 
 
-## Como o partido votaria hoje, sem nenhum acordo fechado.
+## How the party would vote today, with no agreement closed.
 func chat_stance(world: GameWorld, norm: Dictionary, party: Dictionary) -> bool:
 	var probe := {"position": norm.get("position", position_for(world, norm)), "by_player": norm.get("by_player", false), "author_party": norm.get("author_party", -1)}
 	return _party_votes_yes(world, party, probe, false)
 
 
-## Quanto o partido pesa cada coisa ao decidir ouvir o pedido. Devolve {chance, aff, pop, gap, aligned}.
+## How much the party weighs each thing when deciding to hear the request. Returns {chance, aff, pop, gap, aligned}.
 func chat_factors(world: GameWorld, norm: Dictionary, party: Dictionary, want_yes: bool, bonus := 0.0) -> Dictionary:
 	var aligned := chat_stance(world, norm, party) == want_yes
 	var mine: Dictionary = world.politics.player_party(world)
@@ -986,8 +986,8 @@ func chat_factors(world: GameWorld, norm: Dictionary, party: Dictionary, want_ye
 	return {"chance": clampf(chance, CHAT_MIN_CHANCE, CHAT_MAX_CHANCE), "aff": aff, "pop": pop, "gap": gap, "aligned": aligned}
 
 
-## PONTO DE EXTENSÃO: contrapartidas que o jogador oferece junto do pedido (cargos, favores, verba
-## partidária). Devolve um acréscimo à chance do pedido. Hoje não há contrapartida: 0.
+## EXTENSION POINT: counterparts the player offers along with the request (posts, favors, party
+## funds). Returns an addition to the request's chance. Today there is no counterpart: 0.
 func counterpart_bonus(_world: GameWorld, _norm: Dictionary, _party: Dictionary, _want_yes: bool) -> float:
 	return 0.0
 
@@ -996,8 +996,8 @@ func chat_closed(norm: Dictionary, party_id: int) -> bool:
 	return norm.get("chat_asked", {}).has(str(party_id)) or norm.get("deals", {}).has(str(party_id)) or norm.get("asked", {}).has(str(party_id))
 
 
-## Pede ao líder do partido que apoie (want_yes) ou vote contra a lei. Cada partido responde uma vez por lei.
-## Devolve {ok, accepted, msg, chance, aff, pop, gap, aligned}.
+## Asks the party leader to support (want_yes) or vote against the law. Each party answers once per law.
+## Returns {ok, accepted, msg, chance, aff, pop, gap, aligned}.
 func chat_request(world: GameWorld, norm: Dictionary, party_id: int, want_yes: bool, bonus := 0.0) -> Dictionary:
 	if not can_negotiate(norm):
 		return {"ok": false, "msg": tr("Não há mais votação a negociar nesta proposta.")}
@@ -1026,7 +1026,7 @@ func chat_request(world: GameWorld, norm: Dictionary, party_id: int, want_yes: b
 	return f
 
 
-## Onde a norma cai na bússola. Tributos valem pelo que mudam: cortar puxa para a direita, subir para a esquerda.
+## Where the norm falls on the compass. Taxes count for what they change: cutting pulls right, raising pulls left.
 func position_for(world: GameWorld, norm: Dictionary) -> Dictionary:
 	if not norm.get("position", {}).is_empty():
 		return norm.position
@@ -1039,7 +1039,7 @@ func position_for(world: GameWorld, norm: Dictionary) -> Dictionary:
 	var blocks: Array = change.added
 	var seen := 0
 	if int(norm.get("amends", -1)) >= 0:
-		# Alteração: vale o que muda, não o texto inteiro que o rascunho copia.
+		# Amendment: what changes counts, not the whole text the draft copies.
 		base = {"econ": 0.0, "social": 0.0}
 		for pair: Array in [[change.added, 1.0], [change.removed, -1.0]]:
 			for block: Dictionary in pair[0]:
@@ -1063,7 +1063,7 @@ func position_for(world: GameWorld, norm: Dictionary) -> Dictionary:
 	return base
 
 
-## O que os códigos dizem do projeto ("econ", "popularity"), para os que sabem medir a mudança que ele faz.
+## What the codes say about the project ("econ", "popularity"), for those that know how to measure the change it makes.
 func _code_effect(world: GameWorld, norm: Dictionary) -> Dictionary:
 	var out := {"econ": 0.0, "popularity": 0.0}
 	for code: LawCode in LawCodes.all():
@@ -1074,8 +1074,8 @@ func _code_effect(world: GameWorld, norm: Dictionary) -> Dictionary:
 	return out
 
 
-## O que o eleitorado acha, de 0 a 1: a distância das ideias da maioria, o que a norma tira ou dá ao
-## bolso de cada um e o humor com o governo.
+## What the electorate thinks, from 0 to 1: the distance from the majority's ideas, what the norm takes from or gives to
+## everyone's pocket and the mood about the government.
 func popularity_of(world: GameWorld, norm: Dictionary) -> float:
 	var c := world.player
 	var data: Dictionary = world.politics.data_of(iso)
@@ -1096,7 +1096,7 @@ func popularity_of(world: GameWorld, norm: Dictionary) -> float:
 	score += float(_code_effect(world, norm).get("popularity", 0.0))
 	var payload: Dictionary = norm.get("payload", {})
 	if payload.get("kind", "") in ["new_unit", "split_unit"]:
-		# Criar unidade costuma agradar a região, e o resto do país não se opõe muito.
+		# Creating a unit usually pleases the region, and the rest of the country does not object much.
 		score += 0.08
 	if payload.get("kind", "") == "bill":
 		score += float(Politics.bill(payload.id).get("approval", 0.0)) * 5.0
@@ -1107,15 +1107,15 @@ func popularity_of(world: GameWorld, norm: Dictionary) -> float:
 	return clampf(score, 0.03, 0.97)
 
 
-## Peso de um bloco na opinião do eleitor: da tabela, ou o "pop" do bloco de um código.
+## Weight of a block in the voter's opinion: from the table, or the "pop" of a code's block.
 static func _popularity_weight(type: String) -> float:
 	if POPULARITY_WEIGHTS.has(type):
 		return float(POPULARITY_WEIGHTS[type])
 	return float(LawCatalog.get_def(type).get("pop", 0.0))
 
 
-## O que a norma acrescenta e tira. Norma nova: tudo é acréscimo. Alteração: compara com a versão em vigor
-## do alvo, bloco por bloco, pelo tipo e pelos valores.
+## What the norm adds and removes. New norm: everything is an addition. Amendment: compares with the version in force
+## of the target, block by block, by type and values.
 func change_of(norm: Dictionary) -> Dictionary:
 	var mine := LawProgram.all_blocks(norm.get("program", LawProgram.empty()))
 	var target: Dictionary = norms.get(int(norm.get("amends", -1)), {})
@@ -1145,7 +1145,7 @@ static func _block_key(block: Dictionary) -> String:
 	return "%s|%s|%s" % [block.type, var_to_str(block.fields), var_to_str(plugs)]
 
 
-## Estimativa de votos em uma casa, sem contar dissidentes. Quem usa isto é a pesquisa paga.
+## Estimate of votes in a house, not counting dissidents. The paid poll uses this.
 func _estimate_house(world: GameWorld, parties: Array, probe: Dictionary) -> Dictionary:
 	var yes := 0
 	var rows := []
@@ -1162,7 +1162,7 @@ func _estimate_house(world: GameWorld, parties: Array, probe: Dictionary) -> Dic
 	return {"yes": yes, "total": total, "rows": rows}
 
 
-## Pesquisa paga com o fundo do partido. kind: poll_support (apoios por casa) ou poll_popularity (eleitorado).
+## Poll paid for with the party fund. kind: poll_support (support by house) or poll_popularity (electorate).
 func poll(world: GameWorld, kind: String, norm: Dictionary) -> Dictionary:
 	var paid: Dictionary = world.politics.spend_fund(world, kind)
 	if not paid.ok:
@@ -1187,15 +1187,15 @@ func poll(world: GameWorld, kind: String, norm: Dictionary) -> Dictionary:
 	return {"ok": true, "msg": "", "text": "\n".join(lines)}
 
 
-## Alvo de pesquisa para um projeto pronto, ainda sem norma criada.
+## Poll target for a finished project, with no norm created yet.
 func bill_probe(id: String) -> Dictionary:
 	var b := Politics.bill(id)
 	return {"type": "ordinaria", "payload": {"kind": "bill", "id": id, "share": float(b.get("share", 0.0))}, "position": {"econ": b.econ, "social": b.social}, "by_player": true}
 
 
-# --- Consultas para a tela ---------------------------------------------------------------
+# --- Queries for the screen ---------------------------------------------------------------
 
-## Fases da tramitação em linguagem simples, cada uma juntando etapas do rito.
+## Phases of the procedure in plain language, each joining stages of the rite.
 # i18n-begin
 const PHASES := [
 	{"id": "comissao", "label": "Comissão", "steps": ["present", "admissibility", "constitutional"]},
@@ -1207,7 +1207,7 @@ const PHASES := [
 	{"id": "vigencia", "label": "Vigência", "steps": []},
 ]
 # i18n-end
-## Grupos sociais da bússola, para a reação esperada a uma proposta.
+## Social groups of the compass, for the expected reaction to a proposal.
 # i18n-begin
 const SOCIAL_GROUPS := [
 	{"label": "Trabalhadores", "econ": -0.6, "social": 0.1},
@@ -1223,20 +1223,20 @@ const VOTE_WORDS := {"none": "sem votação", "simple": "maioria simples", "abso
 # i18n-end
 
 
-## O código de uma norma: o dela, o da norma que ela altera, ou "".
+## The code of a norm: its own, that of the norm it amends, or "".
 func code_of(norm: Dictionary) -> String:
 	if String(norm.get("code", "")) != "":
 		return String(norm.code)
 	var target: Dictionary = norms.get(int(norm.get("amends", -1)), {})
 	if String(target.get("code", "")) != "":
 		return String(target.code)
-	# O Código Tributário antigo, feito só de alíquotas, ainda é o tributário.
+	# The old Tax Code, made only of tax rates, is still the tax code.
 	if target.get("base_code", false) and String(target.get("title", "")) == "Código Tributário":
 		return "tributario"
 	return ""
 
 
-## Cartão de um código para o centro legislativo: a norma em vigor, se houver, e quantos artigos tem.
+## Card of a code for the legislative center: the norm in force, if any, and how many articles it has.
 func code_card(id: String) -> Dictionary:
 	var norm := code_norm(id)
 	if norm.is_empty() and id == "tributario":
@@ -1257,7 +1257,7 @@ func code_card(id: String) -> Dictionary:
 	return {"norm": norm, "articles": articles, "blocks": blocks, "pending": pending}
 
 
-## Uma linha que explica o rito do tipo de norma, com os votos de que ela precisa.
+## One line that explains the rite of the norm type, with the votes it needs.
 func type_rule_text(world: GameWorld, type: String) -> String:
 	var def: Dictionary = NORM_TYPES[type]
 	if def.vote == "none":
@@ -1274,8 +1274,8 @@ func type_rule_text(world: GameWorld, type: String) -> String:
 	return text
 
 
-## Passo a passo da tramitação: [{label, state (done, current, todo, failed), days, detail}].
-## Rascunho: o caminho que a norma vai seguir, tudo por fazer.
+## Step-by-step procedure: [{label, state (done, current, todo, failed), days, detail}].
+## Draft: the path the norm will follow, everything still to do.
 func process_track(world: GameWorld, norm: Dictionary) -> Array:
 	var process: Dictionary = norm.get("process", {})
 	var steps: Array = process.get("steps", _steps_for(norm))
@@ -1327,7 +1327,7 @@ func process_track(world: GameWorld, norm: Dictionary) -> Array:
 	return out
 
 
-## Dias que faltam até a norma valer, somando as fases por fazer.
+## Days left until the norm takes effect, adding up the phases still to do.
 func days_to_force(world: GameWorld, norm: Dictionary) -> int:
 	var total := 0
 	for entry: Dictionary in process_track(world, norm):
@@ -1336,8 +1336,8 @@ func days_to_force(world: GameWorld, norm: Dictionary) -> int:
 	return total
 
 
-## Chance de passar pelas votações que faltam, de 0 a 1, sem contar acordos ainda por fazer. -1: não há votação.
-## É uma estimativa grosseira e gratuita; a pesquisa paga mostra a contagem por partido.
+## Chance of passing the remaining votes, from 0 to 1, not counting agreements still to be made. -1: there is no vote.
+## It is a rough and free estimate; the paid poll shows the count by party.
 func pass_chance(world: GameWorld, norm: Dictionary) -> float:
 	var process: Dictionary = norm.get("process", {})
 	var steps: Array = process.get("steps", _steps_for(norm))
@@ -1372,7 +1372,7 @@ func pass_chance(world: GameWorld, norm: Dictionary) -> float:
 	return clampf(chance, 0.0, 1.0)
 
 
-## Palavra para a chance: o jogador lê "provável", não 0,73.
+## Word for the chance: the player reads "likely", not 0.73.
 static func chance_word(chance: float) -> String:
 	if chance < 0.0:
 		return TranslationServer.translate("sem votação")
@@ -1387,7 +1387,7 @@ static func chance_word(chance: float) -> String:
 	return TranslationServer.translate("muito difícil")
 
 
-## Efeito esperado de uma proposta, para o painel antes de enviar: aprovação, orçamento, grupos e partidos.
+## Expected effect of a proposal, for the panel before sending: approval, budget, groups and parties.
 func expected_effects(world: GameWorld, norm: Dictionary) -> Dictionary:
 	var c := world.player
 	var popularity := popularity_of(world, norm)
@@ -1417,7 +1417,7 @@ func expected_effects(world: GameWorld, norm: Dictionary) -> Dictionary:
 					var def := LawCatalog.get_def(block.type)
 					if LawCodes.owner_of(String(block.type)) != null and (def.has("econ") or def.has("social")):
 						unknown += 1
-	# Códigos que sabem estimar a própria receita (o Tributário) entram com a conta deles.
+	# Codes that know how to estimate their own revenue (the Tax code) come in with their calculation.
 	var code_id := String(norm.get("code", norm_code_of(norm)))
 	var code := LawCodes.get_code(code_id)
 	if code != null and code.has_method("bill_effect"):
@@ -1444,8 +1444,8 @@ func expected_effects(world: GameWorld, norm: Dictionary) -> Dictionary:
 	}
 
 
-## Nomes que já existem para um campo de referência ("tax", "license", "institution", "duty"), em vigor ou
-## criados no próprio programa. O campo continua aceitando um nome novo quando o bloco cria algo.
+## Names that already exist for a reference field ("tax", "license", "institution", "duty"), in force or
+## created in the program itself. The field still accepts a new name when the block creates something.
 func known_names(kind: String, program := {}) -> Array:
 	var names := []
 	var add := func(n: Variant):
@@ -1482,8 +1482,8 @@ func _admissibility(world: GameWorld, norm: Dictionary) -> String:
 	return "" if compiled.ok else tr("a programação tem erros.")
 
 
-## Cada eleitor pesa a popularidade da proposta, com a incerteza de uma campanha de verdade. Regime fechado
-## organiza a votação para dar o resultado que quer.
+## Each voter weighs the proposal's popularity, with the uncertainty of a real campaign. A closed regime
+## organizes the vote to give the result it wants.
 func _hold_plebiscite(world: GameWorld, norm: Dictionary) -> Dictionary:
 	var c := world.player
 	var yes := popularity_of(world, norm) + _rng.randf_range(-0.07, 0.07)
@@ -1494,7 +1494,7 @@ func _hold_plebiscite(world: GameWorld, norm: Dictionary) -> Dictionary:
 	return result
 
 
-## O que a corte contesta. Vazio: nada.
+## What the court challenges. Empty: nothing.
 func _court_problem(norm: Dictionary) -> String:
 	if norm.type == "emenda":
 		return ""
@@ -1510,7 +1510,7 @@ func _court_problem(norm: Dictionary) -> String:
 	return ""
 
 
-## Quanto mais democrático o país, mais a corte age de fato.
+## The more democratic the country, the more the court actually acts.
 func _court_acts(world: GameWorld) -> bool:
 	return _rng.randf() < clampf(world.player.dem / 8.0, 0.1, 1.0)
 
@@ -1579,7 +1579,7 @@ func _apply_payload(world: GameWorld, norm: Dictionary) -> void:
 			world.refresh_map = true
 
 
-## O governo colhe a reação do eleitor quando a norma começa a valer. A oposição não governa: não muda nada.
+## The government reaps the voter's reaction when the norm starts to apply. The opposition does not govern: nothing changes.
 func _popular_effect(world: GameWorld, norm: Dictionary) -> void:
 	if norm.get("base_code", false):
 		return
@@ -1587,7 +1587,7 @@ func _popular_effect(world: GameWorld, norm: Dictionary) -> void:
 	world.player.approval = clampf(world.player.approval + (score - 0.5) * POPULARITY_APPROVAL, 0.02, 0.95)
 
 
-## A alteração vira uma nova versão da norma original, que continua em vigor. A antiga fica guardada.
+## The amendment becomes a new version of the original norm, which stays in force. The old one is kept.
 func _apply_change(world: GameWorld, norm: Dictionary) -> void:
 	var target: Dictionary = norms.get(int(norm.amends), {})
 	if target.is_empty() or target.state != STATE_IN_FORCE:
@@ -1633,7 +1633,7 @@ func revoke_now(world: GameWorld, target: Dictionary, why: String, who: String) 
 	revision += 1
 
 
-## Cria o projeto que altera uma norma em vigor: copia a versão atual para um novo rascunho.
+## Creates the project that amends a norm in force: copies the current version into a new draft.
 func start_change(world: GameWorld, target: Dictionary) -> Dictionary:
 	var norm := new_norm(world, target.type)
 	norm.program = _current_program(target).duplicate(true)
@@ -1682,9 +1682,9 @@ static func _today(world: GameWorld) -> String:
 	return "%04d-%02d-%02d" % [world.year, world.month + 1, world.day]
 
 
-# --- Emendas constitucionais -----------------------------------------------------------
+# --- Constitutional amendments -----------------------------------------------------------
 
-## ops: [{"op": "alter", "article": id, "text": novo, "value": novo parâmetro}, {"op": "add", "kind": "artigo", "text": ...}].
+## ops: [{"op": "alter", "article": id, "text": new, "value": new parameter}, {"op": "add", "kind": "artigo", "text": ...}].
 func check_amendment(world: GameWorld, norm: Dictionary, in_process_now := false) -> Dictionary:
 	var ops: Array = norm.get("ops", [])
 	if ops.is_empty() and norm.program.stacks.is_empty():
@@ -1710,7 +1710,7 @@ func check_amendment(world: GameWorld, norm: Dictionary, in_process_now := false
 	return {"ok": true, "msg": ""}
 
 
-## Mudar a Constituição tem custo político: concentrar poder puxa para o lado autoritário.
+## Changing the Constitution has a political cost: concentrating power pulls toward the authoritarian side.
 func _amendment_position(norm: Dictionary) -> Dictionary:
 	var social := 0.0
 	for op: Dictionary in norm.get("ops", []):
@@ -1727,8 +1727,8 @@ func _amendment_position(norm: Dictionary) -> Dictionary:
 	return {"econ": 0.0, "social": clampf(social, -1.0, 1.0)}
 
 
-## Texto novo de um dispositivo depois da operação: serve para a comparação e para a promulgação.
-## Com localized, os textos guardados em português saem no idioma do jogo (para a tela).
+## New text of a provision after the operation: serves for the comparison and for the promulgation.
+## With localized, texts stored in Portuguese come out in the game's language (for the screen).
 func preview_op(op: Dictionary, localized := false) -> Dictionary:
 	if op.op == "add":
 		return {"before": "", "after": "%s %s" % [_next_label(String(op.get("kind", "artigo"))), op.get("text", "")]}
@@ -1755,7 +1755,7 @@ func _next_label(kind: String) -> String:
 	return tr("Art. %d.") % (used + 1)
 
 
-## Só aqui a Constituição muda: depois da promulgação, gerando uma nova versão e guardando a anterior.
+## Only here does the Constitution change: after promulgation, generating a new version and keeping the previous one.
 func _apply_amendment(world: GameWorld, norm: Dictionary) -> void:
 	var changes := []
 	for op: Dictionary in norm.ops:
@@ -1777,7 +1777,7 @@ func _apply_amendment(world: GameWorld, norm: Dictionary) -> void:
 				if String(article.get("param", "")) != "" and op.has("value"):
 					article.value = op.value
 				elif op.has("text"):
-					# Texto livre em um artigo com parâmetro: o valor continua, e a redação nova vale daqui em diante.
+					# Free text in an article with a parameter: the value stays, and the new wording applies from now on.
 					article.template = String(op.text)
 				article.text = shown.after
 	_sync_central_bank(world)
@@ -1810,10 +1810,10 @@ func _apply_amendment(world: GameWorld, norm: Dictionary) -> void:
 	revision += 1
 
 
-## A independência do banco central vem da Constituição. Ao ganhá-la, ele retoma o juro na hora.
+## Central bank independence comes from the Constitution. On gaining it, the bank takes back the rate right away.
 func _sync_central_bank(world: GameWorld) -> void:
 	var c := world.player
-	# O sistema eleitoral também mora na Constituição e vale a partir da próxima eleição.
+	# The electoral system also lives in the Constitution and applies from the next election.
 	var rule := Elections.rules(c, world.politics.data_of(iso))
 	rule.system = String(param("electoral_system", rule.system))
 	rule.head = String(param("head_system", rule.head))
@@ -1823,7 +1823,7 @@ func _sync_central_bank(world: GameWorld) -> void:
 		c.rate_manual = false
 
 
-## Suprimir um artigo programado com blocos também desliga a programação dele.
+## Suppressing an article programmed with blocks also turns off its programming.
 func _repeal_block_article(world: GameWorld, article: Dictionary) -> void:
 	if not article.has("program_norm"):
 		return
@@ -1845,10 +1845,10 @@ func constitution_version(n: int) -> Dictionary:
 	return {}
 
 
-# --- Execução ----------------------------------------------------------------------------
+# --- Execution ----------------------------------------------------------------------------
 
-## Dispara um evento: consulta as normas em vigor e roda os artigos, da menor prioridade para a maior,
-## para que a norma mais forte seja a última a definir um valor.
+## Fires an event: looks up the norms in force and runs the articles, from lowest priority to highest,
+## so the strongest norm is the last to set a value.
 func fire(world: GameWorld, event: String, options := {}) -> void:
 	if world.player == null or iso == "":
 		return
@@ -1871,7 +1871,7 @@ func fire(world: GameWorld, event: String, options := {}) -> void:
 
 
 func _run_article(world: GameWorld, norm: Dictionary, number: int, article: Dictionary, event: String) -> void:
-	# Evita rodar duas vezes no mesmo dia pelo mesmo motivo.
+	# Avoids running twice on the same day for the same reason.
 	var key := "%d:%d:%d:%s" % [int(norm.id), int(norm.current_v), number, event]
 	if int(fired.get(key, -1)) == world.day_index:
 		return
@@ -1946,7 +1946,7 @@ func _fire_dates(world: GameWorld) -> void:
 				_run_article(world, norm, int(number), code[number], "ev_date")
 
 
-## Retrato do jogo para o motor: valores médios do grupo que dispara o evento.
+## Snapshot of the game for the engine: average values of the group that fires the event.
 func build_view(world: GameWorld, event: String, fields: Dictionary) -> Dictionary:
 	var c := world.player
 	var pc := c.gdp_pc()
@@ -2022,13 +2022,13 @@ static func _pay(c: Country, usd_bi: float) -> void:
 	c.law_spend_month += usd_bi
 
 
-## Aplica os efeitos de uma execução bem-sucedida. O peso e o grupo viram dinheiro de verdade aqui.
+## Applies the effects of a successful execution. The weight and the group become real money here.
 func _commit(world: GameWorld, norm: Dictionary, effects: Array, _view: Dictionary) -> String:
 	var c := world.player
 	var collected := 0.0
 	var paid := 0.0
 	var notes := []
-	# Trava: uma execução não move mais que metade do PIB, por mais absurda que seja a norma.
+	# Cap: an execution does not move more than half of GDP, however absurd the norm is.
 	var limit := c.y_usd() * 0.5
 	var who := int(norm.id)
 	var prio := _priority(norm, {})
@@ -2133,13 +2133,13 @@ func _commit(world: GameWorld, norm: Dictionary, effects: Array, _view: Dictiona
 	return ", ".join(notes)
 
 
-## Para os códigos: guarda o efeito de um bloco em `standing.codes` enquanto a norma valer.
-## A chave costuma ser "código:item" (por exemplo "penal:maioridade").
+## For the codes: stores the effect of a block in `standing.codes` while the norm is in force.
+## The key is usually "code:item" (for example "penal:maioridade").
 func stand(key: String, data: Dictionary, norm: int, prio: float) -> void:
 	_stand("codes", key, data, norm, prio)
 
 
-## O que um código mantém em vigor: chave → dados, só as chaves que começam com "id:".
+## What a code keeps in force: key → data, only the keys that start with "id:".
 func code_standing(id: String) -> Dictionary:
 	var out := {}
 	for key: String in standing.codes:
@@ -2148,7 +2148,7 @@ func code_standing(id: String) -> Dictionary:
 	return out
 
 
-## A norma de maior prioridade fica com a vaga; a de prioridade menor não sobrescreve.
+## The highest-priority norm takes the slot; a lower-priority one does not overwrite it.
 func _stand(kind: String, key: String, data: Dictionary, norm: int, prio: float) -> void:
 	var old: Dictionary = standing[kind].get(key, {})
 	if not old.is_empty() and float(old.prio) > prio:
@@ -2170,7 +2170,7 @@ func _set_policy(world: GameWorld, field: String, value: float) -> void:
 	Politics._apply_budget_change(world.player, field, clampf(value, limits[0], limits[1]))
 
 
-## Uma norma que sai de vigor deixa de valer: tudo o que ela mantinha cai junto.
+## A norm that goes out of force stops applying: everything it kept falls along with it.
 func _purge_norm(id: int) -> void:
 	for kind: String in standing:
 		for key: String in standing[kind].keys():
@@ -2179,7 +2179,7 @@ func _purge_norm(id: int) -> void:
 	revision += 1
 
 
-## A mudança nos ministérios vale enquanto a norma valer: revogada, tudo volta ao que era.
+## The change in the ministries applies while the norm is in force: once revoked, everything returns to what it was.
 func _ministry_op(world: GameWorld, block: String, data: Dictionary, norm: int, prio: float) -> void:
 	var key := "%d:%s" % [norm, block]
 	if standing.ministry_ops.has(key):
@@ -2198,7 +2198,7 @@ func ministry_ops() -> Array:
 	return out
 
 
-## O valor que uma lei em vigor obriga para um campo do orçamento. Vazio: o governo decide sozinho.
+## The value that a law in force requires for a budget field. Empty: the government decides alone.
 func budget_lock(field: String) -> Dictionary:
 	return standing.budget_locks.get(field, {})
 
@@ -2207,7 +2207,7 @@ func step_month(world: GameWorld) -> void:
 	var c := world.player
 	if c == null or iso == "":
 		return
-	# O que a lei fixa, ninguém muda: nem o governo da IA, nem outra medida.
+	# What the law fixes, nobody changes: neither the AI government nor another measure.
 	for field: String in standing.budget_locks:
 		c.set(field, float(standing.budget_locks[field].value))
 	var annual := 0.0
@@ -2215,7 +2215,7 @@ func step_month(world: GameWorld) -> void:
 		for key: String in standing[kind]:
 			annual += float(standing[kind][key].annual)
 	_pay(c, annual / 12.0)
-	# Cada ministério a mais ou a menos que os sete de sempre pesa nas contas.
+	# Each ministry more or fewer than the usual seven weighs on the accounts.
 	var extra: int = world.politics.portfolios(world).size() - Politics.PORTFOLIOS.size()
 	var ministry_cost := float(extra) * c.y_usd() * Politics.MINISTRY_COST_SHARE / 12.0
 	if ministry_cost >= 0.0:
@@ -2235,7 +2235,7 @@ func step_month(world: GameWorld) -> void:
 	_ai_proposal(world)
 
 
-## Traduz o que está em vigor em pressão sobre a economia, a aprovação e a estabilidade.
+## Translates what is in force into pressure on the economy, approval and stability.
 func _update_macro(c: Country) -> void:
 	revenue_ring.append(c.law_rev_month)
 	spend_ring.append(c.law_spend_month)
@@ -2303,9 +2303,9 @@ static func _sum(values: Array) -> float:
 	return total
 
 
-# --- Propostas da IA ---------------------------------------------------------------------
+# --- AI proposals ---------------------------------------------------------------------
 
-## Um partido fora do jogador às vezes apresenta um projeto próximo das suas ideias.
+## A party other than the player's sometimes presents a project close to its ideas.
 func _ai_proposal(world: GameWorld) -> void:
 	var c := world.player
 	if c.dem < 4.0 or _rng.randf() >= AI_PROPOSAL_CHANCE:
@@ -2320,7 +2320,7 @@ func _ai_proposal(world: GameWorld) -> void:
 	var party: Dictionary = authors[_rng.randi() % authors.size()]
 	var taken := {}
 	for norm: Dictionary in norms.values():
-		# Projeto derrubado só volta à pauta dois anos depois.
+		# A defeated project only returns to the agenda two years later.
 		if (norm.state != STATE_REJECTED and norm.state != STATE_INVALID) or world.year - int(norm.year) < 2:
 			taken[norm.title] = true
 	var options := []
@@ -2341,7 +2341,7 @@ func _ai_proposal(world: GameWorld) -> void:
 	present(world, norm)
 
 
-# --- Registro -----------------------------------------------------------------------------
+# --- Registry -----------------------------------------------------------------------------
 
 func _log(world: GameWorld, norm: Dictionary, kind: String, before: String, after: String, result: String, who: String, event := "") -> void:
 	audit.append({
@@ -2352,10 +2352,10 @@ func _log(world: GameWorld, norm: Dictionary, kind: String, before: String, afte
 		audit = audit.slice(audit.size() - MAX_AUDIT)
 
 
-# --- Simulador ---------------------------------------------------------------------------
+# --- Simulator ---------------------------------------------------------------------------
 
-## Roda um artigo com uma pessoa fictícia. Nada vai para o jogo: o resultado fica só no relatório.
-## citizen: {age, money, income, value, tx, profession, unit, owner, licenses}; economy: valores do país.
+## Runs an article with a fictional person. Nothing goes into the game: the result stays only in the report.
+## citizen: {age, money, income, value, tx, profession, unit, owner, licenses}; economy: country values.
 func simulate(world: GameWorld, program: Dictionary, type: String, event: String, citizen: Dictionary, economy := {}) -> Dictionary:
 	var compiled := LawCompiler.compile(program, compile_context(type))
 	if not compiled.ok:
@@ -2393,7 +2393,7 @@ func simulate(world: GameWorld, program: Dictionary, type: String, event: String
 	return {"ok": failure == "", "error": failure, "trace": trace, "effects": effects, "ran": ran, "errors": []}
 
 
-# --- Exportar e importar ---------------------------------------------------------------
+# --- Export and import ---------------------------------------------------------------
 
 func export_norm(norm: Dictionary) -> String:
 	DirAccess.make_dir_recursive_absolute(EXPORT_DIR)
@@ -2413,7 +2413,7 @@ static func export_files() -> PackedStringArray:
 	return DirAccess.get_files_at(EXPORT_DIR)
 
 
-## Importar traz a norma como rascunho: ela ainda passa pelo compilador e pela tramitação daqui.
+## Importing brings the norm in as a draft: it still goes through the compiler and the procedure here.
 func import_norm(world: GameWorld, file_name: String) -> Dictionary:
 	var f := FileAccess.open(EXPORT_DIR + file_name, FileAccess.READ)
 	if f == null:
@@ -2433,7 +2433,7 @@ func import_norm(world: GameWorld, file_name: String) -> Dictionary:
 	return {"ok": true, "norm": norm, "msg": tr("%s importada como rascunho.%s") % [norm_label(norm), note]}
 
 
-# --- Salvar e carregar -----------------------------------------------------------------
+# --- Saving and loading -----------------------------------------------------------------
 
 func to_dict() -> Dictionary:
 	return {
@@ -2452,12 +2452,12 @@ func from_dict(d: Dictionary, world: GameWorld) -> void:
 	standing.get_or_add("ministry_ops", {})
 	standing.get_or_add("codes", {})
 	next_ministry_seq = int(d.get("next_ministry_seq", 1))
-	# Saves antigos: a Constituição ganha o artigo do banco central, com a situação que o país já tinha.
+	# Old saves: the Constitution gains the central bank article, with the situation the country already had.
 	if world.player and constitution.has("articles") and not constitution.articles.any(func(a): return a.param == "cb_independent"):
 		constitution.articles.append(_article(tr("Art. %d.") % (constitution.articles.size() + 1), tr("O banco central é independente do governo: {v}."), "cb_independent", world.player.cb_independent, false))
 	_rng.seed = int(d.get("rng_seed", 1))
 	_rng.state = int(d.get("rng_state", 0))
-	# Norma publicada não muda em silêncio: versão adulterada no arquivo suspende a norma.
+	# A published norm does not change silently: a tampered version in the file suspends the norm.
 	for norm: Dictionary in norms.values():
 		for version: Dictionary in norm.get("versions", []):
 			if int(version.get("hash", 0)) != 0 and int(version.hash) != hash(var_to_str(version.program)):

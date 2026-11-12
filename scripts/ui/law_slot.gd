@@ -1,6 +1,6 @@
 class_name LawSlot
 extends HBoxContainer
-## A parte de dentro de um bloco de controle, como "Se" ou "Repetir".
+## The inside of a control block, like "Se" (If) or "Repetir" (Repeat).
 
 const BLOCK_PATH := "res://scenes/ui/legislation/law_block.tscn"
 

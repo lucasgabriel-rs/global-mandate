@@ -1,12 +1,12 @@
 class_name PartyTalk
 extends RefCounted
-## Conversa do jogador com o líder de um partido do parlamento para pedir que apoie ou vote contra uma lei
-## em tramitação. A decisão fica em Legislation.chat_request; aqui ficam os contatos, as falas e as respostas.
+## The player's conversation with a parliament party leader to ask them to support or vote against a law
+## in procedure. The decision lives in Legislation.chat_request; here are the contacts, the lines and the answers.
 
 const MAX_LAWS := 4
 
 
-## Partidos com cadeiras, exceto o do jogador, do maior para o menor.
+## Parties with seats, except the player's, from largest to smallest.
 static func contacts(world: GameWorld) -> Array:
 	var data: Dictionary = world.politics.data_of(world.legislation.iso)
 	var out: Array = data.get("parties", []).filter(func(p): return int(p.seats) > 0 and int(p.id) != int(data.player_party))
@@ -14,7 +14,7 @@ static func contacts(world: GameWorld) -> Array:
 	return out
 
 
-## Contato com que abrir a janela de conversas ao falar de uma lei: o maior partido fora o do jogador.
+## Contact with which to open the conversation window when talking about a law: the largest party other than the player's.
 static func first_key(world: GameWorld) -> String:
 	var list := contacts(world)
 	return ChatLog.party_key(int(list[0].id)) if not list.is_empty() else ""
@@ -31,7 +31,7 @@ static func party_by_id(world: GameWorld, id: int) -> Dictionary:
 	return world.politics.party_of(world.legislation.iso, id)
 
 
-## Leis em tramitação que ainda passam por votação, as mais recentes primeiro.
+## Laws in procedure that still go through a vote, the most recent first.
 static func open_laws(world: GameWorld) -> Array:
 	var leg: Legislation = world.legislation
 	var list: Array = leg.in_process().filter(func(n): return leg.can_negotiate(n))
@@ -58,7 +58,7 @@ static func greeting(world: GameWorld, party: Dictionary) -> String:
 	return TranslationServer.translate("Pois não. Qual lei você quer discutir?")
 
 
-## Falas disponíveis agora. Cada uma: {id, label, hint}. id: "ask_yes:N", "ask_no:N" ou "sound:N".
+## Lines available now. Each: {id, label, hint}. id: "ask_yes:N", "ask_no:N" or "sound:N".
 static func options(world: GameWorld, party: Dictionary) -> Array:
 	var leg: Legislation = world.legislation
 	var out := []
@@ -74,8 +74,8 @@ static func options(world: GameWorld, party: Dictionary) -> Array:
 	return out
 
 
-## PONTO DE EXTENSÃO: falas extras com contrapartida (cargos, favores, verba do partido). A sessão que
-## cuidar do orçamento partidário devolve aqui as falas e trata o id em choose_extra.
+## EXTENSION POINT: extra lines with a counterpart (posts, favors, party funds). The session that
+## handles the party budget returns the lines here and handles the id in choose_extra.
 static func extra_offers(_world: GameWorld, _party: Dictionary) -> Array:
 	return []
 
@@ -84,7 +84,7 @@ static func choose_extra(_world: GameWorld, _party: Dictionary, _id: String) -> 
 	return {"ok": false, "accepted": false, "reply": TranslationServer.translate("Não entendi o que você quis dizer.")}
 
 
-## Aplica a fala. Devolve {ok, accepted, reply}. O histórico da conversa também é atualizado.
+## Applies the line. Returns {ok, accepted, reply}. The conversation history is also updated.
 static func say(world: GameWorld, party: Dictionary, id: String) -> Dictionary:
 	var key := ChatLog.party_key(int(party.id))
 	var label := ""
@@ -127,7 +127,7 @@ static func choose(world: GameWorld, party: Dictionary, id: String) -> Dictionar
 	return choose_extra(world, party, id)
 
 
-## Resposta falada: o motivo é o fator que mais pesou.
+## Spoken reply: the reason is the factor that weighed the most.
 static func _answer(r: Dictionary, want_yes: bool, title: String) -> String:
 	var aff: float = r.aff
 	var pop: float = r.pop

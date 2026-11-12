@@ -1,14 +1,14 @@
 class_name InfraPanel
 extends VBoxContainer
-## Portos e aeroportos do país: uso de cada um, obras em andamento e as decisões de ampliar, construir e
-## conceder. O formulário das decisões fica embutido no painel (infra_build.tscn).
+## Ports and airports of the country: use of each one, ongoing works and the decisions to expand, build and
+## concede. The decision form is embedded in the panel (infra_build.tscn).
 
 const ROW := preload("res://scenes/ui/rows/infra_row.tscn")
 const PROJECT_ROW := preload("res://scenes/ui/rows/infra_project_row.tscn")
 const EXPAND_LABELS := ["+25%", "+50%", "+100%"]
 
 var world: GameWorld
-## "expand", "new" ou "concede" enquanto o formulário está aberto.
+## "expand", "new" or "concede" while the form is open.
 var _mode := ""
 var _target := -1
 var _kind := ""
@@ -94,7 +94,7 @@ static func _use_color(u: float) -> Color:
 	return UiKit.GREEN
 
 
-## As linhas são reaproveitadas: só se criam ou removem as que faltam ou sobram.
+## Rows are reused: only those that are missing or left over are created or removed.
 func _fill(box: VBoxContainer, list: Array, c: Country, office: bool) -> void:
 	list.sort_custom(func(a, b): return Infrastructure.cap_eq(a) > Infrastructure.cap_eq(b))
 	while box.get_child_count() < list.size():
@@ -161,7 +161,7 @@ func _fill_projects(c: Country) -> void:
 		(row.get_node("%proj_bar") as ProgressBar).value = 1.0 - float(left) / maxf(float(p.months), 1.0)
 
 
-# --- Formulário --------------------------------------------------------------------
+# --- Form --------------------------------------------------------------------
 
 func open_expand(id: int) -> void:
 	var f := world.infra.facility(id)
@@ -189,7 +189,7 @@ func open_new(kind: String) -> void:
 	var port := kind == Infrastructure.PORT
 	_form_title.text = tr("Construir porto") if port else tr("Construir aeroporto")
 	_form_body.text = (tr("Um porto novo divide a carga com os outros e alivia os que estão lotados.") if port else tr("Um aeroporto novo alivia os que estão lotados e ajuda o turismo.")) + tr(" Leva anos, e o custo sai mês a mês pelo Tesouro.")
-	# Porto novo só onde já há porto (litoral); aeroporto em qualquer cidade com instalação.
+	# A new port only where there is already a port (coast); an airport in any city with a facility.
 	_cities = world.infra.cities_of(c, world).filter(func(f): return not port or f.kind == Infrastructure.PORT)
 	if _cities.is_empty():
 		_cities = world.infra.cities_of(c, world)

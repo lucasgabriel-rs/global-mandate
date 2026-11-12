@@ -1,9 +1,9 @@
 class_name LawProgram
 extends RefCounted
-## O programa visual de uma norma como dados simples, fáceis de salvar e de versionar.
-## Programa: {"next_id": n, "stacks": [{"pos": [x, y], "repealed": bool, "blocks": [bloco...]}]}
-## Bloco: {"id": n, "type": "ec_charge", "fields": {nome: valor}, "plugs": {nome: bloco}, "slots": {nome: [bloco...]}}
-## Cada pilha que começa com um evento é um artigo da norma.
+## The visual program of a norm as plain data, easy to save and to version.
+## Program: {"next_id": n, "stacks": [{"pos": [x, y], "repealed": bool, "blocks": [block...]}]}
+## Block: {"id": n, "type": "ec_charge", "fields": {name: value}, "plugs": {name: block}, "slots": {name: [block...]}}
+## Each stack that starts with an event is an article of the norm.
 
 
 static func empty() -> Dictionary:
@@ -23,7 +23,7 @@ static func new_block(program: Dictionary, type: String) -> Dictionary:
 	return block
 
 
-## Copia com identificadores novos: usada ao arrastar um modelo pronto para outro programa.
+## Copies with new identifiers: used when dragging a ready-made template into another program.
 static func clone(program: Dictionary, block: Dictionary) -> Dictionary:
 	var copy: Dictionary = block.duplicate(true)
 	_renumber(program, copy)
@@ -46,7 +46,7 @@ static func add_stack(program: Dictionary, block: Dictionary, pos: Vector2) -> D
 	return stack
 
 
-## Local de um bloco: {"list": lista onde está, "index": i} ou {"owner": bloco, "plug": campo}.
+## Location of a block: {"list": list it is in, "index": i} or {"owner": block, "plug": field}.
 static func locate(program: Dictionary, id: int) -> Dictionary:
 	for stack: Dictionary in program.stacks:
 		var found := _locate_in(stack.blocks, id)
@@ -82,7 +82,7 @@ static func _locate_inner(block: Dictionary, id: int) -> Dictionary:
 	return {}
 
 
-## Tira o bloco e tudo o que está abaixo dele na mesma pilha, como no Scratch. Devolve a lista retirada.
+## Takes out the block and everything below it in the same stack, as in Scratch. Returns the removed list.
 static func detach(program: Dictionary, id: int) -> Array:
 	var where := locate(program, id)
 	if where.is_empty():
@@ -98,7 +98,7 @@ static func detach(program: Dictionary, id: int) -> Array:
 	return taken
 
 
-## Apaga só um bloco, mantendo os de baixo no lugar.
+## Deletes only one block, keeping the ones below in place.
 static func remove_one(program: Dictionary, id: int) -> void:
 	var where := locate(program, id)
 	if where.is_empty():
@@ -114,7 +114,7 @@ static func _drop_empty(program: Dictionary) -> void:
 	program.stacks = program.stacks.filter(func(s): return not s.blocks.is_empty())
 
 
-## Uma lista de blocos entra logo depois (ou antes) do bloco alvo.
+## A list of blocks goes in right after (or before) the target block.
 static func insert_near(program: Dictionary, target_id: int, blocks: Array, before: bool) -> bool:
 	var where := locate(program, target_id)
 	if where.is_empty() or where.has("plug"):
@@ -175,9 +175,9 @@ static func all_blocks(program: Dictionary) -> Array:
 	return out
 
 
-# --- Texto jurídico ----------------------------------------------------------------------
-# O texto guardado na norma (LawCompiler) fica sempre em português, o idioma original, para não mudar
-# com o idioma do jogador. Com localized, sai traduzido, para mostrar na tela.
+# --- Legal text ----------------------------------------------------------------------
+# The text stored in the norm (LawCompiler) is always in Portuguese, the original language, so it does not change
+# with the player's language. With localized, it comes out translated, to show on the screen.
 
 static func block_text(block: Dictionary, localized := false) -> String:
 	var def := LawCatalog.get_def(block.type)
@@ -213,7 +213,7 @@ static func field_text(block: Dictionary, field: String, localized := false) -> 
 	return str(value)
 
 
-## Texto da norma: cada pilha vira um artigo, com os blocos internos em alíneas.
+## Text of the norm: each stack becomes an article, with the inner blocks as sub-items.
 static func legal_text(program: Dictionary, localized := false) -> String:
 	var lines := []
 	var number := 0

@@ -1,12 +1,12 @@
 class_name CodeDireitos
 extends LawCode
-## Direitos e deveres: Direitos fundamentais e deveres dos cidadãos.
+## Rights and duties: Fundamental rights and duties of citizens.
 ##
-## Tudo aqui conta pela diferença em relação ao texto original do código, que descreve o país como ele
-## já é: o começo da partida não muda nada, e só o que o jogador altera pesa na aprovação, na estabilidade
-## e no investimento. Os direitos que a Constituição garante (Art. 3º) valem mesmo sem bloco; suspendê-los
-## leva a norma à corte. Um direito que uma lei avulsa já concede ou remove (`standing.rights`, dos blocos
-## avançados) fica com ela: `Legislation._update_macro` conta esse, e este código não conta de novo.
+## Everything here counts by the difference from the code's original text, which describes the country as it
+## already is: the start of the match changes nothing, and only what the player alters weighs on approval, stability
+## and investment. The rights that the Constitution guarantees (Art. 3) apply even without a block; suspending them
+## takes the norm to the court. A right that a standalone law already grants or removes (`standing.rights`, from the advanced
+## blocks) stays with it: `Legislation._update_macro` counts that one, and this code does not count it again.
 
 const RANK_LAW := 60
 const RANK_COMPLEMENTARY := 70
@@ -20,14 +20,14 @@ const RIGHTS := {
 	"arma": "o porte de arma", "aborto": "o aborto legal",
 }
 # i18n-end
-## Direitos civis e políticos: entram no índice de liberdades.
+## Civil and political rights: they go into the freedom index.
 const CIVIL := ["expressao", "imprensa", "associacao", "culto", "privacidade", "ir_vir", "internet", "voto"]
 # i18n-begin
 const SCOPES := {"todos": "todas as pessoas", "adultos": "os maiores de 18 anos", "cidadaos": "os cidadãos"}
 # i18n-end
-## Quanto do efeito de um direito vale para cada alcance: restringir aos cidadãos deixa estrangeiros de fora.
+## How much of a right's effect applies to each scope: restricting to citizens leaves foreigners out.
 const SCOPE_WEIGHT := {"todos": 1.0, "adultos": 0.85, "cidadaos": 0.7}
-## Efeito próprio de cada direito, por mês, além do peso geral na aprovação e na estabilidade.
+## Each right's own effect, per month, besides the general weight on approval and stability.
 const RIGHT_EFFECTS := {
 	"propriedade": {"invest": 0.02},
 	"greve": {"invest": -0.004, "inequality": -0.002},
@@ -63,13 +63,13 @@ const LEVELS := {"1": "leve", "2": "moderado", "3": "rigoroso"}
 const SERVICES := {"redes": "as redes sociais estrangeiras", "noticias": "os sites de notícias estrangeiros", "vpn": "as VPNs e ferramentas de anonimato"}
 # i18n-end
 
-## Parte de cada geração de 18 anos convocada de fato, e o tamanho de uma geração de homens na população.
+## Share of each 18-year-old generation actually drafted, and the size of a generation of men in the population.
 const DRAFT_RATE := 0.15
 const COHORT_MEN := 0.0065
-## Sem dever de escolaridade, vale o ensino fundamental de fato.
+## Without a schooling duty, actual primary education applies.
 const SCHOOL_DEFAULT := 10
 
-## Países com serviço militar obrigatório e a duração, em meses.
+## Countries with compulsory military service and the duration, in months.
 const CONSCRIPTION := {
 	"BRA": 12, "RUS": 12, "KOR": 18, "PRK": 120, "ISR": 32, "TUR": 12, "EGY": 24, "IRN": 21, "CHE": 5, "AUT": 6, "FIN": 6, "NOR": 12,
 	"GRC": 9, "VNM": 24, "THA": 24, "COL": 18, "UKR": 18, "CUB": 24, "SGP": 24, "TWN": 12, "DNK": 4, "EST": 11, "LTU": 9, "SWE": 11,
@@ -86,7 +86,7 @@ const FIREWALL := ["CHN", "IRN", "PRK", "TKM", "ERI"]
 
 
 func _init() -> void:
-	# Direitos e deveres valem como lei complementar; os que a Constituição garante ficam no Art. 3º.
+	# Rights and duties apply as a complementary law; those the Constitution guarantees stay in Art. 3.
 	id = "direitos"
 	title = "Direitos e deveres"
 	ementa = "Direitos fundamentais e deveres dos cidadãos."
@@ -114,7 +114,7 @@ func choices() -> Dictionary:
 	return {"dr_right": RIGHTS, "dr_scope": SCOPES, "dr_duty": duties, "dr_draftees": DRAFTEES, "dr_outlet": OUTLETS, "dr_level": LEVELS, "dr_service": SERVICES}
 
 
-## O voto obrigatório é do Código Eleitoral quando ele tiver bloco próprio para isso.
+## Compulsory voting belongs to the Electoral Code once it has its own block for it.
 static func electoral_vote_duty() -> bool:
 	var electoral := LawCodes.get_code("eleitoral")
 	if electoral == null:
@@ -126,7 +126,7 @@ static func electoral_vote_duty() -> bool:
 	return false
 
 
-# --- Texto inicial ---------------------------------------------------------------------
+# --- Initial text ---------------------------------------------------------------------
 
 func seed_program(world: GameWorld, c: Country) -> Dictionary:
 	var program := LawProgram.empty()
@@ -137,7 +137,7 @@ func seed_program(world: GameWorld, c: Country) -> Dictionary:
 		block.fields.right = r
 		block.fields.scope = "cidadaos" if r == "voto" or r == "arma" else ("adultos" if r == "aborto" else "todos")
 		stack.blocks.append(block)
-	# Direitos numa coluna; deveres e imprensa em outra, ao lado, para nada se sobrepor no editor.
+	# Rights in one column; duties and press in another, beside it, so nothing overlaps in the editor.
 	var duties := LawProgram.add_stack(program, LawProgram.new_block(program, "ev_enact"), Vector2(520, 30))
 	var duty := LawProgram.new_block(program, "dr_duty")
 	duty.fields.duty = "tributos"
@@ -181,7 +181,7 @@ func seed_program(world: GameWorld, c: Country) -> Dictionary:
 	return program
 
 
-## Os direitos de fato do país: os da Constituição e o que o regime e o orçamento já sustentam.
+## The country's actual rights: those of the Constitution and what the regime and budget already sustain.
 func _seed_rights(world: GameWorld, c: Country) -> Array:
 	var out := []
 	var guaranteed: Array = world.legislation.param("rights", []) if world.legislation else []
@@ -213,7 +213,7 @@ func _seed_rights(world: GameWorld, c: Country) -> Array:
 	return out
 
 
-# --- Execução --------------------------------------------------------------------------
+# --- Execution --------------------------------------------------------------------------
 
 func apply(world: GameWorld, leg: Legislation, op: String, values: Dictionary, _weight: float, norm_id: int, prio: float) -> String:
 	match op:
@@ -254,7 +254,7 @@ func apply(world: GameWorld, leg: Legislation, op: String, values: Dictionary, _
 	return ""
 
 
-## Estado que um programa descreve, nas mesmas chaves que `apply` guarda. Artigos revogados não contam.
+## State that a program describes, in the same keys that `apply` stores. Repealed articles do not count.
 static func state_of(program: Dictionary) -> Dictionary:
 	var blocks := []
 	for stack: Dictionary in program.get("stacks", []):
@@ -283,7 +283,7 @@ static func state_of(program: Dictionary) -> Dictionary:
 	return out
 
 
-## O texto com que o código começou a partida, mesmo que tenha sido revogado depois.
+## The text the code started the match with, even if it was repealed later.
 static func _base_norm(leg: Legislation) -> Dictionary:
 	for norm: Dictionary in leg.norms.values():
 		if String(norm.get("code", "")) == "direitos" and norm.get("base_code", false) and not norm.versions.is_empty():
@@ -291,7 +291,7 @@ static func _base_norm(leg: Legislation) -> Dictionary:
 	return {}
 
 
-## O que vale agora: o texto original enquanto ninguém mudou o código, mais o que as normas em vigor mantêm.
+## What applies now: the original text while nobody has changed the code, plus what the norms in force keep.
 static func current_state(leg: Legislation) -> Dictionary:
 	var base := _base_norm(leg)
 	var code := leg.code_norm("direitos")
@@ -307,7 +307,7 @@ static func base_state(leg: Legislation) -> Dictionary:
 	return state_of(base.versions[0].program) if not base.is_empty() else {}
 
 
-## 1 com o direito em vigor para todos, menos para alcance menor, 0 se não vale. Sem bloco, vale a Constituição.
+## 1 with the right in force for everyone, less for a smaller scope, 0 if it does not apply. Without a block, the Constitution applies.
 static func right_level(leg: Legislation, state: Dictionary, r: String) -> float:
 	if leg.standing.rights.has(r):
 		return 1.0 if leg.standing.rights[r].on else 0.0
@@ -317,7 +317,7 @@ static func right_level(leg: Legislation, state: Dictionary, r: String) -> float
 	return float(SCOPE_WEIGHT.get(String(entry.scope), 1.0)) if entry.on else 0.0
 
 
-## Convocados por ano, em milhares de soldados.
+## Draftees per year, in thousands of soldiers.
 static func conscripts(c: Country, state: Dictionary) -> float:
 	var service: Dictionary = state.get("military", {})
 	if service.is_empty():
@@ -326,7 +326,7 @@ static func conscripts(c: Country, state: Dictionary) -> float:
 	return c.pop * 1000.0 * COHORT_MEN * share * float(service.months) / 12.0 * DRAFT_RATE
 
 
-## Índice de liberdades, de 0 a 100.
+## Freedom index, from 0 to 100.
 static func freedom_index(world: GameWorld, leg: Legislation, state: Dictionary) -> float:
 	var score := 0.0
 	for r: String in CIVIL:
@@ -401,8 +401,8 @@ func monthly(world: GameWorld, c: Country, leg: Legislation) -> Dictionary:
 	return out
 
 
-## Serviço militar: o efetivo de base acompanha os convocados a mais ou a menos que o texto original,
-## dentro de um limite, e quem está no quartel sai da força de trabalho.
+## Military service: the base force follows the draftees above or below the original text,
+## within a limit, and whoever is in the barracks leaves the labor force.
 func _military(c: Country, now: Dictionary, base: Dictionary, out: Dictionary) -> void:
 	var reference := float(c.code_stats.get_or_add("direitos_efetivo_base", c.troops0))
 	var delta := clampf(conscripts(c, now) - conscripts(c, base), -0.6 * reference, reference)

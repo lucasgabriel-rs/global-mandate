@@ -1,6 +1,6 @@
 class_name NegotiationScreen
 extends ColorRect
-## Negocia com cada bancada o voto em uma proposta em tramitação, a favor ou contra.
+## Negotiates with each caucus the vote on a proposal in procedure, for or against.
 
 const ROW := preload("res://scenes/ui/legislation/negotiation_row.tscn")
 

@@ -1,6 +1,6 @@
 class_name CabinetPanel
 extends VBoxContainer
-## Aba "Ministros": cada pasta com o titular, a competência e a bússola dele.
+## "Ministros" tab: each portfolio with its head, competence and compass.
 
 signal pick_requested(post: String)
 

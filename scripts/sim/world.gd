@@ -1,8 +1,8 @@
 class_name GameWorld
 extends RefCounted
-## Estado global e relógio da simulação. Um dia de jogo é a unidade do tempo;
-## cada país faz sua etapa macro mensal em um dia diferente, o que distribui o custo
-## de CPU e mantém os números sempre mudando.
+## Global state and simulation clock. One game day is the unit of time;
+## each country runs its monthly macro step on a different day, which spreads the CPU
+## cost and keeps the numbers always moving.
 
 signal news_posted(text: String, kind: String, country: Country)
 signal prompt_requested(prompt: Dictionary)
@@ -10,12 +10,12 @@ signal game_ended(result: Dictionary)
 signal month_passed
 signal player_changed
 signal demarcation_requested(session: Dictionary)
-## Um líder procurou o jogador, e ele aceitou conversar.
+## A leader reached out to the player, and the player agreed to talk.
 signal talk_requested(target: Country)
 
 const START_YEAR := 2025
 const MAX_BORDER_PROPOSALS := 3
-## Líderes não procuram o jogador nos primeiros meses, nem mais que uma vez nesse intervalo.
+## Leaders do not approach the player in the first months, nor more than once in this interval.
 const TALK_FIRST_MONTH := 6
 const TALK_COOLDOWN_MONTHS := 4
 # i18n-begin
@@ -33,13 +33,13 @@ var countries: Array = []
 var by_iso := {}
 var usa: Country
 var player: Country
-## false quando o jogador perdeu a eleição: o país segue com a IA, e ele lidera a oposição.
+## false when the player lost the election: the country stays with the AI, and the player leads the opposition.
 var in_office := true
-## Último mês em que cada líder estrangeiro recebeu o jogador: {iso: mês}.
+## Last month in which each foreign leader received the player: {iso: month}.
 var talks := {}
-var chats := {}           # contato -> mensagens (ChatLog)
-var talk_turns := {}      # iso -> falas que ainda restam na conversa em curso
-var offers := {}          # iso -> proposta em aberto que o líder trouxe (Proposals)
+var chats := {}           # contact -> messages (ChatLog)
+var talk_turns := {}      # iso -> lines still left in the current conversation
+var offers := {}          # iso -> open proposal the leader brought (Proposals)
 var markets := Markets.new()
 var diplomacy := Diplomacy.new()
 var subdivisions := Subdivisions.new()
@@ -66,12 +66,12 @@ var global_tension := 0.3
 var ecb_rate := 0.03
 var eur_rate := 1.0
 var _world_gdp := 110000.0
-## Enquanto a simulação roda em outra thread, nada de interface: os sinais ficam na fila até ela acabar.
+## While the simulation runs on another thread, no interface: signals stay queued until it ends.
 var defer_events := false
-## Verdadeiro enquanto outra thread usa este mundo: a interface não pode ler nem mudar nada nele.
+## True while another thread uses this world: the interface cannot read or change anything in it.
 var busy := false
 var _events: Array = []
-## Dia da última ação externa, por ação e país: cada uma tem um intervalo mínimo.
+## Day of the last foreign action, by action and country: each has a minimum interval.
 var action_used := {}
 var difficulty := "normal"
 var mandates := 0
@@ -88,7 +88,7 @@ func setup(seed_value: int = 0) -> void:
 		rng.randomize()
 	else:
 		rng.seed = seed_value
-	# Monta o catálogo de blocos e os códigos legais aqui, antes de a simulação ganhar uma thread.
+	# Builds the block catalog and the legal codes here, before the simulation gets a thread.
 	LawCatalog.categories()
 	var map_info := GameData.map_info()
 	var rows := GameData.load_countries()
@@ -113,9 +113,9 @@ func setup(seed_value: int = 0) -> void:
 		Sectors.init_country(c, self)
 		c.push_hist("y", c.y)
 		Economy.record_start(c)
-	# A migração inicial sai da natalidade: o crescimento dos dados já inclui imigrantes.
+	# The initial migration comes from the birth rate: the data's growth already includes immigrants.
 	Demography.init_world(self)
-	# Gráficos já têm o ponto de partida no primeiro dia.
+	# Charts already have the starting point on the first day.
 	for i in 5:
 		markets.push_hist(i)
 	diplomacy.setup(self)
@@ -129,7 +129,7 @@ func setup(seed_value: int = 0) -> void:
 	next_ai.resize(countries.size())
 	for i in countries.size():
 		next_ai[i] = fmod(i * 11.1, 30.4)
-	# Dinâmica de início: alguns meses de aquecimento sem ninguém olhando.
+	# Starting dynamics: a few months of warm-up with nobody watching.
 	_update_global()
 
 
@@ -145,7 +145,7 @@ func world_gdp() -> float:
 	return _world_gdp
 
 
-## País que controla hoje o território de iso, seguindo as anexações.
+## Country that currently controls the territory of iso, following annexations.
 func resolve_owner(iso: String) -> Country:
 	var c: Country = by_iso.get(iso)
 	while c and not c.alive and c.annexed_by >= 0:
@@ -183,7 +183,7 @@ func set_player(c: Country, diff: String) -> void:
 	c.approval = clampf(c.approval + float(DIFFICULTY[diff].approval) + 0.05, 0.2, 0.85)
 	if c.dem >= 4.0:
 		c.next_election = year_float() + 3.9 + 0.0
-	# Todo governante pertence a um partido: sem escolha, o que já governa.
+	# Every ruler belongs to a party: with no choice, the one already governing.
 	if int(politics.data_of(c.iso).player_party) < 0:
 		politics.join_party(self, int(politics.data_of(c.iso).ruling), true)
 	politics.auto_cabinet(self)
@@ -218,22 +218,22 @@ func tick_day() -> void:
 				NationAI.step_month(countries[i], self)
 
 
-## O cálculo econômico do mês, no dia 1, para todos os países ao mesmo tempo: risco global, a
-## economia de cada país e os preços das commodities. As decisões da IA continuam espalhadas pelo mês.
+## The month's economic calculation, on day 1, for all countries at the same time: global risk, each
+## country's economy and commodity prices. AI decisions remain spread through the month.
 func _economy_month() -> void:
-	# Mesma dinâmica da versão diária (volta de 0,4% ao dia para 0,2 e ruído de 0,004), somada no mês.
+	# Same dynamics as the daily version (0.4% a day return to 0.2 and noise of 0.004), summed over the month.
 	global_risk += (0.2 - global_risk) * 0.115 + rng.randfn(0.0, 0.021)
 	global_risk = clampf(global_risk, 0.05, 1.0)
-	# Os países fecham o mês com os preços vigentes; o mercado reage depois e vale para o mês seguinte.
+	# Countries close the month with the prices in force; the market reacts afterwards and applies to the next month.
 	for c: Country in countries:
 		Economy.step_month(c, self)
-	# Migração depois de nascimentos e mortes: todos os países já fecharam o mês.
+	# Migration after births and deaths: all countries have already closed the month.
 	Demography.step_world(self)
 	markets.step_month(self, rng)
 
 
 func _player_upkeep(c: Country) -> void:
-	# Mesmo cálculo de estoque militar da IA, mas sem decisões automáticas.
+	# Same military stock calculation as the AI, but with no automatic decisions.
 	var ppp := clampf(pow(60000.0 / maxf(c.gdp_pc(), 500.0), 0.35), 1.0, 3.0)
 	c.mil_stock += (c.sp_defense * c.y_usd() * ppp * 0.35 - 0.06 * c.mil_stock) / 12.0
 	c.troops += (c.troops0 * (1.0 + c.mobilization) - c.troops) * 0.03
@@ -241,7 +241,7 @@ func _player_upkeep(c: Country) -> void:
 		c.war_exhaustion = maxf(c.war_exhaustion - 0.012, 0.0)
 
 
-## Quem governa o país do jogador: ele mesmo, ou ninguém que dependa de decisões humanas.
+## Who governs the player's country: the player, or nobody that depends on human decisions.
 func governed() -> Country:
 	return player if in_office else null
 
@@ -270,7 +270,7 @@ func _on_month() -> void:
 
 func _update_global() -> void:
 	_world_gdp = _sum_gdp()
-	# Banco Central Europeu: regra de Taylor sobre o agregado da zona do euro.
+	# European Central Bank: Taylor rule on the euro area aggregate.
 	var w := 0.0
 	var pi_val := 0.0
 	var gap_val := 0.0
@@ -295,7 +295,7 @@ func _update_global() -> void:
 		var le_target := ln_p - log(usa.p) - 1.1 * clampf(rd, -0.1, 0.1)
 		eur_rate = exp(log(eur_rate) + (le_target - log(eur_rate)) * 0.08 + rng.randfn(0.0, 0.006))
 	diplomacy.refresh_sanction_cache(self)
-	# Tensão global: guerras (ponderadas pelo tamanho), sanções e potências nucleares envolvidas.
+	# Global tension: wars (weighted by size), sanctions and nuclear powers involved.
 	var t := 0.15
 	for war: Dictionary in diplomacy.wars:
 		var a: Country = countries[war.main_a]
@@ -330,7 +330,7 @@ func influence_of(c: Country) -> float:
 	var mil := c.military_power() / maxf(usa.military_power(), 0.01)
 	var v := 55.0 * pow(c.y_usd() / _world_gdp, 0.55)
 	v += 18.0 * clampf(pow(mil, 0.6), 0.0, 1.5)
-	# Aliados contam mais para quem tem peso próprio dentro da aliança.
+	# Allies count more for whoever has weight of their own within the alliance.
 	v += 10.0 * pow(allies / _world_gdp, 0.6) * sqrt(clampf(c.y_usd() / _world_gdp * 20.0, 0.0, 1.0))
 	v += 5.0 * c.stability
 	if c.nukes > 0:
@@ -347,7 +347,7 @@ func rank_of(c: Country, key: Callable) -> int:
 	return r
 
 
-## Nomes dos países no idioma atual. Chamado ao abrir e ao trocar de idioma, na thread principal.
+## Country names in the current language. Called on opening and when switching language, on the main thread.
 func localize_country_names() -> void:
 	for c: Country in countries:
 		c.name = TranslationServer.translate(GameData.country_name_pt(c.iso))
@@ -357,7 +357,7 @@ func emit_news(text: String, kind: String, country: Country) -> void:
 	_send(news_posted, [_decimal_comma(text), kind, country])
 
 
-## Números nos textos seguem o formato pt-BR (1,5 e não 1.5), salvo em inglês.
+## Numbers in the texts follow the pt-BR format (1,5 and not 1.5), except in English.
 static var _decimal_re: RegEx
 
 
@@ -368,7 +368,7 @@ func _send(event: Signal, args := []) -> void:
 		event.emit.callv(args)
 
 
-## Entrega na thread principal o que aconteceu durante a simulação em segundo plano.
+## Delivers on the main thread what happened during the background simulation.
 func flush_events() -> void:
 	var pending := _events
 	_events = []
@@ -376,7 +376,7 @@ func flush_events() -> void:
 		(item[0] as Signal).emit.callv(item[1])
 
 
-## Algo na fila exige o jogador? Então um avanço de vários dias precisa parar aqui.
+## Is something in the queue demanding the player? Then a multi-day advance must stop here.
 func has_urgent_event() -> bool:
 	for item: Array in _events:
 		if item[0] != news_posted and item[0] != month_passed:
@@ -385,7 +385,7 @@ func has_urgent_event() -> bool:
 
 
 func _decimal_comma(text: String) -> String:
-	# Em inglês, o ponto decimal fica.
+	# In English, the decimal point stays.
 	if Lang.english_numbers:
 		return text
 	if _decimal_re == null:
@@ -394,7 +394,7 @@ func _decimal_comma(text: String) -> String:
 
 
 func ask_player(prompt: Dictionary) -> void:
-	# Na oposição, só chegam as janelas sobre o próprio jogador: decisões de governo ficam com a IA.
+	# In opposition, only the windows about the player themselves arrive: government decisions stay with the AI.
 	if player and not over and (in_office or prompt.get("always", false)):
 		prompt["text"] = _decimal_comma(prompt.get("text", ""))
 		for opt: Dictionary in prompt.options:
@@ -402,7 +402,7 @@ func ask_player(prompt: Dictionary) -> void:
 		_send(prompt_requested, [prompt])
 
 
-# --- Política do jogador ---------------------------------------------------
+# --- Player politics ---------------------------------------------------
 
 func check_player_politics(c: Country) -> void:
 	if c != player or over:
@@ -444,8 +444,8 @@ func _player_election(c: Country) -> void:
 		enter_opposition(tr("%s venceu a eleição com %d de %d assentos. Sua aprovação de %d%% não bastou. Você passa a liderar a oposição até a próxima eleição.") % [result.winner.name, int(result.winner.seats), int(result.total), int(c.approval * 100.0)], tr("Derrotado nas urnas"))
 
 
-## Começa a partida fora do governo: quem já governa continua, e o jogador disputa a próxima eleição.
-## Regimes fechados não têm eleição, então não há oposição jogável neles.
+## Starts the match out of government: whoever already governs stays, and the player runs in the next election.
+## Closed regimes have no election, so there is no playable opposition in them.
 func start_in_opposition() -> Dictionary:
 	if player == null or player.dem < 4.0:
 		return {"ok": false, "msg": tr("Este regime não tem eleições: não há como disputar o poder pela oposição.")}
@@ -456,13 +456,13 @@ func start_in_opposition() -> Dictionary:
 	return {"ok": true, "msg": ""}
 
 
-## O jogador continua no jogo, à frente do partido dele: a IA governa até a próxima eleição.
+## The player stays in the game, at the head of their party: the AI governs until the next election.
 func enter_opposition(text: String, title: String) -> void:
 	in_office = false
 	player.rate_manual = false
-	# Quem assume começa com a própria popularidade, não com a do governo que caiu.
+	# Whoever takes over starts with their own popularity, not that of the government that fell.
 	player.approval = clampf(0.55 + rng.randf_range(-0.05, 0.08), 0.3, 0.75)
-	# Quem assume começa com a própria popularidade, não com a do governo que caiu.
+	# Whoever takes over starts with their own popularity, not that of the government that fell.
 	player.approval = clampf(0.55 + rng.randf_range(-0.05, 0.08), 0.3, 0.75)
 	politics.clear_cabinet(player.iso)
 	legislation.drop_government_bills(self)
@@ -496,7 +496,7 @@ func _opposition_election(c: Country) -> void:
 		})
 
 
-## Renunciar é uma saída como as outras: o partido seguinte assume.
+## Resigning is an exit like the others: the next party takes over.
 func resign() -> void:
 	if not in_office or over:
 		return
@@ -504,8 +504,8 @@ func resign() -> void:
 	_finish("renuncia", tr("%s renunciou ao cargo.%s") % [leader.get("name", tr("O líder")), tr(" %s assume o governo.") % next_party.name if not next_party.is_empty() else ""])
 
 
-## Depois do fim da carreira, o jogador assume outra pessoa no mesmo país. Se o país acabou, vai para quem o tomou.
-## Em democracia, ela começa na oposição; em regime fechado, é quem sucede no poder.
+## After the end of the career, the player takes over another person in the same country. If the country ended, goes to whoever took it.
+## In a democracy, they start in opposition; in a closed regime, it is whoever succeeds to power.
 func assume_new_character(character: Dictionary) -> void:
 	over = false
 	if not player.alive:
@@ -543,7 +543,7 @@ func assume_new_character(character: Dictionary) -> void:
 	emit_news(tr("%s entra na política de %s.") % [leader.get("name", tr("Um novo nome")), c.name], "politica", c)
 
 
-## Um líder quer conversar com o jogador. Ele decide se atende.
+## A leader wants to talk to the player. The player decides whether to answer.
 func request_talk(c: Country) -> void:
 	if months_elapsed < next_talk_month or not in_office or player == null:
 		return
@@ -595,7 +595,7 @@ func _final_score() -> int:
 	return int(maxf(s, 0.0))
 
 
-# --- Interações com o jogador -----------------------------------------------
+# --- Interactions with the player -----------------------------------------------
 
 func offer_imf(c: Country) -> void:
 	if c.imf_program > 0.0:
@@ -689,8 +689,8 @@ func ally_attacked(w: Dictionary, ally: Country, enemy: Country) -> void:
 	})
 
 
-## Perder a guerra derruba o governo, mas não acaba a carreira: em democracia, o jogador vai para a oposição.
-## Sem eleições para disputar, o regime cai e o líder é deposto.
+## Losing the war topples the government, but does not end the career: in a democracy, the player goes to opposition.
+## With no elections to contest, the regime falls and the leader is deposed.
 func player_lost_war(enemy: Country) -> void:
 	if not player.alive or player.dem < Politics.FREE_PARLIAMENT_DEM:
 		_finish("golpe", tr("As tropas de %s tomaram a capital, e o regime caiu com a rendição.") % enemy.name)
@@ -702,7 +702,7 @@ func player_lost_war(enemy: Country) -> void:
 func player_won_war(w: Dictionary, def: Country) -> void:
 	var pl := player
 	var d := diplomacy
-	# Evita reentrar até a decisão: congela a frente abaixo da capitulação.
+	# Avoids re-entering until the decision: freezes the front below capitulation.
 	w.front = 96.0
 	ask_player({
 		"title": tr("%s capitulou") % def.name,
@@ -722,7 +722,7 @@ func player_won_war(w: Dictionary, def: Country) -> void:
 	})
 
 
-## Quem invadiu o jogador foi expulso: o jogador venceu e decide se fica com o que tomou.
+## Whoever invaded the player was expelled: the player won and decides whether to keep what was taken.
 func player_repelled(w: Dictionary, att: Country) -> void:
 	w.front = -49.0
 	_offer_victory(w, att, 0.3)
@@ -754,7 +754,7 @@ func _offer_negotiation(w: Dictionary, rival: Country) -> void:
 	})
 
 
-## O vencedor fica com as áreas marcadas. Lista vazia: retira as tropas e nada muda no mapa.
+## The winner keeps the marked areas. Empty list: withdraws the troops and nothing changes on the map.
 func settle_victory(w: Dictionary, rival: Country, pieces: Array) -> void:
 	var pl := player
 	var d := diplomacy
@@ -779,8 +779,8 @@ func settle_old_borders(w: Dictionary, rival: Country, msg := "") -> void:
 	diplomacy.end_war_by_player(w, player, rival, self, 0.0, text)
 
 
-## Proposta de novas fronteiras em uma paz sem vencedor. O rival compara, em PIB, o que perde e o
-## que ganha, e tolera mais quando a frente está contra ele ou quando está cansado da guerra.
+## Proposal of new borders in a peace with no winner. The rival compares, in GDP, what it loses and what
+## it gains, and tolerates more when the front is against it or when it is tired of the war.
 func propose_borders(w: Dictionary, rival: Country, claims: Array, offers: Array) -> Dictionary:
 	var pl := player
 	var t := territories
@@ -825,12 +825,12 @@ func nuclear_check(w: Dictionary, att: Country, def: Country, force := false) ->
 	return true
 
 
-# --- Ações do jogador ---------------------------------------------------------------
+# --- Player actions ---------------------------------------------------------------
 
 const ACTION_COOLDOWN_DAYS := 30
 
 
-## Dias até a mesma ação poder ser repetida com o mesmo país.
+## Days until the same action can be repeated with the same country.
 func action_wait(action: String, target: Country) -> int:
 	var last: int = action_used.get("%s:%s" % [action, target.iso], -9999)
 	return maxi(last + ACTION_COOLDOWN_DAYS - day_index, 0)
@@ -953,11 +953,11 @@ func _propose_peace(target: Country) -> Dictionary:
 	if w.is_empty():
 		return {"ok": false, "msg": tr("Vocês não estão em guerra.")}
 	var pl_att: bool = pl.idx in w.a
-	var f: float = w.front if pl_att else -float(w.front)  # >0 favorece o jogador
+	var f: float = w.front if pl_att else -float(w.front)  # >0 favors the player
 	var enemy: Country = countries[w.main_d] if pl_att else countries[w.main_a]
 	var accepts := enemy.war_exhaustion * 0.9 + (f / 100.0) * 0.8 + 0.18
 	if f < -15.0:
-		accepts -= 0.25 + (-f) * 0.008  # inimigo vencendo não aceita fácil
+		accepts -= 0.25 + (-f) * 0.008  # an enemy that is winning does not accept easily
 	action_used["peace:%s" % target.iso] = day_index
 	if rng.randf() > clampf(accepts, 0.02, 0.97):
 		return {"ok": false, "msg": tr("%s rejeitou a proposta de paz.") % enemy.name}
@@ -966,12 +966,12 @@ func _propose_peace(target: Country) -> Dictionary:
 	elif f >= -15.0:
 		_offer_negotiation(w, enemy)
 	else:
-		# O inimigo venceu: é ele quem escolhe o que fica com ele.
+		# The enemy won: it is the one who chooses what it keeps.
 		d.end_war_by_player(w, enemy, pl, self, clampf(-f * 0.004, 0.0, 0.3), tr("Paz assinada: %s cede {pct} do território a %s.") % [pl.name, enemy.name])
 	return {"ok": true, "msg": ""}
 
 
-# --- Salvar e carregar ---------------------------------------------------------
+# --- Saving and loading ---------------------------------------------------------
 
 func to_dict() -> Dictionary:
 	var cs := []
@@ -998,7 +998,7 @@ func load_dict(d: Dictionary) -> void:
 		var c := Country.from_dict(cd)
 		countries.append(c)
 		by_iso[c.iso] = c
-	# O save guarda o nome no idioma de quando foi gravado.
+	# The save keeps the name in the language it was saved in.
 	localize_country_names()
 	usa = by_iso["USA"]
 	markets.from_dict(d.markets)
@@ -1042,7 +1042,7 @@ func load_dict(d: Dictionary) -> void:
 		corporate.setup(self)
 	corruption = Corruption.new()
 	corruption.from_dict(d.get("corruption", {}))
-	# Saves antigos não têm o índice: parte do nível de agora, sem desvio.
+	# Old saves do not have the index: starts from the current level, with no deviation.
 	if not d.has("corruption"):
 		corruption.setup(self)
 	if player and int(politics.data_of(player.iso).player_party) < 0:

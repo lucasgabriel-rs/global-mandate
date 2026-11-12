@@ -1,12 +1,12 @@
 class_name LawEngine
 extends RefCounted
-## Executa o código de um artigo sem mexer em nada do jogo: devolve a lista de efeitos, que só é
-## aplicada se a execução terminar bem. Não há como rodar código arbitrário: o motor só conhece as
-## instruções abaixo, tem limite de passos e nunca lê nada fora do retrato ("view") que recebe.
+## Executes an article's code without touching anything in the game: returns the list of effects, which is only
+## applied if the execution ends well. There is no way to run arbitrary code: the engine only knows the
+## instructions below, has a step limit and never reads anything outside the snapshot ("view") it receives.
 ##
-## Modo agregado: o sujeito é um grupo de "count" milhões de pessoas com os valores médios. Uma condição
-## sobre o cidadão vale pela fração do grupo em que é verdadeira, e cada ramo roda com o peso dessa fração.
-## Modo individual (simulador): o sujeito é uma pessoa, e toda condição vale 0 ou 1.
+## Aggregate mode: the subject is a group of "count" million people with the average values. A condition
+## on the citizen holds for the fraction of the group where it is true, and each branch runs with that fraction's weight.
+## Individual mode (simulator): the subject is one person, and every condition is worth 0 or 1.
 
 const MAX_STEPS := 4000
 const MAX_REPEAT := 200
@@ -27,7 +27,7 @@ var _loops: Array = []
 var _steps := 0
 
 
-## state: continuação de um "Aguardar". Sem ela, o artigo começa do início.
+## state: continuation of a "wait" block. Without it, the article starts from the beginning.
 func run(code: Array, state := {}) -> Dictionary:
 	var pc := 0
 	if not state.is_empty():
@@ -66,7 +66,7 @@ func run(code: Array, state := {}) -> Dictionary:
 				_weight = float(_frames.pop_back().w)
 				pc += 1
 			"while":
-				# Uma repetição não tem peso parcial: continua enquanto valer para a maioria.
+				# A repetition has no partial weight: it continues while it holds for the majority.
 				pc = pc + 1 if _number(ins[1]) >= 0.5 else int(ins[2])
 			"jump":
 				pc = int(ins[1])
@@ -129,7 +129,7 @@ func _start_each(ins: Array, pc: int) -> int:
 		_loops.append({"left": units.size() - 1, "head": pc + 1, "exit": ins[2], "count": view.get("count", 1.0), "units": units})
 		_enter_unit(units[0])
 		return pc + 1
-	# Em agregado, "para cada" é uma passada só sobre o grupo inteiro: os valores já são médias.
+	# In aggregate, "for each" is a single pass over the whole group: the values are already averages.
 	var count: float = view.get("count", 1.0)
 	_loops.append({"left": 0, "head": pc + 1, "exit": ins[2], "count": count})
 	if not individual:
@@ -167,7 +167,7 @@ static func _show(value: Variant) -> String:
 	return str(value)
 
 
-# --- Expressões --------------------------------------------------------------------------
+# --- Expressions --------------------------------------------------------------------------
 
 func _number(expr: Array) -> float:
 	var value: Variant = _eval(expr)
@@ -289,7 +289,7 @@ func _compare(expr: Array) -> Variant:
 	return 0.0
 
 
-## Se a comparação é sobre um dado do cidadão, em agregado ela vale a fração do grupo. -1: não é o caso.
+## If the comparison is about citizen data, in aggregate it is worth the group's fraction. -1: not the case.
 func _subject_share(expr: Array, op: String, limit: float) -> float:
 	if individual or expr[0] != "subject":
 		return -1.0
@@ -308,8 +308,8 @@ func _dist_share(field: String, op: String, limit: float) -> float:
 	return above if op == ">=" or op == ">" else 1.0 - above
 
 
-## Parte do grupo acima do limite. Idade: pirâmide triangular de 0 a 2 médias e meia. Dinheiro e
-## renda: distribuição lognormal, com a dispersão vinda do índice de desigualdade do país.
+## Part of the group above the limit. Age: triangular pyramid from 0 to 2.5 averages. Money and
+## income: lognormal distribution, with the dispersion coming from the country's inequality index.
 static func above_share(field: String, mean: float, limit: float, inequality: float) -> float:
 	if mean <= 0.0:
 		return 0.0
@@ -326,11 +326,11 @@ static func above_share(field: String, mean: float, limit: float, inequality: fl
 
 
 static func _normal_cdf(z: float) -> float:
-	# Aproximação logística da normal padrão, suficiente para repartir um grupo.
+	# Logistic approximation of the standard normal, enough to split a group.
 	return 1.0 / (1.0 + exp(-1.702 * z))
 
 
-# --- Ações ------------------------------------------------------------------------------
+# --- Actions ------------------------------------------------------------------------------
 
 func _act(op: String, args: Dictionary, block: int) -> void:
 	var values := {}
@@ -340,7 +340,7 @@ func _act(op: String, args: Dictionary, block: int) -> void:
 			return
 	var count: float = float(view.get("count", 1.0))
 	var effect := {"op": op, "values": values, "weight": _weight, "count": count, "block": block}
-	# O tributo respeita isenção e limite vigentes.
+	# The tax respects the exemption and limit in force.
 	if op in ["ec_charge", "ec_fee"]:
 		var name_ := String(values.get("name", ""))
 		var amount := maxf(float(values.get("amount", 0.0)), 0.0)

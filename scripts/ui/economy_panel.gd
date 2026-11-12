@@ -1,6 +1,6 @@
 class_name EconomyPanel
 extends VBoxContainer
-## Aba "Economia": setores, portos e aeroportos, empresas, bolsa e população, cada um em uma subaba.
+## "Economia" tab: sectors, ports and airports, companies, stock exchange and population, each in a sub-tab.
 
 const SECTOR_ROW := preload("res://scenes/ui/rows/sector_row.tscn")
 
@@ -22,7 +22,7 @@ func bind(w: GameWorld) -> void:
 	_tabs.tab_changed.connect(func(_i): refresh())
 
 
-## Na oposição não há obra pública para tocar: a subaba de portos e aeroportos some.
+## In opposition there is no public work to run: the ports and airports sub-tab disappears.
 func set_office(office: bool) -> void:
 	_tabs.set_tab_hidden(1, not office)
 	if not office and _tabs.current_tab == 1:
@@ -52,7 +52,7 @@ func _refresh_sectors(c: Country) -> void:
 	var biggest := 0.0
 	for i in Sectors.COUNT:
 		biggest = maxf(biggest, c.sector_share[i])
-	# Do maior para o menor, para a estrutura do país saltar aos olhos.
+	# From largest to smallest, so the country's structure jumps out.
 	var order := range(Sectors.COUNT)
 	order.sort_custom(func(a, b): return c.sector_share[a] > c.sector_share[b])
 	for pos in order.size():

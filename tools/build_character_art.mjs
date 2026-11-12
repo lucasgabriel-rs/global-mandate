@@ -1,11 +1,11 @@
-// Desenha as peças do personagem stickman no VectorCraft e exporta os PNGs usados pelo jogo.
-// Uso: node tools/build_character_art.mjs   (a partir da raiz do projeto; precisa de vectorcraft-cli)
+// Draws the pieces of the stickman character in VectorCraft and exports the PNGs used by the game.
+// Usage: node tools/build_character_art.mjs   (from the project root; needs vectorcraft-cli)
 //
-// Cada peça tem até quatro camadas, sobrepostas nesta ordem:
-//   ink:  contorno preto, desenhado por baixo e um pouco maior
-//   base: detalhes de cor fixa por baixo da cor escolhida (esclera, calça escura)
-//   fill: branco, pintado em tempo de jogo com a cor escolhida (pele, cabelo, olhos, roupa)
-//   top:  detalhes de cor fixa por cima (pupila, gravata, boca)
+// Each piece has up to four layers, stacked in this order:
+//   ink:  black outline, drawn underneath and slightly larger
+//   base: fixed-color details under the chosen color (sclera, dark trousers)
+//   fill: white, painted at game time with the chosen color (skin, hair, eyes, clothes)
+//   top:  fixed-color details on top (pupil, tie, mouth)
 import { execFileSync } from "node:child_process";
 import { mkdirSync, writeFileSync, rmSync } from "node:fs";
 import { resolve } from "node:path";
@@ -15,7 +15,7 @@ const SCALE = 2;
 const OUTLINE = 1.8;
 const INK = "#2a2a30";
 
-// Primitivas: { d } é um caminho fechado; { line, w } é uma linha de pontas redondas.
+// Primitives: { d } is a closed path; { line, w } is a line with round ends.
 const closed = (d, color) => ({ d, color });
 const line = (pts, w, color) => ({ pts, w, color });
 const circle = (x, y, r, color) => closed(`M${x - r} ${y} A${r} ${r} 0 1 1 ${x + r} ${y} A${r} ${r} 0 1 1 ${x - r} ${y} Z`, color);
@@ -23,7 +23,7 @@ const ellipse = (x, y, rx, ry, color) => closed(`M${x - rx} ${y} A${rx} ${ry} 0 
 const poly = (pts, color) => closed("M" + pts.map((p) => p.join(" ")).join(" L") + " Z", color);
 const part = (fill = [], extra = {}) => ({ fill, ink: extra.ink ?? fill, base: extra.base ?? [], top: extra.top ?? [] });
 
-// --- Rostos: todos com o mesmo topo de cabeça, para qualquer cabelo servir em qualquer rosto.
+// --- Faces: all with the same top of the head, so any hair fits any face.
 const TOP = "M62 62 A38 40 0 0 1 138 62";
 const FACES = [
   ["Redondo", `${TOP} A38 40 0 0 1 62 62 Z`],
@@ -35,7 +35,7 @@ const FACES = [
 ];
 const MOUTH = line([[92, 88], [100, 91], [108, 88]], 2.4, INK);
 
-// --- Olhos: esclera fixa, íris na cor escolhida, pupila fixa.
+// --- Eyes: fixed sclera, iris in the chosen color, fixed pupil.
 const EYE_X = [85, 115];
 const both = (fn) => EYE_X.flatMap(fn);
 const EYES = [
@@ -53,7 +53,7 @@ const EYES = [
   ["Felizes", () => ({ fill: [], ink: both((x) => [line([[x - 8, 62], [x, 54], [x + 8, 62]], 3)]) })],
 ];
 
-// --- Cabelo: fill e back são desenhados com a mesma cor; back fica atrás do corpo.
+// --- Hair: fill and back are drawn with the same color; back stays behind the body.
 const HAIR = [
   ["Careca", {}, {}],
   ["Curto", { fill: [closed("M59 66 C56 28 80 18 100 18 C120 18 144 28 141 66 C134 48 122 42 100 42 C78 42 66 48 59 66 Z")] }, {}],
@@ -67,8 +67,8 @@ const HAIR = [
   ["Cacheado", { fill: [circle(66, 44, 11), circle(78, 30, 12), circle(94, 24, 12), circle(110, 24, 12), circle(124, 31, 12), circle(135, 46, 11), closed("M64 56 C70 44 84 40 100 40 C116 40 130 44 136 56 C128 34 72 34 64 56 Z")] }, {}],
 ];
 
-// --- Corpos: silhueta de placa de sanitário. Tronco largo de ombros arredondados, braços e pernas
-// grossos e retos, separados só por uma fresta, que o contorno preenche.
+// --- Bodies: restroom-sign silhouette. Wide torso with rounded shoulders, thick straight
+// arms and legs, separated only by a gap, which the outline fills.
 const BODIES = [
   { name: "Médio", arm: 20, leg: 27, sx: 35, wx: 32, hx: 29, sy: 106, hy: 198, fy: 290, torso: "box" },
   { name: "Esguio", arm: 16, leg: 22, sx: 28, wx: 24, hx: 24, sy: 106, hy: 200, fy: 290, torso: "box" },
@@ -107,7 +107,7 @@ function bodyPart(b) {
   return part(prims);
 }
 
-// --- Roupas: uma versão para cada corpo, sobre a mesma silhueta. Só o que está em fill recebe a cor.
+// --- Clothes: one version for each body, over the same silhouette. Only what is in fill receives the color.
 const DARK = "#2b2f3a";
 const pants = (b, color) => joints(b).legs.map((l) => line([l[0], [l[1][0], l[1][1] - b.leg * 0.2]], b.leg + 1, color));
 const armEnd = (a, f) => [a[0][0] + (a[1][0] - a[0][0]) * f, a[0][1] + (a[1][1] - a[0][1]) * f];
@@ -133,11 +133,11 @@ const OUTFITS = [
   }],
 ];
 
-// --- Geração -----------------------------------------------------------------------
+// --- Generation -----------------------------------------------------------------------
 const steps = [];
 const cmd = (command, params = {}) => steps.push({ command, params });
 function drawPrim(p, mode) {
-  // ink: tudo preto e engrossado. fill: tudo branco. base e top: a cor do próprio detalhe.
+    // ink: everything black and thickened. fill: everything white. base and top: the detail's own color.
   const color = mode === "ink" ? INK : mode === "fill" ? "#ffffff" : (p.color ?? INK);
   const grow = mode === "ink" ? OUTLINE * 2 : 0;
   if (p.pts) {

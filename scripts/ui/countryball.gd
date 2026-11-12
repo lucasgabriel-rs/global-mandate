@@ -1,8 +1,8 @@
 class_name Countryball
 extends Control
-## Retrato de personagem: uma countryball com a bandeira do país, olhos brancos e nenhuma boca.
-## Personagens femininos ganham um laço rosa no topo da bola. A bandeira vem de data/flags.json;
-## um país sem bandeira ali vira listras com cores tiradas do código ISO.
+## Character portrait: a countryball with the country's flag, white eyes and no mouth.
+## Female characters get a pink bow on top of the ball. The flag comes from data/flags.json;
+## a country with no flag there becomes stripes with colors taken from the ISO code.
 
 const FLAGS := "res://data/flags.json"
 const OUTLINE := Color("141414")
@@ -10,7 +10,7 @@ const SHADOW := Color(0, 0, 0, 0.14)
 const BOW := Color("ff6fb0")
 const BOW_DARK := Color("e04891")
 const SEGMENTS := 72
-## Altura do laço acima da bola, em diâmetros.
+## Height of the bow above the ball, in diameters.
 const BOW_ROOM := 0.14
 
 static var _flags := {}
@@ -19,7 +19,7 @@ var character: Dictionary = {}:
 	set(value):
 		character = value
 		queue_redraw()
-## Código ISO do país cuja bandeira a bola veste.
+## ISO code of the country whose flag the ball wears.
 var iso := "":
 	set(value):
 		iso = value
@@ -52,7 +52,7 @@ static func flag(country_iso: String) -> Dictionary:
 	return {("h" if rng.randi() % 2 == 0 else "v"): colors}
 
 
-## Onde a bola fica: o laço precisa de espaço acima dela.
+## Where the ball sits: the bow needs space above it.
 func ball_rect() -> Rect2:
 	var room := BOW_ROOM if is_female() else 0.0
 	var d := minf(size.x, size.y / (1.0 + room)) * 0.92
@@ -138,7 +138,7 @@ static func _ellipse(c: Vector2, radius: Vector2, steps := SEGMENTS) -> PackedVe
 	return out
 
 
-## Olhos de countryball: brancos, contornados, olhando um pouco para o lado. Elas têm cílios.
+## Countryball eyes: white, outlined, looking slightly sideways. They have eyelashes.
 func _draw_eyes(center: Vector2, r: float) -> void:
 	var width := maxf(1.0, r * 0.045)
 	for side: float in [-1.0, 1.0]:
@@ -154,7 +154,7 @@ func _draw_eyes(center: Vector2, r: float) -> void:
 				draw_line(from, from + Vector2(cos(a), sin(a)) * r * 0.12, OUTLINE, width, true)
 
 
-## Laço rosa no topo, um pouco para o lado, inclinado conforme a curva da bola.
+## Pink bow on top, slightly to the side, tilted following the curve of the ball.
 func _draw_bow(center: Vector2, r: float) -> void:
 	var angle := deg_to_rad(-62.0)
 	var knot := center + Vector2(cos(angle), sin(angle)) * r * 0.97

@@ -1,4 +1,4 @@
-// Funções comuns dos geradores de dados do mapa: projeção Robinson, simplificação e arcos.
+// Common functions of the map data generators: Robinson projection, simplification and arcs.
 const WIDTH = 2000;
 
 const ROB_X = [1,0.9986,0.9954,0.99,0.9822,0.973,0.96,0.9427,0.9216,0.8962,0.8679,0.835,0.7986,0.7597,0.7186,0.6732,0.6213,0.5722,0.5322];
@@ -57,9 +57,9 @@ export function centroid(r) {
 }
 export const key = (p) => p[0] + "," + p[1];
 
-// Divide os anéis em arcos e simplifica cada arco uma vez só: uma divisa fica idêntica nos dois lados.
+// Splits the rings into arcs and simplifies each arc only once: a border stays identical on both sides.
 export function buildArcs(units, tolerance) {
-  // Grau de cada vértice no grafo de divisas: mais de dois vizinhos marca o fim de um arco.
+    // Degree of each vertex in the border graph: more than two neighbors marks the end of an arc.
   const neighbors = new Map();
   const note = (a, b) => {
     let s = neighbors.get(a);
@@ -76,7 +76,7 @@ export function buildArcs(units, tolerance) {
   }
   const isJunction = (p) => (neighbors.get(key(p))?.size ?? 0) > 2;
 
-  // Cada arco é guardado em direção canônica, para os dois lados obterem os mesmos pontos.
+    // Each arc is stored in a canonical direction, so both sides get the same points.
   const arcCache = new Map();
   function canonicalArc(run) {
     const n = run.length;

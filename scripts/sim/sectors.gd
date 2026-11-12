@@ -1,9 +1,9 @@
 class_name Sectors
 extends RefCounted
-## Setores da economia: o PIB dividido em dez atividades. A composição de partida vem da renda
-## per capita e da produção de commodities; depois, cada setor reage ao ciclo do seu jeito
-## (construção sente o juro, mineração sente o preço do minério, turismo sente a guerra).
-## Outros sistemas (portos, aeroportos, empresas) mexem nos setores por `sector_boost`.
+## Sectors of the economy: GDP split into ten activities. The starting composition comes from
+## income per capita and commodity production; afterwards, each sector reacts to the cycle in its own way
+## (construction feels interest, mining feels ore prices, tourism feels war).
+## Other systems (ports, airports, companies) move the sectors through `sector_boost`.
 
 const AGRO := 0
 const MINING := 1
@@ -20,13 +20,13 @@ const NAMES := [
 	"Agropecuária", "Mineração e energia", "Indústria", "Construção", "Comércio",
 	"Transporte e logística", "Serviços financeiros", "Tecnologia e comunicação", "Turismo", "Serviços públicos",
 ]
-## Quanto cada setor amplifica o hiato do produto: construção oscila muito, serviço público quase nada.
+## How much each sector amplifies the output gap: construction swings a lot, public services almost nothing.
 const CYCLE_BETA := [0.3, 0.5, 1.5, 2.5, 1.2, 1.3, 1.4, 1.0, 1.8, 0.0]
-## A composição estrutural muda devagar: uma fração por ano em direção ao que a renda pede.
+## The structural composition changes slowly: a fraction per year toward what income calls for.
 const STRUCTURAL_PACE := 0.03
-## Composição real aproximada do valor adicionado (% do PIB, contas nacionais de 2022-2024), na ordem de NAMES.
-## Imobiliário e serviços às empresas entram em "Serviços financeiros"; saúde e educação em "Serviços públicos".
-## Os outros países usam a composição prevista pela renda e pelos recursos naturais.
+## Approximate real composition of value added (% of GDP, national accounts of 2022-2024), in the order of NAMES.
+## Real estate and business services go into "Serviços financeiros"; health and education into "Serviços públicos".
+## The other countries use the composition predicted by income and natural resources.
 const CALIBRATION := {
 	"USA": [1.0, 2.5, 11.0, 4.3, 11.5, 3.3, 20.0, 7.0, 3.0, 17.0],
 	"CHN": [7.0, 4.0, 28.0, 7.0, 10.0, 4.5, 12.0, 4.0, 2.0, 12.0],
@@ -54,7 +54,7 @@ const CALIBRATION := {
 }
 
 
-## Composição "natural" para a renda e a dotação de recursos do país, somando 1.
+## "Natural" composition for the country's income and resource endowment, summing to 1.
 static func structural_shares(c: Country, world: GameWorld) -> PackedFloat32Array:
 	var pc := maxf(c.gdp_pc(), 300.0)
 	var gdp := maxf(c.y_usd(), 0.001)
@@ -88,7 +88,7 @@ static func structural_shares(c: Country, world: GameWorld) -> PackedFloat32Arra
 static func init_country(c: Country, world: GameWorld) -> void:
 	var model := structural_shares(c, world)
 	c.sector_base = model.duplicate()
-	# O desvio entre o dado real e o modelo fica guardado: a mudança estrutural parte dele, não o apaga.
+	# The deviation between the real data and the model is kept: the structural change starts from it, it does not erase it.
 	c.sector_bias = PackedFloat32Array()
 	c.sector_bias.resize(COUNT)
 	c.sector_bias.fill(1.0)
@@ -111,7 +111,7 @@ static func init_country(c: Country, world: GameWorld) -> void:
 	c.sector_drought = 0.0
 
 
-## Ganho de produtividade agregado dos impulsos setoriais: a Economia multiplica o potencial por (1 + isto).
+## Aggregate productivity gain from the sector impulses: Economy multiplies potential by (1 + this).
 static func boost_total(c: Country) -> float:
 	if c.sector_boost.size() != COUNT or c.sector_share.size() != COUNT:
 		return 0.0
@@ -121,7 +121,7 @@ static func boost_total(c: Country) -> float:
 	return t
 
 
-## Desvios específicos de cada setor neste mês, em fração do produto do setor.
+## Specific deviations of each sector this month, as a fraction of the sector's output.
 static func _specific(c: Country, world: GameWorld) -> PackedFloat32Array:
 	var m := world.markets
 	var s := PackedFloat32Array()
@@ -142,7 +142,7 @@ static func _specific(c: Country, world: GameWorld) -> PackedFloat32Array:
 	return s
 
 
-## Etapa mensal: depois que a Economia fechou o PIB do mês, reparte-o entre os setores.
+## Monthly step: after Economy has closed the month's GDP, splits it among the sectors.
 static func step_month(c: Country, world: GameWorld) -> void:
 	if c.sector_share.size() != COUNT:
 		init_country(c, world)
@@ -154,7 +154,7 @@ static func step_month(c: Country, world: GameWorld) -> void:
 			total += target[i]
 		for i in COUNT:
 			c.sector_base[i] += (target[i] / total - c.sector_base[i]) * STRUCTURAL_PACE
-	# Secas e quebras de safra: raras, curtas e mais prováveis onde a agricultura pesa mais.
+	# Droughts and crop failures: rare, short and more likely where agriculture weighs more.
 	c.sector_drought *= 0.8
 	if world.rng.randf() < 0.004:
 		c.sector_drought = world.rng.randf_range(0.08, 0.25)
@@ -168,7 +168,7 @@ static func step_month(c: Country, world: GameWorld) -> void:
 		var w := c.sector_base[i] * maxf(1.0 + float(CYCLE_BETA[i]) * c.gap + clampf(spec[i], -0.5, 0.4) + c.sector_boost[i], 0.05)
 		weights[i] = w
 		total += w
-	# A soma dos setores fecha no PIB. Cada setor se ajusta aos poucos, para não pular de um mês para outro.
+	# The sum of the sectors adds up to GDP. Each sector adjusts gradually, so it does not jump from one month to the next.
 	for i in COUNT:
 		var share := weights[i] / total
 		c.sector_share[i] += (share - c.sector_share[i]) * 0.25
@@ -183,7 +183,7 @@ static func step_month(c: Country, world: GameWorld) -> void:
 			c.push_hist("sec_%d" % i, c.sector_out[i])
 
 
-## Crescimento em 12 meses do produto real do setor (só o país do jogador guarda a série).
+## 12-month growth of the sector's real output (only the player's country keeps the series).
 static func growth_of(c: Country, i: int) -> float:
 	var s: PackedFloat32Array = c.hist.get("sec_%d" % i, PackedFloat32Array())
 	if s.size() < 13:
@@ -191,6 +191,6 @@ static func growth_of(c: Country, i: int) -> float:
 	return s[s.size() - 1] / maxf(s[s.size() - 13], 0.0001) - 1.0
 
 
-## PIB do setor em US$ bi correntes.
+## Sector GDP in current US$ bn.
 static func output_usd(c: Country, i: int) -> float:
 	return c.y_usd() * c.sector_share[i]

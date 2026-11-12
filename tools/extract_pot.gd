@@ -1,28 +1,28 @@
 extends SceneTree
-## Gera locale/messages.pot com todos os textos traduzíveis do jogo e, com --merge, atualiza os .po com
-## msgmerge. O msgid é sempre o texto original em português.
+## Generates locale/messages.pot with all the game's translatable texts and, with --merge, updates the .po files with
+## msgmerge. The msgid is always the original text in Portuguese.
 ##
 ## Uso:
-##   godot --headless --path . --script tools/extract_pot.gd              só o .pot
-##   godot --headless --path . --script tools/extract_pot.gd -- --merge   .pot e msgmerge nos .po
+##   godot --headless --path . --script tools/extract_pot.gd              .pot only
+##   godot --headless --path . --script tools/extract_pot.gd -- --merge   .pot and msgmerge on the .po files
 ##
-## De onde vêm os textos:
-## - cenas (.tscn): text, tooltip_text, placeholder_text, title, label (dock), itens de OptionButton e o nome dos filhos
-##   de TabContainer (é o título da aba). Nós com auto_translate_mode desligado ficam de fora.
-## - scripts (.gd): o primeiro argumento literal de tr(), tr_n(), atr(), Lang.tr_if() e TranslationServer.translate();
-##   e todos os textos de uma linha que termina em "# i18n" ou de um trecho entre "# i18n-begin" e
-##   "# i18n-end", menos as chaves de dicionário (texto seguido de ":") e o que parece id (minúsculas sem
-##   espaço, siglas de até 4 letras; "# i18n-all" no fim da linha pega também esses). As marcas servem para constantes e dados guardados em português,
-##   que só são traduzidos na hora de mostrar.
-## - dados: blocos de lei, categorias e listas de escolha (LawCatalog e LawCodes), títulos e ementas dos
-##   códigos, nomes dos setores e nomes dos países (data/countries.csv).
+## Where the texts come from:
+## - scenes (.tscn): text, tooltip_text, placeholder_text, title, label (dock), OptionButton items and the name of the children
+##   of TabContainer (it is the tab title). Nodes with auto_translate_mode off are left out.
+## - scripts (.gd): the first literal argument of tr(), tr_n(), atr(), Lang.tr_if() and TranslationServer.translate();
+##   and all texts on a line that ends in "# i18n" or in a stretch between "# i18n-begin" and
+##   "# i18n-end", except dictionary keys (text followed by ":") and what looks like an id (lowercase without
+##   spaces, acronyms of up to 4 letters; "# i18n-all" at the end of the line catches those too). The marks are for constants and data stored in Portuguese,
+##   which are only translated at display time.
+## - data: law blocks, categories and choice lists (LawCatalog and LawCodes), titles and summaries of the
+##   codes, sector names and country names (data/countries.csv).
 
 const POT_PATH := "res://locale/messages.pot"
 const LANGS := ["en", "es"]
-## "label" é o nome dos ícones do dock (DockItem).
+## "label" is the name of the dock icons (DockItem).
 const TSCN_KEYS := ["text", "tooltip_text", "placeholder_text", "title", "label", "metadata/opposition_text"]
 
-## msgid -> lista de referências "arquivo:linha", na ordem em que apareceram.
+## msgid -> list of "file:line" references, in the order they appeared.
 var _entries := {}
 var _order: Array[String] = []
 
@@ -75,8 +75,8 @@ static func _has_letters(s: String) -> bool:
 func _scan_scene(path: String) -> void:
 	var text := FileAccess.get_file_as_string(path)
 	var lines := text.split("\n")
-	var types := {}  # caminho do nó -> tipo
-	var node_props := []  # [[msgid, linha]] do nó atual
+	var types := {}  # node path -> type
+	var node_props := []  # [[msgid, line]] of the current node
 	var node_skip := false
 	var i := 0
 	while i < lines.size():
@@ -103,7 +103,7 @@ func _scan_scene(path: String) -> void:
 		if eq > 0:
 			var key := line.substr(0, eq)
 			if key in TSCN_KEYS or (key.begins_with("popup/item_") and key.ends_with("/text")):
-				# O valor pode ocupar várias linhas: vai até a aspa final não escapada.
+				# The value may span several lines: it goes up to the closing unescaped quote.
 				var start_line := i
 				var value := line.substr(eq + 4)
 				while not _closes(value) and i + 1 < lines.size():
@@ -129,7 +129,7 @@ static func _attr(line: String, key: String) -> String:
 	return line.substr(at, line.find("\"", at) - at)
 
 
-## O texto termina em aspa que não está escapada?
+## Does the text end in a quote that is not escaped?
 static func _closes(value: String) -> bool:
 	if not value.ends_with("\""):
 		return false
@@ -151,7 +151,7 @@ func _scan_script(path: String) -> void:
 	var lines := FileAccess.get_file_as_string(path).split("\n")
 	var call_re := RegEx.create_from_string("(?<!\\w)(?:tr|tr_n|atr|tr_if|TranslationServer\\.translate)\\(\\s*\"((?:[^\"\\\\]|\\\\.)*)\"")
 	var str_re := RegEx.create_from_string("\"((?:[^\"\\\\]|\\\\.)*)\"(\\s*:)?")
-	# Nos trechos marcados, ids (minúsculas sem espaço) e siglas curtas não são texto.
+	# In the marked stretches, ids (lowercase without spaces) and short acronyms are not text.
 	var id_re := RegEx.create_from_string("^(?:[a-z0-9_.]*|[A-Z]{1,4})$")
 	var in_block := false
 	var ref_path := path.trim_prefix("res://")
@@ -204,7 +204,7 @@ func _scan_data() -> void:
 		_add(String(row.name), "data/countries.csv (%s)" % row.iso)
 
 
-# --- Saída ----------------------------------------------------------------------------
+# --- Output ----------------------------------------------------------------------------
 
 func _write_pot() -> void:
 	DirAccess.make_dir_recursive_absolute("res://locale")
@@ -268,7 +268,7 @@ func _merge() -> void:
 		print("%s.po: %d sem tradução%s" % [lang, missing.size(), "" if missing.is_empty() else " (primeira: %s)" % missing[0]])
 
 
-## Entradas do .po com msgstr vazio ou marcadas como fuzzy (o Godot ignora as fuzzy).
+## .po entries with an empty msgstr or marked fuzzy (Godot ignores the fuzzy ones).
 static func _untranslated(po_path: String) -> Array:
 	var out := []
 	var text := FileAccess.get_file_as_string(po_path)

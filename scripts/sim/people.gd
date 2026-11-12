@@ -1,7 +1,7 @@
 class_name People
 extends RefCounted
-## O ciclo de vida dos políticos: envelhecer, adoecer, morrer, se aposentar e dar lugar a gente nova.
-## Todos os políticos do mundo passam por aqui uma vez por mês, e o jogador também.
+## The life cycle of politicians: aging, falling ill, dying, retiring and making room for new people.
+## All the world's politicians go through here once a month, and the player too.
 
 const ILLNESSES := ["pneumonia", "uma cardiopatia", "um câncer", "um derrame", "uma infecção grave", "uma doença autoimune"]  # i18n-all
 const RETIRE_AGE := 72
@@ -11,10 +11,10 @@ const NEW_FACE_MAX_AGE := 45
 const PARTY_MIN_MEMBERS := 5
 const PARTY_MAX_MEMBERS := 12
 const NEW_FACE_CHANCE := 0.35
-## Chance mensal de um atentado contra um chefe de governo, sem agravantes.
+## Monthly chance of an assassination attempt on a head of government, with no aggravating factors.
 const ASSASSINATION_BASE := 0.00004
-## O mundo inteiro tem milhares de políticos: cada país passa por aqui a cada tantos meses, com o risco acumulado.
-## O país do jogador é visto todo mês.
+## The whole world has thousands of politicians: each country goes through here every so many months, with accumulated risk.
+## The player's country is seen every month.
 const WORLD_STEP_MONTHS := 3
 
 
@@ -22,7 +22,7 @@ static func age_of(person: Dictionary, world: GameWorld) -> int:
 	return world.year - int(person.get("birth_year", world.start_year - 50))
 
 
-## Chance de morrer em um ano: dobra a cada 8 anos de idade, como nas tábuas de mortalidade.
+## Chance of dying in a year: doubles every 8 years of age, as in mortality tables.
 static func yearly_death_chance(age: int) -> float:
 	return minf(0.00008 * exp(0.085 * float(age)), 0.6)
 
@@ -79,7 +79,7 @@ static func _matters(c: Country, world: GameWorld) -> bool:
 	return c == world.player or c.y_usd() > world.world_gdp() * NationAI.NEWS_SHARE
 
 
-## Tira a pessoa do partido. Pasta fica vaga, a liderança passa adiante, e a bússola refaz a média.
+## Removes the person from the party. The post becomes vacant, the leadership passes on, and the compass redoes the average.
 static func remove_member(world: GameWorld, c: Country, data: Dictionary, party: Dictionary, member: Dictionary, why: String) -> void:
 	var was_head := _is_head(c, data, party, member)
 	var was_leader: bool = party.members[0] == member
@@ -111,7 +111,7 @@ static func remove_member(world: GameWorld, c: Country, data: Dictionary, party:
 		world.diplomacy.on_government_change(c, world)
 
 
-## Todo janeiro, os partidos renovam os quadros: gente mais nova entra, sobretudo onde faltam nomes.
+## Every January, the parties renew their ranks: younger people come in, especially where names are lacking.
 static func _renew(world: GameWorld, c: Country, data: Dictionary, party: Dictionary) -> void:
 	var size: int = party.members.size()
 	var wanted := 0
@@ -126,7 +126,7 @@ static func _renew(world: GameWorld, c: Country, data: Dictionary, party: Dictio
 		world.emit_news(TranslationServer.translate("Novo nome em %s: %s, de %d anos, começa na política.") % [party.short, party.members[-1].name, age_of(party.members[-1], world)], "politica", c)
 
 
-## Atentados são raros, mas regimes instáveis e guerras aumentam o risco.
+## Assassination attempts are rare, but unstable regimes and wars raise the risk.
 static func assassination_chance(c: Country, world: GameWorld) -> float:
 	var risk := ASSASSINATION_BASE
 	if c.stability < 0.25:
@@ -178,7 +178,7 @@ static func _step_player(world: GameWorld) -> void:
 		world.emit_news(TranslationServer.translate("%s se recupera de %s.") % [leader.get("name", TranslationServer.translate("O líder")), TranslationServer.translate(sick.name)], "politica", c)
 
 
-## Adoecer é uma decisão de governo: parar para se tratar custa aprovação, e seguir trabalhando custa saúde.
+## Falling ill is a government decision: stopping for treatment costs approval, and working on costs health.
 static func _player_falls_ill(world: GameWorld, leader: Dictionary) -> void:
 	var c := world.player
 	var sick := {"name": ILLNESSES[world.rng.randi() % ILLNESSES.size()], "severity": world.rng.randf_range(0.15, 1.0)}

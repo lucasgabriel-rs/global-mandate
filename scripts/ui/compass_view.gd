@@ -1,7 +1,7 @@
 class_name CompassView
 extends Control
-## Bússola política: esquerda e direita no eixo horizontal, autoritário no alto e libertário embaixo.
-## points: [{econ, social, color, big?, label?}]. Com interactive, um clique escolhe a posição.
+## Political compass: left and right on the horizontal axis, authoritarian on top and libertarian at the bottom.
+## points: [{econ, social, color, big?, label?}]. With interactive, a click chooses the position.
 
 signal picked(econ: float, social: float)
 

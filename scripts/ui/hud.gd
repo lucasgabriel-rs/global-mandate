@@ -1,7 +1,7 @@
 class_name Hud
 extends Control
-## Interface de jogo: barra superior, painel do governo, dossiê do país selecionado,
-## noticiário e seletor de modos de mapa.
+## Game interface: top bar, government panel, dossier of the selected country,
+## news feed and map mode selector.
 
 signal speed_requested(speed: int)
 signal menu_requested
@@ -21,7 +21,7 @@ signal skip_requested(days: int)
 const NEWS_ITEM := preload("res://scenes/ui/rows/news_item.tscn")
 const LIST_BUTTON := preload("res://scenes/ui/rows/list_button.tscn")
 const WAR_CARD := preload("res://scenes/ui/rows/war_card.tscn")
-## Campos da aba em que cada controle mexe na hora, sem passar pelo orçamento.
+## Fields of the tab that each control changes immediately, without going through the budget.
 const DIRECT_SLIDERS := ["mon_fin", "rate_set", "mobilization"]
 
 var world: GameWorld
@@ -46,13 +46,13 @@ var _syncing := false
 var _wars_sig := ""
 var _partners_tick := 0
 var _tick := 0
-## A janela do centro legislativo vem depois das dez do governo.
+## The legislative center window comes after the ten government ones.
 const LEGISLATION_WINDOW := 10
 
 var _divisions_tab := -1
 var _politics_tab := -1
 var _cabinet_tab := -1
-## Último papel aplicado às janelas: 1 governo, 0 oposição, -1 ainda nenhum (força a aplicar ao ligar uma partida).
+## Last role applied to the windows: 1 government, 0 opposition, -1 none yet (forces applying when a match starts).
 var _office_shown := -1
 var _hover_country: Country
 var _hover_unit := -1
@@ -63,7 +63,7 @@ var _hover_unit := -1
 @onready var _skip_title: Label = %skip_title
 @onready var _skip_body: Label = %skip_body
 @onready var _player_name: Label = %player_name
-## As janelas flutuantes do governo; o índice de cada uma é o das antigas abas.
+## The government's floating windows; the index of each is that of the old tabs.
 @onready var _desk: WindowDesk = %desk
 @onready var _dock: Dock = %dock
 @onready var _dossier: PanelContainer = %dossier
@@ -100,10 +100,10 @@ func _ready() -> void:
 	_set_mode_style("politico")
 
 
-## Os valores que o jogo atualiza são achados pelo nome do nó, então dá para movê-los na cena à vontade.
+## The values the game updates are found by node name, so they can be moved in the scene freely.
 func _collect(from: Node) -> void:
 	for n: Node in from.get_children():
-		# Janelas e dock são cenas próprias; o conteúdo do HUD pode morar dentro delas.
+		# Windows and dock are their own scenes; the HUD content can live inside them.
 		if n.owner != self:
 			_collect(n)
 			continue
@@ -182,7 +182,7 @@ func _connect_buttons() -> void:
 		(_action_buttons[act] as Button).pressed.connect(_on_action.bind(act))
 
 
-# --- Avanço de dias ----------------------------------------------------------------
+# --- Advancing days ----------------------------------------------------------------
 
 func refresh_clock() -> void:
 	if world:
@@ -227,7 +227,7 @@ func show_skip_summary(days: int, before: Dictionary, news: Array) -> void:
 		lines.append(tr("Nenhum acontecimento no noticiário."))
 	else:
 		lines.append(tr("%d acontecimento(s) no noticiário:") % news.size())
-		# Guerras e crises primeiro: são o que muda o rumo do jogo.
+		# Wars and crises first: they are what changes the course of the game.
 		var ordered := news.filter(func(n): return n[1] in ["guerra", "crise"]) + news.filter(func(n): return not n[1] in ["guerra", "crise"])
 		for n: Array in ordered.slice(0, 6):
 			lines.append("• " + String(n[0]))
@@ -293,7 +293,7 @@ func set_speed_display(s: int) -> void:
 
 # --- Barra superior ------------------------------------------------------------
 
-# --- Painel do governo ---------------------------------------------------------
+# --- Government panel ---------------------------------------------------------
 
 func _on_tab_changed(_i: int) -> void:
 	if map:
@@ -306,7 +306,7 @@ func _on_dock_item(item: DockItem) -> void:
 		agenda_requested.emit()
 		return
 	if item.action == "legislation":
-		# O centro é montado de novo a cada abertura; clicar com ele na frente minimiza.
+		# The center is rebuilt on every opening; clicking it when it is in front minimizes it.
 		if _desk.is_open(LEGISLATION_WINDOW) and _desk.current_tab == LEGISLATION_WINDOW:
 			_desk.toggle(LEGISLATION_WINDOW, _dock.item_center(item))
 		else:
@@ -337,7 +337,7 @@ func start_drawing() -> void:
 	_divisions.start_drawing()
 
 
-## O gasto muda na hora, salvo se uma lei obrigar o valor; aí o controle fica travado.
+## Spending changes immediately, unless a law requires the value; then the control is locked.
 func _on_slider(v: float, key: String) -> void:
 	if not _syncing and world and world.player and world.in_office:
 		if key in DIRECT_SLIDERS:
@@ -392,7 +392,7 @@ func _on_toggle_peg() -> void:
 	refresh(true)
 
 
-# --- Dossiê do país selecionado --------------------------------------------------
+# --- Dossier of the selected country --------------------------------------------------
 
 func show_country(c: Country) -> void:
 	debug.set_target(c)
@@ -403,7 +403,7 @@ func show_country(c: Country) -> void:
 	refresh(true)
 
 
-## As partes que só valem para outro país ficam no grupo foreign_only da cena.
+## The parts that only apply to another country stay in the scene's foreign_only group.
 func _build_dossier_for(c: Country) -> void:
 	_dossier_built_for = c
 	if c == null:
@@ -620,7 +620,7 @@ func _process(delta: float) -> void:
 			_toast.visible = false
 
 
-# --- Atualização -----------------------------------------------------------------
+# --- Update -----------------------------------------------------------------------
 
 func _sync_sliders() -> void:
 	var c := world.player
@@ -638,7 +638,7 @@ func _sync_sliders() -> void:
 	_syncing = false
 
 
-## Mostra o valor em vigor e trava o que uma lei obriga. Leis e eventos também mudam esses campos.
+## Shows the value in force and locks what a law requires. Laws and events also change these fields.
 func _sync_budget_sliders(c: Country) -> void:
 	var was_syncing := _syncing
 	_syncing = true
@@ -652,10 +652,10 @@ func _sync_budget_sliders(c: Country) -> void:
 	_syncing = was_syncing
 
 
-## Mostra só o que cabe ao papel do jogador. Nós da cena marcam o que é de cada papel pelos grupos
-## gov_only (só no governo), opposition_only (só na oposição) e foreign_only (só no dossiê de outro país);
-## role_text troca o texto (ou o título da janela, ou o nome do ícone do dock) pelo metadado
-## opposition_text enquanto o jogador está na oposição. Janelas de outro papel fecham e não abrem.
+## Shows only what suits the player's role. Scene nodes mark what belongs to each role through the groups
+## gov_only (government only), opposition_only (opposition only) and foreign_only (only in another country's dossier);
+## role_text swaps the text (or the window title, or the dock icon name) for the metadata
+## opposition_text while the player is in opposition. Windows of the other role close and do not open.
 func _apply_role() -> void:
 	var office := world.in_office
 	var foreign: bool = world.player != null and selected != null and selected != world.player
@@ -682,7 +682,7 @@ func _apply_role() -> void:
 		n.set(prop, n.get_meta("office_text" if office else "opposition_text"))
 
 
-## No governo tudo fica à disposição; na oposição, os controles só mostram o que a IA decide.
+## In government everything is available; in opposition, the controls only show what the AI decides.
 func _refresh_office() -> void:
 	var office := world.in_office
 	if world.player:
@@ -760,7 +760,7 @@ func _set_chart(key: String, c: Country) -> void:
 	ch.set_data(c.hist.get(ch.series_key, PackedFloat32Array()))
 
 
-## Atualiza todas as janelas abertas; fechadas não custam nada.
+## Updates all open windows; closed ones cost nothing.
 func _refresh_tab(c: Country) -> void:
 	for i in _desk.open_windows():
 		_refresh_window(i, c)
@@ -860,7 +860,7 @@ func _refresh_monetary(c: Country) -> void:
 	_dyn.m_status.text = status
 	var rate_slider: HSlider = _sliders.rate_set
 	rate_slider.editable = _can_set_rate(c)
-	# Fora do juro manual, o controle mostra a taxa que quem decide (banco central, BCE ou Fed) está praticando.
+	# Outside the manual rate, the control shows the rate that whoever decides (central bank, ECB or Fed) is applying.
 	if not rate_slider.editable:
 		rate_slider.set_value_no_signal(c.rate * 100.0)
 		_label_slider("rate_set", c.rate)
@@ -883,7 +883,7 @@ func _refresh_monetary(c: Country) -> void:
 		_set_chart(key, c)
 
 
-## Reservas, intervenção, controle de capitais, fuga, dolarização e paridade descoberta.
+## Reserves, intervention, capital controls, flight, dollarization and uncovered parity.
 func _refresh_fx_reserves(c: Country) -> void:
 	var cover := c.reserves / maxf(c.imports / 12.0, 0.001)
 	_dyn.m_res.text = tr("%s  (%s meses)") % [UiKit.money(c.reserves), UiKit.num(cover, 1)]
@@ -901,7 +901,7 @@ func _refresh_fx_reserves(c: Country) -> void:
 	_dyn.m_uip.text = UiKit.pct(c.uip_dep, 1) if c.peg == 0 and c != world.usa else tr("não se aplica")
 
 
-## Fundo soberano: saldo, fluxos do ano, regra de saque e retorno.
+## Sovereign fund: balance, flows of the year, withdrawal rule and return.
 func _refresh_fund(c: Country) -> void:
 	var share := c.swf / maxf(c.y_usd(), 0.001)
 	if c.swf_active:

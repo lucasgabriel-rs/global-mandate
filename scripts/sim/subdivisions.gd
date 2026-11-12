@@ -1,23 +1,23 @@
 class_name Subdivisions
 extends RefCounted
-## Divisão interna dos países. O cenário traz as unidades de 1º nível de todos os países
-## (data/admin1.json); o jogador cria novas dentro do próprio território.
-## Cada país tem os próprios tipos de unidade. As formas ficam em coordenadas do mapa.
-## Uma unidade desenhada é recortada pelo que a contém (território nacional e unidade-mãe)
-## e pelas irmãs já existentes, sem sobreposição.
+## Internal division of countries. The scenario brings the first-level units of all countries
+## (data/admin1.json); the player creates new ones inside their own territory.
+## Each country has its own unit types. Shapes are in map coordinates.
+## A drawn unit is clipped by what contains it (national territory and parent unit)
+## and by the sibling units that already exist, with no overlap.
 
 const MIN_PIECE_AREA := 0.01
 const MIN_UNIT_AREA := 0.05
 const GAP_CLOSE := 0.15
 const MAX_GAP_AREA := 2.0
 const SAVE_VERSION := 4
-## Primeiro id de unidade criada pelo jogador em cada versão do save.
+## First id of a unit created by the player in each save version.
 const OLD_BASE_COUNT := {2: 4220, 3: 9784}
 const CITY_TYPE := "Cidade"
-## Faixa própria para os tipos das capitais, sem colidir com os ids guardados em saves antigos.
+## Own range for the capital types, so they do not collide with the ids stored in old saves.
 const CITY_TYPE_FIRST_ID := 1000000
 const DEFAULT_LOWER_TYPE := "Município"
-## Capitais do cenário. Só o Brasil tem municípios, e portanto só ele tem capitais prontas.
+## Scenario capitals. Only Brazil has municipalities, and therefore only it has ready-made capitals.
 const BRAZIL_CAPITAL := "Brasília"
 const BRAZIL_STATE_CAPITALS := {
 	"Acre": "Rio Branco", "Alagoas": "Maceió", "Amapá": "Macapá", "Amazonas": "Manaus", "Bahia": "Salvador",
@@ -41,13 +41,13 @@ const NAME_PARTS := {
 
 var types := {}
 var units := {}
-## Unidades criadas pelo jogador, sempre com a mãe antes das filhas.
+## Units created by the player, always with the parent before the children.
 var custom_ids: Array = []
-## Quem tem qual capital. Chave: id da unidade ou iso do país. Valor: id da unidade que é a capital.
+## Who has which capital. Key: unit id or country iso. Value: id of the unit that is the capital.
 var capitals := {}
 var arcs: Array = []
 var mun_arcs: Array = []
-## Sobe quando unidades somem ou mudam de dono, os únicos casos em que as divisas precisam ser refeitas.
+## Goes up when units disappear or change owner, the only cases in which the borders must be redone.
 var revision := 0
 var base_count := 0
 var next_type_id := 0
@@ -61,7 +61,7 @@ var _by_area: Array = []
 var _city_types := 0
 
 
-# --- Cenário ---------------------------------------------------------------------
+# --- Scenario ---------------------------------------------------------------------
 
 func load_base(data: Dictionary) -> void:
 	var by_key := {}
@@ -81,7 +81,7 @@ func load_base(data: Dictionary) -> void:
 			"share": float(src.area) / maxf(float(totals[owner]), 0.001),
 			"pop_w": _population_weight(float(src.area), String(src.name)),
 		}
-		# Onde o censo é conhecido, vale o censo, para as unidades de primeiro nível.
+		# Where the census is known, the census holds, for the first-level units.
 		if not src.has("parent") and GameData.UNIT_POPULATION.has(owner) and GameData.UNIT_POPULATION[owner].has(src.name):
 			units[id]["pop_w"] = float(GameData.UNIT_POPULATION[owner][src.name])
 			units[id]["pop_known"] = true
@@ -128,7 +128,7 @@ func _reindex() -> void:
 	_prune_capitals()
 
 
-## Capital de unidade precisa existir e continuar dentro dela. Quem mudou de dono sai em _change_owner.
+## A unit's capital must exist and stay inside it. Whoever changed owner leaves in _change_owner.
 func _prune_capitals() -> void:
 	for holder: Variant in capitals.keys():
 		var id: int = capitals[holder]
@@ -146,12 +146,12 @@ func is_capital(id: int) -> bool:
 	return id in capitals.values()
 
 
-## De quem esta unidade é capital: ids de unidades e isos de países.
+## Whose capital this unit is: unit ids and country isos.
 func holders_of(id: int) -> Array:
 	return capitals.keys().filter(func(holder): return capitals[holder] == id)
 
 
-## Define ou troca a capital. A de uma unidade precisa estar dentro dela; a de um país, ser uma unidade dele.
+## Sets or changes the capital. A unit's must be inside it; a country's must be one of its units.
 func set_capital(holder: Variant, id: int) -> Dictionary:
 	if not units.has(id):
 		return {"ok": false, "msg": tr("Essa unidade não existe mais.")}
@@ -179,7 +179,7 @@ func _link(u: Dictionary) -> void:
 		_kids[u.parent].append(u.id)
 
 
-# --- Tipos -----------------------------------------------------------------------
+# --- Types -----------------------------------------------------------------------
 
 func add_type(type_name: String, owner: String) -> int:
 	var id := next_type_id
@@ -223,7 +223,7 @@ func rename_type(id: int, type_name: String) -> Dictionary:
 	return {"ok": true, "msg": ""}
 
 
-## Quantas unidades usam cada tipo. Uma passada só, para a lista de tipos não varrer tudo por linha.
+## How many units use each type. A single pass, so the type list does not sweep everything per row.
 func type_counts() -> Dictionary:
 	var out := {}
 	for u: Dictionary in units.values():
@@ -249,21 +249,21 @@ func remove_type(id: int) -> Dictionary:
 	return {"ok": true, "msg": ""}
 
 
-# --- Hierarquia ------------------------------------------------------------------
+# --- Hierarchy ------------------------------------------------------------------
 
-## O cenário não traz população por unidade: ela é estimada. Gente se concentra menos do que a área cresce, e cada
-## lugar tem o próprio fator, sempre o mesmo para o mesmo nome.
+## The scenario does not bring population per unit: it is estimated. People concentrate less than the area grows, and each
+## place has its own factor, always the same for the same name.
 static func _population_weight(area: float, unit_name: String) -> float:
 	return sqrt(maxf(area, 0.0001)) * (0.35 + float(absi(hash(unit_name)) % 1000) / 1000.0 * 1.6)
 
 
 func population_weight(u: Dictionary) -> float:
 	var w := float(u.get("pop_w", _population_weight(float(u.get("area", 1.0)), String(u.name))))
-	# A capital concentra gente, salvo se o número já vem do censo.
+	# The capital concentrates people, unless the number already comes from the census.
 	return w * (2.5 if not u.get("pop_known", false) and is_capital(u.id) else 1.0)
 
 
-## Partes de todas as unidades de primeiro nível de um país, de uma vez só: é o que a eleição usa.
+## Shares of all first-level units of a country, at once: it is what the election uses.
 func root_shares(owner: String) -> Dictionary:
 	var capital_ids := {}
 	for held: Variant in capitals.values():
@@ -280,7 +280,7 @@ func root_shares(owner: String) -> Dictionary:
 	return out
 
 
-## Parte da população do país que vive nesta unidade, de 0 a 1.
+## Share of the country's population that lives in this unit, from 0 to 1.
 func pop_share(id: int) -> float:
 	var u: Dictionary = units[id]
 	var parent: int = u.parent
@@ -300,7 +300,7 @@ func children_of(parent_id: int) -> Array:
 	return _kids.get(parent_id, [])
 
 
-## Percorre a árvore com as mães antes das filhas: [{unit, depth}, ...].
+## Walks the tree with parents before children: [{unit, depth}, ...].
 func walk_ids(ids: Array, depth := 0) -> Array:
 	var out := []
 	for id: int in ids:
@@ -331,7 +331,7 @@ func path_of(id: int) -> String:
 	return " › ".join(parts)
 
 
-## Do nível mais alto até a própria unidade.
+## From the highest level down to the unit itself.
 func chain_of(id: int) -> Array:
 	var out := []
 	var u: Dictionary = units.get(id, {})
@@ -362,8 +362,8 @@ func rename_unit(id: int, unit_name: String) -> Dictionary:
 	return {"ok": true, "msg": ""}
 
 
-## Funde unidades vizinhas com a mesma mãe. A resultante herda nome e tipo da primeira,
-## e as filhas de todas passam para ela.
+## Merges neighboring units with the same parent. The result inherits the name and type of the first,
+## and the children of all pass to it.
 func merge_units(ids: Array) -> Dictionary:
 	if ids.size() < 2:
 		return {"ok": false, "msg": tr("Escolha pelo menos duas unidades.")}
@@ -400,7 +400,7 @@ func merge_units(ids: Array) -> Dictionary:
 	custom_ids.append(new_id)
 	for kid: int in kids:
 		units[kid].parent = new_id
-	# A fundida herda o papel de capital das originais e a capital da primeira que tiver uma.
+	# The merged unit inherits the capital role of the originals and the capital of the first that has one.
 	for holder: Variant in capitals.keys():
 		if capitals[holder] in ids:
 			capitals[holder] = new_id
@@ -414,9 +414,9 @@ func merge_units(ids: Array) -> Dictionary:
 	return {"ok": true, "msg": "", "id": new_id}
 
 
-## Une as peças que se tocam, sem deixar a antiga divisa por dentro. Os dados nem sempre têm a mesma
-## linha dos dois lados, então a união é feita com as peças levemente infladas, para fechar as frestas.
-## Um furo de verdade, como um enclave, mantém as peças separadas.
+## Joins the pieces that touch, without leaving the old border inside. The data does not always have the same
+## line on both sides, so the union is made with the pieces slightly inflated, to close the gaps.
+## A real hole, like an enclave, keeps the pieces separate.
 static func _union(pieces: Array) -> Array:
 	var out: Array = pieces.duplicate()
 	var changed := true
@@ -450,7 +450,7 @@ static func _join_closing_gaps(a: PackedVector2Array, b: PackedVector2Array) -> 
 		if polygon_area(p) > polygon_area(outer):
 			outer = p
 	for p: PackedVector2Array in merged:
-		# Peça separada ou furo grande: não é fresta, a união não se aplica.
+		# Separate piece or large hole: it is not a gap, the union does not apply.
 		if p != outer and (polygon_area(p) > MAX_GAP_AREA or Geometry2D.is_polygon_clockwise(p) == Geometry2D.is_polygon_clockwise(outer)):
 			return PackedVector2Array()
 	var shrunk := Geometry2D.offset_polygon(outer, -GAP_CLOSE)
@@ -459,7 +459,7 @@ static func _join_closing_gaps(a: PackedVector2Array, b: PackedVector2Array) -> 
 	return shrunk[0]
 
 
-## Inflar um contorno sinuoso cria furinhos internos: fica só a borda externa, se o resto for desprezível.
+## Inflating a winding outline creates tiny internal holes: only the outer edge is kept, if the rest is negligible.
 static func _grown(p: PackedVector2Array) -> PackedVector2Array:
 	var parts := Geometry2D.offset_polygon(p, GAP_CLOSE)
 	if parts.is_empty():
@@ -503,8 +503,8 @@ static func _touching(a: Dictionary, b: Dictionary) -> bool:
 	return false
 
 
-## Desmembra: a parte da unidade dentro do polígono vira uma unidade nova, irmã da original.
-## As filhas ficam com a parte onde está o centro delas.
+## Splits off: the part of the unit inside the polygon becomes a new unit, sibling of the original.
+## The children stay with the part where their center is.
 func split_unit(id: int, points: PackedVector2Array, region: String, dry_run := false) -> Dictionary:
 	var u: Dictionary = units[id]
 	var inside := _clean(intersect_all_pieces(u.pieces, points))
@@ -542,7 +542,7 @@ func _split_off(u: Dictionary, inside: Array, outside: Array, new_name: String, 
 		for kid: int in children_of(u.id).duplicate():
 			if _contains(fresh, units[kid].center):
 				units[kid].parent = new_id
-		# Se a capital foi junto com a parte nova, é dela que passa a ser capital.
+		# If the capital went along with the new part, it becomes that part's capital.
 		if capitals.has(u.id) and new_id in chain_of(capitals[u.id]):
 			capitals[new_id] = capitals[u.id]
 			capitals.erase(u.id)
@@ -559,12 +559,12 @@ func _set_geometry(u: Dictionary, pieces: Array) -> void:
 	u.erase("outline")
 
 
-## A mãe sempre antes da filha, ordem de que o desenho e a busca por ponto dependem.
+## The parent always before the child, an order that drawing and point lookup depend on.
 func _sort_custom() -> void:
 	custom_ids.sort_custom(func(a, b): return depth_of(a) < depth_of(b))
 
 
-## Muda de país o que está nas peças: unidade inteira troca de dono, unidade cortada se divide.
+## Changes the country of what is in the pieces: a whole unit changes owner, a cut unit is split.
 func transfer_area(pieces: Array, from_isos: Array, to_iso: String) -> void:
 	var box := _bounds_all(pieces)
 	var roots := []
@@ -578,8 +578,8 @@ func transfer_area(pieces: Array, from_isos: Array, to_iso: String) -> void:
 	_reindex()
 
 
-## Passa ao novo país a parte da unidade dentro das peças e faz o mesmo com as filhas dela.
-## new_parent é a mãe do lado do novo país (-1 para o nível mais alto).
+## Passes to the new country the part of the unit inside the pieces and does the same with its children.
+## new_parent is the parent on the new country's side (-1 for the top level).
 func _transfer_unit(id: int, pieces: Array, box: Rect2, new_parent: int, to_iso: String) -> void:
 	var u: Dictionary = units[id]
 	var inside := _clean(_intersect_pieces(u.pieces, pieces))
@@ -609,7 +609,7 @@ func _transfer_unit(id: int, pieces: Array, box: Rect2, new_parent: int, to_iso:
 
 
 func _change_owner(id: int, owner: String, type_id: int) -> void:
-	# Um país não mantém como capital uma unidade que passou para outro.
+	# A country does not keep as capital a unit that passed to another.
 	var moved := [id]
 	for e: Dictionary in walk_ids(children_of(id)):
 		moved.append(e.unit.id)
@@ -636,7 +636,7 @@ func unit_color(u: Dictionary) -> Color:
 	return Color.from_hsv(fposmod(base.h + (h % 100) / 100.0 * 0.07 - 0.035, 1.0), base.s, clampf(base.v - ((h >> 8) % 100) / 100.0 * 0.22, 0.2, 1.0))
 
 
-## Unidades da maior para a menor, para os rótulos pararem assim que ficam pequenas demais.
+## Units from largest to smallest, so labels stop as soon as they become too small.
 func by_area() -> Array:
 	if _by_area.is_empty() and not units.is_empty():
 		_by_area = units.values()
@@ -644,16 +644,16 @@ func by_area() -> Array:
 	return _by_area
 
 
-## Contorno em pares de pontos, calculado só quando a unidade é destacada.
+## Outline in point pairs, computed only when the unit is highlighted.
 func outline_of(u: Dictionary) -> PackedVector2Array:
 	if not u.has("outline"):
 		u["outline"] = _outline(u.pieces)
 	return u.outline
 
 
-# --- Criação ---------------------------------------------------------------------
+# --- Creation ---------------------------------------------------------------------
 
-## O segmento from→to cruza o traçado já desenhado? Ao fechar, ignora a aresta que sai do primeiro ponto.
+## Does the segment from→to cross the path already drawn? On closing, ignores the edge that leaves the first point.
 static func crosses(points: PackedVector2Array, from: Vector2, to: Vector2, closing := false) -> bool:
 	for i in range(0, points.size() - 2):
 		if closing and i == 0:
@@ -663,7 +663,7 @@ static func crosses(points: PackedVector2Array, from: Vector2, to: Vector2, clos
 	return false
 
 
-## territory: {"rings": [...], "holes": [...]}, os contornos do país do jogador.
+## territory: {"rings": [...], "holes": [...]}, the outlines of the player's country.
 func create_unit(points: PackedVector2Array, type_id: int, parent_id: int, territory: Dictionary, region: String, owner: String, dry_run := false) -> Dictionary:
 	if points.size() < 3:
 		return {"ok": false, "msg": tr("São necessários pelo menos 3 vértices.")}
@@ -708,8 +708,8 @@ func create_unit(points: PackedVector2Array, type_id: int, parent_id: int, terri
 	return {"ok": true, "msg": "", "id": id, "clipped": total < polygon_area(points) * 0.99}
 
 
-## A unidade mais específica no ponto: criadas pelo jogador primeiro (filhas antes das mães),
-## depois as do cenário pela grade, onde cada célula lista da menor para a maior.
+## The most specific unit at the point: those created by the player first (children before parents),
+## then the scenario's by the grid, where each cell lists from smallest to largest.
 func unit_at(pos: Vector2) -> int:
 	var custom := -1
 	for i in range(custom_ids.size() - 1, -1, -1):
@@ -723,7 +723,7 @@ func unit_at(pos: Vector2) -> int:
 			break
 	if custom < 0 or base < 0:
 		return maxi(custom, base)
-	# Vale a mais profunda: um estado fundido não pode esconder os municípios dele.
+	# The deepest one counts: a merged state cannot hide its municipalities.
 	var dc := depth_of(custom)
 	var db := depth_of(base)
 	if dc != db:
@@ -759,7 +759,7 @@ func _generate_name(region: String) -> String:
 	return "%s %d" % [candidate, name_counter]
 
 
-# --- Geometria -------------------------------------------------------------------
+# --- Geometry -------------------------------------------------------------------
 
 static func polygon_area(pts: PackedVector2Array) -> float:
 	var a := 0.0
@@ -809,8 +809,8 @@ static func _intersect_pieces(pieces: Array, containers: Array) -> Array:
 	return out
 
 
-## Subtrai sem deixar furos: se o recorte fica no interior de uma peça, ela é dividida em duas
-## por uma linha vertical que passa por ele, porque a triangulação não aceita buracos.
+## Subtracts without leaving holes: if the cut is in the interior of a piece, it is split in two
+## by a vertical line that passes through it, because triangulation does not accept holes.
 static func subtract(pieces: Array, cut: PackedVector2Array, guard := 0) -> Array:
 	var out := []
 	var box := _bounds(cut)
@@ -834,7 +834,7 @@ static func subtract(pieces: Array, cut: PackedVector2Array, guard := 0) -> Arra
 	return out
 
 
-## O Clipper devolve furos com orientação oposta à das bordas externas; a maior peça é sempre externa.
+## Clipper returns holes with the opposite orientation to the outer edges; the largest piece is always outer.
 static func _has_hole(res: Array) -> bool:
 	if res.size() < 2:
 		return false
@@ -861,7 +861,7 @@ static func _clean(pieces: Array) -> Array:
 	return out
 
 
-## Contorno em pares de pontos. Arestas compartilhadas por duas peças (divisão de furos) somem.
+## Outline in point pairs. Edges shared by two pieces (hole splitting) disappear.
 static func _outline(pieces: Array) -> PackedVector2Array:
 	var edges := {}
 	for p: PackedVector2Array in pieces:
@@ -901,7 +901,7 @@ static func _label_point(pieces: Array) -> Vector2:
 		var centroid := sum / (3.0 * twice)
 		if Geometry2D.is_point_in_polygon(centroid, biggest):
 			return centroid
-	# Polígono côncavo: usa o maior triângulo da malha, que sempre fica dentro.
+	# Concave polygon: uses the largest triangle of the mesh, which always stays inside.
 	var ids := Geometry2D.triangulate_polygon(biggest)
 	var best := biggest[0]
 	var best_area := -1.0
@@ -916,10 +916,10 @@ static func _label_point(pieces: Array) -> Vector2:
 	return best
 
 
-# --- Salvar e carregar -----------------------------------------------------------
+# --- Saving and loading -----------------------------------------------------------
 
-## O cenário vem dos arquivos de dados: o save guarda só as unidades dele que mudaram ou foram
-## apagadas, mais as criadas pelo jogador.
+## The scenario comes from the data files: the save keeps only its units that changed or were
+## deleted, plus the ones created by the player.
 func to_dict() -> Dictionary:
 	var base := []
 	var custom := []
@@ -956,7 +956,7 @@ func from_dict(d: Dictionary, player_iso: String) -> void:
 	var version := int(d.version)
 	if version < SAVE_VERSION:
 		_shift_old_ids(d, version)
-	# Os tipos das capitais podem não existir em saves antigos.
+	# The capital types may not exist in old saves.
 	var seeded := types.values().filter(func(t): return int(t.id) >= CITY_TYPE_FIRST_ID)
 	types.clear()
 	for t: Dictionary in seeded:
@@ -980,7 +980,7 @@ func from_dict(d: Dictionary, player_iso: String) -> void:
 			u["reshaped"] = true
 		kept[int(meta.id)] = u
 	if version < 3:
-		# Saves anteriores não conheciam os municípios: entram os dos estados que continuam existindo.
+		# Earlier saves did not know the municipalities: those of the states that still exist come in.
 		for u: Dictionary in units.values():
 			if u.base and int(u.parent) >= 0 and kept.has(u.parent):
 				kept[u.id] = u
@@ -992,7 +992,7 @@ func from_dict(d: Dictionary, player_iso: String) -> void:
 	next_type_id = d.next_type_id
 	next_unit_id = d.next_unit_id
 	name_counter = d.name_counter
-	# Saves sem esta informação ficam com as capitais do cenário.
+	# Saves without this information keep the scenario's capitals.
 	if d.has("capitals"):
 		var national := capitals.duplicate()
 		capitals = d.capitals
@@ -1003,7 +1003,7 @@ func from_dict(d: Dictionary, player_iso: String) -> void:
 	_reindex()
 
 
-## Cada versão acrescentou unidades ao cenário: as criadas pelo jogador andam para depois delas.
+## Each version added units to the scenario: those created by the player move to after them.
 func _shift_old_ids(d: Dictionary, version: int) -> void:
 	var first: int = OLD_BASE_COUNT.get(version, base_count)
 	var by := base_count - first
@@ -1022,7 +1022,7 @@ func _shift_old_ids(d: Dictionary, version: int) -> void:
 	d.next_unit_id = int(d.next_unit_id) + by
 
 
-## Saves da primeira versão: só tinham unidades desenhadas, todas do jogador.
+## Saves from the first version: they only had drawn units, all the player's.
 func _load_v1(d: Dictionary, owner: String) -> void:
 	var type_map := {}
 	for t: Dictionary in d.types:

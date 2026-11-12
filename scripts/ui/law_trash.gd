@@ -1,6 +1,6 @@
 class_name LawTrash
 extends PanelContainer
-## O painel da biblioteca também apaga: soltar um bloco da área de programação aqui o remove.
+## The library panel also deletes: dropping a block from the programming area here removes it.
 
 var editor: LawEditor
 

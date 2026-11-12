@@ -1,15 +1,15 @@
 class_name WorldEvents
 extends RefCounted
-## Choques exógenos e dilemas de governo. Cada dilema oferece escolhas com custos reais.
+## Exogenous shocks and government dilemmas. Each dilemma offers choices with real costs.
 
-## Sorteio mensal de choques e dilemas, desligado por enquanto. O menu debug ainda dispara cada um.
+## Monthly draw of shocks and dilemmas, turned off for now. The debug menu still fires each one.
 const RANDOM_EVENTS := false
 
 
 static func step_month(world: GameWorld) -> void:
 	var rng := world.rng
 	if RANDOM_EVENTS:
-		# Choques globais raros, com frequência próxima da histórica.
+		# Rare global shocks, with frequency close to the historical one.
 		if rng.randf() < 1.0 / (12.0 * 4.0):
 			_drought(world)
 		if rng.randf() < 1.0 / (12.0 * 35.0) and world.year_float() > world.start_year + 2.0:
@@ -22,7 +22,7 @@ static func step_month(world: GameWorld) -> void:
 			_regional_disaster(world)
 		if rng.randf() < 1.0 / 18.0:
 			_mass_protests(world)
-	# OPEP+ administra a oferta conforme o preço real.
+	# OPEC+ manages supply according to the real price.
 	var rel := world.markets.relative_price(Markets.OIL, world)
 	if rel < 0.82 and world.markets.opec_quota < 0.07:
 		world.markets.opec_quota += 0.01
@@ -30,7 +30,7 @@ static func step_month(world: GameWorld) -> void:
 			world.emit_news(TranslationServer.translate("OPEP+ corta produção para sustentar o preço do petróleo."), "economia", null)
 	elif rel > 1.2 and world.markets.opec_quota > -0.03:
 		world.markets.opec_quota -= 0.01
-	# Gargalo de Ormuz: alta probabilidade só com Irã em conflito direto.
+	# Hormuz bottleneck: high probability only with Iran in direct conflict.
 	var iran: Country = world.by_iso.get("IRN")
 	if iran and iran.alive:
 		if world.markets.chokepoint == 0.0 and world.diplomacy.in_war(iran.idx) and rng.randf() < 0.1:

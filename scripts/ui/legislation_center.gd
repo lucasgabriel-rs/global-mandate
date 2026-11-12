@@ -1,7 +1,7 @@
 class_name LegislationCenter
 extends MarginContainer
-## Gerenciador de normas. A primeira aba junta o que se usa sempre: os códigos, os projetos em tramitação,
-## as normas em vigor e, por último, a lei avulsa com todos os blocos. Depois vêm Constituição, instituições,
+## Norm manager. The first tab joins what is always used: the codes, the projects in procedure,
+## the norms in force and, last, the standalone law with all the blocks. Then come Constitution, institutions,
 ## auditoria e tratados.
 
 const CODE_CARD := preload("res://scenes/ui/legislation/code_card.tscn")
@@ -56,7 +56,7 @@ func setup(owner_main: Node, tab := 0, message := "") -> void:
 	%import_norm.pressed.connect(_import)
 	var filter: OptionButton = %state_filter
 	filter.add_item(tr("Todas"))
-	# O texto do item vem traduzido; o estado (em português, como fica na norma) vai na metadata.
+	# The item's text comes translated; the state (in Portuguese, as it stays in the norm) goes in the metadata.
 	filter.set_item_metadata(0, "")
 	for state: String in STATE_COLORS:
 		filter.add_item(tr(state))
@@ -108,7 +108,7 @@ func _fill_codes() -> void:
 
 
 func _alter_code(id: String) -> void:
-	# Enquanto o Código Tributário não tem texto próprio, alterar é mudar o antigo, feito só de alíquotas.
+	# While the Tax Code has no text of its own, amending is changing the old one, made only of tax rates.
 	var legacy: Dictionary = leg.code_card(id).norm
 	var bill := leg.start_change(world, legacy) if leg.code_norm(id).is_empty() and not legacy.is_empty() else leg.start_code_bill(world, id)
 	if bill.is_empty():
@@ -212,7 +212,7 @@ func _sanction(norm: Dictionary, approve: bool) -> void:
 	main.reopen_legislation(0, r.msg)
 
 
-# --- Constituição --------------------------------------------------------------------
+# --- Constitution --------------------------------------------------------------------
 
 func _fill_constitution_versions() -> void:
 	var pick: OptionButton = %version_pick
@@ -260,7 +260,7 @@ func _show_constitution() -> void:
 	(%constitution_text as RichTextLabel).text = "\n\n".join(lines)
 
 
-# --- Instituições e auditoria ------------------------------------------------------------
+# --- Institutions and audit ------------------------------------------------------------
 
 func _fill_institutions() -> void:
 	var rules := []

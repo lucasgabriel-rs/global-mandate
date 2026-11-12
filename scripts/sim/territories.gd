@@ -1,12 +1,12 @@
 class_name Territories
 extends RefCounted
-## Fronteiras alteradas por guerras e tratados. O mapa de base não muda: cada cessão é uma
-## área com dono novo, desenhada por cima dele. Cessões nunca se sobrepõem, e uma área que
-## volta ao país de origem simplesmente deixa de ser cessão.
+## Borders changed by wars and treaties. The base map does not change: each cession is an
+## area with a new owner, drawn on top of it. Cessions never overlap, and an area that
+## returns to its country of origin simply stops being a cession.
 
 var cessions: Array = []
 var next_id := 0
-## Sobe a cada mudança, para o mapa saber quando redesenhar.
+## Goes up with every change, so the map knows when to redraw.
 var revision := 0
 
 var _outlines := {}
@@ -23,8 +23,8 @@ func owner_at(pos: Vector2, world: GameWorld) -> Country:
 	return null
 
 
-## Contornos atuais do país: terras originais e anexadas, mais o que ganhou; "holes" é o que
-## perdeu e os enclaves estrangeiros (Lesoto na África do Sul).
+## Current outlines of the country: original and annexed lands, plus what it gained; "holes" is what it
+## lost and the foreign enclaves (Lesotho in South Africa).
 func territory_of(c: Country, world: GameWorld) -> Dictionary:
 	var rings := []
 	var holes := []
@@ -55,7 +55,7 @@ func area_of(c: Country, world: GameWorld) -> float:
 	return maxf(total, 0.001)
 
 
-## Recorta um polígono desenhado pelo território atual do país.
+## Clips a drawn polygon by the country's current territory.
 func clip_to(points: PackedVector2Array, c: Country, world: GameWorld) -> Array:
 	var t := territory_of(c, world)
 	var pieces := Subdivisions.intersect_all(points, t.rings)
@@ -64,7 +64,7 @@ func clip_to(points: PackedVector2Array, c: Country, world: GameWorld) -> Array:
 	return Subdivisions._clean(pieces)
 
 
-## Passa as peças de from para to, com as unidades subnacionais. Devolve a fração do território perdida.
+## Moves the pieces from from to to, along with the subnational units. Returns the fraction of territory lost.
 func apply(pieces: Array, from: Country, to: Country, world: GameWorld) -> float:
 	if pieces.is_empty():
 		return 0.0
@@ -106,8 +106,8 @@ func _set_pieces(cession: Dictionary, pieces: Array) -> void:
 	cession["outline"] = Subdivisions._outline(pieces)
 
 
-## Tratado entre nações da IA ou imposto ao jogador: cede unidades inteiras, das mais próximas
-## do vencedor para as mais distantes, até chegar perto da fração. Devolve a fração cedida.
+## Treaty between AI nations or imposed on the player: cedes whole units, from the closest
+## to the winner to the farthest, until reaching near the fraction. Returns the fraction ceded.
 func auto_cede(from: Country, to: Country, share: float, world: GameWorld) -> float:
 	var subs := world.subdivisions
 	var target := share * area_of(from, world)
@@ -121,15 +121,15 @@ func auto_cede(from: Country, to: Country, share: float, world: GameWorld) -> fl
 	for u: Dictionary in options:
 		if taken >= target:
 			break
-		# Mantém o país vivo: nunca entrega a última unidade.
+		# Keeps the country alive: never hands over the last unit.
 		if float(u.area) + taken <= target * 1.4 and pieces.size() < options.size() - 1:
 			pieces.append_array(u.pieces)
 			taken += float(u.area)
 	return apply(pieces, from, to, world)
 
 
-## Contorno do país em pares de pontos, considerando o que ele ganhou e perdeu.
-## Devolve vazio quando as fronteiras dele são as originais.
+## Outline of the country in point pairs, considering what it gained and lost.
+## Returns empty when its borders are the original ones.
 func changed_outline(c: Country, world: GameWorld) -> PackedVector2Array:
 	if _outlines.has(c.iso):
 		return _outlines[c.iso]

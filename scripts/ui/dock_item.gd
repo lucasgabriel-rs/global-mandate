@@ -1,6 +1,6 @@
 class_name DockItem
 extends Control
-## Um ícone do dock. Abre a janela `window_index` da mesa, ou dispara `action` quando não é janela.
+## A dock icon. Opens the desk's `window_index` window, or fires `action` when it is not a window.
 
 signal pressed
 
@@ -13,7 +13,7 @@ signal pressed
 @export var window_index := -1
 @export var action := ""
 
-## Tamanho de repouso; o dock aumenta isto quando o mouse passa perto.
+## Resting size; the dock increases this when the mouse passes nearby.
 var base := 48.0
 var magnify := 1.0:
 	set(v):
@@ -37,7 +37,7 @@ func set_running(on: bool) -> void:
 	_dot.visible = on
 
 
-## O pulinho do ícone ao ser clicado.
+## The icon's little bounce when clicked.
 func _bounce() -> void:
 	var t := create_tween().set_trans(Tween.TRANS_QUAD)
 	t.tween_property(_icon, "position:y", -14.0, 0.12).set_ease(Tween.EASE_OUT)

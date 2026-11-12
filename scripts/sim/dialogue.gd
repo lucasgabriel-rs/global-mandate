@@ -1,8 +1,8 @@
 class_name Dialogue
 extends RefCounted
-## Conversas com líderes de outros países. O líder responde conforme a relação entre os países, o chanceler do
-## jogador e, sobretudo, as ideias: a distância entre a bússola dele e a do partido do jogador, e o que ele mesmo
-## pensa de cada assunto. Um líder de direita gosta de abrir mercados; um autoritário não cede a ameaças.
+## Conversations with leaders of other countries. The leader answers according to the relation between the countries, the player's
+## foreign minister and, above all, ideas: the distance between their compass and that of the player's party, and what they
+## themselves think of each subject. A right-wing leader likes to open markets; an authoritarian does not yield to threats.
 
 const TURNS_PER_MEETING := 3
 const COOLDOWN_MONTHS := 1
@@ -18,7 +18,7 @@ static func wait_months(world: GameWorld, target: Country) -> int:
 	return maxi(last + COOLDOWN_MONTHS - world.months_elapsed, 0)
 
 
-## Abre a conversa. Devolve {ok, msg} e, se der certo, a saudação em greeting.
+## Opens the conversation. Returns {ok, msg} and, if it works, the greeting in greeting.
 static func start(world: GameWorld, target: Country, invited := false) -> Dictionary:
 	if not world.in_office:
 		return {"ok": false, "msg": TranslationServer.translate("Na oposição, você não fala em nome do país.")}
@@ -31,7 +31,7 @@ static func start(world: GameWorld, target: Country, invited := false) -> Dictio
 	var hello := greeting(world, target)
 	var key := ChatLog.country_key(target.iso)
 	ChatLog.add(world, key, false, hello)
-	# Quem puxa a conversa chega com uma proposta concreta na mão.
+	# Whoever starts the conversation arrives with a concrete proposal in hand.
 	if invited:
 		var offer := Proposals.pending(world, target)
 		if offer.is_empty():
@@ -41,7 +41,7 @@ static func start(world: GameWorld, target: Country, invited := false) -> Dictio
 	return {"ok": true, "msg": "", "greeting": hello}
 
 
-## Responde à proposta em aberto: "accept", "refuse" ou "counter". Não gasta falas da conversa.
+## Answers the open proposal: "accept", "refuse" or "counter". Does not spend the conversation's lines.
 static func answer(world: GameWorld, target: Country, choice: String) -> Dictionary:
 	var offer := Proposals.pending(world, target)
 	if offer.is_empty():
@@ -61,12 +61,12 @@ static func answer(world: GameWorld, target: Country, choice: String) -> Diction
 	return r
 
 
-## Falas que ainda restam na conversa em curso com o líder.
+## Lines still left in the current conversation with the leader.
 static func turns_left(world: GameWorld, target: Country) -> int:
 	return int(world.talk_turns.get(target.iso, 0))
 
 
-## A fala escolhida vai para o histórico, com a resposta do líder. Cada fala gasta uma das da conversa.
+## The chosen line goes into the history, with the leader's reply. Each line spends one of the conversation's.
 static func say(world: GameWorld, target: Country, id: String) -> Dictionary:
 	var label := ""
 	for o: Dictionary in options(world, target):
@@ -87,7 +87,7 @@ static func leader_of(world: GameWorld, target: Country) -> Dictionary:
 	return world.politics.leader_of(target.iso)
 
 
-## 0 quando as ideias são opostas e 1 quando são iguais: a bússola do líder contra a do partido do jogador.
+## 0 when ideas are opposite and 1 when they are equal: the leader's compass against the player party's.
 static func affinity(world: GameWorld, target: Country) -> float:
 	var theirs := leader_of(world, target)
 	var mine := world.politics.player_party(world)
@@ -96,19 +96,19 @@ static func affinity(world: GameWorld, target: Country) -> float:
 	return clampf(1.0 - Politics.distance(mine, theirs) / 2.8, 0.0, 1.0)
 
 
-## Relação como o líder a enxerga nesta conversa: inclui afinidade de ideias e o chanceler.
+## Relation as the leader sees it in this conversation: includes affinity of ideas and the foreign minister.
 static func goodwill(world: GameWorld, target: Country) -> float:
 	var rel: float = world.diplomacy.relation(world.player.idx, target.idx)
 	var chancellor: float = world.politics.minister_competence(world, "foreign")
 	return rel + (affinity(world, target) - 0.5) * 30.0 + (chancellor - 0.5) * 20.0
 
 
-## Disposição para o confronto: autoritários têm mais, libertários menos.
+## Disposition for confrontation: authoritarians have more, libertarians less.
 static func hawkishness(leader: Dictionary) -> float:
 	return clampf(0.35 - float(leader.get("social", 0.0)) * 0.55, 0.0, 1.0)
 
 
-## O que o líder é, em palavras, para o jogador saber com quem está falando.
+## What the leader is, in words, so the player knows who they are talking to.
 static func temper(leader: Dictionary) -> String:
 	var econ := float(leader.get("econ", 0.0))
 	var social := float(leader.get("social", 0.0))
@@ -117,7 +117,7 @@ static func temper(leader: Dictionary) -> String:
 	return "%s, %s" % [left_right, power]
 
 
-## Uma IA procura outra: a afinidade entre os líderes decide se sai acordo ou atrito.
+## One AI approaches another: the affinity between the leaders decides whether agreement or friction comes out.
 static func summit(world: GameWorld, a: Country, b: Country) -> void:
 	var la: Dictionary = world.politics.leader_of(a.iso)
 	var lb: Dictionary = world.politics.leader_of(b.iso)
@@ -163,7 +163,7 @@ static func greeting(world: GameWorld, target: Country) -> String:
 	return line
 
 
-## Falas disponíveis agora. Cada uma: {id, label, hint}.
+## Lines available now. Each: {id, label, hint}.
 static func options(world: GameWorld, target: Country) -> Array:
 	var d := world.diplomacy
 	var me := world.player
@@ -179,7 +179,7 @@ static func options(world: GameWorld, target: Country) -> Array:
 	if not d.allied(me.idx, target.idx):
 		out.append({"id": "alliance", "label": TranslationServer.translate("Proponho um pacto de defesa mútua."), "hint": TranslationServer.translate("Precisa de muita confiança.")})
 	out.append({"id": "aid", "label": TranslationServer.translate("Meu governo quer enviar ajuda ao seu povo."), "hint": TranslationServer.translate("Doa 0,1% do seu PIB.")})
-	# Os dois tratados que mais combinam com as ideias dele, ainda sem assinar.
+	# The two treaties that best match their ideas, not yet signed.
 	var theirs := leader_of(world, target)
 	var types: Array = Treaties.TYPES.keys().filter(func(t): return t != "fta" and t != "defense" and world.treaties.between(me, target, t).is_empty())
 	types.sort_custom(func(x, y): return Treaties.leader_bias(x, theirs) > Treaties.leader_bias(y, theirs))
@@ -205,7 +205,7 @@ static func enemy_to_sanction(world: GameWorld, target: Country) -> Country:
 	return null
 
 
-## Aplica a fala escolhida. Devolve {reply, accepted}.
+## Applies the chosen line. Returns {reply, accepted}.
 static func choose(world: GameWorld, target: Country, id: String) -> Dictionary:
 	var d := world.diplomacy
 	var me := world.player
@@ -222,13 +222,13 @@ static func choose(world: GameWorld, target: Country, id: String) -> Dictionary:
 				return {"accepted": true, "reply": TranslationServer.translate("Elogios não mudam o que pensamos, mas agradeço a cortesia.")}
 			return {"accepted": true, "reply": TranslationServer.translate("Palavras gentis, e bem-vindas. Vou lembrar disso.")}
 		"fta":
-			# Quem é de direita gosta de abrir mercados, e a esquerda desconfia.
+			# Whoever is on the right likes to open markets, and the left is wary.
 			if trust + econ * 25.0 < NEED_FTA:
 				return {"accepted": false, "reply": TranslationServer.translate("Abrir assim destruiria empregos aqui. Não é o que defendo.") if econ < 0.0 else TranslationServer.translate("Meu parlamento não aceitaria. Ainda falta confiança entre nós.")}
 			world.treaties.sign_with_player(world, target, "fta")
 			return {"accepted": true, "reply": TranslationServer.translate("Temos um acordo. Assinamos agora, e cada parlamento ratifica depois.")}
 		"alliance":
-			# Quem gosta de força valoriza um pacto; o libertário prefere não se amarrar.
+			# Whoever likes force values a pact; the libertarian prefers not to be tied down.
 			if trust + (hawk - 0.35) * 20.0 < NEED_ALLIANCE:
 				return {"accepted": false, "reply": TranslationServer.translate("Um pacto assim exige mais do que temos hoje. Sigamos conversando.")}
 			world.treaties.sign_with_player(world, target, "defense")
@@ -256,7 +256,7 @@ static func choose(world: GameWorld, target: Country, id: String) -> Dictionary:
 			me.approval = clampf(me.approval + 0.01, 0.02, 0.95)
 			return {"accepted": true, "reply": TranslationServer.translate("Registrado. Não espere que eu mude por causa disso.")}
 		"threat":
-			# Um autoritário só recua diante de muito mais força; um libertário cede antes de brigar.
+			# An authoritarian only backs down before much greater force; a libertarian yields before fighting.
 			var needed := 1.2 + hawk * 2.4
 			if me.military_power() >= target.military_power() * needed:
 				d.add_relation(me.idx, target.idx, -8.0)

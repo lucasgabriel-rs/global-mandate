@@ -1,6 +1,6 @@
 class_name DivisionsPanel
 extends VBoxContainer
-## Aba "Divisões": tipos de unidade do país, desenho por vértices e árvore de unidades.
+## "Divisões" tab: the country's unit types, vertex drawing and unit tree.
 
 signal confirm_requested(text: String, fn: Callable)
 signal banner_changed(text: String, is_error: bool)
@@ -28,7 +28,7 @@ var _banner_error_time := 0.0
 var _splitting := false
 var _merging := false
 var _merge_ids: Array = []
-## Unidades com a lista de filhas aberta. O Brasil tem milhares: a lista começa recolhida.
+## Units with the list of children open. Brazil has thousands: the list starts collapsed.
 var _expanded := {}
 
 
@@ -73,7 +73,7 @@ func bind(w: GameWorld, m: MapView) -> void:
 func _process(delta: float) -> void:
 	if world and world.busy:
 		return
-	# Escondida, a aba não monta a lista: com milhares de municípios, isso travaria a tela sem ninguém ver.
+	# Hidden, the tab does not build the list: with thousands of municipalities, that would freeze the screen with nobody seeing.
 	if _dirty and is_visible_in_tree():
 		_dirty = false
 		_rebuild()
@@ -162,7 +162,7 @@ func _on_draft_closed(points: PackedVector2Array) -> void:
 	banner_changed.emit("", false)
 
 
-## Em democracia, o traçado só vira unidade depois do parlamento e do plebiscito.
+## In a democracy, the path only becomes a unit after parliament and the plebiscite.
 func _send_unit_to_parliament(points: PackedVector2Array) -> void:
 	var check: Dictionary = world.subdivisions.create_unit(points, active_type, _draft_parent, map.territory_of(world.player), world.player.region, world.player.iso, true)
 	if not check.ok:
@@ -243,8 +243,8 @@ func _on_unit_clicked(id: int) -> void:
 		select_unit(id)
 
 
-## O mapa informa a unidade mais específica sob o clique. O primeiro clique seleciona o nível mais
-## alto; clicar de novo dentro da selecionada desce um nível: estado, depois município.
+## The map reports the most specific unit under the click. The first click selects the highest
+## level; clicking again inside the selected one goes down a level: state, then municipality.
 func _on_map_clicked(id: int) -> void:
 	if id < 0:
 		if not _merging:
@@ -382,7 +382,7 @@ func _ask_delete(id: int) -> void:
 		map.refresh_units())
 
 
-# --- Construção da lista ---------------------------------------------------------
+# --- Building the list ---------------------------------------------------------
 
 func _clear(box: Control) -> void:
 	for child in box.get_children():
@@ -400,7 +400,7 @@ func _rebuild() -> void:
 	if not subs.units.has(selected_unit):
 		selected_unit = -1
 		map.select_unit(-1)
-	# Uma cessão ou uma fusão pode tirar unidades da seleção em andamento.
+	# A cession or a merge may take units out of the selection in progress.
 	_merge_ids = _merge_ids.filter(func(id): return subs.units.has(id))
 	if _merging and _merge_ids.is_empty():
 		_merging = false
@@ -476,7 +476,7 @@ func _toggle_expanded(id: int) -> void:
 	_rebuild_tree()
 
 
-## Só as filhas das unidades abertas: montar uma linha para cada município travaria a aba.
+## Only the children of the open units: building a row for every municipality would freeze the tab.
 func _visible_rows(ids: Array, depth: int, out: Array) -> void:
 	var subs: Subdivisions = world.subdivisions
 	for id: int in ids:
@@ -586,7 +586,7 @@ func _add_country_capital() -> void:
 	_detail_box.add_child(box)
 
 
-## Uma unidade pode ser capital de qualquer unidade que a contém e do país.
+## A unit can be the capital of any unit that contains it and of the country.
 func _add_capital_controls(box: Control, id: int) -> void:
 	var subs: Subdivisions = world.subdivisions
 	var list: Control = box.get_node("%capitals")

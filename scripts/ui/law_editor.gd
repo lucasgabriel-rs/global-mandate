@@ -1,6 +1,6 @@
 class_name LawEditor
 extends ColorRect
-## Editor legislativo: biblioteca, área de programação, propriedades do bloco e validação.
+## Legislative editor: library, programming area, block properties and validation.
 
 const BLOCK := preload("res://scenes/ui/legislation/law_block.tscn")
 const LIBRARY_HEADING := preload("res://scenes/ui/legislation/library_heading.tscn")
@@ -15,10 +15,10 @@ var read_only := false
 var selected_id := -1
 var error_blocks: Array = []
 var last_compile := {}
-## Na leitura de uma versão publicada, o programa não é o rascunho da norma.
+## When reading a published version, the program is not the norm's draft.
 var _shown_program := {}
 var _library_program := LawProgram.empty()
-## Código que a norma altera ("tributario"...), ou "" para a lei avulsa.
+## Code that the norm amends ("tributario"...), or "" for a standalone law.
 var code_id := ""
 
 @onready var canvas: LawCanvas = %canvas
@@ -86,7 +86,7 @@ func _connect() -> void:
 
 
 func _input(event: InputEvent) -> void:
-	# Em leitura não há "salvar": Esc fecha. Na edição, Esc também salva e fecha.
+	# In reading mode there is no "save": Esc closes. In editing, Esc also saves and closes.
 	if event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE and not (%simulator as Control).visible:
 		get_viewport().set_input_as_handled()
 		if (%review as Control).visible:
@@ -126,7 +126,7 @@ func _fill_document() -> void:
 			_doc_type.set_item_metadata(_doc_type.item_count - 1, key)
 			if key == norm.type:
 				_doc_type.select(_doc_type.item_count - 1)
-	# Títulos dos códigos e dos modelos ficam em português na norma: o campo mostra a tradução.
+	# Titles of the codes and templates stay in Portuguese in the norm: the field shows the translation.
 	(%doc_name as LineEdit).text = tr(norm.title)
 	(%doc_ementa as TextEdit).text = tr(norm.ementa)
 	(%doc_vacatio as LineEdit).text = str(int(norm.get("vacatio", 0)))
@@ -137,8 +137,8 @@ func _fill_document() -> void:
 	_doc_type.disabled = read_only or norm.type == "emenda" or int(norm.get("amends", -1)) >= 0 or not norm.get("revokes", {}).is_empty()
 
 
-## Paleta. Lei avulsa: os blocos dos códigos e, num grupo aberto, os avançados. Norma de código: só a
-## categoria do código e os eventos; os outros códigos e os avançados ficam recolhidos, a um clique.
+## Palette. Standalone law: the blocks of the codes and, in an open group, the advanced ones. Code norm: only the
+## code's category and the events; the other codes and the advanced ones stay collapsed, one click away.
 func _build_library() -> void:
 	var cats := LawCatalog.categories()
 	var others: Control = null
@@ -191,7 +191,7 @@ func _library_group(title: String, hint: String, open: bool) -> Control:
 	return group
 
 
-## O grupo recolhido da paleta que tem o bloco, para o teste abrir antes de arrastar.
+## The collapsed palette group that has the block, so the test opens it before dragging.
 func library_group_of(view: Control) -> Control:
 	var node := view.get_parent()
 	while node and node != _library:
@@ -229,7 +229,7 @@ func _compile_now() -> void:
 	(%present as Button).disabled = not last_compile.ok
 	(%poll as PollBox).refresh()
 	(%poll as PollBox).clear_result()
-	# Os blocos com erro ganham contorno vermelho no próximo desenho.
+	# Blocks with an error get a red outline on the next draw.
 	canvas.rebuild()
 
 
@@ -243,7 +243,7 @@ func _add_validation(entry: Dictionary, is_error: bool) -> void:
 	_validation.add_child(row)
 
 
-## Apresentar abre primeiro o painel de efeitos esperados; quem envia é o botão de lá.
+## Submitting first opens the expected effects panel; the button there is what sends.
 func _on_present() -> void:
 	if String(norm.title).strip_edges() == "" or String(norm.ementa).strip_edges() == "":
 		_feedback.text = tr("Preencha o título e a ementa da norma.")
@@ -262,7 +262,7 @@ func send() -> void:
 		(%review as LawReview).show_error(r.msg)
 
 
-# --- Seleção e propriedades ------------------------------------------------------------
+# --- Selection and properties ------------------------------------------------------------
 
 func select_block(id: int) -> void:
 	if id == selected_id:
@@ -397,8 +397,8 @@ func _field_row(block: Dictionary, key: String, spec: Dictionary) -> Control:
 	return row
 
 
-## Lista do que já existe (tributos, licenças, instituições, deveres). "Outro nome" abre o texto livre, só
-## para dar nome a algo que esta norma cria.
+## List of what already exists (taxes, licenses, institutions, duties). "Outro nome" (another name) opens the free text, only
+## to name something that this norm creates.
 func _ref_field(block: Dictionary, key: String, spec: Dictionary, option: OptionButton, edit: LineEdit) -> void:
 	option.visible = true
 	var names := world.legislation.known_names(String(spec.get("of", "")), _shown_program)
@@ -464,7 +464,7 @@ static func _parse(text: String, type: String) -> Variant:
 	return text.strip_edges() if type == "any" else 0.0 if clean == "" else text.strip_edges()
 
 
-## O painel de propriedades não é refeito aqui, para o campo em edição não perder o foco.
+## The properties panel is not rebuilt here, so the field being edited does not lose focus.
 func _after_edit(_redraw := true) -> void:
 	_compile_now()
 
@@ -487,7 +487,7 @@ func can_plug(data: Dictionary, target_id: int, spec: Dictionary) -> bool:
 	return LawProgram.accepts(spec, probe)
 
 
-## Único lugar que muda a forma do programa. where.kind: canvas, after, before, slot, plug ou trash.
+## The only place that changes the shape of the program. where.kind: canvas, after, before, slot, plug or trash.
 func drop(data: Dictionary, where: Dictionary) -> void:
 	if read_only:
 		return

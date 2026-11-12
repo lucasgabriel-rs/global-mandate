@@ -1,7 +1,7 @@
 class_name Elections
 extends RefCounted
-## Sistema eleitoral: cada país vota por distritos, nas suas unidades subnacionais, com cadeiras repartidas pela
-## população. O sistema decide como votos viram cadeiras; o regime decide se o chefe de governo é eleito direto.
+## Electoral system: each country votes by districts, in its subnational units, with seats split by
+## population. The system decides how votes become seats; the regime decides whether the head of government is directly elected.
 
 # i18n-begin
 const SYSTEMS := {"pr": "Proporcional por distritos", "fptp": "Distrital de maioria simples", "two_round": "Distrital em dois turnos", "mixed": "Misto: distrital e proporcional"}
@@ -19,7 +19,7 @@ const FPTP_LOCAL_SPREAD := 0.5
 const MAX_REPORT_DISTRICTS := 40
 
 
-## Regras do país, criadas na primeira vez que alguém as pede.
+## The country's rules, created the first time someone asks for them.
 static func rules(c: Country, data: Dictionary) -> Dictionary:
 	if data.has("electoral"):
 		return data.electoral
@@ -35,12 +35,12 @@ static func rules(c: Country, data: Dictionary) -> Dictionary:
 	return data.electoral
 
 
-## Comparecimento esperado sem lei eleitoral: estabilidade e democracia levam gente às urnas.
+## Expected turnout without an electoral law: stability and democracy bring people to the polls.
 static func base_turnout(c: Country) -> float:
 	return 0.5 + c.stability * 0.2 + c.dem * 0.012
 
 
-## Parte do voto acompanha o fundo de cada partido: quanto mais pesa o dinheiro privado, mais pesa o caixa.
+## Part of the vote follows each party's fund: the more private money weighs, the more the war chest weighs.
 static func _weigh_money(data: Dictionary, weight: float) -> void:
 	if weight <= 0.0:
 		return
@@ -54,8 +54,8 @@ static func _weigh_money(data: Dictionary, weight: float) -> void:
 	Politics._normalize(data)
 
 
-## Votos de um partido em um distrito: a força nacional, ajustada pelo reduto de cada um. O reduto é sempre o
-## mesmo para o par partido e lugar, então as bases eleitorais persistem de uma eleição para outra.
+## Votes of a party in a district: the national strength, adjusted by each one's stronghold. The stronghold is always the
+## same for the party and place pair, so electoral bases persist from one election to the next.
 static func _district_votes(parties: Array, place: String, rng: RandomNumberGenerator) -> Dictionary:
 	var votes := {}
 	var total := 0.0
@@ -69,7 +69,7 @@ static func _district_votes(parties: Array, place: String, rng: RandomNumberGene
 	return votes
 
 
-## Método D'Hondt: a próxima cadeira vai para quem tem o maior quociente votos / (cadeiras + 1).
+## D'Hondt method: the next seat goes to whoever has the largest quotient votes / (seats + 1).
 static func _dhondt(votes: Dictionary, seats: int) -> Dictionary:
 	var won := {}
 	for id: int in votes:
@@ -97,7 +97,7 @@ static func _plurality(votes: Dictionary) -> int:
 	return best
 
 
-## Segundo turno: os dois mais votados ficam, e os outros eleitores migram para quem está mais perto das ideias deles.
+## Runoff: the top two stay, and the other voters migrate to whoever is closest to their ideas.
 static func _runoff(votes: Dictionary, data: Dictionary) -> Dictionary:
 	var ordered: Array = votes.keys()
 	ordered.sort_custom(func(a, b): return float(votes[a]) > float(votes[b]))
@@ -118,7 +118,7 @@ static func _runoff(votes: Dictionary, data: Dictionary) -> Dictionary:
 	return {"winner": a if va >= vb else b, "a": a, "b": b, "share_a": va / maxf(va + vb, 0.0001)}
 
 
-## Cadeiras por distrito, pela população, por maiores restos. Cada distrito tem ao menos uma.
+## Seats per district, by population, by largest remainders. Each district has at least one.
 static func apportion(shares: Array, total: int) -> Array:
 	var seats := []
 	var rest := []
@@ -145,15 +145,15 @@ static func apportion(shares: Array, total: int) -> Array:
 	return seats
 
 
-## Roda a eleição. mood(partido) diz quanto o momento político multiplica a força de cada partido.
+## Runs the election. mood(party) says how much the political moment multiplies each party's strength.
 static func run(world: GameWorld, c: Country, data: Dictionary, mood: Callable) -> Dictionary:
 	var rng := world.rng
 	var rule := rules(c, data)
-	# O Código Eleitoral do jogador ajusta barreira, comparecimento e o peso do dinheiro; a Constituição vale primeiro.
+	# The player's Electoral Code adjusts threshold, turnout and the weight of money; the Constitution applies first.
 	var law := CodeEleitoral.rules_for(world, c)
 	for p: Dictionary in data.parties:
 		p.support = float(p.support) * float(mood.call(p)) * rng.randf_range(0.92, 1.08)
-		# Voto obrigatório leva às urnas quem costuma faltar, e esse eleitor pende para a esquerda econômica.
+		# Compulsory voting brings to the polls those who usually stay away, and this voter leans economically left.
 		if law.get("compulsory", false):
 			p.support = float(p.support) * (1.0 - 0.06 * float(p.get("econ", 0.0)))
 	Politics._normalize(data)
@@ -163,7 +163,7 @@ static func run(world: GameWorld, c: Country, data: Dictionary, mood: Callable) 
 	var subs: Subdivisions = world.subdivisions
 	var roots: Array = subs.roots_of(c.iso)
 	var total: int = data.seats_total
-	# Partidos abaixo da cláusula de barreira, medida no voto nacional, não entram pela lista.
+	# Parties below the electoral threshold, measured on the national vote, do not get in through the list.
 	var eligible: Array = data.parties.filter(func(p): return float(p.support) >= threshold)
 	if eligible.is_empty():
 		eligible = data.parties
@@ -201,10 +201,10 @@ static func run(world: GameWorld, c: Country, data: Dictionary, mood: Callable) 
 				result = _dhondt(votes, n)
 			_:
 				for s in n:
-					# Cada cadeira é um distrito menor, com o humor local dele.
+					# Each seat is a smaller district, with its own local mood.
 					var local := {}
 					for id: int in votes:
-						# Lugares votam bem diferente uns dos outros: é isso que abre espaço a quem é forte só em parte do país.
+						# Places vote very differently from one another: that is what makes room for whoever is strong in only part of the country.
 						local[id] = float(votes[id]) * exp(rng.randfn(0.0, FPTP_LOCAL_SPREAD))
 					var winner: int = _plurality(local) if system != "two_round" else int(_runoff(local, data).winner)
 					result[winner] = int(result.get(winner, 0)) + 1
@@ -224,7 +224,7 @@ static func run(world: GameWorld, c: Country, data: Dictionary, mood: Callable) 
 		var list_seats := _dhondt(national, maxi(total - used, 0))
 		for id: int in list_seats:
 			won[id] = int(won[id]) + int(list_seats[id])
-	# Ajuste fino: o que sobrou ou faltou por arredondamento fica com o maior partido.
+	# Fine adjustment: what is left over or missing from rounding goes to the largest party.
 	var count := 0
 	for id: int in won:
 		count += int(won[id])
@@ -249,7 +249,7 @@ static func run(world: GameWorld, c: Country, data: Dictionary, mood: Callable) 
 	return report
 
 
-## Senado: cada unidade elege o mesmo número de senadores, por maioria, seja grande ou pequena.
+## Senate: each unit elects the same number of senators, by majority, whether large or small.
 static func _elect_upper_house(data: Dictionary, districts: Array, rng: RandomNumberGenerator, _world: GameWorld, _c: Country) -> void:
 	for p: Dictionary in data.parties:
 		p["upper_seats"] = 0
@@ -267,7 +267,7 @@ static func _elect_upper_house(data: Dictionary, districts: Array, rng: RandomNu
 			winner["upper_seats"] = int(winner.get("upper_seats", 0)) + 1
 
 
-## Chefe de governo eleito direto, em dois turnos: pesa o partido e também o candidato.
+## Head of government directly elected, in two rounds: the party weighs and so does the candidate.
 static func _presidential(data: Dictionary, rng: RandomNumberGenerator) -> Dictionary:
 	var votes := {}
 	var total := 0.0

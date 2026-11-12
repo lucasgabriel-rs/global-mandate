@@ -1,7 +1,7 @@
 class_name MapView
 extends Node2D
-## Mapa-múndi: polígonos por país, câmera com zoom/arraste, seleção, modos de mapa,
-## rótulos e sobreposições (guerras, fluxos de comércio).
+## World map: polygons per country, camera with zoom/drag, selection, map modes,
+## labels and overlays (wars, trade flows).
 
 signal country_clicked(c: Country)
 signal country_hovered(c: Country)
@@ -20,7 +20,7 @@ const MUN_LABEL_ZOOM := 5.0
 const CAPITAL_ZOOM := 1.6
 const FOREIGN_CAPITAL_ZOOM := 1.1
 const CAPITAL_NAME_ZOOM := 2.4
-## Portos e aeroportos do país do jogador: símbolos a partir deste zoom, nomes a partir do seguinte.
+## Ports and airports of the player's country: symbols from this zoom, names from the next one.
 const INFRA_ZOOM := 0.9
 const INFRA_NAME_ZOOM := 3.2
 const OCEAN := Color("0a1520")
@@ -31,7 +31,7 @@ const ANTARCTICA := Color("1a242c")
 const ROB_X := [1, 0.9986, 0.9954, 0.99, 0.9822, 0.973, 0.96, 0.9427, 0.9216, 0.8962, 0.8679, 0.835, 0.7986, 0.7597, 0.7186, 0.6732, 0.6213, 0.5722, 0.5322]
 const ROB_Y := [0, 0.062, 0.124, 0.186, 0.248, 0.31, 0.372, 0.434, 0.4958, 0.5571, 0.6176, 0.6769, 0.7346, 0.7903, 0.8435, 0.8936, 0.9394, 0.9761, 1]
 
-## Modos: chave -> [rótulo, baixo, alto, cor-baixa, cor-alta, descrição do intervalo]
+## Modes: key -> [label, low, high, low color, high color, interval description]
 # i18n-begin
 const MODES := {
 	"politico": ["Político"],
@@ -70,7 +70,7 @@ var interactive := true
 var _last_cam := Vector2.INF
 var _last_zoom := Vector2.ZERO
 
-## Com a aba Divisões aberta, clicar em uma unidade seleciona a unidade em vez do país.
+## With the Divisões tab open, clicking a unit selects the unit instead of the country.
 var unit_pick := false
 var selected_unit := -1
 var drawing := false
@@ -89,7 +89,7 @@ var _mun_lines: Node2D
 var _lines_revision := -1
 var _units_layer: Node2D
 var _draft_layer: Node2D
-## Marcas de portos e aeroportos, refeitas fora da simulação: [posição no mapa, tipo, cor, nome].
+## Port and airport marks, rebuilt outside the simulation: [map position, type, color, name].
 var _infra_marks: Array = []
 var _infra_key := []
 
@@ -144,7 +144,7 @@ func _fit() -> void:
 	_camera.zoom = Vector2.ONE * _target_zoom
 
 
-## Enquadra o mundo inteiro em uma faixa horizontal da tela (o resto fica sob painéis).
+## Fits the whole world into a horizontal strip of the screen (the rest stays under panels).
 func frame_region(left: float, right: float) -> void:
 	var size := get_viewport_rect().size
 	var z := (right - left) / (width * 1.02)
@@ -179,19 +179,19 @@ func _build_graticule() -> void:
 			_graticule.append(_project(lon, lat + 5))
 
 
-# Carregar o mapa acontece em etapas, para a tela nunca parar: ler o arquivo e triangular cada país rodam em
-# outras threads, e só criar os nós fica na thread principal, em pedaços (ver load_features em main.gd).
+# Loading the map happens in stages, so the screen never stops: reading the file and triangulating each country run on
+# other threads, and only creating the nodes stays on the main thread, in chunks (see load_features in main.gd).
 
 var _raw_features: Array = []
 var _prepared: Array = []
 var _built_features := 0
 
 
-## Thread de trabalho. Só mexe nos dados deste objeto, nunca nos nós.
+## Worker thread. Only touches this object's data, never the nodes.
 func load_feature_data() -> void:
 	var data := GameData.load_map()
 	width = data.width
-	# Cópia: a outra thread está lendo a mesma lista, e ordenar mexeria nela.
+	# Copy: the other thread is reading the same list, and sorting would change it.
 	var raw: Array = data.features.duplicate()
 	raw.sort_custom(func(a, b): return float(a.area) > float(b.area))
 	_raw_features = raw
@@ -202,7 +202,7 @@ func feature_count() -> int:
 	return _raw_features.size()
 
 
-## Várias threads ao mesmo tempo, cada uma no próprio país: nenhuma escreve no que é da outra.
+## Several threads at once, each on its own country: none writes to what belongs to another.
 func prepare_feature(index: int) -> void:
 	var feat: Dictionary = _raw_features[index]
 	var rings: Array = []
@@ -218,7 +218,7 @@ func prepare_feature(index: int) -> void:
 		var ids := Geometry2D.triangulate_polygon(ring)
 		var pieces := [ring]
 		if ids.is_empty():
-			# A simplificação pode gerar autointerseções: o Clipper devolve anéis limpos.
+			# Simplification may generate self-intersections: Clipper returns clean rings.
 			pieces = Geometry2D.offset_polygon(ring, 0.05, Geometry2D.JOIN_MITER)
 		var any_ok := false
 		for piece: PackedVector2Array in pieces:
@@ -247,7 +247,7 @@ func prepare_feature(index: int) -> void:
 	_prepared[index] = {"rings": rings, "holes": holes, "border": border, "verts": verts, "indices": indices, "rect": rect, "failed": failed}
 
 
-## Thread principal: cria os nós já com os dados prontos, até gastar o tempo do quadro. true: terminou.
+## Main thread: creates the nodes already with the data ready, until the frame's time is spent. true: finished.
 func build_features_slice(budget_usec: int) -> bool:
 	var start := Time.get_ticks_usec()
 	while _built_features < _raw_features.size():
@@ -302,12 +302,12 @@ func _draw() -> void:
 
 
 func _draw_native_borders() -> void:
-	# A camada pode pedir desenho antes de a thread do mapa entregar as fronteiras.
+	# The layer may ask for drawing before the map thread delivers the borders.
 	if not _border_points.is_empty():
 		_native_borders.draw_multiline(_border_points, BORDER, -1.0)
 
 
-## Áreas que mudaram de país, por cima do mapa de base, com a cor do dono atual e fronteira própria.
+## Areas that changed country, on top of the base map, with the current owner's color and its own border.
 func _draw_cessions() -> void:
 	if world == null:
 		return
@@ -411,14 +411,14 @@ func _draw_units() -> void:
 			_unit_outline(subs.outline_of(subs.units[id]), Color("4fb3d9"), 2.6 / z)
 
 
-## Contorno de uma unidade; unidades sem fronteira desenhada (ilhas minúsculas, por exemplo) não têm pontos.
+## Outline of a unit; units with no drawn border (tiny islands, for example) have no points.
 func _unit_outline(pts: PackedVector2Array, color: Color, width: float) -> void:
 	if pts.size() >= 2:
 		_units_layer.draw_multiline(pts, color, width)
 
 
-## Divisas do cenário: uma camada estática, redesenhada só quando as unidades mudam.
-## O país do jogador aparece mais forte. Uma divisa some quando as duas unidades foram apagadas.
+## Scenario borders: a static layer, redrawn only when the units change.
+## The player's country appears stronger. A border disappears when both units have been deleted.
 func _draw_base_lines() -> void:
 	if world == null:
 		return
@@ -426,7 +426,7 @@ func _draw_base_lines() -> void:
 	_draw_arcs(_base_lines, subs.arcs, Color(0.02, 0.05, 0.07, 0.95), Color(0.03, 0.07, 0.10, 0.55))
 
 
-## Municípios: camada própria, mais fina, que só aparece com zoom.
+## Municipalities: own layer, thinner, which only appears with zoom.
 func _draw_mun_lines() -> void:
 	if world == null:
 		return
@@ -498,8 +498,8 @@ func _unit_label(u: Dictionary, font: Font, xf: Transform2D, z: float, vp: Rect2
 	_labels.draw_string(font, bl, txt, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, color)
 
 
-## Capital do país do jogador: estrela grande, sempre visível. As de outros países e as de unidades
-## aparecem com zoom. Devolve os nomes que só entram depois dos rótulos dos países.
+## Capital of the player's country: large star, always visible. Those of other countries and of units
+## appear with zoom. Returns the names that only come in after the country labels.
 func _draw_capitals(font: Font, xf: Transform2D, z: float, vp: Rect2, placed: Array[Rect2]) -> Array:
 	var subs: Subdivisions = world.subdivisions
 	var drawn := {}
@@ -534,7 +534,7 @@ func _draw_capitals(font: Font, xf: Transform2D, z: float, vp: Rect2, placed: Ar
 	return late
 
 
-## Porto é um losango, aeroporto um triângulo; a cor diz o quanto está cheio (ou fechado).
+## A port is a diamond, an airport a triangle; the color says how full it is (or closed).
 func _draw_infra(font: Font, xf: Transform2D, z: float, vp: Rect2, placed: Array[Rect2], names: bool) -> void:
 	if z < INFRA_ZOOM or (names and z < INFRA_NAME_ZOOM):
 		return
@@ -603,7 +603,7 @@ func _draw_custom_labels(font: Font, xf: Transform2D, z: float, vp: Rect2, place
 			_unit_label(subs.units[id], font, xf, z, vp, placed, Color(1.0, 0.95, 0.8, 0.95))
 
 
-## Rótulos do cenário só aparecem com zoom e depois dos países. A lista vem da maior para a menor.
+## Scenario labels only appear with zoom and after the countries. The list goes from largest to smallest.
 func _draw_base_labels(font: Font, xf: Transform2D, z: float, vp: Rect2, placed: Array[Rect2]) -> void:
 	if z < BASE_LABEL_ZOOM:
 		return
@@ -678,7 +678,7 @@ func bind(w: GameWorld) -> void:
 	_labels.queue_redraw()
 
 
-## Os nomes dos países no mapa mudam com o idioma.
+## Country names on the map change with the language.
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_TRANSLATION_CHANGED and _labels:
 		_labels.queue_redraw()
@@ -790,13 +790,13 @@ func focus_on_point(pos: Vector2) -> void:
 
 # --- Unidades subnacionais -------------------------------------------------------
 
-## Contornos de tudo que pertence ao país, incluindo territórios anexados.
-## Enclaves estrangeiros (Lesoto na África do Sul) são feições próprias e entram como furos.
+## Outlines of everything belonging to the country, including annexed territories.
+## Foreign enclaves (Lesotho in South Africa) are features of their own and come in as holes.
 func territory_of(c: Country) -> Dictionary:
 	return world.territories.territory_of(c, world)
 
 
-## force: o jogador mudou, e com ele a cor das divisas.
+## force: the player changed, and with them the color of the borders.
 func refresh_units(force := false) -> void:
 	var revision: int = world.subdivisions.revision
 	if force or revision != _lines_revision:
@@ -825,7 +825,7 @@ func set_draft_color(color: Color) -> void:
 	_draft_layer.queue_redraw()
 
 
-## Encerra sem avisar ninguém: usado por quem já está fechando a própria sessão.
+## Closes without notifying anyone: used by whoever is already closing their own session.
 func end_draft() -> void:
 	drawing = false
 	draft.clear()
@@ -993,7 +993,7 @@ func _process(delta: float) -> void:
 		_overlay.queue_redraw()
 	if drawing:
 		_draft_layer.queue_redraw()
-	# Rótulos ficam em outra camada: redesenha quando a câmera muda (arraste, zoom, foco animado).
+	# Labels are on another layer: redraws when the camera changes (drag, zoom, animated focus).
 	if _camera.position != _last_cam or _camera.zoom != _last_zoom:
 		if _camera.zoom != _last_zoom:
 			_units_layer.queue_redraw()

@@ -1,16 +1,16 @@
-// Converte o Natural Earth admin-1 (10m) em data/admin1.json: as unidades subnacionais do cenário.
-// Uso: node tools/build_admin1.mjs   (a partir da raiz do projeto)
+// Converts Natural Earth admin-1 (10m) into data/admin1.json: the scenario's subnational units.
+// Usage: node tools/build_admin1.mjs   (from the project root)
 //
-// Divide os anéis em arcos e simplifica cada arco uma vez só: as divisas entre duas unidades
-// continuam idênticas nos dois lados e não abrem frestas. Divisas dentro do mesmo país vão
-// para "arcs", que é o que o mapa desenha.
+// Splits the rings into arcs and simplifies each arc only once: the borders between two units
+// stay identical on both sides and do not open gaps. Borders inside the same country go
+// into "arcs", which is what the map draws.
 import { readFileSync, writeFileSync } from "node:fs";
 import { project, area, centroid, key, buildArcs } from "./geo.mjs";
 
 const TOLERANCE_DEG = 0.04;
-const MIN_PIECE_AREA = 0.02; // unidades² do mapa projetado
+const MIN_PIECE_AREA = 0.02; const MIN_PIECE_AREA = 0.02; // map units² (projected)
 
-// Territórios com linha própria no Natural Earth, ligados ao país que os administra no jogo.
+// Territories with their own line in Natural Earth, linked to the country that administers them in the game.
 const ALIASES = {
   SDS: "SSD", KOS: "XKX", PSX: "PSE", SOL: "SOM", CYN: "CYP", SAH: "MAR", KAS: "IND", KAB: "KAZ",
   GRL: "DNK", FRO: "DNK", PRI: "USA", GUM: "USA", MNP: "USA", VIR: "USA", ASM: "USA", UMI: "USA",
@@ -75,7 +75,7 @@ for (const f of raw.features) {
   const polys = f.geometry.type === "Polygon" ? [f.geometry.coordinates] : f.geometry.coordinates;
   units.push({
     name: q.name || q.name_en || "Ilhas menores", owner: iso, type: TYPES[kind] || "Região",
-    // Só o anel externo: enclaves são unidades próprias e a menor tem prioridade no clique.
+        // Only the outer ring: enclaves are units of their own and the smallest has priority on click.
     rings: polys.map((p) => p[0].slice(0, -1)),
   });
 }
@@ -92,7 +92,7 @@ for (let i = 0; i < units.length; i++) {
     if (ring.length >= 3) pieces.push(ring);
   }
   if (!pieces.length) {
-    // Unidade pequena demais para a tolerância: usa o anel original, só projetado.
+        // Unit too small for the tolerance: uses the original ring, only projected.
     pieces = u.rings.filter((r) => r.length >= 3).map((r) => r.map(project));
   }
   const areas = pieces.map(area);

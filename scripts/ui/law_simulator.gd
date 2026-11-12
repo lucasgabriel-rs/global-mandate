@@ -1,6 +1,6 @@
 class_name LawSimulator
 extends PanelContainer
-## Testa a norma com um cidadão fictício. Nada aqui muda a partida.
+## Tests the norm with a fictional citizen. Nothing here changes the match.
 
 var editor: LawEditor
 var _previous := ""

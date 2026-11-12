@@ -1,7 +1,7 @@
 class_name Hemicycle
 extends Control
-## Plenário em semicírculo: um ponto por assento, da esquerda à direita do espectro político.
-## Partidos do governo têm o ponto cheio; os da oposição, um contorno em volta.
+## Semicircular chamber: one dot per seat, from the left to the right of the political spectrum.
+## Government parties have a filled dot; opposition ones, an outline around it.
 
 const MAX_ROWS := 9
 
@@ -18,7 +18,7 @@ func set_parties(parties: Array, coalition: Array) -> void:
 	queue_redraw()
 
 
-## Posições dos assentos: fileiras concêntricas, com mais lugares nas de fora.
+## Seat positions: concentric rows, with more places in the outer ones.
 func seat_positions(count: int) -> PackedVector2Array:
 	var center := Vector2(size.x * 0.5, size.y - 4.0)
 	var outer := minf(size.x * 0.5 - 6.0, size.y - 10.0)

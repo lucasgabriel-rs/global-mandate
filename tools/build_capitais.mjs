@@ -1,16 +1,16 @@
-// Gera data/capitais.json com nome em português e posição das capitais nacionais (Natural Earth).
-// Uso: node tools/build_capitais.mjs   (depois, rode tools/clip_units.gd, que acrescenta a geometria)
+// Generates data/capitais.json with the Portuguese name and position of the national capitals (Natural Earth).
+// Usage: node tools/build_capitais.mjs   (then run tools/clip_units.gd, which adds the geometry)
 //
-// O Brasil fica de fora: suas capitais já são municípios, definidos em subdivisions.gd.
+// Brazil is left out: its capitals are already municipalities, defined in subdivisions.gd.
 import { readFileSync, writeFileSync } from "node:fs";
 import { project } from "./geo.mjs";
 
-// Onde a fonte marca várias capitais ou a maior cidade em vez da capital oficial.
+// Where the source marks several capitals or the largest city instead of the official capital.
 const CHOSEN = {
   ZAF: "Pretoria", CIV: "Yamoussoukro", BOL: "Sucre", MMR: "Naypyidaw", TZA: "Dodoma", BEN: "Porto-Novo",
   LKA: "Sri Jayawardenepura Kotte", HKG: "Hong Kong", XKX: "Pristina", PSE: "Ramallah",
 };
-// Código do país na fonte, quando difere da tabela do jogo.
+// Country code in the source, when it differs from the game's table.
 const SOURCE_ISO = { XKX: "KOS", PSE: "PSX" };
 const PT = {
   "Washington, D.C.": "Washington", Beijing: "Pequim", Berlin: "Berlim", Tokyo: "Tóquio", "New Delhi": "Nova Délhi",

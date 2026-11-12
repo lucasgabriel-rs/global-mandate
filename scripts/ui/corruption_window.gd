@@ -1,12 +1,12 @@
 class_name CorruptionWindow
 extends ColorRect
-## Janela das ações de corrupção, pagas pelo fundo do partido: comprar votos, abafar escândalos, favorecer aliados,
-## caixa dois e desvio. Mostra a percepção, a exposição ao escândalo e o andamento da investigação.
+## Window of the corruption actions, paid for by the party fund: buying votes, hushing up scandals, favoring allies,
+## slush funds and embezzlement. Shows perception, exposure to scandal and the progress of the investigation.
 
 signal closed
 
 const ROW := preload("res://scenes/ui/rows/corruption_action.tscn")
-## As ações que não precisam de uma norma escolhida, na ordem da janela.
+## The actions that do not need a chosen norm, in the order of the window.
 const PLAIN := ["hush", "favor", "embezzle", "skim"]
 
 var world: GameWorld
@@ -124,7 +124,7 @@ func _buy() -> void:
 	refresh()
 
 
-## Volta a seleção para o item de metadado `id`, se ele ainda existir (a lista é refeita depois de cada compra).
+## Returns the selection to the metadata item `id`, if it still exists (the list is rebuilt after each purchase).
 func _restore_pick(list: OptionButton, id: int) -> void:
 	for i in list.item_count:
 		if int(list.get_item_metadata(i)) == id:

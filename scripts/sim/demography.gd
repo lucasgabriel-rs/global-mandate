@@ -1,28 +1,28 @@
 class_name Demography
 extends RefCounted
-## Demografia em três faixas (0-14, 15-64, 65+): natalidade, mortalidade, envelhecimento e
-## migração entre países. A população total continua em Country.pop; as faixas são frações dela.
-## Roda na thread da simulação: nada de nós nem sinais aqui.
+## Demography in three age groups (0-14, 15-64, 65+): birth rate, mortality, aging and
+## migration between countries. Total population stays in Country.pop; the groups are fractions of it.
+## Runs on the simulation thread: no nodes or signals here.
 
 const DT := 1.0 / 12.0
-## Mortalidade anual de jovens e adultos; o resto das mortes cai sobre os idosos.
+## Annual mortality of young people and adults; the rest of the deaths fall on the elderly.
 const MORT_YOUNG := 0.0015
 const MORT_ADULT := 0.003
-## Migração: diferença de atração (ver _pull) abaixo da qual ninguém se muda, taxa anual por ponto
-## de diferença além dela, refugiados ao ano em guerra e tetos anuais, em fração da população.
+## Migration: attraction difference (see _pull) below which nobody moves, annual rate per point
+## of difference beyond it, refugees per year in war and annual caps, as a fraction of the population.
 const NEUTRAL := 1.0
 const RATE_IN := 0.0025
 const RATE_OUT := 0.0025
 const REFUGEES := 0.01
 const MAX_IN := 0.008
 const MAX_OUT := 0.04
-## Parte do gasto social que é aposentadoria e cresce com a fatia de idosos.
+## Part of social spending that is pensions and grows with the share of the elderly.
 const PENSION_SHARE := 0.55
-## Retiradas extras por ano da idade ativa quando faltam jovens: onde a natalidade já caiu, as
-## gerações que chegam aos 65 são maiores que as que entram aos 15, e o país envelhece rápido.
+## Extra withdrawals per year from the working age when young people are lacking: where the birth rate has already fallen, the
+## generations reaching 65 are larger than those entering at 15, and the country ages fast.
 const AGING := 0.010
-## Estrutura etária de partida (jovens 0-14, idosos 65+) dos maiores países, perto das
-## estimativas da ONU para 2024. Os demais usam a fórmula de renda e crescimento.
+## Starting age structure (young 0-14, elderly 65+) of the largest countries, close to the
+## UN estimates for 2024. The others use the income and growth formula.
 const START := {
 	"USA": [0.175, 0.18], "CHN": [0.165, 0.15], "JPN": [0.114, 0.296], "DEU": [0.14, 0.227],
 	"IND": [0.25, 0.07], "BRA": [0.20, 0.11], "RUS": [0.17, 0.165], "GBR": [0.175, 0.19],
@@ -38,13 +38,13 @@ const START := {
 }
 
 
-## Quão rico é o país numa escala 0-1 (US$ 800 a US$ 50 mil per capita).
+## How rich the country is on a 0-1 scale (US$ 800 to US$ 50 thousand per capita).
 static func _rich(pc_usd: float) -> float:
 	return clampf(log(maxf(pc_usd, 1.0) / 800.0) / log(62.5), 0.0, 1.0)
 
 
-## Estrutura inicial plausível a partir da renda e do crescimento populacional (% ao ano).
-## `mig` é a migração líquida inicial (fração ao ano), já contida em `popg`.
+## Plausible initial structure from income and population growth (% per year).
+## `mig` is the initial net migration (fraction per year), already contained in `popg`.
 static func init_country(c: Country, mig: float = 0.0) -> void:
 	var pc := c.gdp_pc()
 	var rich := _rich(pc)
@@ -58,13 +58,13 @@ static func init_country(c: Country, mig: float = 0.0) -> void:
 	c.adult = 1.0 - c.young - c.old
 	c.adult0 = c.adult
 	c.old0 = c.old
-	# Mortes por habitante: idosos pesam; países pobres têm mortalidade maior em todas as idades.
+	# Deaths per inhabitant: the elderly weigh; poor countries have higher mortality at all ages.
 	c.death = clampf(0.004 + 0.055 * c.old + 0.004 * (1.0 - rich), 0.004, 0.016)
 	c.birth = maxf(c.popg - mig + c.death, 0.005)
 	c.birth0 = c.birth
 	c.migration = mig
-	# Fluxos estacionários: com as taxas de hoje, as faixas mantêm o peso no primeiro ano.
-	# Os migrantes entram como adultos; `g` é o crescimento total, com a migração.
+	# Stationary flows: with today's rates, the groups keep their weight in the first year.
+	# Migrants enter as adults; `g` is the total growth, with migration.
 	var g := c.birth - c.death + mig
 	c.mort_old = maxf((c.death - MORT_YOUNG * c.young - MORT_ADULT * c.adult) / c.old, 0.02)
 	c.k_young = clampf(c.birth / c.young - g - MORT_YOUNG, 0.03, 0.12)
@@ -72,26 +72,26 @@ static func init_country(c: Country, mig: float = 0.0) -> void:
 	c.k_adult += AGING * maxf(1.0 - c.young / 0.25, 0.0)
 
 
-## Saves antigos não têm faixas: monta a estrutura na primeira etapa.
+## Old saves have no groups: builds the structure in the first step.
 static func ensure(c: Country) -> void:
 	if c.adult <= 0.0:
 		init_country(c)
 
 
-## Um mês de nascimentos, mortes e envelhecimento. Migração entra por step_world.
+## One month of births, deaths and aging. Migration comes in through step_world.
 static func step_month(c: Country, world: GameWorld) -> void:
 	if not c.alive:
 		return
 	ensure(c)
 	var rich := _rich(c.gdp_pc())
-	# Ganho de longevidade: a mortalidade dos idosos cai ~1,5% ao ano.
+	# Longevity gain: elderly mortality falls ~1.5% a year.
 	c.mort_old *= 1.0 - 0.015 * DT
-	# Transição demográfica: a natalidade cai devagar quando a renda sobe; guerra e crise adiam filhos.
+	# Demographic transition: the birth rate falls slowly when income rises; war and crisis postpone children.
 	var pc_rel := (c.y / maxf(c.pop, 0.001)) / maxf(c.pc0, 0.001)
 	var b_target := c.birth0 * pow(clampf(pc_rel, 0.3, 3.0), -0.6)
 	b_target *= 1.0 - 0.15 * c.mobilization - 0.15 * maxf(0.4 - c.stability, 0.0)
 	c.birth += (maxf(b_target, 0.004) - c.birth) * 0.01
-	# Gasto em saúde acima da base alonga a vida; guerra mata adultos.
+	# Health spending above the base lengthens life; war kills adults.
 	var health_extra: float = c.sp_health - float(c.sp0.get("health", c.sp_health))
 	var m_old := c.mort_old * clampf(1.0 - 2.0 * health_extra - 0.004 * rich, 0.7, 1.3)
 	var war_mort := 0.004 * c.mobilization + 0.01 * c.occupied
@@ -121,9 +121,9 @@ static func _set_bands(c: Country, y_n: float, a_n: float, o_n: float) -> void:
 	c.old = o_n / total
 
 
-## Território anexado: a população que chega traz a estrutura etária e as taxas de onde veio.
-## Chamar antes de somar `pop` em `to.pop`. As bases (adult0, old0, birth0) também se misturam, para
-## o trabalho e as aposentadorias não saltarem só porque o país ficou maior.
+## Annexed territory: the population that arrives brings the age structure and rates of where it came from.
+## Call before adding `pop` into `to.pop`. The bases (adult0, old0, birth0) are also mixed, so that
+## work and pensions do not jump just because the country got bigger.
 static func absorb(to: Country, from: Country, pop: float) -> void:
 	if pop <= 0.0:
 		return
@@ -134,21 +134,21 @@ static func absorb(to: Country, from: Country, pop: float) -> void:
 		to.set(f, lerpf(float(to.get(f)), float(from.get(f)), w))
 
 
-## Oferta de trabalho relativa à população: menos gente em idade ativa, menos trabalhadores.
+## Labor supply relative to population: fewer people of working age, fewer workers.
 static func labor_factor(c: Country) -> float:
 	if c.adult0 <= 0.0:
 		return 1.0
 	return c.adult / c.adult0
 
 
-## Gasto extra (fração do PIB) com aposentadorias por haver mais idosos que no início.
+## Extra spending (fraction of GDP) on pensions because there are more elderly people than at the start.
 static func pension_extra(c: Country) -> float:
 	if c.old0 <= 0.0:
 		return 0.0
 	return c.sp_social * PENSION_SHARE * (c.old / c.old0 - 1.0)
 
 
-## Atração de um país para migrantes: renda, paz e estabilidade.
+## A country's attraction for migrants: income, peace and stability.
 static func _pull(c: Country, world: GameWorld) -> float:
 	var v := log(maxf(c.gdp_pc(), 300.0) / 1000.0)
 	v += 2.0 * (c.stability - 0.5)
@@ -158,10 +158,10 @@ static func _pull(c: Country, world: GameWorld) -> float:
 	return v
 
 
-## Pessoas que entram (positivo) ou saem (negativo) de cada país em um mês, em milhões.
-## Taxas por habitante: quem está bem acima da média ponderada atrai, quem está bem abaixo perde;
-## a faixa do meio quase não se mexe. Guerra e ocupação somam refugiados. Entradas e saídas
-## são escaladas para se compensarem: a migração não mexe na população mundial.
+## People entering (positive) or leaving (negative) each country in a month, in millions.
+## Per-inhabitant rates: whoever is well above the weighted average attracts, whoever is well below loses;
+## the middle band barely moves. War and occupation add refugees. Inflows and outflows
+## are scaled to offset each other: migration does not change the world population.
 static func _flows(world: GameWorld) -> PackedFloat32Array:
 	var n := world.countries.size()
 	var pulls := PackedFloat32Array()
@@ -200,7 +200,7 @@ static func _flows(world: GameWorld) -> PackedFloat32Array:
 		if rate > 0.0:
 			out[c.idx] = minf(rate, MAX_OUT) * c.pop * DT
 			leaving += out[c.idx]
-	# Só migra quem tem para onde ir: o lado maior encolhe até igualar o menor.
+	# Only those with somewhere to go migrate: the larger side shrinks until it equals the smaller.
 	var moved := minf(leaving, arriving)
 	var s_out := moved / leaving if leaving > 0.0 else 0.0
 	var s_in := moved / arriving if arriving > 0.0 else 0.0
@@ -209,8 +209,8 @@ static func _flows(world: GameWorld) -> PackedFloat32Array:
 	return net
 
 
-## Taxa de migração líquida inicial de cada país, para a natalidade não contar duas vezes o
-## crescimento que nos dados já inclui imigrantes.
+## Initial net migration rate of each country, so the birth rate does not count twice the
+## growth that in the data already includes immigrants.
 static func init_world(world: GameWorld) -> void:
 	var net := _flows(world)
 	for c: Country in world.countries:
@@ -218,13 +218,13 @@ static func init_world(world: GameWorld) -> void:
 			init_country(c, net[c.idx] / maxf(c.pop * DT, 0.000001))
 
 
-## Migração mensal, depois que todos os países fecharam nascimentos e mortes.
+## Monthly migration, after all countries have closed births and deaths.
 static func step_world(world: GameWorld) -> void:
 	var net := _flows(world)
 	for c: Country in world.countries:
 		if not c.alive:
 			continue
 		var moved: float = net[c.idx]
-		# Quem migra é quase sempre adulto em idade de trabalhar.
+		# Whoever migrates is almost always an adult of working age.
 		_set_bands(c, c.young * c.pop, maxf(c.adult * c.pop + moved, 0.001), c.old * c.pop)
 		c.migration += (moved / maxf(c.pop * DT, 0.000001) - c.migration) * 0.2

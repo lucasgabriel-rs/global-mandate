@@ -1,8 +1,8 @@
 class_name Character
 extends RefCounted
-## Dados do personagem do jogador: um dicionário simples, fácil de salvar. O retrato é uma countryball com a
-## bandeira do país (Countryball); o gênero decide o laço e os nomes sorteados.
-## "name" guarda o nome inteiro, sempre igual a prenome + sobrenome, para quem só lê o nome.
+## Data of the player's character: a plain dictionary, easy to save. The portrait is a countryball with the
+## country's flag (Countryball); the gender decides the bow and the drawn names.
+## "name" holds the full name, always equal to first name + surname, for whoever only reads the name.
 
 const GENDERS := ["m", "f"]
 # i18n-begin
@@ -33,7 +33,7 @@ static func set_names(c: Dictionary, first: String, last: String) -> void:
 	c["name"] = full_name(c)
 
 
-## Sorteia prenome e sobrenome do gênero do personagem. Os dois ficam marcados como sorteados até o jogador digitar.
+## Draws first name and surname of the character's gender. Both stay marked as drawn until the player types.
 static func reroll_name(c: Dictionary, group: String, rng: RandomNumberGenerator) -> void:
 	var gender := String(c.get("gender", "m"))
 	set_names(c, Names.first(group, gender, rng), Names.last(group, gender, rng))
@@ -41,8 +41,8 @@ static func reroll_name(c: Dictionary, group: String, rng: RandomNumberGenerator
 	c["last_rolled"] = true
 
 
-## Trocar o gênero troca o prenome sorteado por um do gênero novo e passa o sobrenome sorteado para a forma
-## do gênero (Ivanov, Ivanova). O que o jogador digitou fica como está.
+## Changing the gender swaps the drawn first name for one of the new gender and turns the drawn surname into the
+## gender's form (Ivanov, Ivanova). What the player typed stays as it is.
 static func set_gender(c: Dictionary, gender: String, group: String, rng: RandomNumberGenerator) -> void:
 	c["gender"] = gender
 	var first := String(c.get("first_name", ""))
@@ -54,7 +54,7 @@ static func set_gender(c: Dictionary, gender: String, group: String, rng: Random
 	set_names(c, first, last)
 
 
-## Saves antigos guardam só o nome inteiro: o prenome vai até o primeiro espaço, e o gênero sai do prenome.
+## Old saves keep only the full name: the first name goes up to the first space, and the gender comes from the first name.
 static func migrated(old: Dictionary, rng: RandomNumberGenerator) -> Dictionary:
 	var c := old
 	if not c.has("first_name"):
@@ -75,7 +75,7 @@ static func migrated(old: Dictionary, rng: RandomNumberGenerator) -> Dictionary:
 	return c
 
 
-## Político como personagem para o retrato: os de saves antigos não têm gênero, que sai do prenome.
+## Politician as a character for the portrait: those from old saves have no gender, which comes from the first name.
 static func for_politician(member: Dictionary) -> Dictionary:
 	var gender := String(member.get("gender", ""))
 	if gender == "":
@@ -83,6 +83,6 @@ static func for_politician(member: Dictionary) -> Dictionary:
 	return {"name": member.get("name", ""), "gender": gender}
 
 
-## Título de governo conforme o regime do país.
+## Government title according to the country's regime.
 static func title_for(c: Country) -> String:
 	return TranslationServer.translate("Chefe de governo") if c.dem >= 4.0 else TranslationServer.translate("Líder supremo")

@@ -1,43 +1,43 @@
 class_name Corporate
 extends RefCounted
-## Empresas de cada país e a bolsa de valores (capital aberto e capital fechado).
-## Contrato com o resto do jogo: lê `Country.sector_out`/`sector_share` (ver Sectors), pode somar em
-## `Country.sector_boost`, e é dono de `Country.stock`, o índice da bolsa. Nunca toca em nós nem emite sinais:
-## roda na thread da simulação (notícias só por `world.emit_news`).
+## Companies of each country and the stock exchange (open capital and closed capital).
+## Contract with the rest of the game: reads `Country.sector_out`/`sector_share` (see Sectors), may add to
+## `Country.sector_boost`, and owns `Country.stock`, the exchange index. Never touches nodes or emits signals:
+## runs on the simulation thread (news only through `world.emit_news`).
 ##
-## Cada empresa fatura uma fração do produto do seu setor; a margem sente o ciclo, o juro e o câmbio, e o
-## valor é o lucro vezes um P/L que cai quando o juro e o risco sobem. As grandes são nomeadas (dados reais
-## ou geradas); o resto das listadas entra agregado como "demais empresas", que acompanha o PIB nominal.
+## Each company bills a fraction of its sector's output; the margin feels the cycle, interest and the exchange rate, and the
+## value is the profit times a P/E that falls when interest and risk rise. The large ones are named (real data
+## or generated); the rest of the listed ones come in aggregated as "other companies", which follows nominal GDP.
 
 const DATA_PATH := "res://data/companies.json"
-## P/L típico de cada setor (mesma ordem de Sectors.NAMES).
+## Typical P/E of each sector (same order as Sectors.NAMES).
 const PE := [12.0, 9.0, 15.0, 10.0, 18.0, 13.0, 10.0, 24.0, 16.0, 13.0]
-## Margem líquida para onde as empresas voltam com o tempo.
+## Net margin to which companies return over time.
 const NORM_MARGIN := [0.05, 0.10, 0.07, 0.04, 0.03, 0.05, 0.15, 0.15, 0.07, 0.07]
-## Fração do lucro paga em dividendos.
+## Share of profit paid as dividends.
 const PAYOUT := [0.35, 0.55, 0.35, 0.35, 0.35, 0.4, 0.45, 0.15, 0.3, 0.6]
-## Margem perdida por ponto de juro acima do inicial: construção e serviços públicos vivem de dívida.
+## Margin lost per point of interest above the initial one: construction and public utilities live on debt.
 const RATE_SENS := [0.3, 0.3, 0.3, 0.6, 0.25, 0.4, -0.15, 0.1, 0.3, 0.5]
-## Margem ganha com a moeda mais fraca em termos reais: exportadores ganham, importadores perdem.
+## Margin gained with a weaker currency in real terms: exporters gain, importers lose.
 const FX_SENS := [0.12, 0.15, 0.08, 0.0, -0.06, -0.03, 0.0, 0.03, 0.1, 0.0]
-## Quanto cada setor amplifica o humor do mercado.
+## How much each sector amplifies the market's mood.
 const BETA := [0.7, 1.0, 1.1, 1.4, 1.0, 1.1, 1.3, 1.3, 1.2, 0.6]
-## Volatilidade própria de cada ação, por mês.
+## Each stock's own volatility, per month.
 const VOL := [0.04, 0.05, 0.045, 0.06, 0.045, 0.05, 0.045, 0.07, 0.05, 0.03]
-## Setores em que uma campeã nacional forte puxa a produtividade do setor inteiro.
+## Sectors where a strong national champion pulls up the productivity of the whole sector.
 const CHAMPION_SECTORS := [Sectors.INDUSTRY, Sectors.TECH]
 const MAX_EVENTS := 40
 const STATE_DISCOUNT := 0.25
 const PRIVATIZE_DISCOUNT := 0.08
 const TAKEOVER_PREMIUM := 0.2
 
-## Nomes das estatais geradas, por setor: são únicas no país.
+## Names of generated state companies, by sector: they are unique in the country.
 const STATE_NAMES := [
 	"Companhia Nacional de Agricultura", "Companhia Nacional de Petróleo", "Indústrias Nacionais Reunidas",
 	"Construtora Nacional", "Rede Nacional de Abastecimento", "Linhas Aéreas Nacionais", "Banco Nacional",
 	"Telecom Nacional", "Empresa Nacional de Turismo", "Companhia Elétrica Nacional",
 ]
-## Nomes das privadas geradas: o %s recebe uma palavra de TOKENS.
+## Names of generated private companies: the %s receives a word from TOKENS.
 const PRIVATE_NAMES := [
 	["Agro %s", "Grãos %s", "Frigorífico %s"], ["%s Energia", "Mineração %s", "Petróleo %s"],
 	["Indústrias %s", "%s Metalúrgica", "%s Química"], ["Construtora %s", "%s Engenharia", "%s Cimentos"],
@@ -51,18 +51,18 @@ const TOKENS := [
 	"Sol Nascente", "Estrela", "Continental", "Progresso", "União", "Federal", "Litoral", "Planalto",
 ]
 
-## Bolsas e empresas por país: {iso: mercado}. O mercado guarda a lista de empresas e o estado da bolsa.
+## Exchanges and companies by country: {iso: market}. The market keeps the list of companies and the exchange state.
 var markets := {}
-## Humor do mercado mundial (log): todas as bolsas sentem.
+## Mood of the world market (log): all exchanges feel it.
 var global_mood := 0.0
 var _last_risk := 0.2
 var next_id := 1
-## Gerador próprio: o do mundo só dá um sorteio por país e mês, como a fórmula antiga do índice, para que
-## o resto da simulação (guerras, crises, eleições) não mude de rumo por causa das empresas.
+## Own generator: the world's only gives one draw per country and month, like the old index formula, so that
+## the rest of the simulation (wars, crises, elections) does not change course because of companies.
 var _rng := RandomNumberGenerator.new()
 
 
-# --- Montagem ----------------------------------------------------------------------------
+# --- Setup ----------------------------------------------------------------------------
 
 func setup(world: GameWorld) -> void:
 	_rng.seed = hash("empresas%d" % world.rng.seed)
@@ -105,7 +105,7 @@ func _new_market(c: Country, _world: GameWorld) -> Dictionary:
 	}
 
 
-## Cria uma empresa. rev, profit e value em US$ bi; state é a participação do Estado.
+## Creates a company. rev, profit and value in US$ bn; state is the State's stake.
 func _add(c: Country, m: Dictionary, world: GameWorld, name_: String, sector: int, rev: float, profit: float, value: float, listed: bool, state: float) -> Dictionary:
 	var sec_usd := maxf(Sectors.output_usd(c, sector), 0.001)
 	var price := snappedf(_rng.randf_range(8.0, 90.0), 0.01)
@@ -121,7 +121,7 @@ func _add(c: Country, m: Dictionary, world: GameWorld, name_: String, sector: in
 	return co
 
 
-## Fecha a conta inicial: o prêmio de cada empresa faz o valor de partida bater com o dado real.
+## Closes the initial account: each company's premium makes the starting value match the real data.
 func _calibrate(c: Country, m: Dictionary, market_cap: float) -> void:
 	var yusd := maxf(c.y_usd(), 0.001)
 	var mult := _multiple(c, m, c.g0)
@@ -149,7 +149,7 @@ func _calibrate(c: Country, m: Dictionary, market_cap: float) -> void:
 	_summary(m)
 
 
-## Países sem dado ganham suas maiores empresas a partir dos setores que mais pesam.
+## Countries without data get their largest companies from the sectors that weigh the most.
 func _generate(c: Country, m: Dictionary, world: GameWorld) -> void:
 	var rng := _rng
 	var yusd := maxf(c.y_usd(), 0.01)
@@ -183,7 +183,7 @@ func _generate(c: Country, m: Dictionary, world: GameWorld) -> void:
 		for co: Dictionary in m.list:
 			if co.listed:
 				named += float(co.value)
-		# Valor de toda a bolsa, que _calibrate lê em setup.
+		# Value of the whole exchange, which _calibrate reads in setup.
 		m["cap_hint"] = maxf(yusd * (0.05 + 0.6 * rich), named * 1.2)
 
 
@@ -198,12 +198,12 @@ func _private_name(m: Dictionary, s: int, rng: RandomNumberGenerator) -> String:
 
 # --- Valuation ----------------------------------------------------------------------------
 
-## Taxa com que o mercado desconta lucros: juro real, prêmio de ações e risco do país.
+## Rate at which the market discounts profits: real interest, equity premium and country risk.
 static func _discount(c: Country) -> float:
 	return 0.08 + 0.5 * clampf(c.rate - c.pi_e, -0.03, 0.2) + 0.5 * c.risk
 
 
-## Quantas vezes o lucro o mercado paga hoje, relativo ao início (1 = como no começo).
+## How many times profit the market pays today, relative to the start (1 = as in the beginning).
 static func _multiple(c: Country, m: Dictionary, growth: float) -> float:
 	var ratio := float(m.disc0) / maxf(_discount(c), 0.02)
 	return clampf(ratio, 0.4, 2.2) * exp(clampf(2.0 * (growth - c.g0), -0.3, 0.2))
@@ -216,9 +216,9 @@ static func _fundamental(co: Dictionary, mult: float) -> float:
 	return maxf(earn * float(PE[s]) * mult * control, 0.001)
 
 
-# --- Etapa mensal de cada país -----------------------------------------------------------
+# --- Monthly step of each country -----------------------------------------------------------
 
-## Índice da bolsa, chamado na etapa mensal de cada país.
+## Exchange index, called in each country's monthly step.
 static func update_index(c: Country, world: GameWorld, growth: float) -> void:
 	var shock := world.rng.randfn(0.0, 0.14)
 	var m: Dictionary = world.corporate.markets.get(c.iso, {})
@@ -228,18 +228,18 @@ static func update_index(c: Country, world: GameWorld, growth: float) -> void:
 	world.corporate._step_country(c, m, world, growth, shock)
 
 
-## Fórmula macro para países sem nenhuma empresa listada.
+## Macro formula for countries with no listed company.
 static func _macro_index(c: Country, world: GameWorld, growth: float, shock: float) -> void:
 	c.stock *= exp(clampf(0.05 + 2.0 * (growth - c.g0) - 1.0 * c.rgap - 0.3 * (world.global_risk - 0.2) + c.pi_yoy * 0.8 + shock, -0.8, 0.8) * Economy.DT)
 
 
-## shock: o sorteio do mês vindo do gerador do mundo, em desvios de 0,14.
+## shock: the month's draw coming from the world generator, in deviations of 0.14.
 func _step_country(c: Country, m: Dictionary, world: GameWorld, growth: float, shock: float) -> void:
 	var rng := _rng
 	var yusd := maxf(c.y_usd(), 0.001)
 	var big := yusd > world.world_gdp() * 0.01
 	var mine := c == world.player
-	# Crise bancária: a Economia zera o crédito e arma um intervalo de oito anos; aqui só se percebe o salto.
+	# Banking crisis: Economy zeroes credit and sets an eight-year interval; here only the jump is noticed.
 	var crisis := c.crisis_cooldown > float(m.crisis) + 1.0
 	m.crisis = c.crisis_cooldown
 	var mood: float = m.mood
@@ -249,7 +249,7 @@ func _step_country(c: Country, m: Dictionary, world: GameWorld, growth: float, s
 	var market := mood + 0.8 * global_mood
 	var mult := _multiple(c, m, growth)
 	var real_dep := clampf(log(c.e / maxf(float(m.e0), 0.0001)) - log(c.p / maxf(float(m.p0), 0.0001)), -0.5, 0.5)
-	# Juro real, e não nominal: com inflação alta o juro nominal sobe sem apertar ninguém.
+	# Real interest, not nominal: with high inflation the nominal rate rises without squeezing anyone.
 	var rate_up := clampf(c.rate - c.pi_e - float(m.real0), -0.04, 0.06)
 	var before := 0.0
 	var after := 0.0
@@ -259,14 +259,14 @@ func _step_country(c: Country, m: Dictionary, world: GameWorld, growth: float, s
 	var earn := 0.0
 	var divs := 0.0
 	var healthy := [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-	# O que o país impõe a cada setor neste mês: ciclo, juro, câmbio e crédito.
+	# What the country imposes on each sector this month: cycle, interest, exchange rate and credit.
 	var macro := PackedFloat32Array()
 	macro.resize(Sectors.COUNT)
 	for s in Sectors.COUNT:
 		macro[s] = 0.25 * float(Sectors.CYCLE_BETA[s]) * c.gap - float(RATE_SENS[s]) * rate_up + float(FX_SENS[s]) * real_dep
 	macro[Sectors.FINANCE] += 0.3 * clampf(c.credit_gap, -0.15, 0.1)
 	var january := world.month == 0
-	# Os campos são lidos e escritos uma vez cada: com centenas de empresas, cada acesso ao dicionário pesa.
+	# Fields are read and written once each: with hundreds of companies, every dictionary access weighs.
 	for co: Dictionary in m.list:
 		var s: int = co.sector
 		var g: float = co.g
@@ -274,7 +274,7 @@ func _step_country(c: Country, m: Dictionary, world: GameWorld, growth: float, s
 		var rev := k * yusd * c.sector_share[s]
 		var norm: float = NORM_MARGIN[s]
 		var mb: float = co.mb
-		# Margens ruins voltam rápido ao normal; margens excepcionais duram anos.
+		# Bad margins return to normal fast; exceptional margins last years.
 		mb += (norm - mb) * (0.03 if mb < norm * 0.3 else 0.002)
 		var mi: float = float(co.mi) * 0.9 + rng.randfn(0.0, 0.004)
 		var bank_hit := crisis and s == Sectors.FINANCE
@@ -314,7 +314,7 @@ func _step_country(c: Country, m: Dictionary, world: GameWorld, growth: float, s
 		if listed:
 			before += old_local
 			after += local
-		# Prejuízo acumulado vira dificuldade; dificuldade demais, quebra.
+		# Accumulated losses become distress; too much distress, bankruptcy.
 		if distress > 0.12 and rng.randf() < 0.2:
 			if _rescue_or_fail(c, m, co, world, mine, big):
 				gone.append(co)
@@ -327,7 +327,7 @@ func _step_country(c: Country, m: Dictionary, world: GameWorld, growth: float, s
 			divs += div
 		if margin > 0.0 and (s == Sectors.INDUSTRY or s == Sectors.TECH):
 			healthy[s] = float(healthy[s]) + k
-	# Na crise, o banco mais frágil pode não resistir.
+	# In the crisis, the most fragile bank may not survive.
 	if crisis:
 		var failed := _bank_run(c, m, world, gone, mine, big)
 		if not failed.is_empty() and failed.listed:
@@ -336,7 +336,7 @@ func _step_country(c: Country, m: Dictionary, world: GameWorld, growth: float, s
 	for co: Dictionary in gone:
 		m.list.erase(co)
 	m.mood = mood
-	# O resto do mercado, agregado, acompanha o PIB nominal, o múltiplo e o humor.
+	# The rest of the market, aggregated, follows nominal GDP, the multiple and the mood.
 	var old_rest: float = float(m.rest) * float(m.get("e_last", c.e))
 	m.rest = float(m.rest_ratio) * yusd * mult * exp(market)
 	before += old_rest
@@ -359,12 +359,12 @@ func _step_country(c: Country, m: Dictionary, world: GameWorld, growth: float, s
 	m.dy = divs / named if named > 0.0 else 0.0
 
 
-## Dividendos das estatais: o que já vinha no orçamento do início está na receita-base; o Tesouro sente a diferença.
+## Dividends of state companies: what already came in the starting budget is in the base revenue; the Treasury feels the difference.
 func _treasury(c: Country, m: Dictionary, state_div: float, yusd: float) -> void:
 	c.extra_rev_bucket += (state_div - float(m.div0) * yusd) / 12.0
 
 
-## Uma campeã nacional mais forte que no início puxa a produtividade do setor; se ela some, o setor perde.
+## A national champion stronger than at the start pulls up the sector's productivity; if it disappears, the sector loses.
 func _champions(c: Country, m: Dictionary, healthy: Array) -> void:
 	if c.sector_boost.size() != Sectors.COUNT:
 		return
@@ -377,8 +377,8 @@ func _champions(c: Country, m: Dictionary, healthy: Array) -> void:
 		m.boost[s] = target
 
 
-## Quem quebra: estatais e gigantes são socorridos pelo Tesouro; as demais saem do mercado.
-## Devolve verdadeiro se a empresa deixou de existir.
+## Who goes bankrupt: state companies and giants are rescued by the Treasury; the others leave the market.
+## Returns true if the company ceased to exist.
 func _rescue_or_fail(c: Country, m: Dictionary, co: Dictionary, world: GameWorld, mine: bool, big: bool) -> bool:
 	var yusd := maxf(c.y_usd(), 0.001)
 	var too_big := float(co.rev) > yusd * 0.02
@@ -403,7 +403,7 @@ func _rescue_or_fail(c: Country, m: Dictionary, co: Dictionary, world: GameWorld
 	return true
 
 
-## Devolve o banco que quebrou, ou vazio.
+## Returns the bank that went bankrupt, or empty.
 func _bank_run(c: Country, m: Dictionary, world: GameWorld, gone: Array, mine: bool, big: bool) -> Dictionary:
 	var weakest: Dictionary = {}
 	for co: Dictionary in m.list:
@@ -418,7 +418,7 @@ func _bank_run(c: Country, m: Dictionary, world: GameWorld, gone: Array, mine: b
 	return {}
 
 
-## Nascimentos, aberturas e fechamentos de capital.
+## Births, IPOs and delistings.
 func _lifecycle(c: Country, m: Dictionary, world: GameWorld, market: float, mine: bool, big: bool) -> void:
 	var rng := _rng
 	var count: int = m.list.size()
@@ -432,8 +432,8 @@ func _lifecycle(c: Country, m: Dictionary, world: GameWorld, market: float, mine
 	if m.list.is_empty():
 		return
 	var hot := clampf(1.0 + 3.0 * market, 0.2, 3.0)
-	# Um sorteio por mês, numa empresa qualquer, com a chance multiplicada pelo tamanho da lista:
-	# dá a mesma frequência que sortear todas, sem percorrer a lista.
+	# One draw per month, on any company, with the chance multiplied by the size of the list:
+	# gives the same frequency as drawing for all, without walking the list.
 	var n: int = m.list.size()
 	var co: Dictionary = m.list[rng.randi() % n]
 	if not co.listed:
@@ -500,17 +500,17 @@ func _log(m: Dictionary, world: GameWorld, kind: String, co: Dictionary, value: 
 		events.resize(MAX_EVENTS)
 
 
-# --- Etapa mensal global ---------------------------------------------------------------
+# --- Global monthly step ---------------------------------------------------------------
 
-## Chamado uma vez por mês, depois da legislação.
+## Called once a month, after legislation.
 func step_month(world: GameWorld) -> void:
 	var rng := _rng
-	# O humor mundial sente o risco global: subida brusca do risco derruba todas as bolsas juntas.
-	# O risco global já oscila uns 5 pontos por mês; com peso 0,6 a bolsa americana varia ~5% ao mês, como a real.
+	# The world mood feels global risk: a sharp rise in risk brings down all exchanges together.
+	# Global risk already swings about 5 points a month; with weight 0.6 the US exchange moves ~5% a month, like the real one.
 	global_mood += -0.07 * global_mood + rng.randfn(0.0, 0.02) - 0.6 * (world.global_risk - _last_risk)
 	global_mood = clampf(global_mood, -1.0, 0.6)
 	_last_risk = world.global_risk
-	# Governos estrangeiros apertados vendem participações; regimes fechados às vezes tomam empresas.
+	# Strapped foreign governments sell stakes; closed regimes sometimes seize companies.
 	if world.countries.is_empty():
 		return
 	var c: Country = world.countries[rng.randi() % world.countries.size()]
@@ -535,10 +535,10 @@ static func _pick(m: Dictionary, filter: Callable) -> Dictionary:
 	return best
 
 
-# --- Privatizar e estatizar ---------------------------------------------------------------
+# --- Privatize and nationalize ---------------------------------------------------------------
 
-## Vende fraction da participação do Estado. A receita entra de uma vez no Tesouro.
-## Fechada, a empresa abre o capital para isso. Devolve a nota para a auditoria da norma.
+## Sells fraction of the State's stake. The revenue goes into the Treasury at once.
+## If closed, the company opens its capital for this. Returns the note for the norm's audit.
 func privatize(world: GameWorld, c: Country, name_: String, fraction: float) -> String:
 	var m: Dictionary = markets.get(c.iso, {})
 	var co := find(m, name_)
@@ -563,7 +563,7 @@ func privatize(world: GameWorld, c: Country, name_: String, fraction: float) -> 
 	return tr("privatizou %s de %s") % [UiKit.pct(sold, 0), co.name]
 
 
-## Compra ações até o Estado ter share do capital, pagando prêmio aos acionistas. Com tudo, sai da bolsa.
+## Buys shares until the State has share of the capital, paying a premium to shareholders. With everything, it leaves the exchange.
 func nationalize(world: GameWorld, c: Country, name_: String, share: float) -> String:
 	var m: Dictionary = markets.get(c.iso, {})
 	var co := find(m, name_)
@@ -583,7 +583,7 @@ func nationalize(world: GameWorld, c: Country, name_: String, share: float) -> S
 	return tr("estatizou %s de %s") % [UiKit.pct(bought, 0), co.name]
 
 
-# --- Consultas ------------------------------------------------------------------------------
+# --- Queries ------------------------------------------------------------------------------
 
 static func find(m: Dictionary, name_: String) -> Dictionary:
 	for co: Dictionary in m.get("list", []):
@@ -600,7 +600,7 @@ func companies_of(iso: String) -> Array:
 	return markets.get(iso, {}).get("list", [])
 
 
-## {nome: participação do Estado} das empresas do país, para o compilador das normas.
+## {name: State stake} of the country's companies, for the norm compiler.
 func state_shares(iso: String) -> Dictionary:
 	var out := {}
 	for co: Dictionary in companies_of(iso):
@@ -619,12 +619,12 @@ static func price_of(co: Dictionary) -> float:
 	return float(co.value) / maxf(float(co.shares), 0.0001)
 
 
-## P/L da empresa; zero quando dá prejuízo.
+## The company's P/E; zero when it makes a loss.
 static func pe_of(co: Dictionary) -> float:
 	return float(co.value) / float(co.profit) if float(co.profit) > 0.0 else 0.0
 
 
-# --- Salvar e carregar ------------------------------------------------------------------
+# --- Saving and loading ------------------------------------------------------------
 
 func to_dict() -> Dictionary:
 	return {

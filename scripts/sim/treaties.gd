@@ -1,7 +1,7 @@
 class_name Treaties
 extends RefCounted
-## Tratados como na vida real: negociação, assinatura, ratificação em cada país, vigência por um prazo, e denúncia
-## com aviso prévio. Só depois de ratificado por todos o tratado produz efeito.
+## Treaties as in real life: negotiation, signing, ratification in each country, validity for a term, and denunciation
+## with prior notice. Only after ratification by everyone does the treaty take effect.
 
 # i18n-begin
 const STATE_RATIFYING := "Em ratificação"
@@ -27,8 +27,8 @@ const STATE_BROKEN := "Rompido"
 const NOTICE_MONTHS := 6
 const PARTNER_RATIFY_MONTHS := [1, 3]
 
-## need: quanto de boa vontade o outro lado exige. econ e social: onde o tratado cai na bússola, para os parlamentos
-## e para o líder da outra parte. term: duração em anos, 0 para indefinido.
+## need: how much goodwill the other side requires. econ and social: where the treaty falls on the compass, for the parliaments
+## and for the other party's leader. term: duration in years, 0 for indefinite.
 # i18n-begin
 const TYPES := {
 	"fta": {"label": "Livre comércio", "desc": "Elimina barreiras ao comércio entre as partes.", "need": 15.0, "econ": 0.6, "social": 0.3, "term": 0},
@@ -41,7 +41,7 @@ const TYPES := {
 	"investment": {"label": "Proteção de investimentos", "desc": "Garantias para o capital estrangeiro, que passa a render mais.", "need": 10.0, "econ": 0.7, "social": 0.1, "term": 20},
 }
 # i18n-end
-## Tratados multilaterais que já existem, pelos blocos do cenário.
+## Multilateral treaties that already exist, from the scenario's blocs.
 # i18n-begin
 const FOUNDING := {
 	"NATO": {"title": "Tratado do Atlântico Norte", "type": "defense"}, "EU": {"title": "Tratado da União Europeia", "type": "customs"},
@@ -53,7 +53,7 @@ const FOUNDING := {
 
 var items: Array = []
 var next_id := 1
-## Busca rápida: a IA consulta tratados entre pares o tempo todo. Bilaterais por par e tipo; multilaterais à parte.
+## Fast lookup: the AI consults treaties between pairs all the time. Bilateral by pair and type; multilateral apart.
 var _pairs := {}
 var _multi: Array = []
 
@@ -112,13 +112,13 @@ func of_country(iso: String) -> Array:
 	return items.filter(func(t): return iso in t.parties)
 
 
-## O quanto esse líder gosta do tipo de tratado, pelas ideias dele. Vale para IA e para o jogador recebendo propostas.
+## How much this leader likes the type of treaty, from their ideas. Applies to the AI and to the player receiving proposals.
 static func leader_bias(type: String, leader: Dictionary) -> float:
 	var def: Dictionary = TYPES[type]
 	return (float(leader.get("econ", 0.0)) * float(def.econ) + float(leader.get("social", 0.0)) * float(def.social)) * 25.0
 
 
-## O lado de lá aceita? Pesam a relação, a afinidade entre a bússola dele e a de quem propõe, e o gosto pelo tipo.
+## Does the other side accept? The relation, the affinity between their compass and the proposer's, and the taste for the type weigh.
 func goodwill(world: GameWorld, proposer: Dictionary, target: Country, type: String, from: Country) -> float:
 	var theirs: Dictionary = world.politics.leader_of(target.iso)
 	var rel: float = world.diplomacy.relation(from.idx, target.idx)
@@ -128,7 +128,7 @@ func goodwill(world: GameWorld, proposer: Dictionary, target: Country, type: Str
 	return rel + (affinity - 0.5) * 30.0 + leader_bias(type, theirs)
 
 
-## O jogador propõe. Aceito, o tratado é assinado e vai à ratificação nos dois países.
+## The player proposes. If accepted, the treaty is signed and goes to ratification in both countries.
 func propose(world: GameWorld, target: Country, type: String) -> Dictionary:
 	if not world.in_office:
 		return {"ok": false, "msg": tr("Na oposição, você não negocia em nome do país.")}
@@ -148,7 +148,7 @@ func propose(world: GameWorld, target: Country, type: String) -> Dictionary:
 	return sign_with_player(world, target, type)
 
 
-## Assinatura com o jogador: o tratado só vale depois do parlamento dos dois lados.
+## Signing with the player: the treaty only applies after parliament on both sides.
 func sign_with_player(world: GameWorld, target: Country, type: String) -> Dictionary:
 	var def: Dictionary = TYPES[type]
 	var title := tr("Tratado de %s entre %s e %s") % [tr(def.label).to_lower(), world.player.name, target.name]
@@ -162,7 +162,7 @@ func sign_with_player(world: GameWorld, target: Country, type: String) -> Dictio
 	return {"ok": true, "accepted": true, "treaty": t, "msg": tr("Assinado. Agora precisa ser ratificado pelos parlamentos.")}
 
 
-## Parlamento do jogador decidiu.
+## The player's parliament decided.
 func on_player_ratification(world: GameWorld, id: int, approved: bool) -> void:
 	var t := get_by_id(id)
 	if t.is_empty() or t.state != STATE_RATIFYING:
@@ -191,7 +191,7 @@ func _check_force(world: GameWorld, t: Dictionary) -> void:
 		world.emit_news(tr("Entra em vigor: %s.") % t.title, "diplomacia", world.player)
 
 
-## Dois governos da IA fecham um tratado direto: ratificação sem drama, salvo se o parlamento de lá recusar.
+## Two AI governments close a treaty directly: ratification without drama, unless the parliament there refuses.
 func ai_sign(world: GameWorld, a: Country, b: Country, type: String) -> bool:
 	if not between(a, b, type).is_empty():
 		return false
@@ -216,7 +216,7 @@ func _parliament_accepts(world: GameWorld, c: Country, def: Dictionary) -> bool:
 	return yes * 2 > int(data.get("seats_total", 1))
 
 
-## Liga ou desliga o que o tratado faz entre cada par de partes.
+## Turns on or off what the treaty does between each pair of parties.
 func _apply(world: GameWorld, t: Dictionary, on: bool) -> void:
 	var d := world.diplomacy
 	var parties: Array = t.parties
@@ -245,7 +245,7 @@ func _apply(world: GameWorld, t: Dictionary, on: bool) -> void:
 						d.add_relation(a.idx, b.idx, 6.0)
 
 
-## Efeitos contínuos e calendário: ratificação da outra parte, fim do aviso prévio e fim do prazo.
+## Continuous effects and calendar: the other party's ratification, end of prior notice and end of term.
 func step_month(world: GameWorld) -> void:
 	for t: Dictionary in items:
 		if t.state in [STATE_ENDED, STATE_EXPIRED, STATE_REJECTED, STATE_BROKEN]:
@@ -303,7 +303,7 @@ func _monthly_effect(world: GameWorld, t: Dictionary) -> void:
 				c.capital *= 1.00015
 
 
-## Sair de um tratado: vale depois do aviso prévio, e a outra parte não gosta.
+## Leaving a treaty: applies after the prior notice, and the other party does not like it.
 func denounce(world: GameWorld, id: int) -> Dictionary:
 	var t := get_by_id(id)
 	var pl := world.player
@@ -315,7 +315,7 @@ func denounce(world: GameWorld, id: int) -> Dictionary:
 		if iso != pl.iso:
 			world.diplomacy.add_relation(pl.idx, world.by_iso[iso].idx, -10.0)
 	if t.parties.size() > 2:
-		# Multilateral: sai só quem denunciou; os outros seguem. Não há efeito para eles.
+		# Multilateral: only whoever denounced leaves; the others continue. There is no effect for them.
 		_leave(world, t, pl)
 		return {"ok": true, "msg": tr("Seu país deixa: %s.") % t.title}
 	t.state = STATE_DENOUNCED
@@ -334,7 +334,7 @@ func _leave(world: GameWorld, t: Dictionary, c: Country) -> void:
 	world.emit_news(tr("%s deixa: %s.") % [c.name, t.title], "diplomacia", c)
 
 
-## Guerra entre partes rompe o que havia. Atacar quem assinou não agressão pesa no mundo inteiro.
+## War between parties breaks what existed. Attacking whoever signed non-aggression weighs on the whole world.
 func on_war(world: GameWorld, att: Country, def: Country) -> void:
 	for t: Dictionary in items:
 		if t.state in [STATE_FORCE, STATE_RATIFYING, STATE_DENOUNCED] and att.iso in t.parties and def.iso in t.parties and t.parties.size() == 2:

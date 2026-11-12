@@ -1,13 +1,13 @@
 class_name MiniChart
 extends Control
-## Gráfico de linha compacto com título, valor atual e referência zero.
+## Compact line chart with title, current value and zero reference.
 
 @export var title := ""
 var series := PackedFloat32Array()
 @export var color := Color("4fb3d9")
-## Como o valor atual aparece: porcentagem ou número com 0, 1 ou 2 casas.
+## How the current value appears: percentage or number with 0, 1 or 2 decimal places.
 @export_enum("pct", "num0", "num1", "num2") var format := "pct"
-## Série do histórico do país que este gráfico mostra (growth, infl, debt...).
+## Series of the country's history that this chart shows (growth, infl, debt...).
 @export var series_key := ""
 var window := 60
 var zero_line := true

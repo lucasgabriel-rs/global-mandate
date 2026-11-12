@@ -1,12 +1,12 @@
 extends SceneTree
-## Limita as unidades subnacionais a quem as contém: estados pelo contorno do país no mapa e
-## municípios pelo estado. Roda depois de build_admin1.mjs e build_municipios.mjs e reescreve
-## data/admin1.json e data/municipios.json. Rodar de novo não muda o resultado.
+## Limits the subnational units to whatever contains them: states by the country's outline on the map and
+## municipalities by the state. Runs after build_admin1.mjs and build_municipios.mjs and rewrites
+## data/admin1.json and data/municipios.json. Running it again does not change the result.
 ## Uso: godot --headless --path . -s tools/clip_units.gd -- [--dry]
-## Para gerar tudo do zero: build_map.mjs, build_admin1.mjs, build_municipios.mjs e este script.
+## To generate everything from scratch: build_map.mjs, build_admin1.mjs, build_municipios.mjs and this script.
 ##
-## Uma unidade que fica inteira fora do contorno, como uma ilha que o mapa omite, vira um marcador
-## pequeno na borda mais próxima: continua existindo e pode ser selecionada, sem sair do limite.
+## A unit that falls entirely outside the outline, like an island that the map omits, becomes a small
+## marker on the nearest edge: it keeps existing and can be selected, without leaving the limit.
 
 const MIN_EXTRA_PIECE := 0.01
 const MARKER_RADIUS := 0.12
@@ -14,7 +14,7 @@ const ADMIN1 := "res://data/admin1.json"
 const MUNICIPIOS := "res://data/municipios.json"
 const CAPITAIS := "res://data/capitais.json"
 const CITY_RADIUS := 0.35
-## Unidade com o nome da capital e até esta área é a própria cidade (Paris, Berlim), sem unidade extra.
+## A unit with the capital's name and up to this area is the city itself (Paris, Berlin), with no extra unit.
 const CITY_UNIT_MAX_AREA := 5.0
 
 
@@ -77,8 +77,8 @@ func _init() -> void:
 	quit()
 
 
-## Liga cada capital à unidade que a contém. Se essa unidade já for a cidade, ela mesma é a capital;
-## senão, a capital vira uma unidade pequena dentro dela. Tudo fica dentro do limite do país.
+## Links each capital to the unit that contains it. If that unit is already the city, it is the capital itself;
+## otherwise, the capital becomes a small unit inside it. Everything stays inside the country's limit.
 func _place_capitals(capitals: Array, units: Array) -> void:
 	var by_owner := {}
 	for i in units.size():
@@ -95,7 +95,7 @@ func _place_capitals(capitals: Array, units: Array) -> void:
 		var nearest_unit := -1
 		for i: int in by_owner.get(cap.iso, []):
 			for piece: PackedVector2Array in _to_pieces(units[i].s):
-				# Só o contorno externo é guardado, então a província em volta de um enclave também contém o ponto.
+				# Only the outer outline is kept, so the province around an enclave also contains the point.
 				if Geometry2D.is_point_in_polygon(pos, piece) and (parent < 0 or float(units[i].a) < float(units[parent].a)):
 					parent = i
 				for k in piece.size():
@@ -168,7 +168,7 @@ func _clip(pieces: Array, container: Array, holes: Array) -> Array:
 	return out
 
 
-## Grava a geometria nova na unidade. Devolve Vector2(área perdida, área original).
+## Writes the new geometry to the unit. Returns Vector2(lost area, original area).
 func _apply(u: Dictionary, before: Array, clipped: Array, container: Array, markers: Array) -> Vector2:
 	var original := Subdivisions.total_area(before)
 	var pieces := _usable(clipped)
@@ -192,7 +192,7 @@ func _apply(u: Dictionary, before: Array, clipped: Array, container: Array, mark
 	return Vector2(maxf(original - area, 0.0), original)
 
 
-## Mantém a maior peça e descarta farelos do recorte.
+## Keeps the largest piece and discards crumbs from the clipping.
 func _usable(pieces: Array) -> Array:
 	var out := []
 	var biggest: PackedVector2Array = PackedVector2Array()
@@ -232,7 +232,7 @@ func _marker(from: Vector2, container: Array) -> PackedVector2Array:
 	return PackedVector2Array([nearest, nearest + Vector2(r, 0), nearest + Vector2(0, r)])
 
 
-## limits.call(arc) devolve [anéis permitidos, furos].
+## limits.call(arc) returns [allowed rings, holes].
 func _clip_arcs(arcs: Array, limits: Callable) -> Array:
 	var out := []
 	for arc: Array in arcs:
@@ -262,7 +262,7 @@ func _clip_arcs(arcs: Array, limits: Callable) -> Array:
 	return out
 
 
-## O recorte de linhas pode emendar dois pedaços com um trecho fora do limite: corta a linha nesses trechos.
+## Line clipping may join two pieces with a stretch outside the limit: cuts the line at those stretches.
 func _inside_runs(part: PackedVector2Array, rings: Array) -> Array:
 	var runs := []
 	var current := PackedVector2Array()

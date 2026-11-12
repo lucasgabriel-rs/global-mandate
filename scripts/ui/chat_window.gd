@@ -1,7 +1,7 @@
 class_name ChatWindow
 extends ColorRect
-## Janela de conversas estilo mensageiro: contatos à esquerda (líderes partidários e de outros países),
-## o histórico em balões no meio e as falas disponíveis como respostas rápidas embaixo.
+## Messenger-style conversation window: contacts on the left (party leaders and leaders of other countries),
+## the history in bubbles in the middle and the available lines as quick replies at the bottom.
 
 const BUBBLE := preload("res://scenes/ui/chat/chat_bubble.tscn")
 const CONTACT := preload("res://scenes/ui/chat/chat_contact.tscn")

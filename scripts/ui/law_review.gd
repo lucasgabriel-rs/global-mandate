@@ -1,7 +1,7 @@
 class_name LawReview
 extends PanelContainer
-## Antes de enviar ao parlamento: o efeito previsto na aprovação, no orçamento e nos grupos sociais, a
-## reação dos partidos e o caminho que a norma vai seguir. Nada aqui muda a partida.
+## Before sending to parliament: the predicted effect on approval, the budget and social groups, the
+## parties' reaction and the path the norm will follow. Nothing here changes the match.
 
 var editor: LawEditor
 

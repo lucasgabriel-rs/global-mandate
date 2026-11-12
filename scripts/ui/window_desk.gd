@@ -1,12 +1,12 @@
 class_name WindowDesk
 extends Control
-## Mesa das janelas do governo: abre, fecha e põe na frente as janelas flutuantes que são seus filhos.
-## Cada janela tem um índice fixo (a ordem dos filhos na cena), o mesmo das antigas abas; `current_tab`
-## é a janela da frente, ou -1 se nenhuma está aberta.
+## Desk of the government windows: opens, closes and brings to the front the floating windows that are its children.
+## Each window has a fixed index (the order of the children in the scene), the same as the old tabs; `current_tab`
+## is the front window, or -1 if none is open.
 
 signal tab_changed(index: int)
 
-## As janelas abrem no centro da tela; cada janela a mais desce um degrau em cascata.
+## Windows open in the center of the screen; each extra window goes down a step in cascade.
 const CASCADE := Vector2(28, 26)
 
 var current_tab: int:
@@ -36,7 +36,7 @@ func get_tab_count() -> int:
 	return _windows.size()
 
 
-## O conteúdo da janela (para achar em qual janela um painel mora).
+## The window's content (to find which window a panel lives in).
 func get_tab_control(i: int) -> Control:
 	return _windows[i].content()
 
@@ -76,7 +76,7 @@ func close(i: int) -> void:
 		_windows[i].close()
 
 
-## Clique no dock: abre se está fechada, traz para a frente se está atrás, minimiza se já está na frente.
+## Dock click: opens if closed, brings to the front if behind, minimizes if already in front.
 func toggle(i: int, from := Vector2.ZERO) -> void:
 	if is_open(i) and _front == i:
 		if from != Vector2.ZERO:
@@ -91,7 +91,7 @@ func close_all() -> void:
 		close(i)
 
 
-## Índices das janelas abertas, da de trás para a da frente.
+## Indices of the open windows, from the back to the front.
 func open_windows() -> Array[int]:
 	var out: Array[int] = []
 	for child in get_children():
@@ -114,7 +114,7 @@ func _on_closed(i: int) -> void:
 	tab_changed.emit(_front)
 
 
-## Clicar em qualquer ponto de uma janela a traz para a frente, como num sistema de janelas.
+## Clicking any point of a window brings it to the front, as in a window system.
 func _input(event: InputEvent) -> void:
 	if not (event is InputEventMouseButton and event.pressed):
 		return

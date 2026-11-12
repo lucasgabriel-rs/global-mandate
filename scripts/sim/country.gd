@@ -1,39 +1,39 @@
 class_name Country
 extends RefCounted
-## Estado completo de um país. Taxas e razões são frações (0.05 = 5%).
-## Valores monetários em bilhões de US$ a preços-base, salvo indicação.
+## Full state of a country. Rates and ratios are fractions (0.05 = 5%).
+## Monetary values are in US$ billions at base prices unless noted.
 
-# Identidade
+# Identity
 var idx := 0
 var iso := ""
 var name := ""
 var region := ""
 var blocs := PackedStringArray()
-var dem := 5.0                 # índice de democracia, 0-10
-var peg := 0                   # 0 flutuante, 1 âncora no US$, 2 união monetária (euro)
+var dem := 5.0                 # democracy index, 0-10
+var peg := 0                   # 0 floating, 1 pegged to the US$, 2 monetary union (euro)
 var alive := true
 var annexed_by := -1
 var center := Vector2.ZERO
 var area := 1.0
 
-# Produção
-var pop := 1.0                 # milhões
+# Output
+var pop := 1.0                 # millions
 var popg := 0.0
-# Demografia (ver Demography): frações da população por faixa e taxas anuais.
-var young := 0.0               # 0-14 anos
-var adult := 0.0               # 15-64 anos
+# Demography (see Demography): population shares by age group and annual rates.
+var young := 0.0               # 0-14 years
+var adult := 0.0               # 15-64 years
 var old := 0.0                 # 65+
 var adult0 := 0.0
 var old0 := 0.0
-var birth := 0.0               # nascimentos por habitante ao ano
+var birth := 0.0               # births per inhabitant per year
 var birth0 := 0.0
 var death := 0.0
-var k_young := 0.0             # fração dos jovens que vira adulta por ano
-var k_adult := 0.0             # fração dos adultos que se aposenta por ano
+var k_young := 0.0             # share of young people who become adults each year
+var k_adult := 0.0             # share of adults who retire each year
 var mort_old := 0.0
-var migration := 0.0           # migração líquida ao ano, fração da população
-var y := 1.0                   # PIB real
-var y_pot := 1.0               # PIB potencial
+var migration := 0.0           # net migration per year, as a fraction of the population
+var y := 1.0                   # real GDP
+var y_pot := 1.0               # potential GDP
 var y0 := 1.0
 var gap := 0.0
 var capital := 1.0
@@ -42,12 +42,12 @@ var human := 1.0
 var labor := 1.0
 var g_tfp0 := 0.01
 var g0 := 0.02
-var pc0 := 1.0                 # PIB per capita inicial (real), referência de convergência
+var pc0 := 1.0                 # initial real GDP per capita, convergence reference
 var inv_share0 := 0.2
-var occupied := 0.0            # fração do território ocupada por inimigos
-var damage := 0.0              # fração do potencial perdida por destruição recente
+var occupied := 0.0            # share of the territory occupied by enemies
+var damage := 0.0              # share of potential output lost to recent destruction
 
-# Demanda / choques
+# Demand / shocks
 var demand_shock := 0.0
 var supply_shock := 0.0
 var noise := 0.0
@@ -56,32 +56,32 @@ var credit_gap := 0.0
 var rgap := 0.0
 var crisis_cooldown := 0.0
 
-# Preços e moeda
-var p := 1.0                   # nível de preços
+# Prices and currency
+var p := 1.0                   # price level
 var p_hist := PackedFloat32Array()
 var pi_core := 0.02
 var pi_e := 0.02
 var pi_yoy := 0.02
 var pi_target := 0.02
-var cred := 0.7                # credibilidade do banco central, 0-1
-var rate := 0.03               # taxa básica
-var r_n := 0.01                # juro real neutro
-## Independente, o banco central decide o juro sozinho: nem o governo do país, nem o jogador, escolhem.
+var cred := 0.7                # central bank credibility, 0-1
+var rate := 0.03               # policy rate
+var r_n := 0.01                # neutral real rate
+## When independent, the central bank sets the rate by itself: neither the country's government nor the player chooses it.
 var cb_independent := true
 var rate_manual := false
 var rate_set := 0.03
-## Último juro anunciado no noticiário (negativo: ainda nenhum).
+## Last rate announced in the news (negative: none yet).
 var rate_said := -1.0
-var e := 1.0                   # moeda local por US$ (índice, 1 no início)
+var e := 1.0                   # local currency per US$ (index, 1 at the start)
 var rer := 1.0
 var rer_ref := 1.0
 
-# Política fiscal (frações do PIB)
+# Fiscal policy (fractions of GDP)
 var tax_income := 0.1
 var tax_consumption := 0.08
 var tax_corporate := 0.03
 var tax0 := 0.21
-var rent_take := 0.0           # fatia estatal das receitas de exportação de commodities
+var rent_take := 0.0           # state share of commodity export revenue
 var sp_social := 0.1
 var sp_health := 0.05
 var sp_education := 0.04
@@ -89,34 +89,34 @@ var sp_infra := 0.02
 var sp_defense := 0.02
 var sp_admin := 0.03
 var sp0 := {}
-var tariff := 0.0              # tarifa geral de importação
-var mon_fin := 0.0             # fração do déficit financiada por emissão
+var tariff := 0.0              # general import tariff
+var mon_fin := 0.0             # share of the deficit financed by money issuance
 var g_ref := 0.3
 var t_ref := 0.3
 var mobilization := 0.0
-var aid_flow := 0.0            # ajuda externa líquida recebida, US$ bi/ano
+var aid_flow := 0.0            # net foreign aid received, US$ bn/year
 var reparations := 0.0
 
-# Contas públicas (fluxos anualizados)
+# Public accounts (annualized flows)
 var revenue := 0.0
 var spending := 0.0
 var interest := 0.0
 var deficit := 0.0
-var debt_loc := 0.0            # dívida em moeda local (unidades de preços-base)
-var debt_fx := 0.0             # dívida em US$
+var debt_loc := 0.0            # debt in local currency (base-price units)
+var debt_fx := 0.0             # debt in US$
 var debt_ratio := 0.5
 var debt_tol := 0.6
 var avg_rate := 0.04
-var avg_fx := 0.05             # custo médio da dívida em US$ (não paga juro nominal local)
+var avg_fx := 0.05             # average cost of the US$ debt (pays no local nominal interest)
 var yield_gov := 0.05
-var yield_mult := 1.0          # parte da dívida de países pobres é concessional
+var yield_mult := 1.0          # part of poor countries' debt is concessional
 var risk := 0.01
 var risk0 := 0.01
 var rating := "BBB"
-var default_until := -1.0      # ano até o qual está sem acesso ao mercado
-var imf_program := 0.0         # meses restantes de programa com o FMI
+var default_until := -1.0      # year until which the country has no market access
+var imf_program := 0.0         # months left in the IMF program
 
-# Setor externo (US$ bi/ano)
+# External sector (US$ bn/year)
 var x_share := 0.2
 var m_share := 0.2
 var ca_resid := 0.0
@@ -127,101 +127,101 @@ var ca := 0.0
 var ca_ratio := 0.0
 var ca0 := 0.0
 var reserves := 10.0
-# Câmbio: intervenção do banco central, controle de capitais, fuga e dolarização
-var fx_lean := 0.3             # quanto o banco central segura do movimento do câmbio, 0-1
-var fx_interv := 0.0           # venda líquida de reservas no mês, anualizada (US$ bi/ano; negativa = compra)
-var cap_controls := 0.0        # controle de capitais, 0 (livre) a 1 (fechado)
-var cap_flight := 0.0          # saída de capitais, anualizada (US$ bi/ano)
-var dollarization := 0.0       # fração dos depósitos e preços em dólar, 0-1
-var uip_dep := 0.0             # depreciação esperada pela paridade descoberta: i - i* - prêmio
-var res_ratio0 := 0.0          # reservas de partida em fração do PIB em dólar: o colchão que o banco central recompõe
-# Fundo soberano (US$ bi): aplica no exterior, recebe renda de commodities e superávits
+# Exchange rate: central bank intervention, capital controls, flight and dollarization
+var fx_lean := 0.3             # how much of the exchange rate move the central bank holds back, 0-1
+var fx_interv := 0.0           # net reserve sales in the month, annualized (US$ bn/year; negative = purchase)
+var cap_controls := 0.0        # capital controls, 0 (free) to 1 (closed)
+var cap_flight := 0.0          # capital outflow, annualized (US$ bn/year)
+var dollarization := 0.0       # share of deposits and prices in dollars, 0-1
+var uip_dep := 0.0             # depreciation expected by uncovered parity: i - i* - premium
+var res_ratio0 := 0.0          # starting reserves as a share of dollar GDP: the cushion the central bank rebuilds
+# Sovereign wealth fund (US$ bn): invests abroad, receives commodity revenue and surpluses
 var swf := 0.0
 var swf_active := false
-var swf_rent_share := 0.0      # fração da renda de commodities do Estado que vai ao fundo
-var swf_surplus_share := 0.0   # fração do superávit nominal que vai ao fundo
-var swf_limit := 0.0           # saque anual máximo, fração do saldo
-var swf_in := 0.0              # aporte do ano (moeda local, bi/ano)
-var swf_out := 0.0             # saque do ano (moeda local, bi/ano)
-var swf_return := 0.0          # retorno do último mês, anualizado
-var swf_pain := 0.0            # perda de aprovação por sacar acima do retorno
-var swf_flow0 := 0.0          # fluxo líquido do fundo na partida, fração do PIB
-var rent_ref := 0.0            # renda de commodities média, para o amortecedor do fundo
+var swf_rent_share := 0.0      # share of the state's commodity revenue that goes to the fund
+var swf_surplus_share := 0.0   # share of the nominal surplus that goes to the fund
+var swf_limit := 0.0           # maximum annual withdrawal, as a share of the balance
+var swf_in := 0.0              # contribution for the year (local currency, bn/year)
+var swf_out := 0.0             # withdrawal for the year (local currency, bn/year)
+var swf_return := 0.0          # return of the last month, annualized
+var swf_pain := 0.0            # approval lost for withdrawing above the return
+var swf_flow0 := 0.0          # net flow of the fund at the start, share of GDP
+var rent_ref := 0.0            # average commodity revenue, for the fund's buffer
 var trade_loss := 0.0
-var trade0 := 0.0              # atritos já embutidos no PIB-base (sanções de 2024 etc.)
+var trade0 := 0.0              # frictions already built into the base GDP (2024 sanctions etc.)
 var press0 := 0.0
 var occ0 := 0.0
 var ext_demand := 0.0
-var stock := 100.0             # índice da bolsa; quem o move é o Corporate
+var stock := 100.0             # stock index; Corporate is what moves it
 
-# Setores (ver Sectors): frações do PIB que somam 1, produto real por setor e impulsos externos
+# Sectors (see Sectors): shares of GDP that sum to 1, real output per sector and external impulses
 var sector_base := PackedFloat32Array()
 var sector_bias := PackedFloat32Array()
 var sector_share := PackedFloat32Array()
 var sector_out := PackedFloat32Array()
-## Ganho de produtividade por setor que outros sistemas aplicam (0.03 = +3%). Infraestrutura e empresas somam aqui.
+## Productivity gain per sector that other systems apply (0.03 = +3%). Infrastructure and companies add to it.
 var sector_boost := PackedFloat32Array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
 var sector_drought := 0.0
-## Dinheiro do mês, em US$ bi, que entra ou sai do Tesouro fora dos tributos e das normas:
-## dividendos de estatais, venda de participações, obras em portos e aeroportos.
+## Money of the month, in US$ bn, that enters or leaves the Treasury outside taxes and norms:
+## dividends of state companies, sale of stakes, works at ports and airports.
 var extra_rev_bucket := 0.0
 var extra_spend_bucket := 0.0
-## Capacidade logística de portos e aeroportos frente à demanda: 1 é neutro, abaixo disso o comércio engasga.
+## Logistics capacity of ports and airports against demand: 1 is neutral, below it trade chokes.
 var logistics := 1.0
 
-# Commodities: produção/consumo-base por mercado e capacidade relativa
+# Commodities: base production/consumption per market and relative capacity
 var prod := PackedFloat32Array([0, 0, 0, 0, 0])
 var use := PackedFloat32Array([0, 0, 0, 0, 0])
 var prod_factor := PackedFloat32Array([1, 1, 1, 1, 1])
 var p_ref := PackedFloat32Array([1, 1, 1, 1, 1])
 
-# Mercado de trabalho e política
+# Labor market and politics
 var unemp := 0.05
 var unemp_n := 0.05
 var approval := 0.5
 var stability := 0.6
 var inequality := 0.38
 var next_election := 0.0
-## Efeitos das normas em vigor. Os "bucket" são o dinheiro do mês, em US$ bi.
+## Effects of the norms in force. The "bucket" fields are the money of the month, in US$ bn.
 var law_rev_bucket := 0.0
 var law_spend_bucket := 0.0
-## O mesmo dinheiro somado desde o último fechamento mensal das normas: a Economia zera os "bucket" no dia
-## da etapa fiscal do país, que não coincide com o fechamento.
+## The same money added up since the last monthly closing of the norms: Economy zeroes the "bucket" fields on
+## the country's fiscal step day, which does not coincide with the closing.
 var law_rev_month := 0.0
 var law_spend_month := 0.0
-var law_tax := 0.0             # peso anual dos tributos das normas, em fração do PIB
-var law_spend := 0.0           # peso anual das despesas das normas, em fração do PIB
+var law_tax := 0.0             # annual weight of the norms' taxes, as a fraction of GDP
+var law_spend := 0.0           # annual weight of the norms' spending, as a fraction of GDP
 var law_approval := 0.0
 var law_stability := 0.0
 var law_invest := 0.0
 var law_unemp := 0.0
-# Canais dos códigos legais (LawCode.monthly): desigualdade, oferta de trabalho, produtividade e evasão.
-var law_inequality := 0.0      # desvio do Gini em relação à base do país
-var law_labor := 0.0           # fração a mais ou a menos de oferta de trabalho
-var law_tfp := 0.0             # crescimento anual extra da PTF
-var law_evasion := 0.0         # fração da arrecadação perdida para a sonegação
-# Corrupção (ver Corruption): nível real, nível de partida e o que a opinião enxerga, de 0 a 1.
+# Channels of the legal codes (LawCode.monthly): inequality, labor supply, productivity and evasion.
+var law_inequality := 0.0      # deviation of the Gini from the country's base
+var law_labor := 0.0           # extra or missing share of labor supply
+var law_tfp := 0.0             # extra annual TFP growth
+var law_evasion := 0.0         # share of revenue lost to tax evasion
+# Corruption (see Corruption): real level, starting level and what public opinion sees, from 0 to 1.
 var corruption := 0.0
 var corruption0 := 0.0
 var corr_seen := 0.0
-var inequality0 := 0.38        # Gini de partida, para onde a desigualdade volta devagar
-## Indicadores próprios dos códigos (criminalidade, cobertura previdenciária...), por chave.
+var inequality0 := 0.38        # starting Gini, to which inequality slowly returns
+## Own indicators of the codes (crime, pension coverage...), by key.
 var code_stats := {}
 var regime_age := 0.0
 var unrest := 0.0
 var influence := 0.0
 
-# Militar
-var troops := 10.0             # mil
+# Military
+var troops := 10.0             # thousands
 var troops0 := 10.0
-var mil_stock := 1.0           # estoque de equipamento, US$ bi PPC
+var mil_stock := 1.0           # equipment stock, US$ bn PPP
 var nukes := 0
 var aggression := 0.2
 var war_exhaustion := 0.0
 var stance_offensive := false
 var client_of := -1
 
-# Séries mensais para gráficos
+# Monthly series for charts
 var hist := {}
 
 
@@ -258,8 +258,8 @@ func military_power() -> float:
 	return pow(maxf(mil_stock, 0.01), 0.65) * pow(maxf(troops, 0.1), 0.35) * tech * morale * (1.0 + 0.7 * mobilization)
 
 
-## Reescala o passado do PIB real quando o território muda: o crescimento passa a comparar o país com
-## ele mesmo nas fronteiras atuais, e anexar ou ceder terra não aparece como crescimento ou recessão.
+## Rescales the past real GDP when the territory changes: growth then compares the country with
+## itself within the current borders, and annexing or ceding land does not show up as growth or recession.
 func rebase_territory(ratio: float) -> void:
 	var s: PackedFloat32Array = hist.get("y", PackedFloat32Array())
 	for i in s.size():
@@ -287,7 +287,7 @@ static func from_dict(d: Dictionary) -> Country:
 	var c := Country.new()
 	for k in d:
 		c.set(k, d[k])
-	# Saves antigos não têm o campo.
+	# Old saves do not have the field.
 	if not d.has("cb_independent"):
 		c.cb_independent = c.dem >= Economy.CB_INDEPENDENT_DEM or c.peg == 2
 	return c

@@ -1,8 +1,8 @@
 class_name DebugMenu
 extends PanelContainer
-## Menu de testes (F12): dispara à mão qualquer sistema do jogo, sem esperar a simulação chegar lá.
-## Os comandos agem sobre o jogador ou sobre o país-alvo, escolhido na lista ou com clique no mapa.
-## O alvo pode ser o próprio país do jogador; só o que exige outro país fica desativado nesse caso.
+## Test menu (F12): manually fires any game system, without waiting for the simulation to get there.
+## The commands act on the player or on the target country, chosen from the list or by clicking on the map.
+## The target may be the player's own country; only what requires another country is disabled in that case.
 
 const ACTIONS := ["mission", "aid", "fta", "arms", "tariff", "denounce", "sanction", "embargo", "covert", "alliance", "peace", "war"]
 # i18n-begin
@@ -14,7 +14,7 @@ const DEBUG_GRID := preload("res://scenes/ui/rows/debug_grid.tscn")
 const DEBUG_BUTTON := preload("res://scenes/ui/rows/debug_button.tscn")
 
 var main: Node
-## [{"section", "label", "fn", "target", "hide"}]: a lista é pública para o teste percorrer tudo.
+## [{"section", "label", "fn", "target", "hide"}]: the list is public so the test can go through everything.
 var commands: Array = []
 var target: Country
 var infinite_dp := false
@@ -95,7 +95,7 @@ func _process(_delta: float) -> void:
 			mine["funds"] = world.politics.fund_unit(world) * 50.0
 
 
-# --- Lista de comandos -------------------------------------------------------------
+# --- Command list -------------------------------------------------------------
 
 func _add(section: String, label: String, fn: Callable, needs_target := false, hide_menu := false) -> void:
 	commands.append({"section": section, "label": label, "fn": fn, "target": needs_target, "hide": hide_menu})
@@ -232,7 +232,7 @@ func _define_diplomacy() -> void:
 	_add(s, tr("Alvo: IA escolhe gastos e guerra"), func(): NationAI.step_month(target, world), true)
 
 
-## Guerra atual com o alvo. Sem guerra, o jogador declara uma.
+## Current war with the target. Without a war, the player declares one.
 func _war() -> Dictionary:
 	var w: Dictionary = world.diplomacy.war_between(pl.idx, target.idx)
 	if w.is_empty():
@@ -516,7 +516,7 @@ func _define_endings() -> void:
 	_add(s, tr("Voltar à tela inicial"), func(): main._restart())
 
 
-# --- Execução ----------------------------------------------------------------------
+# --- Execution ----------------------------------------------------------------------
 
 func _advance(days: int) -> String:
 	var done := 0
@@ -530,7 +530,7 @@ func _advance(days: int) -> String:
 	return tr("Avançou %d dias.") % done
 
 
-## Executa um comando pelo índice e mostra o resultado. Público para o teste chamar.
+## Executes a command by index and shows the result. Public so the test can call it.
 func run(index: int) -> void:
 	var cmd: Dictionary = commands[index]
 	if target == null or not target.alive or world.by_iso.get(target.iso) != target:

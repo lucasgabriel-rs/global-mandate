@@ -1,19 +1,19 @@
 class_name Corruption
 extends RefCounted
-## Corrupção do governo do jogador, paga por enquanto com o fundo do partido.
+## Corruption of the player's government, paid for now with the party fund.
 ##
-## Contrato com o resto do jogo:
-## - `Country.corruption` é o nível real, `Country.corruption0` o de partida e `Country.corr_seen` o que a opinião
-##   pública e os investidores enxergam (demora para acompanhar, e salta num escândalo). Todos de 0 a 1.
-## - A economia só sente o DESVIO em relação à partida (`drift`): sem ação do jogador o desvio é zero, e nada muda
-##   na calibragem. Os ganchos estão em Economy (`_risk_premium`, investimento, arrecadação).
-## - O dinheiro vem de um ponto só: `balance`, `take` e `give`. Para trocar a fonte (caixa do Estado, doações,
-##   favores) basta mudar essas três funções.
-## - `offer` e `quote` são a porta para a diplomacia: uma conversa com líder de partido pode pagar a contrapartida
-##   de um voto sem conhecer nada deste arquivo.
-## Roda na thread da simulação: sem nós nem sinais, só `world.emit_news` e `world.ask_player`.
+## Contract with the rest of the game:
+## - `Country.corruption` is the real level, `Country.corruption0` the starting one and `Country.corr_seen` what public
+##   opinion and investors see (slow to follow, and jumps in a scandal). All from 0 to 1.
+## - The economy only feels the DEVIATION from the start (`drift`): without player action the deviation is zero, and nothing changes
+##   in the calibration. The hooks are in Economy (`_risk_premium`, investment, collection).
+## - Money comes from a single point: `balance`, `take` and `give`. To change the source (State cash, donations,
+##   favors) just change these three functions.
+## - `offer` and `quote` are the door to diplomacy: a conversation with a party leader can pay the counterpart
+##   of a vote without knowing anything about this file.
+## Runs on the simulation thread: no nodes or signals, only `world.emit_news` and `world.ask_player`.
 
-## Preços em múltiplos da unidade do fundo (Politics.fund_unit).
+## Prices in multiples of the fund unit (Politics.fund_unit).
 const BRIBE_FACTOR := 0.6
 const HUSH_PRICE := 1.5
 const FAVOR_PRICE := 1.0
@@ -24,7 +24,7 @@ const SKIM_GAIN := 1.5
 const SKIM_SCORE := 2.0
 const SKIM_SCORE_CAP := 60.0
 
-## Cada ação: dívida moral sobre o nível real (`corruption`), exposição (`heat`) e espera, em meses.
+## Each action: moral debt on the real level (`corruption`), exposure (`heat`) and cooldown, in months.
 const ACTIONS := {
 	"bribe": {"corruption": 0.010, "heat": 0.12, "cooldown": 0},
 	"hush": {"corruption": 0.008, "heat": 0.0, "cooldown": 2},
@@ -45,23 +45,23 @@ const DESCRIPTIONS := {
 	"skim": "Leva dinheiro público para o seu bolso. Conta pontos no fim da carreira, se ninguém descobrir antes.",
 }
 # i18n-end
-## Chance de um mês sem ação trazer o escândalo: exposição * (BASE + SCALE * integridade).
+## Chance of a month with no action bringing the scandal: exposure * (BASE + SCALE * integrity).
 const SCANDAL_BASE := 0.10
 const SCANDAL_SCALE := 0.50
 const HEAT_DECAY := 0.06
-## O nível real volta devagar à partida, mais rápido onde as instituições funcionam.
+## The real level slowly returns to the start, faster where institutions work.
 const REVERT := 0.010
 const SEEN_FOLLOW := 0.08
 const INVESTIGATION_MONTHS := 6
 const CASE_LIMIT := 0.6
 const CASE_DECAY := 0.03
-## Teto do desvio que a economia sente, e a força de cada canal.
+## Cap on the deviation the economy feels, and the strength of each channel.
 const DRIFT_MIN := -0.10
 const DRIFT_MAX := 0.60
 const RISK_PER_DRIFT := 0.06
 const INVEST_PER_DRIFT := 0.35
 const EVASION_PER_DRIFT := 0.25
-## Palavras que marcam uma instituição criada por lei como órgão de combate à corrupção.
+## Words that mark an institution created by law as an anti-corruption body.
 const WATCHDOG_WORDS := ["corrup", "integridade", "controladoria", "auditoria", "ouvidoria"]
 
 var heat := 0.0
@@ -72,7 +72,7 @@ var scandals := 0
 var last_scandal := -999
 var cooldowns := {}
 var kickbacks := []
-## Últimos fatos, do mais novo ao mais antigo: {month, text}.
+## Latest facts, from newest to oldest: {month, text}.
 var history := []
 var revision := 0
 var _rng := RandomNumberGenerator.new()
@@ -87,12 +87,12 @@ func setup(world: GameWorld) -> void:
 		c.corr_seen = base
 
 
-## Nível de partida: mais democrático e mais rico, menos corrupto.
+## Starting level: more democratic and richer, less corrupt.
 static func base_level(c: Country) -> float:
 	return clampf(0.88 - 0.065 * c.dem - 0.2 * minf(c.gdp_pc() / 40000.0, 1.0), 0.05, 0.95)
 
 
-## Quanto a corrupção subiu (ou caiu) desde o início. É isto que a economia sente.
+## How much corruption has risen (or fallen) since the start. This is what the economy feels.
 static func drift(c: Country) -> float:
 	return clampf(c.corruption - c.corruption0, DRIFT_MIN, DRIFT_MAX)
 
@@ -109,12 +109,12 @@ static func collection_factor(c: Country) -> float:
 	return 1.0 - EVASION_PER_DRIFT * drift(c)
 
 
-## Pontuação à moda dos índices de percepção: 100 é limpo.
+## Score in the style of perception indexes: 100 is clean.
 static func perception_score(c: Country) -> int:
 	return int(round(100.0 * (1.0 - c.corr_seen)))
 
 
-# --- Dinheiro: o único ponto que conhece a fonte ------------------------------------------
+# --- Money: the only point that knows the source ------------------------------------------
 
 func unit(world: GameWorld) -> float:
 	return world.politics.fund_unit(world)
@@ -124,7 +124,7 @@ func balance(world: GameWorld) -> float:
 	return world.politics.party_fund(world)
 
 
-## Tira dinheiro da fonte. Falso se não há saldo.
+## Takes money from the source. False if there is no balance.
 func take(world: GameWorld, amount: float) -> bool:
 	var mine := world.politics.player_party(world)
 	if mine.is_empty() or float(mine.get("funds", 0.0)) < amount:
@@ -142,10 +142,10 @@ func give(world: GameWorld, amount: float) -> void:
 	world.politics.revision += 1
 
 
-# --- Instituições -------------------------------------------------------------------------
+# --- Institutions -------------------------------------------------------------------------
 
-## De 0 a 1: quanto o país consegue descobrir e punir. Soma de apostas sobre o que o jogo já tem: democracia,
-## controle de constitucionalidade, oposição e imprensa livres, ministro da Justiça e órgãos criados por lei.
+## From 0 to 1: how much the country manages to discover and punish. A sum of bets on what the game already has: democracy,
+## constitutional review, free opposition and press, justice minister and bodies created by law.
 func integrity(world: GameWorld, c: Country) -> float:
 	var leg := world.legislation
 	var i := 0.30 * clampf(c.dem / 10.0, 0.0, 1.0)
@@ -171,17 +171,17 @@ static func _free_press(leg: Legislation) -> bool:
 	return "expressao" in leg.param("rights", [])
 
 
-## Chance de um mês qualquer trazer o escândalo, com a exposição de agora.
+## Chance of any month bringing the scandal, with the current exposure.
 func scandal_chance(world: GameWorld, c: Country) -> float:
 	return clampf(heat * (SCANDAL_BASE + SCANDAL_SCALE * integrity(world, c)), 0.0, 0.6)
 
 
-## O quanto o público e a imprensa reagem: onde a imprensa é amordaçada, o escândalo pesa menos.
+## How much the public and the press react: where the press is gagged, the scandal weighs less.
 func bite(world: GameWorld, c: Country) -> float:
 	return lerpf(0.35, 1.0, integrity(world, c))
 
 
-# --- Ações --------------------------------------------------------------------------------
+# --- Actions --------------------------------------------------------------------------------
 
 func can_act(world: GameWorld) -> bool:
 	return world.player != null and world.governed() != null and not world.over
@@ -231,7 +231,7 @@ func _note(world: GameWorld, text: String) -> void:
 		history.pop_back()
 
 
-## Compra o voto de uma bancada numa norma que ainda vai a plenário. A bancada do próprio jogador não precisa.
+## Buys a caucus's vote on a norm that is still going to the floor. The player's own caucus does not need it.
 func bribe_votes(world: GameWorld, norm: Dictionary, party_id: int, want_yes: bool) -> Dictionary:
 	var blocked := _gate(world, "bribe")
 	if not blocked.is_empty():
@@ -251,7 +251,7 @@ func bribe_votes(world: GameWorld, norm: Dictionary, party_id: int, want_yes: bo
 		return _fail(tr("A compra custa %s, e o fundo tem %s.") % [UiKit.millions(cost), UiKit.millions(balance(world))])
 	_commit(world, "bribe")
 	if _rng.randf() < 0.1:
-		# O partido pega o dinheiro, não cumpre e ainda vaza a conversa.
+		# The party takes the money, does not deliver and also leaks the conversation.
 		heat = clampf(heat + 0.25, 0.0, 1.0)
 		_note(world, tr("%s embolsou o dinheiro e ameaça denunciar.") % party.short)
 		return {"ok": true, "accepted": false, "msg": tr("%s embolsou %s e não se comprometeu. A conversa pode vazar.") % [party.short, UiKit.millions(cost)]}
@@ -304,7 +304,7 @@ func embezzle(world: GameWorld) -> Dictionary:
 	var amount := unit(world) * EMBEZZLE_GAIN
 	_commit(world, "embezzle")
 	give(world, amount)
-	# O dinheiro sai do Tesouro: o gasto aparece nas contas, sem entregar nada.
+	# The money leaves the Treasury: the spending shows up in the accounts, without delivering anything.
 	world.player.extra_spend_bucket += amount / 1000.0
 	_note(world, tr("Verba pública desviada para o fundo do partido."))
 	return {"ok": true, "msg": tr("%s saíram do Tesouro para o fundo do partido.") % UiKit.millions(amount)}
@@ -322,13 +322,13 @@ func skim(world: GameWorld) -> Dictionary:
 	return {"ok": true, "msg": tr("%s foram para o seu patrimônio.") % UiKit.millions(amount)}
 
 
-## Ponto de extensão para a diplomacia: o preço de comprar o voto de um partido numa norma, em US$ milhões.
+## Extension point for diplomacy: the price of buying a party's vote on a norm, in US$ millions.
 func quote(world: GameWorld, norm: Dictionary, party_id: int) -> float:
 	return price(world, "bribe", norm, party_id)
 
 
-## Ponto de extensão para a diplomacia: oferece uma contrapartida a um líder de partido pelo voto numa norma.
-## `kind` é o tipo de contrapartida; só "money" (o dinheiro da fonte atual) existe por enquanto. Devolve
+## Extension point for diplomacy: offers a counterpart to a party leader for the vote on a norm.
+## `kind` is the type of counterpart; only "money" (the current source's money) exists for now. Returns
 ## {ok, accepted, msg}.
 func offer(world: GameWorld, party_id: int, norm: Dictionary, want_yes: bool, kind := "money") -> Dictionary:
 	if kind != "money":
@@ -336,12 +336,12 @@ func offer(world: GameWorld, party_id: int, norm: Dictionary, want_yes: bool, ki
 	return bribe_votes(world, norm, party_id, want_yes)
 
 
-## Pontos que o patrimônio desviado soma no fim da carreira.
+## Points that the diverted wealth adds at the end of the career.
 func score_bonus(world: GameWorld) -> float:
 	return minf(stash / maxf(unit(world), 0.001) * SKIM_SCORE, SKIM_SCORE_CAP)
 
 
-# --- Mês ----------------------------------------------------------------------------------
+# --- Month ----------------------------------------------------------------------------------
 
 func step_month(world: GameWorld) -> void:
 	var c := world.player
@@ -355,7 +355,7 @@ func step_month(world: GameWorld) -> void:
 		if int(k.left) > 0:
 			kept.append(k)
 	kickbacks = kept
-	# O nível real volta devagar à partida; a percepção acompanha o nível real.
+	# The real level slowly returns to the start; perception follows the real level.
 	c.corruption += (c.corruption0 - c.corruption) * REVERT * (0.5 + i)
 	c.corr_seen += (c.corruption - c.corr_seen) * SEEN_FOLLOW
 	if investigation > 0:
@@ -432,7 +432,7 @@ func _step_investigation(world: GameWorld, c: Country, i: float) -> void:
 	world.emit_news(TranslationServer.translate("A investigação sobre o governo de %s foi arquivada.") % c.name, "politica", c)
 
 
-# --- Salvar e carregar --------------------------------------------------------------------
+# --- Saving and loading --------------------------------------------------------------------
 
 func to_dict() -> Dictionary:
 	return {
