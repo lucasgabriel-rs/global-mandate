@@ -48,6 +48,7 @@ var legislation := Legislation.new()
 var treaties := Treaties.new()
 var infra := Infrastructure.new()
 var corporate := Corporate.new()
+var corruption := Corruption.new()
 var next_talk_month := TALK_FIRST_MONTH
 var campaign_noticed := false
 var leader := {}
@@ -123,6 +124,7 @@ func setup(seed_value: int = 0) -> void:
 	treaties.setup(self)
 	infra.setup(self)
 	corporate.setup(self)
+	corruption.setup(self)
 	next_ai.resize(countries.size())
 	for i in countries.size():
 		next_ai[i] = fmod(i * 11.1, 30.4)
@@ -254,6 +256,7 @@ func _on_month() -> void:
 	legislation.step_month(self)
 	infra.step_month(self)
 	corporate.step_month(self)
+	corruption.step_month(self)
 	for i in 5:
 		markets.push_hist(i)
 	if month == 0:
@@ -578,6 +581,7 @@ func _final_score() -> int:
 	var pc_growth := (player.y / maxf(player.pop, 0.001)) / maxf(player.pc0, 0.0001)
 	var s := 100.0 * (pc_growth - 1.0) + 8.0 * influence_of(player) + 60.0 * mandates + 3.0 * (year_float() - start_year)
 	s += 80.0 * player.stability
+	s += corruption.score_bonus(self)
 	return int(maxf(s, 0.0))
 
 
@@ -973,7 +977,7 @@ func to_dict() -> Dictionary:
 		"rng_state": rng.state, "rng_seed": rng.seed, "subdivisions": subdivisions.to_dict(),
 		"territories": territories.to_dict(), "leader": leader, "politics": politics.to_dict(),
 		"in_office": in_office, "talks": talks, "chats": chats, "talk_turns": talk_turns, "legislation": legislation.to_dict(), "treaties": treaties.to_dict(), "next_talk_month": next_talk_month,
-		"infra": infra.to_dict(), "corporate": corporate.to_dict(),
+		"infra": infra.to_dict(), "corporate": corporate.to_dict(), "corruption": corruption.to_dict(),
 	}
 
 
@@ -1025,6 +1029,11 @@ func load_dict(d: Dictionary) -> void:
 		corporate.from_dict(d.corporate, self)
 	else:
 		corporate.setup(self)
+	corruption = Corruption.new()
+	corruption.from_dict(d.get("corruption", {}))
+	# Saves antigos não têm o índice: parte do nível de agora, sem desvio.
+	if not d.has("corruption"):
+		corruption.setup(self)
 	if player and int(politics.data_of(player.iso).player_party) < 0:
 		politics.join_party(self, int(politics.data_of(player.iso).ruling), true)
 	over = false

@@ -4,6 +4,7 @@ extends VBoxContainer
 
 signal party_requested
 signal legislation_requested
+signal corruption_requested
 signal election_requested
 signal values_changed
 signal party_detail_requested(id: int)
@@ -31,6 +32,7 @@ var _signature := ""
 func _ready() -> void:
 	%SuasIdeiasTrocarOuFundar.pressed.connect(party_requested.emit)
 	%CentroLegislativo.pressed.connect(legislation_requested.emit)
+	%CaixaDois.pressed.connect(corruption_requested.emit)
 	%UltimaEleicao.pressed.connect(election_requested.emit)
 	_connect_opposition(%CriticarOGoverno6, func(): return world.politics.criticize(world))
 	_connect_opposition(%FazerCampanha10, func(): return world.politics.campaign(world))
