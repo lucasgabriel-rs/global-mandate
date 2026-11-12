@@ -271,6 +271,7 @@ There are 170 countries with their own GDP, population, debt, inflation, interes
 - **Prices:** Phillips curve with expectations anchored by central bank credibility, exchange rate pass-through and energy and food shocks.
 - **Monetary policy:** Taylor rule, the euro zone with a common ECB, dollar pegs that can break.
 - **Exchange rate:** purchasing power parity, real interest rate differential, current account and risk premium.
+- **Labor market:** Okun's law in level and growth form (layoffs come faster than hiring), hysteresis in the natural rate, a real wage that follows labor productivity and falls with slack and inflation surprises, a minimum wage whose Kaitz index cuts jobs above ~60% of the median wage, and an informal sector that grows with unemployment and a high minimum wage and shrinks the tax base.
 - **Public finances:** taxes with a Laffer curve and tax evasion, automatic stabilizers, debt in local currency and in dollars, endogenous risk premium, credit rating, IMF and default.
 - **Trade:** gravity-based bilateral matrix, changed by tariffs, agreements, sanctions and wars.
 - **Commodities:** oil, gas, grains, metals and chips with supply by country, stocks and OPEC+.

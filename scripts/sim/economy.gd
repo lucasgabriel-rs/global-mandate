@@ -11,7 +11,9 @@ const DT := 1.0 / 12.0
 ## Democracias consolidadas e a zona do euro têm banco central independente; o resto responde ao governo.
 const CB_INDEPENDENT_DEM := 6.0
 const KY := 3.0
-const OKUN := 0.40
+const OKUN := 0.50
+## Okun em diferença: cada ponto de crescimento abaixo da tendência soma isto ao desemprego.
+const OKUN_GROWTH := 0.50
 const KAPPA := 0.30
 const MAX_RATE := 1.2
 const RATINGS := ["AAA", "AA", "A", "BBB", "BB", "B", "CCC", "CC"]
@@ -58,6 +60,9 @@ static func init_country(c: Country, row: Dictionary, world: GameWorld) -> void:
 
 	c.unemp = row.unemp / 100.0
 	c.unemp_n = c.unemp
+	c.informal0 = informal_base(c.pc0 * 1000.0)
+	c.informal = c.informal0
+	c.real_wage = 1.0
 	c.dem = row.dem
 	c.peg = row.peg
 	c.cb_independent = c.dem >= CB_INDEPENDENT_DEM or c.peg == 2
@@ -451,6 +456,7 @@ static func _fiscal_flows(c: Country) -> void:
 	var tax_rate := c.tax_total()
 	# Curva de Laffer: acima de ~48% a evasão corrói a arrecadação. Elasticidade cíclica de 1,1.
 	var collection := clampf(1.0 - 2.2 * maxf(tax_rate - 0.48, 0.0) ** 1.3, 0.55, 1.0) * (1.0 - clampf(c.law_evasion, -0.05, 0.3))
+	collection *= 1.0 - 0.5 * clampf(c.informal - c.informal0, -0.1, 0.4)
 	var tax_rev := tax_rate * yn * (1.0 + 0.1 * c.gap) * collection
 	var rent := c.comm_exports * c.e * c.rent_take
 	var tariff_rev := c.tariff * c.imports * c.e * 0.7
@@ -575,8 +581,7 @@ static func apply_imf(c: Country, world: GameWorld) -> void:
 
 
 static func _labor_and_politics(c: Country, world: GameWorld) -> void:
-	var u_target := c.unemp_n + c.law_unemp - OKUN * c.gap + 0.25 * c.mobilization * -0.1
-	c.unemp += (clampf(u_target, 0.005, 0.5) - c.unemp) * 0.1
+	_labor_market(c, world)
 	# Histerese: desemprego prolongado eleva a taxa natural.
 	c.unemp_n += (c.unemp - c.unemp_n) * 0.002
 
@@ -623,6 +628,42 @@ static func _labor_and_politics(c: Country, world: GameWorld) -> void:
 		elif c.dem < 4.0 and c.stability < 0.14 and world.rng.randf() < 0.012:
 			_ai_coup(c, world)
 	world.check_player_politics(c)
+
+
+## Mercado de trabalho: lei de Okun, salário real e informalidade.
+static func _labor_market(c: Country, world: GameWorld) -> void:
+	# Okun em nível (hiato) e em diferença (crescimento abaixo da tendência), com demissões mais rápidas
+	# que contratações. Onde a informalidade é grande, parte do choque vira bico, não desemprego aberto.
+	var cushion := 1.0 - 0.5 * clampf(c.informal0, 0.0, 0.8)
+	var slack := -OKUN * c.gap * (1.4 if c.gap < 0.0 else 1.0)
+	var growth_gap := clampf(c.g0 - c.growth_yoy(), -0.06, 0.15)
+	slack += OKUN_GROWTH * growth_gap
+	var u_target := c.unemp_n + c.law_unemp + slack * cushion - 0.025 * c.mobilization
+	var speed := 0.14 if u_target > c.unemp else 0.07
+	c.unemp += (clampf(u_target, 0.005, 0.45) - c.unemp) * speed
+	var u_gap := c.unemp - c.unemp_n
+
+	# Informalidade: cresce com o desemprego, com mínimo acima da produtividade e com a rigidez das leis.
+	var inf_target := c.informal0 + 0.6 * clampf(u_gap, -0.03, 0.2) + 0.25 * maxf(c.minwage_ratio - 0.8, 0.0)
+	inf_target += 0.5 * clampf(c.law_evasion, -0.05, 0.3)
+	c.informal += (clampf(inf_target, 0.02, 0.9) - c.informal) * 0.03
+
+	# Salário real: segue a produtividade do trabalho, cai com folga no mercado e com inflação acima da esperada
+	# (os reajustes vêm atrasados). O mínimo alto puxa a base, a informalidade puxa para baixo.
+	var productivity := (c.y / maxf(c.pop * (1.0 - c.unemp), 0.001)) / maxf(c.pc0 / (1.0 - c.unemp_n), 0.001)
+	var w_target := productivity * (1.0 - 1.2 * clampf(u_gap, -0.03, 0.2)) * (1.0 + 0.04 * clampf(c.minwage_ratio - 0.5, -0.3, 0.7))
+	w_target *= 1.0 - 0.3 * (c.informal - c.informal0)
+	c.real_wage += (maxf(w_target, 0.2) - c.real_wage) * 0.03
+	c.real_wage *= 1.0 - clampf(c.pi_yoy - c.pi_e, -0.05, 0.5) * DT * 0.5
+	c.real_wage = clampf(c.real_wage, 0.2, 5.0)
+	if c == world.player and u_gap > 0.03 and c.unemp > 0.08 and world.rng.randf() < 0.05:
+		world.emit_news(TranslationServer.translate("Desemprego em %s chega a %.1f%%; demissões se espalham.") % [c.name, c.unemp * 100.0], "economia", c)
+
+
+## Informalidade de partida pela renda per capita (US$): ~10% nos ricos, ~40% na renda média, ~60% nos pobres.
+static func informal_base(gdp_pc_usd: float) -> float:
+	var f := clampf(log(maxf(gdp_pc_usd, 1.0) / 1000.0) / log(60.0), 0.0, 1.0)
+	return clampf(0.75 - 0.65 * f, 0.08, 0.8)
 
 
 static func _ai_election(c: Country, world: GameWorld) -> void:
@@ -715,6 +756,8 @@ static func _push_series(c: Country) -> void:
 	c.push_hist("growth", c.growth_yoy())
 	c.push_hist("infl", c.pi_yoy)
 	c.push_hist("unemp", c.unemp)
+	c.push_hist("real_wage", c.real_wage)
+	c.push_hist("informal", c.informal)
 	c.push_hist("debt", c.debt_ratio)
 	c.push_hist("rate", c.rate)
 	c.push_hist("deficit", c.deficit / maxf(c.y_nominal(), 0.001))

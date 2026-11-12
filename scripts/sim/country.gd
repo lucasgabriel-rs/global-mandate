@@ -145,6 +145,10 @@ var p_ref := PackedFloat32Array([1, 1, 1, 1, 1])
 # Mercado de trabalho e política
 var unemp := 0.05
 var unemp_n := 0.05
+var real_wage := 1.0           # salário real médio, índice (1 = início da partida)
+var informal := 0.2            # fração dos ocupados na informalidade
+var informal0 := 0.2           # informalidade de partida, para onde ela volta devagar
+var minwage_ratio := 0.5       # índice de Kaitz: salário mínimo anual sobre o salário mediano (60% do PIB per capita)
 var approval := 0.5
 var stability := 0.6
 var inequality := 0.38

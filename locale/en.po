@@ -498,7 +498,7 @@ msgid "Editar personagem"
 msgstr "Edit character"
 
 #: scenes/ui/hud.tscn:1536 scripts/sim/legislation.gd:1608
-#: scripts/sim/legislation.gd:2399
+#: scripts/sim/legislation.gd:2401
 msgid "Sistema"
 msgstr "System"
 
@@ -1564,7 +1564,7 @@ msgid "Aleatório"
 msgstr "Random"
 
 #: scenes/ui/modals/game_over.tscn:48 scripts/ui/debug_menu.gd:489
-#: scripts/ui/main.gd:1047
+#: scripts/ui/main.gd:1049
 msgid "Fim de jogo"
 msgstr "Game over"
 
@@ -2748,76 +2748,81 @@ msgstr "%s capitulates; %s installs an allied government."
 msgid "Cessar-fogo entre %s e %s: nenhuma área do tamanho negociado, as fronteiras não mudam."
 msgstr "Ceasefire between %s and %s: no area of the negotiated size, borders unchanged."
 
-#: scripts/sim/economy.gd:409
+#: scripts/sim/economy.gd:414
 #, c-format
 msgid "%s abandona a âncora cambial: moeda desvaloriza %d%%."
 msgstr "%s abandons its currency peg: the currency devalues %d%%."
 
-#: scripts/sim/economy.gd:441
+#: scripts/sim/economy.gd:446
 #, c-format
 msgid "Agências rebaixam a nota de crédito de %s de %s para %s."
 msgstr "Agencies downgrade %s's credit rating from %s to %s."
 
-#: scripts/sim/economy.gd:441
+#: scripts/sim/economy.gd:446
 #, c-format
 msgid "Agências elevam a nota de crédito de %s de %s para %s."
 msgstr "Agencies upgrade %s's credit rating from %s to %s."
 
-#: scripts/sim/economy.gd:553
+#: scripts/sim/economy.gd:559
 #, c-format
 msgid "%s declara moratória da dívida soberana; credores aceitam corte de 45%%."
 msgstr "%s defaults on its sovereign debt; creditors accept a 45%% haircut."
 
-#: scripts/sim/economy.gd:574
+#: scripts/sim/economy.gd:580
 #, c-format
 msgid "FMI aprova pacote de US$ %.0f bi para %s, com ajuste fiscal."
 msgstr "IMF approves a US$ %.0f bn package for %s, with fiscal adjustment."
 
-#: scripts/sim/economy.gd:634
+#: scripts/sim/economy.gd:660
+#, c-format
+msgid "Desemprego em %s chega a %.1f%%; demissões se espalham."
+msgstr "Unemployment in %s reaches %.1f%%; layoffs spread."
+
+#: scripts/sim/economy.gd:675
 #, c-format
 msgid "Eleições em %s: oposição vence e promete mudar o rumo."
 msgstr "Elections in %s: the opposition wins and promises a change of course."
 
-#: scripts/sim/economy.gd:643
+#: scripts/sim/economy.gd:684
 #, c-format
 msgid "Golpe de Estado em %s: junta militar assume o poder."
 msgstr "Coup d'état in %s: a military junta takes power."
 
-#: scripts/sim/economy.gd:667
+#: scripts/sim/economy.gd:708
 #, c-format
 msgid "Crise bancária em %s: crédito congela e o Tesouro socorre bancos."
 msgstr "Banking crisis in %s: credit freezes and the Treasury bails out banks."
 
-#: scripts/sim/economy.gd:681
+#: scripts/sim/economy.gd:722
 #, c-format
 msgid "%s entra em recessão: o PIB encolhe %s em 12 meses."
 msgstr "%s enters recession: GDP shrinks %s over 12 months."
 
-#: scripts/sim/economy.gd:683
+#: scripts/sim/economy.gd:724
 #, c-format
 msgid "%s sai da recessão: o PIB volta a crescer."
 msgstr "%s exits recession: GDP grows again."
 
-#: scripts/sim/economy.gd:690
+#: scripts/sim/economy.gd:731
 #, c-format
 msgid "Inflação em %s passa de %s ao ano."
 msgstr "Inflation in %s exceeds %s a year."
 
-#: scripts/sim/economy.gd:695
+#: scripts/sim/economy.gd:736
 msgid "O BCE"
 msgstr "The ECB"
 
-#: scripts/sim/economy.gd:695
+#: scripts/sim/economy.gd:736
 #, c-format
 msgid "O banco central de %s"
 msgstr "The central bank of %s"
 
-#: scripts/sim/economy.gd:696
+#: scripts/sim/economy.gd:737
 #, c-format
 msgid "%s eleva o juro básico para %s ao ano."
 msgstr "%s raises the policy rate to %s a year."
 
-#: scripts/sim/economy.gd:696
+#: scripts/sim/economy.gd:737
 #, c-format
 msgid "%s reduz o juro básico para %s ao ano."
 msgstr "%s cuts the policy rate to %s a year."
@@ -3285,8 +3290,8 @@ msgstr "Concession signed: %s go to the Treasury."
 msgid "US$ %s bi"
 msgstr "US$ %s bn"
 
-#: scripts/sim/infrastructure.gd:430 scripts/ui/main.gd:954
-#: scripts/ui/main.gd:957
+#: scripts/sim/infrastructure.gd:430 scripts/ui/main.gd:956
+#: scripts/ui/main.gd:959
 #, c-format
 msgid "%d anos"
 msgstr "%d years"
@@ -4218,7 +4223,7 @@ msgstr "At most {v} amendments will proceed at the same time."
 msgid "Art. 17."
 msgstr "Art. 17"
 
-#: scripts/sim/legislation.gd:269 scripts/sim/legislation.gd:2389
+#: scripts/sim/legislation.gd:269 scripts/sim/legislation.gd:2391
 msgid "O banco central é independente do governo: {v}."
 msgstr "The central bank is independent from the government: {v}."
 
@@ -4973,7 +4978,7 @@ msgstr "Clause %d."
 msgid "ADT %dº"
 msgstr "TP %d"
 
-#: scripts/sim/legislation.gd:1687 scripts/sim/legislation.gd:2389
+#: scripts/sim/legislation.gd:1687 scripts/sim/legislation.gd:2391
 #, c-format
 msgid "Art. %d."
 msgstr "Art. %d."
@@ -5033,7 +5038,7 @@ msgstr "Automatic suspension"
 msgid "%s foi suspensa: a execução falhou repetidas vezes."
 msgstr "%s was suspended: execution failed repeatedly."
 
-#: scripts/sim/legislation.gd:1832 scripts/sim/legislation.gd:2315
+#: scripts/sim/legislation.gd:1832 scripts/sim/legislation.gd:2317
 #, c-format
 msgid "Art. %d: %s"
 msgstr "Art. %d: %s"
@@ -5082,50 +5087,50 @@ msgstr "Ministries merged into %s."
 msgid "Extinto o ministério %s."
 msgstr "Ministry of %s abolished."
 
-#: scripts/sim/legislation.gd:2294
+#: scripts/sim/legislation.gd:2296
 msgid "A norma tem erros: corrija antes de simular."
 msgstr "The act has errors: fix them before simulating."
 
-#: scripts/sim/legislation.gd:2319
+#: scripts/sim/legislation.gd:2321
 #, c-format
 msgid "ERRO: %s"
 msgstr "ERROR: %s"
 
-#: scripts/sim/legislation.gd:2322
+#: scripts/sim/legislation.gd:2324
 msgid "O restante roda depois da espera."
 msgstr "The rest runs after the wait."
 
-#: scripts/sim/legislation.gd:2324
+#: scripts/sim/legislation.gd:2326
 msgid "Nenhum artigo responde a esse evento."
 msgstr "No article responds to this event."
 
-#: scripts/sim/legislation.gd:2352
+#: scripts/sim/legislation.gd:2354
 msgid "Arquivo não encontrado."
 msgstr "File not found."
 
-#: scripts/sim/legislation.gd:2355
+#: scripts/sim/legislation.gd:2357
 msgid "Arquivo incompatível."
 msgstr "Incompatible file."
 
-#: scripts/sim/legislation.gd:2357
+#: scripts/sim/legislation.gd:2359
 msgid "A Constituição é de cada país e não pode ser importada."
 msgstr "The Constitution belongs to each country and cannot be imported."
 
-#: scripts/sim/legislation.gd:2364
+#: scripts/sim/legislation.gd:2366
 #, c-format
 msgid " Há %d erro(s) de compatibilidade para corrigir."
 msgstr " There are %d compatibility error(s) to fix."
 
-#: scripts/sim/legislation.gd:2365
+#: scripts/sim/legislation.gd:2367
 #, c-format
 msgid "%s importada como rascunho.%s"
 msgstr "%s imported as a draft.%s"
 
-#: scripts/sim/legislation.gd:2399
+#: scripts/sim/legislation.gd:2401
 msgid "Versão publicada não confere: norma suspensa"
 msgstr "Published version doesn't match: act suspended"
 
-#: scripts/sim/legislation.gd:2399
+#: scripts/sim/legislation.gd:2401
 msgid "Integridade"
 msgstr "Integrity"
 
@@ -5656,7 +5661,7 @@ msgstr "The party needs a name."
 msgid "Escolha uma família política."
 msgstr "Choose a political family."
 
-#: scripts/sim/politics.gd:823 scripts/ui/main.gd:823
+#: scripts/sim/politics.gd:823 scripts/ui/main.gd:825
 msgid "Já existe um partido com esse nome."
 msgstr "A party with that name already exists."
 
@@ -7037,7 +7042,7 @@ msgstr ""
 "%s, %d years old  ·  %s\n"
 "Competence: %d%%%s"
 
-#: scripts/ui/cabinet_panel.gd:71 scripts/ui/main.gd:647
+#: scripts/ui/cabinet_panel.gd:71 scripts/ui/main.gd:649
 msgid "  ·  doente"
 msgstr "  ·  ill"
 
@@ -8049,7 +8054,7 @@ msgstr "D (default)"
 msgid "Falar com %s"
 msgstr "Talk to %s"
 
-#: scripts/ui/hud.gd:468 scripts/ui/main.gd:701
+#: scripts/ui/hud.gd:468 scripts/ui/main.gd:703
 msgid "o líder"
 msgstr "the leader"
 
@@ -8914,7 +8919,7 @@ msgstr "  [event: %s]"
 msgid "%d registro(s) guardado(s)"
 msgstr "%d record(s) kept"
 
-#: scripts/ui/main.gd:258 scripts/ui/main.gd:1129
+#: scripts/ui/main.gd:258 scripts/ui/main.gd:1131
 msgid "Preparando o mundo..."
 msgstr "Preparing the world..."
 
@@ -8995,138 +9000,138 @@ msgstr "%s takes office in %s. The world watches."
 msgid "%s lidera a oposição em %s contra o governo de %s."
 msgstr "%s leads the opposition in %s against the government of %s."
 
-#: scripts/ui/main.gd:647
+#: scripts/ui/main.gd:649
 #, c-format
 msgid "%s, %d anos  ·  %s  ·  competência %d%%%s"
 msgstr "%s, %d years old  ·  %s  ·  competence %d%%%s"
 
-#: scripts/ui/main.gd:656
+#: scripts/ui/main.gd:658
 msgid "Você: "
 msgstr "You: "
 
-#: scripts/ui/main.gd:664
+#: scripts/ui/main.gd:666
 #, c-format
 msgid "%s  ·  %d assentos  ·  %s dos votos. A bússola do partido é a média dos políticos."
 msgstr "%s  ·  %d seats  ·  %s of the vote. The party's compass is the average of its politicians."
 
-#: scripts/ui/main.gd:682
+#: scripts/ui/main.gd:684
 #, c-format
 msgid "Ministério: %s"
 msgstr "Ministry: %s"
 
-#: scripts/ui/main.gd:687
+#: scripts/ui/main.gd:689
 #, c-format
 msgid "%s assume a pasta."
 msgstr "%s takes the portfolio."
 
-#: scripts/ui/main.gd:701
+#: scripts/ui/main.gd:703
 #, c-format
 msgid "Conversa com %s"
 msgstr "Talk with %s"
 
-#: scripts/ui/main.gd:701
+#: scripts/ui/main.gd:703
 #, c-format
 msgid "%s  ·  %s  ·  %s, %d anos, %s"
 msgstr "%s  ·  %s  ·  %s, %d years old, %s"
 
-#: scripts/ui/main.gd:705
+#: scripts/ui/main.gd:707
 #, c-format
 msgid "Dourado: %s. Branco: seu partido."
 msgstr "Gold: %s. White: your party."
 
-#: scripts/ui/main.gd:705
+#: scripts/ui/main.gd:707
 msgid "líder"
 msgstr "leader"
 
-#: scripts/ui/main.gd:720
+#: scripts/ui/main.gd:722
 #, c-format
 msgid "Falas restantes: %d"
 msgstr "Remaining lines: %d"
 
-#: scripts/ui/main.gd:720
+#: scripts/ui/main.gd:722
 msgid "A conversa terminou."
 msgstr "The conversation is over."
 
-#: scripts/ui/main.gd:739
+#: scripts/ui/main.gd:741
 msgid "Todo político pertence a um partido. Escolha um deles ou crie o seu, e decida se começa no governo ou na oposição."
 msgstr "Every politician belongs to a party. Choose one or create your own, and decide whether to start in government or in opposition."
 
-#: scripts/ui/main.gd:739
+#: scripts/ui/main.gd:741
 msgid "Só é possível mudar de partido uma vez por ano. O partido novo só ganha assentos na próxima eleição."
 msgstr "You can only switch parties once a year. The new party only gains seats at the next election."
 
-#: scripts/ui/main.gd:740
+#: scripts/ui/main.gd:742
 #, c-format
 msgid "Escolha seu partido em %s"
 msgstr "Choose your party in %s"
 
-#: scripts/ui/main.gd:777
+#: scripts/ui/main.gd:779
 msgid "Regimes fechados não têm eleições."
 msgstr "Closed regimes have no elections."
 
-#: scripts/ui/main.gd:779
+#: scripts/ui/main.gd:781
 #, c-format
 msgid "Hoje governa: %s."
 msgstr "Currently governing: %s."
 
-#: scripts/ui/main.gd:779
+#: scripts/ui/main.gd:781
 msgid "Regime fechado, sem eleições: só é possível governar."
 msgstr "Closed regime, no elections: you can only govern."
 
-#: scripts/ui/main.gd:787
+#: scripts/ui/main.gd:789
 #, c-format
 msgid "Ficar em %s  ·  %s  ·  %s dos votos  ·  %d de %d assentos"
 msgstr "Stay in %s  ·  %s  ·  %s of the vote  ·  %d of %d seats"
 
-#: scripts/ui/main.gd:787
+#: scripts/ui/main.gd:789
 #, c-format
 msgid "%s  ·  %s  ·  %s dos votos  ·  %d de %d assentos"
 msgstr "%s  ·  %s  ·  %s of the vote  ·  %d of %d seats"
 
-#: scripts/ui/main.gd:788
+#: scripts/ui/main.gd:790
 #, c-format
 msgid "%s. Clique para escolher."
 msgstr "%s. Click to choose."
 
-#: scripts/ui/main.gd:819
+#: scripts/ui/main.gd:821
 msgid "Dê um nome ao partido."
 msgstr "Give the party a name."
 
-#: scripts/ui/main.gd:922
+#: scripts/ui/main.gd:924
 #, c-format
 msgid "Bandeira: %s"
 msgstr "Flag: %s"
 
-#: scripts/ui/main.gd:1035
+#: scripts/ui/main.gd:1037
 msgid "Renunciar ao cargo? Isso encerra a sua carreira, e depois você escolhe entre um novo jogo e um novo personagem."
 msgstr "Resign from office? This ends your career, and then you choose between a new game and a new character."
 
-#: scripts/ui/main.gd:1045
+#: scripts/ui/main.gd:1047
 msgid "Impeachment"
 msgstr "Impeachment"
 
-#: scripts/ui/main.gd:1045
+#: scripts/ui/main.gd:1047
 msgid "Deposto"
 msgstr "Deposed"
 
-#: scripts/ui/main.gd:1045
+#: scripts/ui/main.gd:1047
 msgid "Renúncia"
 msgstr "Resignation"
 
-#: scripts/ui/main.gd:1045
+#: scripts/ui/main.gd:1047
 msgid "Assassinato"
 msgstr "Assassination"
 
-#: scripts/ui/main.gd:1045
+#: scripts/ui/main.gd:1047
 msgid "Fim da vida"
 msgstr "End of life"
 
-#: scripts/ui/main.gd:1050
+#: scripts/ui/main.gd:1052
 #, c-format
 msgid "Pontuação final: %s"
 msgstr "Final score: %s"
 
-#: scripts/ui/main.gd:1051
+#: scripts/ui/main.gd:1053
 #, c-format
 msgid ""
 "Tempo no poder: %s anos  ·  Reeleições: %d\n"
@@ -9137,74 +9142,74 @@ msgstr ""
 "Real GDP per capita: %s times 2025\n"
 "Debt/GDP: %s  ·  Inflation: %s  ·  Influence: #%d in the world"
 
-#: scripts/ui/main.gd:1081
+#: scripts/ui/main.gd:1083
 #, c-format
 msgid "Tratado com %s"
 msgstr "Treaty with %s"
 
-#: scripts/ui/main.gd:1081
+#: scripts/ui/main.gd:1083
 #, c-format
 msgid "O líder de lá é %s (%s)."
 msgstr "Their leader is %s (%s)."
 
-#: scripts/ui/main.gd:1089
+#: scripts/ui/main.gd:1091
 #, c-format
 msgid "Vale por %d anos."
 msgstr "Valid for %d years."
 
-#: scripts/ui/main.gd:1089
+#: scripts/ui/main.gd:1091
 msgid "Sem prazo."
 msgstr "No time limit."
 
-#: scripts/ui/main.gd:1105
+#: scripts/ui/main.gd:1107
 #, c-format
 msgid "Eleição de %s em %s"
 msgstr "%s election in %s"
 
-#: scripts/ui/main.gd:1107
+#: scripts/ui/main.gd:1109
 #, c-format
 msgid "[color=#8ba2af]Sistema:[/color] %s  ·  cláusula de barreira de %d%%"
 msgstr "[color=#8ba2af]System:[/color] %s  ·  %d%% threshold"
 
-#: scripts/ui/main.gd:1108
+#: scripts/ui/main.gd:1110
 #, c-format
 msgid "[color=#8ba2af]Regime:[/color] %s"
 msgstr "[color=#8ba2af]Regime:[/color] %s"
 
-#: scripts/ui/main.gd:1109
+#: scripts/ui/main.gd:1111
 #, c-format
 msgid "[color=#8ba2af]Comparecimento:[/color] %s  ·  %d distritos"
 msgstr "[color=#8ba2af]Turnout:[/color] %s  ·  %d districts"
 
-#: scripts/ui/main.gd:1112
+#: scripts/ui/main.gd:1114
 #, c-format
 msgid "[color=#8ba2af]Chefe de governo:[/color] %s, com %s, em %d turno(s)"
 msgstr "[color=#8ba2af]Head of government:[/color] %s, with %s, in %d round(s)"
 
-#: scripts/ui/main.gd:1115
+#: scripts/ui/main.gd:1117
 #, c-format
 msgid "[color=#%s]■[/color] %s: %s dos votos, %d deputados, %d senadores"
 msgstr "[color=#%s]■[/color] %s: %s of the vote, %d deputies, %d senators"
 
-#: scripts/ui/main.gd:1119
+#: scripts/ui/main.gd:1121
 #, c-format
 msgid "%s: %d cadeiras, %s mi de habitantes, maioria de %s"
 msgstr "%s: %d seats, %s m inhabitants, %s majority"
 
-#: scripts/ui/main.gd:1151
+#: scripts/ui/main.gd:1153
 #, c-format
 msgid "Não foi possível salvar: erro %d."
 msgstr "Could not save: error %d."
 
-#: scripts/ui/main.gd:1160
+#: scripts/ui/main.gd:1162
 msgid "Não foi possível salvar: o arquivo não pôde ser conferido."
 msgstr "Could not save: the file could not be verified."
 
-#: scripts/ui/main.gd:1166
+#: scripts/ui/main.gd:1168
 msgid "Partida salva."
 msgstr "Game saved."
 
-#: scripts/ui/main.gd:1174
+#: scripts/ui/main.gd:1176
 msgid "Carregando a partida..."
 msgstr "Loading the game..."
 
