@@ -321,7 +321,7 @@ Each day's simulation, saving, loading and starting the game run on other thread
 
 ## Tests
 
-Headless tests run as scripts and print `RESULTADO: N falhas` (`falhas: N` for `policy.gd`). Interface tests run the game with a flag and save screenshots to the folder given in `--shots`.
+Headless tests run as scripts and print `RESULT: N failures`. Interface tests run the game with a flag and save screenshots to the folder given in `--shots`.
 
 ```bash
 godot --headless --path . -s tests/legislation.gd

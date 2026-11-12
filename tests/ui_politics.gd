@@ -29,7 +29,7 @@ func _shot(name_: String) -> void:
 func _check(cond: bool, what: String) -> void:
 	if not cond:
 		failures += 1
-	print("ok: " if cond else "FALHA: ", what)
+	print("ok: " if cond else "FAIL: ", what)
 
 
 func _click(b: Control) -> void:
@@ -184,7 +184,7 @@ func _process(delta: float) -> void:
 			_check(main.world.politics.player_party(main.world).name == "Partido do Palito", "carregar mantém o partido")
 			_check(main.world.leader.first_name == "Palito" and main.world.leader.gender == "f", "carregar mantém o personagem")
 			DirAccess.remove_absolute(ProjectSettings.globalize_path(main.SAVE_PATH))
-			print("RESULTADO: ", failures, " falhas")
+			print("RESULT: ", failures, " failures")
 			get_tree().quit(1 if failures > 0 else 0)
 
 

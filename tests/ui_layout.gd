@@ -20,7 +20,7 @@ func _ready() -> void:
 	var f := FileAccess.open(out_dir.path_join("layout.txt"), FileAccess.WRITE)
 	f.store_string("\n".join(lines))
 	f.close()
-	print("RESULTADO: 0 falhas")
+	print("RESULT: 0 failures")
 	get_tree().quit()
 
 

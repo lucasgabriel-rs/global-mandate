@@ -8,7 +8,7 @@ var failures := 0
 func _check(cond: bool, what: String) -> void:
 	if not cond:
 		failures += 1
-	print("ok: " if cond else "FALHA: ", what)
+	print("ok: " if cond else "FAIL: ", what)
 
 
 func _advance(world: GameWorld, days: int) -> void:
@@ -52,7 +52,7 @@ func _init() -> void:
 	_reform_penal(world, leg, crime0)
 	_reform_civil(world, leg, trust0)
 	_revoke(world, leg)
-	print("RESULTADO: %d falhas" % failures)
+	print("RESULT: %d failures" % failures)
 	quit(1 if failures > 0 else 0)
 
 

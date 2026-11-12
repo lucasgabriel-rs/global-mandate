@@ -10,7 +10,7 @@ func _check(cond: bool, what: String) -> void:
 		print("ok: ", what)
 	else:
 		failures += 1
-		print("FALHA: ", what)
+		print("FAIL: ", what)
 
 
 func _world(iso := "BRA") -> GameWorld:
@@ -303,7 +303,7 @@ func _init() -> void:
 			broken.append(c.iso)
 	_check(broken.is_empty(), "12 anos depois os parlamentos seguem coerentes %s" % str(broken.slice(0, 5)))
 
-	print("RESULTADO: ", failures, " falhas")
+	print("RESULT: ", failures, " failures")
 	quit(1 if failures > 0 else 0)
 
 

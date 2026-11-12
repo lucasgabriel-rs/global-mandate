@@ -33,7 +33,7 @@ func _shot(name_: String) -> void:
 func _check(cond: bool, what: String) -> void:
 	if not cond:
 		failures += 1
-	print("ok: " if cond else "FALHA: ", what)
+	print("ok: " if cond else "FAIL: ", what)
 
 
 ## Dias de jogo, com a fração do dia em curso.
@@ -232,7 +232,7 @@ func _process(delta: float) -> void:
 		22:
 			_check(main.world.date_string() == get_meta("saved_date") and main.hud._date.text == get_meta("saved_date"), "carregar restaura a data: %s" % main.hud._date.text)
 			DirAccess.remove_absolute(ProjectSettings.globalize_path(main.SAVE_PATH))
-			print("RESULTADO: ", failures, " falhas")
+			print("RESULT: ", failures, " failures")
 			get_tree().quit(1 if failures > 0 else 0)
 
 

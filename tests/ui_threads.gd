@@ -11,14 +11,14 @@ var failures := 0
 func _ready() -> void:
 	main = get_parent()
 	await _run()
-	print("RESULTADO: %d falhas" % failures)
+	print("RESULT: %d failures" % failures)
 	get_tree().quit()
 
 
 func _check(cond: bool, what: String) -> void:
 	if not cond:
 		failures += 1
-	print("ok: " if cond else "FALHA: ", what)
+	print("ok: " if cond else "FAIL: ", what)
 
 
 func _frames(n := 3) -> void:

@@ -10,7 +10,7 @@ func _check(cond: bool, what: String) -> void:
 		print("ok: ", what)
 	else:
 		failures += 1
-		print("FALHA: ", what)
+		print("FAIL: ", what)
 
 
 func _world(iso := "BRA", seed_value := 7) -> GameWorld:
@@ -168,5 +168,5 @@ func _init() -> void:
 	_check((buttons[1] as Button).disabled, "botão espera o intervalo")
 	window.queue_free()
 
-	print("RESULTADO: %d falhas" % failures)
+	print("RESULT: %d failures" % failures)
 	quit(1 if failures > 0 else 0)

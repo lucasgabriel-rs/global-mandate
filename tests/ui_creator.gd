@@ -16,7 +16,7 @@ func _ready() -> void:
 			out = a.trim_prefix("--shots=")
 	DirAccess.make_dir_recursive_absolute(out)
 	await _run()
-	print("RESULTADO: ", failures, " falhas")
+	print("RESULT: ", failures, " failures")
 	get_tree().quit(1 if failures > 0 else 0)
 
 

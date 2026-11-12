@@ -8,7 +8,7 @@ var failures := 0
 func _check(cond: bool, what: String) -> void:
 	if not cond:
 		failures += 1
-	print("ok: " if cond else "FALHA: ", what)
+	print("ok: " if cond else "FAIL: ", what)
 
 
 func _has_error(result: Dictionary, part: String) -> bool:
@@ -67,7 +67,7 @@ func _init() -> void:
 	_central_bank()
 	_party_ideas()
 	_opposition(world)
-	print("RESULTADO: %d falhas" % failures)
+	print("RESULT: %d failures" % failures)
 	quit()
 
 

@@ -14,14 +14,14 @@ func _ready() -> void:
 			out = a.trim_prefix("--shots=")
 	DirAccess.make_dir_recursive_absolute(out)
 	await _run()
-	print("RESULTADO: %d falhas" % failures)
+	print("RESULT: %d failures" % failures)
 	get_tree().quit()
 
 
 func _check(cond: bool, what: String) -> void:
 	if not cond:
 		failures += 1
-	print("ok: " if cond else "FALHA: ", what)
+	print("ok: " if cond else "FAIL: ", what)
 
 
 func _shot(name_: String) -> void:

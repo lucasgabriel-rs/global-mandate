@@ -9,7 +9,7 @@ var failures := 0
 func _check(cond: bool, what: String) -> void:
 	if not cond:
 		failures += 1
-	print("ok: " if cond else "FALHA: ", what)
+	print("ok: " if cond else "FAIL: ", what)
 
 
 func _fresh(iso := "BRA") -> GameWorld:
@@ -117,5 +117,5 @@ func _init() -> void:
 	_months(again, 2)
 	_check(absf(_sum(rb.sector_out) - rb.y) < rb.y * 0.001, "o jogo carregado continua fechando os setores")
 
-	print("RESULTADO: %d falhas" % failures)
+	print("RESULT: %d failures" % failures)
 	quit()

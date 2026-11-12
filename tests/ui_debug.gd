@@ -32,7 +32,7 @@ func _shot(name_: String) -> void:
 func _check(cond: bool, what: String) -> void:
 	if not cond:
 		failures += 1
-	print("ok: " if cond else "FALHA: ", what)
+	print("ok: " if cond else "FAIL: ", what)
 
 
 func _start_game() -> void:
@@ -67,7 +67,7 @@ func _command(label: String) -> int:
 		if menu.commands[i].label == label:
 			return i
 	failures += 1
-	print("FALHA: comando não existe: ", label)
+	print("FAIL: comando não existe: ", label)
 	return 0
 
 
@@ -196,7 +196,7 @@ func _process(delta: float) -> void:
 		7:
 			print("comandos executados: %d, reinícios: %d" % [menu.commands.size(), restarts])
 			DirAccess.remove_absolute(ProjectSettings.globalize_path(main.SAVE_PATH))
-			print("RESULTADO: ", failures, " falhas")
+			print("RESULT: ", failures, " failures")
 			get_tree().quit(1 if failures > 0 else 0)
 
 

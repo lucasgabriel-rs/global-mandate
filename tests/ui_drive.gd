@@ -29,7 +29,7 @@ func _shot(name_: String) -> void:
 func _check(cond: bool, what: String) -> void:
 	if not cond:
 		failures += 1
-		print("FALHA: ", what)
+		print("FAIL: ", what)
 	else:
 		print("ok: ", what)
 
@@ -151,7 +151,7 @@ func _process(delta: float) -> void:
 		27:
 			_shot("15_fim")
 			_check(not main.world.in_office and not main.world.over, "derrota eleitoral leva à oposição (próxima eleição %.2f, ano %.2f)" % [main.world.player.next_election, main.world.year_float()])
-			print("RESULTADO: ", failures, " falhas")
+			print("RESULT: ", failures, " failures")
 			get_tree().quit(1 if failures > 0 else 0)
 
 

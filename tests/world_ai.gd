@@ -9,7 +9,7 @@ var failures := 0
 func _check(cond: bool, what: String) -> void:
 	if not cond:
 		failures += 1
-	print("ok: " if cond else "FALHA: ", what)
+	print("ok: " if cond else "FAIL: ", what)
 
 
 func _init() -> void:
@@ -18,7 +18,7 @@ func _init() -> void:
 	var seed_value := int(args[1]) if args.size() > 1 else 42
 	_compass_changes_behavior()
 	_run(years, seed_value)
-	print("RESULTADO: %d falhas" % failures)
+	print("RESULT: %d failures" % failures)
 	quit()
 
 

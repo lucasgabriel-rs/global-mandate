@@ -9,7 +9,7 @@ var failures := 0
 func _check(cond: bool, what: String) -> void:
 	if not cond:
 		failures += 1
-	print("ok: " if cond else "FALHA: ", what)
+	print("ok: " if cond else "FAIL: ", what)
 
 
 func _fresh(iso: String) -> GameWorld:
@@ -55,7 +55,7 @@ func _init() -> void:
 	_bracket_by_law()
 	_revoke_restores()
 	_evasion()
-	print("RESULTADO: %d falhas" % failures)
+	print("RESULT: %d failures" % failures)
 	quit(1 if failures > 0 else 0)
 
 

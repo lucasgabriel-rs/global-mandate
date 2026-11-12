@@ -10,7 +10,7 @@ const PRIO := 1e12
 func _check(cond: bool, what: String) -> void:
 	if not cond:
 		failures += 1
-	print("ok: " if cond else "FALHA: ", what)
+	print("ok: " if cond else "FAIL: ", what)
 
 
 func _fresh(iso := "BRA") -> GameWorld:
@@ -39,7 +39,7 @@ func _init() -> void:
 	_minimum_wage()
 	_threshold()
 	_reelection()
-	print("RESULTADO: %d falhas" % failures)
+	print("RESULT: %d failures" % failures)
 	quit(1 if failures > 0 else 0)
 
 

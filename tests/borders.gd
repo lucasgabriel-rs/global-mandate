@@ -10,7 +10,7 @@ func _check(cond: bool, what: String) -> void:
 		print("ok: ", what)
 	else:
 		failures += 1
-		print("FALHA: ", what)
+		print("FAIL: ", what)
 
 
 func _box(center: Vector2, r: float) -> PackedVector2Array:
@@ -374,5 +374,5 @@ func _init() -> void:
 	_cessions()
 	_war_endings()
 	_character()
-	print("RESULTADO: ", failures, " falhas")
+	print("RESULT: ", failures, " failures")
 	quit(1 if failures > 0 else 0)

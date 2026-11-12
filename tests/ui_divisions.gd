@@ -34,7 +34,7 @@ func _shot(name_: String) -> void:
 func _check(cond: bool, what: String) -> void:
 	if not cond:
 		failures += 1
-	print("ok: " if cond else "FALHA: ", what)
+	print("ok: " if cond else "FAIL: ", what)
 
 
 func _screen(offset: Vector2) -> Vector2:
@@ -281,7 +281,7 @@ func _process(delta: float) -> void:
 			print("tempo por quadro: médio %.1f ms, máximo %.1f ms em %d quadros" % [frame_sum / maxi(frame_count, 1) * 1000.0, frame_max * 1000.0, frame_count])
 			main._set_speed(0)
 			DirAccess.remove_absolute(ProjectSettings.globalize_path(main.SAVE_PATH))
-			print("RESULTADO: ", failures, " falhas")
+			print("RESULT: ", failures, " failures")
 			get_tree().quit(1 if failures > 0 else 0)
 
 

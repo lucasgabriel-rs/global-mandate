@@ -21,7 +21,7 @@ func run(iso: String, policy: Callable, years := YEARS) -> Country:
 
 
 func check(name_: String, cond: bool, detail: String) -> void:
-	print("%s  %s  (%s)" % ["ok   " if cond else "FALHA", name_, detail])
+	print("%s  %s  (%s)" % ["ok   " if cond else "FAIL", name_, detail])
 	if not cond:
 		failures += 1
 
@@ -81,5 +81,5 @@ func _init() -> void:
 		w1.tick_day()
 		w2.tick_day()
 	check("embargo a grande exportador encarece o petróleo", w2.markets.price[0] > w1.markets.price[0] * 1.1, "$%.0f vs $%.0f" % [w2.markets.price[0], w1.markets.price[0]])
-	print("falhas: ", failures)
+	print("RESULT: ", failures, " failures")
 	quit(1 if failures > 0 else 0)

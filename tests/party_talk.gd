@@ -10,7 +10,7 @@ func _check(cond: bool, what: String) -> void:
 		print("ok: ", what)
 	else:
 		failures += 1
-		print("FALHA: ", what)
+		print("FAIL: ", what)
 
 
 func _program(type: String) -> Dictionary:
@@ -54,7 +54,7 @@ func _init() -> void:
 	_closed_after_answer()
 	_log_and_save()
 	_hook()
-	print("RESULTADO: ", failures, " falhas")
+	print("RESULT: ", failures, " failures")
 	quit(1 if failures > 0 else 0)
 
 

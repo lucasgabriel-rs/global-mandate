@@ -8,7 +8,7 @@ var failures := 0
 func _check(cond: bool, what: String) -> void:
 	if not cond:
 		failures += 1
-	print("ok: " if cond else "FALHA: ", what)
+	print("ok: " if cond else "FAIL: ", what)
 
 
 func _init() -> void:
@@ -89,5 +89,5 @@ func _init() -> void:
 	old_save.adult = 0.0
 	Demography.ensure(old_save)
 	_check(old_save.adult > 0.5, "save antigo ganha faixas")
-	print("falhas: ", failures)
+	print("RESULT: ", failures, " failures")
 	quit(1 if failures > 0 else 0)

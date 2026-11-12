@@ -26,7 +26,7 @@ func _shot(name_: String) -> void:
 func _check(cond: bool, what: String) -> void:
 	if not cond:
 		failures += 1
-	print("ok: " if cond else "FALHA: ", what)
+	print("ok: " if cond else "FAIL: ", what)
 
 
 func _click(b: Control) -> void:
@@ -307,5 +307,5 @@ func _process(delta: float) -> void:
 		45:
 			_check((_named(root, "role_opposition") as Button).disabled, "regime fechado não tem oposição jogável")
 			_shot("s15_regime_fechado")
-			print("RESULTADO: ", failures, " falhas")
+			print("RESULT: ", failures, " failures")
 			get_tree().quit(1 if failures > 0 else 0)

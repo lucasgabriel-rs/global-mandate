@@ -10,7 +10,7 @@ func _check(cond: bool, what: String) -> void:
 		print("ok: ", what)
 	else:
 		failures += 1
-		print("FALHA: ", what)
+		print("FAIL: ", what)
 
 
 func _init() -> void:
@@ -78,5 +78,5 @@ func _init() -> void:
 		hw._update_global()
 	_check(hw.global_hist.tension.size() <= 480, "histórico global tem teto (%d)" % hw.global_hist.tension.size())
 
-	print("RESULTADO: ", failures, " falhas")
+	print("RESULT: ", failures, " failures")
 	quit(1 if failures > 0 else 0)

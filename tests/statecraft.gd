@@ -10,7 +10,7 @@ func _check(cond: bool, what: String) -> void:
 		print("ok: ", what)
 	else:
 		failures += 1
-		print("FALHA: ", what)
+		print("FAIL: ", what)
 
 
 func _world(iso := "BRA", seed_value := 7) -> GameWorld:
@@ -36,7 +36,7 @@ func _init() -> void:
 	_opposition()
 	_dialogue()
 	_no_time_limit()
-	print("RESULTADO: ", failures, " falhas")
+	print("RESULT: ", failures, " failures")
 	quit(1 if failures > 0 else 0)
 
 
