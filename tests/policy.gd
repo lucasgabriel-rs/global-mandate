@@ -12,8 +12,10 @@ func run(iso: String, policy: Callable, years := YEARS) -> Country:
 	w.setup(1234)
 	w.set_player(w.by_iso[iso], "normal")
 	policy.call(w.player, w)
+	# Sem eleição nem fim de jogo (morte do líder, golpe): o que se compara aqui é a economia.
 	for d in 365 * years:
 		w.player.next_election = 9999.0
+		w.over = false
 		w.tick_day()
 	return w.player
 
