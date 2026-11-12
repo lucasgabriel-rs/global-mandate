@@ -109,6 +109,8 @@ func setup(seed_value: int = 0) -> void:
 		Sectors.init_country(c, self)
 		c.push_hist("y", c.y)
 		Economy.record_start(c)
+	# A migração inicial sai da natalidade: o crescimento dos dados já inclui imigrantes.
+	Demography.init_world(self)
 	# Gráficos já têm o ponto de partida no primeiro dia.
 	for i in 5:
 		markets.push_hist(i)
@@ -220,6 +222,8 @@ func _economy_month() -> void:
 	# Os países fecham o mês com os preços vigentes; o mercado reage depois e vale para o mês seguinte.
 	for c: Country in countries:
 		Economy.step_month(c, self)
+	# Migração depois de nascimentos e mortes: todos os países já fecharam o mês.
+	Demography.step_world(self)
 	markets.step_month(self, rng)
 
 

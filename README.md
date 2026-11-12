@@ -73,6 +73,12 @@ Each country has companies, real for the large economies and generated for the r
 
 Companies change hands by law: the **Privatize** and **Nationalize** blocks in the law editor sell or buy the state's stake. A strong national champion lifts the productivity of its whole sector.
 
+### Population
+
+Population is no longer a fixed growth rate. Each country has three age groups (young people 0-14, working age 15-64 and elderly 65+) with its own birth and death rates. The largest countries start from rounded UN estimates for 2024, and the rest are estimated from income per capita and population growth. Births fall slowly as income rises and drop during war and instability; death rates of the elderly fall over time and with health spending; war kills working-age adults. Countries with few young people age faster, because larger generations reach 65 than reach 15.
+
+Ageing hits the economy in two places: a smaller share of working-age people reduces the labor supply, and more elderly people than at the start raise pension spending in the public accounts. People also migrate between countries, mostly working-age adults: countries well above the world average in income, peace and stability attract migrants, those well below lose them, and war and occupation create refugees. Migration never changes the world population, and annexed territory brings its own age structure. The **Population** tab of the **Economy** window shows the age structure, birth, death and migration rates and the extra pension cost.
+
 ### Public accounts
 
 The first day of the game already has budget figures, a credit rating and reserves. The central bank works with a target rate, and the news feed reports major macro moves (growth, inflation, rating changes, crises).
@@ -277,6 +283,7 @@ Export presets for Windows and Linux (x86_64 and arm64) are in `export_presets.c
 There are 170 countries with their own GDP, population, debt, inflation, interest rates, exports, armed forces and commodity production. Each one runs the same economy every month:
 
 - **Supply:** Solow production function with capital, labor, human capital and productivity, with income convergence, split into ten sectors.
+- **Demography:** three age groups with births, deaths, ageing and migration between countries; the working-age share sets the labor supply and the elderly share weighs on pensions.
 - **Demand:** output gap driven by the real interest rate, fiscal impulse, partner demand, real exchange rate, terms of trade, credit and confidence, plus the logistics of ports and airports.
 - **Prices:** Phillips curve with expectations anchored by central bank credibility, exchange rate pass-through and energy and food shocks.
 - **Monetary policy:** Taylor rule, the euro zone with a common ECB, dollar pegs that can break.
@@ -326,8 +333,9 @@ godot --path . -- --ui-legislation --shots=/tmp/shots
 | --- | --- |
 | `scenes.gd` | Opens every scene and rejects repeated names under the same parent. |
 | `policy.gd` | Checks the effect of each player lever against a control. |
-| `calibrate.gd` | Prints world indicators year by year (`-- 15 42`), with optional `taiwan` and `hormuz` scenarios. |
+| `calibrate.gd` | Prints world indicators and populations by age group year by year (`-- 15 42`), with optional `taiwan` and `hormuz` scenarios. |
 | `economy_health.gd` | Long runs of the world economy within sane bounds. |
+| `demography.gd` | Starting age structures, ageing, labor supply, pensions, migration and old saves. |
 | `sectors.gd`, `infra.gd`, `corporate.gd` | Sectors, ports and airports, companies and the stock exchange. |
 | `legislation.gd` | Laws, legislative process, party fund, polls, amendments and block dragging. |
 | `code_tributario.gd`, `code_penal_civil.gd`, `code_trabalho_eleicoes.gd`, `direitos.gd` | Each legal code: starting text, changes by bill, revocation and monthly effects. |
@@ -342,7 +350,7 @@ godot --path . -- --ui-legislation --shots=/tmp/shots
 | --- | --- |
 | `--ui-desk` | Dock and floating windows: open, bring to front, drag, resize, minimize, centered opening and small screens. |
 | `--ui-legislation`, `--ui-society` | Legislative center, code cards, filtered library, expected effects, step tracker, amendments and society systems. |
-| `--ui-economy`, `--ui-infra`, `--ui-corporate`, `--ui-econ-audit` | Economy windows (including Currency with reserves and the sovereign fund), infrastructure, companies and stock exchange. |
+| `--ui-economy`, `--ui-infra`, `--ui-corporate`, `--ui-econ-audit` | Economy windows (including Currency with reserves and the sovereign fund), population, infrastructure, companies and stock exchange. |
 | `--ui-creator` | Countryball creator, with male and female portraits and names, and a gallery of every country's countryball (`galeria_bandeiras.png`). |
 | `--ui-locale` | Switches to English and Spanish and takes screenshots of the start screen, HUD, legislative center and block editor. |
 | `--ui-politics`, `--ui-statecraft` | Politics and statecraft through the interface. |

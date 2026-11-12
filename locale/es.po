@@ -191,8 +191,12 @@ msgid "Aprovação"
 msgstr "Aprobación"
 
 #: scenes/ui/hud.tscn:342
-msgid "Fundo do seu partido: paga pesquisas, campanhas e outros gastos. Recebe todo mês conforme a votação."
-msgstr "Fondo de tu partido: paga encuestas, campañas y otros gastos. Recibe cada mes según su votación."
+msgid ""
+"Fundo do seu partido: paga pesquisas, campanhas e outros gastos. Recebe todo "
+"mês conforme a votação."
+msgstr ""
+"Fondo de tu partido: paga encuestas, campañas y otros gastos. Recibe cada "
+"mes según su votación."
 
 #: scenes/ui/hud.tscn:349
 msgid "Fundo partid."
@@ -269,7 +273,7 @@ msgid "PIB per capita"
 msgstr "PIB per cápita"
 
 #: scenes/ui/hud.tscn:615 scenes/ui/hud.tscn:1780
-#: scenes/ui/start_screen.tscn:166
+#: scenes/ui/start_screen.tscn:166 scenes/ui/panels/economy_panel.tscn:78
 msgid "População"
 msgstr "Población"
 
@@ -359,8 +363,11 @@ msgid "Falar com o líder"
 msgstr "Hablar con el líder"
 
 #: scenes/ui/hud.tscn:1066
-msgid "Negocia um tratado: assinado, ele ainda precisa ser ratificado pelos parlamentos."
-msgstr "Negocia un tratado: firmado, aún debe ser ratificado por los parlamentos."
+msgid ""
+"Negocia um tratado: assinado, ele ainda precisa ser ratificado pelos "
+"parlamentos."
+msgstr ""
+"Negocia un tratado: firmado, aún debe ser ratificado por los parlamentos."
 
 #: scenes/ui/hud.tscn:1069
 msgid "Propor tratado"
@@ -404,8 +411,12 @@ msgid "Vender armas"
 msgstr "Vender armas"
 
 #: scenes/ui/hud.tscn:1143
-msgid "Liga/desliga. Protege o mercado, encarece importações e pode gerar retaliação."
-msgstr "Activa/desactiva. Protege el mercado, encarece importaciones y puede generar represalias."
+msgid ""
+"Liga/desliga. Protege o mercado, encarece importações e pode gerar "
+"retaliação."
+msgstr ""
+"Activa/desactiva. Protege el mercado, encarece importaciones y puede generar "
+"represalias."
 
 #: scenes/ui/hud.tscn:1147 scripts/ui/debug_menu.gd:9 scripts/ui/hud.gd:505
 msgid "Tarifa de 20%"
@@ -428,8 +439,11 @@ msgid "Sanções"
 msgstr "Sanciones"
 
 #: scenes/ui/hud.tscn:1179
-msgid "Corta 88% do comércio. Reduz a oferta de energia do alvo conforme seu peso."
-msgstr "Corta el 88% del comercio. Reduce la oferta de energía del objetivo según tu peso."
+msgid ""
+"Corta 88% do comércio. Reduz a oferta de energia do alvo conforme seu peso."
+msgstr ""
+"Corta el 88% del comercio. Reduce la oferta de energía del objetivo según tu "
+"peso."
 
 #: scenes/ui/hud.tscn:1183 scripts/ui/debug_menu.gd:9 scripts/ui/hud.gd:504
 msgid "Embargo total"
@@ -447,7 +461,7 @@ msgstr "Operación encubierta"
 msgid "Exige relação +55. Uma vez assinado, ataque a um é ataque ao outro."
 msgstr "Exige relación +55. Una vez firmado, atacar a uno es atacar al otro."
 
-#: scenes/ui/hud.tscn:1207 scripts/sim/world.gd:614 scripts/ui/debug_menu.gd:9
+#: scenes/ui/hud.tscn:1207 scripts/sim/world.gd:618 scripts/ui/debug_menu.gd:9
 #: scripts/ui/hud.gd:502
 msgid "Pacto de defesa"
 msgstr "Pacto de defensa"
@@ -512,8 +526,12 @@ msgid "Próxima eleição"
 msgstr "Próxima elección"
 
 #: scenes/ui/hud.tscn:1644
-msgid "Ranking entre as nações, combinando economia, força militar, alianças e estabilidade."
-msgstr "Ranking entre naciones, que combina economía, fuerza militar, alianzas y estabilidad."
+msgid ""
+"Ranking entre as nações, combinando economia, força militar, alianças e "
+"estabilidade."
+msgstr ""
+"Ranking entre naciones, que combina economía, fuerza militar, alianzas y "
+"estabilidad."
 
 #: scenes/ui/hud.tscn:1651
 msgid "Influência global"
@@ -548,8 +566,12 @@ msgid "ORÇAMENTO"
 msgstr "PRESUPUESTO"
 
 #: scenes/ui/hud.tscn:1937
-msgid "O governo define os gastos sozinho, e a mudança vale na hora. Só fica travado o que uma lei em vigor obrigar."
-msgstr "El gobierno fija el gasto solo, y el cambio vale al instante. Solo queda bloqueado lo que exija una ley vigente."
+msgid ""
+"O governo define os gastos sozinho, e a mudança vale na hora. Só fica "
+"travado o que uma lei em vigor obrigar."
+msgstr ""
+"El gobierno fija el gasto solo, y el cambio vale al instante. Solo queda "
+"bloqueado lo que exija una ley vigente."
 
 #: scenes/ui/hud.tscn:1951
 msgid "IMPOSTOS (% DO PIB)"
@@ -568,8 +590,12 @@ msgid "Empresas e capital"
 msgstr "Empresas y capital"
 
 #: scenes/ui/hud.tscn:2022 scenes/ui/hud.tscn:3261
-msgid "Abre o editor de blocos com as alíquotas em vigor. A mudança passa pelo parlamento como qualquer lei."
-msgstr "Abre el editor de bloques con las alícuotas vigentes. El cambio pasa por el parlamento como cualquier ley."
+msgid ""
+"Abre o editor de blocos com as alíquotas em vigor. A mudança passa pelo "
+"parlamento como qualquer lei."
+msgstr ""
+"Abre el editor de bloques con las alícuotas vigentes. El cambio pasa por el "
+"parlamento como cualquier ley."
 
 #: scenes/ui/hud.tscn:2025
 msgid "Mudar tributos por lei"
@@ -672,12 +698,16 @@ msgid "Emissão monetária (% do déficit)"
 msgstr "Emisión monetaria (% del déficit)"
 
 #: scenes/ui/hud.tscn:2438
-msgid "Evita dívida, mas gera inflação e destrói a credibilidade do banco central."
-msgstr "Evita deuda, pero genera inflación y destruye la credibilidad del banco central."
+msgid ""
+"Evita dívida, mas gera inflação e destrói a credibilidade do banco central."
+msgstr ""
+"Evita deuda, pero genera inflación y destruye la credibilidad del banco "
+"central."
 
 #: scenes/ui/hud.tscn:2445
 msgid "Empréstimo de 8% do PIB em troca de ajuste fiscal e perda de aprovação."
-msgstr "Préstamo del 8% del PIB a cambio de ajuste fiscal y pérdida de aprobación."
+msgstr ""
+"Préstamo del 8% del PIB a cambio de ajuste fiscal y pérdida de aprobación."
 
 #: scenes/ui/hud.tscn:2448
 msgid "Pedir socorro ao FMI"
@@ -692,8 +722,12 @@ msgid "Regime"
 msgstr "Régimen"
 
 #: scenes/ui/hud.tscn:2499 scripts/ui/hud.gd:827
-msgid "Manual dá controle direto, mas interferência reduz a credibilidade do banco central."
-msgstr "El manual da control directo, pero la interferencia reduce la credibilidad del banco central."
+msgid ""
+"Manual dá controle direto, mas interferência reduz a credibilidade do banco "
+"central."
+msgstr ""
+"El manual da control directo, pero la interferencia reduce la credibilidad "
+"del banco central."
 
 #: scenes/ui/hud.tscn:2502
 msgid "Alternar: regra de Taylor / juro manual"
@@ -704,8 +738,12 @@ msgid "Juro básico alvo"
 msgstr "Tipo básico objetivo"
 
 #: scenes/ui/hud.tscn:2535
-msgid "Mais juros: menos inflação e mais câmbio valorizado, ao custo de recessão e dívida mais cara."
-msgstr "Más interés: menos inflación y moneda más fuerte, a costa de recesión y deuda más cara."
+msgid ""
+"Mais juros: menos inflação e mais câmbio valorizado, ao custo de recessão e "
+"dívida mais cara."
+msgstr ""
+"Más interés: menos inflación y moneda más fuerte, a costa de recesión y "
+"deuda más cara."
 
 #: scenes/ui/hud.tscn:2548
 msgid "Juro básico atual"
@@ -736,8 +774,12 @@ msgid "Inflação esperada"
 msgstr "Inflación esperada"
 
 #: scenes/ui/hud.tscn:2656
-msgid "Quanto as expectativas se ancoram na meta. Sobe devagar quando a meta é cumprida."
-msgstr "Cuánto se anclan las expectativas en la meta. Sube despacio cuando se cumple la meta."
+msgid ""
+"Quanto as expectativas se ancoram na meta. Sobe devagar quando a meta é "
+"cumprida."
+msgstr ""
+"Cuánto se anclan las expectativas en la meta. Sube despacio cuando se cumple "
+"la meta."
 
 #: scenes/ui/hud.tscn:2663
 msgid "Credibilidade"
@@ -752,52 +794,79 @@ msgid "Moeda por US$ (índice 2025 = 1)"
 msgstr "Moneda por US$ (índice 2025 = 1)"
 
 #: scenes/ui/hud.tscn:2715
-msgid "Acima de 1: moeda real mais fraca que em 2025, exportações mais competitivas."
-msgstr "Por encima de 1: moneda real más débil que en 2025, exportaciones más competitivas."
+msgid ""
+"Acima de 1: moeda real mais fraca que em 2025, exportações mais competitivas."
+msgstr ""
+"Por encima de 1: moneda real más débil que en 2025, exportaciones más "
+"competitivas."
 
 #: scenes/ui/hud.tscn:2722
 msgid "Câmbio real"
 msgstr "Tipo de cambio real"
 
 #: scenes/ui/hud.tscn:2738
-msgid "Dólares do banco central, em meses de importação entre parênteses. Abaixo de 3 meses o risco sobe."
-msgstr "Dólares del banco central, en meses de importación entre paréntesis. Por debajo de 3 meses sube el riesgo."
+msgid ""
+"Dólares do banco central, em meses de importação entre parênteses. Abaixo de "
+"3 meses o risco sobe."
+msgstr ""
+"Dólares del banco central, en meses de importación entre paréntesis. Por "
+"debajo de 3 meses sube el riesgo."
 
 #: scenes/ui/hud.tscn:2761
-msgid "Venda líquida de reservas para segurar a moeda; negativa quando o banco central compra dólares."
-msgstr "Venta neta de reservas para sostener la moneda; negativa cuando el banco central compra dólares."
+msgid ""
+"Venda líquida de reservas para segurar a moeda; negativa quando o banco "
+"central compra dólares."
+msgstr ""
+"Venta neta de reservas para sostener la moneda; negativa cuando el banco "
+"central compra dólares."
 
 #: scenes/ui/hud.tscn:2768
 msgid "Intervenção no câmbio (ao ano)"
 msgstr "Intervención cambiaria (al año)"
 
 #: scenes/ui/hud.tscn:2784
-msgid "Quanto do movimento do câmbio o banco central segura, definido pela Lei Cambial."
-msgstr "Cuánto del movimiento del tipo de cambio frena el banco central, según la Ley Cambiaria."
+msgid ""
+"Quanto do movimento do câmbio o banco central segura, definido pela Lei "
+"Cambial."
+msgstr ""
+"Cuánto del movimiento del tipo de cambio frena el banco central, según la "
+"Ley Cambiaria."
 
 #: scenes/ui/hud.tscn:2791
 msgid "Política cambial"
 msgstr "Política cambiaria"
 
 #: scenes/ui/hud.tscn:2807
-msgid "Freia a fuga de capitais, mas afasta investimento estrangeiro e eleva um pouco o risco."
-msgstr "Frena la fuga de capitales, pero ahuyenta la inversión extranjera y eleva un poco el riesgo."
+msgid ""
+"Freia a fuga de capitais, mas afasta investimento estrangeiro e eleva um "
+"pouco o risco."
+msgstr ""
+"Frena la fuga de capitales, pero ahuyenta la inversión extranjera y eleva un "
+"poco el riesgo."
 
 #: scenes/ui/hud.tscn:2814
 msgid "Controle de capitais"
 msgstr "Control de capitales"
 
 #: scenes/ui/hud.tscn:2830
-msgid "Dinheiro que sai do país quando o risco ou a inflação sobem. Pressiona o câmbio e as reservas."
-msgstr "Dinero que sale del país cuando suben el riesgo o la inflación. Presiona el tipo de cambio y las reservas."
+msgid ""
+"Dinheiro que sai do país quando o risco ou a inflação sobem. Pressiona o "
+"câmbio e as reservas."
+msgstr ""
+"Dinero que sale del país cuando suben el riesgo o la inflación. Presiona el "
+"tipo de cambio y las reservas."
 
 #: scenes/ui/hud.tscn:2837
 msgid "Fuga de capitais (ao ano)"
 msgstr "Fuga de capitales (al año)"
 
 #: scenes/ui/hud.tscn:2853
-msgid "Parte dos depósitos e preços em dólar. Sobe com inflação alta e tira força do juro."
-msgstr "Parte de los depósitos y precios en dólares. Sube con inflación alta y le quita fuerza al tipo de interés."
+msgid ""
+"Parte dos depósitos e preços em dólar. Sobe com inflação alta e tira força "
+"do juro."
+msgstr ""
+"Parte de los depósitos y precios en dólares. Sube con inflación alta y le "
+"quita fuerza al tipo de interés."
 
 #: scenes/ui/hud.tscn:2860
 msgid "Dolarização"
@@ -812,8 +881,12 @@ msgid "Depreciação esperada (paridade de juros)"
 msgstr "Depreciación esperada (paridad de intereses)"
 
 #: scenes/ui/hud.tscn:2900
-msgid "A âncora importa a política monetária dos EUA e exige reservas para ser defendida."
-msgstr "El ancla importa la política monetaria de EE. UU. y exige reservas para defenderla."
+msgid ""
+"A âncora importa a política monetária dos EUA e exige reservas para ser "
+"defendida."
+msgstr ""
+"El ancla importa la política monetaria de EE. UU. y exige reservas para "
+"defenderla."
 
 #: scenes/ui/hud.tscn:2903
 msgid "Alternar: flutuante / âncora no dólar"
@@ -824,16 +897,24 @@ msgid "FUNDO SOBERANO"
 msgstr "FONDO SOBERANO"
 
 #: scenes/ui/hud.tscn:2920
-msgid "O fundo é criado e alterado pela Lei Cambial e do Fundo Soberano, no centro legislativo."
-msgstr "El fondo se crea y se modifica con la Ley Cambiaria y del Fondo Soberano, en el centro legislativo."
+msgid ""
+"O fundo é criado e alterado pela Lei Cambial e do Fundo Soberano, no centro "
+"legislativo."
+msgstr ""
+"El fondo se crea y se modifica con la Ley Cambiaria y del Fondo Soberano, en "
+"el centro legislativo."
 
 #: scenes/ui/hud.tscn:2927 scripts/ui/law_editor.gd:443
 msgid "Situação"
 msgstr "Situación"
 
 #: scenes/ui/hud.tscn:2943
-msgid "Investido fora do país: os aportes não valorizam a moeda. Um fundo grande reduz o risco."
-msgstr "Invertido fuera del país: los aportes no aprecian la moneda. Un fondo grande reduce el riesgo."
+msgid ""
+"Investido fora do país: os aportes não valorizam a moeda. Um fundo grande "
+"reduz o risco."
+msgstr ""
+"Invertido fuera del país: los aportes no aprecian la moneda. Un fondo grande "
+"reduce el riesgo."
 
 #: scenes/ui/hud.tscn:2950
 msgid "Saldo aplicado no exterior"
@@ -841,23 +922,31 @@ msgstr "Saldo invertido en el exterior"
 
 #: scenes/ui/hud.tscn:2966
 msgid "Parte da renda de commodities e dos superávits que vai para o fundo."
-msgstr "Parte de la renta de materias primas y de los superávits que va al fondo."
+msgstr ""
+"Parte de la renta de materias primas y de los superávits que va al fondo."
 
 #: scenes/ui/hud.tscn:2973
 msgid "Aportes do ano"
 msgstr "Aportes del año"
 
 #: scenes/ui/hud.tscn:2989
-msgid "O saque entra no orçamento. Cobre parte das quedas da renda de commodities."
-msgstr "El retiro entra en el presupuesto. Cubre parte de las caídas de la renta de materias primas."
+msgid ""
+"O saque entra no orçamento. Cobre parte das quedas da renda de commodities."
+msgstr ""
+"El retiro entra en el presupuesto. Cubre parte de las caídas de la renta de "
+"materias primas."
 
 #: scenes/ui/hud.tscn:2996
 msgid "Saques do ano"
 msgstr "Retiros del año"
 
 #: scenes/ui/hud.tscn:3012
-msgid "Saque anual máximo, em fração do saldo. Acima de 4% ao ano o fundo encolhe e a aprovação cai."
-msgstr "Retiro anual máximo, como fracción del saldo. Por encima del 4% al año el fondo se achica y la aprobación cae."
+msgid ""
+"Saque anual máximo, em fração do saldo. Acima de 4% ao ano o fundo encolhe e "
+"a aprovação cai."
+msgstr ""
+"Retiro anual máximo, como fracción del saldo. Por encima del 4% al año el "
+"fondo se achica y la aprobación cae."
 
 #: scenes/ui/hud.tscn:3019
 msgid "Regra de saque"
@@ -865,13 +954,14 @@ msgstr "Regla de retiro"
 
 #: scenes/ui/hud.tscn:3035
 msgid "Retorno anualizado do último mês: ações e títulos no exterior."
-msgstr "Rendimiento anualizado del último mes: acciones y bonos en el exterior."
+msgstr ""
+"Rendimiento anualizado del último mes: acciones y bonos en el exterior."
 
 #: scenes/ui/hud.tscn:3042
 msgid "Retorno da carteira"
 msgstr "Rendimiento de la cartera"
 
-#: scenes/ui/hud.tscn:3089 scripts/sim/law_catalog.gd_(categorias)
+#: scenes/ui/hud.tscn:3089
 msgid "Câmbio"
 msgstr "Tipo de cambio"
 
@@ -889,7 +979,8 @@ msgstr "Importaciones"
 
 #: scenes/ui/hud.tscn:3215
 msgid "Efeito líquido de sanções, tarifas e acordos sobre suas exportações."
-msgstr "Efecto neto de sanciones, aranceles y acuerdos sobre tus exportaciones."
+msgstr ""
+"Efecto neto de sanciones, aranceles y acuerdos sobre tus exportaciones."
 
 #: scenes/ui/hud.tscn:3222
 msgid "Acesso a mercados"
@@ -936,8 +1027,12 @@ msgid "Mobilização"
 msgstr "Movilización"
 
 #: scenes/ui/hud.tscn:3598
-msgid "Aumenta o poder de combate. Tira trabalhadores da economia e custa até 3,5% do PIB."
-msgstr "Aumenta el poder de combate. Saca trabajadores de la economía y cuesta hasta el 3,5% del PIB."
+msgid ""
+"Aumenta o poder de combate. Tira trabalhadores da economia e custa até 3,5% "
+"do PIB."
+msgstr ""
+"Aumenta el poder de combate. Saca trabajadores de la economía y cuesta hasta "
+"el 3,5% del PIB."
 
 #: scenes/ui/hud.tscn:3613
 msgid "GUERRAS"
@@ -988,8 +1083,10 @@ msgid "Nenhum país selecionado"
 msgstr "Ningún país seleccionado"
 
 #: scenes/ui/start_screen.tscn:81
-msgid "Clique em um país no mapa para ver seus dados. Cenário: janeiro de 2025."
-msgstr "Haz clic en un país del mapa para ver sus datos. Escenario: enero de 2025."
+msgid ""
+"Clique em um país no mapa para ver seus dados. Cenário: janeiro de 2025."
+msgstr ""
+"Haz clic en un país del mapa para ver sus datos. Escenario: enero de 2025."
 
 #: scenes/ui/start_screen.tscn:102
 msgid "ECONOMIA"
@@ -1040,7 +1137,7 @@ msgstr "Normal"
 msgid "Difícil"
 msgstr "Difícil"
 
-#: scenes/ui/start_screen.tscn:542 scripts/sim/world.gd:480
+#: scenes/ui/start_screen.tscn:542 scripts/sim/world.gd:484
 msgid "Assumir o governo"
 msgstr "Asumir el gobierno"
 
@@ -1072,8 +1169,12 @@ msgid "DISPOSITIVOS EM VIGOR"
 msgstr "DISPOSICIONES VIGENTES"
 
 #: scenes/ui/legislation/amendment_editor.tscn:109
-msgid "Acrescenta um artigo, parágrafo, inciso ou disposição transitória escrevendo o texto."
-msgstr "Añade un artículo, párrafo, inciso o disposición transitoria escribiendo el texto."
+msgid ""
+"Acrescenta um artigo, parágrafo, inciso ou disposição transitória escrevendo "
+"o texto."
+msgstr ""
+"Añade un artículo, párrafo, inciso o disposición transitoria escribiendo el "
+"texto."
 
 #: scenes/ui/legislation/amendment_editor.tscn:112
 msgid "Novo artigo"
@@ -1081,7 +1182,8 @@ msgstr "Nuevo artículo"
 
 #: scenes/ui/legislation/amendment_editor.tscn:118
 msgid "Cada pilha de blocos vira um artigo que a Constituição executa."
-msgstr "Cada pila de bloques se convierte en un artículo que la Constitución ejecuta."
+msgstr ""
+"Cada pila de bloques se convierte en un artículo que la Constitución ejecuta."
 
 #: scenes/ui/legislation/amendment_editor.tscn:121
 msgid "Novo artigo com blocos"
@@ -1208,8 +1310,11 @@ msgid "BIBLIOTECA DE BLOCOS"
 msgstr "BIBLIOTECA DE BLOQUES"
 
 #: scenes/ui/legislation/law_editor.tscn:149
-msgid "Arraste um bloco para a área ao lado. Para apagar, arraste de volta para cá."
-msgstr "Arrastra un bloque al área de al lado. Para borrarlo, arrástralo de vuelta aquí."
+msgid ""
+"Arraste um bloco para a área ao lado. Para apagar, arraste de volta para cá."
+msgstr ""
+"Arrastra un bloque al área de al lado. Para borrarlo, arrástralo de vuelta "
+"aquí."
 
 #: scenes/ui/legislation/law_editor.tscn:194
 msgid "VALIDAÇÃO"
@@ -1376,8 +1481,16 @@ msgid "Códigos"
 msgstr "Códigos"
 
 #: scenes/ui/legislation/legislation_center.tscn:80
-msgid "Cada código é uma lei complementar com os blocos da sua área. Para mudar tributos, penas, trabalho, eleições ou direitos, altere o código: o editor abre com os blocos dele, e a mudança passa pelo parlamento com maioria absoluta."
-msgstr "Cada código es una ley complementaria con los bloques de su área. Para cambiar tributos, penas, trabajo, elecciones o derechos, modifica el código: el editor se abre con sus bloques, y el cambio pasa por el parlamento con mayoría absoluta."
+msgid ""
+"Cada código é uma lei complementar com os blocos da sua área. Para mudar "
+"tributos, penas, trabalho, eleições ou direitos, altere o código: o editor "
+"abre com os blocos dele, e a mudança passa pelo parlamento com maioria "
+"absoluta."
+msgstr ""
+"Cada código es una ley complementaria con los bloques de su área. Para "
+"cambiar tributos, penas, trabajo, elecciones o derechos, modifica el código: "
+"el editor se abre con sus bloques, y el cambio pasa por el parlamento con "
+"mayoría absoluta."
 
 #: scenes/ui/legislation/legislation_center.tscn:100
 #: scripts/sim/legislation.gd:18
@@ -1385,8 +1498,14 @@ msgid "Em tramitação"
 msgstr "En tramitación"
 
 #: scenes/ui/legislation/legislation_center.tscn:112
-msgid "Cada projeto anda sozinho com o tempo do jogo. Quando um projeto de outro autor chega à sanção, você tem alguns dias para sancionar ou vetar; depois disso, vale a sanção tácita."
-msgstr "Cada proyecto avanza solo con el tiempo del juego. Cuando un proyecto de otro autor llega a la sanción, tienes unos días para sancionarlo o vetarlo; después, vale la sanción tácita."
+msgid ""
+"Cada projeto anda sozinho com o tempo do jogo. Quando um projeto de outro "
+"autor chega à sanção, você tem alguns dias para sancionar ou vetar; depois "
+"disso, vale a sanção tácita."
+msgstr ""
+"Cada proyecto avanza solo con el tiempo del juego. Cuando un proyecto de "
+"otro autor llega a la sanción, tienes unos días para sancionarlo o vetarlo; "
+"después, vale la sanción tácita."
 
 #: scenes/ui/legislation/legislation_center.tscn:125
 msgid "Nenhum projeto em tramitação."
@@ -1406,8 +1525,14 @@ msgid "Lei avulsa (avançado)"
 msgstr "Ley suelta (avanzado)"
 
 #: scenes/ui/legislation/legislation_center.tscn:183
-msgid "Para regras que não cabem em nenhum código: uma norma nova, montada com todos os blocos, um modelo pronto, uma emenda à Constituição ou um arquivo exportado."
-msgstr "Para reglas que no caben en ningún código: una norma nueva, armada con todos los bloques, una plantilla, una enmienda a la Constitución o un archivo exportado."
+msgid ""
+"Para regras que não cabem em nenhum código: uma norma nova, montada com "
+"todos os blocos, um modelo pronto, uma emenda à Constituição ou um arquivo "
+"exportado."
+msgstr ""
+"Para reglas que no caben en ningún código: una norma nueva, armada con todos "
+"los bloques, una plantilla, una enmienda a la Constitución o un archivo "
+"exportado."
 
 #: scenes/ui/legislation/legislation_center.tscn:197
 msgid "Nova norma"
@@ -1465,8 +1590,12 @@ msgid "QUEM PODE O QUÊ"
 msgstr "QUIÉN PUEDE QUÉ"
 
 #: scenes/ui/legislation/legislation_center.tscn:334
-msgid "A tabela segue a Constituição em vigor. Para mudá-la, aprove uma emenda aos artigos de veto, decreto autônomo, oposição ou corte."
-msgstr "La tabla sigue la Constitución vigente. Para cambiarla, aprueba una enmienda a los artículos de veto, decreto autónomo, oposición o tribunal."
+msgid ""
+"A tabela segue a Constituição em vigor. Para mudá-la, aprove uma emenda aos "
+"artigos de veto, decreto autônomo, oposição ou corte."
+msgstr ""
+"La tabla sigue la Constitución vigente. Para cambiarla, aprueba una enmienda "
+"a los artículos de veto, decreto autónomo, oposición o tribunal."
 
 #: scenes/ui/legislation/legislation_center.tscn:353
 msgid "EM VIGOR POR FORÇA DAS NORMAS"
@@ -1486,8 +1615,12 @@ msgid "Tratados"
 msgstr "Tratados"
 
 #: scenes/ui/legislation/legislation_center.tscn:412
-msgid "Tratados do seu país. Para propor um novo, selecione o outro país no mapa e use o botão Propor tratado no dossiê."
-msgstr "Tratados de tu país. Para proponer uno nuevo, selecciona el otro país en el mapa y usa el botón Proponer tratado en el dosier."
+msgid ""
+"Tratados do seu país. Para propor um novo, selecione o outro país no mapa e "
+"use o botão Propor tratado no dossiê."
+msgstr ""
+"Tratados de tu país. Para proponer uno nuevo, selecciona el otro país en el "
+"mapa y usa el botón Proponer tratado en el dosier."
 
 #: scenes/ui/legislation/library_group.tscn:15
 msgid "▸ Avançado"
@@ -1504,8 +1637,16 @@ msgid "Voltar"
 msgstr "Volver"
 
 #: scenes/ui/legislation/negotiation.tscn:53
-msgid "Peça o voto de uma bancada para aprovar ou derrubar a proposta. A recusa não custa nada, mas o partido não volta a conversar sobre esta proposta. Quanto mais longe das ideias do partido, mais difícil virar o voto. Pesquise antes: pagar quem já votaria assim é dinheiro jogado fora."
-msgstr "Pide el voto de una bancada para aprobar o tumbar la propuesta. El rechazo no cuesta nada, pero el partido no volverá a hablar de esta propuesta. Cuanto más lejos de las ideas del partido, más difícil cambiar el voto. Encuesta antes: pagar a quien ya votaría así es dinero tirado."
+msgid ""
+"Peça o voto de uma bancada para aprovar ou derrubar a proposta. A recusa não "
+"custa nada, mas o partido não volta a conversar sobre esta proposta. Quanto "
+"mais longe das ideias do partido, mais difícil virar o voto. Pesquise antes: "
+"pagar quem já votaria assim é dinheiro jogado fora."
+msgstr ""
+"Pide el voto de una bancada para aprobar o tumbar la propuesta. El rechazo "
+"no cuesta nada, pero el partido no volverá a hablar de esta propuesta. "
+"Cuanto más lejos de las ideas del partido, más difícil cambiar el voto. "
+"Encuesta antes: pagar a quien ya votaría así es dinero tirado."
 
 #: scenes/ui/legislation/negotiation.tscn:64
 msgid "Oferta generosa: paga o dobro e aumenta a chance de aceitar"
@@ -1513,7 +1654,8 @@ msgstr "Oferta generosa: paga el doble y aumenta la probabilidad de aceptar"
 
 #: scenes/ui/legislation/negotiation_row.tscn:43
 msgid "Sem custo no fundo: o partido entra na coalizão e vota a favor."
-msgstr "Sin costo para el fondo: el partido entra en la coalición y vota a favor."
+msgstr ""
+"Sin costo para el fondo: el partido entra en la coalición y vota a favor."
 
 #: scenes/ui/legislation/negotiation_row.tscn:46
 msgid "Oferecer governo"
@@ -1578,12 +1720,19 @@ msgid "Retirar"
 msgstr "Retirar"
 
 #: scenes/ui/legislation/poll_box.tscn:15
-msgid "Sai do fundo do partido. Mostra como cada bancada deve votar, em cada casa."
-msgstr "Sale del fondo del partido. Muestra cómo debería votar cada bancada, en cada cámara."
+msgid ""
+"Sai do fundo do partido. Mostra como cada bancada deve votar, em cada casa."
+msgstr ""
+"Sale del fondo del partido. Muestra cómo debería votar cada bancada, en cada "
+"cámara."
 
 #: scenes/ui/legislation/poll_box.tscn:23
-msgid "Sai do fundo do partido. Mostra quantos eleitores aprovam a proposta. Norma impopular custa aprovação ao entrar em vigor."
-msgstr "Sale del fondo del partido. Muestra cuántos votantes aprueban la propuesta. Una norma impopular cuesta aprobación al entrar en vigor."
+msgid ""
+"Sai do fundo do partido. Mostra quantos eleitores aprovam a proposta. Norma "
+"impopular custa aprovação ao entrar em vigor."
+msgstr ""
+"Sale del fondo del partido. Muestra cuántos votantes aprueban la propuesta. "
+"Una norma impopular cuesta aprobación al entrar en vigor."
 
 #: scenes/ui/legislation/process_row.tscn:69
 msgid "Ver a norma"
@@ -1594,8 +1743,12 @@ msgid "Comissão"
 msgstr "Comisión"
 
 #: scenes/ui/legislation/treaty_row.tscn:25
-msgid "Tira o país do tratado. Em tratado entre dois países, vale depois de seis meses de aviso."
-msgstr "Saca al país del tratado. En un tratado entre dos países, vale tras seis meses de aviso."
+msgid ""
+"Tira o país do tratado. Em tratado entre dois países, vale depois de seis "
+"meses de aviso."
+msgstr ""
+"Saca al país del tratado. En un tratado entre dos países, vale tras seis "
+"meses de aviso."
 
 #: scenes/ui/legislation/treaty_row.tscn:28
 msgid "Denunciar"
@@ -1664,8 +1817,12 @@ msgid "50 anos"
 msgstr "50 años"
 
 #: scenes/ui/modals/creator.tscn:196
-msgid "Seu personagem é uma countryball com a bandeira do país. Trocar o gênero troca o nome sorteado, não o que você digitou."
-msgstr "Tu personaje es una countryball con la bandera del país. Cambiar el género cambia el nombre sorteado, no el que escribiste."
+msgid ""
+"Seu personagem é uma countryball com a bandeira do país. Trocar o gênero "
+"troca o nome sorteado, não o que você digitou."
+msgstr ""
+"Tu personaje es una countryball con la bandera del país. Cambiar el género "
+"cambia el nombre sorteado, no el que escribiste."
 
 #: scenes/ui/modals/creator.tscn:210
 msgid "Sorteia gênero, nome e idade."
@@ -1716,33 +1873,68 @@ msgstr "Cómo jugar"
 
 #: scenes/ui/modals/help.tscn:55
 msgid ""
-"O mundo corre em tempo real: pause com Espaço e ajuste a velocidade com 1 (normal), 2 (2x) e 3 ou 4 (4x). Os botões +7 e +30 dias avançam o tempo de uma vez. Arraste o mapa, use a roda do mouse para o zoom e clique nos países para ver o dossiê.\n"
+"O mundo corre em tempo real: pause com Espaço e ajuste a velocidade com 1 "
+"(normal), 2 (2x) e 3 ou 4 (4x). Os botões +7 e +30 dias avançam o tempo de "
+"uma vez. Arraste o mapa, use a roda do mouse para o zoom e clique nos países "
+"para ver o dossiê.\n"
 "\n"
-"O cenário já traz estados e províncias de todos os países. Na aba Divisões, selecione uma unidade do seu país e pressione N para desenhar outra dentro dela: clique no mapa para colocar vértices e no primeiro ponto para fechar o polígono. Ali também é possível fundir e desmembrar unidades.\n"
+"O cenário já traz estados e províncias de todos os países. Na aba Divisões, "
+"selecione uma unidade do seu país e pressione N para desenhar outra dentro "
+"dela: clique no mapa para colocar vértices e no primeiro ponto para fechar o "
+"polígono. Ali também é possível fundir e desmembrar unidades.\n"
 "\n"
-"Ao vencer uma guerra, você escolhe entre demarcar no mapa o que fica com o seu país ou não ficar com nada. Em uma paz sem vencedor, as fronteiras antigas voltam ou os dois lados negociam novas.\n"
+"Ao vencer uma guerra, você escolhe entre demarcar no mapa o que fica com o "
+"seu país ou não ficar com nada. Em uma paz sem vencedor, as fronteiras "
+"antigas voltam ou os dois lados negociam novas.\n"
 "\n"
-"A economia responde com defasagem. Juros levam cerca de um ano para frear a inflação; gastos em educação e infraestrutura demoram anos para aparecer no PIB potencial.\n"
+"A economia responde com defasagem. Juros levam cerca de um ano para frear a "
+"inflação; gastos em educação e infraestrutura demoram anos para aparecer no "
+"PIB potencial.\n"
 "\n"
-"Dívida acima do limite encarece o financiamento e pode terminar em moratória. Em democracias você perde o cargo nas urnas se a aprovação estiver baixa; em regimes fechados, a ameaça é golpe ou revolta.\n"
+"Dívida acima do limite encarece o financiamento e pode terminar em "
+"moratória. Em democracias você perde o cargo nas urnas se a aprovação "
+"estiver baixa; em regimes fechados, a ameaça é golpe ou revolta.\n"
 "\n"
-"Não há limite de tempo. Se perder uma eleição ou uma guerra, você passa a liderar a oposição e pode voltar ao poder. O jogo só acaba com impeachment, golpe, renúncia ou morte, e aí você escolhe entre um novo jogo e assumir outro personagem.\n"
+"Não há limite de tempo. Se perder uma eleição ou uma guerra, você passa a "
+"liderar a oposição e pode voltar ao poder. O jogo só acaba com impeachment, "
+"golpe, renúncia ou morte, e aí você escolhe entre um novo jogo e assumir "
+"outro personagem.\n"
 "\n"
-"Todos envelhecem, adoecem e morrem, inclusive você, e novos políticos surgem com o tempo. Em países democráticos, criar uma unidade subnacional passa pelo parlamento e por plebiscito."
+"Todos envelhecem, adoecem e morrem, inclusive você, e novos políticos surgem "
+"com o tempo. Em países democráticos, criar uma unidade subnacional passa "
+"pelo parlamento e por plebiscito."
 msgstr ""
-"El mundo corre en tiempo real: pausa con Espacio y ajusta la velocidad con 1 (normal), 2 (2x) y 3 o 4 (4x). Los botones +7 y +30 días avanzan el tiempo de una vez. Arrastra el mapa, usa la rueda del ratón para el zoom y haz clic en los países para ver el dosier.\n"
+"El mundo corre en tiempo real: pausa con Espacio y ajusta la velocidad con 1 "
+"(normal), 2 (2x) y 3 o 4 (4x). Los botones +7 y +30 días avanzan el tiempo "
+"de una vez. Arrastra el mapa, usa la rueda del ratón para el zoom y haz clic "
+"en los países para ver el dosier.\n"
 "\n"
-"El escenario ya trae estados y provincias de todos los países. En la pestaña Divisiones, selecciona una unidad de tu país y pulsa N para dibujar otra dentro de ella: haz clic en el mapa para colocar vértices y en el primer punto para cerrar el polígono. Ahí también se pueden fusionar y desmembrar unidades.\n"
+"El escenario ya trae estados y provincias de todos los países. En la pestaña "
+"Divisiones, selecciona una unidad de tu país y pulsa N para dibujar otra "
+"dentro de ella: haz clic en el mapa para colocar vértices y en el primer "
+"punto para cerrar el polígono. Ahí también se pueden fusionar y desmembrar "
+"unidades.\n"
 "\n"
-"Al ganar una guerra, eliges entre demarcar en el mapa lo que queda para tu país o no quedarte con nada. En una paz sin vencedor, vuelven las fronteras antiguas o ambos lados negocian nuevas.\n"
+"Al ganar una guerra, eliges entre demarcar en el mapa lo que queda para tu "
+"país o no quedarte con nada. En una paz sin vencedor, vuelven las fronteras "
+"antiguas o ambos lados negocian nuevas.\n"
 "\n"
-"La economía responde con retraso. Los tipos de interés tardan cerca de un año en frenar la inflación; el gasto en educación e infraestructura tarda años en aparecer en el PIB potencial.\n"
+"La economía responde con retraso. Los tipos de interés tardan cerca de un "
+"año en frenar la inflación; el gasto en educación e infraestructura tarda "
+"años en aparecer en el PIB potencial.\n"
 "\n"
-"Una deuda por encima del límite encarece la financiación y puede acabar en impago. En democracias pierdes el cargo en las urnas si la aprobación es baja; en regímenes cerrados, la amenaza es un golpe o una revuelta.\n"
+"Una deuda por encima del límite encarece la financiación y puede acabar en "
+"impago. En democracias pierdes el cargo en las urnas si la aprobación es "
+"baja; en regímenes cerrados, la amenaza es un golpe o una revuelta.\n"
 "\n"
-"No hay límite de tiempo. Si pierdes una elección o una guerra, pasas a liderar la oposición y puedes volver al poder. El juego solo termina con impeachment, golpe, renuncia o muerte, y entonces eliges entre una nueva partida y asumir otro personaje.\n"
+"No hay límite de tiempo. Si pierdes una elección o una guerra, pasas a "
+"liderar la oposición y puedes volver al poder. El juego solo termina con "
+"impeachment, golpe, renuncia o muerte, y entonces eliges entre una nueva "
+"partida y asumir otro personaje.\n"
 "\n"
-"Todos envejecen, enferman y mueren, incluido tú, y surgen nuevos políticos con el tiempo. En países democráticos, crear una unidad subnacional pasa por el parlamento y por un plebiscito."
+"Todos envejecen, enferman y mueren, incluido tú, y surgen nuevos políticos "
+"con el tiempo. En países democráticos, crear una unidad subnacional pasa por "
+"el parlamento y por un plebiscito."
 
 #: scenes/ui/modals/help.tscn:75
 msgid "Entendi"
@@ -1761,16 +1953,24 @@ msgid "Frente Nacional"
 msgstr "Frente Nacional"
 
 #: scenes/ui/modals/party_detail.tscn:57
-msgid "Nacionalista  ·  144 assentos  ·  24% dos votos. A bússola do partido é a média dos políticos."
-msgstr "Nacionalista  ·  144 escaños  ·  24% de los votos. La brújula del partido es la media de sus políticos."
+msgid ""
+"Nacionalista  ·  144 assentos  ·  24% dos votos. A bússola do partido é a "
+"média dos políticos."
+msgstr ""
+"Nacionalista  ·  144 escaños  ·  24% de los votos. La brújula del partido es "
+"la media de sus políticos."
 
 #: scenes/ui/modals/party_picker.tscn:49
 msgid "Escolha seu partido em Brasil"
 msgstr "Elige tu partido en Brasil"
 
 #: scenes/ui/modals/party_picker.tscn:57
-msgid "Todo político pertence a um partido. Escolha um deles ou funde o seu, e decida se começa no governo ou na oposição."
-msgstr "Todo político pertenece a un partido. Elige uno o funda el tuyo, y decide si empiezas en el gobierno o en la oposición."
+msgid ""
+"Todo político pertence a um partido. Escolha um deles ou funde o seu, e "
+"decida se começa no governo ou na oposição."
+msgstr ""
+"Todo político pertenece a un partido. Elige uno o funda el tuyo, y decide si "
+"empiezas en el gobierno o en la oposición."
 
 #: scenes/ui/modals/party_picker.tscn:77
 msgid "IDEIAS DO NOVO PARTIDO: CLIQUE NA BÚSSOLA"
@@ -1797,10 +1997,13 @@ msgid "Governar"
 msgstr "Gobernar"
 
 #: scenes/ui/modals/party_picker.tscn:128
-msgid "O governo atual segue com a IA, e você o enfrenta até a próxima eleição."
-msgstr "El gobierno actual sigue con la IA, y te enfrentas a él hasta la próxima elección."
+msgid ""
+"O governo atual segue com a IA, e você o enfrenta até a próxima eleição."
+msgstr ""
+"El gobierno actual sigue con la IA, y te enfrentas a él hasta la próxima "
+"elección."
 
-#: scenes/ui/modals/party_picker.tscn:131 scripts/sim/world.gd:462
+#: scenes/ui/modals/party_picker.tscn:131 scripts/sim/world.gd:466
 msgid "Liderar a oposição"
 msgstr "Liderar la oposición"
 
@@ -1862,8 +2065,12 @@ msgid "Menu debug (F12)"
 msgstr "Menú debug (F12)"
 
 #: scenes/ui/modals/pause_menu.tscn:103
-msgid "Deixa o governo. Depois, você escolhe entre um novo jogo e um novo personagem."
-msgstr "Deja el gobierno. Después eliges entre una nueva partida y un nuevo personaje."
+msgid ""
+"Deixa o governo. Depois, você escolhe entre um novo jogo e um novo "
+"personagem."
+msgstr ""
+"Deja el gobierno. Después eliges entre una nueva partida y un nuevo "
+"personaje."
 
 #: scenes/ui/modals/pause_menu.tscn:107
 msgid "Renunciar ao cargo"
@@ -1902,8 +2109,16 @@ msgid "Encerrar a conversa"
 msgstr "Terminar la conversación"
 
 #: scenes/ui/modals/treaty.tscn:60
-msgid "Se o outro lado aceitar, o tratado é assinado na hora, mas só vale depois de ratificado pelos dois parlamentos. A resposta depende da relação e das ideias do líder de lá. Você acompanha tudo na aba Tratados do Centro legislativo."
-msgstr "Si el otro lado acepta, el tratado se firma al instante, pero solo vale tras ser ratificado por ambos parlamentos. La respuesta depende de la relación y de las ideas del líder de allí. Lo sigues todo en la pestaña Tratados del Centro legislativo."
+msgid ""
+"Se o outro lado aceitar, o tratado é assinado na hora, mas só vale depois de "
+"ratificado pelos dois parlamentos. A resposta depende da relação e das "
+"ideias do líder de lá. Você acompanha tudo na aba Tratados do Centro "
+"legislativo."
+msgstr ""
+"Si el otro lado acepta, el tratado se firma al instante, pero solo vale tras "
+"ser ratificado por ambos parlamentos. La respuesta depende de la relación y "
+"de las ideas del líder de allí. Lo sigues todo en la pestaña Tratados del "
+"Centro legislativo."
 
 #: scenes/ui/modals/treaty.tscn:77
 msgid "Propor"
@@ -1918,20 +2133,36 @@ msgid "GABINETE"
 msgstr "GABINETE"
 
 #: scenes/ui/panels/cabinet_panel.tscn:25
-msgid "Ministros vêm dos partidos da coalizão. Competência acima de 50% ajuda a pasta e abaixo atrapalha. Aliado sem nenhum ministério pode abandonar o governo."
-msgstr "Los ministros vienen de los partidos de la coalición. Competencia por encima del 50% ayuda a la cartera y por debajo perjudica. Un aliado sin ministerio puede abandonar el gobierno."
+msgid ""
+"Ministros vêm dos partidos da coalizão. Competência acima de 50% ajuda a "
+"pasta e abaixo atrapalha. Aliado sem nenhum ministério pode abandonar o "
+"governo."
+msgstr ""
+"Los ministros vienen de los partidos de la coalición. Competencia por encima "
+"del 50% ayuda a la cartera y por debajo perjudica. Un aliado sin ministerio "
+"puede abandonar el gobierno."
 
 #: scenes/ui/panels/cabinet_panel.tscn:49
-msgid "Na oposição, o gabinete é escolhido pelo governo. Vença a próxima eleição para nomear seus ministros."
-msgstr "En la oposición, el gabinete lo elige el gobierno. Gana la próxima elección para nombrar a tus ministros."
+msgid ""
+"Na oposição, o gabinete é escolhido pelo governo. Vença a próxima eleição "
+"para nomear seus ministros."
+msgstr ""
+"En la oposición, el gabinete lo elige el gobierno. Gana la próxima elección "
+"para nombrar a tus ministros."
 
 #: scenes/ui/panels/companies_panel.tscn:17
 msgid "EMPRESAS"
 msgstr "EMPRESAS"
 
 #: scenes/ui/panels/companies_panel.tscn:24
-msgid "As maiores empresas do país. A receita segue o produto do setor; a margem sente o ciclo, o juro e o câmbio. Estatais pagam dividendos ao Tesouro, e privatizar ou estatizar se faz por lei."
-msgstr "Las mayores empresas del país. Los ingresos siguen al producto del sector; el margen siente el ciclo, el interés y el cambio. Las estatales pagan dividendos al Tesoro, y privatizar o estatizar se hace por ley."
+msgid ""
+"As maiores empresas do país. A receita segue o produto do setor; a margem "
+"sente o ciclo, o juro e o câmbio. Estatais pagam dividendos ao Tesouro, e "
+"privatizar ou estatizar se faz por lei."
+msgstr ""
+"Las mayores empresas del país. Los ingresos siguen al producto del sector; "
+"el margen siente el ciclo, el interés y el cambio. Las estatales pagan "
+"dividendos al Tesoro, y privatizar o estatizar se hace por ley."
 
 #: scenes/ui/panels/companies_panel.tscn:52
 msgid "0 empresas"
@@ -1966,8 +2197,11 @@ msgid "TIPOS DE UNIDADE"
 msgstr "TIPOS DE UNIDAD"
 
 #: scenes/ui/panels/divisions_panel.tscn:25
-msgid "O marcador define o tipo da próxima unidade. Clique em um nome para editá-lo."
-msgstr "El marcador define el tipo de la próxima unidad. Haz clic en un nombre para editarlo."
+msgid ""
+"O marcador define o tipo da próxima unidade. Clique em um nome para editá-lo."
+msgstr ""
+"El marcador define el tipo de la próxima unidad. Haz clic en un nombre para "
+"editarlo."
 
 #: scenes/ui/panels/divisions_panel.tscn:37
 msgid "Cria um tipo de unidade com o nome que você quiser."
@@ -1982,8 +2216,12 @@ msgid "DESENHAR"
 msgstr "DIBUJAR"
 
 #: scenes/ui/panels/divisions_panel.tscn:67
-msgid "Clique no mapa para colocar vértices e no primeiro ponto para fechar o polígono."
-msgstr "Haz clic en el mapa para colocar vértices y en el primer punto para cerrar el polígono."
+msgid ""
+"Clique no mapa para colocar vértices e no primeiro ponto para fechar o "
+"polígono."
+msgstr ""
+"Haz clic en el mapa para colocar vértices y en el primer punto para cerrar "
+"el polígono."
 
 #: scenes/ui/panels/divisions_panel.tscn:96
 msgid "HIERARQUIA"
@@ -2002,8 +2240,14 @@ msgid "SETORES DA ECONOMIA"
 msgstr "SECTORES DE LA ECONOMÍA"
 
 #: scenes/ui/panels/economy_panel.tscn:39
-msgid "Quanto cada atividade produz por ano e quanto cresceu em 12 meses. Construção sente o juro, mineração o preço das commodities, turismo a guerra e a instabilidade."
-msgstr "Cuánto produce cada actividad al año y cuánto creció en 12 meses. La construcción siente el interés, la minería el precio de las materias primas, el turismo la guerra y la inestabilidad."
+msgid ""
+"Quanto cada atividade produz por ano e quanto cresceu em 12 meses. "
+"Construção sente o juro, mineração o preço das commodities, turismo a guerra "
+"e a instabilidade."
+msgstr ""
+"Cuánto produce cada actividad al año y cuánto creció en 12 meses. La "
+"construcción siente el interés, la minería el precio de las materias primas, "
+"el turismo la guerra y la inestabilidad."
 
 #: scenes/ui/panels/economy_panel.tscn:58
 msgid "Empresas"
@@ -2012,6 +2256,31 @@ msgstr "Empresas"
 #: scenes/ui/panels/economy_panel.tscn:68 scenes/ui/panels/stock_panel.tscn:25
 msgid "Bolsa"
 msgstr "Bolsa"
+
+#: scenes/ui/panels/economy_panel.tscn:89
+msgid "ESTRUTURA ETÁRIA"
+msgstr "ESTRUCTURA ETARIA"
+
+#: scenes/ui/panels/economy_panel.tscn:96
+msgid ""
+"Menos gente em idade de trabalhar reduz a produção; mais idosos pesam nas "
+"aposentadorias. Renda, paz e estabilidade atraem migrantes."
+msgstr ""
+"Menos gente en edad de trabajar reduce la producción; más adultos mayores "
+"pesan en las jubilaciones. Ingresos, paz y estabilidad atraen migrantes."
+
+#: scenes/ui/panels/economy_panel.tscn:110
+#, fuzzy
+msgid "Jovens (0-14)"
+msgstr "Jóvenes"
+
+#: scenes/ui/panels/economy_panel.tscn:134
+msgid "Idade ativa (15-64)"
+msgstr "Edad activa (15-64)"
+
+#: scenes/ui/panels/economy_panel.tscn:158
+msgid "Idosos (65+)"
+msgstr "Mayores (65+)"
 
 #: scenes/ui/panels/infra_build.tscn:35 scenes/ui/rows/infra_row.tscn:106
 msgid "Ampliar"
@@ -2038,8 +2307,14 @@ msgid "PORTOS E AEROPORTOS"
 msgstr "PUERTOS Y AEROPUERTOS"
 
 #: scenes/ui/panels/infra_panel.tscn:25
-msgid "Portos acompanham o comércio exterior; aeroportos, o PIB e o turismo. Acima de 80% de uso, a logística piora: o comércio engasga e transporte e turismo perdem produtividade."
-msgstr "Los puertos siguen al comercio exterior; los aeropuertos, al PIB y al turismo. Por encima del 80% de uso, la logística empeora: el comercio se atasca y el transporte y el turismo pierden productividad."
+msgid ""
+"Portos acompanham o comércio exterior; aeroportos, o PIB e o turismo. Acima "
+"de 80% de uso, a logística piora: o comércio engasga e transporte e turismo "
+"perdem produtividade."
+msgstr ""
+"Los puertos siguen al comercio exterior; los aeropuertos, al PIB y al "
+"turismo. Por encima del 80% de uso, la logística empeora: el comercio se "
+"atasca y el transporte y el turismo pierden productividad."
 
 #: scenes/ui/panels/infra_panel.tscn:39
 msgid "Portos"
@@ -2090,20 +2365,32 @@ msgid "AEROPORTOS"
 msgstr "AEROPUERTOS"
 
 #: scenes/ui/panels/politics_panel.tscn:36
-msgid "O fundo paga pesquisas, campanhas, críticas, moções e convites. Cada gasto tem o próprio preço."
-msgstr "El fondo paga encuestas, campañas, críticas, mociones e invitaciones. Cada gasto tiene su propio precio."
+msgid ""
+"O fundo paga pesquisas, campanhas, críticas, moções e convites. Cada gasto "
+"tem o próprio preço."
+msgstr ""
+"El fondo paga encuestas, campañas, críticas, mociones e invitaciones. Cada "
+"gasto tiene su propio precio."
 
 #: scenes/ui/panels/politics_panel.tscn:45
-msgid "Só é possível mudar de partido uma vez por ano e, no governo, isso custa aprovação. Ao entrar em um partido, você adota as ideias dele."
-msgstr "Solo se puede cambiar de partido una vez al año y, en el gobierno, eso cuesta aprobación. Al entrar en un partido, adoptas sus ideas."
+msgid ""
+"Só é possível mudar de partido uma vez por ano e, no governo, isso custa "
+"aprovação. Ao entrar em um partido, você adota as ideias dele."
+msgstr ""
+"Solo se puede cambiar de partido una vez al año y, en el gobierno, eso "
+"cuesta aprobación. Al entrar en un partido, adoptas sus ideas."
 
 #: scenes/ui/panels/politics_panel.tscn:48
 msgid "Trocar ou criar partido"
 msgstr "Cambiar o crear partido"
 
 #: scenes/ui/panels/politics_panel.tscn:53
-msgid "Criar normas com blocos, acompanhar a tramitação, emendar a Constituição e consultar a auditoria (tecla L)."
-msgstr "Crear normas con bloques, seguir la tramitación, enmendar la Constitución y consultar la auditoría (tecla L)."
+msgid ""
+"Criar normas com blocos, acompanhar a tramitação, emendar a Constituição e "
+"consultar a auditoria (tecla L)."
+msgstr ""
+"Crear normas con bloques, seguir la tramitación, enmendar la Constitución y "
+"consultar la auditoría (tecla L)."
 
 #: scenes/ui/panels/politics_panel.tscn:56
 msgid "Centro legislativo (L)"
@@ -2166,8 +2453,12 @@ msgid "PROJETOS DE LEI"
 msgstr "PROYECTOS DE LEY"
 
 #: scenes/ui/panels/politics_panel.tscn:217
-msgid "O parlamento leva semanas para deliberar: um projeto enviado só vale se for aprovado no fim do rito."
-msgstr "El parlamento tarda semanas en deliberar: un proyecto enviado solo vale si se aprueba al final del trámite."
+msgid ""
+"O parlamento leva semanas para deliberar: um projeto enviado só vale se for "
+"aprovado no fim do rito."
+msgstr ""
+"El parlamento tarda semanas en deliberar: un proyecto enviado solo vale si "
+"se aprueba al final del trámite."
 
 #: scenes/ui/panels/politics_panel.tscn:230
 msgid "Pesquisar um projeto antes de enviar:"
@@ -2234,8 +2525,12 @@ msgid "Nenhuma abertura de capital, falência ou privatização ainda."
 msgstr "Ninguna salida a bolsa, quiebra o privatización todavía."
 
 #: scenes/ui/panels/stock_panel.tscn:173
-msgid "O país não tem bolsa de valores: as empresas são todas de capital fechado. O índice acompanha só a economia."
-msgstr "El país no tiene bolsa de valores: todas las empresas son de capital cerrado. El índice solo sigue a la economía."
+msgid ""
+"O país não tem bolsa de valores: as empresas são todas de capital fechado. O "
+"índice acompanha só a economia."
+msgstr ""
+"El país no tiene bolsa de valores: todas las empresas son de capital "
+"cerrado. El índice solo sigue a la economía."
 
 #: scenes/ui/rows/capital_link.tscn:6 scenes/ui/rows/country_capital.tscn:26
 msgid "Selecionar a capital"
@@ -2315,8 +2610,12 @@ msgid "FUNDIR UNIDADES"
 msgstr "FUSIONAR UNIDADES"
 
 #: scenes/ui/rows/merge_box.tscn:28
-msgid "Clique no mapa ou na lista nas vizinhas que entram na fusão. A nova unidade fica com o nome e o tipo da primeira."
-msgstr "Haz clic en el mapa o en la lista en las vecinas que entran en la fusión. La nueva unidad toma el nombre y el tipo de la primera."
+msgid ""
+"Clique no mapa ou na lista nas vizinhas que entram na fusão. A nova unidade "
+"fica com o nome e o tipo da primeira."
+msgstr ""
+"Haz clic en el mapa o en la lista en las vecinas que entran en la fusión. La "
+"nueva unidad toma el nombre y el tipo de la primera."
 
 #: scenes/ui/rows/merge_box.tscn:50
 msgid "Confirmar fusão"
@@ -2391,8 +2690,11 @@ msgid "CAPITAL"
 msgstr "CAPITAL"
 
 #: scenes/ui/rows/unit_detail.tscn:74
-msgid "Esta unidade está sem capital. Selecione uma unidade de dentro dela para escolher."
-msgstr "Esta unidad no tiene capital. Selecciona una unidad de dentro para elegirla."
+msgid ""
+"Esta unidade está sem capital. Selecione uma unidade de dentro dela para "
+"escolher."
+msgstr ""
+"Esta unidad no tiene capital. Selecciona una unidad de dentro para elegirla."
 
 #: scenes/ui/rows/unit_detail.tscn:94
 msgid "Centralizar"
@@ -2511,8 +2813,11 @@ msgstr "Nace una nueva empresa en %s: %s, en %s."
 
 #: scripts/sim/corporate.gd:446
 #, c-format
-msgid "%s fecha o capital: investidores compram as ações e a empresa sai da bolsa."
-msgstr "%s deja la bolsa: los inversores compran las acciones y la empresa sale del mercado."
+msgid ""
+"%s fecha o capital: investidores compram as ações e a empresa sai da bolsa."
+msgstr ""
+"%s deja la bolsa: los inversores compran las acciones y la empresa sale del "
+"mercado."
 
 #: scripts/sim/corporate.gd:456
 #, c-format
@@ -2532,7 +2837,9 @@ msgstr "privatizó %s de %s"
 #: scripts/sim/corporate.gd:582
 #, c-format
 msgid "%s estatiza %s: o Estado passa a ter %d%% do capital, a um custo de %s."
-msgstr "%s estatiza %s: el Estado pasa a tener el %d%% del capital, con un costo de %s."
+msgstr ""
+"%s estatiza %s: el Estado pasa a tener el %d%% del capital, con un costo de "
+"%s."
 
 #: scripts/sim/corporate.gd:583
 #, c-format
@@ -2551,7 +2858,7 @@ msgstr "Estatal"
 msgid "Mista"
 msgstr "Mixta"
 
-#: scripts/sim/dialogue.gd:24 scripts/sim/world.gd:825
+#: scripts/sim/dialogue.gd:24 scripts/sim/world.gd:829
 msgid "Na oposição, você não fala em nome do país."
 msgstr "En la oposición, no hablas en nombre del país."
 
@@ -2583,7 +2890,7 @@ msgstr "autoritario"
 msgid "libertário"
 msgstr "libertario"
 
-#: scripts/sim/dialogue.gd:63 scripts/sim/law_catalog.gd_(escolha_dr_level)
+#: scripts/sim/dialogue.gd:63
 msgid "moderado"
 msgstr "moderado"
 
@@ -2730,15 +3037,20 @@ msgstr "Mi parlamento no lo aceptaría. Aún falta confianza entre nosotros."
 
 #: scripts/sim/dialogue.gd:176
 msgid "Temos um acordo. Assinamos agora, e cada parlamento ratifica depois."
-msgstr "Tenemos un acuerdo. Firmamos ahora, y cada parlamento ratifica después."
+msgstr ""
+"Tenemos un acuerdo. Firmamos ahora, y cada parlamento ratifica después."
 
 #: scripts/sim/dialogue.gd:180
 msgid "Um pacto assim exige mais do que temos hoje. Sigamos conversando."
 msgstr "Un pacto así exige más de lo que tenemos hoy. Sigamos conversando."
 
 #: scripts/sim/dialogue.gd:182
-msgid "Então está decidido: assinamos, e um ataque a um será um ataque ao outro assim que os parlamentos ratificarem."
-msgstr "Entonces está decidido: firmamos, y un ataque a uno será un ataque al otro en cuanto los parlamentos ratifiquen."
+msgid ""
+"Então está decidido: assinamos, e um ataque a um será um ataque ao outro "
+"assim que os parlamentos ratificarem."
+msgstr ""
+"Entonces está decidido: firmamos, y un ataque a uno será un ataque al otro "
+"en cuanto los parlamentos ratifiquen."
 
 #: scripts/sim/dialogue.gd:186
 msgid "Agradeço a intenção, mas seu governo não tem como cumprir isso agora."
@@ -2857,96 +3169,106 @@ msgstr "%s capitula; %s instala un gobierno aliado."
 
 #: scripts/sim/diplomacy.gd:632
 #, c-format
-msgid "Cessar-fogo entre %s e %s: nenhuma área do tamanho negociado, as fronteiras não mudam."
-msgstr "Alto el fuego entre %s y %s: ningún área del tamaño negociado, las fronteras no cambian."
+msgid ""
+"Cessar-fogo entre %s e %s: nenhuma área do tamanho negociado, as fronteiras "
+"não mudam."
+msgstr ""
+"Alto el fuego entre %s y %s: ningún área del tamaño negociado, las fronteras "
+"no cambian."
 
-#: scripts/sim/economy.gd:479
+#: scripts/sim/economy.gd:480
 #, c-format
 msgid "%s abandona a âncora cambial: moeda desvaloriza %d%%."
 msgstr "%s abandona el ancla cambiaria: la moneda se devalúa un %d%%."
 
-#: scripts/sim/economy.gd:512
+#: scripts/sim/economy.gd:513
 #, c-format
 msgid "Agências rebaixam a nota de crédito de %s de %s para %s."
 msgstr "Las agencias rebajan la calificación de %s de %s a %s."
 
-#: scripts/sim/economy.gd:512
+#: scripts/sim/economy.gd:513
 #, c-format
 msgid "Agências elevam a nota de crédito de %s de %s para %s."
 msgstr "Las agencias elevan la calificación de %s de %s a %s."
 
-#: scripts/sim/economy.gd:666
+#: scripts/sim/economy.gd:669
 #, c-format
-msgid "%s declara moratória da dívida soberana; credores aceitam corte de 45%%."
-msgstr "%s declara impago de la deuda soberana; los acreedores aceptan una quita del 45%%."
+msgid ""
+"%s declara moratória da dívida soberana; credores aceitam corte de 45%%."
+msgstr ""
+"%s declara impago de la deuda soberana; los acreedores aceptan una quita del "
+"45%%."
 
-#: scripts/sim/economy.gd:687
+#: scripts/sim/economy.gd:690
 #, c-format
 msgid "FMI aprova pacote de US$ %.0f bi para %s, com ajuste fiscal."
-msgstr "El FMI aprueba un paquete de US$ %.0f mil M para %s, con ajuste fiscal."
+msgstr ""
+"El FMI aprueba un paquete de US$ %.0f mil M para %s, con ajuste fiscal."
 
-#: scripts/sim/economy.gd:748
+#: scripts/sim/economy.gd:751
 #, c-format
 msgid "Eleições em %s: oposição vence e promete mudar o rumo."
 msgstr "Elecciones en %s: la oposición gana y promete cambiar el rumbo."
 
-#: scripts/sim/economy.gd:757
+#: scripts/sim/economy.gd:760
 #, c-format
 msgid "Golpe de Estado em %s: junta militar assume o poder."
 msgstr "Golpe de Estado en %s: una junta militar toma el poder."
 
-#: scripts/sim/economy.gd:781
+#: scripts/sim/economy.gd:784
 #, c-format
 msgid "Crise bancária em %s: crédito congela e o Tesouro socorre bancos."
-msgstr "Crisis bancaria en %s: el crédito se congela y el Tesoro rescata a los bancos."
+msgstr ""
+"Crisis bancaria en %s: el crédito se congela y el Tesoro rescata a los "
+"bancos."
 
-#: scripts/sim/economy.gd:795
+#: scripts/sim/economy.gd:798
 #, c-format
 msgid "%s entra em recessão: o PIB encolhe %s em 12 meses."
 msgstr "%s entra en recesión: el PIB se contrae un %s en 12 meses."
 
-#: scripts/sim/economy.gd:797
+#: scripts/sim/economy.gd:800
 #, c-format
 msgid "%s sai da recessão: o PIB volta a crescer."
 msgstr "%s sale de la recesión: el PIB vuelve a crecer."
 
-#: scripts/sim/economy.gd:804
+#: scripts/sim/economy.gd:807
 #, c-format
 msgid "Inflação em %s passa de %s ao ano."
 msgstr "La inflación en %s supera el %s anual."
 
-#: scripts/sim/economy.gd:809
+#: scripts/sim/economy.gd:812
 msgid "O BCE"
 msgstr "El BCE"
 
-#: scripts/sim/economy.gd:809
+#: scripts/sim/economy.gd:812
 #, c-format
 msgid "O banco central de %s"
 msgstr "El banco central de %s"
 
-#: scripts/sim/economy.gd:810
+#: scripts/sim/economy.gd:813
 #, c-format
 msgid "%s eleva o juro básico para %s ao ano."
 msgstr "%s eleva el tipo básico al %s anual."
 
-#: scripts/sim/economy.gd:810
+#: scripts/sim/economy.gd:813
 #, c-format
 msgid "%s reduz o juro básico para %s ao ano."
 msgstr "%s reduce el tipo básico al %s anual."
 
-#: scripts/sim/elections.gd:7 scripts/sim/law_catalog.gd_(escolha_el_system)
+#: scripts/sim/elections.gd:7
 msgid "Proporcional por distritos"
 msgstr "Proporcional por distritos"
 
-#: scripts/sim/elections.gd:7 scripts/sim/law_catalog.gd_(escolha_el_system)
+#: scripts/sim/elections.gd:7
 msgid "Distrital de maioria simples"
 msgstr "Distrital de mayoría simple"
 
-#: scripts/sim/elections.gd:7 scripts/sim/law_catalog.gd_(escolha_el_system)
+#: scripts/sim/elections.gd:7
 msgid "Distrital em dois turnos"
 msgstr "Distrital a dos vueltas"
 
-#: scripts/sim/elections.gd:7 scripts/sim/law_catalog.gd_(escolha_el_system)
+#: scripts/sim/elections.gd:7
 msgid "Misto: distrital e proporcional"
 msgstr "Mixto: distrital y proporcional"
 
@@ -2964,7 +3286,9 @@ msgstr "La OPEP+ recorta la producción para sostener el precio del petróleo."
 
 #: scripts/sim/events.gd:39
 msgid "Irã fecha parcialmente o Estreito de Ormuz; petroleiros desviam rota."
-msgstr "Irán cierra parcialmente el estrecho de Ormuz; los petroleros desvían su ruta."
+msgstr ""
+"Irán cierra parcialmente el estrecho de Ormuz; los petroleros desvían su "
+"ruta."
 
 #: scripts/sim/events.gd:42
 msgid "Estreito de Ormuz reaberto ao tráfego comercial."
@@ -2972,19 +3296,27 @@ msgstr "Estrecho de Ormuz reabierto al tráfico comercial."
 
 #: scripts/sim/events.gd:50
 msgid "El Niño e seca derrubam safras; preço de grãos dispara."
-msgstr "El Niño y la sequía hunden las cosechas; el precio de los granos se dispara."
+msgstr ""
+"El Niño y la sequía hunden las cosechas; el precio de los granos se dispara."
 
 #: scripts/sim/events.gd:59
-msgid "OMS declara pandemia: fronteiras fecham e atividade desaba no mundo inteiro."
-msgstr "La OMS declara una pandemia: las fronteras se cierran y la actividad se desploma en todo el mundo."
+msgid ""
+"OMS declara pandemia: fronteiras fecham e atividade desaba no mundo inteiro."
+msgstr ""
+"La OMS declara una pandemia: las fronteras se cierran y la actividad se "
+"desploma en todo el mundo."
 
 #: scripts/sim/events.gd:63
 msgid "Pandemia global"
 msgstr "Pandemia global"
 
 #: scripts/sim/events.gd:64
-msgid "Um novo vírus se espalha rapidamente. Hospitais lotam e o comércio mundial trava. O que seu governo faz?"
-msgstr "Un nuevo virus se propaga rápidamente. Los hospitales se llenan y el comercio mundial se paraliza. ¿Qué hace tu gobierno?"
+msgid ""
+"Um novo vírus se espalha rapidamente. Hospitais lotam e o comércio mundial "
+"trava. O que seu governo faz?"
+msgstr ""
+"Un nuevo virus se propaga rápidamente. Los hospitales se llenan y el "
+"comercio mundial se paraliza. ¿Qué hace tu gobierno?"
 
 #: scripts/sim/events.gd:66
 msgid "Lockdown rígido e transferências de renda"
@@ -3008,7 +3340,8 @@ msgstr "Mantener la economía abierta"
 
 #: scripts/sim/events.gd:75
 msgid "PIB cai menos, mas mortes derrubam aprovação e estabilidade"
-msgstr "El PIB cae menos, pero las muertes hunden la aprobación y la estabilidad"
+msgstr ""
+"El PIB cae menos, pero las muertes hunden la aprobación y la estabilidad"
 
 #: scripts/sim/events.gd:90
 msgid "Sabotagem em gasoduto aperta a oferta global de gás."
@@ -3027,8 +3360,11 @@ msgid "Incêndio em fábrica de wafers causa escassez de semicondutores."
 msgstr "Un incendio en una fábrica de obleas causa escasez de semiconductores."
 
 #: scripts/sim/events.gd:107
-msgid "Salto em inteligência artificial eleva produtividade em economias avançadas."
-msgstr "Un salto en inteligencia artificial eleva la productividad en economías avanzadas."
+msgid ""
+"Salto em inteligência artificial eleva produtividade em economias avançadas."
+msgstr ""
+"Un salto en inteligencia artificial eleva la productividad en economías "
+"avanzadas."
 
 #: scripts/sim/events.gd:123
 msgid "Terremoto"
@@ -3061,8 +3397,12 @@ msgid "Greve geral"
 msgstr "Huelga general"
 
 #: scripts/sim/events.gd:161
-msgid "Sindicatos paralisam portos e transportes e exigem reajuste acima da inflação."
-msgstr "Los sindicatos paralizan puertos y transportes y exigen un aumento por encima de la inflación."
+msgid ""
+"Sindicatos paralisam portos e transportes e exigem reajuste acima da "
+"inflação."
+msgstr ""
+"Los sindicatos paralizan puertos y transportes y exigen un aumento por "
+"encima de la inflación."
 
 #: scripts/sim/events.gd:163
 msgid "Negociar e conceder reajuste"
@@ -3085,8 +3425,12 @@ msgid "Escândalo de corrupção"
 msgstr "Escándalo de corrupción"
 
 #: scripts/sim/events.gd:178
-msgid "A imprensa revela propinas em contratos de infraestrutura envolvendo ministros do seu governo."
-msgstr "La prensa revela sobornos en contratos de infraestructura que involucran a ministros de tu gobierno."
+msgid ""
+"A imprensa revela propinas em contratos de infraestrutura envolvendo "
+"ministros do seu governo."
+msgstr ""
+"La prensa revela sobornos en contratos de infraestructura que involucran a "
+"ministros de tu gobierno."
 
 #: scripts/sim/events.gd:180
 msgid "Demitir e abrir investigação independente"
@@ -3110,8 +3454,12 @@ msgstr "Desastre natural"
 
 #: scripts/sim/events.gd:197
 #, c-format
-msgid "Um desastre destruiu %.1f%% do capital produtivo do país. Milhares estão desabrigados."
-msgstr "Un desastre destruyó el %.1f%% del capital productivo del país. Miles están sin hogar."
+msgid ""
+"Um desastre destruiu %.1f%% do capital produtivo do país. Milhares estão "
+"desabrigados."
+msgstr ""
+"Un desastre destruyó el %.1f%% del capital productivo del país. Miles están "
+"sin hogar."
 
 #: scripts/sim/events.gd:199
 msgid "Reconstrução financiada com dívida"
@@ -3135,8 +3483,12 @@ msgid "Banco sistêmico em risco"
 msgstr "Banco sistémico en riesgo"
 
 #: scripts/sim/events.gd:212
-msgid "Um dos maiores bancos do país sofre corrida de depositantes. O regulador pede uma decisão hoje."
-msgstr "Uno de los mayores bancos del país sufre una corrida de depositantes. El regulador pide una decisión hoy."
+msgid ""
+"Um dos maiores bancos do país sofre corrida de depositantes. O regulador "
+"pede uma decisão hoje."
+msgstr ""
+"Uno de los mayores bancos del país sufre una corrida de depositantes. El "
+"regulador pide una decisión hoy."
 
 #: scripts/sim/events.gd:214
 msgid "Socorro público integral"
@@ -3159,8 +3511,12 @@ msgid "Combustível em alta"
 msgstr "Combustible en alza"
 
 #: scripts/sim/events.gd:230
-msgid "O preço internacional do petróleo disparou e caminhoneiros ameaçam bloquear rodovias."
-msgstr "El precio internacional del petróleo se disparó y los camioneros amenazan con bloquear carreteras."
+msgid ""
+"O preço internacional do petróleo disparou e caminhoneiros ameaçam bloquear "
+"rodovias."
+msgstr ""
+"El precio internacional del petróleo se disparó y los camioneros amenazan "
+"con bloquear carreteras."
 
 #: scripts/sim/events.gd:232
 msgid "Subsidiar o combustível por um ano"
@@ -3183,8 +3539,12 @@ msgid "Alimentos caros"
 msgstr "Alimentos caros"
 
 #: scripts/sim/events.gd:246
-msgid "A alta global de grãos pesa na cesta básica. Há filas e protestos nos bairros mais pobres."
-msgstr "El alza global de los granos pesa en la canasta básica. Hay colas y protestas en los barrios más pobres."
+msgid ""
+"A alta global de grãos pesa na cesta básica. Há filas e protestos nos "
+"bairros mais pobres."
+msgstr ""
+"El alza global de los granos pesa en la canasta básica. Hay colas y "
+"protestas en los barrios más pobres."
 
 #: scripts/sim/events.gd:248
 msgid "Vale-alimentação emergencial"
@@ -3215,8 +3575,12 @@ msgid "Onda migratória"
 msgstr "Ola migratoria"
 
 #: scripts/sim/events.gd:267
-msgid "Centenas de milhares chegam às fronteiras fugindo de crises vizinhas. O debate divide o país."
-msgstr "Cientos de miles llegan a las fronteras huyendo de crisis vecinas. El debate divide al país."
+msgid ""
+"Centenas de milhares chegam às fronteiras fugindo de crises vizinhas. O "
+"debate divide o país."
+msgstr ""
+"Cientos de miles llegan a las fronteras huyendo de crisis vecinas. El debate "
+"divide al país."
 
 #: scripts/sim/events.gd:269
 msgid "Acolher e integrar"
@@ -3239,8 +3603,12 @@ msgid "Política industrial"
 msgstr "Política industrial"
 
 #: scripts/sim/events.gd:283
-msgid "Ministros propõem um programa de subsídios para atrair fábricas de alta tecnologia e reduzir dependência externa."
-msgstr "Los ministros proponen un programa de subsidios para atraer fábricas de alta tecnología y reducir la dependencia externa."
+msgid ""
+"Ministros propõem um programa de subsídios para atrair fábricas de alta "
+"tecnologia e reduzir dependência externa."
+msgstr ""
+"Los ministros proponen un programa de subsidios para atraer fábricas de alta "
+"tecnología y reducir la dependencia externa."
 
 #: scripts/sim/events.gd:285
 msgid "Aprovar o programa"
@@ -3299,7 +3667,8 @@ msgstr "Instalación no encontrada."
 #: scripts/sim/infrastructure.gd:350
 #, c-format
 msgid "%s é operado pela iniciativa privada: quem amplia é a concessionária."
-msgstr "%s es operado por la iniciativa privada: quien lo amplía es la concesionaria."
+msgstr ""
+"%s es operado por la iniciativa privada: quien lo amplía es la concesionaria."
 
 #: scripts/sim/infrastructure.gd:352
 #, c-format
@@ -3474,8 +3843,12 @@ msgid "%s, %s e mais %d instalações %s"
 msgstr "%s, %s y %d instalaciones más %s"
 
 #: scripts/sim/law_compiler.gd:73
-msgid "A norma não tem nenhum artigo: coloque um bloco de evento na área de programação."
-msgstr "La norma no tiene ningún artículo: coloca un bloque de evento en el área de programación."
+msgid ""
+"A norma não tem nenhum artigo: coloque um bloco de evento na área de "
+"programação."
+msgstr ""
+"La norma no tiene ningún artículo: coloca un bloque de evento en el área de "
+"programación."
 
 #: scripts/sim/law_compiler.gd:77
 #, c-format
@@ -3517,7 +3890,8 @@ msgstr "Conexión inválida: \"%s\" es un valor y debe entrar en un campo."
 
 #: scripts/sim/law_compiler.gd:124
 msgid "Fluxo inválido: \"Interromper\" só funciona dentro de uma repetição."
-msgstr "Flujo inválido: \"Interromper\" solo funciona dentro de una repetición."
+msgstr ""
+"Flujo inválido: \"Interromper\" solo funciona dentro de una repetición."
 
 #: scripts/sim/law_compiler.gd:131
 #, c-format
@@ -3526,8 +3900,10 @@ msgstr "\"%s\" tiene una parte vacía."
 
 #: scripts/sim/law_compiler.gd:140
 #, c-format
-msgid "Esta repetição pode não terminar. O motor interrompe depois de %d passos."
-msgstr "Esta repetición puede no terminar. El motor la interrumpe tras %d pasos."
+msgid ""
+"Esta repetição pode não terminar. O motor interrompe depois de %d passos."
+msgstr ""
+"Esta repetición puede no terminar. El motor la interrumpe tras %d pasos."
 
 #: scripts/sim/law_compiler.gd:158
 #, c-format
@@ -4177,7 +4553,7 @@ msgstr "Estructura fundamental del Estado."
 msgid "Texto original"
 msgstr "Texto original"
 
-#: scripts/sim/legislation.gd:211 scripts/sim/codes_(tributario)
+#: scripts/sim/legislation.gd:211
 msgid "Código Tributário"
 msgstr "Código Tributario"
 
@@ -4200,7 +4576,8 @@ msgstr "Art. 1.º"
 #: scripts/sim/legislation.gd:253
 #, c-format
 msgid "%s é um Estado soberano, organizado em governo, parlamento e tribunais."
-msgstr "%s es un Estado soberano, organizado en gobierno, parlamento y tribunales."
+msgstr ""
+"%s es un Estado soberano, organizado en gobierno, parlamento y tribunales."
 
 #: scripts/sim/legislation.gd:254
 msgid "Art. 2º"
@@ -4367,7 +4744,6 @@ msgid "não"
 msgstr "no"
 
 #: scripts/sim/legislation.gd:313 scripts/ui/hud.gd:853
-#: scripts/sim/law_catalog.gd_(escolha_cb_controle)
 msgid "nenhum"
 msgstr "ninguno"
 
@@ -4403,8 +4779,11 @@ msgid "vale a hierarquia, a especialidade e a data de vigência"
 msgstr "valen la jerarquía, la especialidad y la fecha de vigencia"
 
 #: scripts/sim/legislation.gd:485
-msgid "A Constituição garante esse direito: a corte pode declarar a norma inválida."
-msgstr "La Constitución garantiza ese derecho: el tribunal puede declarar inválida la norma."
+msgid ""
+"A Constituição garante esse direito: a corte pode declarar a norma inválida."
+msgstr ""
+"La Constitución garantiza ese derecho: el tribunal puede declarar inválida "
+"la norma."
 
 #: scripts/sim/legislation.gd:496
 msgid "salário mínimo"
@@ -4426,7 +4805,8 @@ msgstr "Rellena el título y el sumario de la norma."
 
 #: scripts/sim/legislation.gd:567
 msgid "Os blocos da emenda têm erros: corrija antes de apresentar."
-msgstr "Los bloques de la enmienda tienen errores: corrígelos antes de presentar."
+msgstr ""
+"Los bloques de la enmienda tienen errores: corrígelos antes de presentar."
 
 #: scripts/sim/legislation.gd:571
 #, c-format
@@ -4746,8 +5126,12 @@ msgstr "%s entró en el gobierno y votará a favor"
 
 #: scripts/sim/legislation.gd:958
 #, c-format
-msgid "%s entra no governo e vota a favor. Lembre de dar um ministério ao novo aliado."
-msgstr "%s entra en el gobierno y vota a favor. Recuerda dar un ministerio al nuevo aliado."
+msgid ""
+"%s entra no governo e vota a favor. Lembre de dar um ministério ao novo "
+"aliado."
+msgstr ""
+"%s entra en el gobierno y vota a favor. Recuerda dar un ministerio al nuevo "
+"aliado."
 
 #: scripts/sim/legislation.gd:1112
 #, c-format
@@ -5360,7 +5744,8 @@ msgstr "Diagnóstico: %s"
 #: scripts/sim/people.gd:189
 #, c-format
 msgid "Os médicos pedem que %s se afaste para o tratamento. Seu estado é %s."
-msgstr "Los médicos piden que %s se aparte para el tratamiento. Su estado es %s."
+msgstr ""
+"Los médicos piden que %s se aparte para el tratamiento. Su estado es %s."
 
 #: scripts/sim/people.gd:189
 msgid "você"
@@ -5374,7 +5759,7 @@ msgstr "grave"
 msgid "sério"
 msgstr "serio"
 
-#: scripts/sim/people.gd:189 scripts/sim/law_catalog.gd_(escolha_dr_level)
+#: scripts/sim/people.gd:189
 msgid "leve"
 msgstr "leve"
 
@@ -5652,8 +6037,12 @@ msgid "Gastos sociais +1 p.p. do PIB. Aprovação sobe, déficit também."
 msgstr "Gasto social +1 p.p. del PIB. La aprobación sube, el déficit también."
 
 #: scripts/sim/politics.gd:88
-msgid "Gastos sociais -0,8 p.p. e administração -0,4 p.p. Reduz o déficit e custa aprovação."
-msgstr "Gasto social -0,8 p.p. y administración -0,4 p.p. Reduce el déficit y cuesta aprobación."
+msgid ""
+"Gastos sociais -0,8 p.p. e administração -0,4 p.p. Reduz o déficit e custa "
+"aprovação."
+msgstr ""
+"Gasto social -0,8 p.p. y administración -0,4 p.p. Reduce el déficit y cuesta "
+"aprobación."
 
 #: scripts/sim/politics.gd:89
 msgid "Educação +0,6 p.p. do PIB. Efeito longo sobre a produtividade."
@@ -5700,7 +6089,8 @@ msgstr "Ese político no puede asumir la cartera."
 #: scripts/sim/politics.gd:467
 #, c-format
 msgid "%s deixa o governo: sem nenhum ministério, não vê motivo para ficar."
-msgstr "%s deja el gobierno: sin ningún ministerio, no ve motivo para quedarse."
+msgstr ""
+"%s deja el gobierno: sin ningún ministerio, no ve motivo para quedarse."
 
 #: scripts/sim/politics.gd:501
 #, c-format
@@ -5848,8 +6238,12 @@ msgstr "El parlamento de %s rechaza: %s (%s), por %d a %d."
 
 #: scripts/sim/politics.gd:1084
 #, c-format
-msgid "O Código Eleitoral de %s não permite outro mandato: o chefe de governo deixa o cargo, e %s assume."
-msgstr "El Código Electoral de %s no permite otro mandato: el jefe de gobierno deja el cargo, y %s asume."
+msgid ""
+"O Código Eleitoral de %s não permite outro mandato: o chefe de governo deixa "
+"o cargo, e %s assume."
+msgstr ""
+"El Código Electoral de %s no permite otro mandato: el jefe de gobierno deja "
+"el cargo, y %s asume."
 
 #: scripts/sim/sectors.gd:162
 #, c-format
@@ -5898,7 +6292,8 @@ msgstr "Elige al menos dos unidades."
 
 #: scripts/sim/subdivisions.gd:373
 msgid "Só é possível fundir unidades do mesmo nível, dentro da mesma mãe."
-msgstr "Solo se pueden fusionar unidades del mismo nivel, dentro de la misma madre."
+msgstr ""
+"Solo se pueden fusionar unidades del mismo nivel, dentro de la misma madre."
 
 #: scripts/sim/subdivisions.gd:375
 msgid "As unidades precisam fazer divisa entre si."
@@ -5936,8 +6331,12 @@ msgid "O polígono não cobre área livre dentro de %s."
 msgstr "El polígono no cubre área libre dentro de %s."
 
 #: scripts/sim/subdivisions.gd:689
-msgid " Selecione uma unidade para desenhar dentro dela ou apague as que ocupam a área."
-msgstr " Selecciona una unidad para dibujar dentro de ella o borra las que ocupan el área."
+msgid ""
+" Selecione uma unidade para desenhar dentro dela ou apague as que ocupam a "
+"área."
+msgstr ""
+" Selecciona una unidad para dibujar dentro de ella o borra las que ocupan el "
+"área."
 
 #: scripts/sim/territories.gd:96
 #, c-format
@@ -5993,8 +6392,10 @@ msgid "Não agressão"
 msgstr "No agresión"
 
 #: scripts/sim/treaties.gd:37
-msgid "As partes se comprometem a não atacar uma à outra. Romper tem preço alto."
-msgstr "Las partes se comprometen a no atacarse. Romperlo tiene un precio alto."
+msgid ""
+"As partes se comprometem a não atacar uma à outra. Romper tem preço alto."
+msgstr ""
+"Las partes se comprometen a no atacarse. Romperlo tiene un precio alto."
 
 #: scripts/sim/treaties.gd:38
 msgid "Controle de armas"
@@ -6009,8 +6410,10 @@ msgid "Cooperação climática"
 msgstr "Cooperación climática"
 
 #: scripts/sim/treaties.gd:39
-msgid "Metas comuns de emissões. Custa um pouco de produtividade e agrada o eleitor."
-msgstr "Metas comunes de emisiones. Cuesta algo de productividad y agrada al votante."
+msgid ""
+"Metas comuns de emissões. Custa um pouco de produtividade e agrada o eleitor."
+msgstr ""
+"Metas comunes de emisiones. Cuesta algo de productividad y agrada al votante."
 
 #: scripts/sim/treaties.gd:40
 msgid "Extradição"
@@ -6211,559 +6614,634 @@ msgstr "Nov"
 msgid "Dez"
 msgstr "Dic"
 
-#: scripts/sim/world.gd:257
+#: scripts/sim/world.gd:261
 #, c-format
 msgid "%s deixou de existir, e sua carreira política acabou junto com o país."
 msgstr "%s dejó de existir, y tu carrera política terminó junto con el país."
 
-#: scripts/sim/world.gd:403
+#: scripts/sim/world.gd:407
 #, c-format
-msgid "Começa a campanha eleitoral em %s. Faltam cerca de três meses para a votação."
-msgstr "Comienza la campaña electoral en %s. Faltan unos tres meses para la votación."
+msgid ""
+"Começa a campanha eleitoral em %s. Faltam cerca de três meses para a votação."
+msgstr ""
+"Comienza la campaña electoral en %s. Faltan unos tres meses para la votación."
 
-#: scripts/sim/world.gd:412
+#: scripts/sim/world.gd:416
 #, c-format
-msgid "Sem apoio no parlamento e com a aprovação em %d%%, %s sofreu impeachment. %s assume o governo."
-msgstr "Sin apoyo en el parlamento y con la aprobación en %d%%, %s sufrió un impeachment. %s asume el gobierno."
+msgid ""
+"Sem apoio no parlamento e com a aprovação em %d%%, %s sofreu impeachment. %s "
+"assume o governo."
+msgstr ""
+"Sin apoyo en el parlamento y con la aprobación en %d%%, %s sufrió un "
+"impeachment. %s asume el gobierno."
 
-#: scripts/sim/world.gd:412
+#: scripts/sim/world.gd:416
 msgid "o governo"
 msgstr "el gobierno"
 
-#: scripts/sim/world.gd:412 scripts/sim/world.gd:679
+#: scripts/sim/world.gd:416 scripts/sim/world.gd:683
 msgid "Outro partido"
 msgstr "Otro partido"
 
-#: scripts/sim/world.gd:415 scripts/ui/debug_menu.gd:502
-msgid "Generais e a elite política perderam a paciência. Um golpe encerrou seu governo."
-msgstr "Los generales y la élite política perdieron la paciencia. Un golpe terminó con tu gobierno."
+#: scripts/sim/world.gd:419 scripts/ui/debug_menu.gd:502
+msgid ""
+"Generais e a elite política perderam a paciência. Um golpe encerrou seu "
+"governo."
+msgstr ""
+"Los generales y la élite política perdieron la paciencia. Un golpe terminó "
+"con tu gobierno."
 
-#: scripts/sim/world.gd:417
-msgid "Multidões tomaram o palácio, e os militares não defenderam o regime. Você foi deposto."
-msgstr "Multitudes tomaron el palacio, y los militares no defendieron al régimen. Fuiste depuesto."
+#: scripts/sim/world.gd:421
+msgid ""
+"Multidões tomaram o palácio, e os militares não defenderam o regime. Você "
+"foi deposto."
+msgstr ""
+"Multitudes tomaron el palacio, y los militares no defendieron al régimen. "
+"Fuiste depuesto."
 
-#: scripts/sim/world.gd:429
+#: scripts/sim/world.gd:433
 msgid "Reeleito!"
 msgstr "¡Reelegido!"
 
-#: scripts/sim/world.gd:430
+#: scripts/sim/world.gd:434
 #, c-format
-msgid "Seu partido fez %.1f%% dos votos e %d de %d assentos. Você conquista seu %dº mandato consecutivo em %s."
-msgstr "Tu partido obtuvo el %.1f%% de los votos y %d de %d escaños. Conquistas tu %d.º mandato consecutivo en %s."
+msgid ""
+"Seu partido fez %.1f%% dos votos e %d de %d assentos. Você conquista seu %dº "
+"mandato consecutivo em %s."
+msgstr ""
+"Tu partido obtuvo el %.1f%% de los votos y %d de %d escaños. Conquistas tu "
+"%d.º mandato consecutivo en %s."
 
-#: scripts/sim/world.gd:431
+#: scripts/sim/world.gd:435
 msgid "Seguir governando"
 msgstr "Seguir gobernando"
 
-#: scripts/sim/world.gd:434
+#: scripts/sim/world.gd:438
 #, c-format
-msgid "%s venceu a eleição com %d de %d assentos. Sua aprovação de %d%% não bastou. Você passa a liderar a oposição até a próxima eleição."
-msgstr "%s ganó la elección con %d de %d escaños. Tu aprobación del %d%% no bastó. Pasas a liderar la oposición hasta la próxima elección."
+msgid ""
+"%s venceu a eleição com %d de %d assentos. Sua aprovação de %d%% não bastou. "
+"Você passa a liderar a oposição até a próxima eleição."
+msgstr ""
+"%s ganó la elección con %d de %d escaños. Tu aprobación del %d%% no bastó. "
+"Pasas a liderar la oposición hasta la próxima elección."
 
-#: scripts/sim/world.gd:434 scripts/ui/debug_menu.gd:494
+#: scripts/sim/world.gd:438 scripts/ui/debug_menu.gd:494
 msgid "Derrotado nas urnas"
 msgstr "Derrotado en las urnas"
 
-#: scripts/sim/world.gd:441
-msgid "Este regime não tem eleições: não há como disputar o poder pela oposição."
-msgstr "Este régimen no tiene elecciones: no hay forma de disputar el poder desde la oposición."
+#: scripts/sim/world.gd:445
+msgid ""
+"Este regime não tem eleições: não há como disputar o poder pela oposição."
+msgstr ""
+"Este régimen no tiene elecciones: no hay forma de disputar el poder desde la "
+"oposición."
 
-#: scripts/sim/world.gd:459
+#: scripts/sim/world.gd:463
 #, c-format
 msgid "%s deixa o governo de %s."
 msgstr "%s deja el gobierno de %s."
 
-#: scripts/sim/world.gd:462
+#: scripts/sim/world.gd:466
 msgid "Critique o governo, faça campanha e dispute a próxima eleição"
 msgstr "Critica al gobierno, haz campaña y disputa la próxima elección"
 
-#: scripts/sim/world.gd:477
+#: scripts/sim/world.gd:481
 #, c-format
 msgid "%s vence a eleição em %s e volta ao poder."
 msgstr "%s gana la elección en %s y vuelve al poder."
 
-#: scripts/sim/world.gd:479
+#: scripts/sim/world.gd:483
 msgid "De volta ao poder!"
 msgstr "¡De vuelta al poder!"
 
-#: scripts/sim/world.gd:479
+#: scripts/sim/world.gd:483
 #, c-format
-msgid "Seu partido fez %.1f%% dos votos e %d de %d assentos. O governo é seu novamente."
-msgstr "Tu partido obtuvo el %.1f%% de los votos y %d de %d escaños. El gobierno vuelve a ser tuyo."
+msgid ""
+"Seu partido fez %.1f%% dos votos e %d de %d assentos. O governo é seu "
+"novamente."
+msgstr ""
+"Tu partido obtuvo el %.1f%% de los votos y %d de %d escaños. El gobierno "
+"vuelve a ser tuyo."
 
-#: scripts/sim/world.gd:480
+#: scripts/sim/world.gd:484
 msgid "Revise o orçamento e escolha os ministros"
 msgstr "Revisa el presupuesto y elige a los ministros"
 
-#: scripts/sim/world.gd:484
+#: scripts/sim/world.gd:488
 msgid "Oposição mais quatro anos"
 msgstr "Cuatro años más en la oposición"
 
-#: scripts/sim/world.gd:484
+#: scripts/sim/world.gd:488
 #, c-format
-msgid "%s venceu com %d de %d assentos. Seu partido fez %.1f%% dos votos e ficou com %d."
-msgstr "%s ganó con %d de %d escaños. Tu partido obtuvo el %.1f%% de los votos y se quedó con %d."
+msgid ""
+"%s venceu com %d de %d assentos. Seu partido fez %.1f%% dos votos e ficou "
+"com %d."
+msgstr ""
+"%s ganó con %d de %d escaños. Tu partido obtuvo el %.1f%% de los votos y se "
+"quedó con %d."
 
-#: scripts/sim/world.gd:485
+#: scripts/sim/world.gd:489
 msgid "Seguir na oposição"
 msgstr "Seguir en la oposición"
 
-#: scripts/sim/world.gd:494
+#: scripts/sim/world.gd:498
 #, c-format
 msgid "%s renunciou ao cargo.%s"
 msgstr "%s renunció al cargo.%s"
 
-#: scripts/sim/world.gd:494
+#: scripts/sim/world.gd:498
 #, c-format
 msgid " %s assume o governo."
 msgstr " %s asume el gobierno."
 
-#: scripts/sim/world.gd:533
+#: scripts/sim/world.gd:537
 #, c-format
 msgid "%s entra na política de %s."
 msgstr "%s entra en la política de %s."
 
-#: scripts/sim/world.gd:533
+#: scripts/sim/world.gd:537
 msgid "Um novo nome"
 msgstr "Un nuevo nombre"
 
-#: scripts/sim/world.gd:543
+#: scripts/sim/world.gd:547
 msgid "aproximar os dois países"
 msgstr "acercar a los dos países"
 
-#: scripts/sim/world.gd:545
+#: scripts/sim/world.gd:549
 msgid "discutir a guerra"
 msgstr "discutir la guerra"
 
-#: scripts/sim/world.gd:547
+#: scripts/sim/world.gd:551
 msgid "cobrar explicações sobre o seu governo"
 msgstr "pedir explicaciones sobre su gobierno"
 
-#: scripts/sim/world.gd:549
+#: scripts/sim/world.gd:553
 msgid "propor um novo acordo"
 msgstr "proponer un nuevo acuerdo"
 
-#: scripts/sim/world.gd:552
+#: scripts/sim/world.gd:556
 #, c-format
 msgid "%s quer falar com você"
 msgstr "%s quiere hablar contigo"
 
-#: scripts/sim/world.gd:552
+#: scripts/sim/world.gd:556
 msgid "Um líder"
 msgstr "Un líder"
 
-#: scripts/sim/world.gd:553
+#: scripts/sim/world.gd:557
 #, c-format
 msgid "O líder de %s (%s) pede uma conversa para %s."
 msgstr "El líder de %s (%s) pide una conversación para %s."
 
-#: scripts/sim/world.gd:555
+#: scripts/sim/world.gd:559
 msgid "Atender"
 msgstr "Atender"
 
-#: scripts/sim/world.gd:555
+#: scripts/sim/world.gd:559
 msgid "Abre a conversa agora."
 msgstr "Abre la conversación ahora."
 
-#: scripts/sim/world.gd:556
+#: scripts/sim/world.gd:560
 msgid "Não atender"
 msgstr "No atender"
 
-#: scripts/sim/world.gd:556
+#: scripts/sim/world.gd:560
 msgid "Relação -3."
 msgstr "Relación -3."
 
-#: scripts/sim/world.gd:585
+#: scripts/sim/world.gd:589
 msgid "Colapso do financiamento"
 msgstr "Colapso de la financiación"
 
-#: scripts/sim/world.gd:586
+#: scripts/sim/world.gd:590
 #, c-format
-msgid "Os credores não rolam mais a dívida de %s. O juro chegou a %.1f%% e as reservas estão em US$ %.1f bi."
-msgstr "Los acreedores ya no refinancian la deuda de %s. El interés llegó al %.1f%% y las reservas están en US$ %.1f mil M."
+msgid ""
+"Os credores não rolam mais a dívida de %s. O juro chegou a %.1f%% e as "
+"reservas estão em US$ %.1f bi."
+msgstr ""
+"Los acreedores ya no refinancian la deuda de %s. El interés llegó al %.1f%% "
+"y las reservas están en US$ %.1f mil M."
 
-#: scripts/sim/world.gd:588
+#: scripts/sim/world.gd:592
 msgid "Aceitar pacote do FMI"
 msgstr "Aceptar el paquete del FMI"
 
-#: scripts/sim/world.gd:588
+#: scripts/sim/world.gd:592
 #, c-format
 msgid "US$ %.0f bi, com corte de gastos e aumento de impostos"
 msgstr "US$ %.0f mil M, con recorte de gastos y aumento de impuestos"
 
-#: scripts/sim/world.gd:590
+#: scripts/sim/world.gd:594
 msgid "Declarar moratória"
 msgstr "Declarar impago"
 
-#: scripts/sim/world.gd:590
+#: scripts/sim/world.gd:594
 msgid "Corta 45% da dívida; 3 anos sem mercado, recessão severa"
 msgstr "Corta el 45% de la deuda; 3 años sin mercado, recesión severa"
 
-#: scripts/sim/world.gd:600
+#: scripts/sim/world.gd:604
 #, c-format
 msgid "Proposta comercial de %s"
 msgstr "Propuesta comercial de %s"
 
-#: scripts/sim/world.gd:601
+#: scripts/sim/world.gd:605
 #, c-format
-msgid "O governo de %s propõe um acordo de livre comércio. Hoje ele responde por %.1f%% das suas exportações."
-msgstr "El gobierno de %s propone un acuerdo de libre comercio. Hoy representa el %.1f%% de tus exportaciones."
+msgid ""
+"O governo de %s propõe um acordo de livre comércio. Hoje ele responde por "
+"%.1f%% das suas exportações."
+msgstr ""
+"El gobierno de %s propone un acuerdo de libre comercio. Hoy representa el "
+"%.1f%% de tus exportaciones."
 
-#: scripts/sim/world.gd:603 scripts/sim/world.gd:617
+#: scripts/sim/world.gd:607 scripts/sim/world.gd:621
 msgid "Assinar"
 msgstr "Firmar"
 
-#: scripts/sim/world.gd:603
+#: scripts/sim/world.gd:607
 msgid "Vale depois de ratificado pelos dois parlamentos"
 msgstr "Vale tras ser ratificado por ambos parlamentos"
 
-#: scripts/sim/world.gd:605
+#: scripts/sim/world.gd:609
 msgid "Recusar"
 msgstr "Rechazar"
 
-#: scripts/sim/world.gd:605
+#: scripts/sim/world.gd:609
 msgid "Relação -5"
 msgstr "Relación -5"
 
-#: scripts/sim/world.gd:615
-#, c-format
-msgid "%s propõe um pacto de defesa mútua. Se um dos dois for atacado, o outro entra na guerra."
-msgstr "%s propone un pacto de defensa mutua. Si uno de los dos es atacado, el otro entra en la guerra."
-
-#: scripts/sim/world.gd:617
-msgid "Vale depois de ratificado. Proteção mútua; arrisca arrastar você para guerras alheias"
-msgstr "Vale tras ser ratificado. Protección mutua; puede arrastrarte a guerras ajenas"
-
 #: scripts/sim/world.gd:619
+#, c-format
+msgid ""
+"%s propõe um pacto de defesa mútua. Se um dos dois for atacado, o outro "
+"entra na guerra."
+msgstr ""
+"%s propone un pacto de defensa mutua. Si uno de los dos es atacado, el otro "
+"entra en la guerra."
+
+#: scripts/sim/world.gd:621
+msgid ""
+"Vale depois de ratificado. Proteção mútua; arrisca arrastar você para "
+"guerras alheias"
+msgstr ""
+"Vale tras ser ratificado. Protección mutua; puede arrastrarte a guerras "
+"ajenas"
+
+#: scripts/sim/world.gd:623
 msgid "Recusar educadamente"
 msgstr "Rechazar con cortesía"
 
-#: scripts/sim/world.gd:619
+#: scripts/sim/world.gd:623
 msgid "Relação -3"
 msgstr "Relación -3"
 
-#: scripts/sim/world.gd:628
+#: scripts/sim/world.gd:632
 #, c-format
 msgid "Ultimato de %s"
 msgstr "Ultimátum de %s"
 
-#: scripts/sim/world.gd:629
+#: scripts/sim/world.gd:633
 #, c-format
-msgid "%s concentra forças e exige que você reduza a presença militar e retire apoio aos rivais dele."
-msgstr "%s concentra fuerzas y exige que reduzcas la presencia militar y retires el apoyo a sus rivales."
+msgid ""
+"%s concentra forças e exige que você reduza a presença militar e retire "
+"apoio aos rivais dele."
+msgstr ""
+"%s concentra fuerzas y exige que reduzcas la presencia militar y retires el "
+"apoyo a sus rivales."
 
-#: scripts/sim/world.gd:631
+#: scripts/sim/world.gd:635
 msgid "Ceder para ganhar tempo"
 msgstr "Ceder para ganar tiempo"
 
-#: scripts/sim/world.gd:631
+#: scripts/sim/world.gd:635
 msgid "Relação +15; aprovação -6 pontos"
 msgstr "Relación +15; aprobación -6 puntos"
 
-#: scripts/sim/world.gd:634
+#: scripts/sim/world.gd:638
 msgid "Rejeitar publicamente"
 msgstr "Rechazar públicamente"
 
-#: scripts/sim/world.gd:634
+#: scripts/sim/world.gd:638
 msgid "Aprovação +3 pontos; relação -12 e tensão maior"
 msgstr "Aprobación +3 puntos; relación -12 y mayor tensión"
 
-#: scripts/sim/world.gd:647
+#: scripts/sim/world.gd:651
 msgid "Fomos invadidos!"
 msgstr "¡Nos han invadido!"
 
-#: scripts/sim/world.gd:648
+#: scripts/sim/world.gd:652
 #, c-format
-msgid "Tropas de %s cruzaram a fronteira. A guerra começou e a economia sente o choque."
-msgstr "Tropas de %s cruzaron la frontera. La guerra empezó y la economía siente el golpe."
+msgid ""
+"Tropas de %s cruzaram a fronteira. A guerra começou e a economia sente o "
+"choque."
+msgstr ""
+"Tropas de %s cruzaron la frontera. La guerra empezó y la economía siente el "
+"golpe."
 
-#: scripts/sim/world.gd:649
+#: scripts/sim/world.gd:653
 msgid "Mobilizar o país"
 msgstr "Movilizar el país"
 
-#: scripts/sim/world.gd:649
+#: scripts/sim/world.gd:653
 msgid "Mobilização a 60%"
 msgstr "Movilización al 60%"
 
-#: scripts/sim/world.gd:657
+#: scripts/sim/world.gd:661
 msgid "Aliado sob ataque"
 msgstr "Aliado bajo ataque"
 
-#: scripts/sim/world.gd:658
+#: scripts/sim/world.gd:662
 #, c-format
-msgid "%s invocou o pacto de defesa: %s atacou. Se honrar o tratado, seu país entra em guerra."
-msgstr "%s invocó el pacto de defensa: %s atacó. Si honras el tratado, tu país entra en guerra."
+msgid ""
+"%s invocou o pacto de defesa: %s atacou. Se honrar o tratado, seu país entra "
+"em guerra."
+msgstr ""
+"%s invocó el pacto de defensa: %s atacó. Si honras el tratado, tu país entra "
+"en guerra."
 
-#: scripts/sim/world.gd:660
+#: scripts/sim/world.gd:664
 msgid "Honrar o pacto e entrar na guerra"
 msgstr "Honrar el pacto y entrar en la guerra"
 
-#: scripts/sim/world.gd:660
+#: scripts/sim/world.gd:664
 msgid "Mobilização 25%; alta de gastos"
 msgstr "Movilización 25%; alza de gastos"
 
-#: scripts/sim/world.gd:663
+#: scripts/sim/world.gd:667
 msgid "Quebrar o pacto"
 msgstr "Romper el pacto"
 
-#: scripts/sim/world.gd:663
+#: scripts/sim/world.gd:667
 msgid "Pacto cancelado; relações com aliados despencam"
 msgstr "Pacto cancelado; las relaciones con los aliados se desploman"
 
-#: scripts/sim/world.gd:676
+#: scripts/sim/world.gd:680
 #, c-format
 msgid "As tropas de %s tomaram a capital, e o regime caiu com a rendição."
-msgstr "Las tropas de %s tomaron la capital, y el régimen cayó con la rendición."
+msgstr ""
+"Las tropas de %s tomaron la capital, y el régimen cayó con la rendición."
 
-#: scripts/sim/world.gd:679
+#: scripts/sim/world.gd:683
 #, c-format
-msgid "As tropas de %s tomaram a capital, e seu governo assinou a rendição. %s assume, e você passa a liderar a oposição."
-msgstr "Las tropas de %s tomaron la capital, y tu gobierno firmó la rendición. %s asume, y pasas a liderar la oposición."
+msgid ""
+"As tropas de %s tomaram a capital, e seu governo assinou a rendição. %s "
+"assume, e você passa a liderar a oposição."
+msgstr ""
+"Las tropas de %s tomaron la capital, y tu gobierno firmó la rendición. %s "
+"asume, y pasas a liderar la oposición."
 
-#: scripts/sim/world.gd:679
+#: scripts/sim/world.gd:683
 msgid "Rendição"
 msgstr "Rendición"
 
-#: scripts/sim/world.gd:688
+#: scripts/sim/world.gd:692
 #, c-format
 msgid "%s capitulou"
 msgstr "%s capituló"
 
-#: scripts/sim/world.gd:689
+#: scripts/sim/world.gd:693
 #, c-format
 msgid "As forças de %s se renderam. Qual será o futuro do país?"
 msgstr "Las fuerzas de %s se rindieron. ¿Cuál será el futuro del país?"
 
-#: scripts/sim/world.gd:691
+#: scripts/sim/world.gd:695
 msgid "Anexar"
 msgstr "Anexionar"
 
-#: scripts/sim/world.gd:691
+#: scripts/sim/world.gd:695
 msgid "Ganha população e recursos; reputação global despenca"
 msgstr "Gana población y recursos; la reputación global se desploma"
 
-#: scripts/sim/world.gd:693
+#: scripts/sim/world.gd:697
 #, c-format
 msgid "%s anexa %s depois de vencer a guerra."
 msgstr "%s anexiona %s tras ganar la guerra."
 
-#: scripts/sim/world.gd:694
+#: scripts/sim/world.gd:698
 msgid "Instalar governo aliado"
 msgstr "Instalar un gobierno aliado"
 
-#: scripts/sim/world.gd:694
+#: scripts/sim/world.gd:698
 msgid "Vira Estado-cliente e aliado militar"
 msgstr "Se convierte en Estado cliente y aliado militar"
 
-#: scripts/sim/world.gd:696
+#: scripts/sim/world.gd:700
 #, c-format
 msgid "%s vence e instala governo aliado em %s."
 msgstr "%s gana e instala un gobierno aliado en %s."
 
-#: scripts/sim/world.gd:697 scripts/sim/world.gd:716
+#: scripts/sim/world.gd:701 scripts/sim/world.gd:720
 msgid "Demarcar novas fronteiras"
 msgstr "Demarcar nuevas fronteras"
 
-#: scripts/sim/world.gd:697 scripts/sim/world.gd:716
+#: scripts/sim/world.gd:701 scripts/sim/world.gd:720
 msgid "Você desenha no mapa as áreas que ficam com o seu país"
 msgstr "Dibujas en el mapa las áreas que quedan para tu país"
 
-#: scripts/sim/world.gd:699 scripts/sim/world.gd:718
+#: scripts/sim/world.gd:703 scripts/sim/world.gd:722
 #: scripts/ui/border_panel.gd:59
 msgid "Não ficar com território"
 msgstr "No quedarse con territorio"
 
-#: scripts/sim/world.gd:699 scripts/sim/world.gd:718
+#: scripts/sim/world.gd:703 scripts/sim/world.gd:722
 msgid "Retira as tropas e melhora a reputação internacional"
 msgstr "Retira las tropas y mejora la reputación internacional"
 
-#: scripts/sim/world.gd:713
+#: scripts/sim/world.gd:717
 #, c-format
 msgid "Vitória sobre %s"
 msgstr "Victoria sobre %s"
 
-#: scripts/sim/world.gd:714
+#: scripts/sim/world.gd:718
 #, c-format
-msgid "Suas tropas controlam cerca de %s do território de %s. Fica com alguma parte?"
-msgstr "Tus tropas controlan cerca del %s del territorio de %s. ¿Te quedas con alguna parte?"
+msgid ""
+"Suas tropas controlam cerca de %s do território de %s. Fica com alguma parte?"
+msgstr ""
+"Tus tropas controlan cerca del %s del territorio de %s. ¿Te quedas con "
+"alguna parte?"
 
-#: scripts/sim/world.gd:726
+#: scripts/sim/world.gd:730
 msgid "Negociação de fronteiras"
 msgstr "Negociación de fronteras"
 
-#: scripts/sim/world.gd:727
+#: scripts/sim/world.gd:731
 #, c-format
 msgid "O cessar-fogo com %s saiu sem vencedor. Como ficam as fronteiras?"
-msgstr "El alto el fuego con %s salió sin vencedor. ¿Cómo quedan las fronteras?"
+msgstr ""
+"El alto el fuego con %s salió sin vencedor. ¿Cómo quedan las fronteras?"
 
-#: scripts/sim/world.gd:729 scripts/ui/border_panel.gd:64
+#: scripts/sim/world.gd:733 scripts/ui/border_panel.gd:64
 msgid "Restabelecer fronteiras antigas"
 msgstr "Restablecer las fronteras antiguas"
 
-#: scripts/sim/world.gd:729
+#: scripts/sim/world.gd:733
 msgid "Cada lado volta para onde estava antes da guerra"
 msgstr "Cada lado vuelve adonde estaba antes de la guerra"
 
-#: scripts/sim/world.gd:731
+#: scripts/sim/world.gd:735
 msgid "Propor novas fronteiras"
 msgstr "Proponer nuevas fronteras"
 
-#: scripts/sim/world.gd:731
+#: scripts/sim/world.gd:735
 #, c-format
 msgid "Desenhe o que pede e o que oferece. %s pode recusar"
 msgstr "Dibuja lo que pides y lo que ofreces. %s puede rechazar"
 
-#: scripts/sim/world.gd:746
+#: scripts/sim/world.gd:750
 #, c-format
 msgid "%s vence a guerra, retira as tropas e não fica com território de %s."
-msgstr "%s gana la guerra, retira las tropas y no se queda con territorio de %s."
+msgstr ""
+"%s gana la guerra, retira las tropas y no se queda con territorio de %s."
 
-#: scripts/sim/world.gd:753
+#: scripts/sim/world.gd:757
 #, c-format
 msgid "Novas fronteiras: %s fica com %s do território de %s."
 msgstr "Nuevas fronteras: %s se queda con el %s del territorio de %s."
 
-#: scripts/sim/world.gd:758
+#: scripts/sim/world.gd:762
 #, c-format
 msgid "%s e %s restabelecem as fronteiras de antes da guerra."
 msgstr "%s y %s restablecen las fronteras de antes de la guerra."
 
-#: scripts/sim/world.gd:775
+#: scripts/sim/world.gd:779
 #, c-format
-msgid "%s recusou: a troca tira território demais. O saldo aceitável é cerca de %s do país."
-msgstr "%s se negó: el canje quita demasiado territorio. El saldo aceptable es cerca del %s del país."
+msgid ""
+"%s recusou: a troca tira território demais. O saldo aceitável é cerca de %s "
+"do país."
+msgstr ""
+"%s se negó: el canje quita demasiado territorio. El saldo aceptable es cerca "
+"del %s del país."
 
-#: scripts/sim/world.gd:781
+#: scripts/sim/world.gd:785
 #, c-format
 msgid "Acordo de paz: %s e %s estabelecem novas fronteiras."
 msgstr "Acuerdo de paz: %s y %s establecen nuevas fronteras."
 
-#: scripts/sim/world.gd:797
+#: scripts/sim/world.gd:801
 #, c-format
 msgid "ATAQUE NUCLEAR: %s usa armas atômicas diante da derrota."
 msgstr "ATAQUE NUCLEAR: %s usa armas atómicas ante la derrota."
 
-#: scripts/sim/world.gd:804
+#: scripts/sim/world.gd:808
 #, c-format
 msgid "%s lançou armas nucleares. O mundo inteiro entra em choque."
 msgstr "%s lanzó armas nucleares. El mundo entero queda en shock."
 
-#: scripts/sim/world.gd:823
+#: scripts/sim/world.gd:827
 msgid "Ação inválida."
 msgstr "Acción inválida."
 
-#: scripts/sim/world.gd:827
+#: scripts/sim/world.gd:831
 #, c-format
 msgid "Essa ação com %s só pode ser repetida em %d dia(s)."
 msgstr "Esa acción con %s solo puede repetirse en %d día(s)."
 
-#: scripts/sim/world.gd:833
+#: scripts/sim/world.gd:837
 #, c-format
 msgid "Missão diplomática melhora relações com %s."
 msgstr "La misión diplomática mejora las relaciones con %s."
 
-#: scripts/sim/world.gd:840
+#: scripts/sim/world.gd:844
 #, c-format
 msgid "Pacote de ajuda de US$ %.1f bi enviado a %s."
 msgstr "Paquete de ayuda de US$ %.1f mil M enviado a %s."
 
-#: scripts/sim/world.gd:843
+#: scripts/sim/world.gd:847
 msgid "Já existe acordo comercial."
 msgstr "Ya existe un acuerdo comercial."
 
-#: scripts/sim/world.gd:845
+#: scripts/sim/world.gd:849
 #, c-format
 msgid "%s não negocia: relação abaixo de +15."
 msgstr "%s no negocia: relación por debajo de +15."
 
-#: scripts/sim/world.gd:857
+#: scripts/sim/world.gd:861
 #, c-format
 msgid "Pacto de defesa com %s cancelado."
 msgstr "Pacto de defensa con %s cancelado."
 
-#: scripts/sim/world.gd:860
+#: scripts/sim/world.gd:864
 #, c-format
 msgid "%s recusa: relação abaixo de +55."
 msgstr "%s rechaza: relación por debajo de +55."
 
-#: scripts/sim/world.gd:868
+#: scripts/sim/world.gd:872
 #, c-format
 msgid "Seu governo condena %s publicamente."
 msgstr "Tu gobierno condena públicamente a %s."
 
-#: scripts/sim/world.gd:873
+#: scripts/sim/world.gd:877
 #, c-format
 msgid "Sanções contra %s suspensas."
 msgstr "Sanciones contra %s suspendidas."
 
-#: scripts/sim/world.gd:876
+#: scripts/sim/world.gd:880
 #, c-format
 msgid "Sanções financeiras contra %s em vigor."
 msgstr "Sanciones financieras contra %s vigentes."
 
-#: scripts/sim/world.gd:881
+#: scripts/sim/world.gd:885
 #, c-format
 msgid "Embargo contra %s reduzido a sanções."
 msgstr "Embargo contra %s reducido a sanciones."
 
-#: scripts/sim/world.gd:884
+#: scripts/sim/world.gd:888
 #, c-format
 msgid "Embargo total contra %s decretado."
 msgstr "Embargo total contra %s decretado."
 
-#: scripts/sim/world.gd:889
+#: scripts/sim/world.gd:893
 #, c-format
 msgid "Tarifa contra %s removida."
 msgstr "Arancel contra %s retirado."
 
-#: scripts/sim/world.gd:892
+#: scripts/sim/world.gd:896
 #, c-format
 msgid "Tarifa de 20%% sobre produtos de %s."
 msgstr "Arancel del 20%% a los productos de %s."
 
-#: scripts/sim/world.gd:898
+#: scripts/sim/world.gd:902
 #, c-format
 msgid "Operação secreta descoberta em %s: escândalo internacional."
 msgstr "Operación encubierta descubierta en %s: escándalo internacional."
 
-#: scripts/sim/world.gd:903
+#: scripts/sim/world.gd:907
 #, c-format
 msgid "Operação secreta desestabiliza %s."
 msgstr "Una operación encubierta desestabiliza %s."
 
-#: scripts/sim/world.gd:906
+#: scripts/sim/world.gd:910
 #, c-format
 msgid "%s não compra de você: relação abaixo de +10."
 msgstr "%s no te compra: relación por debajo de +10."
 
-#: scripts/sim/world.gd:911
+#: scripts/sim/world.gd:915
 #, c-format
 msgid "Venda de armas de US$ %.1f bi para %s."
 msgstr "Venta de armas de US$ %.1f mil M a %s."
 
-#: scripts/sim/world.gd:914
+#: scripts/sim/world.gd:918
 #, c-format
 msgid "Cancele o pacto com %s antes."
 msgstr "Cancela antes el pacto con %s."
 
-#: scripts/sim/world.gd:916
+#: scripts/sim/world.gd:920
 msgid "Já em guerra."
 msgstr "Ya en guerra."
 
-#: scripts/sim/world.gd:922
+#: scripts/sim/world.gd:926
 msgid "Ação desconhecida."
 msgstr "Acción desconocida."
 
-#: scripts/sim/world.gd:934
+#: scripts/sim/world.gd:938
 msgid "Vocês não estão em guerra."
 msgstr "No están en guerra."
 
-#: scripts/sim/world.gd:943
+#: scripts/sim/world.gd:947
 #, c-format
 msgid "%s rejeitou a proposta de paz."
 msgstr "%s rechazó la propuesta de paz."
 
-#: scripts/sim/world.gd:950 scripts/ui/debug_menu.gd:279
+#: scripts/sim/world.gd:954 scripts/ui/debug_menu.gd:279
 #, c-format
 msgid "Paz assinada: %s cede {pct} do território a %s."
 msgstr "Paz firmada: %s cede {pct} del territorio a %s."
@@ -6789,152 +7267,122 @@ msgid "empresa aberta em até %d dias"
 msgstr "empresa abierta en hasta %d días"
 
 #: scripts/sim/codes/code_direitos.gd:16
-#: scripts/sim/law_catalog.gd_(escolha_dr_right)
 msgid "a liberdade de expressão"
 msgstr "la libertad de expresión"
 
 #: scripts/sim/codes/code_direitos.gd:16
-#: scripts/sim/law_catalog.gd_(escolha_dr_right)
 msgid "a liberdade de imprensa"
 msgstr "la libertad de prensa"
 
 #: scripts/sim/codes/code_direitos.gd:16
-#: scripts/sim/law_catalog.gd_(escolha_dr_right)
 msgid "a liberdade de reunião e associação"
 msgstr "la libertad de reunión y asociación"
 
 #: scripts/sim/codes/code_direitos.gd:17
-#: scripts/sim/law_catalog.gd_(escolha_dr_right)
 msgid "a liberdade de culto"
 msgstr "la libertad de culto"
 
 #: scripts/sim/codes/code_direitos.gd:17
-#: scripts/sim/law_catalog.gd_(escolha_dr_right)
 msgid "a privacidade e o sigilo das comunicações"
 msgstr "la privacidad y el secreto de las comunicaciones"
 
 #: scripts/sim/codes/code_direitos.gd:17
-#: scripts/sim/law_catalog.gd_(escolha_dr_right)
 msgid "o direito de greve"
 msgstr "el derecho de huelga"
 
 #: scripts/sim/codes/code_direitos.gd:18
-#: scripts/sim/law_catalog.gd_(escolha_dr_right)
 msgid "a propriedade privada"
 msgstr "la propiedad privada"
 
 #: scripts/sim/codes/code_direitos.gd:18
-#: scripts/sim/law_catalog.gd_(escolha_dr_right)
 msgid "a liberdade de ir e vir"
 msgstr "la libertad de circulación"
 
 #: scripts/sim/codes/code_direitos.gd:18
-#: scripts/sim/law_catalog.gd_(escolha_dr_right)
 msgid "a educação pública gratuita"
 msgstr "la educación pública gratuita"
 
 #: scripts/sim/codes/code_direitos.gd:19
-#: scripts/sim/law_catalog.gd_(escolha_dr_right)
 msgid "a saúde pública gratuita"
 msgstr "la salud pública gratuita"
 
 #: scripts/sim/codes/code_direitos.gd:19
-#: scripts/sim/law_catalog.gd_(escolha_dr_right)
 msgid "a moradia digna"
 msgstr "la vivienda digna"
 
 #: scripts/sim/codes/code_direitos.gd:19
-#: scripts/sim/law_catalog.gd_(escolha_dr_right)
 msgid "o acesso à internet"
 msgstr "el acceso a internet"
 
 #: scripts/sim/codes/code_direitos.gd:19
-#: scripts/sim/law_catalog.gd_(escolha_dr_right)
 msgid "o voto"
 msgstr "el voto"
 
 #: scripts/sim/codes/code_direitos.gd:20
-#: scripts/sim/law_catalog.gd_(escolha_dr_right)
 msgid "o porte de arma"
 msgstr "la portación de armas"
 
 #: scripts/sim/codes/code_direitos.gd:20
-#: scripts/sim/law_catalog.gd_(escolha_dr_right)
 msgid "o aborto legal"
 msgstr "el aborto legal"
 
 #: scripts/sim/codes/code_direitos.gd:26
-#: scripts/sim/law_catalog.gd_(escolha_dr_scope)
 msgid "todas as pessoas"
 msgstr "todas las personas"
 
 #: scripts/sim/codes/code_direitos.gd:26
-#: scripts/sim/law_catalog.gd_(escolha_dr_scope)
 msgid "os maiores de 18 anos"
 msgstr "los mayores de 18 años"
 
 #: scripts/sim/codes/code_direitos.gd:26
-#: scripts/sim/law_catalog.gd_(escolha_dr_scope)
 msgid "os cidadãos"
 msgstr "los ciudadanos"
 
 #: scripts/sim/codes/code_direitos.gd:45
-#: scripts/sim/law_catalog.gd_(escolha_dr_duty)
 msgid "pagar os tributos"
 msgstr "pagar los tributos"
 
 #: scripts/sim/codes/code_direitos.gd:45
-#: scripts/sim/law_catalog.gd_(escolha_dr_duty)
 msgid "vacinar-se e vacinar os filhos"
 msgstr "vacunarse y vacunar a los hijos"
 
 #: scripts/sim/codes/code_direitos.gd:45
-#: scripts/sim/law_catalog.gd_(escolha_dr_duty)
 msgid "alistar-se nas Forças Armadas aos 18 anos"
 msgstr "alistarse en las Fuerzas Armadas a los 18 años"
 
 #: scripts/sim/codes/code_direitos.gd:46
-#: scripts/sim/law_catalog.gd_(escolha_dr_duty)
 msgid "votar nas eleições"
 msgstr "votar en las elecciones"
 
 #: scripts/sim/codes/code_direitos.gd:56
-#: scripts/sim/law_catalog.gd_(escolha_dr_draftees)
 msgid "os homens"
 msgstr "los hombres"
 
 #: scripts/sim/codes/code_direitos.gd:56
-#: scripts/sim/law_catalog.gd_(escolha_dr_draftees)
 msgid "homens e mulheres"
 msgstr "hombres y mujeres"
 
 #: scripts/sim/codes/code_direitos.gd:59
-#: scripts/sim/law_catalog.gd_(escolha_dr_outlet)
 msgid "a imprensa"
 msgstr "la prensa"
 
 #: scripts/sim/codes/code_direitos.gd:59
-#: scripts/sim/law_catalog.gd_(escolha_dr_outlet)
 msgid "a internet"
 msgstr "internet"
 
 #: scripts/sim/codes/code_direitos.gd:59
-#: scripts/sim/law_catalog.gd_(escolha_dr_outlet)
 msgid "as artes e os espetáculos"
 msgstr "las artes y los espectáculos"
 
 #: scripts/sim/codes/code_direitos.gd:63
-#: scripts/sim/law_catalog.gd_(escolha_dr_service)
 msgid "as redes sociais estrangeiras"
 msgstr "las redes sociales extranjeras"
 
 #: scripts/sim/codes/code_direitos.gd:63
-#: scripts/sim/law_catalog.gd_(escolha_dr_service)
 msgid "os sites de notícias estrangeiros"
 msgstr "los sitios de noticias extranjeros"
 
 #: scripts/sim/codes/code_direitos.gd:63
-#: scripts/sim/law_catalog.gd_(escolha_dr_service)
 msgid "as VPNs e ferramentas de anonimato"
 msgstr "las VPN y herramientas de anonimato"
 
@@ -6993,7 +7441,8 @@ msgstr "sistema sin efecto: la Constitución (Art. 18) fija %s"
 #: scripts/sim/codes/code_eleitoral.gd:106
 #, c-format
 msgid "barreira abaixo do piso constitucional de %d%%: vale a Constituição"
-msgstr "barrera por debajo del piso constitucional del %d%%: vale la Constitución"
+msgstr ""
+"barrera por debajo del piso constitucional del %d%%: vale la Constitución"
 
 #: scripts/sim/codes/code_eleitoral.gd:109
 #, c-format
@@ -7077,8 +7526,14 @@ msgstr "Demarcar conquistas"
 
 #: scripts/ui/border_panel.gd:57
 #, c-format
-msgid "Você venceu %s. Desenhe as áreas que ficam com o seu país: clique no mapa para colocar vértices e no primeiro ponto para fechar. Pode desenhar várias. O que não for marcado volta para %s."
-msgstr "Venciste a %s. Dibuja las áreas que quedan para tu país: haz clic en el mapa para colocar vértices y en el primer punto para cerrar. Puedes dibujar varias. Lo que no se marque vuelve a %s."
+msgid ""
+"Você venceu %s. Desenhe as áreas que ficam com o seu país: clique no mapa "
+"para colocar vértices e no primeiro ponto para fechar. Pode desenhar várias. "
+"O que não for marcado volta para %s."
+msgstr ""
+"Venciste a %s. Dibuja las áreas que quedan para tu país: haz clic en el mapa "
+"para colocar vértices y en el primer punto para cerrar. Puedes dibujar "
+"varias. Lo que no se marque vuelve a %s."
 
 #: scripts/ui/border_panel.gd:58
 msgid "Confirmar novas fronteiras"
@@ -7090,8 +7545,14 @@ msgstr "Negociar fronteras"
 
 #: scripts/ui/border_panel.gd:62
 #, c-format
-msgid "A guerra terminou sem vencedor. Desenhe sobre %s o que pede e sobre o seu país o que oferece. %s decide com base na frente de batalha e no cansaço da guerra."
-msgstr "La guerra terminó sin vencedor. Dibuja sobre %s lo que pides y sobre tu país lo que ofreces. %s decide según el frente de batalla y el cansancio de la guerra."
+msgid ""
+"A guerra terminou sem vencedor. Desenhe sobre %s o que pede e sobre o seu "
+"país o que oferece. %s decide com base na frente de batalha e no cansaço da "
+"guerra."
+msgstr ""
+"La guerra terminó sin vencedor. Dibuja sobre %s lo que pides y sobre tu país "
+"lo que ofreces. %s decide según el frente de batalla y el cansancio de la "
+"guerra."
 
 #: scripts/ui/border_panel.gd:63
 msgid "Enviar proposta"
@@ -7422,7 +7883,7 @@ msgstr "Aversión al riesgo 0%"
 msgid "Tensão global 100%"
 msgstr "Tensión global 100%"
 
-#: scripts/ui/debug_menu.gd:196 scripts/sim/law_catalog.gd_(categorias)
+#: scripts/ui/debug_menu.gd:196
 msgid "Eventos"
 msgstr "Eventos"
 
@@ -7919,13 +8380,19 @@ msgstr " (usa el país objetivo)"
 
 #: scripts/ui/divisions_panel.gd:139
 #, c-format
-msgid "Desmembrar %s: contorne a parte que vai se separar  ·  %d vértice(s)  ·  %s  ·  Esc cancela"
-msgstr "Desmembrar %s: contornea la parte que se separará  ·  %d vértice(s)  ·  %s  ·  Esc cancela"
+msgid ""
+"Desmembrar %s: contorne a parte que vai se separar  ·  %d vértice(s)  ·  %s  "
+"·  Esc cancela"
+msgstr ""
+"Desmembrar %s: contornea la parte que se separará  ·  %d vértice(s)  ·  %s  "
+"·  Esc cancela"
 
 #: scripts/ui/divisions_panel.gd:141
 #, c-format
-msgid "%s em %s  ·  %d vértice(s)  ·  %s  ·  botão direito desfaz  ·  Esc cancela"
-msgstr "%s en %s  ·  %d vértice(s)  ·  %s  ·  clic derecho deshace  ·  Esc cancela"
+msgid ""
+"%s em %s  ·  %d vértice(s)  ·  %s  ·  botão direito desfaz  ·  Esc cancela"
+msgstr ""
+"%s en %s  ·  %d vértice(s)  ·  %s  ·  clic derecho deshace  ·  Esc cancela"
 
 #: scripts/ui/divisions_panel.gd:156
 msgid ", recortada pelos limites existentes"
@@ -8022,8 +8489,12 @@ msgstr "Ninguna unidad creada todavía."
 
 #: scripts/ui/divisions_panel.gd:558
 #, c-format
-msgid "≈ %s do território nacional  ·  cerca de %s mi de habitantes  ·  %d subunidade(s)"
-msgstr "≈ %s del territorio nacional  ·  cerca de %s M de habitantes  ·  %d subunidad(es)"
+msgid ""
+"≈ %s do território nacional  ·  cerca de %s mi de habitantes  ·  %d "
+"subunidade(s)"
+msgstr ""
+"≈ %s del territorio nacional  ·  cerca de %s M de habitantes  ·  %d "
+"subunidad(es)"
 
 #: scripts/ui/divisions_panel.gd:585
 #, c-format
@@ -8054,6 +8525,21 @@ msgstr "%s dejó de ser capital de %s."
 #, c-format
 msgid "%s agora é capital de %s."
 msgstr "%s es ahora capital de %s."
+
+#: scripts/ui/economy_panel.gd:65
+#, fuzzy, c-format
+msgid "População: %s milhões"
+msgstr "Población (M)"
+
+#: scripts/ui/economy_panel.gd:70
+#, c-format
+msgid "Natalidade %s · mortalidade %s · migração %s ao ano"
+msgstr "Natalidad %s · mortalidad %s · migración %s al año"
+
+#: scripts/ui/economy_panel.gd:72
+#, c-format
+msgid "Aposentadorias além da base: %s do PIB"
+msgstr "Jubilaciones por encima de la base: %s del PIB"
 
 #: scripts/ui/hud.gd:188
 msgid "parado"
@@ -8137,13 +8623,21 @@ msgid "%s ancora a moeda no dólar."
 msgstr "%s ancla su moneda al dólar."
 
 #: scripts/ui/hud.gd:378
-msgid "Reservas insuficientes para sustentar uma âncora (mínimo de 4 meses de importação)."
-msgstr "Reservas insuficientes para sostener un ancla (mínimo de 4 meses de importaciones)."
+msgid ""
+"Reservas insuficientes para sustentar uma âncora (mínimo de 4 meses de "
+"importação)."
+msgstr ""
+"Reservas insuficientes para sostener un ancla (mínimo de 4 meses de "
+"importaciones)."
 
 #: scripts/ui/hud.gd:412
 #, c-format
-msgid "Declarar guerra a %s? O mundo vai reagir e pactos de defesa podem ser acionados."
-msgstr "¿Declarar la guerra a %s? El mundo reaccionará y pueden activarse pactos de defensa."
+msgid ""
+"Declarar guerra a %s? O mundo vai reagir e pactos de defesa podem ser "
+"acionados."
+msgstr ""
+"¿Declarar la guerra a %s? El mundo reaccionará y pueden activarse pactos de "
+"defensa."
 
 #: scripts/ui/hud.gd:441 scripts/ui/hud.gd:768 scripts/ui/main.gd:348
 msgid "Regime híbrido"
@@ -8349,8 +8843,12 @@ msgid "Juro definido pelo governo"
 msgstr "Tipo fijado por el gobierno"
 
 #: scripts/ui/hud.gd:827
-msgid "O banco central é independente: o governo não escolhe o juro. A Constituição pode mudar isso por emenda."
-msgstr "El banco central es independiente: el gobierno no elige el tipo. La Constitución puede cambiarlo por enmienda."
+msgid ""
+"O banco central é independente: o governo não escolhe o juro. A Constituição "
+"pode mudar isso por emenda."
+msgstr ""
+"El banco central es independiente: el gobierno no elige el tipo. La "
+"Constitución puede cambiarlo por enmienda."
 
 #: scripts/ui/hud.gd:845
 #, c-format
@@ -8375,11 +8873,11 @@ msgstr "compra %s"
 msgid "câmbio fixo"
 msgstr "cambio fijo"
 
-#: scripts/ui/hud.gd:851 scripts/sim/law_catalog.gd_(escolha_cb_modo)
+#: scripts/ui/hud.gd:851
 msgid "forte"
 msgstr "fuerte"
 
-#: scripts/ui/hud.gd:851 scripts/sim/law_catalog.gd_(escolha_cb_modo)
+#: scripts/ui/hud.gd:851
 msgid "suave"
 msgstr "suave"
 
@@ -8503,16 +9001,23 @@ msgstr "Ampliar %s"
 
 #: scripts/ui/infra_panel.gd:173
 #, c-format
-msgid "Hoje: %s por ano, %s em uso. A obra é paga mês a mês pelo Tesouro e só aumenta a capacidade quando termina."
-msgstr "Hoy: %s al año, %s en uso. La obra se paga mes a mes por el Tesoro y solo aumenta la capacidad al terminar."
+msgid ""
+"Hoje: %s por ano, %s em uso. A obra é paga mês a mês pelo Tesouro e só "
+"aumenta a capacidade quando termina."
+msgstr ""
+"Hoy: %s al año, %s en uso. La obra se paga mes a mes por el Tesoro y solo "
+"aumenta la capacidad al terminar."
 
 #: scripts/ui/infra_panel.gd:180 scripts/ui/infra_panel.gd:205
 msgid "Iniciar obra"
 msgstr "Iniciar obra"
 
 #: scripts/ui/infra_panel.gd:191
-msgid "Um porto novo divide a carga com os outros e alivia os que estão lotados."
-msgstr "Un puerto nuevo reparte la carga con los otros y alivia los que están saturados."
+msgid ""
+"Um porto novo divide a carga com os outros e alivia os que estão lotados."
+msgstr ""
+"Un puerto nuevo reparte la carga con los otros y alivia los que están "
+"saturados."
 
 #: scripts/ui/infra_panel.gd:191
 msgid "Um aeroporto novo alivia os que estão lotados e ajuda o turismo."
@@ -8528,8 +9033,14 @@ msgid "Conceder %s"
 msgstr "Conceder %s"
 
 #: scripts/ui/infra_panel.gd:216
-msgid "Uma operadora privada assume o ativo e paga uma outorga única ao Tesouro. Ela opera um pouco melhor e amplia por conta própria quando lotar, mas o governo deixa de decidir sobre ele."
-msgstr "Una operadora privada asume el activo y paga un canon único al Tesoro. Opera un poco mejor y amplía por cuenta propia cuando se llena, pero el gobierno deja de decidir sobre él."
+msgid ""
+"Uma operadora privada assume o ativo e paga uma outorga única ao Tesouro. "
+"Ela opera um pouco melhor e amplia por conta própria quando lotar, mas o "
+"governo deixa de decidir sobre ele."
+msgstr ""
+"Una operadora privada asume el activo y paga un canon único al Tesoro. Opera "
+"un poco mejor y amplía por cuenta propia cuando se llena, pero el gobierno "
+"deja de decidir sobre él."
 
 #: scripts/ui/infra_panel.gd:219
 msgid "Assinar concessão"
@@ -8592,8 +9103,12 @@ msgid "Avançado"
 msgstr "Avanzado"
 
 #: scripts/ui/law_editor.gd:145
-msgid "Blocos genéricos para regras próprias: condições, cálculos, variáveis e ações administrativas."
-msgstr "Bloques genéricos para reglas propias: condiciones, cálculos, variables y acciones administrativas."
+msgid ""
+"Blocos genéricos para regras próprias: condições, cálculos, variáveis e "
+"ações administrativas."
+msgstr ""
+"Bloques genéricos para reglas propias: condiciones, cálculos, variables y "
+"acciones administrativas."
 
 #: scripts/ui/law_editor.gd:152
 msgid "Outros códigos"
@@ -8839,8 +9354,12 @@ msgid "Nenhum bloco desta norma cobra ou gasta diretamente."
 msgstr "Ningún bloque de esta norma cobra o gasta directamente."
 
 #: scripts/ui/law_review.gd:38
-msgid " Os blocos dos códigos agem pela economia ao longo dos meses (investimento, emprego, arrecadação)."
-msgstr " Los bloques de los códigos actúan por la economía a lo largo de los meses (inversión, empleo, recaudación)."
+msgid ""
+" Os blocos dos códigos agem pela economia ao longo dos meses (investimento, "
+"emprego, arrecadação)."
+msgstr ""
+" Los bloques de los códigos actúan por la economía a lo largo de los meses "
+"(inversión, empleo, recaudación)."
 
 #: scripts/ui/law_review.gd:48
 msgid "[color=#4cc794]tende a apoiar[/color]"
@@ -8864,8 +9383,10 @@ msgstr "cierta fecha"
 
 #: scripts/ui/law_simulator.gd:73
 #, c-format
-msgid "[color=#4cc794]%d ação(ões) simulada(s). Nada foi cobrado de verdade.[/color]"
-msgstr "[color=#4cc794]%d acción(es) simulada(s). No se cobró nada de verdad.[/color]"
+msgid ""
+"[color=#4cc794]%d ação(ões) simulada(s). Nada foi cobrado de verdade.[/color]"
+msgstr ""
+"[color=#4cc794]%d acción(es) simulada(s). No se cobró nada de verdad.[/color]"
 
 #: scripts/ui/law_slot.gd:18
 msgid "caso contrário: solte blocos aqui"
@@ -9005,7 +9526,9 @@ msgstr "nada"
 #: scripts/ui/legislation_center.gd:282
 #, c-format
 msgid "Receita das normas nos últimos 12 meses: %s do PIB. Despesa: %s do PIB."
-msgstr "Ingresos de las normas en los últimos 12 meses: %s del PIB. Gasto: %s del PIB."
+msgstr ""
+"Ingresos de las normas en los últimos 12 meses: %s del PIB. Gasto: %s del "
+"PIB."
 
 #: scripts/ui/legislation_center.gd:283
 #, c-format
@@ -9186,8 +9709,12 @@ msgstr "Tú: "
 
 #: scripts/ui/main.gd:666
 #, c-format
-msgid "%s  ·  %d assentos  ·  %s dos votos. A bússola do partido é a média dos políticos."
-msgstr "%s  ·  %d escaños  ·  %s de los votos. La brújula del partido es la media de sus políticos."
+msgid ""
+"%s  ·  %d assentos  ·  %s dos votos. A bússola do partido é a média dos "
+"políticos."
+msgstr ""
+"%s  ·  %d escaños  ·  %s de los votos. La brújula del partido es la media de "
+"sus políticos."
 
 #: scripts/ui/main.gd:684
 #, c-format
@@ -9228,12 +9755,20 @@ msgid "A conversa terminou."
 msgstr "La conversación terminó."
 
 #: scripts/ui/main.gd:741
-msgid "Todo político pertence a um partido. Escolha um deles ou crie o seu, e decida se começa no governo ou na oposição."
-msgstr "Todo político pertenece a un partido. Elige uno o crea el tuyo, y decide si empiezas en el gobierno o en la oposición."
+msgid ""
+"Todo político pertence a um partido. Escolha um deles ou crie o seu, e "
+"decida se começa no governo ou na oposição."
+msgstr ""
+"Todo político pertenece a un partido. Elige uno o crea el tuyo, y decide si "
+"empiezas en el gobierno o en la oposición."
 
 #: scripts/ui/main.gd:741
-msgid "Só é possível mudar de partido uma vez por ano. O partido novo só ganha assentos na próxima eleição."
-msgstr "Solo se puede cambiar de partido una vez al año. El partido nuevo solo gana escaños en la próxima elección."
+msgid ""
+"Só é possível mudar de partido uma vez por ano. O partido novo só ganha "
+"assentos na próxima eleição."
+msgstr ""
+"Solo se puede cambiar de partido una vez al año. El partido nuevo solo gana "
+"escaños en la próxima elección."
 
 #: scripts/ui/main.gd:742
 #, c-format
@@ -9278,8 +9813,12 @@ msgid "Bandeira: %s"
 msgstr "Bandera: %s"
 
 #: scripts/ui/main.gd:1037
-msgid "Renunciar ao cargo? Isso encerra a sua carreira, e depois você escolhe entre um novo jogo e um novo personagem."
-msgstr "¿Renunciar al cargo? Eso termina tu carrera, y después eliges entre una nueva partida y un nuevo personaje."
+msgid ""
+"Renunciar ao cargo? Isso encerra a sua carreira, e depois você escolhe entre "
+"um novo jogo e um novo personagem."
+msgstr ""
+"¿Renunciar al cargo? Eso termina tu carrera, y después eliges entre una "
+"nueva partida y un nuevo personaje."
 
 #: scripts/ui/main.gd:1047
 msgid "Impeachment"
@@ -9480,18 +10019,30 @@ msgstr "[color=#8ba2af]Sumario:[/color] %s"
 
 #: scripts/ui/norm_page.gd:37
 #, c-format
-msgid "[color=#8ba2af]Apresentação:[/color] %s  ·  [color=#8ba2af]Aprovação:[/color] %s"
-msgstr "[color=#8ba2af]Presentación:[/color] %s  ·  [color=#8ba2af]Aprobación:[/color] %s"
+msgid ""
+"[color=#8ba2af]Apresentação:[/color] %s  ·  [color=#8ba2af]Aprovação:[/"
+"color] %s"
+msgstr ""
+"[color=#8ba2af]Presentación:[/color] %s  ·  [color=#8ba2af]Aprobación:[/"
+"color] %s"
 
 #: scripts/ui/norm_page.gd:38
 #, c-format
-msgid "[color=#8ba2af]Promulgação:[/color] %s  ·  [color=#8ba2af]Publicação:[/color] %s"
-msgstr "[color=#8ba2af]Promulgación:[/color] %s  ·  [color=#8ba2af]Publicación:[/color] %s"
+msgid ""
+"[color=#8ba2af]Promulgação:[/color] %s  ·  [color=#8ba2af]Publicação:[/"
+"color] %s"
+msgstr ""
+"[color=#8ba2af]Promulgación:[/color] %s  ·  [color=#8ba2af]Publicación:[/"
+"color] %s"
 
 #: scripts/ui/norm_page.gd:39
 #, c-format
-msgid "[color=#8ba2af]Entrada em vigor:[/color] %s  ·  [color=#8ba2af]Situação:[/color] %s"
-msgstr "[color=#8ba2af]Entrada en vigor:[/color] %s  ·  [color=#8ba2af]Situación:[/color] %s"
+msgid ""
+"[color=#8ba2af]Entrada em vigor:[/color] %s  ·  [color=#8ba2af]Situação:[/"
+"color] %s"
+msgstr ""
+"[color=#8ba2af]Entrada en vigor:[/color] %s  ·  [color=#8ba2af]Situación:[/"
+"color] %s"
 
 #: scripts/ui/norm_page.gd:42
 #, c-format
@@ -9648,12 +10199,17 @@ msgstr "Ahora: %s. Faltan unos %d días para que valga."
 
 #: scripts/ui/process_track.gd:49
 #, c-format
-msgid "Chance de aprovação: %s (cerca de %d%%). Estimativa grosseira; a pesquisa paga mostra a contagem por partido."
-msgstr "Probabilidad de aprobación: %s (cerca del %d%%). Estimación aproximada; la encuesta pagada muestra el recuento por partido."
+msgid ""
+"Chance de aprovação: %s (cerca de %d%%). Estimativa grosseira; a pesquisa "
+"paga mostra a contagem por partido."
+msgstr ""
+"Probabilidad de aprobación: %s (cerca del %d%%). Estimación aproximada; la "
+"encuesta pagada muestra el recuento por partido."
 
 #: scripts/ui/process_track.gd:51
 msgid "Projeto pronto: passa pelo parlamento com o rito de lei ordinária."
-msgstr "Proyecto listo: pasa por el parlamento con el trámite de ley ordinaria."
+msgstr ""
+"Proyecto listo: pasa por el parlamento con el trámite de ley ordinaria."
 
 #: scripts/ui/stock_panel.gd:10
 msgid "Fechou o capital"
@@ -9730,784 +10286,13 @@ msgstr "US$ %s bill."
 msgid "US$ %s mi"
 msgstr "US$ %s M"
 
-#: scripts/sim/law_catalog.gd_(categorias)
-msgid "Tributos"
-msgstr "Tributos"
-
-#: scripts/sim/law_catalog.gd_(categorias)
-msgid "Trabalho"
-msgstr "Trabajo"
-
-#: scripts/sim/law_catalog.gd_(categorias)
-msgid "Penal"
-msgstr "Penal"
-
-#: scripts/sim/law_catalog.gd_(categorias)
-msgid "Civil"
-msgstr "Civil"
-
-#: scripts/sim/law_catalog.gd_(categorias)
-msgid "Eleições"
-msgstr "Elecciones"
-
-#: scripts/sim/law_catalog.gd_(categorias) scripts/sim/codes_(direitos)
-msgid "Direitos e deveres"
-msgstr "Derechos y deberes"
-
-#: scripts/sim/law_catalog.gd_(categorias)
-msgid "Condições"
-msgstr "Condiciones"
-
-#: scripts/sim/law_catalog.gd_(categorias)
-msgid "Operadores lógicos"
-msgstr "Operadores lógicos"
-
-#: scripts/sim/law_catalog.gd_(categorias)
-msgid "Consultas"
-msgstr "Consultas"
-
-#: scripts/sim/law_catalog.gd_(categorias)
-msgid "Variáveis"
-msgstr "Variables"
-
-#: scripts/sim/law_catalog.gd_(categorias)
-msgid "Ações administrativas"
-msgstr "Acciones administrativas"
-
-#: scripts/sim/law_catalog.gd_(categorias)
-msgid "Economia e tributação"
-msgstr "Economía y tributación"
-
-#: scripts/sim/law_catalog.gd_(categorias)
-msgid "Direitos e obrigações"
-msgstr "Derechos y obligaciones"
-
-#: scripts/sim/law_catalog.gd_(categorias)
-msgid "Controle de fluxo"
-msgstr "Control de flujo"
-
-#: scripts/sim/law_catalog.gd_(bloco_tr_irpf_isencao)
-msgid "IRPF: isenção para rendas de até {limite} por mês"
-msgstr "IRPF: exención para rentas de hasta {limite} al mes"
-
-#: scripts/sim/law_catalog.gd_(bloco_tr_irpf_faixa)
-msgid "IRPF, faixa {faixa}: renda até {limite} por mês paga {aliquota}%"
-msgstr "IRPF, tramo {faixa}: renta de hasta {limite} al mes paga {aliquota}%"
-
-#: scripts/sim/law_catalog.gd_(bloco_tr_irpf_topo)
-msgid "IRPF: acima da última faixa, alíquota de {aliquota}%"
-msgstr "IRPF: por encima del último tramo, alícuota del {aliquota}%"
-
-#: scripts/sim/law_catalog.gd_(bloco_tr_prev)
-msgid "Contribuição previdenciária do {quem}: {aliquota}% do salário"
-msgstr "Cotización a la seguridad social del {quem}: {aliquota}% del salario"
-
-#: scripts/sim/law_catalog.gd_(bloco_tr_irpj)
-msgid "IRPJ: {aliquota}% sobre o lucro das empresas"
-msgstr "Impuesto de sociedades: {aliquota}% sobre el beneficio de las empresas"
-
-#: scripts/sim/law_catalog.gd_(bloco_tr_csll)
-msgid "CSLL: {aliquota}% sobre o lucro líquido"
-msgstr "Contribución social: {aliquota}% sobre el beneficio neto"
-
-#: scripts/sim/law_catalog.gd_(bloco_tr_simples)
-msgid "Regime simplificado: empresas com faturamento de até {limite} por ano pagam {aliquota}% do faturamento"
-msgstr "Régimen simplificado: empresas con facturación de hasta {limite} al año pagan {aliquota}% de la facturación"
-
-#: scripts/sim/law_catalog.gd_(bloco_tr_isencao_setor)
-msgid "Isenção de {parcela}% do IRPJ e da CSLL para o setor {setor}"
-msgstr "Exención del {parcela}% del impuesto de sociedades para el sector {setor}"
-
-#: scripts/sim/law_catalog.gd_(bloco_tr_consumo)
-msgid "{tributo}: alíquota padrão de {aliquota}%"
-msgstr "{tributo}: alícuota general del {aliquota}%"
-
-#: scripts/sim/law_catalog.gd_(bloco_tr_reduzida)
-msgid "Alíquota reduzida de {aliquota}% sobre {grupo}"
-msgstr "Alícuota reducida del {aliquota}% sobre {grupo}"
-
-#: scripts/sim/law_catalog.gd_(bloco_tr_seletivo)
-msgid "Imposto seletivo de {aliquota}% sobre {produto}"
-msgstr "Impuesto selectivo del {aliquota}% sobre {produto}"
-
-#: scripts/sim/law_catalog.gd_(bloco_tr_importacao)
-msgid "Imposto de importação geral de {aliquota}%"
-msgstr "Arancel general de importación del {aliquota}%"
-
-#: scripts/sim/law_catalog.gd_(bloco_tr_iof)
-msgid "IOF: {aliquota}% sobre crédito, câmbio e seguros"
-msgstr "Impuesto a operaciones financieras: {aliquota}% sobre crédito, cambio y seguros"
-
-#: scripts/sim/law_catalog.gd_(bloco_tr_patrimonio)
-msgid "{tributo}: {aliquota}% ao ano sobre o valor do bem"
-msgstr "{tributo}: {aliquota}% al año sobre el valor del bien"
-
-#: scripts/sim/law_catalog.gd_(bloco_tr_heranca)
-msgid "ITCMD: {aliquota}% sobre heranças e doações"
-msgstr "Impuesto de sucesiones: {aliquota}% sobre herencias y donaciones"
-
-#: scripts/sim/law_catalog.gd_(bloco_tr_fortunas)
-msgid "Imposto sobre grandes fortunas: {aliquota}% ao ano sobre patrimônios acima de {limite}"
-msgstr "Impuesto a las grandes fortunas: {aliquota}% al año sobre patrimonios de más de {limite}"
-
-#: scripts/sim/law_catalog.gd_(bloco_tr_fiscalizacao)
-msgid "Orçamento da Receita para fiscalização: {verba}% do PIB por ano"
-msgstr "Presupuesto de la agencia tributaria para fiscalización: {verba}% del PIB al año"
-
-#: scripts/sim/law_catalog.gd_(bloco_tb_minwage)
-msgid "Salário mínimo de {amount} por mês"
-msgstr "Salario mínimo de {amount} al mes"
-
-#: scripts/sim/law_catalog.gd_(bloco_tb_hours)
-msgid "Jornada máxima de {hours} horas por semana"
-msgstr "Jornada máxima de {hours} horas semanales"
-
-#: scripts/sim/law_catalog.gd_(bloco_tb_overtime)
-msgid "Hora extra paga com adicional de {pct}%"
-msgstr "Horas extra pagadas con un recargo del {pct}%"
-
-#: scripts/sim/law_catalog.gd_(bloco_tb_vacation)
-msgid "Férias anuais remuneradas de {days} dias"
-msgstr "Vacaciones anuales pagadas de {days} días"
-
-#: scripts/sim/law_catalog.gd_(bloco_tb_13th)
-msgid "Décimo terceiro salário obrigatório: {on}"
-msgstr "Aguinaldo obligatorio: {on}"
-
-#: scripts/sim/law_catalog.gd_(bloco_tb_fgts)
-msgid "Fundo de garantia com depósito de {deposit}% do salário ao mês e multa de {fine}% do saldo na demissão sem justa causa"
-msgstr "Fondo de garantía con depósito del {deposit}% del salario al mes y multa del {fine}% del saldo en el despido sin causa"
-
-#: scripts/sim/law_catalog.gd_(bloco_tb_severance)
-msgid "Indenização de {weeks} semanas de salário por ano trabalhado na demissão sem justa causa"
-msgstr "Indemnización de {weeks} semanas de salario por año trabajado en el despido sin causa"
-
-#: scripts/sim/law_catalog.gd_(bloco_tb_unemp_ins)
-msgid "Seguro-desemprego por {months} meses, pagando {pct}% do último salário"
-msgstr "Seguro de desempleo por {months} meses, pagando el {pct}% del último salario"
-
-#: scripts/sim/law_catalog.gd_(bloco_tb_parental)
-msgid "Licença-maternidade de {maternity} dias e licença-paternidade de {paternity} dias"
-msgstr "Licencia de maternidad de {maternity} días y de paternidad de {paternity} días"
-
-#: scripts/sim/law_catalog.gd_(bloco_tb_unions)
-msgid "Sindicalização {mode}"
-msgstr "Sindicalización {mode}"
-
-#: scripts/sim/law_catalog.gd_(bloco_tb_strike)
-msgid "Greve em {sector}: {mode}"
-msgstr "Huelga en {sector}: {mode}"
-
-#: scripts/sim/law_catalog.gd_(bloco_tb_outsourcing)
-msgid "Terceirização {mode}"
-msgstr "Tercerización {mode}"
-
-#: scripts/sim/law_catalog.gd_(bloco_tb_gig)
-msgid "Quem trabalha por aplicativo é {mode}"
-msgstr "Quien trabaja por aplicación es {mode}"
-
-#: scripts/sim/law_catalog.gd_(bloco_tb_min_age)
-msgid "Idade mínima para trabalhar de {age} anos, ou {apprentice} como aprendiz"
-msgstr "Edad mínima para trabajar de {age} años, o {apprentice} como aprendiz"
-
-#: scripts/sim/law_catalog.gd_(bloco_tb_retirement)
-msgid "Aposentadoria aos {men} anos (homens) e {women} anos (mulheres), com {years} anos de contribuição"
-msgstr "Jubilación a los {men} años (hombres) y {women} años (mujeres), con {years} años de cotización"
-
-#: scripts/sim/law_catalog.gd_(bloco_tb_pension_cap)
-msgid "Teto do benefício previdenciário de {amount} por mês"
-msgstr "Tope de la pensión de {amount} al mes"
-
-#: scripts/sim/law_catalog.gd_(bloco_pn_crime)
-msgid "Tipificar {conduct} como crime, com pena de {min} a {max} anos de prisão"
-msgstr "Tipificar {conduct} como delito, con pena de {min} a {max} años de prisión"
-
-#: scripts/sim/law_catalog.gd_(bloco_pn_fine)
-msgid "Punir {conduct} só com multa de até {amount}"
-msgstr "Castigar {conduct} solo con multa de hasta {amount}"
-
-#: scripts/sim/law_catalog.gd_(bloco_pn_decrim)
-msgid "Descriminalizar {conduct}"
-msgstr "Despenalizar {conduct}"
-
-#: scripts/sim/law_catalog.gd_(bloco_pn_age)
-msgid "Fixar a maioridade penal em {age} anos"
-msgstr "Fijar la mayoría de edad penal en {age} años"
-
-#: scripts/sim/law_catalog.gd_(bloco_pn_guns)
-msgid "Tornar o porte e a posse de armas {regime}"
-msgstr "Hacer la portación y tenencia de armas {regime}"
-
-#: scripts/sim/law_catalog.gd_(bloco_pn_death)
-msgid "Pena de morte: {status}"
-msgstr "Pena de muerte: {status}"
-
-#: scripts/sim/law_catalog.gd_(bloco_pn_life)
-msgid "Prisão perpétua: {status}, com cumprimento máximo de {years} anos nas demais penas"
-msgstr "Cadena perpetua: {status}, con cumplimiento máximo de {years} años en las demás penas"
-
-#: scripts/sim/law_catalog.gd_(bloco_pn_regime)
-msgid "Cumprir as penas em regime {regime}, com progressão após {share}% da pena"
-msgstr "Cumplir las penas en régimen {regime}, con progresión tras el {share}% de la pena"
-
-#: scripts/sim/law_catalog.gd_(bloco_pn_budget)
-msgid "Destinar {value}% do PIB a {area}"
-msgstr "Destinar el {value}% del PIB a {area}"
-
-#: scripts/sim/law_catalog.gd_(bloco_pn_alternative)
-msgid "Substituir penas de até {years} anos por penas alternativas (serviço comunitário, tornozeleira)"
-msgstr "Sustituir penas de hasta {years} años por penas alternativas (servicio comunitario, tobillera)"
-
-#: scripts/sim/law_catalog.gd_(bloco_cv_marriage_age)
-msgid "Fixar a idade mínima para casar em {age} anos"
-msgstr "Fijar la edad mínima para casarse en {age} años"
-
-#: scripts/sim/law_catalog.gd_(bloco_cv_same_sex)
-msgid "União entre pessoas do mesmo sexo: {status}"
-msgstr "Unión entre personas del mismo sexo: {status}"
-
-#: scripts/sim/law_catalog.gd_(bloco_cv_divorce)
-msgid "Divórcio {mode}"
-msgstr "Divorcio {mode}"
-
-#: scripts/sim/law_catalog.gd_(bloco_cv_goods)
-msgid "Adotar a {regime} como regime de bens padrão do casamento"
-msgstr "Adoptar la {regime} como régimen de bienes por defecto del matrimonio"
-
-#: scripts/sim/law_catalog.gd_(bloco_cv_property)
-msgid "Garantir a propriedade privada, com desapropriação {mode}"
-msgstr "Garantizar la propiedad privada, con expropiación {mode}"
-
-#: scripts/sim/law_catalog.gd_(bloco_cv_adverse)
-msgid "Admitir usucapião após {years} anos de posse mansa e pacífica"
-msgstr "Admitir la usucapión tras {years} años de posesión pacífica"
-
-#: scripts/sim/law_catalog.gd_(bloco_cv_inheritance)
-msgid "Reservar {share}% da herança aos herdeiros necessários"
-msgstr "Reservar el {share}% de la herencia a los herederos forzosos"
-
-#: scripts/sim/law_catalog.gd_(bloco_cv_contracts)
-msgid "Liberdade contratual {level}"
-msgstr "Libertad contractual {level}"
-
-#: scripts/sim/law_catalog.gd_(bloco_cv_usury)
-msgid "Limitar os juros dos contratos privados a {rate}% ao ano"
-msgstr "Limitar el interés de los contratos privados al {rate}% anual"
-
-#: scripts/sim/law_catalog.gd_(bloco_cv_business)
-msgid "Abrir uma empresa em até {days} dias, com {steps} procedimentos"
-msgstr "Abrir una empresa en hasta {days} días, con {steps} trámites"
-
-#: scripts/sim/law_catalog.gd_(bloco_cv_bankruptcy)
-msgid "Tratar a insolvência com {mode}, com prazo de {days} dias para o plano"
-msgstr "Tratar la insolvencia con {mode}, con un plazo de {days} días para el plan"
-
-#: scripts/sim/law_catalog.gd_(bloco_cv_prescription)
-msgid "Fixar a prescrição das dívidas civis em {years} anos"
-msgstr "Fijar la prescripción de las deudas civiles en {years} años"
-
-#: scripts/sim/law_catalog.gd_(bloco_el_vote)
-msgid "Voto {mode}"
-msgstr "Voto {mode}"
-
-#: scripts/sim/law_catalog.gd_(bloco_el_age)
-msgid "Idade mínima para votar de {age} anos"
-msgstr "Edad mínima para votar de {age} años"
-
-#: scripts/sim/law_catalog.gd_(bloco_el_system)
-msgid "O parlamento é eleito pelo sistema {system}"
-msgstr "El parlamento se elige por el sistema {system}"
-
-#: scripts/sim/law_catalog.gd_(bloco_el_threshold)
-msgid "Cláusula de barreira de {pct}% dos votos nacionais"
-msgstr "Barrera electoral del {pct}% de los votos nacionales"
-
-#: scripts/sim/law_catalog.gd_(bloco_el_funding)
-msgid "Financiamento de campanha {mode}"
-msgstr "Financiación de campaña {mode}"
-
-#: scripts/sim/law_catalog.gd_(bloco_el_reelection)
-msgid "Reeleição do chefe de governo: {mode}"
-msgstr "Reelección del jefe de gobierno: {mode}"
-
-#: scripts/sim/law_catalog.gd_(bloco_el_term)
-msgid "Mandato do parlamento de {years} anos"
-msgstr "Mandato del parlamento de {years} años"
-
-#: scripts/sim/law_catalog.gd_(bloco_el_quota)
-msgid "Cota mínima de {pct}% de mulheres nas listas dos partidos"
-msgstr "Cuota mínima del {pct}% de mujeres en las listas de los partidos"
-
-#: scripts/sim/law_catalog.gd_(bloco_el_ballot)
-msgid "Votação em {mode}"
-msgstr "Votación en {mode}"
-
-#: scripts/sim/law_catalog.gd_(bloco_el_free_ads)
-msgid "Propaganda eleitoral gratuita no rádio e na TV: {on}"
-msgstr "Propaganda electoral gratuita en radio y TV: {on}"
-
-#: scripts/sim/law_catalog.gd_(bloco_dr_right)
-msgid "Garantir {right} a {scope}"
-msgstr "Garantizar {right} a {scope}"
-
-#: scripts/sim/law_catalog.gd_(bloco_dr_suspend)
-msgid "Suspender {right}"
-msgstr "Suspender {right}"
-
-#: scripts/sim/law_catalog.gd_(bloco_dr_duty)
-msgid "Todos têm o dever de {duty}"
-msgstr "Todos tienen el deber de {duty}"
-
-#: scripts/sim/law_catalog.gd_(bloco_dr_military)
-msgid "Serviço militar obrigatório de {months} meses para {who}"
-msgstr "Servicio militar obligatorio de {months} meses para {who}"
-
-#: scripts/sim/law_catalog.gd_(bloco_dr_school)
-msgid "Escolaridade obrigatória até os {age} anos"
-msgstr "Escolaridad obligatoria hasta los {age} años"
-
-#: scripts/sim/law_catalog.gd_(bloco_dr_censor)
-msgid "Submeter {outlet} à censura prévia"
-msgstr "Someter {outlet} a censura previa"
-
-#: scripts/sim/law_catalog.gd_(bloco_dr_regulate)
-msgid "Regular {outlet} por um conselho de rigor {level}"
-msgstr "Regular {outlet} mediante un consejo de rigor {level}"
-
-#: scripts/sim/law_catalog.gd_(bloco_dr_block)
-msgid "Bloquear {service} na internet"
-msgstr "Bloquear {service} en internet"
-
-#: scripts/sim/law_catalog.gd_(bloco_dr_emergency)
-msgid "Decretar estado de emergência por {days} dias"
-msgstr "Decretar estado de emergencia por {days} días"
-
-#: scripts/sim/law_catalog.gd_(bloco_cb_intervencao)
-msgid "O banco central intervém no câmbio de forma {modo}, vendendo e comprando reservas"
-msgstr "El banco central interviene en el tipo de cambio de forma {modo}, vendiendo y comprando reservas"
-
-#: scripts/sim/law_catalog.gd_(bloco_cb_controle)
-msgid "Controle de capitais: {nivel}"
-msgstr "Control de capitales: {nivel}"
-
-#: scripts/sim/law_catalog.gd_(bloco_fs_fundo)
-msgid "Fundo soberano: recebe {renda}% da renda pública de commodities e {superavit}% dos superávits"
-msgstr "Fondo soberano: recibe el {renda}% de la renta pública de materias primas y el {superavit}% de los superávits"
-
-#: scripts/sim/law_catalog.gd_(bloco_fs_saque)
-msgid "Saque anual do fundo soberano limitado a {limite}% do saldo"
-msgstr "Retiro anual del fondo soberano limitado al {limite}% del saldo"
-
-#: scripts/sim/law_catalog.gd_(bloco_ev_citizen_enter)
-msgid "Quando um cidadão ingressar no território"
-msgstr "Cuando un ciudadano ingrese en el territorio"
-
-#: scripts/sim/law_catalog.gd_(bloco_ev_transaction)
-msgid "Quando um cidadão realizar uma transação"
-msgstr "Cuando un ciudadano realice una transacción"
-
-#: scripts/sim/law_catalog.gd_(bloco_ev_property)
-msgid "Quando uma propriedade for adquirida"
-msgstr "Cuando se adquiera una propiedad"
-
-#: scripts/sim/law_catalog.gd_(bloco_ev_death)
-msgid "Quando um cidadão morrer"
-msgstr "Cuando un ciudadano muera"
-
-#: scripts/sim/law_catalog.gd_(bloco_ev_age)
-msgid "Quando um cidadão completar {age} anos"
-msgstr "Cuando un ciudadano cumpla {age} años"
-
-#: scripts/sim/law_catalog.gd_(bloco_ev_company)
-msgid "Quando uma empresa for registrada"
-msgstr "Cuando se registre una empresa"
-
-#: scripts/sim/law_catalog.gd_(bloco_ev_due)
-msgid "Quando uma obrigação vencer"
-msgstr "Cuando venza una obligación"
-
-#: scripts/sim/law_catalog.gd_(bloco_ev_election)
-msgid "Quando uma eleição for iniciada"
-msgstr "Cuando comience una elección"
-
-#: scripts/sim/law_catalog.gd_(bloco_ev_fiscal)
-msgid "Quando um exercício financeiro começar"
-msgstr "Cuando comience un ejercicio fiscal"
-
-#: scripts/sim/law_catalog.gd_(bloco_ev_date)
-msgid "Em {date}"
-msgstr "El {date}"
-
-#: scripts/sim/law_catalog.gd_(bloco_ev_month)
-msgid "Todo mês"
-msgstr "Todos los meses"
-
-#: scripts/sim/law_catalog.gd_(bloco_ev_enact)
-msgid "Quando esta norma entrar em vigor"
-msgstr "Cuando esta norma entre en vigor"
-
-#: scripts/sim/law_catalog.gd_(bloco_ev_war)
-msgid "Quando o país entrar em guerra"
-msgstr "Cuando el país entre en guerra"
-
-#: scripts/sim/law_catalog.gd_(bloco_cd_profession)
-msgid "cidadão trabalha em {profession}"
-msgstr "el ciudadano trabaja en {profession}"
-
-#: scripts/sim/law_catalog.gd_(bloco_cd_territory)
-msgid "cidadão vive em {unit}"
-msgstr "el ciudadano vive en {unit}"
-
-#: scripts/sim/law_catalog.gd_(bloco_cd_money)
-msgid "cidadão tem pelo menos {amount} em dinheiro"
-msgstr "el ciudadano tiene al menos {amount} en dinero"
-
-#: scripts/sim/law_catalog.gd_(bloco_cd_owner)
-msgid "a propriedade pertence ao cidadão"
-msgstr "la propiedad pertenece al ciudadano"
-
-#: scripts/sim/law_catalog.gd_(bloco_cd_license)
-msgid "cidadão tem a licença {license}"
-msgstr "el ciudadano tiene la licencia {license}"
-
-#: scripts/sim/law_catalog.gd_(bloco_cd_period)
-msgid "a data está entre {from} e {to}"
-msgstr "la fecha está entre {from} y {to}"
-
-#: scripts/sim/law_catalog.gd_(bloco_cd_institution)
-msgid "a instituição {institution} está ativa"
-msgstr "la institución {institution} está activa"
-
-#: scripts/sim/law_catalog.gd_(bloco_cd_norm)
-msgid "a norma nº {norm} está em vigor"
-msgstr "la norma n.º {norm} está vigente"
-
-#: scripts/sim/law_catalog.gd_(bloco_op_and)
-msgid "{a} E {b}"
-msgstr "{a} Y {b}"
-
-#: scripts/sim/law_catalog.gd_(bloco_op_or)
-msgid "{a} OU {b}"
-msgstr "{a} O {b}"
-
-#: scripts/sim/law_catalog.gd_(bloco_op_not)
-msgid "NÃO {a}"
-msgstr "NO {a}"
-
-#: scripts/sim/law_catalog.gd_(bloco_op_eq)
-msgid "{a} igual a {b}"
-msgstr "{a} igual a {b}"
-
-#: scripts/sim/law_catalog.gd_(bloco_op_ne)
-msgid "{a} diferente de {b}"
-msgstr "{a} distinto de {b}"
-
-#: scripts/sim/law_catalog.gd_(bloco_op_gt)
-msgid "{a} maior que {b}"
-msgstr "{a} mayor que {b}"
-
-#: scripts/sim/law_catalog.gd_(bloco_op_lt)
-msgid "{a} menor que {b}"
-msgstr "{a} menor que {b}"
-
-#: scripts/sim/law_catalog.gd_(bloco_op_ge)
-msgid "{a} maior ou igual a {b}"
-msgstr "{a} mayor o igual que {b}"
-
-#: scripts/sim/law_catalog.gd_(bloco_op_le)
-msgid "{a} menor ou igual a {b}"
-msgstr "{a} menor o igual que {b}"
-
-#: scripts/sim/law_catalog.gd_(bloco_op_between)
-msgid "{a} está entre {lo} e {hi}"
-msgstr "{a} está entre {lo} y {hi}"
-
-#: scripts/sim/law_catalog.gd_(bloco_sb_age)
-msgid "idade do cidadão"
-msgstr "edad del ciudadano"
-
-#: scripts/sim/law_catalog.gd_(bloco_sb_money)
-msgid "dinheiro do cidadão"
-msgstr "dinero del ciudadano"
-
-#: scripts/sim/law_catalog.gd_(bloco_sb_income)
-msgid "renda anual do cidadão"
-msgstr "renta anual del ciudadano"
-
-#: scripts/sim/law_catalog.gd_(bloco_sb_value)
-msgid "valor tributável da propriedade"
-msgstr "valor imponible de la propiedad"
-
-#: scripts/sim/law_catalog.gd_(bloco_sb_tx)
-msgid "valor da transação"
-msgstr "valor de la transacción"
-
-#: scripts/sim/law_catalog.gd_(bloco_gm_value)
-msgid "{field} do país"
-msgstr "{field} del país"
-
-#: scripts/sim/law_catalog.gd_(bloco_var_set)
-msgid "Definir {name} ({vtype}) como {value}"
-msgstr "Definir {name} ({vtype}) como {value}"
-
-#: scripts/sim/law_catalog.gd_(bloco_var_get)
-msgid "variável {name}"
-msgstr "variable {name}"
-
-#: scripts/sim/law_catalog.gd_(bloco_var_change)
-msgid "Alterar {name} para {value}"
-msgstr "Cambiar {name} a {value}"
-
-#: scripts/sim/law_catalog.gd_(bloco_m_add)
-msgid "{a} + {b}"
-msgstr "{a} + {b}"
-
-#: scripts/sim/law_catalog.gd_(bloco_m_sub)
-msgid "{a} − {b}"
-msgstr "{a} − {b}"
-
-#: scripts/sim/law_catalog.gd_(bloco_m_mul)
-msgid "{a} × {b}"
-msgstr "{a} × {b}"
-
-#: scripts/sim/law_catalog.gd_(bloco_m_div)
-msgid "{a} ÷ {b}"
-msgstr "{a} ÷ {b}"
-
-#: scripts/sim/law_catalog.gd_(bloco_m_pct)
-msgid "{rate}% de {base}"
-msgstr "{rate}% de {base}"
-
-#: scripts/sim/law_catalog.gd_(bloco_ac_obligation)
-msgid "Criar obrigação tributária de {amount} com prazo de {days} dias"
-msgstr "Crear una obligación tributaria de {amount} con plazo de {days} días"
-
-#: scripts/sim/law_catalog.gd_(bloco_ac_fine)
-msgid "Aplicar multa de {amount}"
-msgstr "Aplicar una multa de {amount}"
-
-#: scripts/sim/law_catalog.gd_(bloco_ac_benefit)
-msgid "Conceder benefício de {amount}"
-msgstr "Conceder un beneficio de {amount}"
-
-#: scripts/sim/law_catalog.gd_(bloco_ac_revoke_license)
-msgid "Revogar a licença {license}"
-msgstr "Revocar la licencia {license}"
-
-#: scripts/sim/law_catalog.gd_(bloco_ac_issue_license)
-msgid "Emitir autorização: licença {license}"
-msgstr "Emitir autorización: licencia {license}"
-
-#: scripts/sim/law_catalog.gd_(bloco_ac_register)
-msgid "Registrar o cidadão no cadastro"
-msgstr "Registrar al ciudadano en el registro"
-
-#: scripts/sim/law_catalog.gd_(bloco_ac_status)
-msgid "Alterar situação cadastral para {status}"
-msgstr "Cambiar la situación registral a {status}"
-
-#: scripts/sim/law_catalog.gd_(bloco_ac_post)
-msgid "Criar o cargo público {name} com {posts} vagas e salário anual de {salary}"
-msgstr "Crear el cargo público {name} con {posts} plazas y salario anual de {salary}"
-
-#: scripts/sim/law_catalog.gd_(bloco_ac_expense)
-msgid "Registrar despesa pública de {amount} bilhões para {purpose}"
-msgstr "Registrar un gasto público de {amount} mil millones para {purpose}"
-
-#: scripts/sim/law_catalog.gd_(bloco_ac_institution)
-msgid "Criar a instituição {name} com custo anual de {cost} bilhões"
-msgstr "Crear la institución {name} con un costo anual de {cost} mil millones"
-
-#: scripts/sim/law_catalog.gd_(bloco_ac_param)
-msgid "Alterar {field} para {value}%"
-msgstr "Cambiar {field} a {value}%"
-
-#: scripts/sim/law_catalog.gd_(bloco_ad_min_create)
-msgid "Criar o ministério {name}, responsável por {area}"
-msgstr "Crear el ministerio {name}, responsable de {area}"
-
-#: scripts/sim/law_catalog.gd_(bloco_ad_min_merge)
-msgid "Fundir os ministérios {a} e {b} em {name}"
-msgstr "Fusionar los ministerios {a} y {b} en {name}"
-
-#: scripts/sim/law_catalog.gd_(bloco_ad_min_abolish)
-msgid "Extinguir o ministério {a}"
-msgstr "Extinguir el ministerio {a}"
-
-#: scripts/sim/law_catalog.gd_(bloco_ec_rate)
-msgid "Definir alíquota de {field} em {value}% do PIB"
-msgstr "Fijar la alícuota de {field} en el {value}% del PIB"
-
-#: scripts/sim/law_catalog.gd_(bloco_ec_calc)
-msgid "imposto de {rate}% sobre {base}"
-msgstr "impuesto del {rate}% sobre {base}"
-
-#: scripts/sim/law_catalog.gd_(bloco_ec_charge)
-msgid "Cobrar o tributo {name} no valor de {amount}"
-msgstr "Cobrar el tributo {name} por valor de {amount}"
-
-#: scripts/sim/law_catalog.gd_(bloco_ec_fee)
-msgid "Criar a taxa {name} de {amount}"
-msgstr "Crear la tasa {name} de {amount}"
-
-#: scripts/sim/law_catalog.gd_(bloco_ec_contribution)
-msgid "Criar a contribuição {name} de {rate}% da renda mensal"
-msgstr "Crear la contribución {name} del {rate}% de la renta mensual"
-
-#: scripts/sim/law_catalog.gd_(bloco_ec_exempt)
-msgid "Definir isenção de {share}% no tributo {name}"
-msgstr "Fijar una exención del {share}% en el tributo {name}"
-
-#: scripts/sim/law_catalog.gd_(bloco_ec_cap)
-msgid "Limitar a cobrança de {name} a {max} por pessoa"
-msgstr "Limitar el cobro de {name} a {max} por persona"
-
-#: scripts/sim/law_catalog.gd_(bloco_ec_treasury)
-msgid "Transferir {amount} bilhões das reservas ao Tesouro"
-msgstr "Transferir {amount} mil millones de las reservas al Tesoro"
-
-#: scripts/sim/law_catalog.gd_(bloco_ec_subsidy)
-msgid "Criar subsídio de {amount} bilhões por ano para {sector}"
-msgstr "Crear un subsidio de {amount} mil millones al año para {sector}"
-
-#: scripts/sim/law_catalog.gd_(bloco_ec_minwage)
-msgid "Estabelecer salário mínimo de {amount} por mês"
-msgstr "Establecer un salario mínimo de {amount} al mes"
-
-#: scripts/sim/law_catalog.gd_(bloco_ec_spend)
-msgid "Criar despesa permanente de {amount} bilhões por ano para {purpose}"
-msgstr "Crear un gasto permanente de {amount} mil millones al año para {purpose}"
-
-#: scripts/sim/law_catalog.gd_(bloco_ec_privatize)
-msgid "Privatizar {stake}% da participação do Estado em {company}"
-msgstr "Privatizar el {stake}% de la participación del Estado en {company}"
-
-#: scripts/sim/law_catalog.gd_(bloco_ec_nationalize)
-msgid "Estatizar {company}, levando a participação do Estado a {stake}% do capital"
-msgstr "Estatizar {company}, llevando la participación del Estado al {stake}% del capital"
-
-#: scripts/sim/law_catalog.gd_(bloco_ec_budget)
-msgid "Obrigar o orçamento de {field} a {value}% do PIB"
-msgstr "Obligar el presupuesto de {field} al {value}% del PIB"
-
-#: scripts/sim/law_catalog.gd_(bloco_rg_grant)
-msgid "Conceder o direito: {right}"
-msgstr "Conceder el derecho: {right}"
-
-#: scripts/sim/law_catalog.gd_(bloco_rg_remove)
-msgid "Remover o direito: {right}"
-msgstr "Quitar el derecho: {right}"
-
-#: scripts/sim/law_catalog.gd_(bloco_rg_duty)
-msgid "Criar a obrigação: {name}"
-msgstr "Crear la obligación: {name}"
-
-#: scripts/sim/law_catalog.gd_(bloco_rg_deadline)
-msgid "Estabelecer prazo de {days} dias para {name}"
-msgstr "Establecer un plazo de {days} días para {name}"
-
-#: scripts/sim/law_catalog.gd_(bloco_rg_restrict)
-msgid "Definir a restrição: {name}"
-msgstr "Definir la restricción: {name}"
-
-#: scripts/sim/law_catalog.gd_(bloco_rg_require)
-msgid "Estabelecer o requisito: {name}"
-msgstr "Establecer el requisito: {name}"
-
-#: scripts/sim/law_catalog.gd_(bloco_rg_exception)
-msgid "Criar exceção à obrigação {name}"
-msgstr "Crear una excepción a la obligación {name}"
-
-#: scripts/sim/law_catalog.gd_(bloco_rg_penalty)
-msgid "Definir penalidade de {amount} para {name}"
-msgstr "Definir una sanción de {amount} para {name}"
-
-#: scripts/sim/law_catalog.gd_(bloco_fl_if)
-#: scripts/sim/law_catalog.gd_(bloco_fl_ifelse)
-msgid "Se {cond}"
-msgstr "Si {cond}"
-
-#: scripts/sim/law_catalog.gd_(bloco_fl_while)
-msgid "Enquanto {cond}"
-msgstr "Mientras {cond}"
-
-#: scripts/sim/law_catalog.gd_(bloco_fl_repeat)
-msgid "Repetir {times} vezes"
-msgstr "Repetir {times} veces"
-
-#: scripts/sim/law_catalog.gd_(bloco_fl_foreach)
-msgid "Para cada {set}"
-msgstr "Para cada {set}"
-
-#: scripts/sim/law_catalog.gd_(bloco_fl_wait)
-msgid "Aguardar {days} dias"
-msgstr "Esperar {days} días"
-
-#: scripts/sim/law_catalog.gd_(bloco_fl_break)
-msgid "Interromper a repetição"
-msgstr "Interrumpir la repetición"
-
-#: scripts/sim/law_catalog.gd_(bloco_fl_end)
-msgid "Encerrar a execução"
-msgstr "Terminar la ejecución"
-
-#: scripts/sim/codes_(tributario)
-msgid "Tributos, alíquotas, faixas, isenções e contribuições."
-msgstr "Tributos, alícuotas, tramos, exenciones y contribuciones."
-
-#: scripts/sim/codes_(trabalhista)
-msgid "Código Trabalhista"
-msgstr "Código Laboral"
-
-#: scripts/sim/codes_(trabalhista)
-msgid "Salário mínimo, jornada, férias, sindicatos, greve e previdência."
-msgstr "Salario mínimo, jornada, vacaciones, sindicatos, huelga y pensiones."
-
-#: scripts/sim/codes_(penal)
-msgid "Código Penal"
-msgstr "Código Penal"
-
-#: scripts/sim/codes_(penal)
-msgid "Crimes, penas, maioridade penal, drogas, armas e sistema prisional."
-msgstr "Delitos, penas, mayoría de edad penal, drogas, armas y sistema penitenciario."
-
-#: scripts/sim/codes_(civil)
-msgid "Código Civil"
-msgstr "Código Civil"
-
-#: scripts/sim/codes_(civil)
-msgid "Família, casamento, propriedade, contratos, herança e empresas."
-msgstr "Familia, matrimonio, propiedad, contratos, herencia y empresas."
-
-#: scripts/sim/codes_(eleitoral)
-msgid "Código Eleitoral"
-msgstr "Código Electoral"
-
-#: scripts/sim/codes_(eleitoral)
-msgid "Voto, idade eleitoral, financiamento de campanha, reeleição e cotas."
-msgstr "Voto, edad electoral, financiación de campaña, reelección y cuotas."
-
-#: scripts/sim/codes_(direitos)
-msgid "Direitos fundamentais e deveres dos cidadãos."
-msgstr "Derechos fundamentales y deberes de los ciudadanos."
-
-#: scripts/sim/codes_(cambial)
-msgid "Lei Cambial e do Fundo Soberano"
-msgstr "Ley Cambiaria y del Fondo Soberano"
-
-#: scripts/sim/codes_(cambial)
-msgid "Intervenção no câmbio, controle de capitais e fundo soberano."
-msgstr "Intervención cambiaria, control de capitales y fondo soberano."
-
 #: scripts/sim/law_catalog.gd_(escolha_profession)
-#: scripts/sim/law_catalog.gd_(escolha_sector)
-#: scripts/sim/law_catalog.gd_(escolha_tr_setor) scripts/sim/sectors.gd_(NAMES)
+#: scripts/sim/law_catalog.gd_(escolha_sector) scripts/sim/sectors.gd_(NAMES)
 msgid "Agropecuária"
 msgstr "Agropecuaria"
 
 #: scripts/sim/law_catalog.gd_(escolha_profession)
-#: scripts/sim/law_catalog.gd_(escolha_sector)
-#: scripts/sim/law_catalog.gd_(escolha_tr_setor) scripts/sim/sectors.gd_(NAMES)
+#: scripts/sim/law_catalog.gd_(escolha_sector) scripts/sim/sectors.gd_(NAMES)
 msgid "Indústria"
 msgstr "Industria"
 
@@ -10660,369 +10445,37 @@ msgstr "Temporal"
 msgid "Identificador"
 msgstr "Identificador"
 
-#: scripts/sim/law_catalog.gd_(escolha_tr_contribuinte)
-msgid "empregado"
-msgstr "empleado"
-
-#: scripts/sim/law_catalog.gd_(escolha_tr_contribuinte)
-msgid "empregador"
-msgstr "empleador"
-
-#: scripts/sim/law_catalog.gd_(escolha_tr_consumo)
-msgid "IVA"
-msgstr "IVA"
-
-#: scripts/sim/law_catalog.gd_(escolha_tr_consumo)
-msgid "ICMS (mercadorias)"
-msgstr "ICMS (mercancías)"
-
-#: scripts/sim/law_catalog.gd_(escolha_tr_consumo)
-msgid "IPI (industrializados)"
-msgstr "IPI (industrializados)"
-
-#: scripts/sim/law_catalog.gd_(escolha_tr_consumo)
-msgid "ISS (serviços)"
-msgstr "ISS (servicios)"
-
-#: scripts/sim/law_catalog.gd_(escolha_tr_grupo)
-msgid "a cesta básica"
-msgstr "la canasta básica"
-
-#: scripts/sim/law_catalog.gd_(escolha_tr_grupo)
-msgid "saúde"
-msgstr "salud"
-
-#: scripts/sim/law_catalog.gd_(escolha_tr_grupo)
-msgid "educação"
-msgstr "educación"
-
-#: scripts/sim/law_catalog.gd_(escolha_tr_produto)
-msgid "tabaco"
-msgstr "tabaco"
-
-#: scripts/sim/law_catalog.gd_(escolha_tr_produto)
-msgid "bebidas alcoólicas"
-msgstr "bebidas alcohólicas"
-
-#: scripts/sim/law_catalog.gd_(escolha_tr_produto)
-msgid "combustíveis"
-msgstr "combustibles"
-
-#: scripts/sim/law_catalog.gd_(escolha_tr_produto)
-msgid "bebidas açucaradas"
-msgstr "bebidas azucaradas"
-
-#: scripts/sim/law_catalog.gd_(escolha_tr_patrimonio)
-msgid "IPTU (imóveis)"
-msgstr "IPTU (inmuebles)"
-
-#: scripts/sim/law_catalog.gd_(escolha_tr_patrimonio)
-msgid "IPVA (veículos)"
-msgstr "IPVA (vehículos)"
-
-#: scripts/sim/law_catalog.gd_(escolha_tr_setor) scripts/sim/sectors.gd_(NAMES)
+#: scripts/sim/sectors.gd_(NAMES)
 msgid "Mineração e energia"
 msgstr "Minería y energía"
 
-#: scripts/sim/law_catalog.gd_(escolha_tr_setor) scripts/sim/sectors.gd_(NAMES)
+#: scripts/sim/sectors.gd_(NAMES)
 msgid "Construção"
 msgstr "Construcción"
 
-#: scripts/sim/law_catalog.gd_(escolha_tr_setor) scripts/sim/sectors.gd_(NAMES)
+#: scripts/sim/sectors.gd_(NAMES)
 msgid "Comércio"
 msgstr "Comercio"
 
-#: scripts/sim/law_catalog.gd_(escolha_tr_setor) scripts/sim/sectors.gd_(NAMES)
+#: scripts/sim/sectors.gd_(NAMES)
 msgid "Transporte e logística"
 msgstr "Transporte y logística"
 
-#: scripts/sim/law_catalog.gd_(escolha_tr_setor) scripts/sim/sectors.gd_(NAMES)
+#: scripts/sim/sectors.gd_(NAMES)
 msgid "Serviços financeiros"
 msgstr "Servicios financieros"
 
-#: scripts/sim/law_catalog.gd_(escolha_tr_setor) scripts/sim/sectors.gd_(NAMES)
+#: scripts/sim/sectors.gd_(NAMES)
 msgid "Tecnologia e comunicação"
 msgstr "Tecnología y comunicación"
 
-#: scripts/sim/law_catalog.gd_(escolha_tr_setor) scripts/sim/sectors.gd_(NAMES)
+#: scripts/sim/sectors.gd_(NAMES)
 msgid "Turismo"
 msgstr "Turismo"
 
-#: scripts/sim/law_catalog.gd_(escolha_tr_setor) scripts/sim/sectors.gd_(NAMES)
+#: scripts/sim/sectors.gd_(NAMES)
 msgid "Serviços públicos"
 msgstr "Servicios públicos"
-
-#: scripts/sim/law_catalog.gd_(escolha_tb_union_mode)
-msgid "obrigatória, com contribuição de todos"
-msgstr "obligatoria, con contribución de todos"
-
-#: scripts/sim/law_catalog.gd_(escolha_tb_union_mode)
-msgid "livre"
-msgstr "libre"
-
-#: scripts/sim/law_catalog.gd_(escolha_tb_union_mode)
-#: scripts/sim/law_catalog.gd_(escolha_tb_strike_mode)
-#: scripts/sim/law_catalog.gd_(escolha_tb_outsourcing_mode)
-#: scripts/sim/law_catalog.gd_(escolha_life_status)
-msgid "proibida"
-msgstr "prohibida"
-
-#: scripts/sim/law_catalog.gd_(escolha_tb_strike_sector)
-msgid "o setor privado"
-msgstr "el sector privado"
-
-#: scripts/sim/law_catalog.gd_(escolha_tb_strike_sector)
-msgid "o serviço público"
-msgstr "el servicio público"
-
-#: scripts/sim/law_catalog.gd_(escolha_tb_strike_sector)
-msgid "os serviços essenciais"
-msgstr "los servicios esenciales"
-
-#: scripts/sim/law_catalog.gd_(escolha_tb_strike_mode)
-msgid "permitida"
-msgstr "permitida"
-
-#: scripts/sim/law_catalog.gd_(escolha_tb_strike_mode)
-msgid "permitida com serviço mínimo"
-msgstr "permitida con servicio mínimo"
-
-#: scripts/sim/law_catalog.gd_(escolha_tb_outsourcing_mode)
-msgid "permitida em qualquer atividade"
-msgstr "permitida en cualquier actividad"
-
-#: scripts/sim/law_catalog.gd_(escolha_tb_outsourcing_mode)
-msgid "permitida só em atividades-meio"
-msgstr "permitida solo en actividades de apoyo"
-
-#: scripts/sim/law_catalog.gd_(escolha_tb_gig_mode)
-msgid "autônomo, sem vínculo"
-msgstr "autónomo, sin vínculo"
-
-#: scripts/sim/law_catalog.gd_(escolha_tb_gig_mode)
-msgid "autônomo com contribuição e seguro"
-msgstr "autónomo con cotización y seguro"
-
-#: scripts/sim/law_catalog.gd_(escolha_tb_gig_mode)
-msgid "empregado com carteira"
-msgstr "empleado con contrato formal"
-
-#: scripts/sim/law_catalog.gd_(escolha_penal_conduct)
-msgid "o porte de drogas para uso próprio"
-msgstr "la tenencia de drogas para uso propio"
-
-#: scripts/sim/law_catalog.gd_(escolha_penal_conduct)
-msgid "o tráfico de drogas"
-msgstr "el tráfico de drogas"
-
-#: scripts/sim/law_catalog.gd_(escolha_penal_conduct)
-msgid "o aborto"
-msgstr "el aborto"
-
-#: scripts/sim/law_catalog.gd_(escolha_penal_conduct)
-msgid "os jogos de azar"
-msgstr "los juegos de azar"
-
-#: scripts/sim/law_catalog.gd_(escolha_penal_conduct)
-msgid "a sonegação fiscal"
-msgstr "la evasión fiscal"
-
-#: scripts/sim/law_catalog.gd_(escolha_penal_conduct)
-msgid "a corrupção"
-msgstr "la corrupción"
-
-#: scripts/sim/law_catalog.gd_(escolha_penal_conduct)
-msgid "o dano ambiental"
-msgstr "el daño ambiental"
-
-#: scripts/sim/law_catalog.gd_(escolha_penal_conduct)
-msgid "o discurso de ódio"
-msgstr "el discurso de odio"
-
-#: scripts/sim/law_catalog.gd_(escolha_penal_conduct)
-msgid "a invasão de sistemas informáticos"
-msgstr "la intrusión en sistemas informáticos"
-
-#: scripts/sim/law_catalog.gd_(escolha_penal_conduct)
-msgid "a prostituição"
-msgstr "la prostitución"
-
-#: scripts/sim/law_catalog.gd_(escolha_penal_conduct)
-msgid "a eutanásia"
-msgstr "la eutanasia"
-
-#: scripts/sim/law_catalog.gd_(escolha_penal_conduct)
-msgid "a lavagem de dinheiro"
-msgstr "el lavado de dinero"
-
-#: scripts/sim/law_catalog.gd_(escolha_gun_regime)
-msgid "proibidos aos civis"
-msgstr "prohibidas a los civiles"
-
-#: scripts/sim/law_catalog.gd_(escolha_gun_regime)
-msgid "restritos, com licença e registro"
-msgstr "restringidas, con licencia y registro"
-
-#: scripts/sim/law_catalog.gd_(escolha_gun_regime)
-msgid "livres para maiores de idade"
-msgstr "libres para mayores de edad"
-
-#: scripts/sim/law_catalog.gd_(escolha_death_status)
-msgid "abolida"
-msgstr "abolida"
-
-#: scripts/sim/law_catalog.gd_(escolha_death_status)
-msgid "só em tempo de guerra"
-msgstr "solo en tiempo de guerra"
-
-#: scripts/sim/law_catalog.gd_(escolha_death_status)
-#: scripts/sim/law_catalog.gd_(escolha_life_status)
-msgid "admitida para crimes hediondos"
-msgstr "admitida para crímenes atroces"
-
-#: scripts/sim/law_catalog.gd_(escolha_prison_regime)
-msgid "progressivo, por bom comportamento"
-msgstr "progresivo, por buen comportamiento"
-
-#: scripts/sim/law_catalog.gd_(escolha_prison_regime)
-msgid "integralmente fechado para crimes graves"
-msgstr "íntegramente cerrado para delitos graves"
-
-#: scripts/sim/law_catalog.gd_(escolha_prison_regime)
-msgid "progressivo, com livramento condicional"
-msgstr "progresivo, con libertad condicional"
-
-#: scripts/sim/law_catalog.gd_(escolha_security_area)
-msgid "policiamento"
-msgstr "vigilancia policial"
-
-#: scripts/sim/law_catalog.gd_(escolha_security_area)
-msgid "sistema prisional"
-msgstr "sistema penitenciario"
-
-#: scripts/sim/law_catalog.gd_(escolha_same_sex)
-msgid "casamento civil permitido"
-msgstr "matrimonio civil permitido"
-
-#: scripts/sim/law_catalog.gd_(escolha_same_sex)
-msgid "só união civil"
-msgstr "solo unión civil"
-
-#: scripts/sim/law_catalog.gd_(escolha_divorce)
-msgid "direto, a pedido de qualquer cônjuge"
-msgstr "directo, a pedido de cualquier cónyuge"
-
-#: scripts/sim/law_catalog.gd_(escolha_divorce)
-msgid "só consensual ou com causa provada"
-msgstr "solo consensual o con causa probada"
-
-#: scripts/sim/law_catalog.gd_(escolha_divorce)
-msgid "proibido"
-msgstr "prohibido"
-
-#: scripts/sim/law_catalog.gd_(escolha_goods_regime)
-msgid "comunhão parcial"
-msgstr "comunidad parcial"
-
-#: scripts/sim/law_catalog.gd_(escolha_goods_regime)
-msgid "comunhão universal"
-msgstr "comunidad universal"
-
-#: scripts/sim/law_catalog.gd_(escolha_goods_regime)
-msgid "separação total"
-msgstr "separación total"
-
-#: scripts/sim/law_catalog.gd_(escolha_expropriation)
-msgid "só com indenização prévia em dinheiro"
-msgstr "solo con indemnización previa en dinero"
-
-#: scripts/sim/law_catalog.gd_(escolha_expropriation)
-msgid "paga em títulos públicos"
-msgstr "pagada en títulos públicos"
-
-#: scripts/sim/law_catalog.gd_(escolha_expropriation)
-msgid "sem indenização, por interesse social"
-msgstr "sin indemnización, por interés social"
-
-#: scripts/sim/law_catalog.gd_(escolha_contract_freedom)
-msgid "ampla"
-msgstr "amplia"
-
-#: scripts/sim/law_catalog.gd_(escolha_contract_freedom)
-msgid "com cláusulas protetivas obrigatórias"
-msgstr "con cláusulas protectoras obligatorias"
-
-#: scripts/sim/law_catalog.gd_(escolha_contract_freedom)
-msgid "restrita a contratos-padrão do Estado"
-msgstr "restringida a contratos tipo del Estado"
-
-#: scripts/sim/law_catalog.gd_(escolha_bankruptcy)
-msgid "recuperação judicial antes da falência"
-msgstr "reorganización judicial antes de la quiebra"
-
-#: scripts/sim/law_catalog.gd_(escolha_bankruptcy)
-msgid "liquidação rápida dos bens"
-msgstr "liquidación rápida de los bienes"
-
-#: scripts/sim/law_catalog.gd_(escolha_bankruptcy)
-msgid "falência sem proteção ao devedor"
-msgstr "quiebra sin protección al deudor"
-
-#: scripts/sim/law_catalog.gd_(escolha_el_vote_mode)
-msgid "obrigatório"
-msgstr "obligatorio"
-
-#: scripts/sim/law_catalog.gd_(escolha_el_vote_mode)
-msgid "facultativo"
-msgstr "facultativo"
-
-#: scripts/sim/law_catalog.gd_(escolha_el_funding)
-msgid "só público"
-msgstr "solo pública"
-
-#: scripts/sim/law_catalog.gd_(escolha_el_funding)
-msgid "misto, público e privado"
-msgstr "mixta, pública y privada"
-
-#: scripts/sim/law_catalog.gd_(escolha_el_funding)
-msgid "privado, com teto por doador"
-msgstr "privada, con tope por donante"
-
-#: scripts/sim/law_catalog.gd_(escolha_el_funding)
-msgid "privado, sem teto"
-msgstr "privada, sin tope"
-
-#: scripts/sim/law_catalog.gd_(escolha_el_reelection)
-msgid "permitida uma vez"
-msgstr "permitida una vez"
-
-#: scripts/sim/law_catalog.gd_(escolha_el_reelection)
-msgid "ilimitada"
-msgstr "ilimitada"
-
-#: scripts/sim/law_catalog.gd_(escolha_el_ballot)
-msgid "urna eletrônica"
-msgstr "urna electrónica"
-
-#: scripts/sim/law_catalog.gd_(escolha_el_ballot)
-msgid "cédula de papel"
-msgstr "papeleta"
-
-#: scripts/sim/law_catalog.gd_(escolha_dr_level)
-msgid "rigoroso"
-msgstr "riguroso"
-
-#: scripts/sim/law_catalog.gd_(escolha_cb_modo)
-msgid "livre (sem intervenção)"
-msgstr "libre (sin intervención)"
-
-#: scripts/sim/law_catalog.gd_(escolha_cb_controle)
-msgid "imposto sobre a saída de capitais"
-msgstr "impuesto a la salida de capitales"
-
-#: scripts/sim/law_catalog.gd_(escolha_cb_controle)
-msgid "cotas e autorização prévia"
-msgstr "cupos y autorización previa"
 
 #: data/countries.csv_(USA)
 msgid "Estados Unidos"
@@ -11704,8 +11157,905 @@ msgstr "Mauricio"
 msgid "Bahamas"
 msgstr "Bahamas"
 
+#~ msgid "Tributos"
+#~ msgstr "Tributos"
+
+#~ msgid "Trabalho"
+#~ msgstr "Trabajo"
+
+#~ msgid "Penal"
+#~ msgstr "Penal"
+
+#~ msgid "Civil"
+#~ msgstr "Civil"
+
+#~ msgid "Eleições"
+#~ msgstr "Elecciones"
+
+#~ msgid "Direitos e deveres"
+#~ msgstr "Derechos y deberes"
+
+#~ msgid "Condições"
+#~ msgstr "Condiciones"
+
+#~ msgid "Operadores lógicos"
+#~ msgstr "Operadores lógicos"
+
+#~ msgid "Consultas"
+#~ msgstr "Consultas"
+
+#~ msgid "Variáveis"
+#~ msgstr "Variables"
+
+#~ msgid "Ações administrativas"
+#~ msgstr "Acciones administrativas"
+
+#~ msgid "Economia e tributação"
+#~ msgstr "Economía y tributación"
+
+#~ msgid "Direitos e obrigações"
+#~ msgstr "Derechos y obligaciones"
+
+#~ msgid "Controle de fluxo"
+#~ msgstr "Control de flujo"
+
+#~ msgid "IRPF: isenção para rendas de até {limite} por mês"
+#~ msgstr "IRPF: exención para rentas de hasta {limite} al mes"
+
+#~ msgid "IRPF, faixa {faixa}: renda até {limite} por mês paga {aliquota}%"
+#~ msgstr ""
+#~ "IRPF, tramo {faixa}: renta de hasta {limite} al mes paga {aliquota}%"
+
+#~ msgid "IRPF: acima da última faixa, alíquota de {aliquota}%"
+#~ msgstr "IRPF: por encima del último tramo, alícuota del {aliquota}%"
+
+#~ msgid "Contribuição previdenciária do {quem}: {aliquota}% do salário"
+#~ msgstr ""
+#~ "Cotización a la seguridad social del {quem}: {aliquota}% del salario"
+
+#~ msgid "IRPJ: {aliquota}% sobre o lucro das empresas"
+#~ msgstr ""
+#~ "Impuesto de sociedades: {aliquota}% sobre el beneficio de las empresas"
+
+#~ msgid "CSLL: {aliquota}% sobre o lucro líquido"
+#~ msgstr "Contribución social: {aliquota}% sobre el beneficio neto"
+
+#~ msgid ""
+#~ "Regime simplificado: empresas com faturamento de até {limite} por ano "
+#~ "pagam {aliquota}% do faturamento"
+#~ msgstr ""
+#~ "Régimen simplificado: empresas con facturación de hasta {limite} al año "
+#~ "pagan {aliquota}% de la facturación"
+
+#~ msgid "Isenção de {parcela}% do IRPJ e da CSLL para o setor {setor}"
+#~ msgstr ""
+#~ "Exención del {parcela}% del impuesto de sociedades para el sector {setor}"
+
+#~ msgid "{tributo}: alíquota padrão de {aliquota}%"
+#~ msgstr "{tributo}: alícuota general del {aliquota}%"
+
+#~ msgid "Alíquota reduzida de {aliquota}% sobre {grupo}"
+#~ msgstr "Alícuota reducida del {aliquota}% sobre {grupo}"
+
+#~ msgid "Imposto seletivo de {aliquota}% sobre {produto}"
+#~ msgstr "Impuesto selectivo del {aliquota}% sobre {produto}"
+
+#~ msgid "Imposto de importação geral de {aliquota}%"
+#~ msgstr "Arancel general de importación del {aliquota}%"
+
+#~ msgid "IOF: {aliquota}% sobre crédito, câmbio e seguros"
+#~ msgstr ""
+#~ "Impuesto a operaciones financieras: {aliquota}% sobre crédito, cambio y "
+#~ "seguros"
+
+#~ msgid "{tributo}: {aliquota}% ao ano sobre o valor do bem"
+#~ msgstr "{tributo}: {aliquota}% al año sobre el valor del bien"
+
+#~ msgid "ITCMD: {aliquota}% sobre heranças e doações"
+#~ msgstr "Impuesto de sucesiones: {aliquota}% sobre herencias y donaciones"
+
+#~ msgid ""
+#~ "Imposto sobre grandes fortunas: {aliquota}% ao ano sobre patrimônios "
+#~ "acima de {limite}"
+#~ msgstr ""
+#~ "Impuesto a las grandes fortunas: {aliquota}% al año sobre patrimonios de "
+#~ "más de {limite}"
+
+#~ msgid "Orçamento da Receita para fiscalização: {verba}% do PIB por ano"
+#~ msgstr ""
+#~ "Presupuesto de la agencia tributaria para fiscalización: {verba}% del PIB "
+#~ "al año"
+
+#~ msgid "Salário mínimo de {amount} por mês"
+#~ msgstr "Salario mínimo de {amount} al mes"
+
+#~ msgid "Jornada máxima de {hours} horas por semana"
+#~ msgstr "Jornada máxima de {hours} horas semanales"
+
+#~ msgid "Hora extra paga com adicional de {pct}%"
+#~ msgstr "Horas extra pagadas con un recargo del {pct}%"
+
+#~ msgid "Férias anuais remuneradas de {days} dias"
+#~ msgstr "Vacaciones anuales pagadas de {days} días"
+
+#~ msgid "Décimo terceiro salário obrigatório: {on}"
+#~ msgstr "Aguinaldo obligatorio: {on}"
+
+#~ msgid ""
+#~ "Fundo de garantia com depósito de {deposit}% do salário ao mês e multa de "
+#~ "{fine}% do saldo na demissão sem justa causa"
+#~ msgstr ""
+#~ "Fondo de garantía con depósito del {deposit}% del salario al mes y multa "
+#~ "del {fine}% del saldo en el despido sin causa"
+
+#~ msgid ""
+#~ "Indenização de {weeks} semanas de salário por ano trabalhado na demissão "
+#~ "sem justa causa"
+#~ msgstr ""
+#~ "Indemnización de {weeks} semanas de salario por año trabajado en el "
+#~ "despido sin causa"
+
+#~ msgid ""
+#~ "Seguro-desemprego por {months} meses, pagando {pct}% do último salário"
+#~ msgstr ""
+#~ "Seguro de desempleo por {months} meses, pagando el {pct}% del último "
+#~ "salario"
+
+#~ msgid ""
+#~ "Licença-maternidade de {maternity} dias e licença-paternidade de "
+#~ "{paternity} dias"
+#~ msgstr ""
+#~ "Licencia de maternidad de {maternity} días y de paternidad de {paternity} "
+#~ "días"
+
+#~ msgid "Sindicalização {mode}"
+#~ msgstr "Sindicalización {mode}"
+
+#~ msgid "Greve em {sector}: {mode}"
+#~ msgstr "Huelga en {sector}: {mode}"
+
+#~ msgid "Terceirização {mode}"
+#~ msgstr "Tercerización {mode}"
+
+#~ msgid "Quem trabalha por aplicativo é {mode}"
+#~ msgstr "Quien trabaja por aplicación es {mode}"
+
+#~ msgid ""
+#~ "Idade mínima para trabalhar de {age} anos, ou {apprentice} como aprendiz"
+#~ msgstr ""
+#~ "Edad mínima para trabajar de {age} años, o {apprentice} como aprendiz"
+
+#~ msgid ""
+#~ "Aposentadoria aos {men} anos (homens) e {women} anos (mulheres), com "
+#~ "{years} anos de contribuição"
+#~ msgstr ""
+#~ "Jubilación a los {men} años (hombres) y {women} años (mujeres), con "
+#~ "{years} años de cotización"
+
+#~ msgid "Teto do benefício previdenciário de {amount} por mês"
+#~ msgstr "Tope de la pensión de {amount} al mes"
+
+#~ msgid ""
+#~ "Tipificar {conduct} como crime, com pena de {min} a {max} anos de prisão"
+#~ msgstr ""
+#~ "Tipificar {conduct} como delito, con pena de {min} a {max} años de prisión"
+
+#~ msgid "Punir {conduct} só com multa de até {amount}"
+#~ msgstr "Castigar {conduct} solo con multa de hasta {amount}"
+
+#~ msgid "Descriminalizar {conduct}"
+#~ msgstr "Despenalizar {conduct}"
+
+#~ msgid "Fixar a maioridade penal em {age} anos"
+#~ msgstr "Fijar la mayoría de edad penal en {age} años"
+
+#~ msgid "Tornar o porte e a posse de armas {regime}"
+#~ msgstr "Hacer la portación y tenencia de armas {regime}"
+
+#~ msgid "Pena de morte: {status}"
+#~ msgstr "Pena de muerte: {status}"
+
+#~ msgid ""
+#~ "Prisão perpétua: {status}, com cumprimento máximo de {years} anos nas "
+#~ "demais penas"
+#~ msgstr ""
+#~ "Cadena perpetua: {status}, con cumplimiento máximo de {years} años en las "
+#~ "demás penas"
+
+#~ msgid ""
+#~ "Cumprir as penas em regime {regime}, com progressão após {share}% da pena"
+#~ msgstr ""
+#~ "Cumplir las penas en régimen {regime}, con progresión tras el {share}% de "
+#~ "la pena"
+
+#~ msgid "Destinar {value}% do PIB a {area}"
+#~ msgstr "Destinar el {value}% del PIB a {area}"
+
+#~ msgid ""
+#~ "Substituir penas de até {years} anos por penas alternativas (serviço "
+#~ "comunitário, tornozeleira)"
+#~ msgstr ""
+#~ "Sustituir penas de hasta {years} años por penas alternativas (servicio "
+#~ "comunitario, tobillera)"
+
+#~ msgid "Fixar a idade mínima para casar em {age} anos"
+#~ msgstr "Fijar la edad mínima para casarse en {age} años"
+
+#~ msgid "União entre pessoas do mesmo sexo: {status}"
+#~ msgstr "Unión entre personas del mismo sexo: {status}"
+
+#~ msgid "Divórcio {mode}"
+#~ msgstr "Divorcio {mode}"
+
+#~ msgid "Adotar a {regime} como regime de bens padrão do casamento"
+#~ msgstr ""
+#~ "Adoptar la {regime} como régimen de bienes por defecto del matrimonio"
+
+#~ msgid "Garantir a propriedade privada, com desapropriação {mode}"
+#~ msgstr "Garantizar la propiedad privada, con expropiación {mode}"
+
+#~ msgid "Admitir usucapião após {years} anos de posse mansa e pacífica"
+#~ msgstr "Admitir la usucapión tras {years} años de posesión pacífica"
+
+#~ msgid "Reservar {share}% da herança aos herdeiros necessários"
+#~ msgstr "Reservar el {share}% de la herencia a los herederos forzosos"
+
+#~ msgid "Liberdade contratual {level}"
+#~ msgstr "Libertad contractual {level}"
+
+#~ msgid "Limitar os juros dos contratos privados a {rate}% ao ano"
+#~ msgstr "Limitar el interés de los contratos privados al {rate}% anual"
+
+#~ msgid "Abrir uma empresa em até {days} dias, com {steps} procedimentos"
+#~ msgstr "Abrir una empresa en hasta {days} días, con {steps} trámites"
+
+#~ msgid ""
+#~ "Tratar a insolvência com {mode}, com prazo de {days} dias para o plano"
+#~ msgstr ""
+#~ "Tratar la insolvencia con {mode}, con un plazo de {days} días para el plan"
+
+#~ msgid "Fixar a prescrição das dívidas civis em {years} anos"
+#~ msgstr "Fijar la prescripción de las deudas civiles en {years} años"
+
+#~ msgid "Voto {mode}"
+#~ msgstr "Voto {mode}"
+
+#~ msgid "Idade mínima para votar de {age} anos"
+#~ msgstr "Edad mínima para votar de {age} años"
+
+#~ msgid "O parlamento é eleito pelo sistema {system}"
+#~ msgstr "El parlamento se elige por el sistema {system}"
+
+#~ msgid "Cláusula de barreira de {pct}% dos votos nacionais"
+#~ msgstr "Barrera electoral del {pct}% de los votos nacionales"
+
+#~ msgid "Financiamento de campanha {mode}"
+#~ msgstr "Financiación de campaña {mode}"
+
+#~ msgid "Reeleição do chefe de governo: {mode}"
+#~ msgstr "Reelección del jefe de gobierno: {mode}"
+
+#~ msgid "Mandato do parlamento de {years} anos"
+#~ msgstr "Mandato del parlamento de {years} años"
+
+#~ msgid "Cota mínima de {pct}% de mulheres nas listas dos partidos"
+#~ msgstr "Cuota mínima del {pct}% de mujeres en las listas de los partidos"
+
+#~ msgid "Votação em {mode}"
+#~ msgstr "Votación en {mode}"
+
+#~ msgid "Propaganda eleitoral gratuita no rádio e na TV: {on}"
+#~ msgstr "Propaganda electoral gratuita en radio y TV: {on}"
+
+#~ msgid "Garantir {right} a {scope}"
+#~ msgstr "Garantizar {right} a {scope}"
+
+#~ msgid "Suspender {right}"
+#~ msgstr "Suspender {right}"
+
+#~ msgid "Todos têm o dever de {duty}"
+#~ msgstr "Todos tienen el deber de {duty}"
+
+#~ msgid "Serviço militar obrigatório de {months} meses para {who}"
+#~ msgstr "Servicio militar obligatorio de {months} meses para {who}"
+
+#~ msgid "Escolaridade obrigatória até os {age} anos"
+#~ msgstr "Escolaridad obligatoria hasta los {age} años"
+
+#~ msgid "Submeter {outlet} à censura prévia"
+#~ msgstr "Someter {outlet} a censura previa"
+
+#~ msgid "Regular {outlet} por um conselho de rigor {level}"
+#~ msgstr "Regular {outlet} mediante un consejo de rigor {level}"
+
+#~ msgid "Bloquear {service} na internet"
+#~ msgstr "Bloquear {service} en internet"
+
+#~ msgid "Decretar estado de emergência por {days} dias"
+#~ msgstr "Decretar estado de emergencia por {days} días"
+
+#~ msgid ""
+#~ "O banco central intervém no câmbio de forma {modo}, vendendo e comprando "
+#~ "reservas"
+#~ msgstr ""
+#~ "El banco central interviene en el tipo de cambio de forma {modo}, "
+#~ "vendiendo y comprando reservas"
+
+#~ msgid "Controle de capitais: {nivel}"
+#~ msgstr "Control de capitales: {nivel}"
+
+#~ msgid ""
+#~ "Fundo soberano: recebe {renda}% da renda pública de commodities e "
+#~ "{superavit}% dos superávits"
+#~ msgstr ""
+#~ "Fondo soberano: recibe el {renda}% de la renta pública de materias primas "
+#~ "y el {superavit}% de los superávits"
+
+#~ msgid "Saque anual do fundo soberano limitado a {limite}% do saldo"
+#~ msgstr "Retiro anual del fondo soberano limitado al {limite}% del saldo"
+
+#~ msgid "Quando um cidadão ingressar no território"
+#~ msgstr "Cuando un ciudadano ingrese en el territorio"
+
+#~ msgid "Quando um cidadão realizar uma transação"
+#~ msgstr "Cuando un ciudadano realice una transacción"
+
+#~ msgid "Quando uma propriedade for adquirida"
+#~ msgstr "Cuando se adquiera una propiedad"
+
+#~ msgid "Quando um cidadão morrer"
+#~ msgstr "Cuando un ciudadano muera"
+
+#~ msgid "Quando um cidadão completar {age} anos"
+#~ msgstr "Cuando un ciudadano cumpla {age} años"
+
+#~ msgid "Quando uma empresa for registrada"
+#~ msgstr "Cuando se registre una empresa"
+
+#~ msgid "Quando uma obrigação vencer"
+#~ msgstr "Cuando venza una obligación"
+
+#~ msgid "Quando uma eleição for iniciada"
+#~ msgstr "Cuando comience una elección"
+
+#~ msgid "Quando um exercício financeiro começar"
+#~ msgstr "Cuando comience un ejercicio fiscal"
+
+#~ msgid "Em {date}"
+#~ msgstr "El {date}"
+
+#~ msgid "Todo mês"
+#~ msgstr "Todos los meses"
+
+#~ msgid "Quando esta norma entrar em vigor"
+#~ msgstr "Cuando esta norma entre en vigor"
+
+#~ msgid "Quando o país entrar em guerra"
+#~ msgstr "Cuando el país entre en guerra"
+
+#~ msgid "cidadão trabalha em {profession}"
+#~ msgstr "el ciudadano trabaja en {profession}"
+
+#~ msgid "cidadão vive em {unit}"
+#~ msgstr "el ciudadano vive en {unit}"
+
+#~ msgid "cidadão tem pelo menos {amount} em dinheiro"
+#~ msgstr "el ciudadano tiene al menos {amount} en dinero"
+
+#~ msgid "a propriedade pertence ao cidadão"
+#~ msgstr "la propiedad pertenece al ciudadano"
+
+#~ msgid "cidadão tem a licença {license}"
+#~ msgstr "el ciudadano tiene la licencia {license}"
+
+#~ msgid "a data está entre {from} e {to}"
+#~ msgstr "la fecha está entre {from} y {to}"
+
+#~ msgid "a instituição {institution} está ativa"
+#~ msgstr "la institución {institution} está activa"
+
+#~ msgid "a norma nº {norm} está em vigor"
+#~ msgstr "la norma n.º {norm} está vigente"
+
+#~ msgid "{a} E {b}"
+#~ msgstr "{a} Y {b}"
+
+#~ msgid "{a} OU {b}"
+#~ msgstr "{a} O {b}"
+
+#~ msgid "NÃO {a}"
+#~ msgstr "NO {a}"
+
+#~ msgid "{a} igual a {b}"
+#~ msgstr "{a} igual a {b}"
+
+#~ msgid "{a} diferente de {b}"
+#~ msgstr "{a} distinto de {b}"
+
+#~ msgid "{a} maior que {b}"
+#~ msgstr "{a} mayor que {b}"
+
+#~ msgid "{a} menor que {b}"
+#~ msgstr "{a} menor que {b}"
+
+#~ msgid "{a} maior ou igual a {b}"
+#~ msgstr "{a} mayor o igual que {b}"
+
+#~ msgid "{a} menor ou igual a {b}"
+#~ msgstr "{a} menor o igual que {b}"
+
+#~ msgid "{a} está entre {lo} e {hi}"
+#~ msgstr "{a} está entre {lo} y {hi}"
+
+#~ msgid "idade do cidadão"
+#~ msgstr "edad del ciudadano"
+
+#~ msgid "dinheiro do cidadão"
+#~ msgstr "dinero del ciudadano"
+
+#~ msgid "renda anual do cidadão"
+#~ msgstr "renta anual del ciudadano"
+
+#~ msgid "valor tributável da propriedade"
+#~ msgstr "valor imponible de la propiedad"
+
+#~ msgid "valor da transação"
+#~ msgstr "valor de la transacción"
+
+#~ msgid "{field} do país"
+#~ msgstr "{field} del país"
+
+#~ msgid "Definir {name} ({vtype}) como {value}"
+#~ msgstr "Definir {name} ({vtype}) como {value}"
+
+#~ msgid "variável {name}"
+#~ msgstr "variable {name}"
+
+#~ msgid "Alterar {name} para {value}"
+#~ msgstr "Cambiar {name} a {value}"
+
+#~ msgid "{a} + {b}"
+#~ msgstr "{a} + {b}"
+
+#~ msgid "{a} − {b}"
+#~ msgstr "{a} − {b}"
+
+#~ msgid "{a} × {b}"
+#~ msgstr "{a} × {b}"
+
+#~ msgid "{a} ÷ {b}"
+#~ msgstr "{a} ÷ {b}"
+
+#~ msgid "{rate}% de {base}"
+#~ msgstr "{rate}% de {base}"
+
+#~ msgid "Criar obrigação tributária de {amount} com prazo de {days} dias"
+#~ msgstr ""
+#~ "Crear una obligación tributaria de {amount} con plazo de {days} días"
+
+#~ msgid "Aplicar multa de {amount}"
+#~ msgstr "Aplicar una multa de {amount}"
+
+#~ msgid "Conceder benefício de {amount}"
+#~ msgstr "Conceder un beneficio de {amount}"
+
+#~ msgid "Revogar a licença {license}"
+#~ msgstr "Revocar la licencia {license}"
+
+#~ msgid "Emitir autorização: licença {license}"
+#~ msgstr "Emitir autorización: licencia {license}"
+
+#~ msgid "Registrar o cidadão no cadastro"
+#~ msgstr "Registrar al ciudadano en el registro"
+
+#~ msgid "Alterar situação cadastral para {status}"
+#~ msgstr "Cambiar la situación registral a {status}"
+
+#~ msgid ""
+#~ "Criar o cargo público {name} com {posts} vagas e salário anual de {salary}"
+#~ msgstr ""
+#~ "Crear el cargo público {name} con {posts} plazas y salario anual de "
+#~ "{salary}"
+
+#~ msgid "Registrar despesa pública de {amount} bilhões para {purpose}"
+#~ msgstr "Registrar un gasto público de {amount} mil millones para {purpose}"
+
+#~ msgid "Criar a instituição {name} com custo anual de {cost} bilhões"
+#~ msgstr ""
+#~ "Crear la institución {name} con un costo anual de {cost} mil millones"
+
+#~ msgid "Alterar {field} para {value}%"
+#~ msgstr "Cambiar {field} a {value}%"
+
+#~ msgid "Criar o ministério {name}, responsável por {area}"
+#~ msgstr "Crear el ministerio {name}, responsable de {area}"
+
+#~ msgid "Fundir os ministérios {a} e {b} em {name}"
+#~ msgstr "Fusionar los ministerios {a} y {b} en {name}"
+
+#~ msgid "Extinguir o ministério {a}"
+#~ msgstr "Extinguir el ministerio {a}"
+
+#~ msgid "Definir alíquota de {field} em {value}% do PIB"
+#~ msgstr "Fijar la alícuota de {field} en el {value}% del PIB"
+
+#~ msgid "imposto de {rate}% sobre {base}"
+#~ msgstr "impuesto del {rate}% sobre {base}"
+
+#~ msgid "Cobrar o tributo {name} no valor de {amount}"
+#~ msgstr "Cobrar el tributo {name} por valor de {amount}"
+
+#~ msgid "Criar a taxa {name} de {amount}"
+#~ msgstr "Crear la tasa {name} de {amount}"
+
+#~ msgid "Criar a contribuição {name} de {rate}% da renda mensal"
+#~ msgstr "Crear la contribución {name} del {rate}% de la renta mensual"
+
+#~ msgid "Definir isenção de {share}% no tributo {name}"
+#~ msgstr "Fijar una exención del {share}% en el tributo {name}"
+
+#~ msgid "Limitar a cobrança de {name} a {max} por pessoa"
+#~ msgstr "Limitar el cobro de {name} a {max} por persona"
+
+#~ msgid "Transferir {amount} bilhões das reservas ao Tesouro"
+#~ msgstr "Transferir {amount} mil millones de las reservas al Tesoro"
+
+#~ msgid "Criar subsídio de {amount} bilhões por ano para {sector}"
+#~ msgstr "Crear un subsidio de {amount} mil millones al año para {sector}"
+
+#~ msgid "Estabelecer salário mínimo de {amount} por mês"
+#~ msgstr "Establecer un salario mínimo de {amount} al mes"
+
+#~ msgid "Criar despesa permanente de {amount} bilhões por ano para {purpose}"
+#~ msgstr ""
+#~ "Crear un gasto permanente de {amount} mil millones al año para {purpose}"
+
+#~ msgid "Privatizar {stake}% da participação do Estado em {company}"
+#~ msgstr "Privatizar el {stake}% de la participación del Estado en {company}"
+
+#~ msgid ""
+#~ "Estatizar {company}, levando a participação do Estado a {stake}% do "
+#~ "capital"
+#~ msgstr ""
+#~ "Estatizar {company}, llevando la participación del Estado al {stake}% del "
+#~ "capital"
+
+#~ msgid "Obrigar o orçamento de {field} a {value}% do PIB"
+#~ msgstr "Obligar el presupuesto de {field} al {value}% del PIB"
+
+#~ msgid "Conceder o direito: {right}"
+#~ msgstr "Conceder el derecho: {right}"
+
+#~ msgid "Remover o direito: {right}"
+#~ msgstr "Quitar el derecho: {right}"
+
+#~ msgid "Criar a obrigação: {name}"
+#~ msgstr "Crear la obligación: {name}"
+
+#~ msgid "Estabelecer prazo de {days} dias para {name}"
+#~ msgstr "Establecer un plazo de {days} días para {name}"
+
+#~ msgid "Definir a restrição: {name}"
+#~ msgstr "Definir la restricción: {name}"
+
+#~ msgid "Estabelecer o requisito: {name}"
+#~ msgstr "Establecer el requisito: {name}"
+
+#~ msgid "Criar exceção à obrigação {name}"
+#~ msgstr "Crear una excepción a la obligación {name}"
+
+#~ msgid "Definir penalidade de {amount} para {name}"
+#~ msgstr "Definir una sanción de {amount} para {name}"
+
+#~ msgid "Se {cond}"
+#~ msgstr "Si {cond}"
+
+#~ msgid "Enquanto {cond}"
+#~ msgstr "Mientras {cond}"
+
+#~ msgid "Repetir {times} vezes"
+#~ msgstr "Repetir {times} veces"
+
+#~ msgid "Para cada {set}"
+#~ msgstr "Para cada {set}"
+
+#~ msgid "Aguardar {days} dias"
+#~ msgstr "Esperar {days} días"
+
+#~ msgid "Interromper a repetição"
+#~ msgstr "Interrumpir la repetición"
+
+#~ msgid "Encerrar a execução"
+#~ msgstr "Terminar la ejecución"
+
+#~ msgid "Tributos, alíquotas, faixas, isenções e contribuições."
+#~ msgstr "Tributos, alícuotas, tramos, exenciones y contribuciones."
+
+#~ msgid "Código Trabalhista"
+#~ msgstr "Código Laboral"
+
+#~ msgid "Salário mínimo, jornada, férias, sindicatos, greve e previdência."
+#~ msgstr ""
+#~ "Salario mínimo, jornada, vacaciones, sindicatos, huelga y pensiones."
+
+#~ msgid "Código Penal"
+#~ msgstr "Código Penal"
+
+#~ msgid "Crimes, penas, maioridade penal, drogas, armas e sistema prisional."
+#~ msgstr ""
+#~ "Delitos, penas, mayoría de edad penal, drogas, armas y sistema "
+#~ "penitenciario."
+
+#~ msgid "Código Civil"
+#~ msgstr "Código Civil"
+
+#~ msgid "Família, casamento, propriedade, contratos, herança e empresas."
+#~ msgstr "Familia, matrimonio, propiedad, contratos, herencia y empresas."
+
+#~ msgid "Código Eleitoral"
+#~ msgstr "Código Electoral"
+
+#~ msgid "Voto, idade eleitoral, financiamento de campanha, reeleição e cotas."
+#~ msgstr "Voto, edad electoral, financiación de campaña, reelección y cuotas."
+
+#~ msgid "Direitos fundamentais e deveres dos cidadãos."
+#~ msgstr "Derechos fundamentales y deberes de los ciudadanos."
+
+#~ msgid "Lei Cambial e do Fundo Soberano"
+#~ msgstr "Ley Cambiaria y del Fondo Soberano"
+
+#~ msgid "Intervenção no câmbio, controle de capitais e fundo soberano."
+#~ msgstr "Intervención cambiaria, control de capitales y fondo soberano."
+
+#~ msgid "empregado"
+#~ msgstr "empleado"
+
+#~ msgid "empregador"
+#~ msgstr "empleador"
+
+#~ msgid "IVA"
+#~ msgstr "IVA"
+
+#~ msgid "ICMS (mercadorias)"
+#~ msgstr "ICMS (mercancías)"
+
+#~ msgid "IPI (industrializados)"
+#~ msgstr "IPI (industrializados)"
+
+#~ msgid "ISS (serviços)"
+#~ msgstr "ISS (servicios)"
+
+#~ msgid "a cesta básica"
+#~ msgstr "la canasta básica"
+
+#~ msgid "saúde"
+#~ msgstr "salud"
+
+#~ msgid "educação"
+#~ msgstr "educación"
+
+#~ msgid "tabaco"
+#~ msgstr "tabaco"
+
+#~ msgid "bebidas alcoólicas"
+#~ msgstr "bebidas alcohólicas"
+
+#~ msgid "combustíveis"
+#~ msgstr "combustibles"
+
+#~ msgid "bebidas açucaradas"
+#~ msgstr "bebidas azucaradas"
+
+#~ msgid "IPTU (imóveis)"
+#~ msgstr "IPTU (inmuebles)"
+
+#~ msgid "IPVA (veículos)"
+#~ msgstr "IPVA (vehículos)"
+
+#~ msgid "obrigatória, com contribuição de todos"
+#~ msgstr "obligatoria, con contribución de todos"
+
+#~ msgid "livre"
+#~ msgstr "libre"
+
+#~ msgid "proibida"
+#~ msgstr "prohibida"
+
+#~ msgid "o setor privado"
+#~ msgstr "el sector privado"
+
+#~ msgid "o serviço público"
+#~ msgstr "el servicio público"
+
+#~ msgid "os serviços essenciais"
+#~ msgstr "los servicios esenciales"
+
+#~ msgid "permitida"
+#~ msgstr "permitida"
+
+#~ msgid "permitida com serviço mínimo"
+#~ msgstr "permitida con servicio mínimo"
+
+#~ msgid "permitida em qualquer atividade"
+#~ msgstr "permitida en cualquier actividad"
+
+#~ msgid "permitida só em atividades-meio"
+#~ msgstr "permitida solo en actividades de apoyo"
+
+#~ msgid "autônomo, sem vínculo"
+#~ msgstr "autónomo, sin vínculo"
+
+#~ msgid "autônomo com contribuição e seguro"
+#~ msgstr "autónomo con cotización y seguro"
+
+#~ msgid "empregado com carteira"
+#~ msgstr "empleado con contrato formal"
+
+#~ msgid "o porte de drogas para uso próprio"
+#~ msgstr "la tenencia de drogas para uso propio"
+
+#~ msgid "o tráfico de drogas"
+#~ msgstr "el tráfico de drogas"
+
+#~ msgid "o aborto"
+#~ msgstr "el aborto"
+
+#~ msgid "os jogos de azar"
+#~ msgstr "los juegos de azar"
+
+#~ msgid "a sonegação fiscal"
+#~ msgstr "la evasión fiscal"
+
+#~ msgid "a corrupção"
+#~ msgstr "la corrupción"
+
+#~ msgid "o dano ambiental"
+#~ msgstr "el daño ambiental"
+
+#~ msgid "o discurso de ódio"
+#~ msgstr "el discurso de odio"
+
+#~ msgid "a invasão de sistemas informáticos"
+#~ msgstr "la intrusión en sistemas informáticos"
+
+#~ msgid "a prostituição"
+#~ msgstr "la prostitución"
+
+#~ msgid "a eutanásia"
+#~ msgstr "la eutanasia"
+
+#~ msgid "a lavagem de dinheiro"
+#~ msgstr "el lavado de dinero"
+
+#~ msgid "proibidos aos civis"
+#~ msgstr "prohibidas a los civiles"
+
+#~ msgid "restritos, com licença e registro"
+#~ msgstr "restringidas, con licencia y registro"
+
+#~ msgid "livres para maiores de idade"
+#~ msgstr "libres para mayores de edad"
+
+#~ msgid "abolida"
+#~ msgstr "abolida"
+
+#~ msgid "só em tempo de guerra"
+#~ msgstr "solo en tiempo de guerra"
+
+#~ msgid "admitida para crimes hediondos"
+#~ msgstr "admitida para crímenes atroces"
+
+#~ msgid "progressivo, por bom comportamento"
+#~ msgstr "progresivo, por buen comportamiento"
+
+#~ msgid "integralmente fechado para crimes graves"
+#~ msgstr "íntegramente cerrado para delitos graves"
+
+#~ msgid "progressivo, com livramento condicional"
+#~ msgstr "progresivo, con libertad condicional"
+
+#~ msgid "policiamento"
+#~ msgstr "vigilancia policial"
+
+#~ msgid "sistema prisional"
+#~ msgstr "sistema penitenciario"
+
+#~ msgid "casamento civil permitido"
+#~ msgstr "matrimonio civil permitido"
+
+#~ msgid "só união civil"
+#~ msgstr "solo unión civil"
+
+#~ msgid "direto, a pedido de qualquer cônjuge"
+#~ msgstr "directo, a pedido de cualquier cónyuge"
+
+#~ msgid "só consensual ou com causa provada"
+#~ msgstr "solo consensual o con causa probada"
+
+#~ msgid "proibido"
+#~ msgstr "prohibido"
+
+#~ msgid "comunhão parcial"
+#~ msgstr "comunidad parcial"
+
+#~ msgid "comunhão universal"
+#~ msgstr "comunidad universal"
+
+#~ msgid "separação total"
+#~ msgstr "separación total"
+
+#~ msgid "só com indenização prévia em dinheiro"
+#~ msgstr "solo con indemnización previa en dinero"
+
+#~ msgid "paga em títulos públicos"
+#~ msgstr "pagada en títulos públicos"
+
+#~ msgid "sem indenização, por interesse social"
+#~ msgstr "sin indemnización, por interés social"
+
+#~ msgid "ampla"
+#~ msgstr "amplia"
+
+#~ msgid "com cláusulas protetivas obrigatórias"
+#~ msgstr "con cláusulas protectoras obligatorias"
+
+#~ msgid "restrita a contratos-padrão do Estado"
+#~ msgstr "restringida a contratos tipo del Estado"
+
+#~ msgid "recuperação judicial antes da falência"
+#~ msgstr "reorganización judicial antes de la quiebra"
+
+#~ msgid "liquidação rápida dos bens"
+#~ msgstr "liquidación rápida de los bienes"
+
+#~ msgid "falência sem proteção ao devedor"
+#~ msgstr "quiebra sin protección al deudor"
+
+#~ msgid "obrigatório"
+#~ msgstr "obligatorio"
+
+#~ msgid "facultativo"
+#~ msgstr "facultativo"
+
+#~ msgid "só público"
+#~ msgstr "solo pública"
+
+#~ msgid "misto, público e privado"
+#~ msgstr "mixta, pública y privada"
+
+#~ msgid "privado, com teto por doador"
+#~ msgstr "privada, con tope por donante"
+
+#~ msgid "privado, sem teto"
+#~ msgstr "privada, sin tope"
+
+#~ msgid "permitida uma vez"
+#~ msgstr "permitida una vez"
+
+#~ msgid "ilimitada"
+#~ msgstr "ilimitada"
+
+#~ msgid "urna eletrônica"
+#~ msgstr "urna electrónica"
+
+#~ msgid "cédula de papel"
+#~ msgstr "papeleta"
+
+#~ msgid "rigoroso"
+#~ msgstr "riguroso"
+
+#~ msgid "livre (sem intervenção)"
+#~ msgstr "libre (sin intervención)"
+
+#~ msgid "imposto sobre a saída de capitais"
+#~ msgstr "impuesto a la salida de capitales"
+
+#~ msgid "cotas e autorização prévia"
+#~ msgstr "cupos y autorización previa"
+
 #~ msgid "Ponteiro longo: uma volta por hora de jogo. Anel: progresso do dia."
-#~ msgstr "Aguja larga: una vuelta por hora de juego. Anillo: progreso del día."
+#~ msgstr ""
+#~ "Aguja larga: una vuelta por hora de juego. Anillo: progreso del día."
 
 #, c-format
 #~ msgid "%d min/s"

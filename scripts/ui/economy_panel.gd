@@ -1,6 +1,6 @@
 class_name EconomyPanel
 extends VBoxContainer
-## Aba "Economia": setores, portos e aeroportos, empresas e bolsa, cada um em uma subaba.
+## Aba "Economia": setores, portos e aeroportos, empresas, bolsa e população, cada um em uma subaba.
 
 const SECTOR_ROW := preload("res://scenes/ui/rows/sector_row.tscn")
 
@@ -30,6 +30,7 @@ func refresh() -> void:
 		1: infra.refresh()
 		2: companies.refresh()
 		3: stock.refresh()
+		4: _refresh_population(world.player)
 
 
 func _refresh_sectors(c: Country) -> void:
@@ -57,3 +58,15 @@ func _refresh_sectors(c: Country) -> void:
 		growth.text = UiKit.pct(g)
 		growth.add_theme_color_override("font_color", UiKit.good_bad(g))
 		(row.get_node("%sector_bar") as ProgressBar).value = c.sector_share[i] / maxf(biggest, 0.001)
+
+
+func _refresh_population(c: Country) -> void:
+	Demography.ensure(c)
+	(%pop_total as Label).text = tr("População: %s milhões") % UiKit.num(c.pop)
+	for band: String in ["young", "adult", "old"]:
+		var share: float = c.get(band)
+		(get_node("%" + band + "_bar") as ProgressBar).value = share
+		(get_node("%" + band + "_value") as Label).text = UiKit.pct(share)
+	(%pop_rates as Label).text = tr("Natalidade %s · mortalidade %s · migração %s ao ano") % [
+		UiKit.pct(c.birth), UiKit.pct(c.death), UiKit.pct(c.migration, 2)]
+	(%pop_pension as Label).text = tr("Aposentadorias além da base: %s do PIB") % UiKit.pct(Demography.pension_extra(c))

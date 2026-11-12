@@ -74,3 +74,110 @@ metadata/_tab_index = 3
 [node name="stock" parent="sub_tabs/Bolsa" instance=ExtResource("5_stock")]
 unique_name_in_owner = true
 layout_mode = 2
+
+[node name="População" type="VBoxContainer" parent="sub_tabs"]
+visible = false
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 6
+metadata/_tab_index = 4
+
+[node name="POPULACAO" type="Label" parent="sub_tabs/População"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 11
+text = "ESTRUTURA ETÁRIA"
+
+[node name="NotaPop" type="Label" parent="sub_tabs/População"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 12
+text = "Menos gente em idade de trabalhar reduz a produção; mais idosos pesam nas aposentadorias. Renda, paz e estabilidade atraem migrantes."
+autowrap_mode = 3
+
+[node name="pop_total" type="Label" parent="sub_tabs/População"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="young" type="HBoxContainer" parent="sub_tabs/População"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="young_label" type="Label" parent="sub_tabs/População/young"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "Jovens (0-14)"
+
+[node name="young_bar" type="ProgressBar" parent="sub_tabs/População/young"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 14)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+show_percentage = false
+
+[node name="young_value" type="Label" parent="sub_tabs/População/young"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+horizontal_alignment = 2
+
+[node name="adult" type="HBoxContainer" parent="sub_tabs/População"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="adult_label" type="Label" parent="sub_tabs/População/adult"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "Idade ativa (15-64)"
+
+[node name="adult_bar" type="ProgressBar" parent="sub_tabs/População/adult"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 14)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+show_percentage = false
+
+[node name="adult_value" type="Label" parent="sub_tabs/População/adult"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+horizontal_alignment = 2
+
+[node name="old" type="HBoxContainer" parent="sub_tabs/População"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="old_label" type="Label" parent="sub_tabs/População/old"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "Idosos (65+)"
+
+[node name="old_bar" type="ProgressBar" parent="sub_tabs/População/old"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 14)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+show_percentage = false
+
+[node name="old_value" type="Label" parent="sub_tabs/População/old"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+horizontal_alignment = 2
+
+[node name="pop_rates" type="Label" parent="sub_tabs/População"]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 3
+
+[node name="pop_pension" type="Label" parent="sub_tabs/População"]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 3

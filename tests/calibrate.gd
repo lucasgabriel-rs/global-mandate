@@ -72,4 +72,9 @@ func _report(w: GameWorld, y: int) -> int:
 		var c: Country = w.by_iso[iso]
 		parts.append("%s g%.1f i%.0f u%.0f r%.0f d%.0f def%.0f e%.2f ap%.0f" % [iso, c.growth_yoy() * 100, c.pi_yoy * 100, c.unemp * 100, c.rate * 100, c.debt_ratio * 100, c.deficit / c.y_nominal() * 100, c.e, c.approval * 100])
 	print("   ", " | ".join(parts))
+	var demo := []
+	for iso in WATCH:
+		var c: Country = w.by_iso[iso]
+		demo.append("%s pop%.0f j%.0f a%.0f i%.0f mig%+.2f" % [iso, c.pop, c.young * 100, c.adult * 100, c.old * 100, c.migration * 100])
+	print("   pop: ", " | ".join(demo))
 	return bad
