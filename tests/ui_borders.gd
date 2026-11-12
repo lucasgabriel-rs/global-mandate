@@ -184,10 +184,10 @@ func _process(delta: float) -> void:
 			map._camera.zoom = Vector2.ONE * 3.0
 		15:
 			main._set_speed(3)
-			hud.border.set_meta("clock", w.day_index * 1440 + w.minute)
+			hud.border.set_meta("clock", w.day_index)
 			_polygon(_center("ARG", "Córdoba"), 40.0)
 		16:
-			_check(int(hud.border.get_meta("clock")) == w.day_index * 1440 + w.minute, "relógio parado durante a demarcação")
+			_check(int(hud.border.get_meta("clock")) == w.day_index, "relógio parado durante a demarcação")
 			_check(hud.border._areas.size() == 1, "área marcada")
 			_polygon(_center("ARG", "Mendoza"), 60.0)
 		17:

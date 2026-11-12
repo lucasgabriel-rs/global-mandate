@@ -3,10 +3,11 @@ extends Node
 
 const SAVE_PATH := "user://mandato.save"
 const BACKUP_PATH := "user://mandato.bak"
-## Na velocidade normal, cada 0,0125 s reais é 1 minuto de jogo (80 min/s). Os valores multiplicam isso.
-const SECONDS_PER_MINUTE := 0.0125
+## Na velocidade normal passa 1 dia de jogo por segundo real. Os valores multiplicam isso.
+const DAYS_PER_SECOND := 1.0
 const SPEEDS := [0.0, 1.0, 2.0, 4.0]
-const MAX_MINUTES_PER_FRAME := 60
+## Atraso máximo guardado quando a simulação demora: além disso, o tempo perdido não é recuperado.
+const MAX_DAYS_BEHIND := 2.0
 const START_SCREEN := preload("res://scenes/ui/start_screen.tscn")
 const LOADING_SCREEN := preload("res://scenes/ui/loading_screen.tscn")
 ## Tempo por quadro para criar nós do mapa na thread principal, para a animação de carga não engasgar.
@@ -63,7 +64,7 @@ var _start_button: Button
 var _start_title: Label
 var _difficulty := "normal"
 var _autotest := ""
-var _rate_clock := 0
+var _rate_clock := 0.0
 var _rate_usec := 0
 var _skip_left := 0
 var _skip_total := 0
@@ -431,7 +432,7 @@ func _process(delta: float) -> void:
 		if not WorkerThreadPool.is_task_completed(_sim_task):
 			# O relógio espera a thread: o tempo não se perde, e a tela continua desenhando.
 			if speed > 0:
-				accumulator = minf(accumulator + delta / SECONDS_PER_MINUTE * SPEEDS[speed], float(MAX_MINUTES_PER_FRAME))
+				accumulator = minf(accumulator + delta * DAYS_PER_SECOND * SPEEDS[speed], MAX_DAYS_BEHIND)
 			return
 		join_sim()
 	if not playing:
@@ -441,20 +442,11 @@ func _process(delta: float) -> void:
 	if _skip_left > 0:
 		_run_skip()
 	elif speed > 0 and not modal_open and not world.over and not hud.border.active:
-		accumulator += delta / SECONDS_PER_MINUTE * SPEEDS[speed]
-		var ticks := 0
-		while accumulator >= 1.0 and ticks < MAX_MINUTES_PER_FRAME:
+		accumulator = minf(accumulator + delta * DAYS_PER_SECOND * SPEEDS[speed], MAX_DAYS_BEHIND)
+		# Cada dia roda em outra thread; o relógio espera ele terminar antes do próximo.
+		if accumulator >= 1.0:
 			accumulator -= 1.0
-			# A virada do dia é o que pesa: ela roda em outra thread, e o resto do relógio espera.
-			if world.minute + 1 >= world.MINUTES_PER_DAY:
-				_run_on_worker(world.tick_minute)
-				break
-			world.tick_minute()
-			ticks += 1
-			if not prompts.is_empty():
-				accumulator = 0.0
-				break
-		accumulator = minf(accumulator, float(MAX_MINUTES_PER_FRAME))
+			_run_on_worker(world.tick_day)
 	hud.refresh_clock()
 	_measure_rate()
 	refresh_timer += delta
@@ -513,16 +505,17 @@ func _measure_rate() -> void:
 	var now := Time.get_ticks_usec()
 	if now - _rate_usec < 1000000:
 		return
-	var clock := _clock_minutes()
-	var rate := float(clock - _rate_clock) / ((now - _rate_usec) / 1000000.0)
+	var clock := _clock_days()
+	var rate := (clock - _rate_clock) / ((now - _rate_usec) / 1000000.0)
 	_rate_clock = clock
 	_rate_usec = now
 	var running: bool = speed > 0 and not modal_open and not world.over and not hud.border.active and _skip_left == 0
-	hud.set_rate_display(rate if running else 0.0, SPEEDS[speed] * (1.0 / SECONDS_PER_MINUTE) if running else 0.0)
+	hud.set_rate_display(rate if running else 0.0, SPEEDS[speed] * DAYS_PER_SECOND if running else 0.0)
 
 
-func _clock_minutes() -> int:
-	return world.day_index * world.MINUTES_PER_DAY + world.minute
+## Dias de jogo contados com a fração do dia em curso, para o ritmo medido não oscilar.
+func _clock_days() -> float:
+	return world.day_index + accumulator
 
 
 func _set_speed(s: int) -> void:
@@ -530,10 +523,12 @@ func _set_speed(s: int) -> void:
 		last_speed = s
 	if s != speed and world:
 		print("velocidade: %s, relógio em %s" % ["pausa" if s == 0 else "%dx" % int(SPEEDS[s]), world.date_string()])
-		# A próxima medida do ritmo não mistura a velocidade anterior.
-		_rate_clock = _clock_minutes()
+		# O atraso acumulado na velocidade anterior não é cobrado na nova, e a próxima medida do ritmo
+		# não mistura as duas.
+		accumulator = fmod(accumulator, 1.0)
+		_rate_clock = _clock_days()
 		_rate_usec = Time.get_ticks_usec()
-		var expected: float = SPEEDS[s] * (1.0 / SECONDS_PER_MINUTE)
+		var expected: float = SPEEDS[s] * DAYS_PER_SECOND
 		hud.set_rate_display(expected, expected)
 	speed = s
 	hud.set_speed_display(s)

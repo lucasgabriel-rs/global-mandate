@@ -59,7 +59,7 @@ func _run() -> void:
 func _day_turn() -> void:
 	var w: GameWorld = main.world
 	var day := w.day_index
-	w.minute = w.MINUTES_PER_DAY - 3
+	main.accumulator = 0.9
 	main._set_speed(3)
 	var saw_busy := false
 	for i in 120:
@@ -69,7 +69,7 @@ func _day_turn() -> void:
 			break
 	main._set_speed(0)
 	main.join_sim()
-	_check(w.day_index == day + 1 and w.minute < 200, "o dia virou uma vez: dia %d, minuto %d" % [w.day_index, w.minute])
+	_check(w.day_index == day + 1, "o dia virou uma vez: dia %d" % w.day_index)
 	_check(saw_busy, "a virada rodou fora da thread principal")
 	_check(not w.busy and not w.defer_events, "o mundo voltou para a interface")
 
@@ -79,7 +79,7 @@ func _month_turn() -> void:
 	var w: GameWorld = main.world
 	w.month = 11
 	w.day = w.MONTH_DAYS[11]
-	w.minute = w.MINUTES_PER_DAY - 3
+	main.accumulator = 0.9
 	var month: int = w.months_elapsed
 	var got_month := [false]
 	var news := [0]
@@ -222,7 +222,7 @@ func _restart() -> void:
 		main._pick_start(main.world.by_iso["BRA"])
 		main._begin(Character.random(main.world.rng), {})
 		main._set_speed(3)
-		main.world.minute = main.world.MINUTES_PER_DAY - 5
+		main.accumulator = 0.9
 		await _frames(30)
 		main.start_skip(30)
 		await _frames(10)
