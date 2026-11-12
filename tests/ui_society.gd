@@ -46,7 +46,7 @@ func _top() -> Control:
 
 func _run() -> void:
 	await _wait(5)
-	var w: GameWorld = main.world
+	var w: GameWorld = Game.world
 	main._pick_start(w.by_iso["BRA"])
 	main._start_button.pressed.emit()
 	await _wait()
@@ -93,8 +93,8 @@ func _run() -> void:
 	main.map.select(null)
 	hud.show_country(null)
 	# Eleição: relatório.
-	main.world.politics.player_election(w)
-	main.world.politics.revision += 1
+	Game.world.politics.player_election(w)
+	Game.world.politics.revision += 1
 	hud._desk.current_tab = hud._politics_tab
 	hud.refresh(true)
 	await _wait()
@@ -189,7 +189,7 @@ func _run() -> void:
 	_check(not w.over and w.leader.name == "Maria Sucessora", "a mesma partida segue com outra pessoa")
 	_top().get_node("%cancel").pressed.emit()
 	await _wait()
-	_check(not main.modal_open and main.world == w, "o jogo continua")
+	_check(not main.modal_open and Game.world == w, "o jogo continua")
 	hud.refresh(true)
 	await _shot("v12_novo_personagem")
 	main._set_speed(3)

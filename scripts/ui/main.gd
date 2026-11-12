@@ -1,8 +1,6 @@
 extends Node
 ## Entry point: start screen, real-time clock, decisions, menu and game over.
 
-const SAVE_PATH := "user://mandato.save"
-const BACKUP_PATH := "user://mandato.bak"
 ## At normal speed 1 game day passes per real second. The values multiply that.
 const DAYS_PER_SECOND := 1.0
 const SPEEDS := [0.0, 1.0, 2.0, 4.0]
@@ -39,7 +37,12 @@ const ELECTION_REPORT := preload("res://scenes/ui/modals/election_report.tscn")
 ## Smallest window that still keeps the interface legible.
 const MIN_WINDOW := Vector2i(1024, 576)
 
-var world: GameWorld
+## The match in progress lives in the Game autoload; this is a shortcut to it.
+var world: GameWorld:
+	get:
+		return Game.world
+	set(value):
+		Game.world = value
 var start_screen: Control
 var main_menu: Control
 ## Opening, loading or restarting: there is no world ready for the interface to use.
@@ -80,8 +83,6 @@ var _lang_pending := false
 
 
 func _ready() -> void:
-	Lang.startup()
-	GameSettings.startup()
 	map.country_clicked.connect(_on_country_clicked)
 	map.country_hovered.connect(_on_country_hovered)
 	hud.debug.main = self
@@ -335,7 +336,7 @@ func _build_main_menu() -> void:
 		_close_main_menu()
 		_build_start_screen())
 	var load_button: Button = main_menu.get_node("%carregar_jogo")
-	load_button.disabled = not (FileAccess.file_exists(SAVE_PATH) or FileAccess.file_exists(BACKUP_PATH))
+	load_button.disabled = not SaveService.has_save()
 	# The menu only goes away when the match loads (_enter_game): if the file is bad, it stays there.
 	load_button.pressed.connect(_load_game)
 	main_menu.get_node("%configuracoes").pressed.connect(_open_settings)
@@ -375,7 +376,7 @@ func _build_start_screen() -> void:
 	_start_button.pressed.connect(func(): _open_creator(Character.random(world.rng, _start_pick.iso, _start_pick.region), func(ch):
 		_open_party_picker(_start_pick, true, func(choice): _begin(ch, choice))))
 	var saved: Button = start_screen.get_node("%continue_game")
-	saved.visible = FileAccess.file_exists(SAVE_PATH)
+	saved.visible = SaveService.has_save()
 	saved.pressed.connect(_load_game)
 
 
@@ -1064,7 +1065,7 @@ func _open_menu() -> void:
 		_save_game()
 		_close_modal(dim))
 	var load_button: Button = dim.get_node("%CarregarPartida")
-	load_button.visible = FileAccess.file_exists(SAVE_PATH)
+	load_button.visible = SaveService.has_save()
 	load_button.pressed.connect(func():
 		_close_modal(dim)
 		_load_game())
@@ -1199,24 +1200,10 @@ func _save_game() -> void:
 
 
 func _write_save() -> void:
-	var temp := SAVE_PATH + ".tmp"
-	var f := FileAccess.open(temp, FileAccess.WRITE)
-	if f == null:
-		world.emit_news(tr("Não foi possível salvar: erro %d.") % FileAccess.get_open_error(), "crise", null)
+	var error := SaveService.write(world)
+	if error != "":
+		world.emit_news(error, "crise", null)
 		return
-	f.store_var(world.to_dict())
-	f.close()
-	var check := FileAccess.open(temp, FileAccess.READ)
-	var readable: bool = check != null and check.get_var() is Dictionary
-	if check:
-		check.close()
-	if not readable:
-		world.emit_news(tr("Não foi possível salvar: o arquivo não pôde ser conferido."), "crise", null)
-		return
-	var folder := DirAccess.open("user://")
-	if FileAccess.file_exists(SAVE_PATH):
-		folder.rename(SAVE_PATH.get_file(), BACKUP_PATH.get_file())
-	folder.rename(temp.get_file(), SAVE_PATH.get_file())
 	world.emit_news(tr("Partida salva."), "politica", null)
 
 
@@ -1227,7 +1214,7 @@ func _load_game() -> void:
 	playing = false
 	_show_loading(tr("Carregando a partida..."))
 	var box := {"world": null}
-	await _wait_task(WorkerThreadPool.add_task(_read_save.bind(box), true, "carregar"))
+	await _wait_task(WorkerThreadPool.add_task(func(): box.world = SaveService.read(), true, "carregar"))
 	var fresh: GameWorld = box.world
 	if fresh == null:
 		playing = was_playing
@@ -1238,17 +1225,3 @@ func _load_game() -> void:
 	_enter_game()
 	_set_speed(0)
 	_hide_loading()
-
-
-static func _read_save(box: Dictionary) -> void:
-	var f := FileAccess.open(SAVE_PATH, FileAccess.READ)
-	var raw: Variant = f.get_var() if f else null
-	if not raw is Dictionary:
-		f = FileAccess.open(BACKUP_PATH, FileAccess.READ)
-		raw = f.get_var() if f else null
-	if not raw is Dictionary:
-		return
-	var fresh := GameWorld.new()
-	fresh.setup()
-	fresh.load_dict(raw)
-	box.world = fresh

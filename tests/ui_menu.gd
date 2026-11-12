@@ -48,7 +48,7 @@ func _run() -> void:
 	for key: String in labels:
 		var b: Button = menu.get_node(key)
 		_check(b.text == labels[key] and b.is_visible_in_tree(), "botão %s" % labels[key])
-	_check((menu.get_node("%carregar_jogo") as Button).disabled == not (FileAccess.file_exists(main.SAVE_PATH) or FileAccess.file_exists(main.BACKUP_PATH)), "Carregar só liga com save")
+	_check((menu.get_node("%carregar_jogo") as Button).disabled == not SaveService.has_save(), "Carregar só liga com save")
 	_check(main.modal_open and not main.map.interactive, "o mapa fica parado atrás do menu")
 	await _shot("menu_inicial")
 

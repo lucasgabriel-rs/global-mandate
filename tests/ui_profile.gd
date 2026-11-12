@@ -46,7 +46,7 @@ func _frames(n := 3) -> void:
 func _run() -> void:
 	await _frames(5)
 	rows.append(["(inicialização: mundo, mapa e cenas, do início do processo)", Time.get_ticks_msec() * 1.0])
-	var w: GameWorld = main.world
+	var w: GameWorld = Game.world
 	_time("escolher país na tela inicial", func(): main._pick_start(w.by_iso["BRA"]))
 	await _frames()
 	var ch := Character.random(w.rng)
@@ -107,12 +107,12 @@ func _run() -> void:
 	_time("salvar: serializar (var_to_bytes)", func(): bytes = var_to_bytes(dict))
 	rows.append(["(tamanho do save em MB)", bytes.size() / 1048576.0])
 	_time("salvar: tela parada", func(): main._save_game())
-	await _worst_while("salvar: pior quadro", func(): return main.world.busy or main._sim_pending.is_valid())
+	await _worst_while("salvar: pior quadro", func(): return Game.world.busy or main._sim_pending.is_valid())
 	main.join_sim()
 	main._load_game()
 	await _worst_while("carregar: pior quadro", func(): return main.loading)
 	await _frames(5)
-	w = main.world
+	w = Game.world
 	main.start_skip(30)
 	await _worst_while("botão +30 dias: pior quadro", func(): return main._skip_left > 0)
 	main.join_sim()
@@ -141,5 +141,5 @@ func _run() -> void:
 	main._set_speed(0)
 	rows.append(["quadro mais lento a 4x", worst])
 	rows.append(["quadros acima de 33 ms em %d" % frames, float(over_33)])
-	DirAccess.remove_absolute(ProjectSettings.globalize_path(main.SAVE_PATH))
-	DirAccess.remove_absolute(ProjectSettings.globalize_path(main.BACKUP_PATH))
+	SaveService.delete_files()
+	

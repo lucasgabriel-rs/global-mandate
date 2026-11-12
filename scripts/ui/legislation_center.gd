@@ -29,7 +29,7 @@ func current_tab() -> int:
 
 func setup(owner_main: Node, tab := 0, message := "") -> void:
 	main = owner_main
-	world = main.world
+	world = Game.world
 	leg = world.legislation
 	_tabs.current_tab = tab
 	_feedback.text = message

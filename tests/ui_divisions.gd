@@ -96,7 +96,7 @@ func _process(delta: float) -> void:
 		step = 17
 	step += 1
 	wait = 0.5
-	var w: GameWorld = main.world
+	var w: GameWorld = Game.world
 	var hud: Hud = main.hud
 	var map: MapView = main.map
 	var panel: DivisionsPanel = hud._divisions if hud else null
@@ -246,12 +246,12 @@ func _process(delta: float) -> void:
 			subs.rename_unit(coast_id, "Litoral Renomeado")
 			main._save_game()
 		20:
-			var f := FileAccess.open(main.SAVE_PATH, FileAccess.READ)
+			var f := FileAccess.open(SaveService.path, FileAccess.READ)
 			print("save: %d KB" % (f.get_length() / 1024))
 			f.close()
 			main._load_game()
 		21:
-			var s2: Subdivisions = main.world.subdivisions
+			var s2: Subdivisions = Game.world.subdivisions
 			_check(s2.custom_ids.size() == 3 and s2.units.size() == s2.base_count + 3, "carregar restaura cenário e unidades")
 			_check(s2.depth_of(s2.custom_ids[1]) == 3, "carregar restaura a hierarquia")
 			_check(s2.units[coast_id].name == "Litoral Renomeado", "carregar restaura o nome editado")
@@ -268,7 +268,7 @@ func _process(delta: float) -> void:
 				if dim is ColorRect:
 					_press(dim, "Confirmar")
 		24:
-			var s2: Subdivisions = main.world.subdivisions
+			var s2: Subdivisions = Game.world.subdivisions
 			_check(not s2.units.has(state_id) and s2.custom_ids.size() == 1, "apagar o estado remove as unidades dentro dele")
 			# País e os 26 estados que sobraram, recolhidos.
 			_check(panel._tree_box.get_child_count() == 27, "árvore atualizada (%d)" % panel._tree_box.get_child_count())
@@ -280,7 +280,7 @@ func _process(delta: float) -> void:
 			print("fps com o jogo correndo: ", Engine.get_frames_per_second())
 			print("tempo por quadro: médio %.1f ms, máximo %.1f ms em %d quadros" % [frame_sum / maxi(frame_count, 1) * 1000.0, frame_max * 1000.0, frame_count])
 			main._set_speed(0)
-			DirAccess.remove_absolute(ProjectSettings.globalize_path(main.SAVE_PATH))
+			SaveService.delete_files()
 			print("RESULT: ", failures, " failures")
 			get_tree().quit(1 if failures > 0 else 0)
 

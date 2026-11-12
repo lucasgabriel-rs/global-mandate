@@ -89,9 +89,9 @@ func _close() -> void:
 
 
 func _run() -> void:
-	DirAccess.remove_absolute(ProjectSettings.globalize_path(main.SAVE_PATH))
+	SaveService.delete_files()
 	await _snap("inicio")
-	var world: GameWorld = main.world
+	var world: GameWorld = Game.world
 	var brazil: Country = world.by_iso["BRA"]
 	var usa: Country = world.by_iso["USA"]
 	main._pick_start(brazil)

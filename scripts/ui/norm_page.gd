@@ -13,7 +13,7 @@ var norm := {}
 
 func setup(owner_main: Node, target: Dictionary) -> void:
 	main = owner_main
-	world = main.world
+	world = Game.world
 	leg = world.legislation
 	norm = target
 	(%title as Label).text = "%s  ·  %s" % [leg.norm_label(norm), tr(norm.title)]

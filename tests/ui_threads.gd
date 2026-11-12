@@ -27,15 +27,15 @@ func _frames(n := 3) -> void:
 
 
 func _run() -> void:
-	_check(not main.loading and main.world != null, "a abertura termina com o mundo pronto")
+	_check(not main.loading and Game.world != null, "a abertura termina com o mundo pronto")
 	_check(main.map.features.size() > 150, "o mapa foi montado: %d" % main.map.features.size())
 	_check(not main.map._border_points.is_empty(), "as fronteiras foram montadas")
-	main._pick_start(main.world.by_iso["BRA"])
-	main._begin(Character.random(main.world.rng), {})
+	main._pick_start(Game.world.by_iso["BRA"])
+	main._begin(Character.random(Game.world.rng), {})
 	main._set_speed(0)
 	await _frames(5)
 	# Banco central independente: a tela não deixa escolher o juro.
-	var c: Country = main.world.player
+	var c: Country = Game.world.player
 	main.hud._desk.current_tab = 2
 	main.hud.refresh(true)
 	await _frames(2)
@@ -57,7 +57,7 @@ func _run() -> void:
 
 ## A virada do dia acontece mesmo em outra thread, e o relógio não perde tempo.
 func _day_turn() -> void:
-	var w: GameWorld = main.world
+	var w: GameWorld = Game.world
 	var day := w.day_index
 	main.accumulator = 0.9
 	main._set_speed(3)
@@ -76,7 +76,7 @@ func _day_turn() -> void:
 
 ## O pior momento do jogo: a virada do mês, com todos os países agindo.
 func _month_turn() -> void:
-	var w: GameWorld = main.world
+	var w: GameWorld = Game.world
 	w.month = 11
 	w.day = w.MONTH_DAYS[11]
 	main.accumulator = 0.9
@@ -109,7 +109,7 @@ func _month_turn() -> void:
 
 ## Um clique com a simulação no meio espera a thread, em vez de mexer no mundo junto com ela.
 func _click_during_work() -> void:
-	var w: GameWorld = main.world
+	var w: GameWorld = Game.world
 	var day := w.day_index
 	main._run_on_worker(func():
 		for i in 40:
@@ -138,7 +138,7 @@ func _click_during_work() -> void:
 
 ## Uma decisão no meio do avanço de dias para a contagem, e ele continua depois da resposta.
 func _skip_and_prompt() -> void:
-	var w: GameWorld = main.world
+	var w: GameWorld = Game.world
 	var day := w.day_index
 	var prompted := [false]
 	var hook := func():
@@ -173,19 +173,19 @@ func _skip_and_prompt() -> void:
 
 
 func _save_and_load() -> void:
-	var w: GameWorld = main.world
-	DirAccess.remove_absolute(ProjectSettings.globalize_path(main.SAVE_PATH))
+	var w: GameWorld = Game.world
+	SaveService.delete_files()
 	var day := w.day_index
 	main._save_game()
 	await RenderingServer.frame_post_draw
 	_check(w.busy, "salvar roda em outra thread")
 	main.join_sim()
-	_check(FileAccess.file_exists(main.SAVE_PATH), "o save foi escrito")
+	_check(FileAccess.file_exists(SaveService.path), "o save foi escrito")
 	var news := main.hud._news_box.get_child(0) as Button
 	_check(news.text.contains("Partida salva"), "a notícia do save aparece: " + news.text)
 	w.tick_day()
 	main._load_game()
-	_check(main.loading and main.world == w, "enquanto carrega, o mundo atual continua inteiro")
+	_check(main.loading and Game.world == w, "enquanto carrega, o mundo atual continua inteiro")
 	var worst := 0.0
 	var stamp := Time.get_ticks_usec()
 	while main.loading:
@@ -195,32 +195,31 @@ func _save_and_load() -> void:
 		stamp = now
 	print("  pior quadro ao carregar: %.1f ms" % worst)
 	_check(worst < FRAME_LIMIT_MS, "carregar não trava a tela")
-	_check(main.world != w and main.world.day_index == day, "o save voltou: dia %d" % main.world.day_index)
+	_check(Game.world != w and Game.world.day_index == day, "o save voltou: dia %d" % Game.world.day_index)
 	_check(main.playing, "o jogo continua depois de carregar")
 	# Arquivo principal estragado: vale a cópia de segurança.
 	main._save_game()
 	main.join_sim()
 	main._save_game()
 	main.join_sim()
-	var broken := FileAccess.open(main.SAVE_PATH, FileAccess.WRITE)
+	var broken := FileAccess.open(SaveService.path, FileAccess.WRITE)
 	broken.store_string("lixo")
 	broken.close()
-	var before: GameWorld = main.world
+	var before: GameWorld = Game.world
 	await main._load_game()
-	_check(main.world != before and main.playing, "save estragado: carrega a cópia de segurança")
-	DirAccess.remove_absolute(ProjectSettings.globalize_path(main.SAVE_PATH))
-	DirAccess.remove_absolute(ProjectSettings.globalize_path(main.BACKUP_PATH))
-
+	_check(Game.world != before and main.playing, "save estragado: carrega a cópia de segurança")
+	SaveService.delete_files()
+	
 
 func _restart() -> void:
-	var old: GameWorld = main.world
+	var old: GameWorld = Game.world
 	await main._restart()
-	_check(main.world != old and not main.playing and not main.loading, "nova partida monta outro mundo")
+	_check(Game.world != old and not main.playing and not main.loading, "nova partida monta outro mundo")
 	_check(main.start_screen != null, "volta à tela inicial")
 	# Estresse: jogar, simular, salvar e carregar em sequência, com as threads se revezando.
 	for round_ in 4:
-		main._pick_start(main.world.by_iso["BRA"])
-		main._begin(Character.random(main.world.rng), {})
+		main._pick_start(Game.world.by_iso["BRA"])
+		main._begin(Character.random(Game.world.rng), {})
 		main._set_speed(3)
 		main.accumulator = 0.9
 		await _frames(30)
@@ -236,5 +235,5 @@ func _restart() -> void:
 		await _frames(2)
 		await main._restart()
 	_check(not main.loading and main.start_screen != null, "o revezamento das threads termina inteiro")
-	DirAccess.remove_absolute(ProjectSettings.globalize_path(main.SAVE_PATH))
-	DirAccess.remove_absolute(ProjectSettings.globalize_path(main.BACKUP_PATH))
+	SaveService.delete_files()
+	

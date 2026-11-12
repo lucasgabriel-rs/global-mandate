@@ -49,14 +49,14 @@ func _agenda() -> AgendaWindow:
 
 
 func _run() -> void:
-	while main.loading or main.world == null:
+	while main.loading or Game.world == null:
 		await get_tree().process_frame
 	main.join_sim()
-	main._pick_start(main.world.by_iso["BRA"])
-	main._begin(Character.random(main.world.rng), {})
+	main._pick_start(Game.world.by_iso["BRA"])
+	main._begin(Character.random(Game.world.rng), {})
 	main._set_speed(0)
 	await _frames(5)
-	var w: GameWorld = main.world
+	var w: GameWorld = Game.world
 	var me: Country = w.player
 	await _situations(w, me)
 	await _every_answer(w, me)

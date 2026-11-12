@@ -66,7 +66,7 @@ func _process(delta: float) -> void:
 		return
 	step += 1
 	wait = 0.4
-	var w: GameWorld = main.world
+	var w: GameWorld = Game.world
 	var hud: Hud = main.hud
 	var root: Control = main.modal_root
 	match step:
@@ -109,7 +109,7 @@ func _process(delta: float) -> void:
 			_click(_text(root, "Fundar partido"))
 		8:
 			_check(main.playing, "fundar inicia a partida")
-			w = main.world
+			w = Game.world
 			_check(w.politics.player_party(w).name == "Partido do Palito", "jogador pertence ao partido fundado")
 			_check(w.leader.first_name == "Palito" and w.leader.gender == "f", "personagem chega à partida")
 			main._set_speed(0)
@@ -181,9 +181,9 @@ func _process(delta: float) -> void:
 		19:
 			main._load_game()
 		20:
-			_check(main.world.politics.player_party(main.world).name == "Partido do Palito", "carregar mantém o partido")
-			_check(main.world.leader.first_name == "Palito" and main.world.leader.gender == "f", "carregar mantém o personagem")
-			DirAccess.remove_absolute(ProjectSettings.globalize_path(main.SAVE_PATH))
+			_check(Game.world.politics.player_party(Game.world).name == "Partido do Palito", "carregar mantém o partido")
+			_check(Game.world.leader.first_name == "Palito" and Game.world.leader.gender == "f", "carregar mantém o personagem")
+			SaveService.delete_files()
 			print("RESULT: ", failures, " failures")
 			get_tree().quit(1 if failures > 0 else 0)
 

@@ -95,7 +95,7 @@ func _unit(s: Subdivisions, iso: String, name_: String) -> int:
 
 
 func _center(iso: String, name_: String) -> Vector2:
-	var s: Subdivisions = main.world.subdivisions
+	var s: Subdivisions = Game.world.subdivisions
 	return s.units[_unit(s, iso, name_)].center
 
 
@@ -108,7 +108,7 @@ func _process(delta: float) -> void:
 		return
 	step += 1
 	wait = 0.5
-	var w: GameWorld = main.world
+	var w: GameWorld = Game.world
 	var hud: Hud = main.hud
 	var map: MapView = main.map
 	var panel: DivisionsPanel = hud._divisions
@@ -251,10 +251,10 @@ func _process(delta: float) -> void:
 			hud.set_meta("count", count)
 			main._load_game()
 		30:
-			_check(main.world.territories.cessions.size() == int(hud.get_meta("count")), "carregar restaura as fronteiras")
-			_check(not main.world.leader.is_empty(), "carregar restaura o personagem")
+			_check(Game.world.territories.cessions.size() == int(hud.get_meta("count")), "carregar restaura as fronteiras")
+			_check(not Game.world.leader.is_empty(), "carregar restaura o personagem")
 			_shot("n5_carregado")
-			DirAccess.remove_absolute(ProjectSettings.globalize_path(main.SAVE_PATH))
+			SaveService.delete_files()
 			print("RESULT: ", failures, " failures")
 			get_tree().quit(1 if failures > 0 else 0)
 
@@ -272,7 +272,7 @@ func _gallery() -> void:
 	var grid := GridContainer.new()
 	grid.columns = 15
 	_gallery_root.add_child(grid)
-	for c: Country in main.world.countries:
+	for c: Country in Game.world.countries:
 		var v: Countryball = COUNTRYBALL.instantiate()
 		v.custom_minimum_size = Vector2(72, 72)
 		var who := Character.random(rng, c.iso)

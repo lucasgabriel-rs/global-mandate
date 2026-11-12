@@ -38,7 +38,7 @@ func _check(cond: bool, what: String) -> void:
 
 ## Dias de jogo, com a fração do dia em curso.
 func _clock() -> float:
-	return main.world.day_index + main.accumulator
+	return Game.world.day_index + main.accumulator
 
 
 ## O que o jogador lê na barra: "07 Fev 2025".
@@ -74,7 +74,7 @@ func _rate_ok(expected: float) -> void:
 	var real := (Time.get_ticks_msec() - start_time) / 1000.0
 	var rate := (_clock() - start_clock) / real
 	_check(absf(rate - expected) <= expected * 0.15, "%.2f dias por segundo (esperado %.0f)" % [rate, expected])
-	_check(_shown_date() != start_shown and _shown_date() == main.world.date_string(), "data na tela avançou: %s → %s" % [start_shown, _shown_date()])
+	_check(_shown_date() != start_shown and _shown_date() == Game.world.date_string(), "data na tela avançou: %s → %s" % [start_shown, _shown_date()])
 	var shown := float(main.hud._rate_label.text.split(" ")[0].replace(",", "."))
 	_check(main.hud._rate_label.text.ends_with("dia/s") and absf(shown - expected) <= expected * 0.2, "indicador mostra: " + main.hud._rate_label.text)
 
@@ -121,7 +121,7 @@ func _process(delta: float) -> void:
 		return
 	step += 1
 	wait = 0.5
-	var w: GameWorld = main.world
+	var w: GameWorld = Game.world
 	var hud: Hud = main.hud
 	match step:
 		1:
@@ -230,8 +230,8 @@ func _process(delta: float) -> void:
 			main._load_game()
 			wait = 0.3
 		22:
-			_check(main.world.date_string() == get_meta("saved_date") and main.hud._date.text == get_meta("saved_date"), "carregar restaura a data: %s" % main.hud._date.text)
-			DirAccess.remove_absolute(ProjectSettings.globalize_path(main.SAVE_PATH))
+			_check(Game.world.date_string() == get_meta("saved_date") and main.hud._date.text == get_meta("saved_date"), "carregar restaura a data: %s" % main.hud._date.text)
+			SaveService.delete_files()
 			print("RESULT: ", failures, " failures")
 			get_tree().quit(1 if failures > 0 else 0)
 

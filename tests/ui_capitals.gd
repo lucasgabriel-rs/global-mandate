@@ -65,7 +65,7 @@ func _process(delta: float) -> void:
 		return
 	step += 1
 	wait = 0.5
-	var w: GameWorld = main.world
+	var w: GameWorld = Game.world
 	var hud: Hud = main.hud
 	var map: MapView = main.map
 	var panel: DivisionsPanel = hud._divisions
@@ -127,24 +127,24 @@ func _process(delta: float) -> void:
 		8:
 			main._load_game()
 		9:
-			_check(main.world.subdivisions.capital_of("BRA") == int(hud.get_meta("capital")), "carregar mantém a capital escolhida")
+			_check(Game.world.subdivisions.capital_of("BRA") == int(hud.get_meta("capital")), "carregar mantém a capital escolhida")
 			hud._desk.current_tab = hud._divisions_tab
 			panel.select_unit(int(hud.get_meta("capital")))
 		10:
 			_click(_find(panel._detail_box, "Capital de Brasil: remover").get_global_rect().get_center())
 		11:
-			var s2: Subdivisions = main.world.subdivisions
+			var s2: Subdivisions = Game.world.subdivisions
 			_check(s2.capital_of("BRA") == -1, "botão remove a capital do país")
 			panel.select_unit(-1)
 		12:
 			_check(_find(panel._detail_box, "Brasília") == null, "aba indica país sem capital")
 			_shot("k5_sem_capital")
-			main.map.select(main.world.player)
-			hud.show_country(main.world.player)
+			main.map.select(Game.world.player)
+			hud.show_country(Game.world.player)
 			_check(hud._dossier_dyn.capital.text == "—", "dossiê indica país sem capital")
 			main._set_speed(3)
 			wait = 2.0
 		13:
-			DirAccess.remove_absolute(ProjectSettings.globalize_path(main.SAVE_PATH))
+			SaveService.delete_files()
 			print("RESULT: ", failures, " failures")
 			get_tree().quit(1 if failures > 0 else 0)

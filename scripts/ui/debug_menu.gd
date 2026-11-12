@@ -29,7 +29,7 @@ var _buttons: Array = []
 
 var world: GameWorld:
 	get:
-		return main.world
+		return Game.world
 var hud: Hud:
 	get:
 		return main.hud
@@ -38,7 +38,7 @@ var map: MapView:
 		return main.map
 var pl: Country:
 	get:
-		return main.world.player
+		return Game.world.player
 
 
 func _ready() -> void:
@@ -475,7 +475,7 @@ func _define_interface() -> void:
 		hud.show_country(target))
 	_add(s, tr("Salvar partida"), func(): main._save_game())
 	_add(s, tr("Carregar partida"), func():
-		if not FileAccess.file_exists(main.SAVE_PATH):
+		if not FileAccess.file_exists(SaveService.path):
 			return tr("Ainda não há partida salva.")
 		main._load_game())
 	_add(s, tr("Abrir o menu de pausa"), func(): main._open_menu())

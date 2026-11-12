@@ -109,8 +109,8 @@ func _show_in_library(editor: LawEditor, view: Control) -> void:
 
 func _run() -> void:
 	await _wait(5)
-	main._pick_start(main.world.by_iso["BRA"])
-	main._begin(Character.random(main.world.rng), {})
+	main._pick_start(Game.world.by_iso["BRA"])
+	main._begin(Character.random(Game.world.rng), {})
 	main._set_speed(0)
 	await _wait(5)
 	var hud: Hud = main.hud
@@ -325,13 +325,13 @@ func _run() -> void:
 	await _click(editor.get_node("%simulate"))
 	var sim: LawSimulator = editor.get_node("%simulator")
 	_check(sim.visible, "abre o simulador")
-	var fund: float = main.world.politics.party_fund(main.world)
-	var bucket: float = main.world.player.law_rev_bucket
+	var fund: float = Game.world.politics.party_fund(Game.world)
+	var bucket: float = Game.world.player.law_rev_bucket
 	await _click(sim.get_node("%sim_run"))
 	var result: String = (sim.get_node("%sim_result") as RichTextLabel).text
 	print(result)
 	_check(result.contains("100000,00") and result.contains("5000,00") and result.contains("Obrigação tributária criada"), "simulador mostra o cálculo")
-	_check(main.world.player.law_rev_bucket == bucket and main.world.politics.party_fund(main.world) == fund, "simular não cobra nada")
+	_check(Game.world.player.law_rev_bucket == bucket and Game.world.politics.party_fund(Game.world) == fund, "simular não cobra nada")
 	await _shot("l5_simulador")
 	await _click(sim.get_node("%sim_close"))
 
@@ -351,13 +351,13 @@ func _run() -> void:
 	await _click(process_row.get_node("%chat"))
 	var chat: ChatWindow = main.modal_root.get_child(main.modal_root.get_child_count() - 1)
 	_check(chat is ChatWindow and chat.current.begins_with("partido:"), "abre a conversa com o líder de um partido")
-	var party_chat := PartyTalk.party_by_id(main.world, int(chat.current.trim_prefix("partido:")))
+	var party_chat := PartyTalk.party_by_id(Game.world, int(chat.current.trim_prefix("partido:")))
 	var ask_chat: Button = chat.find_child("say_ask_yes_%d" % int(norm.id), true, false)
 	_check(ask_chat != null, "a conversa oferece pedir apoio à lei")
 	(chat.find_child("ChoicesScroll", true, false) as ScrollContainer).ensure_control_visible(ask_chat)
 	await _wait()
 	await _click(ask_chat)
-	_check(ChatLog.thread(main.world, chat.current).size() == 3 and (chat.get_node("%thread") as Control).get_child_count() == 3, "pedido e resposta aparecem na conversa")
+	_check(ChatLog.thread(Game.world, chat.current).size() == 3 and (chat.get_node("%thread") as Control).get_child_count() == 3, "pedido e resposta aparecem na conversa")
 	_check(norm.get("chat_asked", {}).has(str(party_chat.id)), "o pedido fica registrado na lei")
 	await _shot("l6_conversa_partido")
 	await _click(chat.get_node("%say_end"))
@@ -366,7 +366,7 @@ func _run() -> void:
 	var deal: NegotiationScreen = _top()
 	_check(deal is NegotiationScreen, "abre a negociação de votos")
 	await _shot("l6_negociacao")
-	var data: Dictionary = main.world.politics.data_of("BRA")
+	var data: Dictionary = Game.world.politics.data_of("BRA")
 	var other_party: int = -1
 	for p: Dictionary in data.parties:
 		if int(p.id) != int(data.player_party) and int(p.seats) > 0:
@@ -384,8 +384,8 @@ func _run() -> void:
 	await _wait()
 	_check(main.legislation_center() == null and not main.modal_open, "fechar tira a janela")
 	for i in 150:
-		main.world.player.next_election = 9999.0
-		main.world.tick_day()
+		Game.world.player.next_election = 9999.0
+		Game.world.tick_day()
 		if not norm.state in [Legislation.STATE_PROCESS, Legislation.STATE_APPROVED, Legislation.STATE_AWAITING, Legislation.STATE_PUBLISHED]:
 			break
 	print("  estado: ", norm.state)
@@ -416,7 +416,7 @@ func _run() -> void:
 	var amendment: AmendmentEditor = _top()
 	_check(amendment is AmendmentEditor, "abre o editor de emendas")
 	var mandate := {}
-	for a: Dictionary in main.world.legislation.constitution.articles:
+	for a: Dictionary in Game.world.legislation.constitution.articles:
 		if a.param == "mandate":
 			mandate = a
 	amendment.get_node("%article_list").get_child(3).get_node("%select").pressed.emit()
@@ -449,16 +449,15 @@ func _run() -> void:
 	await _wait()
 	main._save_game()
 	main.join_sim()
-	var count: int = main.world.legislation.norms.size()
+	var count: int = Game.world.legislation.norms.size()
 	await main._load_game()
-	_check(main.world.legislation.norms.size() == count, "as normas voltam do save")
-	_check(FileAccess.file_exists(main.SAVE_PATH), "o save ficou no lugar")
+	_check(Game.world.legislation.norms.size() == count, "as normas voltam do save")
+	_check(FileAccess.file_exists(SaveService.path), "o save ficou no lugar")
 	main._save_game()
 	main.join_sim()
-	_check(FileAccess.file_exists(main.BACKUP_PATH), "o save anterior vira cópia de segurança")
-	DirAccess.remove_absolute(ProjectSettings.globalize_path(main.SAVE_PATH))
-	DirAccess.remove_absolute(ProjectSettings.globalize_path(main.BACKUP_PATH))
-
+	_check(FileAccess.file_exists(SaveService.backup_path), "o save anterior vira cópia de segurança")
+	SaveService.delete_files()
+	
 
 ## A tela da frente: um modal aberto, ou a janela do centro legislativo.
 func _top() -> Control:

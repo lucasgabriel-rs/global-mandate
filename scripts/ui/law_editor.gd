@@ -37,7 +37,7 @@ var code_id := ""
 
 func setup(owner_main: Node, target: Dictionary, version := -1) -> void:
 	main = owner_main
-	world = main.world
+	world = Game.world
 	norm = target
 	code_id = world.legislation.code_of(norm)
 	read_only = version >= 0 or norm.state != Legislation.STATE_DRAFT

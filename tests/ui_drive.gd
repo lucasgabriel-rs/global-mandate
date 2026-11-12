@@ -43,7 +43,7 @@ func _process(delta: float) -> void:
 		return
 	step += 1
 	wait = 0.6
-	var w: GameWorld = main.world
+	var w: GameWorld = Game.world
 	match step:
 		1:
 			_shot("01_inicio")
@@ -121,36 +121,36 @@ func _process(delta: float) -> void:
 			_shot("13_guerra_jogador")
 			main._save_game()
 			main.join_sim()
-			_check(FileAccess.file_exists(main.SAVE_PATH), "arquivo salvo")
+			_check(FileAccess.file_exists(SaveService.path), "arquivo salvo")
 			main._set_speed(0)
 			saved_day = w.day_index
 		17:
 			var y0: float = w.player.y
 			main._load_game()
-			_check(main.world.day_index == saved_day, "carregamento restaura a data (%d)" % main.world.day_index)
-			_check(absf(main.world.player.y - y0) < 0.001 * y0 + 5.0, "carregamento restaura o PIB")
-			_check(main.world.player.iso == "BRA", "carregamento restaura o jogador")
+			_check(Game.world.day_index == saved_day, "carregamento restaura a data (%d)" % Game.world.day_index)
+			_check(absf(Game.world.player.y - y0) < 0.001 * y0 + 5.0, "carregamento restaura o PIB")
+			_check(Game.world.player.iso == "BRA", "carregamento restaura o jogador")
 		18:
 			main._set_speed(3)
 			main.start_skip(30)
 			wait = 3.0
 		19:
 			_dismiss_prompts()
-			_check(main.world.day_index > 0, "jogo prossegue depois de carregar")
+			_check(Game.world.day_index > 0, "jogo prossegue depois de carregar")
 			_shot("14_depois_de_carregar")
-			main.world.player.approval = 0.02
-			main.world.player.next_election = main.world.year_float()
-			main.world.player.dem = 7.0
+			Game.world.player.approval = 0.02
+			Game.world.player.next_election = Game.world.year_float()
+			Game.world.player.dem = 7.0
 			main.start_skip(60)
 		20, 21, 22, 23, 24, 25, 26:
 			# Só o modal de fim de jogo pode permanecer aberto.
 			wait = 0.8
 			main._set_speed(3)
-			if not main.world.over:
+			if not Game.world.over:
 				_dismiss_prompts()
 		27:
 			_shot("15_fim")
-			_check(not main.world.in_office and not main.world.over, "derrota eleitoral leva à oposição (próxima eleição %.2f, ano %.2f)" % [main.world.player.next_election, main.world.year_float()])
+			_check(not Game.world.in_office and not Game.world.over, "derrota eleitoral leva à oposição (próxima eleição %.2f, ano %.2f)" % [Game.world.player.next_election, Game.world.year_float()])
 			print("RESULT: ", failures, " failures")
 			get_tree().quit(1 if failures > 0 else 0)
 

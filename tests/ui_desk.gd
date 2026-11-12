@@ -47,7 +47,7 @@ func _press(item: DockItem) -> void:
 
 func _run() -> void:
 	await _wait(5)
-	var w: GameWorld = main.world
+	var w: GameWorld = Game.world
 	main._pick_start(w.by_iso["BRA"])
 	main._start_button.pressed.emit()
 	await _wait()

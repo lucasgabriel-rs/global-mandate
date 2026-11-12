@@ -16,7 +16,7 @@ var chat: ChatWindow
 
 func setup(owner_main: Node, from_chat: ChatWindow = null) -> void:
 	main = owner_main
-	world = main.world
+	world = Game.world
 	chat = from_chat
 	%close.pressed.connect(func(): main._close_modal(self))
 	_search.text_changed.connect(func(_t: String): _fill())

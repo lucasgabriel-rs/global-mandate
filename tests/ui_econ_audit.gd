@@ -70,7 +70,7 @@ func _first_button(node: Node) -> Button:
 
 ## Avança como o botão "30 dias": a simulação roda na thread de trabalho e para em cada decisão.
 func _advance(days: int) -> void:
-	var w: GameWorld = main.world
+	var w: GameWorld = Game.world
 	var target: int = w.day_index + days
 	var guard := 0
 	while w.day_index < target and not w.over and guard < 4000:
@@ -134,12 +134,12 @@ func _snapshot_all(tag: String) -> Dictionary:
 	for key in ["mc_rate", "mc_infl", "mc_fx", "mc_yield"]:
 		var ch: MiniChart = hud._dyn[key]
 		_check(ch.series.size() >= 1, "Moeda: gráfico %s com dados (%d)" % [key, ch.series.size()])
-	var c: Country = main.world.player
+	var c: Country = Game.world.player
 	if not hud._can_set_rate(c):
 		var shown: String = (hud._slider_labels.rate_set as Label).text
 		_check(shown == UiKit.num(c.rate * 100.0, 1) + "%", "Moeda: o juro alvo mostra a taxa praticada (%s, juro %.2f%%)" % [shown, c.rate * 100.0])
 	var peg: Button = hud.get_node("%AlternarFlutuanteAncoraNoDolar")
-	_check(peg.disabled == (c == main.world.usa or c.peg == 2), "Moeda: âncora no dólar só para quem tem moeda própria e não é o dólar")
+	_check(peg.disabled == (c == Game.world.usa or c.peg == 2), "Moeda: âncora no dólar só para quem tem moeda própria e não é o dólar")
 	await _shot(tag + "_2_moeda")
 	await _tab(3)
 	all.merge(_audit_labels("t", "Comércio"))
@@ -156,7 +156,7 @@ func _snapshot_all(tag: String) -> Dictionary:
 		await _shot("%s_9_economia_%d" % [tag, t])
 	sub.current_tab = 0
 	await _tab(0)
-	var other: Country = main.world.by_iso["ARG" if iso != "ARG" else "CHL"]
+	var other: Country = Game.world.by_iso["ARG" if iso != "ARG" else "CHL"]
 	main.map.select(other)
 	hud.show_country(other)
 	await _wait()
@@ -184,7 +184,7 @@ func _snapshot_all(tag: String) -> Dictionary:
 
 func _run() -> void:
 	await _wait(5)
-	var w: GameWorld = main.world
+	var w: GameWorld = Game.world
 	main._pick_start(w.by_iso[iso])
 	main._start_button.pressed.emit()
 	await _wait()

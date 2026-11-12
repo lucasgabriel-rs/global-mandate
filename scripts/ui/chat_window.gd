@@ -22,7 +22,7 @@ var _buttons := {}
 
 func setup(owner_main: Node, key: String) -> void:
 	main = owner_main
-	world = main.world
+	world = Game.world
 	%say_end.pressed.connect(func(): main._close_modal(self))
 	%open_agenda.pressed.connect(func(): main.open_agenda(self))
 	%info_toggle.toggled.connect(func(on: bool): (%info_panel as Control).visible = on)

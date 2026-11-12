@@ -75,7 +75,7 @@ func _no_portuguese(root: Node, what: String) -> void:
 
 func _run() -> void:
 	await _wait(5)
-	main._pick_start(main.world.by_iso["USA"])
+	main._pick_start(Game.world.by_iso["USA"])
 	for lang: String in LANGS:
 		Lang.apply(lang, false)
 		await _wait(6)
@@ -84,10 +84,10 @@ func _run() -> void:
 		_no_portuguese(main.start_screen, "tela inicial (%s)" % lang)
 		var picker: OptionButton = main.start_screen.find_child("language", true, false)
 		_check(picker != null and picker.selected == Lang.CODES.find(lang), "o seletor mostra o idioma ativo (%s)" % lang)
-		_check(main.world.by_iso["DEU"].name == ("Germany" if lang == "en" else "Alemania"), "nomes de país traduzidos (%s)" % lang)
+		_check(Game.world.by_iso["DEU"].name == ("Germany" if lang == "en" else "Alemania"), "nomes de país traduzidos (%s)" % lang)
 	Lang.apply("en", false)
 	await _wait(4)
-	main._begin(Character.random(main.world.rng, "USA", main.world.by_iso["USA"].region), {})
+	main._begin(Character.random(Game.world.rng, "USA", Game.world.by_iso["USA"].region), {})
 	main._set_speed(0)
 	await _wait(8)
 	for lang: String in LANGS:
@@ -106,7 +106,7 @@ func _run() -> void:
 			_no_portuguese(center, "centro legislativo (%s)" % lang)
 		main.close_legislation()
 		await _wait(4)
-		main.open_law_editor(main.world.legislation.start_code_bill(main.world, "tributario"))
+		main.open_law_editor(Game.world.legislation.start_code_bill(Game.world, "tributario"))
 		await _wait(10)
 		var editor: LawEditor = null
 		for child in main.modal_root.get_children():

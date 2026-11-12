@@ -83,7 +83,7 @@ func _process(delta: float) -> void:
 		return
 	step += 1
 	wait = 0.4
-	var w: GameWorld = main.world
+	var w: GameWorld = Game.world
 	var hud: Hud = main.hud
 	var root: Control = main.modal_root
 	match step:
@@ -230,7 +230,7 @@ func _process(delta: float) -> void:
 			hud.refresh(true)
 			_check(not hud._player_name.text.contains("oposição"), "barra volta ao normal: " + hud._player_name.text)
 			_check((hud._sliders.sp_social as HSlider).editable, "controles voltam")
-			DirAccess.remove_absolute(ProjectSettings.globalize_path(main.SAVE_PATH))
+			SaveService.delete_files()
 			# Nova partida, já na oposição, com partido existente.
 			main._restart()
 		29:

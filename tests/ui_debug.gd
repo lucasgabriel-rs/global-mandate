@@ -36,7 +36,7 @@ func _check(cond: bool, what: String) -> void:
 
 
 func _start_game() -> void:
-	main._pick_start(main.world.by_iso["BRA"])
+	main._pick_start(Game.world.by_iso["BRA"])
 	main._begin()
 	main._set_speed(0)
 	menu = main.hud.debug
@@ -166,22 +166,22 @@ func _process(delta: float) -> void:
 			phase = 40
 		40:
 			# Clique real em um botão do painel.
-			menu.set_meta("dp", float(main.world.politics.party_fund(main.world)))
+			menu.set_meta("dp", float(Game.world.politics.party_fund(Game.world)))
 			var b: Button = menu._rows[1].buttons[0]
 			_click(b.get_global_rect().get_center())
 			phase = 41
 			wait = 0.2
 		41:
-			_check(main.world.politics.party_fund(main.world) > float(menu.get_meta("dp")), "clique no botão executa o comando")
+			_check(Game.world.politics.party_fund(Game.world) > float(menu.get_meta("dp")), "clique no botão executa o comando")
 			# Clique em um país no mapa muda o alvo, com o menu aberto.
-			var pos: Vector2 = main.map.get_canvas_transform() * main.world.by_iso["USA"].center
+			var pos: Vector2 = main.map.get_canvas_transform() * Game.world.by_iso["USA"].center
 			_click(pos)
-			_check(menu.target == main.world.by_iso["USA"], "clique no mapa troca o alvo para EUA (%s)" % (menu.target.name if menu.target else "nenhum"))
+			_check(menu.target == Game.world.by_iso["USA"], "clique no mapa troca o alvo para EUA (%s)" % (menu.target.name if menu.target else "nenhum"))
 			_check(menu._options.get_item_text(menu._options.selected) == "Estados Unidos", "lista mostra o alvo")
 			_shot("g3_alvo")
 			phase = 42
 		42:
-			_click(main.map.get_canvas_transform() * main.world.player.center)
+			_click(main.map.get_canvas_transform() * Game.world.player.center)
 			phase = 43
 			wait = 0.3
 		43:
@@ -195,14 +195,14 @@ func _process(delta: float) -> void:
 			_run_next()
 		7:
 			print("comandos executados: %d, reinícios: %d" % [menu.commands.size(), restarts])
-			DirAccess.remove_absolute(ProjectSettings.globalize_path(main.SAVE_PATH))
+			SaveService.delete_files()
 			print("RESULT: ", failures, " failures")
 			get_tree().quit(1 if failures > 0 else 0)
 
 
 ## O país do próprio jogador é um alvo válido, e cada comando de "Jogador" muda o que promete.
 func _own_country() -> void:
-	var w: GameWorld = main.world
+	var w: GameWorld = Game.world
 	var me: Country = w.player
 	_click(main.map.get_canvas_transform() * me.center)
 	_check(menu.target == me, "clique no próprio país vira o alvo")
@@ -253,7 +253,7 @@ func _own_country() -> void:
 
 ## Confere o efeito real dos comandos principais.
 func _effects() -> void:
-	var w: GameWorld = main.world
+	var w: GameWorld = Game.world
 	menu.set_target(w.by_iso["ARG"])
 	var fund: float = w.politics.party_fund(w)
 	menu.run(_command("Fundo do partido +20 unidades"))
@@ -291,7 +291,7 @@ func _run_next() -> void:
 	if index >= menu.commands.size():
 		phase = 7
 		return
-	var w: GameWorld = main.world
+	var w: GameWorld = Game.world
 	# Comandos que aceitam o próprio país rodam nele; os outros, em um país estrangeiro.
 	var foreign: Country = w.by_iso.get("ARG")
 	if foreign == null or not foreign.alive or foreign == w.player:
@@ -315,7 +315,7 @@ func _run_next() -> void:
 		restarts += 1
 		want_start = true
 		return
-	if main.world.over or not main.playing:
+	if Game.world.over or not main.playing:
 		restarts += 1
 		if main.playing:
 			_settle()
@@ -326,19 +326,19 @@ func _run_next() -> void:
 		return
 	# Alguns dias depois, o sistema precisa continuar de pé.
 	for i in 3:
-		if not main.world.over:
-			main.world.tick_day()
+		if not Game.world.over:
+			Game.world.tick_day()
 	_settle()
 	if main.loading:
 		restarts += 1
 		want_start = true
 		return
-	if main.world.over:
+	if Game.world.over:
 		restarts += 1
 		main._restart()
 		want_start = true
 		return
-	_check(_sane(main.world), "estado numérico válido depois de: " + String(cmd.label))
+	_check(_sane(Game.world), "estado numérico válido depois de: " + String(cmd.label))
 
 
 func _sane(w: GameWorld) -> bool:

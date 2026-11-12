@@ -73,7 +73,7 @@ func _type(edit: LineEdit, text: String) -> void:
 
 func _run() -> void:
 	await _frames(5)
-	var w: GameWorld = main.world
+	var w: GameWorld = Game.world
 	main._pick_start(w.by_iso["BRA"])
 	main._start_button.pressed.emit()
 	await _frames()
