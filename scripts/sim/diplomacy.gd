@@ -136,7 +136,8 @@ func _compute_shares(world: GameWorld) -> void:
 				continue
 			var b: Country = world.countries[j]
 			var d := maxf(a.center.distance_to(b.center), 40.0)
-			var w := pow(b.y_usd(), 0.9) / pow(d, 1.05)
+			# Gravitacional: Yi·Yj/D^θ; Yi é comum a todos os parceiros e some na normalização.
+			var w := EconFormulas.gravity(a.y_usd(), b.y_usd(), d)
 			if a.region == b.region:
 				w *= 1.4
 			for bloc in TRADE_BLOCS:

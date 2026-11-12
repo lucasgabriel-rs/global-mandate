@@ -767,7 +767,7 @@ msgstr "El ancla importa la política monetaria de EE. UU. y exige reservas para
 msgid "Alternar: flutuante / âncora no dólar"
 msgstr "Alternar: flotante / ancla al dólar"
 
-#: scenes/ui/hud.tscn:2777
+#: scenes/ui/hud.tscn:2777 scenes/ui/panels/economy_panel.tscn:139
 msgid "Câmbio"
 msgstr "Tipo de cambio"
 
@@ -1563,8 +1563,20 @@ msgstr "Sortea género, nombre y edad."
 msgid "Aleatório"
 msgstr "Aleatorio"
 
+#: scenes/ui/modals/formula_window.tscn:57
+msgid "COMO FUNCIONA"
+msgstr "CÓMO FUNCIONA"
+
+#: scenes/ui/modals/formula_window.tscn:83
+msgid "COM OS NÚMEROS DO SEU PAÍS"
+msgstr "CON LOS NÚMEROS DE SU PAÍS"
+
+#: scenes/ui/modals/formula_window.tscn:106 scenes/ui/modals/help.tscn:75
+msgid "Entendi"
+msgstr "Entendido"
+
 #: scenes/ui/modals/game_over.tscn:48 scripts/ui/debug_menu.gd:489
-#: scripts/ui/main.gd:1047
+#: scripts/ui/main.gd:1049
 msgid "Fim de jogo"
 msgstr "Fin del juego"
 
@@ -1631,10 +1643,6 @@ msgstr ""
 "No hay límite de tiempo. Si pierdes una elección o una guerra, pasas a liderar la oposición y puedes volver al poder. El juego solo termina con impeachment, golpe, renuncia o muerte, y entonces eliges entre una nueva partida y asumir otro personaje.\n"
 "\n"
 "Todos envejecen, enferman y mueren, incluido tú, y surgen nuevos políticos con el tiempo. En países democráticos, crear una unidad subnacional pasa por el parlamento y por un plebiscito."
-
-#: scenes/ui/modals/help.tscn:75
-msgid "Entendi"
-msgstr "Entendido"
 
 #: scenes/ui/modals/minister_picker.tscn:48
 msgid "Ministério: Fazenda"
@@ -1900,6 +1908,65 @@ msgstr "Empresas"
 #: scenes/ui/panels/economy_panel.tscn:68 scenes/ui/panels/stock_panel.tscn:25
 msgid "Bolsa"
 msgstr "Bolsa"
+
+#: scenes/ui/panels/economy_panel.tscn:78
+#
+msgid "Como funciona"
+msgstr "Cómo funciona"
+
+#: scenes/ui/panels/economy_panel.tscn:89
+msgid "COMO FUNCIONA CADA INDICADOR"
+msgstr "CÓMO FUNCIONA CADA INDICADOR"
+
+#: scenes/ui/panels/economy_panel.tscn:96
+msgid "A fórmula que a simulação usa em cada indicador, com os números atuais do seu país."
+msgstr "La fórmula que la simulación usa en cada indicador, con los números actuales de su país."
+
+#: scenes/ui/panels/economy_panel.tscn:111
+#
+msgid "PIB potencial"
+msgstr "PIB potencial"
+
+#: scenes/ui/panels/economy_panel.tscn:125
+msgid "Juros"
+msgstr "Tasas de interés"
+
+#: scenes/ui/panels/economy_panel.tscn:146
+#
+msgid "Balança comercial"
+msgstr "Balanza comercial"
+
+#: scenes/ui/panels/economy_panel.tscn:153
+#
+msgid "Gasto e impostos"
+msgstr "Gasto e impuestos"
+
+#: scenes/ui/panels/economy_panel.tscn:160
+#
+msgid "Arrecadação"
+msgstr "Recaudación"
+
+#: scenes/ui/panels/economy_panel.tscn:167
+#
+msgid "Desigualdade"
+msgstr "Desigualdad"
+
+#: scenes/ui/panels/economy_panel.tscn:174
+#
+msgid "Petróleo e minérios"
+msgstr "Petróleo y minerales"
+
+#: scenes/ui/panels/economy_panel.tscn:181
+#: scripts/sim/law_catalog.gd_(escolha_profession)
+#: scripts/sim/law_catalog.gd_(escolha_sector)
+#: scripts/sim/law_catalog.gd_(escolha_tr_setor)
+msgid "Indústria"
+msgstr "Industria"
+
+#: scenes/ui/panels/economy_panel.tscn:188
+#
+msgid "Parceiros comerciais"
+msgstr "Socios comerciales"
 
 #: scenes/ui/panels/infra_build.tscn:35 scenes/ui/rows/infra_row.tscn:106
 msgid "Ampliar"
@@ -2693,131 +2760,131 @@ msgstr "Acepto. Firmamos, y cada parlamento ratifica."
 msgid "Isso não combina com o que eu defendo, ou ainda não confio o bastante."
 msgstr "Eso no encaja con lo que defiendo, o aún no confío lo suficiente."
 
-#: scripts/sim/diplomacy.gd:344
+#: scripts/sim/diplomacy.gd:345
 #, c-format
 msgid "%s retalia com tarifa de %d%% contra %s."
 msgstr "%s toma represalias con un arancel del %d%% contra %s."
 
-#: scripts/sim/diplomacy.gd:356
+#: scripts/sim/diplomacy.gd:357
 #, c-format
 msgid "%s e %s assinam pacto de defesa mútua."
 msgstr "%s y %s firman un pacto de defensa mutua."
 
-#: scripts/sim/diplomacy.gd:402
+#: scripts/sim/diplomacy.gd:403
 #, c-format
 msgid "GUERRA: %s invade %s."
 msgstr "GUERRA: %s invade %s."
 
-#: scripts/sim/diplomacy.gd:441
+#: scripts/sim/diplomacy.gd:442
 #, c-format
 msgid "%s entra na guerra entre %s e %s."
 msgstr "%s entra en la guerra entre %s y %s."
 
-#: scripts/sim/diplomacy.gd:554
+#: scripts/sim/diplomacy.gd:555
 #, c-format
 msgid "%s expulsa os invasores e força %s a recuar."
 msgstr "%s expulsa a los invasores y obliga a %s a retroceder."
 
-#: scripts/sim/diplomacy.gd:591
+#: scripts/sim/diplomacy.gd:592
 #, c-format
 msgid "Cessar-fogo entre %s e %s: as fronteiras antigas voltam a valer."
 msgstr "Alto el fuego entre %s y %s: vuelven a valer las fronteras antiguas."
 
-#: scripts/sim/diplomacy.gd:593 scripts/ui/debug_menu.gd:296
+#: scripts/sim/diplomacy.gd:594 scripts/ui/debug_menu.gd:296
 #, c-format
 msgid "Tratado de paz: %s cede {pct} do território a %s."
 msgstr "Tratado de paz: %s cede {pct} del territorio a %s."
 
-#: scripts/sim/diplomacy.gd:598
+#: scripts/sim/diplomacy.gd:599
 #, c-format
 msgid "Negociação entre %s e %s: %s cede {pct} do território."
 msgstr "Negociación entre %s y %s: %s cede {pct} del territorio."
 
-#: scripts/sim/diplomacy.gd:613
+#: scripts/sim/diplomacy.gd:614
 #, c-format
 msgid "%s capitula e é anexado por %s."
 msgstr "%s capitula y es anexionado por %s."
 
-#: scripts/sim/diplomacy.gd:616
+#: scripts/sim/diplomacy.gd:617
 #, c-format
 msgid "%s capitula; %s instala governo aliado."
 msgstr "%s capitula; %s instala un gobierno aliado."
 
-#: scripts/sim/diplomacy.gd:632
+#: scripts/sim/diplomacy.gd:633
 #, c-format
 msgid "Cessar-fogo entre %s e %s: nenhuma área do tamanho negociado, as fronteiras não mudam."
 msgstr "Alto el fuego entre %s y %s: ningún área del tamaño negociado, las fronteras no cambian."
 
-#: scripts/sim/economy.gd:409
+#: scripts/sim/economy.gd:431
 #, c-format
 msgid "%s abandona a âncora cambial: moeda desvaloriza %d%%."
 msgstr "%s abandona el ancla cambiaria: la moneda se devalúa un %d%%."
 
-#: scripts/sim/economy.gd:441
+#: scripts/sim/economy.gd:463
 #, c-format
 msgid "Agências rebaixam a nota de crédito de %s de %s para %s."
 msgstr "Las agencias rebajan la calificación de %s de %s a %s."
 
-#: scripts/sim/economy.gd:441
+#: scripts/sim/economy.gd:463
 #, c-format
 msgid "Agências elevam a nota de crédito de %s de %s para %s."
 msgstr "Las agencias elevan la calificación de %s de %s a %s."
 
-#: scripts/sim/economy.gd:553
+#: scripts/sim/economy.gd:576
 #, c-format
 msgid "%s declara moratória da dívida soberana; credores aceitam corte de 45%%."
 msgstr "%s declara impago de la deuda soberana; los acreedores aceptan una quita del 45%%."
 
-#: scripts/sim/economy.gd:574
+#: scripts/sim/economy.gd:597
 #, c-format
 msgid "FMI aprova pacote de US$ %.0f bi para %s, com ajuste fiscal."
 msgstr "El FMI aprueba un paquete de US$ %.0f mil M para %s, con ajuste fiscal."
 
-#: scripts/sim/economy.gd:634
+#: scripts/sim/economy.gd:657
 #, c-format
 msgid "Eleições em %s: oposição vence e promete mudar o rumo."
 msgstr "Elecciones en %s: la oposición gana y promete cambiar el rumbo."
 
-#: scripts/sim/economy.gd:643
+#: scripts/sim/economy.gd:666
 #, c-format
 msgid "Golpe de Estado em %s: junta militar assume o poder."
 msgstr "Golpe de Estado en %s: una junta militar toma el poder."
 
-#: scripts/sim/economy.gd:667
+#: scripts/sim/economy.gd:690
 #, c-format
 msgid "Crise bancária em %s: crédito congela e o Tesouro socorre bancos."
 msgstr "Crisis bancaria en %s: el crédito se congela y el Tesoro rescata a los bancos."
 
-#: scripts/sim/economy.gd:681
+#: scripts/sim/economy.gd:704
 #, c-format
 msgid "%s entra em recessão: o PIB encolhe %s em 12 meses."
 msgstr "%s entra en recesión: el PIB se contrae un %s en 12 meses."
 
-#: scripts/sim/economy.gd:683
+#: scripts/sim/economy.gd:706
 #, c-format
 msgid "%s sai da recessão: o PIB volta a crescer."
 msgstr "%s sale de la recesión: el PIB vuelve a crecer."
 
-#: scripts/sim/economy.gd:690
+#: scripts/sim/economy.gd:713
 #, c-format
 msgid "Inflação em %s passa de %s ao ano."
 msgstr "La inflación en %s supera el %s anual."
 
-#: scripts/sim/economy.gd:695
+#: scripts/sim/economy.gd:718
 msgid "O BCE"
 msgstr "El BCE"
 
-#: scripts/sim/economy.gd:695
+#: scripts/sim/economy.gd:718
 #, c-format
 msgid "O banco central de %s"
 msgstr "El banco central de %s"
 
-#: scripts/sim/economy.gd:696
+#: scripts/sim/economy.gd:719
 #, c-format
 msgid "%s eleva o juro básico para %s ao ano."
 msgstr "%s eleva el tipo básico al %s anual."
 
-#: scripts/sim/economy.gd:696
+#: scripts/sim/economy.gd:719
 #, c-format
 msgid "%s reduz o juro básico para %s ao ano."
 msgstr "%s reduce el tipo básico al %s anual."
@@ -3285,8 +3352,8 @@ msgstr "Concesión firmada: %s entran en el Tesoro."
 msgid "US$ %s bi"
 msgstr "US$ %s mil M"
 
-#: scripts/sim/infrastructure.gd:430 scripts/ui/main.gd:954
-#: scripts/ui/main.gd:957
+#: scripts/sim/infrastructure.gd:430 scripts/ui/main.gd:956
+#: scripts/ui/main.gd:959
 #, c-format
 msgid "%d anos"
 msgstr "%d años"
@@ -5656,7 +5723,7 @@ msgstr "El partido necesita un nombre."
 msgid "Escolha uma família política."
 msgstr "Elige una familia política."
 
-#: scripts/sim/politics.gd:823 scripts/ui/main.gd:823
+#: scripts/sim/politics.gd:823 scripts/ui/main.gd:825
 msgid "Já existe um partido com esse nome."
 msgstr "Ya existe un partido con ese nombre."
 
@@ -5738,7 +5805,7 @@ msgstr "El parlamento de %s rechaza: %s (%s), por %d a %d."
 msgid "O Código Eleitoral de %s não permite outro mandato: o chefe de governo deixa o cargo, e %s assume."
 msgstr "El Código Electoral de %s no permite otro mandato: el jefe de gobierno deja el cargo, y %s asume."
 
-#: scripts/sim/sectors.gd:162
+#: scripts/sim/sectors.gd:168
 #, c-format
 msgid "Quebra de safra em %s: a agropecuária encolhe."
 msgstr "Pérdida de cosecha en %s: el agro se contrae."
@@ -7037,7 +7104,7 @@ msgstr ""
 "%s, %d años  ·  %s\n"
 "Competencia: %d%%%s"
 
-#: scripts/ui/cabinet_panel.gd:71 scripts/ui/main.gd:647
+#: scripts/ui/cabinet_panel.gd:71 scripts/ui/main.gd:649
 msgid "  ·  doente"
 msgstr "  ·  enfermo"
 
@@ -7932,6 +7999,183 @@ msgstr "%s dejó de ser capital de %s."
 msgid "%s agora é capital de %s."
 msgstr "%s es ahora capital de %s."
 
+#: scripts/ui/formula_explain.gd:26
+msgid "PIB potencial: modelo de Solow"
+msgstr "PIB potencial: modelo de Solow"
+
+#: scripts/ui/formula_explain.gd:28
+#, c-format
+msgid "α = %s  ·  s = %s  ·  n = %s  ·  δ = %s\nK/Y hoje = %s  ·  K/Y de equilíbrio = %s  ·  hiato do produto = %s"
+msgstr "α = %s  ·  s = %s  ·  n = %s  ·  δ = %s\nK/Y hoy = %s  ·  K/Y de equilibrio = %s  ·  brecha del producto = %s"
+
+#: scripts/ui/formula_explain.gd:30
+msgid "O PIB de longo prazo depende de capital, trabalho, educação e produtividade (A). Investir acima da depreciação aproxima o capital do equilíbrio; daí em diante, só a produtividade sustenta o crescimento."
+msgstr "El PIB de largo plazo depende del capital, el trabajo, la educación y la productividad (A). Invertir por encima de la depreciación acerca el capital al equilibrio; a partir de ahí, solo la productividad sostiene el crecimiento."
+
+#: scripts/ui/formula_explain.gd:35
+msgid "Inflação: curva de Phillips e equação quantitativa"
+msgstr "Inflación: curva de Phillips y ecuación cuantitativa"
+
+#: scripts/ui/formula_explain.gd:36
+msgid "π = πe + κ·hiato + choques      M·V = P·Y"
+msgstr "π = πe + κ·brecha + shocks      M·V = P·Y"
+
+#: scripts/ui/formula_explain.gd:37
+#, c-format
+msgid "πe = %s  ·  κ = %s  ·  hiato = %s  →  núcleo-alvo ≈ %s\nV = %s  ·  senhoriagem = %s/ano  ·  imposto inflacionário = %s/ano"
+msgstr "πe = %s  ·  κ = %s  ·  brecha = %s  →  núcleo objetivo ≈ %s\nV = %s  ·  señoreaje = %s/año  ·  impuesto inflacionario = %s/año"
+
+#: scripts/ui/formula_explain.gd:40
+msgid "Com a economia acima do potencial os preços aceleram; expectativas ancoradas seguram a inflação. Financiar o déficit emitindo moeda aumenta M e, com V e Y dados, o nível de preços sobe na mesma proporção."
+msgstr "Con la economía por encima del potencial los precios se aceleran; las expectativas ancladas contienen la inflación. Financiar el déficit emitiendo dinero aumenta M y, con V e Y dados, el nivel de precios sube en la misma proporción."
+
+#: scripts/ui/formula_explain.gd:44
+msgid "Juros: regra de Taylor"
+msgstr "Tasas de interés: regla de Taylor"
+
+#: scripts/ui/formula_explain.gd:45
+msgid "i = r* + πe + 0,6·(π − π*) + 0,5·hiato"
+msgstr "i = r* + πe + 0,6·(π − π*) + 0,5·brecha"
+
+#: scripts/ui/formula_explain.gd:46
+#, c-format
+msgid "r* = %s  ·  πe = %s  ·  π = %s  ·  meta π* = %s  ·  hiato = %s\nTaxa sugerida = %s  ·  taxa atual = %s"
+msgstr "r* = %s  ·  πe = %s  ·  π = %s  ·  meta π* = %s  ·  brecha = %s\nTasa sugerida = %s  ·  tasa actual = %s"
+
+#: scripts/ui/formula_explain.gd:48
+msgid "O banco central sobe o juro mais que a inflação (princípio de Taylor) para que o juro real aumente e esfrie a demanda. Bancos centrais sem independência podem seguir o governo em vez da regra."
+msgstr "El banco central sube la tasa más que la inflación (principio de Taylor) para que la tasa real aumente y enfríe la demanda. Los bancos centrales sin independencia pueden seguir al gobierno en lugar de la regla."
+
+#: scripts/ui/formula_explain.gd:53
+msgid "Câmbio: paridade do poder de compra e Balassa-Samuelson"
+msgstr "Tipo de cambio: paridad del poder adquisitivo y Balassa-Samuelson"
+
+#: scripts/ui/formula_explain.gd:55
+#, c-format
+msgid "PPC: E = %s  ·  câmbio atual = %s\nDepreciação pela PPC = %s/ano  ·  Balassa-Samuelson acumulado = %s"
+msgstr "PPA: E = %s  ·  tipo de cambio actual = %s\nDepreciación por PPA = %s/año  ·  Balassa-Samuelson acumulado = %s"
+
+#: scripts/ui/formula_explain.gd:57
+msgid "No longo prazo a moeda perde valor na proporção da inflação a mais que a dos EUA. Países que ganham produtividade mais rápido veem o câmbio real se apreciar, porque os serviços ficam mais caros."
+msgstr "A largo plazo la moneda pierde valor en proporción a la inflación por encima de la de EE. UU. Los países cuya productividad crece más rápido ven apreciarse su tipo de cambio real, porque los servicios se encarecen."
+
+#: scripts/ui/formula_explain.gd:62
+msgid "Balança comercial: Marshall-Lerner e curva J"
+msgstr "Balanza comercial: Marshall-Lerner y curva J"
+
+#: scripts/ui/formula_explain.gd:63
+msgid "εx + εm > 1      ΔBC ≈ d · (ajuste · (εx + εm) − 1)"
+msgstr "εx + εm > 1      ΔBC ≈ d · (ajuste · (εx + εm) − 1)"
+
+#: scripts/ui/formula_explain.gd:64
+#, c-format
+msgid "εx = %s  ·  εm = %s  ·  soma = %s\nCâmbio real = %s  ·  câmbio real que os volumes já sentem = %s  ·  conta corrente = %s do PIB"
+msgstr "εx = %s  ·  εm = %s  ·  suma = %s\nTipo de cambio real = %s  ·  tipo real que ya sienten los volúmenes = %s  ·  cuenta corriente = %s del PIB"
+
+#: scripts/ui/formula_explain.gd:66
+msgid "Depois de uma desvalorização, as importações encarecem na hora, mas os volumes levam cerca de um ano para reagir: a balança piora antes de melhorar. Como as elasticidades somam mais que 1, o efeito final é positivo."
+msgstr "Tras una devaluación, las importaciones se encarecen de inmediato, pero los volúmenes tardan cerca de un año en reaccionar: la balanza empeora antes de mejorar. Como las elasticidades suman más de 1, el efecto final es positivo."
+
+#: scripts/ui/formula_explain.gd:73
+msgid "Política fiscal: multiplicador keynesiano"
+msgstr "Política fiscal: multiplicador keynesiano"
+
+#: scripts/ui/formula_explain.gd:75
+#, c-format
+msgid "c = %s  ·  t = %s  ·  m = %s  →  k = %s\nFração ricardiana θ = %s  →  multiplicador do imposto = %s"
+msgstr "c = %s  ·  t = %s  ·  m = %s  →  k = %s\nFracción ricardiana θ = %s  →  multiplicador del impuesto = %s"
+
+#: scripts/ui/formula_explain.gd:77
+msgid "Cada real de gasto vira renda de alguém, que consome parte dela. Impostos e importações vazam do circuito. Com a economia aquecida, parte do estímulo vira juro e preço. Corte de imposto rende menos: as famílias poupam parte, à espera do imposto futuro, ainda mais com dívida alta."
+msgstr "Cada unidad de gasto se convierte en ingreso de alguien, que consume una parte. Los impuestos y las importaciones se fugan del circuito. Con la economía recalentada, parte del estímulo se vuelve tasa de interés y precios. Un recorte de impuestos rinde menos: las familias ahorran una parte esperando el impuesto futuro, más aún con deuda alta."
+
+#: scripts/ui/formula_explain.gd:82
+msgid "Arrecadação: curva de Laffer"
+msgstr "Recaudación: curva de Laffer"
+
+#: scripts/ui/formula_explain.gd:84
+#, c-format
+msgid "ε = %s  ·  carga de partida t0 = %s  ·  carga atual t = %s\nBase tributável = %s da original  ·  alíquota de arrecadação máxima t* = %s"
+msgstr "ε = %s  ·  carga inicial t0 = %s  ·  carga actual t = %s\nBase imponible = %s de la original  ·  tasa de recaudación máxima t* = %s"
+
+#: scripts/ui/formula_explain.gd:86
+msgid "Imposto mais alto desestimula trabalho, investimento e declaração da renda. Até t* a arrecadação ainda sobe; acima, cai."
+msgstr "Impuestos más altos desalientan el trabajo, la inversión y la declaración de ingresos. Hasta t* la recaudación aún sube; por encima, cae."
+
+#: scripts/ui/formula_explain.gd:91
+msgid "Desigualdade: curva de Lorenz e índice de Gini"
+msgstr "Desigualdad: curva de Lorenz e índice de Gini"
+
+#: scripts/ui/formula_explain.gd:93
+#, c-format
+msgid "Gini = %s\nFatia da renda por quinto da população: %s · %s · %s · %s · %s"
+msgstr "Gini = %s\nParticipación en el ingreso por quintil de la población: %s · %s · %s · %s · %s"
+
+#: scripts/ui/formula_explain.gd:95
+msgid "A curva de Lorenz mostra quanto da renda os p% mais pobres recebem. Quanto mais ela se afasta da diagonal, maior o Gini: 0 é igualdade total, 1 é um só com tudo."
+msgstr "La curva de Lorenz muestra cuánto del ingreso reciben el p% más pobre. Cuanto más se aleja de la diagonal, mayor el Gini: 0 es igualdad total, 1 es uno solo con todo."
+
+#: scripts/ui/formula_explain.gd:100
+msgid "Petróleo e minérios: regra de Hotelling"
+msgstr "Petróleo y minerales: regla de Hotelling"
+
+#: scripts/ui/formula_explain.gd:102
+#, c-format
+msgid "r = %s  ·  anos = %s  ·  renda de escassez do petróleo = %s do preço\nPreço de tendência = US$ %s  ·  preço atual = US$ %s"
+msgstr "r = %s  ·  años = %s  ·  renta de escasez del petróleo = %s del precio\nPrecio de tendencia = US$ %s  ·  precio actual = US$ %s"
+
+#: scripts/ui/formula_explain.gd:105
+msgid "Petróleo deixado no chão é um ativo: só vale extrair hoje se a renda do recurso crescer como o juro. Por isso o preço real dos recursos esgotáveis tende a subir com o tempo."
+msgstr "El petróleo bajo tierra es un activo: solo conviene extraerlo hoy si la renta del recurso crece como la tasa de interés. Por eso el precio real de los recursos agotables tiende a subir con el tiempo."
+
+#: scripts/ui/formula_explain.gd:111
+msgid "Indústria: doença holandesa"
+msgstr "Industria: enfermedad holandesa"
+
+#: scripts/ui/formula_explain.gd:112
+msgid "Δ(indústria/PIB) ≈ −0,5 · Δ(renda de recursos/PIB)"
+msgstr "Δ(industria/PIB) ≈ −0,5 · Δ(renta de recursos/PIB)"
+
+#: scripts/ui/formula_explain.gd:113
+#, c-format
+msgid "Renda de commodities = %s do PIB (partida: %s)\nEfeito na indústria = %s do PIB  ·  fatia atual da indústria = %s"
+msgstr "Renta de materias primas = %s del PIB (inicio: %s)\nEfecto en la industria = %s del PIB  ·  participación actual de la industria = %s"
+
+#: scripts/ui/formula_explain.gd:115
+msgid "Um boom de commodities traz dólares, aprecia o câmbio real e puxa trabalhadores e capital para os recursos e os serviços. A indústria perde competitividade."
+msgstr "Un auge de materias primas trae dólares, aprecia el tipo de cambio real y atrae trabajadores y capital hacia los recursos y los servicios. La industria pierde competitividad."
+
+#: scripts/ui/formula_explain.gd:119
+msgid "Comércio: modelo gravitacional"
+msgstr "Comercio: modelo gravitacional"
+
+#: scripts/ui/formula_explain.gd:121
+#, c-format
+msgid "PIB do país = %s  ·  exportações = %s  ·  importações = %s"
+msgstr "PIB del país = %s  ·  exportaciones = %s  ·  importaciones = %s"
+
+#: scripts/ui/formula_explain.gd:122
+msgid "Países comerciam mais com parceiros grandes e próximos. Blocos comerciais, a mesma região e boas relações aumentam o fluxo; sanções e tarifas o reduzem."
+msgstr "Los países comercian más con socios grandes y cercanos. Los bloques comerciales, la misma región y las buenas relaciones aumentan el flujo; las sanciones y los aranceles lo reducen."
+
+#: scripts/ui/formula_explain.gd:126
+#
+msgid "Desemprego: lei de Okun"
+msgstr "Desempleo: ley de Okun"
+
+#: scripts/ui/formula_explain.gd:127
+msgid "u = u* − β · hiato"
+msgstr "u = u* − β · brecha"
+
+#: scripts/ui/formula_explain.gd:128
+#, c-format
+msgid "u* = %s  ·  β = %s  ·  hiato = %s  →  desemprego-alvo = %s  ·  atual = %s"
+msgstr "u* = %s  ·  β = %s  ·  brecha = %s  →  desempleo objetivo = %s  ·  actual = %s"
+
+#: scripts/ui/formula_explain.gd:130
+msgid "Quando o PIB fica abaixo do potencial, as empresas demitem. Desemprego alto por muito tempo eleva a própria taxa natural (histerese)."
+msgstr "Cuando el PIB queda por debajo del potencial, las empresas despiden. Un desempleo alto por mucho tiempo eleva la propia tasa natural (histéresis)."
+
 #: scripts/ui/hud.gd:188
 msgid "parado"
 msgstr "parado"
@@ -8049,7 +8293,7 @@ msgstr "D (impago)"
 msgid "Falar com %s"
 msgstr "Hablar con %s"
 
-#: scripts/ui/hud.gd:468 scripts/ui/main.gd:701
+#: scripts/ui/hud.gd:468 scripts/ui/main.gd:703
 msgid "o líder"
 msgstr "el líder"
 
@@ -8914,7 +9158,7 @@ msgstr "  [evento: %s]"
 msgid "%d registro(s) guardado(s)"
 msgstr "%d registro(s) guardado(s)"
 
-#: scripts/ui/main.gd:258 scripts/ui/main.gd:1129
+#: scripts/ui/main.gd:258 scripts/ui/main.gd:1131
 msgid "Preparando o mundo..."
 msgstr "Preparando el mundo..."
 
@@ -8995,138 +9239,138 @@ msgstr "%s asume el cargo en %s. El mundo observa."
 msgid "%s lidera a oposição em %s contra o governo de %s."
 msgstr "%s lidera la oposición en %s contra el gobierno de %s."
 
-#: scripts/ui/main.gd:647
+#: scripts/ui/main.gd:649
 #, c-format
 msgid "%s, %d anos  ·  %s  ·  competência %d%%%s"
 msgstr "%s, %d años  ·  %s  ·  competencia %d%%%s"
 
-#: scripts/ui/main.gd:656
+#: scripts/ui/main.gd:658
 msgid "Você: "
 msgstr "Tú: "
 
-#: scripts/ui/main.gd:664
+#: scripts/ui/main.gd:666
 #, c-format
 msgid "%s  ·  %d assentos  ·  %s dos votos. A bússola do partido é a média dos políticos."
 msgstr "%s  ·  %d escaños  ·  %s de los votos. La brújula del partido es la media de sus políticos."
 
-#: scripts/ui/main.gd:682
+#: scripts/ui/main.gd:684
 #, c-format
 msgid "Ministério: %s"
 msgstr "Ministerio: %s"
 
-#: scripts/ui/main.gd:687
+#: scripts/ui/main.gd:689
 #, c-format
 msgid "%s assume a pasta."
 msgstr "%s asume la cartera."
 
-#: scripts/ui/main.gd:701
+#: scripts/ui/main.gd:703
 #, c-format
 msgid "Conversa com %s"
 msgstr "Conversación con %s"
 
-#: scripts/ui/main.gd:701
+#: scripts/ui/main.gd:703
 #, c-format
 msgid "%s  ·  %s  ·  %s, %d anos, %s"
 msgstr "%s  ·  %s  ·  %s, %d años, %s"
 
-#: scripts/ui/main.gd:705
+#: scripts/ui/main.gd:707
 #, c-format
 msgid "Dourado: %s. Branco: seu partido."
 msgstr "Dorado: %s. Blanco: tu partido."
 
-#: scripts/ui/main.gd:705
+#: scripts/ui/main.gd:707
 msgid "líder"
 msgstr "líder"
 
-#: scripts/ui/main.gd:720
+#: scripts/ui/main.gd:722
 #, c-format
 msgid "Falas restantes: %d"
 msgstr "Intervenciones restantes: %d"
 
-#: scripts/ui/main.gd:720
+#: scripts/ui/main.gd:722
 msgid "A conversa terminou."
 msgstr "La conversación terminó."
 
-#: scripts/ui/main.gd:739
+#: scripts/ui/main.gd:741
 msgid "Todo político pertence a um partido. Escolha um deles ou crie o seu, e decida se começa no governo ou na oposição."
 msgstr "Todo político pertenece a un partido. Elige uno o crea el tuyo, y decide si empiezas en el gobierno o en la oposición."
 
-#: scripts/ui/main.gd:739
+#: scripts/ui/main.gd:741
 msgid "Só é possível mudar de partido uma vez por ano. O partido novo só ganha assentos na próxima eleição."
 msgstr "Solo se puede cambiar de partido una vez al año. El partido nuevo solo gana escaños en la próxima elección."
 
-#: scripts/ui/main.gd:740
+#: scripts/ui/main.gd:742
 #, c-format
 msgid "Escolha seu partido em %s"
 msgstr "Elige tu partido en %s"
 
-#: scripts/ui/main.gd:777
+#: scripts/ui/main.gd:779
 msgid "Regimes fechados não têm eleições."
 msgstr "Los regímenes cerrados no tienen elecciones."
 
-#: scripts/ui/main.gd:779
+#: scripts/ui/main.gd:781
 #, c-format
 msgid "Hoje governa: %s."
 msgstr "Hoy gobierna: %s."
 
-#: scripts/ui/main.gd:779
+#: scripts/ui/main.gd:781
 msgid "Regime fechado, sem eleições: só é possível governar."
 msgstr "Régimen cerrado, sin elecciones: solo se puede gobernar."
 
-#: scripts/ui/main.gd:787
+#: scripts/ui/main.gd:789
 #, c-format
 msgid "Ficar em %s  ·  %s  ·  %s dos votos  ·  %d de %d assentos"
 msgstr "Quedarse en %s  ·  %s  ·  %s de los votos  ·  %d de %d escaños"
 
-#: scripts/ui/main.gd:787
+#: scripts/ui/main.gd:789
 #, c-format
 msgid "%s  ·  %s  ·  %s dos votos  ·  %d de %d assentos"
 msgstr "%s  ·  %s  ·  %s de los votos  ·  %d de %d escaños"
 
-#: scripts/ui/main.gd:788
+#: scripts/ui/main.gd:790
 #, c-format
 msgid "%s. Clique para escolher."
 msgstr "%s. Haz clic para elegir."
 
-#: scripts/ui/main.gd:819
+#: scripts/ui/main.gd:821
 msgid "Dê um nome ao partido."
 msgstr "Dale un nombre al partido."
 
-#: scripts/ui/main.gd:922
+#: scripts/ui/main.gd:924
 #, c-format
 msgid "Bandeira: %s"
 msgstr "Bandera: %s"
 
-#: scripts/ui/main.gd:1035
+#: scripts/ui/main.gd:1037
 msgid "Renunciar ao cargo? Isso encerra a sua carreira, e depois você escolhe entre um novo jogo e um novo personagem."
 msgstr "¿Renunciar al cargo? Eso termina tu carrera, y después eliges entre una nueva partida y un nuevo personaje."
 
-#: scripts/ui/main.gd:1045
+#: scripts/ui/main.gd:1047
 msgid "Impeachment"
 msgstr "Impeachment"
 
-#: scripts/ui/main.gd:1045
+#: scripts/ui/main.gd:1047
 msgid "Deposto"
 msgstr "Depuesto"
 
-#: scripts/ui/main.gd:1045
+#: scripts/ui/main.gd:1047
 msgid "Renúncia"
 msgstr "Renuncia"
 
-#: scripts/ui/main.gd:1045
+#: scripts/ui/main.gd:1047
 msgid "Assassinato"
 msgstr "Asesinato"
 
-#: scripts/ui/main.gd:1045
+#: scripts/ui/main.gd:1047
 msgid "Fim da vida"
 msgstr "Fin de la vida"
 
-#: scripts/ui/main.gd:1050
+#: scripts/ui/main.gd:1052
 #, c-format
 msgid "Pontuação final: %s"
 msgstr "Puntuación final: %s"
 
-#: scripts/ui/main.gd:1051
+#: scripts/ui/main.gd:1053
 #, c-format
 msgid ""
 "Tempo no poder: %s anos  ·  Reeleições: %d\n"
@@ -9137,74 +9381,74 @@ msgstr ""
 "PIB per cápita real: %s veces el de 2025\n"
 "Deuda/PIB: %s  ·  Inflación: %s  ·  Influencia: %d.º del mundo"
 
-#: scripts/ui/main.gd:1081
+#: scripts/ui/main.gd:1083
 #, c-format
 msgid "Tratado com %s"
 msgstr "Tratado con %s"
 
-#: scripts/ui/main.gd:1081
+#: scripts/ui/main.gd:1083
 #, c-format
 msgid "O líder de lá é %s (%s)."
 msgstr "El líder de allí es %s (%s)."
 
-#: scripts/ui/main.gd:1089
+#: scripts/ui/main.gd:1091
 #, c-format
 msgid "Vale por %d anos."
 msgstr "Vale por %d años."
 
-#: scripts/ui/main.gd:1089
+#: scripts/ui/main.gd:1091
 msgid "Sem prazo."
 msgstr "Sin plazo."
 
-#: scripts/ui/main.gd:1105
+#: scripts/ui/main.gd:1107
 #, c-format
 msgid "Eleição de %s em %s"
 msgstr "Elección de %s en %s"
 
-#: scripts/ui/main.gd:1107
+#: scripts/ui/main.gd:1109
 #, c-format
 msgid "[color=#8ba2af]Sistema:[/color] %s  ·  cláusula de barreira de %d%%"
 msgstr "[color=#8ba2af]Sistema:[/color] %s  ·  barrera del %d%%"
 
-#: scripts/ui/main.gd:1108
+#: scripts/ui/main.gd:1110
 #, c-format
 msgid "[color=#8ba2af]Regime:[/color] %s"
 msgstr "[color=#8ba2af]Régimen:[/color] %s"
 
-#: scripts/ui/main.gd:1109
+#: scripts/ui/main.gd:1111
 #, c-format
 msgid "[color=#8ba2af]Comparecimento:[/color] %s  ·  %d distritos"
 msgstr "[color=#8ba2af]Participación:[/color] %s  ·  %d distritos"
 
-#: scripts/ui/main.gd:1112
+#: scripts/ui/main.gd:1114
 #, c-format
 msgid "[color=#8ba2af]Chefe de governo:[/color] %s, com %s, em %d turno(s)"
 msgstr "[color=#8ba2af]Jefe de gobierno:[/color] %s, con %s, en %d vuelta(s)"
 
-#: scripts/ui/main.gd:1115
+#: scripts/ui/main.gd:1117
 #, c-format
 msgid "[color=#%s]■[/color] %s: %s dos votos, %d deputados, %d senadores"
 msgstr "[color=#%s]■[/color] %s: %s de los votos, %d diputados, %d senadores"
 
-#: scripts/ui/main.gd:1119
+#: scripts/ui/main.gd:1121
 #, c-format
 msgid "%s: %d cadeiras, %s mi de habitantes, maioria de %s"
 msgstr "%s: %d escaños, %s M de habitantes, mayoría de %s"
 
-#: scripts/ui/main.gd:1151
+#: scripts/ui/main.gd:1153
 #, c-format
 msgid "Não foi possível salvar: erro %d."
 msgstr "No se pudo guardar: error %d."
 
-#: scripts/ui/main.gd:1160
+#: scripts/ui/main.gd:1162
 msgid "Não foi possível salvar: o arquivo não pôde ser conferido."
 msgstr "No se pudo guardar: el archivo no pudo verificarse."
 
-#: scripts/ui/main.gd:1166
+#: scripts/ui/main.gd:1168
 msgid "Partida salva."
 msgstr "Partida guardada."
 
-#: scripts/ui/main.gd:1174
+#: scripts/ui/main.gd:1176
 msgid "Carregando a partida..."
 msgstr "Cargando la partida..."
 
@@ -10300,12 +10544,6 @@ msgstr "Derechos fundamentales y deberes de los ciudadanos."
 #: scripts/sim/law_catalog.gd_(escolha_tr_setor) scripts/sim/sectors.gd_(NAMES)
 msgid "Agropecuária"
 msgstr "Agropecuaria"
-
-#: scripts/sim/law_catalog.gd_(escolha_profession)
-#: scripts/sim/law_catalog.gd_(escolha_sector)
-#: scripts/sim/law_catalog.gd_(escolha_tr_setor) scripts/sim/sectors.gd_(NAMES)
-msgid "Indústria"
-msgstr "Industria"
 
 #: scripts/sim/law_catalog.gd_(escolha_profession)
 #: scripts/sim/law_catalog.gd_(escolha_sector)

@@ -148,6 +148,12 @@ static func step_month(c: Country, world: GameWorld) -> void:
 		init_country(c, world)
 	if world.month == 0:
 		var target := structural_shares(c, world)
+		# Doença holandesa: renda de recursos acima da de partida aprecia o câmbio e, ao longo dos anos,
+		# tira fatia da indústria.
+		var rent := c.comm_exports / maxf(c.y_usd(), 0.001)
+		if not c.hist.has("_rent0"):
+			c.hist["_rent0"] = rent
+		target[INDUSTRY] = maxf(target[INDUSTRY] + EconFormulas.dutch_disease(rent - float(c.hist["_rent0"])), target[INDUSTRY] * 0.4)
 		var total := 0.0
 		for i in COUNT:
 			target[i] *= c.sector_bias[i] if c.sector_bias.size() == COUNT else 1.0

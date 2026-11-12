@@ -3,6 +3,7 @@ extends VBoxContainer
 ## Aba "Economia": setores, portos e aeroportos, empresas e bolsa, cada um em uma subaba.
 
 const SECTOR_ROW := preload("res://scenes/ui/rows/sector_row.tscn")
+const FORMULA_WINDOW := preload("res://scenes/ui/modals/formula_window.tscn")
 
 var world: GameWorld
 var _sector_rows: Array = []
@@ -12,6 +13,7 @@ var _sector_rows: Array = []
 @onready var infra: InfraPanel = %infra
 @onready var companies: CompaniesPanel = %companies
 @onready var stock: StockPanel = %stock
+@onready var _formula_buttons: GridContainer = %formula_buttons
 
 
 func bind(w: GameWorld) -> void:
@@ -20,6 +22,26 @@ func bind(w: GameWorld) -> void:
 	companies.bind(w)
 	stock.bind(w)
 	_tabs.tab_changed.connect(func(_i): refresh())
+	for b: Button in _formula_buttons.get_children():
+		var key := String(b.name)
+		b.pressed.connect(func(): show_formula(key))
+
+
+## Abre a janela "Como funciona" do indicador `key` com os números atuais do país do jogador.
+func show_formula(key: String) -> Control:
+	if world == null or world.player == null:
+		return null
+	var info := FormulaExplain.build(key, world.player, world)
+	var dim: Control = FORMULA_WINDOW.instantiate()
+	var main := get_tree().current_scene
+	var host: Node = main.get("modal_root") if main != null and main.get("modal_root") != null else get_tree().root
+	host.add_child(dim)
+	(dim.get_node("%title") as Label).text = info.title
+	(dim.get_node("%formula") as Label).text = info.formula
+	(dim.get_node("%numbers") as Label).text = info.numbers
+	(dim.get_node("%body") as Label).text = info.body
+	dim.get_node("%Fechar").pressed.connect(dim.queue_free)
+	return dim
 
 
 func refresh() -> void:

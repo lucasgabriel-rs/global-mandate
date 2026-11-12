@@ -79,3 +79,20 @@ func _run() -> void:
 	get_window().size = Vector2i(1100, 700)
 	await _wait(8)
 	await _shot("e3_janela_menor")
+	get_window().size = Vector2i(1600, 900)
+	await _wait(4)
+	(panel.get_node("%sub_tabs") as TabContainer).current_tab = 4
+	hud.refresh(true)
+	await _wait()
+	var buttons: GridContainer = panel.get_node("%formula_buttons")
+	_check(buttons.get_child_count() == FormulaExplain.KEYS.size(), "um botão por indicador: %d" % buttons.get_child_count())
+	for b: Button in buttons.get_children():
+		_check(String(b.name) in FormulaExplain.KEYS, "botão com fórmula conhecida: " + b.name)
+		var dim := panel.show_formula(String(b.name))
+		await _wait(2)
+		var nums := (dim.get_node("%numbers") as Label).text
+		_check((dim.get_node("%formula") as Label).text != "" and nums != "" and not nums.containsn(" nan") and not nums.containsn(" inf "), "janela %s com números: %s" % [b.name, nums.replace("\n", " | ")])
+		if String(b.name) == "fiscal":
+			await _shot("e4_como_funciona")
+		dim.queue_free()
+		await _wait(1)
