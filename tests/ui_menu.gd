@@ -16,8 +16,8 @@ func _ready() -> void:
 	DirAccess.make_dir_recursive_absolute(out)
 	GameSettings.path = "user://settings_test.cfg"
 	await _run()
-	DirAccess.remove_absolute(GameSettings.path)
 	GameSettings.reset()
+	DirAccess.remove_absolute(GameSettings.path)
 	print("RESULT: %d failures" % failures)
 	get_tree().quit()
 

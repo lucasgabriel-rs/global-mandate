@@ -99,7 +99,8 @@ func _run() -> void:
 	await _frames()
 	_time("open legislative center", func(): main.open_legislation())
 	await _frames()
-	main._close_modal(main.modal_root.get_child(main.modal_root.get_child_count() - 1))
+	# The legislative center is a floating window of the desk, not a modal.
+	main.close_legislation()
 	await _frames()
 	var dict := {}
 	_time("save: world.to_dict", func(): dict = w.to_dict())

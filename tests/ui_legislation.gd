@@ -139,7 +139,7 @@ func _run() -> void:
 	# Codes: one card per code, and "Alterar" opens the editor with only the blocks of that area.
 	var cards: Control = center.get_node("%code_cards")
 	_check(cards.get_child_count() == LawCodes.all().size(), "one card per code: %d" % cards.get_child_count())
-	var tax_card: Control = cards.get_node("code_tax")
+	var tax_card: Control = cards.get_node("code_tributario")
 	_check((tax_card.get_node("%articles") as Label).text.contains("artigo"), "the tax card shows the articles:" + (tax_card.get_node("%articles") as Label).text)
 	await _click(tax_card.get_node("%alter"))
 	var code_editor: LawEditor = _top()
@@ -205,7 +205,7 @@ func _run() -> void:
 	# Rights and duties: concrete blocks, no typed names.
 	(center.get_node("%Scroll") as ScrollContainer).scroll_vertical = 0
 	await _wait()
-	await _click(center.get_node("%code_cards").get_node("code_rights").get_node("%alter"))
+	await _click(center.get_node("%code_cards").get_node("code_direitos").get_node("%alter"))
 	var rights_editor: LawEditor = _top()
 	_check(rights_editor is LawEditor and rights_editor.code_id == "direitos", "the card opens the Rights and duties editor")
 	_check(_library_block(rights_editor, "dr_military") != null and _library_block(rights_editor, "dr_censor") != null, "the palette has military service and censorship")

@@ -7,7 +7,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8-bit\n"
 "X-Source-Language: pt_BR\n"
 
-#: scenes/ui/agenda.tscn:50 scenes/ui/chat/chat.tscn:90 scripts/ui/main.gd:773
+#: scenes/ui/agenda.tscn:50 scenes/ui/chat/chat.tscn:90 scripts/ui/main.gd:742
 msgid "Agenda"
 msgstr ""
 
@@ -1039,7 +1039,7 @@ msgstr ""
 msgid "POLÍTICA E DEFESA"
 msgstr ""
 
-#: scenes/ui/start_screen.tscn:384 scripts/ui/hud.gd:450 scripts/ui/hud.gd:812 scripts/ui/main.gd:399
+#: scenes/ui/start_screen.tscn:384 scripts/ui/hud.gd:450 scripts/ui/hud.gd:812 scripts/ui/main.gd:368
 msgid "Democracia"
 msgstr ""
 
@@ -1083,7 +1083,7 @@ msgstr ""
 msgid "Continuar partida salva"
 msgstr ""
 
-#: scenes/ui/chat/chat.tscn:82 scripts/ui/main.gd:767
+#: scenes/ui/chat/chat.tscn:82 scripts/ui/main.gd:736
 msgid "Conversas"
 msgstr ""
 
@@ -1679,7 +1679,7 @@ msgstr ""
 msgid "Texto da confirmação"
 msgstr ""
 
-#: scenes/ui/modals/corruption.tscn:50 scenes/ui/panels/politics_panel.tscn:64 scripts/ui/main.gd:732
+#: scenes/ui/modals/corruption.tscn:50 scenes/ui/panels/politics_panel.tscn:64 scripts/ui/main.gd:701
 msgid "Caixa dois"
 msgstr ""
 
@@ -1763,7 +1763,7 @@ msgstr ""
 msgid "Aleatório"
 msgstr ""
 
-#: scenes/ui/modals/game_over.tscn:48 scripts/ui/debug_menu.gd:489 scripts/ui/main.gd:1102
+#: scenes/ui/modals/game_over.tscn:48 scripts/ui/debug_menu.gd:489 scripts/ui/main.gd:1071
 msgid "Fim de jogo"
 msgstr ""
 
@@ -3758,7 +3758,7 @@ msgstr ""
 msgid "US$ %s bi"
 msgstr ""
 
-#: scripts/sim/infrastructure.gd:430 scripts/ui/main.gd:1006 scripts/ui/main.gd:1009
+#: scripts/sim/infrastructure.gd:430 scripts/ui/main.gd:975 scripts/ui/main.gd:978
 #, c-format
 msgid "%d anos"
 msgstr ""
@@ -6241,7 +6241,7 @@ msgstr ""
 msgid "Escolha uma família política."
 msgstr ""
 
-#: scripts/sim/politics.gd:823 scripts/ui/main.gd:875
+#: scripts/sim/politics.gd:823 scripts/ui/main.gd:844
 msgid "Já existe um partido com esse nome."
 msgstr ""
 
@@ -7864,7 +7864,7 @@ msgid ""
 "Competência: %d%%%s"
 msgstr ""
 
-#: scripts/ui/cabinet_panel.gd:71 scripts/ui/main.gd:701
+#: scripts/ui/cabinet_panel.gd:71 scripts/ui/main.gd:670
 msgid "  ·  doente"
 msgstr ""
 
@@ -8954,11 +8954,11 @@ msgstr ""
 msgid "Declarar guerra a %s? O mundo vai reagir e pactos de defesa podem ser acionados."
 msgstr ""
 
-#: scripts/ui/hud.gd:450 scripts/ui/hud.gd:812 scripts/ui/main.gd:399
+#: scripts/ui/hud.gd:450 scripts/ui/hud.gd:812 scripts/ui/main.gd:368
 msgid "Regime híbrido"
 msgstr ""
 
-#: scripts/ui/hud.gd:450 scripts/ui/main.gd:399
+#: scripts/ui/hud.gd:450 scripts/ui/main.gd:368
 msgid "Regime autoritário"
 msgstr ""
 
@@ -8967,7 +8967,7 @@ msgstr ""
 msgid "US$ %s"
 msgstr ""
 
-#: scripts/ui/hud.gd:455 scripts/ui/hud.gd:824 scripts/ui/main.gd:405
+#: scripts/ui/hud.gd:455 scripts/ui/hud.gd:824 scripts/ui/main.gd:374
 #, c-format
 msgid "%s mi"
 msgstr ""
@@ -9214,7 +9214,7 @@ msgstr ""
 msgid "até %s do saldo ao ano"
 msgstr ""
 
-#: scripts/ui/hud.gd:952 scripts/ui/main.gd:415
+#: scripts/ui/hud.gd:952 scripts/ui/main.gd:384
 #, c-format
 msgid "%s mil"
 msgstr ""
@@ -9895,195 +9895,195 @@ msgstr ""
 msgid "%d registro(s) guardado(s)"
 msgstr ""
 
-#: scripts/ui/main.gd:277 scripts/ui/main.gd:1184
+#: scripts/ui/main.gd:246 scripts/ui/main.gd:1153
 msgid "Preparando o mundo..."
 msgstr ""
 
-#: scripts/ui/main.gd:287
+#: scripts/ui/main.gd:256
 msgid "Desenhando o mapa..."
 msgstr ""
 
-#: scripts/ui/main.gd:397
+#: scripts/ui/main.gd:366
 msgid "África"
 msgstr ""
 
-#: scripts/ui/main.gd:397
+#: scripts/ui/main.gd:366
 msgid "Ásia"
 msgstr ""
 
-#: scripts/ui/main.gd:397
+#: scripts/ui/main.gd:366
 msgid "Europa"
 msgstr ""
 
-#: scripts/ui/main.gd:397
+#: scripts/ui/main.gd:366
 msgid "América Latina"
 msgstr ""
 
-#: scripts/ui/main.gd:398
+#: scripts/ui/main.gd:367
 msgid "Oriente Médio"
 msgstr ""
 
-#: scripts/ui/main.gd:398
+#: scripts/ui/main.gd:367
 msgid "América do Norte"
 msgstr ""
 
-#: scripts/ui/main.gd:398
+#: scripts/ui/main.gd:367
 msgid "Oceania"
 msgstr ""
 
-#: scripts/ui/main.gd:402
+#: scripts/ui/main.gd:371
 #, c-format
 msgid "PIB  ·  #%d"
 msgstr ""
 
-#: scripts/ui/main.gd:417 scripts/ui/stock_panel.gd:57
+#: scripts/ui/main.gd:386 scripts/ui/stock_panel.gd:57
 #, c-format
 msgid "%s do PIB"
 msgstr ""
 
-#: scripts/ui/main.gd:421
+#: scripts/ui/main.gd:390
 #, c-format
 msgid "Governo: %s (%s das cadeiras)"
 msgstr ""
 
-#: scripts/ui/main.gd:423
+#: scripts/ui/main.gd:392
 msgid "Eleição a cada 4 anos"
 msgstr ""
 
-#: scripts/ui/main.gd:425
+#: scripts/ui/main.gd:394
 msgid "Sem eleições livres: risco de golpe e revolta"
 msgstr ""
 
-#: scripts/ui/main.gd:435
+#: scripts/ui/main.gd:404
 msgid "Moeda: euro (juros definidos pelo BCE)"
 msgstr ""
 
-#: scripts/ui/main.gd:437
+#: scripts/ui/main.gd:406
 msgid "Moeda ancorada no dólar"
 msgstr ""
 
-#: scripts/ui/main.gd:439
+#: scripts/ui/main.gd:408
 msgid "EM GUERRA no início da partida"
 msgstr ""
 
-#: scripts/ui/main.gd:456
+#: scripts/ui/main.gd:425
 #, c-format
 msgid "%s toma posse em %s. O mundo observa."
 msgstr ""
 
-#: scripts/ui/main.gd:458
+#: scripts/ui/main.gd:427
 #, c-format
 msgid "%s lidera a oposição em %s contra o governo de %s."
 msgstr ""
 
-#: scripts/ui/main.gd:701
+#: scripts/ui/main.gd:670
 #, c-format
 msgid "%s, %d anos  ·  %s  ·  competência %d%%%s"
 msgstr ""
 
-#: scripts/ui/main.gd:710
+#: scripts/ui/main.gd:679
 msgid "Você: "
 msgstr ""
 
-#: scripts/ui/main.gd:718
+#: scripts/ui/main.gd:687
 #, c-format
 msgid "%s  ·  %d assentos  ·  %s dos votos. A bússola do partido é a média dos políticos."
 msgstr ""
 
-#: scripts/ui/main.gd:732
+#: scripts/ui/main.gd:701
 msgid "Dinheiro por fora do orçamento oficial, pago por enquanto com o fundo do partido. Rende hoje e cobra amanhã."
 msgstr ""
 
-#: scripts/ui/main.gd:745
+#: scripts/ui/main.gd:714
 #, c-format
 msgid "Ministério: %s"
 msgstr ""
 
-#: scripts/ui/main.gd:750
+#: scripts/ui/main.gd:719
 #, c-format
 msgid "%s assume a pasta."
 msgstr ""
 
-#: scripts/ui/main.gd:791
+#: scripts/ui/main.gd:760
 msgid "Todo político pertence a um partido. Escolha um deles ou crie o seu, e decida se começa no governo ou na oposição."
 msgstr ""
 
-#: scripts/ui/main.gd:791
+#: scripts/ui/main.gd:760
 msgid "Só é possível mudar de partido uma vez por ano. O partido novo só ganha assentos na próxima eleição."
 msgstr ""
 
-#: scripts/ui/main.gd:792
+#: scripts/ui/main.gd:761
 #, c-format
 msgid "Escolha seu partido em %s"
 msgstr ""
 
-#: scripts/ui/main.gd:829
+#: scripts/ui/main.gd:798
 msgid "Regimes fechados não têm eleições."
 msgstr ""
 
-#: scripts/ui/main.gd:831
+#: scripts/ui/main.gd:800
 #, c-format
 msgid "Hoje governa: %s."
 msgstr ""
 
-#: scripts/ui/main.gd:831
+#: scripts/ui/main.gd:800
 msgid "Regime fechado, sem eleições: só é possível governar."
 msgstr ""
 
-#: scripts/ui/main.gd:839
+#: scripts/ui/main.gd:808
 #, c-format
 msgid "Ficar em %s  ·  %s  ·  %s dos votos  ·  %d de %d assentos"
 msgstr ""
 
-#: scripts/ui/main.gd:839
+#: scripts/ui/main.gd:808
 #, c-format
 msgid "%s  ·  %s  ·  %s dos votos  ·  %d de %d assentos"
 msgstr ""
 
-#: scripts/ui/main.gd:840
+#: scripts/ui/main.gd:809
 #, c-format
 msgid "%s. Clique para escolher."
 msgstr ""
 
-#: scripts/ui/main.gd:871
+#: scripts/ui/main.gd:840
 msgid "Dê um nome ao partido."
 msgstr ""
 
-#: scripts/ui/main.gd:974
+#: scripts/ui/main.gd:943
 #, c-format
 msgid "Bandeira: %s"
 msgstr ""
 
-#: scripts/ui/main.gd:1090
+#: scripts/ui/main.gd:1059
 msgid "Renunciar ao cargo? Isso encerra a sua carreira, e depois você escolhe entre um novo jogo e um novo personagem."
 msgstr ""
 
-#: scripts/ui/main.gd:1100
+#: scripts/ui/main.gd:1069
 msgid "Impeachment"
 msgstr ""
 
-#: scripts/ui/main.gd:1100
+#: scripts/ui/main.gd:1069
 msgid "Deposto"
 msgstr ""
 
-#: scripts/ui/main.gd:1100
+#: scripts/ui/main.gd:1069
 msgid "Renúncia"
 msgstr ""
 
-#: scripts/ui/main.gd:1100
+#: scripts/ui/main.gd:1069
 msgid "Assassinato"
 msgstr ""
 
-#: scripts/ui/main.gd:1100
+#: scripts/ui/main.gd:1069
 msgid "Fim da vida"
 msgstr ""
 
-#: scripts/ui/main.gd:1105
+#: scripts/ui/main.gd:1074
 #, c-format
 msgid "Pontuação final: %s"
 msgstr ""
 
-#: scripts/ui/main.gd:1106
+#: scripts/ui/main.gd:1075
 #, c-format
 msgid ""
 "Tempo no poder: %s anos  ·  Reeleições: %d\n"
@@ -10091,65 +10091,65 @@ msgid ""
 "Dívida/PIB: %s  ·  Inflação: %s  ·  Influência: %dº no mundo"
 msgstr ""
 
-#: scripts/ui/main.gd:1136
+#: scripts/ui/main.gd:1105
 #, c-format
 msgid "Tratado com %s"
 msgstr ""
 
-#: scripts/ui/main.gd:1136
+#: scripts/ui/main.gd:1105
 #, c-format
 msgid "O líder de lá é %s (%s)."
 msgstr ""
 
-#: scripts/ui/main.gd:1144
+#: scripts/ui/main.gd:1113
 #, c-format
 msgid "Vale por %d anos."
 msgstr ""
 
-#: scripts/ui/main.gd:1144
+#: scripts/ui/main.gd:1113
 msgid "Sem prazo."
 msgstr ""
 
-#: scripts/ui/main.gd:1160
+#: scripts/ui/main.gd:1129
 #, c-format
 msgid "Eleição de %s em %s"
 msgstr ""
 
-#: scripts/ui/main.gd:1162
+#: scripts/ui/main.gd:1131
 #, c-format
 msgid "[color=#8ba2af]Sistema:[/color] %s  ·  cláusula de barreira de %d%%"
 msgstr ""
 
-#: scripts/ui/main.gd:1163
+#: scripts/ui/main.gd:1132
 #, c-format
 msgid "[color=#8ba2af]Regime:[/color] %s"
 msgstr ""
 
-#: scripts/ui/main.gd:1164
+#: scripts/ui/main.gd:1133
 #, c-format
 msgid "[color=#8ba2af]Comparecimento:[/color] %s  ·  %d distritos"
 msgstr ""
 
-#: scripts/ui/main.gd:1167
+#: scripts/ui/main.gd:1136
 #, c-format
 msgid "[color=#8ba2af]Chefe de governo:[/color] %s, com %s, em %d turno(s)"
 msgstr ""
 
-#: scripts/ui/main.gd:1170
+#: scripts/ui/main.gd:1139
 #, c-format
 msgid "[color=#%s]■[/color] %s: %s dos votos, %d deputados, %d senadores"
 msgstr ""
 
-#: scripts/ui/main.gd:1174
+#: scripts/ui/main.gd:1143
 #, c-format
 msgid "%s: %d cadeiras, %s mi de habitantes, maioria de %s"
 msgstr ""
 
-#: scripts/ui/main.gd:1207
+#: scripts/ui/main.gd:1176
 msgid "Partida salva."
 msgstr ""
 
-#: scripts/ui/main.gd:1215
+#: scripts/ui/main.gd:1184
 msgid "Carregando a partida..."
 msgstr ""
 

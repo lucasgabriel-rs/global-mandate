@@ -30,7 +30,7 @@ func write(world: GameWorld) -> String:
 	var temp := path + ".tmp"
 	var f := FileAccess.open(temp, FileAccess.WRITE)
 	if f == null:
-		return tr("Não foi possível salvar: erro %d.") % FileAccess.get_open_error()
+		return TranslationServer.translate("Não foi possível salvar: erro %d.") % FileAccess.get_open_error()
 	f.store_var(world.to_dict())
 	f.close()
 	var check := FileAccess.open(temp, FileAccess.READ)
@@ -38,7 +38,7 @@ func write(world: GameWorld) -> String:
 	if check:
 		check.close()
 	if not readable:
-		return tr("Não foi possível salvar: o arquivo não pôde ser conferido.")
+		return TranslationServer.translate("Não foi possível salvar: o arquivo não pôde ser conferido.")
 	var folder := DirAccess.open(path.get_base_dir())
 	if FileAccess.file_exists(path):
 		folder.rename(path.get_file(), backup_path.get_file())

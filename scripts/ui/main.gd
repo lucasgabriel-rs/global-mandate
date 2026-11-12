@@ -1173,7 +1173,7 @@ func _write_save() -> void:
 	if error != "":
 		world.emit_news(error, "crise", null)
 		return
-	world.emit_news(tr("Partida salva."), "politica", null)
+	world.emit_news(TranslationServer.translate("Partida salva."), "politica", null)
 
 
 ## Reads the file and builds the new world on another thread. The current world is only swapped if everything goes well.

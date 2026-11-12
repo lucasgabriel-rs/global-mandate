@@ -193,7 +193,9 @@ func _process(delta: float) -> void:
 			_check(w.player.approval < mark, "criticizing brings down approval:" + hud._politics._status.text)
 			hud._desk.current_tab = hud._cabinet_tab
 		22:
-			_check(_named(hud._cabinet, "pick_finance") == null, "ministers locked in opposition")
+			# The window of another role does not open, so the panel keeps its old rows hidden; nothing can be clicked.
+			var pick := _named(hud._cabinet, "pick_finance")
+			_check(not hud._desk.is_open(hud._cabinet_tab) and (pick == null or not pick.is_visible_in_tree()), "ministers locked in opposition")
 			main.map.select(w.by_iso["ARG"])
 			hud.show_country(w.by_iso["ARG"])
 		23:
