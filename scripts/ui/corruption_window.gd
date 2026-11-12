@@ -114,8 +114,22 @@ func _buy() -> void:
 	var norm := _norm()
 	if norm.is_empty() or _parties.selected < 0:
 		return
-	_show(corruption.bribe_votes(world, norm, int(_parties.get_selected_metadata()), _side.selected == 0))
+	var norm_id := int(norm.id)
+	var party_id := int(_parties.get_selected_metadata())
+	_show(corruption.bribe_votes(world, norm, party_id, _side.selected == 0))
 	_fill_norms()
+	_restore_pick(_norms, norm_id)
+	_fill_parties()
+	_restore_pick(_parties, party_id)
+	refresh()
+
+
+## Volta a seleção para o item de metadado `id`, se ele ainda existir (a lista é refeita depois de cada compra).
+func _restore_pick(list: OptionButton, id: int) -> void:
+	for i in list.item_count:
+		if int(list.get_item_metadata(i)) == id:
+			list.select(i)
+			return
 
 
 func _show(r: Dictionary) -> void:
