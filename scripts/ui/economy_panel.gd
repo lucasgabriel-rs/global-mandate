@@ -22,6 +22,13 @@ func bind(w: GameWorld) -> void:
 	_tabs.tab_changed.connect(func(_i): refresh())
 
 
+## Na oposição não há obra pública para tocar: a subaba de portos e aeroportos some.
+func set_office(office: bool) -> void:
+	_tabs.set_tab_hidden(1, not office)
+	if not office and _tabs.current_tab == 1:
+		_tabs.current_tab = 0
+
+
 func refresh() -> void:
 	if world == null or world.player == null:
 		return

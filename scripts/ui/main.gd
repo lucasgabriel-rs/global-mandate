@@ -171,6 +171,8 @@ func _ready() -> void:
 		autotest = load("res://tests/ui_locale.gd")
 	if OS.get_cmdline_user_args().has("--ui-menu"):
 		autotest = load("res://tests/ui_menu.gd")
+	if OS.get_cmdline_user_args().has("--ui-opposition"):
+		autotest = load("res://tests/ui_opposition.gd")
 	if autotest:
 		add_child(autotest.new())
 

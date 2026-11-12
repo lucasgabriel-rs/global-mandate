@@ -60,6 +60,8 @@ func open(i: int, from := Vector2.ZERO) -> void:
 	if i < 0 or i >= _windows.size():
 		return
 	var w := _windows[i]
+	if w.locked:
+		return
 	if from != Vector2.ZERO:
 		w.origin = from
 	if w.is_open:
