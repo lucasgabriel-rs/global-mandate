@@ -266,10 +266,10 @@ func _process(delta: float) -> void:
 			_check(s2.depth_of(s2.custom_ids[1]) == 3, "carregar restaura a hierarquia")
 			_check(s2.units[coast_id].name == "Litoral Renomeado", "carregar restaura o nome editado")
 			hud._desk.current_tab = hud._divisions_tab
-			hud._on_mode("inflacao")
+			hud._on_mode("inflation")
 		22:
 			_shot("d5_loaded_mode_data")
-			hud._on_mode("politico")
+			hud._on_mode("political")
 			panel.select_unit(state_id)
 			panel._ask_delete(panel.selected_unit)
 		23:

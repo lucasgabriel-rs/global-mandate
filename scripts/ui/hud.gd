@@ -97,7 +97,7 @@ func _ready() -> void:
 	_divisions_tab = _tab_of(_divisions)
 	_politics_tab = _tab_of(_politics)
 	_cabinet_tab = _tab_of(_cabinet)
-	_set_mode_style("politico")
+	_set_mode_style("political")
 
 
 ## The values the game updates are found by node name, so they can be moved in the scene freely.
@@ -544,10 +544,10 @@ func _set_mode_style(key: String) -> void:
 		b.add_theme_color_override("font_color", UiKit.ACCENT if on else UiKit.TEXT)
 		b.add_theme_stylebox_override("normal", UiKit.panel_style(Color(0.08, 0.13, 0.17, 0.95), UiKit.ACCENT if on else UiKit.LINE, 3, 5))
 	var legends := {
-		"politico": "", "relacoes": tr("vermelho hostil · verde amigo · azul aliado"),
-		"crescimento": "-3% a +8%", "inflacao": "0% a 30%+", "desemprego": "2% a 22%",
-		"divida": tr("relativa ao limite do país"), "renda": tr("US$ 300 a 90 mil per capita"),
-		"estabilidade": tr("vermelho instável"), "militar": tr("em relação aos EUA"),
+		"political": "", "relations": tr("vermelho hostil · verde amigo · azul aliado"),
+		"growth": "-3% a +8%", "inflation": "0% a 30%+", "unemployment": "2% a 22%",
+		"debt": tr("relativa ao limite do país"), "income": tr("US$ 300 a 90 mil per capita"),
+		"stability": tr("vermelho instável"), "military": tr("em relação aos EUA"),
 	}
 	_legend.text = "  " + str(legends.get(key, ""))
 

@@ -83,7 +83,7 @@ func _run() -> void:
 	_time("recompute trade (_compute_shares)", func(): w.diplomacy._compute_shares(w))
 	_time("sanctions: refresh_sanction_cache", func(): w.diplomacy.refresh_sanction_cache(w))
 	_time("a new sanction (set_sanction)", func(): w.diplomacy.set_sanction(w.by_iso["FRA"], w.by_iso["RUS"], 1, w))
-	for mode: String in ["relacoes", "crescimento", "politico"]:
+	for mode: String in ["relations", "growth", "political"]:
 		_time("map: mode %s" % mode, func(): main.hud._on_mode(mode))
 	await _frames()
 	_time("map: refresh_colors", func(): main.map.refresh_colors())

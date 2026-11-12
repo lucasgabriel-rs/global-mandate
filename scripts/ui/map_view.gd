@@ -34,20 +34,20 @@ const ROB_Y := [0, 0.062, 0.124, 0.186, 0.248, 0.31, 0.372, 0.434, 0.4958, 0.557
 ## Modes: key -> [label, low, high, low color, high color, interval description]
 # i18n-begin
 const MODES := {
-	"politico": ["Político"],
-	"relacoes": ["Relações"],
-	"crescimento": ["Crescimento"],
-	"inflacao": ["Inflação"],
-	"desemprego": ["Desemprego"],
-	"divida": ["Dívida"],
-	"renda": ["Renda"],
-	"estabilidade": ["Estabilidade"],
-	"militar": ["Militar"],
+	"political": ["Político"],
+	"relations": ["Relações"],
+	"growth": ["Crescimento"],
+	"inflation": ["Inflação"],
+	"unemployment": ["Desemprego"],
+	"debt": ["Dívida"],
+	"income": ["Renda"],
+	"stability": ["Estabilidade"],
+	"military": ["Militar"],
 }
 # i18n-end
 
 var world: GameWorld
-var mode := "politico"
+var mode := "political"
 var selected: Country
 var hovered: Country
 var features: Array = []
@@ -386,7 +386,7 @@ func _draw_units() -> void:
 		return
 	var subs: Subdivisions = world.subdivisions
 	var z := _camera.zoom.x
-	if mode == "politico":
+	if mode == "political":
 		for id: int in subs.custom_ids:
 			if subs.units[id].get("plain", false):
 				continue
@@ -729,7 +729,7 @@ const RAMP_SEQ := [Color("20323e"), Color("2c5a6c"), Color("3f8c94"), Color("7cb
 
 func color_for(c: Country) -> Color:
 	match mode:
-		"relacoes":
+		"relations":
 			if world.player == null:
 				return _political(c)
 			if c == world.player:
@@ -740,19 +740,19 @@ func color_for(c: Country) -> Color:
 			if d.allied(c.idx, world.player.idx):
 				return Color("3b9fd8")
 			return ramp((d.relation(c.idx, world.player.idx) + 100.0) / 200.0, RAMP_BAD_GOOD)
-		"crescimento":
+		"growth":
 			return ramp((c.growth_yoy() + 0.03) / 0.11, RAMP_BAD_GOOD)
-		"inflacao":
+		"inflation":
 			return ramp(pow(clampf(c.pi_yoy / 0.3, 0.0, 1.0), 0.6), RAMP_GOOD_BAD)
-		"desemprego":
+		"unemployment":
 			return ramp((c.unemp - 0.02) / 0.2, RAMP_GOOD_BAD)
-		"divida":
+		"debt":
 			return ramp(c.debt_ratio / maxf(c.debt_tol, 0.1) * 0.5, RAMP_GOOD_BAD)
-		"renda":
+		"income":
 			return ramp(log(maxf(c.gdp_pc(), 300.0) / 300.0) / log(300.0), RAMP_SEQ)
-		"estabilidade":
+		"stability":
 			return ramp(c.stability, RAMP_BAD_GOOD)
-		"militar":
+		"military":
 			return ramp(pow(c.military_power() / maxf(world.usa.military_power(), 0.01), 0.45), RAMP_SEQ)
 	return _political(c)
 

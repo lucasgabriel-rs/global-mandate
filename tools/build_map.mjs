@@ -6,7 +6,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 
 const TOLERANCE_DEG = 0.02;
-const MIN_ISLAND_AREA = 1; const MIN_ISLAND_AREA = 1; // map units² (projected)
+const MIN_ISLAND_AREA = 1; // map units² (projected)
 const WIDTH = 2000;
 
 // Territories without their own line in the table, colored like the administering country.
@@ -163,7 +163,7 @@ for (const g of topo.objects.countries.geometries) {
   const name = g.properties.name;
   const iso = name === "Kosovo" ? "XKX" : numToIso.get(g.id) ?? OWNERS[name] ?? "";
   if (name === "Ashmore and Cartier Is." || name === "Indian Ocean Ter.") continue;
-  if (!iso && name !== "Antarctica") unmatched.push(name);   if (!iso && name !== "Antarctica") unmatched.push(name); // stays neutral, with no playable country
+  if (!iso && name !== "Antarctica") unmatched.push(name); // stays neutral, with no playable country
   if (iso) matched.add(iso);
   const polys = g.type === "Polygon" ? [g.arcs] : g.type === "MultiPolygon" ? g.arcs : [];
   const shapes = [];

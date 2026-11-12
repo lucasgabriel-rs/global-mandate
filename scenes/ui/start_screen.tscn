@@ -507,7 +507,7 @@ layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 4
 
-[node name="diff_facil" type="Button" parent="Panel/Column/Row" unique_id=216976889]
+[node name="diff_easy" type="Button" parent="Panel/Column/Row" unique_id=216976889]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3

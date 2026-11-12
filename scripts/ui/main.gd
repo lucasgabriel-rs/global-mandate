@@ -334,7 +334,7 @@ func _build_start_screen() -> void:
 	_start_title = start_screen.get_node("%start_title")
 	_start_info = start_screen.get_node("%start_info")
 	_start_button = start_screen.get_node("%start_button")
-	var diff_buttons := {"facil": start_screen.get_node("%diff_facil"), "normal": start_screen.get_node("%diff_normal"), "dificil": start_screen.get_node("%diff_hard")}
+	var diff_buttons := {"facil": start_screen.get_node("%diff_easy"), "normal": start_screen.get_node("%diff_normal"), "dificil": start_screen.get_node("%diff_hard")}
 	var style_diff := func(sel: String):
 		_difficulty = sel
 		for k: String in diff_buttons:
@@ -477,7 +477,7 @@ func _process(delta: float) -> void:
 		hud.refresh()
 	if map_timer > 1.0:
 		map_timer = 0.0
-		if map.mode != "politico":
+		if map.mode != "political":
 			map.refresh_colors()
 
 

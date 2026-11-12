@@ -8,7 +8,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { project, area, centroid, key, buildArcs } from "./geo.mjs";
 
 const TOLERANCE_DEG = 0.04;
-const MIN_PIECE_AREA = 0.02; const MIN_PIECE_AREA = 0.02; // map units² (projected)
+const MIN_PIECE_AREA = 0.02; // map units² (projected)
 
 // Territories with their own line in Natural Earth, linked to the country that administers them in the game.
 const ALIASES = {

@@ -93,15 +93,15 @@ func _process(delta: float) -> void:
 			main.hud._on_action("mission")
 			_check(w.action_wait("mission", w.by_iso["CHN"]) > 0, "the same action only repeats after an interval")
 			_check(w.diplomacy.relation(w.player.idx, w.by_iso["CHN"].idx) > rel, "mission improves relation")
-			main.hud._on_mode("inflacao")
+			main.hud._on_mode("inflation")
 		12:
 			_dismiss_prompts()
 			_shot("10_mode_inflation")
-			main.hud._on_mode("relacoes")
+			main.hud._on_mode("relations")
 		13:
 			_dismiss_prompts()
 			_shot("11_mode_relations")
-			main.hud._on_mode("politico")
+			main.hud._on_mode("political")
 			w.offer_alliance(w.by_iso["PER"])
 			w.diplomacy.declare_war(w.by_iso["IND"], w.by_iso["BGD"], w)
 			main.map.select(w.by_iso["ARG"])
