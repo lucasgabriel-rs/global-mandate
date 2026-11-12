@@ -124,7 +124,6 @@ func _run() -> void:
 	main._set_speed(3)
 	main.map.focus_on(w.by_iso["BRA"])
 	w.day = 28
-	w.minute = 1200
 	var worst := 0.0
 	var over_33 := 0
 	var frames := 0

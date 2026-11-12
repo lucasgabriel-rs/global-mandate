@@ -56,7 +56,6 @@ var _hover_unit := -1
 
 @onready var _date: Label = %date
 @onready var _rate_label: Label = %rate_label
-@onready var _day_clock: DayClock = %day_clock
 @onready var _skip_card: PanelContainer = %skip_card
 @onready var _skip_title: Label = %skip_title
 @onready var _skip_body: Label = %skip_body
@@ -180,14 +179,13 @@ func _connect_buttons() -> void:
 
 func refresh_clock() -> void:
 	if world:
-		_day_clock.minute = world.minute
-		var text := world.date_string().get_slice("  ", 0)
+		var text := world.date_string()
 		if _date.text != text:
 			_date.text = text
 
 
 func set_rate_display(rate: float, expected: float) -> void:
-	_rate_label.text = tr("parado") if expected <= 0.0 else tr("%d min/s") % roundi(rate)
+	_rate_label.text = tr("parado") if expected <= 0.0 else tr("%s dia/s") % UiKit.num(rate, 1)
 	_rate_label.add_theme_color_override("font_color", UiKit.RED if expected > 0.0 and absf(rate - expected) > expected * 0.25 else UiKit.DIM)
 
 

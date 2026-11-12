@@ -45,13 +45,13 @@ Clicking an icon opens the window in the center of the screen. Clicking it again
 
 Each window is dragged by its title bar and resized by its bottom-right corner. The red button closes it, the yellow one minimizes it and the green one stretches it to the full height of the screen; double-clicking the title bar does the same. Clicking anywhere on a window brings it to the front. With no window open, the map is free. The legislative center is also a window of the dock and does not block the rest of the screen.
 
-The top bar shows the date (without the time), the analog clock, the speed buttons, the main indicators and the party fund. The news feed sits in the bottom-left corner and the map modes in the top-left corner.
+The top bar shows the date, the speed buttons, the main indicators and the party fund. The news feed sits in the bottom-left corner and the map modes in the top-left corner.
 
 ## Time
 
-At normal speed (1x) the game clock runs at 80 game minutes per real second, so a day lasts 18 s. At 2x it runs at 160 minutes per second (9 s per day) and at 4x at 320 (4.5 s per day). The top bar shows the date only. The analog clock keeps track of the hours: the long hand makes one turn per game hour and the ring around it fills over the day. Next to the buttons, the bar shows the actual clock rate in minutes per second, in red if it is far from the expected value. The simulation is daily: the economy, wars and markets move at midnight, and what moves during the day is the clock.
+At normal speed (1x) one game day passes per real second; at 2x, two days, and at 4x, four. The game has no hours: the top bar shows only the date. Next to the buttons, the bar shows the actual rate in days per second, in red if it is far from the expected value.
 
-The **+7 dias** and **+30 dias** buttons run the same daily simulation without waiting for the clock, keep the current time and show a summary with the country's indicators and the news of the period. A decision that comes up midway pauses the skip, which resumes after you answer.
+The **+7 dias** and **+30 dias** buttons run the same daily simulation without waiting for the clock and show a summary with the country's indicators and the news of the period. A decision that comes up midway pauses the skip, which resumes after you answer.
 
 Random events (drought, pandemic, disasters, protests, technology boom, supply shock and government dilemmas) are turned off for now, in `RANDOM_EVENTS` in `events.gd`, and can be triggered from the debug menu. AI decisions (including proposals and threats to the player), elections, economic crises computed by the model and daily market moves are still active.
 

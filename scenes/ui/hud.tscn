@@ -3,7 +3,6 @@
 [ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="1_kicr4"]
 [ext_resource type="Script" uid="uid://bntrohifu8c0m" path="res://scripts/ui/hud.gd" id="2_mj13f"]
 [ext_resource type="PackedScene" path="res://scenes/ui/countryball.tscn" id="3_0h1do"]
-[ext_resource type="Script" uid="uid://bgcmqtfb5aary" path="res://scripts/ui/day_clock.gd" id="4_4d46k"]
 [ext_resource type="Script" uid="uid://cuo1ffufbd646" path="res://scripts/ui/chart.gd" id="5_erw67"]
 [ext_resource type="PackedScene" path="res://scenes/ui/panels/divisions_panel.tscn" id="sub_1"]
 [ext_resource type="PackedScene" path="res://scenes/ui/panels/politics_panel.tscn" id="sub_2"]
@@ -150,17 +149,6 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_font_sizes/font_size = 13
 
-[node name="Centro" type="CenterContainer" parent="Painel/Linha" unique_id=96170185]
-layout_mode = 2
-
-[node name="day_clock" type="Control" parent="Painel/Linha/Centro" unique_id=583725182]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(40, 40)
-layout_mode = 2
-tooltip_text = "Ponteiro longo: uma volta por hora de jogo. Anel: progresso do dia."
-mouse_filter = 1
-script = ExtResource("4_4d46k")
-
 [node name="Centro2" type="CenterContainer" parent="Painel/Linha" unique_id=1090190506]
 layout_mode = 2
 
@@ -236,7 +224,7 @@ layout_mode = 2
 unique_name_in_owner = true
 custom_minimum_size = Vector2(62, 0)
 layout_mode = 2
-tooltip_text = "Ritmo real do relógio, em minutos de jogo por segundo."
+tooltip_text = "Ritmo real do relógio, em dias de jogo por segundo."
 mouse_filter = 1
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_font_sizes/font_size = 12

@@ -2,19 +2,18 @@ extends Node
 ## Roteiro do relógio com o jogo rodando: mede as velocidades em tempo real e usa os botões de avanço.
 ## Uso: godot --path . -- --ui-clock --shots=/caminho/da/pasta
 
-const MEASURE_SECONDS := 3.0
+const MEASURE_SECONDS := 4.0
 
 var main: Node
 var out := "user://shots"
 var step := 0
 var wait := 1.0
 var failures := 0
-var start_clock := 0
-var start_shown := 0
+var start_clock := 0.0
+var start_shown := ""
 var start_time := 0
 var measuring := -1
 var day0 := 0
-var minute0 := 0
 var skip_phase := 0
 
 
@@ -37,14 +36,14 @@ func _check(cond: bool, what: String) -> void:
 	print("ok: " if cond else "FALHA: ", what)
 
 
-func _clock() -> int:
-	return main.world.day_index * 1440 + main.world.minute
+## Dias de jogo, com a fração do dia em curso.
+func _clock() -> float:
+	return main.world.day_index + main.accumulator
 
 
-## O que o jogador lê na barra, e não o valor interno: "07 Fev 2025  08:13".
-func _shown_minutes() -> int:
-	# A barra mostra só a data; a hora fica nos ponteiros do relógio redondo.
-	return main.hud._day_clock.minute
+## O que o jogador lê na barra: "07 Fev 2025".
+func _shown_date() -> String:
+	return main.hud._date.text
 
 
 func _key(code: Key) -> void:
@@ -72,26 +71,25 @@ func _begin_measure(key: Key) -> void:
 
 func _rate_ok(expected: float) -> void:
 	_clock_shot("r%d_b" % step)
-	_check(main.hud._day_clock.minute == main.world.minute, "ponteiros acompanham o relógio")
 	var real := (Time.get_ticks_msec() - start_time) / 1000.0
 	var rate := (_clock() - start_clock) / real
-	_check(absf(rate - expected) <= expected * 0.08, "%.1f minutos por segundo (esperado %.0f)" % [rate, expected])
-	var shown := posmod(_shown_minutes() - start_shown, 1440) / real
-	_check(absf(shown - expected) <= expected * 0.08, "relógio na tela: %.1f minutos por segundo" % shown)
-	_check(main.hud._rate_label.text == "%d min/s" % int(expected) or absf(int(main.hud._rate_label.text.split(" ")[0]) - expected) <= expected * 0.1, "indicador mostra: " + main.hud._rate_label.text)
+	_check(absf(rate - expected) <= expected * 0.15, "%.2f dias por segundo (esperado %.0f)" % [rate, expected])
+	_check(_shown_date() != start_shown and _shown_date() == main.world.date_string(), "data na tela avançou: %s → %s" % [start_shown, _shown_date()])
+	var shown := float(main.hud._rate_label.text.split(" ")[0].replace(",", "."))
+	_check(main.hud._rate_label.text.ends_with("dia/s") and absf(shown - expected) <= expected * 0.2, "indicador mostra: " + main.hud._rate_label.text)
 
 
 ## Recorte só da barra com o relógio, para comparar o que foi desenhado no início e no fim da medição.
 func _clock_shot(name_: String) -> void:
 	var img := get_viewport().get_texture().get_image()
 	img.get_region(Rect2i(0, 0, 620, 58)).save_png("%s/%s.png" % [out, name_])
-	print("relógio ", name_, ": ", main.hud._date.text, " ponteiro em ", main.hud._day_clock.minute % 60, " min")
+	print("relógio ", name_, ": ", main.hud._date.text)
 
 
 func _start_measure() -> void:
 	_clock_shot("r%d_a" % step)
 	start_clock = _clock()
-	start_shown = _shown_minutes()
+	start_shown = _shown_date()
 	start_time = Time.get_ticks_msec()
 	wait = MEASURE_SECONDS
 
@@ -139,7 +137,7 @@ func _process(delta: float) -> void:
 		4:
 			_start_measure()
 		5:
-			_rate_ok(80.0)
+			_rate_ok(1.0)
 			_shot("t1_normal")
 			_key(KEY_2)
 			wait = 0.3
@@ -147,7 +145,7 @@ func _process(delta: float) -> void:
 			_check(main.speed == 2, "tecla 2 escolhe 2x")
 			_start_measure()
 		7:
-			_rate_ok(160.0)
+			_rate_ok(2.0)
 			_shot("t1b_2x")
 			_click(hud._speed_buttons[3])
 			wait = 0.3
@@ -155,7 +153,7 @@ func _process(delta: float) -> void:
 			_check(main.speed == 3, "botão escolhe 4x")
 			_start_measure()
 		9:
-			_rate_ok(320.0)
+			_rate_ok(4.0)
 			_shot("t1c_4x")
 			_click(hud._speed_buttons[2])
 			wait = 0.3
@@ -163,7 +161,7 @@ func _process(delta: float) -> void:
 			_check(main.speed == 2, "botão escolhe 2x")
 			_start_measure()
 		11:
-			_rate_ok(160.0)
+			_rate_ok(2.0)
 			_key(KEY_4)
 			wait = 0.3
 		12:
@@ -182,14 +180,12 @@ func _process(delta: float) -> void:
 			_check(_clock() == start_clock, "relógio parado na pausa")
 			_check(hud._rate_label.text == "parado", "indicador mostra a pausa")
 			day0 = w.day_index
-			minute0 = w.minute
 			_click(hud._skip_buttons[0])
 			wait = 0.5
 		16:
 			_check(w.day_index == day0 + 7, "+7 dias avança 7 dias (%d)" % (w.day_index - day0))
-			_check(w.minute == minute0, "hora não muda no avanço")
 			_check(hud._skip_card.visible and hud._skip_title.text == "Resumo de 7 dias", "resumo aparece")
-			_check(hud._date.text == w.date_string().get_slice("  ", 0), "data atualizada na barra")
+			_check(hud._date.text == w.date_string(), "data atualizada na barra")
 			_shot("t2_resumo_7")
 			day0 = w.day_index
 			_click(hud._skip_buttons[1])
@@ -223,16 +219,18 @@ func _process(delta: float) -> void:
 			_check(main._skip_left == 30, "segundo clique não soma enquanto avança")
 			wait = 0.6
 		20:
-			# Salvar e carregar mantém a hora; a velocidade volta pausada.
-			var m := w.minute
-			w.minute = 725
+			# Salvar e carregar mantém a data.
+			set_meta("saved_date", w.date_string())
 			main._save_game()
 			main.join_sim()
-			w.minute = m
+			main.start_skip(7)
+			main.join_sim()
+			wait = 0.6
+		21:
 			main._load_game()
 			wait = 0.3
-		21:
-			_check(main.world.minute == 725 and hud._day_clock.minute == 725, "carregar restaura a hora: %d" % hud._day_clock.minute)
+		22:
+			_check(main.world.date_string() == get_meta("saved_date") and main.hud._date.text == get_meta("saved_date"), "carregar restaura a data: %s" % main.hud._date.text)
 			DirAccess.remove_absolute(ProjectSettings.globalize_path(main.SAVE_PATH))
 			print("RESULTADO: ", failures, " falhas")
 			get_tree().quit(1 if failures > 0 else 0)

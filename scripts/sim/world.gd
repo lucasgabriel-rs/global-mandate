@@ -14,7 +14,6 @@ signal demarcation_requested(session: Dictionary)
 signal talk_requested(target: Country)
 
 const START_YEAR := 2025
-const MINUTES_PER_DAY := 1440
 const MAX_BORDER_PROPOSALS := 3
 ## Líderes não procuram o jogador nos primeiros meses, nem mais que uma vez nesse intervalo.
 const TALK_FIRST_MONTH := 6
@@ -56,7 +55,6 @@ var day_index := 0
 var year := START_YEAR
 var month := 0
 var day := 1
-var minute := 0
 var next_step := PackedFloat64Array()
 var next_ai := PackedFloat64Array()
 
@@ -171,18 +169,8 @@ func global_price_index() -> float:
 	return usa.p
 
 
-## O relógio do jogo: a simulação continua sendo diária, e o dia vira à meia-noite.
-func tick_minute() -> void:
-	if over:
-		return
-	minute += 1
-	if minute >= MINUTES_PER_DAY:
-		minute = 0
-		tick_day()
-
-
 func date_string() -> String:
-	return "%02d %s %d  %02d:%02d" % [day, tr(MONTHS[month]), year, minute / 60, minute % 60]
+	return "%02d %s %d" % [day, tr(MONTHS[month]), year]
 
 
 func set_player(c: Country, diff: String) -> void:
@@ -973,7 +961,7 @@ func to_dict() -> Dictionary:
 		"mandates": mandates, "months_elapsed": months_elapsed, "global_hist": global_hist,
 		"player": player.idx if player else -1, "world_gdp": _world_gdp,
 		"rng_state": rng.state, "rng_seed": rng.seed, "subdivisions": subdivisions.to_dict(),
-		"territories": territories.to_dict(), "leader": leader, "minute": minute, "politics": politics.to_dict(),
+		"territories": territories.to_dict(), "leader": leader, "politics": politics.to_dict(),
 		"in_office": in_office, "talks": talks, "legislation": legislation.to_dict(), "treaties": treaties.to_dict(), "next_talk_month": next_talk_month,
 		"infra": infra.to_dict(), "corporate": corporate.to_dict(),
 	}
@@ -1000,7 +988,6 @@ func load_dict(d: Dictionary) -> void:
 	subdivisions.from_dict(d.get("subdivisions", {}), player.iso if player else "")
 	territories.from_dict(d.get("territories", {}))
 	leader = Character.migrated(d.get("leader", {}), rng) if d.has("leader") and not d.leader.is_empty() else {}
-	minute = d.get("minute", 0)
 	politics.from_dict(d.get("politics", {}))
 	in_office = d.get("in_office", true)
 	talks = d.get("talks", {})

@@ -1,5 +1,5 @@
 extends SceneTree
-## Testes do relógio em minutos e da ausência de eventos aleatórios, sem interface.
+## Testes do relógio em dias e da ausência de eventos aleatórios, sem interface.
 ## Uso: godot --headless --path . -s tests/clock.gd
 
 var failures := 0
@@ -17,39 +17,20 @@ func _init() -> void:
 	var w := GameWorld.new()
 	w.setup(11)
 	w.set_player(w.by_iso["BRA"], "normal")
-	_check(w.date_string() == "01 Jan 2025  00:00", "relógio começa à meia-noite: " + w.date_string())
-	for i in 90:
-		w.tick_minute()
-	_check(w.date_string() == "01 Jan 2025  01:30", "90 minutos: " + w.date_string())
-	_check(w.day_index == 0, "o dia não vira antes da meia-noite")
-	for i in 1350:
-		w.tick_minute()
-	_check(w.date_string() == "02 Jan 2025  00:00" and w.day_index == 1, "1.440 minutos viram um dia: " + w.date_string())
+	_check(w.date_string() == "01 Jan 2025", "data sem hora: " + w.date_string())
+	w.tick_day()
+	_check(w.date_string() == "02 Jan 2025" and w.day_index == 1, "um tick é um dia: " + w.date_string())
+	for i in 30:
+		w.tick_day()
+	_check(w.date_string() == "01 Fev 2025", "31 dias viram o mês: " + w.date_string())
 
-	# Minutos e dias inteiros levam ao mesmo resultado: o relógio não muda a simulação.
-	var by_min := GameWorld.new()
-	by_min.setup(21)
-	by_min.set_player(by_min.by_iso["BRA"], "normal")
-	var by_day := GameWorld.new()
-	by_day.setup(21)
-	by_day.set_player(by_day.by_iso["BRA"], "normal")
-	for i in 1440 * 10:
-		by_min.tick_minute()
-	for i in 10:
-		by_day.tick_day()
-	_check(by_min.day_index == by_day.day_index and is_equal_approx(by_min.player.y, by_day.player.y) and by_min.markets.price[0] == by_day.markets.price[0], "10 dias em minutos valem 10 dias diretos")
-
-	var w2 := GameWorld.new()
-	w2.setup(11)
-	w.minute = 333
-	w2.load_dict(bytes_to_var(var_to_bytes(w.to_dict())))
-	_check(w2.minute == 333, "save guarda a hora")
+	# Saves antigos guardavam a hora; ela é ignorada ao carregar.
 	var old := w.to_dict()
-	old.erase("minute")
+	old["minute"] = 333
 	var w3 := GameWorld.new()
 	w3.setup(11)
 	w3.load_dict(bytes_to_var(var_to_bytes(old)))
-	_check(w3.minute == 0, "save antigo começa à meia-noite")
+	_check(w3.date_string() == w.date_string(), "save antigo com hora abre na mesma data")
 
 	# Eventos aleatórios: 20 anos sem nenhum choque ou dilema.
 	_check(not WorldEvents.RANDOM_EVENTS, "sorteio de eventos desligado")
