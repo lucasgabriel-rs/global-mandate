@@ -103,7 +103,11 @@ func _bad_text(t: String) -> bool:
 func _audit_labels(prefix: String, tab: String) -> Dictionary:
 	var labels := _labels_of(prefix)
 	var bad := []
+	var no_fund: bool = Game.world.player.swf <= 0.0
 	for k: String in labels:
+		# A country with no sovereign fund shows "—" in the fund rule and return on purpose.
+		if no_fund and k in ["m_swf_rule", "m_swf_ret"] and labels[k] == "—":
+			continue
 		if _bad_text(labels[k]):
 			bad.append("%s=%s" % [k, labels[k]])
 	_check(bad.is_empty(), "%s: no empty or invalid label %s" % [tab, str(bad)])

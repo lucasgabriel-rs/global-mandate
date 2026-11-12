@@ -1,7 +1,7 @@
-extends SceneTree
+extends Node
 ## Every interface scene must open without errors and without two nodes of the same name under the same parent: repeated
 ## names make the containers leave nodes out of the screen layout.
-## Usage: godot --headless --path . --script tests/scenes.gd
+## Usage: godot --path . -- --ui-scenes
 
 var failures := 0
 
@@ -14,7 +14,7 @@ func _walk(path: String, out: Array) -> void:
 		_walk(path.path_join(d), out)
 
 
-func _init() -> void:
+func _ready() -> void:
 	var all := []
 	_walk("res://scenes", all)
 	for path: String in all:
@@ -25,7 +25,7 @@ func _init() -> void:
 			var key := "%s/%s" % [line.get_slice("parent=\"", 1).get_slice("\"", 0), line.get_slice("name=\"", 1).get_slice("\"", 0)]
 			if seen.has(key):
 				failures += 1
-				print("FAIL: nome repetido em %s: %s" % [path, key])
+				print("FAIL: repeated name in %s: %s" % [path, key])
 			seen[key] = true
 		var scene: PackedScene = load(path)
 		var node := scene.instantiate(PackedScene.GEN_EDIT_STATE_MAIN) if scene else null
@@ -36,4 +36,4 @@ func _init() -> void:
 			node.free()
 	print("%d scenes checked" % all.size())
 	print("RESULT: %d failures" % failures)
-	quit()
+	get_tree().quit()

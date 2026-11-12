@@ -125,57 +125,26 @@ func _ready() -> void:
 		_build_main_menu()
 	_hide_loading()
 	_lang_ready = true
-	var autotest := load("res://tests/ui_drive.gd") if OS.get_cmdline_user_args().has("--ui-test") else null
-	if OS.get_cmdline_user_args().has("--ui-divisions"):
-		autotest = load("res://tests/ui_divisions.gd")
-	if OS.get_cmdline_user_args().has("--ui-statecraft"):
-		autotest = load("res://tests/ui_statecraft.gd")
-	if OS.get_cmdline_user_args().has("--ui-politics"):
-		autotest = load("res://tests/ui_politics.gd")
-	if OS.get_cmdline_user_args().has("--ui-clock"):
-		autotest = load("res://tests/ui_clock.gd")
-	if OS.get_cmdline_user_args().has("--ui-capitals"):
-		autotest = load("res://tests/ui_capitals.gd")
-	if OS.get_cmdline_user_args().has("--ui-debug"):
-		autotest = load("res://tests/ui_debug.gd")
-	if OS.get_cmdline_user_args().has("--ui-borders"):
-		autotest = load("res://tests/ui_borders.gd")
-	if OS.get_cmdline_user_args().has("--ui-legislation"):
-		autotest = load("res://tests/ui_legislation.gd")
-	if OS.get_cmdline_user_args().has("--ui-society"):
-		autotest = load("res://tests/ui_society.gd")
-	if OS.get_cmdline_user_args().has("--ui-infra"):
-		autotest = load("res://tests/ui_infra.gd")
-	if OS.get_cmdline_user_args().has("--ui-corporate"):
-		autotest = load("res://tests/ui_corporate.gd")
-	if OS.get_cmdline_user_args().has("--ui-boot"):
+	var autotest := _interface_test(args)
+	if "--ui-boot" in args:
 		print("startup ok: %d countries, %d on the map, %d ms" % [world.countries.size(), map.features.size(), Time.get_ticks_msec()])
 		get_tree().quit()
 		return
-	if OS.get_cmdline_user_args().has("--ui-threads"):
-		autotest = load("res://tests/ui_threads.gd")
-	if OS.get_cmdline_user_args().has("--ui-profile"):
-		autotest = load("res://tests/ui_profile.gd")
-	if OS.get_cmdline_user_args().has("--ui-desk"):
-		autotest = load("res://tests/ui_desk.gd")
-	if OS.get_cmdline_user_args().has("--ui-economy"):
-		autotest = load("res://tests/ui_economy.gd")
-	if OS.get_cmdline_user_args().has("--ui-econ-audit"):
-		autotest = load("res://tests/ui_econ_audit.gd")
-	if OS.get_cmdline_user_args().has("--ui-layout"):
-		autotest = load("res://tests/ui_layout.gd")
-	if OS.get_cmdline_user_args().has("--ui-creator"):
-		autotest = load("res://tests/ui_creator.gd")
-	if OS.get_cmdline_user_args().has("--ui-diplomacy"):
-		autotest = load("res://tests/ui_diplomacy.gd")
-	if OS.get_cmdline_user_args().has("--ui-locale"):
-		autotest = load("res://tests/ui_locale.gd")
-	if OS.get_cmdline_user_args().has("--ui-menu"):
-		autotest = load("res://tests/ui_menu.gd")
-	if OS.get_cmdline_user_args().has("--ui-opposition"):
-		autotest = load("res://tests/ui_opposition.gd")
 	if autotest:
 		add_child(autotest.new())
+
+
+## The interface test chosen on the command line: `--ui-NAME` runs res://tests/ui_NAME.gd (dashes become underscores),
+## and `--ui-test` runs ui_drive.gd. Null in normal play.
+func _interface_test(args: Array) -> GDScript:
+	for arg: String in args:
+		if not arg.begins_with("--ui-"):
+			continue
+		var name := arg.trim_prefix("--ui-").replace("-", "_")
+		var path := "res://tests/ui_%s.gd" % ("drive" if name == "test" else name)
+		if ResourceLoader.exists(path):
+			return load(path)
+	return null
 
 
 func _adopt_world(fresh: GameWorld) -> void:

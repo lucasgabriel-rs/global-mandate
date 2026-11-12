@@ -362,7 +362,6 @@ godot --path . -- --ui-legislation --shots=/tmp/shots
 
 | Headless (`-s tests/X.gd`) | What it covers |
 | --- | --- |
-| `scenes.gd` | Opens every scene and rejects repeated names under the same parent. |
 | `policy.gd` | Checks the effect of each player lever against a control. |
 | `calibrate.gd` | Prints world indicators and populations by age group year by year (`-- 15 42`), with optional `taiwan` and `hormuz` scenarios. |
 | `economy_health.gd` | Long runs of the world economy within sane bounds. |
@@ -382,7 +381,7 @@ godot --path . -- --ui-legislation --shots=/tmp/shots
 | `--ui-desk` | Dock and floating windows: open, bring to front, drag, resize, minimize, centered opening and small screens. |
 | `--ui-legislation`, `--ui-society` | Legislative center, code cards, filtered library, expected effects, step tracker, amendments and society systems. |
 | `--ui-economy`, `--ui-infra`, `--ui-corporate`, `--ui-econ-audit` | Economy windows (including Currency with reserves and the sovereign fund), population, infrastructure, companies and stock exchange. |
-| `--ui-creator` | Countryball creator, with male and female portraits and names, and a gallery of every country's countryball (`galeria_bandeiras.png`). |
+| `--ui-creator` | Countryball creator, with male and female portraits and names, and a gallery of every country's countryball (`gallery_flags.png`). |
 | `--ui-menu` | Main menu and settings window: the four buttons, saved options and the way into the country choice. |
 | `--ui-locale` | Switches to English and Spanish and takes screenshots of the start screen, HUD, legislative center and block editor. |
 | `--ui-politics`, `--ui-statecraft` | Politics and statecraft through the interface. |
@@ -390,5 +389,6 @@ godot --path . -- --ui-legislation --shots=/tmp/shots
 | `--ui-clock`, `--ui-capitals`, `--ui-divisions`, `--ui-borders` | Clock, capitals, drawing units and borders with clicks on the map. |
 | `--ui-debug` | Presses every debug menu command, one at a time. |
 | `--ui-threads`, `--ui-profile` | Threading and timing. |
+| `--ui-scenes` | Opens every scene and rejects repeated names under the same parent. |
 | `--ui-layout` | Records the position and style of each control on every screen in `layout.txt`, with a screenshot of each. Running it before and after changing a scene shows what moved. |
 | `--ui-test` | Plays on its own through the interface and saves screenshots. |
