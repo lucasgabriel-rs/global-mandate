@@ -271,7 +271,7 @@ There are 170 countries with their own GDP, population, debt, inflation, interes
 - **Prices:** Phillips curve with expectations anchored by central bank credibility, exchange rate pass-through and energy and food shocks.
 - **Monetary policy:** Taylor rule, the euro zone with a common ECB, dollar pegs that can break.
 - **Exchange rate:** purchasing power parity, real interest rate differential, current account and risk premium.
-- **Public finances:** taxes with a Laffer curve and tax evasion, automatic stabilizers, debt in local currency and in dollars, endogenous risk premium, credit rating, IMF and default.
+- **Public finances:** taxes with a Laffer curve and tax evasion, automatic stabilizers, a yield curve built from the Fisher effect (i = r + πᵉ), fixed-rate, inflation-linked and dollar bonds with an average maturity that must be rolled over, the exact debt identity Δb = (r − g)/(1 + g)·b − primary balance, endogenous risk premium, credit rating, IMF and default. AI governments tighten the primary balance when debt passes their tolerance.
 - **Trade:** gravity-based bilateral matrix, changed by tariffs, agreements, sanctions and wars.
 - **Commodities:** oil, gas, grains, metals and chips with supply by country, stocks and OPEC+.
 - **Financial crises:** credit cycle that produces banking crises and global contagion.
@@ -317,6 +317,7 @@ godot --path . -- --ui-legislation --shots=/tmp/shots
 | `policy.gd` | Checks the effect of each player lever against a control. |
 | `calibrate.gd` | Prints world indicators year by year (`-- 15 42`), with optional `taiwan` and `hormuz` scenarios. |
 | `economy_health.gd` | Long runs of the world economy within sane bounds. |
+| `debt.gd` | Yield curve, Fisher effect, fixed-rate, inflation-linked and dollar bonds, maturities and rollover, and the debt identity Δb = (r − g)/(1 + g)·b − primary balance. |
 | `sectors.gd`, `infra.gd`, `corporate.gd` | Sectors, ports and airports, companies and the stock exchange. |
 | `legislation.gd` | Laws, legislative process, party fund, polls, amendments and block dragging. |
 | `code_tributario.gd`, `code_penal_civil.gd`, `code_trabalho_eleicoes.gd`, `direitos.gd` | Each legal code: starting text, changes by bill, revocation and monthly effects. |

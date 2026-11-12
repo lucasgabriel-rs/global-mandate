@@ -75,6 +75,18 @@ func _run() -> void:
 		hud.refresh(true)
 		await _wait()
 	await _shot("e2_bolsa")
+	tabs.current_tab = 1
+	hud.refresh(true)
+	await _wait()
+	var debt: DebtPanel = hud.debt_panel
+	_check(debt.is_visible_in_tree(), "a janela Fiscal mostra a dívida")
+	_check((debt.get_node("%debt_curve") as DebtChart).values.size() == Economy.TENORS.size(), "curva de juros com todos os prazos")
+	_check((debt.get_node("%debt_maturities") as DebtChart).values.size() == 5, "vencimentos dos próximos 5 anos")
+	_check((debt.get_node("%debt_maturity_value") as Label).text != "—", "prazo médio preenchido")
+	var scroll: ScrollContainer = debt.get_parent().get_parent().get_parent()
+	scroll.scroll_vertical = 100000
+	await _wait()
+	await _shot("e2b_fiscal_divida")
 	(panel.get_node("%sub_tabs") as TabContainer).current_tab = 0
 	get_window().size = Vector2i(1100, 700)
 	await _wait(8)

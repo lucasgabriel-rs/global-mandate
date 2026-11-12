@@ -83,6 +83,7 @@ var _hover_unit := -1
 @onready var _politics: PoliticsPanel = %politics
 @onready var _cabinet: CabinetPanel = %cabinet
 @onready var economy: EconomyPanel = %economy
+@onready var debt_panel: DebtPanel = %debt
 @onready var _banner: PanelContainer = %banner
 @onready var _banner_label: Label = %banner_label
 
@@ -799,6 +800,7 @@ func _refresh_fiscal(c: Country) -> void:
 	_dyn.f_def.add_theme_color_override("font_color", UiKit.RED if dr > 0.05 else (UiKit.GREEN if dr <= 0.01 else UiKit.TEXT))
 	_dyn.f_debt.text = UiKit.pct(c.debt_ratio, 0)
 	_dyn.f_tol.text = UiKit.pct(c.debt_tol, 0)
+	debt_panel.refresh(c)
 
 
 func _can_set_rate(c: Country) -> bool:

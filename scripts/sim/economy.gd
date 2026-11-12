@@ -87,6 +87,7 @@ static func init_country(c: Country, row: Dictionary, world: GameWorld) -> void:
 		c.avg_rate = 0.008
 	# Dívida concessional: o serviço inicial não passa de ~1/4 da receita.
 	c.avg_rate = minf(c.avg_rate, 0.25 * rev / maxf(c.debt_ratio, 0.01))
+	_init_debt_profile(c, advanced, pc)
 
 	var target_deficit: float = row.def / 100.0
 	var interest_gdp := c.avg_rate * c.debt_ratio
@@ -120,7 +121,8 @@ static func init_country(c: Country, row: Dictionary, world: GameWorld) -> void:
 	var score := _risk_premium(c, world)
 	c.risk = score
 	c.risk0 = score
-	c.yield_gov = c.rate + 0.005 + score
+	update_curve(c, world)
+	c.yield_gov = c.curve[TENOR_10Y]
 	c.avg_fx = minf(0.045 + score, c.avg_rate * 1.0 if c.avg_rate < 0.045 else 0.09)
 	if pc < 12000.0:
 		c.yield_mult = clampf(c.avg_rate / maxf(c.yield_gov, 0.001), 0.4, 1.0)
@@ -411,6 +413,8 @@ static func _break_peg(c: Country, world: GameWorld) -> void:
 
 static func _fiscal(c: Country, world: GameWorld) -> void:
 	var yn := c.y_nominal()
+	var b0 := c.debt_ratio
+	var d0 := c.debt_loc + c.debt_fx * c.e
 	_fiscal_flows(c)
 
 	var no_market := world.year_float() < c.default_until
@@ -430,10 +434,10 @@ static func _fiscal(c: Country, world: GameWorld) -> void:
 	c.debt_ratio = (c.debt_loc + c.debt_fx * c.e) / maxf(yn, 0.001)
 
 	c.risk = _risk_premium(c, world)
-	c.yield_gov = c.rate + 0.005 + c.risk
-	# Dívida rola em ~6 anos: o custo médio segue o rendimento de mercado com atraso.
-	c.avg_rate += (c.yield_gov * c.yield_mult - c.avg_rate) * DT / 6.0
-	c.avg_fx += ((world.usa.rate + 0.005 + minf(c.risk, 0.25)) * c.yield_mult - c.avg_fx) * DT / 6.0
+	_roll_debt(c, world)
+	_debt_dynamics(c, b0, d0, yn)
+	if c != world.governed():
+		_fiscal_reaction(c)
 	var old_rating := c.rating
 	c.rating = _rating_for(c)
 	if c.rating != old_rating and old_rating != "D" and world.year_float() >= c.default_until and _newsworthy(c, world):
@@ -460,13 +464,155 @@ static func _fiscal_flows(c: Country) -> void:
 	# Estabilizador automático: gasto social sobe quando há desemprego.
 	var social := c.sp_social * yn_pot * (1.0 + 2.0 * clampf(c.unemp - c.unemp_n, -0.03, 0.2))
 	var war_cost := c.mobilization * 0.035 * yn_pot
-	c.interest = c.debt_loc * c.avg_rate + c.debt_fx * c.e * c.avg_fx
+	# Prefixados pagam o cupom nominal; indexados pagam juro real mais a correção pela inflação (regime de competência).
+	var il := c.debt_loc * c.debt_il_share
+	c.interest = (c.debt_loc - il) * c.avg_rate + il * (c.avg_real + c.pi_yoy) + c.debt_fx * c.e * c.avg_fx
 	c.spending = prog + social + war_cost + c.interest + c.reparations * c.e + (c.law_spend_bucket + c.extra_spend_bucket) * 12.0 * c.e
 	c.law_rev_bucket = 0.0
 	c.law_spend_bucket = 0.0
 	c.extra_rev_bucket = 0.0
 	c.extra_spend_bucket = 0.0
 	c.deficit = c.spending - c.revenue
+
+
+# --- Dívida pública: curva de juros, títulos e rolagem ---
+
+## Prazos da curva de juros, em anos.
+const TENORS := [0.25, 1.0, 2.0, 5.0, 10.0, 30.0]
+const TENOR_10Y := 4
+## Escala (anos) em que a curva passa do juro curto para o longo (fator de Nelson-Siegel).
+const CURVE_TAU := 2.0
+const TERM_PREMIUM := 0.004
+## Países com grande parte da dívida corrigida pela inflação.
+const IL_SHARE := {"BRA": 0.4, "CHL": 0.6, "ISR": 0.45, "COL": 0.3, "MEX": 0.15, "GBR": 0.25, "ARG": 0.3, "URY": 0.4, "TUR": 0.15, "ZAF": 0.2, "USA": 0.08, "FRA": 0.1, "ITA": 0.1, "SWE": 0.15, "AUS": 0.07, "CAN": 0.05}
+const MATURITY := {"GBR": 14.0, "JPN": 9.0, "USA": 6.0, "MEX": 8.0, "BRA": 4.0, "TUR": 4.0, "ARG": 4.0, "CHE": 9.0}
+
+
+static func _init_debt_profile(c: Country, advanced: bool, pc: float) -> void:
+	c.debt_il_share = IL_SHARE.get(c.iso, 0.05 if advanced else (0.08 if pc > 8000.0 else 0.0))
+	# Dívida de países pobres é sobretudo empréstimo oficial, de prazo longo.
+	var m := 7.5 if advanced else (5.5 if pc > 8000.0 else (5.0 if pc > 3000.0 else 9.0))
+	c.debt_maturity = MATURITY.get(c.iso, m)
+	c.debt_mat0 = c.debt_maturity
+	c.avg_real = clampf(c.avg_rate - c.pi_e, -0.01, 0.12)
+
+
+static func _h(t: float) -> float:
+	var x := t / CURVE_TAU
+	return (1.0 - exp(-x)) / x
+
+
+## Inflação esperada em média até o prazo t: começa na expectativa atual e converge para a meta
+## à medida que a credibilidade do banco central ancora o horizonte longo.
+static func expected_inflation(c: Country, t: float) -> float:
+	var long := clampf(lerpf(c.pi_e, c.pi_target, c.cred), -0.01, 3.0)
+	return long + (c.pi_e - long) * _h(t)
+
+
+## Curva nominal (Nelson-Siegel com dois fatores). Ponta longa pelo efeito Fisher:
+## i = r + πᵉ, mais prêmio de prazo e de risco de crédito.
+static func update_curve(c: Country, _world: GameWorld) -> void:
+	var short := c.rate + 0.7 * c.risk
+	var long := c.r_n + expected_inflation(c, 30.0) + TERM_PREMIUM + c.risk
+	var out := PackedFloat32Array()
+	out.resize(TENORS.size())
+	for i in TENORS.size():
+		out[i] = maxf(long + (short - long) * _h(TENORS[i]), -0.01)
+	c.curve = out
+
+
+## Rendimento nominal no prazo t, interpolado na curva.
+static func yield_at(c: Country, t: float) -> float:
+	if c.curve.is_empty():
+		return c.yield_gov
+	if t <= TENORS[0]:
+		return c.curve[0]
+	for i in range(1, TENORS.size()):
+		if t <= TENORS[i]:
+			var k: float = (t - TENORS[i - 1]) / (TENORS[i] - TENORS[i - 1])
+			return lerpf(c.curve[i - 1], c.curve[i], k)
+	return c.curve[TENORS.size() - 1]
+
+
+## Juro real no prazo t (Fisher invertido: r = i − πᵉ).
+static func real_yield_at(c: Country, t: float) -> float:
+	return yield_at(c, t) - expected_inflation(c, t)
+
+
+## Cada mês vence 1/prazo da dívida, refinanciada aos juros de hoje. O mercado só aceita títulos
+## curtos quando o risco sobe, e o prazo médio encurta.
+static func _roll_debt(c: Country, world: GameWorld) -> void:
+	update_curve(c, world)
+	c.yield_gov = c.curve[TENOR_10Y]
+	var m := maxf(c.debt_maturity, 0.5)
+	var f := DT / m
+	var y_new := yield_at(c, m)
+	c.avg_rate += (y_new * c.yield_mult - c.avg_rate) * f
+	c.avg_real += (clampf(real_yield_at(c, m), -0.02, 0.3) * c.yield_mult - c.avg_real) * f
+	var usd := yield_at(world.usa, m) if world.usa != c else y_new
+	c.avg_fx += ((usd + minf(c.risk, 0.25)) * c.yield_mult - c.avg_fx) * f
+	var target := c.debt_mat0 * clampf(1.0 - 2.5 * c.risk, 0.3, 1.0)
+	c.debt_maturity += (target - m) * f
+	c.rollover = (c.debt_loc + c.debt_fx * c.e) * (1.0 - exp(-1.0 / m))
+
+
+## Quanto da dívida vence em cada um dos próximos anos (moeda local nominal).
+static func maturities(c: Country, years := 5) -> PackedFloat32Array:
+	var out := PackedFloat32Array()
+	var d := c.debt_loc + c.debt_fx * c.e
+	var m := maxf(c.debt_maturity, 0.5)
+	for k in years:
+		out.append(d * (exp(-k / m) - exp(-(k + 1) / m)))
+	return out
+
+
+## Decompõe a variação mensal da razão dívida/PIB pela identidade exata
+## Δb = (i − g)/(1 + g)·b − saldo primário + ajuste (câmbio, emissão monetária, calotes).
+static func _debt_dynamics(c: Country, b0: float, _d0: float, yn: float) -> void:
+	if c._yn_prev <= 0.0:
+		c._yn_prev = yn
+		return
+	var g := yn / c._yn_prev - 1.0
+	var i := c.interest * DT / maxf(b0 * c._yn_prev, 0.001)
+	var snow := debt_snowball(b0, i, g)
+	var pb := (c.revenue - (c.spending - c.interest)) * DT / maxf(yn, 0.001)
+	var change := c.debt_ratio - b0
+	var a: Dictionary = c._dyn_acc
+	a.snowball += snow
+	a.primary += pb
+	a.change += change
+	a.adjust += change - snow + pb
+	a.n += 1
+	if a.n >= 12:
+		c.debt_dyn = {"snowball": a.snowball, "primary": a.primary, "adjust": a.adjust, "change": a.change}
+		c._dyn_acc = {"snowball": 0.0, "primary": 0.0, "adjust": 0.0, "change": 0.0, "n": 0}
+	c._yn_prev = yn
+
+
+## Efeito bola de neve: (r − g)/(1 + g)·b.
+static func debt_snowball(b: float, r: float, g: float) -> float:
+	return (r - g) / (1.0 + g) * b
+
+
+## Regra de Bohn para governos da IA: com a dívida acima da tolerância, o saldo primário reage e o
+## gasto discricionário é cortado aos poucos; com a dívida de volta abaixo, o corte é desfeito.
+const FISCAL_KEYS := ["sp_social", "sp_health", "sp_education", "sp_infra", "sp_admin"]
+
+
+static func _fiscal_reaction(c: Country) -> void:
+	var yn := maxf(c.y_nominal(), 0.001)
+	var pb := (c.revenue - (c.spending - c.interest)) / yn
+	var excess := c.debt_ratio / maxf(c.debt_tol, 0.1) - 0.85
+	var pb_target := clampf(0.06 * excess, -0.02, 0.035)
+	var gap := pb_target - pb
+	for key in FISCAL_KEYS:
+		var base: float = c.sp0.get(key.trim_prefix("sp_"), c.get(key))
+		var v: float = c.get(key)
+		if excess > 0.0 and gap > 0.0:
+			v = maxf(v * (1.0 - minf(gap, 0.04) * 0.15), base * 0.65)
+		elif excess < -0.1 and v < base:
+			v += (base - v) * 0.01
+		c.set(key, v)
 
 
 static func _risk_premium(c: Country, world: GameWorld) -> float:
