@@ -96,6 +96,14 @@ focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "Como jogar"
 
+[node name="Configuracoes" type="Button" parent="Centro/Painel/col"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Configurações"
+
 [node name="Renunciar" type="Button" parent="Centro/Painel/col"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 36)

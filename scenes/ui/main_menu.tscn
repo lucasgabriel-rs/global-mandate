@@ -1,0 +1,104 @@
+[gd_scene format=3]
+
+[ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="1_menu"]
+
+[node name="MainMenu" type="ColorRect"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_menu")
+color = Color(0.01, 0.03, 0.05, 0.6)
+
+[node name="Margem" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 72
+theme_override_constants/margin_top = 56
+theme_override_constants/margin_right = 72
+theme_override_constants/margin_bottom = 40
+
+[node name="Coluna" type="VBoxContainer" parent="Margem"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="GLOBALMANDATE" type="Label" parent="Margem/Coluna"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9490196, 0.7019608, 0.23921569, 1)
+theme_override_font_sizes/font_size = 64
+text = "GLOBAL MANDATE"
+
+[node name="Subtitulo" type="Label" parent="Margem/Coluna"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 18
+text = "Geopolítica em tempo real sobre um modelo econômico mundial"
+
+[node name="Espaco" type="Control" parent="Margem/Coluna"]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Botoes" type="VBoxContainer" parent="Margem/Coluna"]
+custom_minimum_size = Vector2(320, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="novo_jogo" type="Button" parent="Margem/Coluna/Botoes"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_font_sizes/font_size = 18
+text = "Novo Jogo"
+
+[node name="carregar_jogo" type="Button" parent="Margem/Coluna/Botoes"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+tooltip_text = "Continua a última partida salva."
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_font_sizes/font_size = 18
+text = "Carregar Jogo"
+
+[node name="configuracoes" type="Button" parent="Margem/Coluna/Botoes"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_font_sizes/font_size = 18
+text = "Configurações"
+
+[node name="sair_do_jogo" type="Button" parent="Margem/Coluna/Botoes"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_font_sizes/font_size = 18
+text = "Sair do Jogo"
+
+[node name="Folga" type="Control" parent="Margem/Coluna"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="versao" type="Label" parent="Margem/Coluna"]
+unique_name_in_owner = true
+auto_translate_mode = 2
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 12
+horizontal_alignment = 2

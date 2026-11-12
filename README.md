@@ -259,12 +259,12 @@ This rewrites `locale/messages.pot` from the scenes (texts, tooltips, placeholde
 
 All menus are scenes in `scenes/ui/`, opened and edited in Godot:
 
-- `start_screen.tscn`: start screen.
+- `main_menu.tscn`: main menu (New Game, Load Game, Settings, Quit Game). `start_screen.tscn`: country choice, opened by New Game.
 - `hud.tscn`: top bar, the window desk with all government windows, the dossier, map modes, news feed, notices and the dock.
 - `float_window.tscn`, `dock.tscn` and `dock_item.tscn`: the floating window frame (title bar, traffic-light buttons and resize grip), the dock and its icons. The dock icons are in `assets/ui/dock/`.
 - `panels/`: the content of each window (Divisions, Politics, Ministers, Economy with Sectors, Infrastructure, Companies and Stock exchange tabs), the border panel and the debug menu.
 - `legislation/`: legislative center, law editor, blocks, amendments, expected effects and the step tracker.
-- `modals/`: pause, help, confirmation, decision, character creator, party choice, party, minister, conversation and game over.
+- `modals/`: pause, settings (language, window mode, vsync, interface size; saved in `user://settings.cfg` by `GameSettings`), help, confirmation, decision, character creator, party choice, party, minister, conversation and game over.
 - `rows/`: rows repeated in lists, such as news, party, minister, unit and sector.
 - `theme.tres`: general theme. The slider images are in `assets/ui/`.
 
@@ -352,6 +352,7 @@ godot --path . -- --ui-legislation --shots=/tmp/shots
 | `--ui-legislation`, `--ui-society` | Legislative center, code cards, filtered library, expected effects, step tracker, amendments and society systems. |
 | `--ui-economy`, `--ui-infra`, `--ui-corporate`, `--ui-econ-audit` | Economy windows (including Currency with reserves and the sovereign fund), population, infrastructure, companies and stock exchange. |
 | `--ui-creator` | Countryball creator, with male and female portraits and names, and a gallery of every country's countryball (`galeria_bandeiras.png`). |
+| `--ui-menu` | Main menu and settings window: the four buttons, saved options and the way into the country choice. |
 | `--ui-locale` | Switches to English and Spanish and takes screenshots of the start screen, HUD, legislative center and block editor. |
 | `--ui-politics`, `--ui-statecraft` | Politics and statecraft through the interface. |
 | `--ui-clock`, `--ui-capitals`, `--ui-divisions`, `--ui-borders` | Clock, capitals, drawing units and borders with clicks on the map. |

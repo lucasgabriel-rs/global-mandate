@@ -8,6 +8,8 @@ const DAYS_PER_SECOND := 1.0
 const SPEEDS := [0.0, 1.0, 2.0, 4.0]
 ## Atraso máximo guardado quando a simulação demora: além disso, o tempo perdido não é recuperado.
 const MAX_DAYS_BEHIND := 2.0
+const MAIN_MENU := preload("res://scenes/ui/main_menu.tscn")
+const SETTINGS := preload("res://scenes/ui/modals/settings.tscn")
 const START_SCREEN := preload("res://scenes/ui/start_screen.tscn")
 const LOADING_SCREEN := preload("res://scenes/ui/loading_screen.tscn")
 ## Tempo por quadro para criar nós do mapa na thread principal, para a animação de carga não engasgar.
@@ -38,6 +40,7 @@ const MIN_WINDOW := Vector2i(1024, 576)
 
 var world: GameWorld
 var start_screen: Control
+var main_menu: Control
 ## Abrindo, carregando ou recomeçando: não há mundo pronto para a interface usar.
 var loading := false
 var _loading_screen: Control
@@ -77,6 +80,7 @@ var _lang_pending := false
 
 func _ready() -> void:
 	Lang.startup()
+	GameSettings.startup()
 	map.country_clicked.connect(_on_country_clicked)
 	map.country_hovered.connect(_on_country_hovered)
 	hud.debug.main = self
@@ -110,7 +114,12 @@ func _ready() -> void:
 	get_window().unresizable = false
 	get_window().min_size = MIN_WINDOW
 	await _boot()
-	_build_start_screen()
+	# Os testes de interface começam direto na escolha do país.
+	var args := Array(OS.get_cmdline_user_args())
+	if args.any(func(a: String): return a.begins_with("--ui-")) and not args.has("--ui-menu"):
+		_build_start_screen()
+	else:
+		_build_main_menu()
 	_hide_loading()
 	_lang_ready = true
 	var autotest := load("res://tests/ui_drive.gd") if OS.get_cmdline_user_args().has("--ui-test") else null
@@ -156,6 +165,8 @@ func _ready() -> void:
 		autotest = load("res://tests/ui_creator.gd")
 	if OS.get_cmdline_user_args().has("--ui-locale"):
 		autotest = load("res://tests/ui_locale.gd")
+	if OS.get_cmdline_user_args().has("--ui-menu"):
+		autotest = load("res://tests/ui_menu.gd")
 	if autotest:
 		add_child(autotest.new())
 
@@ -306,6 +317,38 @@ func _on_language_changed() -> void:
 			open_legislation(center.current_tab())
 
 
+# --- Menu inicial --------------------------------------------------------------
+
+func _build_main_menu() -> void:
+	main_menu = MAIN_MENU.instantiate()
+	modal_root.add_child(main_menu)
+	_sync_modal_state()
+	map.frame_region(10.0, get_viewport().get_visible_rect().size.x)
+	(main_menu.get_node("%versao") as Label).text = String(ProjectSettings.get_setting("application/config/version", ""))
+	main_menu.get_node("%novo_jogo").pressed.connect(func():
+		_close_main_menu()
+		_build_start_screen())
+	var load_button: Button = main_menu.get_node("%carregar_jogo")
+	load_button.disabled = not (FileAccess.file_exists(SAVE_PATH) or FileAccess.file_exists(BACKUP_PATH))
+	# O menu só some quando a partida carrega (_enter_game): se o arquivo estiver ruim, ele continua ali.
+	load_button.pressed.connect(_load_game)
+	main_menu.get_node("%configuracoes").pressed.connect(_open_settings)
+	main_menu.get_node("%sair_do_jogo").pressed.connect(func(): get_tree().quit())
+
+
+func _close_main_menu() -> void:
+	if main_menu == null:
+		return
+	main_menu.queue_free()
+	main_menu = null
+	_sync_modal_state()
+
+
+func _open_settings() -> void:
+	var dim := _modal(SETTINGS) as SettingsMenu
+	dim.closed.connect(func(): _close_modal(dim))
+
+
 # --- Tela inicial --------------------------------------------------------------
 
 func _build_start_screen() -> void:
@@ -418,6 +461,7 @@ func _enter_game() -> void:
 	if start_screen:
 		start_screen.queue_free()
 		start_screen = null
+	_close_main_menu()
 	hud.visible = true
 	hud.bind(world, map)
 	map.refresh_colors()
@@ -1010,6 +1054,9 @@ func _open_menu() -> void:
 	dim.get_node("%ComoJogar").pressed.connect(func():
 		_close_modal(dim)
 		_show_help())
+	dim.get_node("%Configuracoes").pressed.connect(func():
+		_close_modal(dim)
+		_open_settings())
 	dim.get_node("%Sair").pressed.connect(func(): get_tree().quit())
 	var quit_office: Button = dim.get_node("%Renunciar")
 	quit_office.visible = world.in_office

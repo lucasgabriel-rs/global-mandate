@@ -12043,3 +12043,44 @@ msgstr ""
 #: data/countries.csv_(BHS)
 msgid "Bahamas"
 msgstr ""
+
+#: scenes/ui/main_menu.tscn:70
+msgid "Novo Jogo"
+msgstr ""
+
+#: scenes/ui/main_menu.tscn:79
+msgid "Carregar Jogo"
+msgstr ""
+
+#: scenes/ui/main_menu.tscn:96 scenes/ui/modals/pause_menu.tscn scenes/ui/modals/settings.tscn
+msgid "Configurações"
+msgstr ""
+
+#: scenes/ui/main_menu.tscn:105
+msgid "Sair do Jogo"
+msgstr ""
+
+#: scenes/ui/main_menu.tscn:82
+msgid "Continua a última partida salva."
+msgstr ""
+
+#: scenes/ui/modals/settings.tscn
+msgid "Modo de janela"
+msgstr ""
+
+#: scenes/ui/modals/settings.tscn
+msgid "Tela cheia"
+msgstr ""
+
+#: scenes/ui/modals/settings.tscn
+msgid "Sincronia vertical"
+msgstr ""
+
+#: scenes/ui/modals/settings.tscn
+msgid "Tamanho da interface"
+msgstr ""
+
+#: scenes/ui/modals/settings.tscn
+msgid "Restaurar padrões"
+msgstr ""
+
