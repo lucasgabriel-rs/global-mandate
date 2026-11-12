@@ -114,6 +114,26 @@ var ca := 0.0
 var ca_ratio := 0.0
 var ca0 := 0.0
 var reserves := 10.0
+# Câmbio: intervenção do banco central, controle de capitais, fuga e dolarização
+var fx_lean := 0.3             # quanto o banco central segura do movimento do câmbio, 0-1
+var fx_interv := 0.0           # venda líquida de reservas no mês, anualizada (US$ bi/ano; negativa = compra)
+var cap_controls := 0.0        # controle de capitais, 0 (livre) a 1 (fechado)
+var cap_flight := 0.0          # saída de capitais, anualizada (US$ bi/ano)
+var dollarization := 0.0       # fração dos depósitos e preços em dólar, 0-1
+var uip_dep := 0.0             # depreciação esperada pela paridade descoberta: i - i* - prêmio
+var res_ratio0 := 0.0          # reservas de partida em fração do PIB em dólar: o colchão que o banco central recompõe
+# Fundo soberano (US$ bi): aplica no exterior, recebe renda de commodities e superávits
+var swf := 0.0
+var swf_active := false
+var swf_rent_share := 0.0      # fração da renda de commodities do Estado que vai ao fundo
+var swf_surplus_share := 0.0   # fração do superávit nominal que vai ao fundo
+var swf_limit := 0.0           # saque anual máximo, fração do saldo
+var swf_in := 0.0              # aporte do ano (moeda local, bi/ano)
+var swf_out := 0.0             # saque do ano (moeda local, bi/ano)
+var swf_return := 0.0          # retorno do último mês, anualizado
+var swf_pain := 0.0            # perda de aprovação por sacar acima do retorno
+var swf_flow0 := 0.0          # fluxo líquido do fundo na partida, fração do PIB
+var rent_ref := 0.0            # renda de commodities média, para o amortecedor do fundo
 var trade_loss := 0.0
 var trade0 := 0.0              # atritos já embutidos no PIB-base (sanções de 2024 etc.)
 var press0 := 0.0
