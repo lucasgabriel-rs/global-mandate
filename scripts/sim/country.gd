@@ -221,6 +221,15 @@ func military_power() -> float:
 	return pow(maxf(mil_stock, 0.01), 0.65) * pow(maxf(troops, 0.1), 0.35) * tech * morale * (1.0 + 0.7 * mobilization)
 
 
+## Reescala o passado do PIB real quando o território muda: o crescimento passa a comparar o país com
+## ele mesmo nas fronteiras atuais, e anexar ou ceder terra não aparece como crescimento ou recessão.
+func rebase_territory(ratio: float) -> void:
+	var s: PackedFloat32Array = hist.get("y", PackedFloat32Array())
+	for i in s.size():
+		s[i] *= ratio
+	hist["y"] = s
+
+
 func push_hist(key: String, value: float) -> void:
 	var s: PackedFloat32Array = hist.get(key, PackedFloat32Array())
 	s.append(value)
