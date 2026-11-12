@@ -49,7 +49,7 @@ The top bar shows the date, the speed buttons, the main indicators and the party
 
 ## Time
 
-At normal speed (1x) one game day passes per real second; at 2x, two days, and at 4x, four. The game has no hours: the top bar shows only the date. Next to the buttons, the bar shows the actual rate in days per second, in red if it is far from the expected value.
+At normal speed (1x) one game day passes per real second; at 2x, two days, and at 4x, four. The game has no hours: the top bar shows only the date. Next to the buttons, the bar shows the actual rate in days per second, in red if it is far from the expected value. The economy is calculated once a month, on the 1st, for every country at the same time, together with commodity prices and global risk; wars, parliament and the AI's decisions move day by day.
 
 The **+7 dias** and **+30 dias** buttons run the same daily simulation without waiting for the clock and show a summary with the country's indicators and the news of the period. A decision that comes up midway pauses the skip, which resumes after you answer.
 

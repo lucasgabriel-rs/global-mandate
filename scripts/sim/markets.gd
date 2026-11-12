@@ -24,6 +24,13 @@ const DEMAND_ELAST := [0.12, 0.15, 0.10, 0.25, 0.30]
 const SUPPLY_RESP := [0.20, 0.20, 0.45, 0.18, 0.12]
 const PRICE_ELAST := [0.45, 0.55, 0.45, 0.60, 0.50]  # sensibilidade inversa do preço ao estoque
 const VOL := [0.018, 0.022, 0.012, 0.012, 0.006]     # vol. diária
+## Passo mensal calibrado para reproduzir o modelo diário antigo (puxada de 8% ao dia rumo ao alvo e
+## ruído AR(1) com memória de 0,97): mesma variação de um mês para o outro (5,8% no petróleo) e mesma
+## oscilação em torno do alvo. A memória do ruído e a queda dos choques são as diárias elevadas a 30,4.
+const PRICE_PULL_MONTH := 0.76
+const NOISE_KEEP_MONTH := 0.396
+const NOISE_SD_MONTH := 3.75
+const SHOCK_KEEP_MONTH := 0.928
 const INCOME_ELAST := [0.45, 0.5, 0.3, 0.8, 1.0]     # demanda cresce menos que o PIB (ganho de eficiência)
 const STOCK_YEARS := [0.10, 0.10, 0.30, 0.25, 0.15]  # estoque normal, em anos de consumo
 const CAPACITY_TREND := [0.008, 0.012, 0.008, 0.02, 0.035]  # expansão anual de capacidade
@@ -78,8 +85,9 @@ func value_usd(market: int, amount: float) -> float:
 	return amount * float(VALUE_PER_UNIT[market]) * price[market] / float(P0[market])
 
 
-func step_day(world: GameWorld, rng: RandomNumberGenerator) -> void:
-	var dt := 1.0 / 365.0
+## Um mês de mercado de uma vez, no início de cada mês, depois de os países fecharem o mês.
+func step_month(world: GameWorld, rng: RandomNumberGenerator) -> void:
+	var dt := 1.0 / 12.0
 	var s := PackedFloat64Array([0, 0, 0, 0, 0])
 	var d := PackedFloat64Array([0, 0, 0, 0, 0])
 	for c: Country in world.countries:
@@ -106,11 +114,11 @@ func step_day(world: GameWorld, rng: RandomNumberGenerator) -> void:
 		# Investimento em capacidade segue o preço real com defasagem de anos.
 		capacity[i] *= 1.0 + (SUPPLY_RESP[i] * clampf(log(rel_price), -1.0, 1.2) + CAPACITY_TREND[i]) * dt
 		capacity[i] = clampf(capacity[i], 0.4, 6.0)
-		noise[i] += -noise[i] * 0.03 + rng.randfn(0.0, VOL[i])
+		noise[i] = noise[i] * NOISE_KEEP_MONTH + rng.randfn(0.0, VOL[i] * NOISE_SD_MONTH)
 		var target: float = log(P0[i] * world.global_price_index()) - log(inv[i]) / PRICE_ELAST[i] + noise[i]
 		var lp: float = log(price[i])
-		price[i] = exp(lp + (target - lp) * 0.08)
-		shock[i] *= 1.0 - 0.9 * dt
+		price[i] = exp(lp + (target - lp) * PRICE_PULL_MONTH)
+		shock[i] *= SHOCK_KEEP_MONTH
 
 
 func relative_price(market: int, world: GameWorld) -> float:

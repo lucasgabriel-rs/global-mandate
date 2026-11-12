@@ -55,7 +55,6 @@ var day_index := 0
 var year := START_YEAR
 var month := 0
 var day := 1
-var next_step := PackedFloat64Array()
 var next_ai := PackedFloat64Array()
 
 var global_risk := 0.2
@@ -120,10 +119,8 @@ func setup(seed_value: int = 0) -> void:
 	treaties.setup(self)
 	infra.setup(self)
 	corporate.setup(self)
-	next_step.resize(countries.size())
 	next_ai.resize(countries.size())
 	for i in countries.size():
-		next_step[i] = fmod(i * 7.3, 30.4)
 		next_ai[i] = fmod(i * 11.1, 30.4)
 	# Dinâmica de início: alguns meses de aquecimento sem ninguém olhando.
 	_update_global()
@@ -201,22 +198,29 @@ func tick_day() -> void:
 		if month >= 12:
 			month = 0
 			year += 1
+		_economy_month()
 		_on_month()
-	markets.step_day(self, rng)
 	diplomacy.step_wars(self)
 	legislation.step_day(self)
-	global_risk += (0.2 - global_risk) * 0.004 + rng.randfn(0.0, 0.004)
-	global_risk = clampf(global_risk, 0.05, 1.0)
 	for i in countries.size():
-		if day_index >= next_step[i]:
-			next_step[i] += 30.4167
-			Economy.step_month(countries[i], self)
 		if day_index >= next_ai[i]:
 			next_ai[i] += 30.4167
 			if countries[i] == player and in_office:
 				_player_upkeep(countries[i])
 			else:
 				NationAI.step_month(countries[i], self)
+
+
+## O cálculo econômico do mês, no dia 1, para todos os países ao mesmo tempo: risco global, a
+## economia de cada país e os preços das commodities. As decisões da IA continuam espalhadas pelo mês.
+func _economy_month() -> void:
+	# Mesma dinâmica da versão diária (volta de 0,4% ao dia para 0,2 e ruído de 0,004), somada no mês.
+	global_risk += (0.2 - global_risk) * 0.115 + rng.randfn(0.0, 0.021)
+	global_risk = clampf(global_risk, 0.05, 1.0)
+	# Os países fecham o mês com os preços vigentes; o mercado reage depois e vale para o mês seguinte.
+	for c: Country in countries:
+		Economy.step_month(c, self)
+	markets.step_month(self, rng)
 
 
 func _player_upkeep(c: Country) -> void:
@@ -955,7 +959,7 @@ func to_dict() -> Dictionary:
 		cs.append(c.to_dict())
 	return {
 		"countries": cs, "markets": markets.to_dict(), "diplomacy": diplomacy.to_dict(),
-		"day_index": day_index, "year": year, "month": month, "day": day, "next_step": next_step,
+		"day_index": day_index, "year": year, "month": month, "day": day,
 		"next_ai": next_ai, "global_risk": global_risk, "global_tension": global_tension,
 		"ecb_rate": ecb_rate, "eur_rate": eur_rate, "action_used": action_used, "difficulty": difficulty,
 		"mandates": mandates, "months_elapsed": months_elapsed, "global_hist": global_hist,
@@ -979,7 +983,7 @@ func load_dict(d: Dictionary) -> void:
 	usa = by_iso["USA"]
 	markets.from_dict(d.markets)
 	diplomacy.from_dict(d.diplomacy)
-	for k: String in ["day_index", "year", "month", "day", "next_step", "next_ai", "global_risk", "global_tension", "ecb_rate", "eur_rate", "difficulty", "mandates", "months_elapsed", "global_hist"]:
+	for k: String in ["day_index", "year", "month", "day", "next_ai", "global_risk", "global_tension", "ecb_rate", "eur_rate", "difficulty", "mandates", "months_elapsed", "global_hist"]:
 		set(k, d[k])
 	_world_gdp = d.world_gdp
 	rng.seed = d.rng_seed
