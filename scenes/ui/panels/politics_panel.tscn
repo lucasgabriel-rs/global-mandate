@@ -210,14 +210,14 @@ layout_mode = 2
 mouse_filter = 2
 color = Color(0.15294118, 0.2509804, 0.30980393, 1)
 
-[node name="PROJETOSDELEI" type="Label" parent="." unique_id=1612890980]
+[node name="PROJETOSDELEI" type="Label" parent="." unique_id=1612890980 groups=["gov_only"]]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_constants/line_spacing = 0
 theme_override_font_sizes/font_size = 11
 text = "PROJETOS DE LEI"
 
-[node name="CadaVotacaoCusta5De" type="Label" parent="." unique_id=346016167]
+[node name="CadaVotacaoCusta5De" type="Label" parent="." unique_id=346016167 groups=["gov_only"]]
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
@@ -225,24 +225,24 @@ theme_override_font_sizes/font_size = 12
 text = "O parlamento leva semanas para deliberar: um projeto enviado só vale se for aprovado no fim do rito."
 autowrap_mode = 3
 
-[node name="bills" type="VBoxContainer" parent="." unique_id=562905721]
+[node name="bills" type="VBoxContainer" parent="." unique_id=562905721 groups=["gov_only"]]
 unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 3
 
-[node name="bill_poll_title" type="Label" parent="."]
+[node name="bill_poll_title" type="Label" parent="." groups=["gov_only"]]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_font_sizes/font_size = 12
 text = "Pesquisar um projeto antes de enviar:"
 
-[node name="bill_poll_pick" type="OptionButton" parent="."]
+[node name="bill_poll_pick" type="OptionButton" parent="." groups=["gov_only"]]
 unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0
 
-[node name="poll" parent="." instance=ExtResource("poll_box")]
+[node name="poll" parent="." instance=ExtResource("poll_box") groups=["gov_only"]]
 unique_name_in_owner = true
 layout_mode = 2
 

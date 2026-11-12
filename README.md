@@ -177,6 +177,8 @@ Before starting, when choosing a party, you decide between **Governar** and **Li
 
 When you lose an election or are impeached, you stay in the same country as the leader of your party, and the AI governs: budget, interest rates, diplomacy and wars leave your hands, and the controls only show what it decides. In the **Politics** window you can criticize the government, campaign and file a motion of no confidence, which only brings down the government if the opposition holds the majority of seats. In the next election, the worse the government's approval, the better for your party, and you return to power if it is the largest.
 
+The interface changes with the role. In opposition the top bar shows an **OPOSIÇÃO** badge, and the dock, the HUD and the windows show only what the opposition can do: Ministers, Budget and taxes, Currency, Foreign trade, Armed forces and Territory divisions disappear (and cannot be opened), the foreign dossier loses talks, treaties and foreign policy buttons, and the Politics window loses the bill votes. The dashboard, Politics and legislative center windows are renamed (*Painel da oposição*, *Partido e pesquisas*, *Projetos e emendas*), and a new **Government oversight** window shows who governs, your bench, how many seats are missing for a no-confidence majority, the next election and the government's numbers. Scenes tag what belongs to each role with the groups `gov_only` and `opposition_only` (and the metadata `opposition_text` for the opposition's names), and `Hud._apply_role()` applies them, so winning the election or a successful motion brings the government menus back without reloading.
+
 ## Politicians and political compass
 
 Each party has 5 to 8 politicians, each with their own position on the political compass (economy and authority), competence and appearance. The party's compass is the average of its politicians. You are also a politician: you set your ideas by clicking the compass when choosing the party, and the party's average changes when you join, leave or change your mind. Click a party in the **Politics** window to see its politicians.
@@ -354,6 +356,7 @@ godot --path . -- --ui-legislation --shots=/tmp/shots
 | `--ui-creator` | Countryball creator, with male and female portraits and names, and a gallery of every country's countryball (`galeria_bandeiras.png`). |
 | `--ui-locale` | Switches to English and Spanish and takes screenshots of the start screen, HUD, legislative center and block editor. |
 | `--ui-politics`, `--ui-statecraft` | Politics and statecraft through the interface. |
+| `--ui-opposition` | Starts in opposition and checks the dock, badge, window names and locked government windows; switches to government and back (also when losing office with a window open), with screenshots of both modes. |
 | `--ui-clock`, `--ui-capitals`, `--ui-divisions`, `--ui-borders` | Clock, capitals, drawing units and borders with clicks on the map. |
 | `--ui-debug` | Presses every debug menu command, one at a time. |
 | `--ui-threads`, `--ui-profile` | Threading and timing. |

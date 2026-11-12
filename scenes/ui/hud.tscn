@@ -26,6 +26,24 @@
 [ext_resource type="Texture2D" path="res://assets/ui/dock/economia.svg" id="wi_economia"]
 
 [ext_resource type="Texture2D" path="res://assets/ui/dock/legislacao.svg" id="wi_legislacao"]
+[ext_resource type="Texture2D" path="res://assets/ui/dock/oposicao.svg" id="wi_oposicao"]
+[ext_resource type="PackedScene" path="res://scenes/ui/panels/opposition_panel.tscn" id="sub_7"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxOposicao"]
+content_margin_left = 10.0
+content_margin_top = 3.0
+content_margin_right = 10.0
+content_margin_bottom = 3.0
+bg_color = Color(0.66, 0.2, 0.17, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.93, 0.45, 0.38, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_el1dq"]
 content_margin_left = 8.0
 content_margin_top = 8.0
@@ -148,6 +166,19 @@ unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_font_sizes/font_size = 13
+
+[node name="selo_oposicao" type="PanelContainer" parent="Painel/Linha" groups=["opposition_only"]]
+visible = false
+layout_mode = 2
+size_flags_vertical = 4
+tooltip_text = "Você lidera a oposição: o governo é de outro partido. Critique, faça campanha, apresente projetos e dispute a próxima eleição. Orçamento, ministros e decretos são do governo."
+theme_override_styles/panel = SubResource("StyleBoxOposicao")
+
+[node name="selo_texto" type="Label" parent="Painel/Linha/selo_oposicao"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 13
+text = "OPOSIÇÃO"
 
 [node name="Centro2" type="CenterContainer" parent="Painel/Linha" unique_id=1090190506]
 layout_mode = 2
@@ -324,11 +355,12 @@ layout_mode = 2
 tooltip_text = "Aprovação do governo. Em democracias decide a próxima eleição."
 theme_override_constants/separation = 0
 
-[node name="Aprovacao" type="Label" parent="Painel/Linha/Coluna7" unique_id=260546906]
+[node name="Aprovacao" type="Label" parent="Painel/Linha/Coluna7" unique_id=260546906 groups=["role_text"]]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_font_sizes/font_size = 11
 text = "Aprovação"
+metadata/opposition_text = "Aprov. governo"
 
 [node name="top_approval" type="Label" parent="Painel/Linha/Coluna7" unique_id=1931533029]
 unique_name_in_owner = true
@@ -1037,20 +1069,29 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 12
 autowrap_mode = 3
 
-[node name="Separador3" type="ColorRect" parent="dossier/Rolagem/dossier_body" unique_id=914374724 groups=["foreign_only"]]
+[node name="OposicaoNota" type="Label" parent="dossier/Rolagem/dossier_body" groups=["opposition_only", "foreign_only"]]
+visible = false
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 12
+text = "Na oposição, quem conduz a política externa é o governo. Você só acompanha."
+autowrap_mode = 3
+
+[node name="Separador3" type="ColorRect" parent="dossier/Rolagem/dossier_body" unique_id=914374724 groups=["foreign_only", "gov_only"]]
 custom_minimum_size = Vector2(0, 1)
 layout_mode = 2
 mouse_filter = 2
 color = Color(0.15294118, 0.2509804, 0.30980393, 1)
 
-[node name="CONVERSACOMOLIDER" type="Label" parent="dossier/Rolagem/dossier_body" unique_id=829648613 groups=["foreign_only"]]
+[node name="CONVERSACOMOLIDER" type="Label" parent="dossier/Rolagem/dossier_body" unique_id=829648613 groups=["foreign_only", "gov_only"]]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_constants/line_spacing = 0
 theme_override_font_sizes/font_size = 11
 text = "CONVERSA COM O LÍDER"
 
-[node name="dossier_talk" type="Button" parent="dossier/Rolagem/dossier_body" unique_id=386136188 groups=["foreign_only"]]
+[node name="dossier_talk" type="Button" parent="dossier/Rolagem/dossier_body" unique_id=386136188 groups=["foreign_only", "gov_only"]]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
@@ -1060,7 +1101,7 @@ mouse_default_cursor_shape = 2
 text = "Falar com o líder"
 clip_text = true
 
-[node name="ProporTratado" type="Button" parent="dossier/Rolagem/dossier_body" unique_id=1885962718 groups=["foreign_only"]]
+[node name="ProporTratado" type="Button" parent="dossier/Rolagem/dossier_body" unique_id=1885962718 groups=["foreign_only", "gov_only"]]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Negocia um tratado: assinado, ele ainda precisa ser ratificado pelos parlamentos."
@@ -1068,20 +1109,20 @@ focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "Propor tratado"
 
-[node name="Separador4" type="ColorRect" parent="dossier/Rolagem/dossier_body" unique_id=768803281 groups=["foreign_only"]]
+[node name="Separador4" type="ColorRect" parent="dossier/Rolagem/dossier_body" unique_id=768803281 groups=["foreign_only", "gov_only"]]
 custom_minimum_size = Vector2(0, 1)
 layout_mode = 2
 mouse_filter = 2
 color = Color(0.15294118, 0.2509804, 0.30980393, 1)
 
-[node name="POLITICAEXTERNA" type="Label" parent="dossier/Rolagem/dossier_body" unique_id=460834315 groups=["foreign_only"]]
+[node name="POLITICAEXTERNA" type="Label" parent="dossier/Rolagem/dossier_body" unique_id=460834315 groups=["foreign_only", "gov_only"]]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_constants/line_spacing = 0
 theme_override_font_sizes/font_size = 11
 text = "POLÍTICA EXTERNA"
 
-[node name="Grade" type="GridContainer" parent="dossier/Rolagem/dossier_body" unique_id=189104003 groups=["foreign_only"]]
+[node name="Grade" type="GridContainer" parent="dossier/Rolagem/dossier_body" unique_id=189104003 groups=["foreign_only", "gov_only"]]
 layout_mode = 2
 theme_override_constants/h_separation = 4
 theme_override_constants/v_separation = 4
@@ -1390,15 +1431,16 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("desk_1")
 
-[node name="w_painel" parent="desk" instance=ExtResource("fw_1")]
+[node name="w_painel" parent="desk" instance=ExtResource("fw_1") groups=["role_text"]]
 layout_mode = 0
 offset_right = 440.0
 offset_bottom = 640.0
 title = "Painel do governo"
 icon = ExtResource("wi_painel")
 default_size = Vector2(440, 640)
+metadata/opposition_text = "Painel da oposição"
 
-[node name="w_fiscal" parent="desk" instance=ExtResource("fw_1")]
+[node name="w_fiscal" parent="desk" instance=ExtResource("fw_1") groups=["gov_only"]]
 layout_mode = 0
 offset_right = 440.0
 offset_bottom = 640.0
@@ -1406,7 +1448,7 @@ title = "Orçamento e impostos"
 icon = ExtResource("wi_fiscal")
 default_size = Vector2(440, 640)
 
-[node name="w_moeda" parent="desk" instance=ExtResource("fw_1")]
+[node name="w_moeda" parent="desk" instance=ExtResource("fw_1") groups=["gov_only"]]
 layout_mode = 0
 offset_right = 440.0
 offset_bottom = 600.0
@@ -1414,7 +1456,7 @@ title = "Moeda e juros"
 icon = ExtResource("wi_moeda")
 default_size = Vector2(440, 600)
 
-[node name="w_comercio" parent="desk" instance=ExtResource("fw_1")]
+[node name="w_comercio" parent="desk" instance=ExtResource("fw_1") groups=["gov_only"]]
 layout_mode = 0
 offset_right = 440.0
 offset_bottom = 600.0
@@ -1422,7 +1464,7 @@ title = "Comércio exterior"
 icon = ExtResource("wi_comercio")
 default_size = Vector2(440, 600)
 
-[node name="w_militar" parent="desk" instance=ExtResource("fw_1")]
+[node name="w_militar" parent="desk" instance=ExtResource("fw_1") groups=["gov_only"]]
 layout_mode = 0
 offset_right = 440.0
 offset_bottom = 600.0
@@ -1438,7 +1480,7 @@ title = "Mundo"
 icon = ExtResource("wi_mundo")
 default_size = Vector2(440, 600)
 
-[node name="w_divisoes" parent="desk" instance=ExtResource("fw_1")]
+[node name="w_divisoes" parent="desk" instance=ExtResource("fw_1") groups=["gov_only"]]
 layout_mode = 0
 offset_right = 440.0
 offset_bottom = 640.0
@@ -1446,15 +1488,16 @@ title = "Divisões do território"
 icon = ExtResource("wi_divisoes")
 default_size = Vector2(440, 640)
 
-[node name="w_politica" parent="desk" instance=ExtResource("fw_1")]
+[node name="w_politica" parent="desk" instance=ExtResource("fw_1") groups=["role_text"]]
 layout_mode = 0
 offset_right = 480.0
 offset_bottom = 680.0
 title = "Política"
 icon = ExtResource("wi_politica")
 default_size = Vector2(480, 680)
+metadata/opposition_text = "Partido e pesquisas"
 
-[node name="w_ministros" parent="desk" instance=ExtResource("fw_1")]
+[node name="w_ministros" parent="desk" instance=ExtResource("fw_1") groups=["gov_only"]]
 layout_mode = 0
 offset_right = 460.0
 offset_bottom = 640.0
@@ -1598,11 +1641,12 @@ layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 4
 
-[node name="ApoioNoParlamento" type="Label" parent="desk/w_painel/Painel/Margem/Coluna/Linha5" unique_id=76432979]
+[node name="ApoioNoParlamento" type="Label" parent="desk/w_painel/Painel/Margem/Coluna/Linha5" unique_id=76432979 groups=["role_text"]]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_font_sizes/font_size = 13
 text = "Apoio no parlamento"
+metadata/opposition_text = "Governo no parlamento"
 
 [node name="Espaco" type="Control" parent="desk/w_painel/Painel/Margem/Coluna/Linha5" unique_id=2042097860]
 layout_mode = 2
@@ -3876,13 +3920,26 @@ theme_override_constants/separation = 6
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="w_legislacao" parent="desk" instance=ExtResource("fw_1")]
+[node name="w_legislacao" parent="desk" instance=ExtResource("fw_1") groups=["role_text"]]
 layout_mode = 0
 offset_right = 1180.0
 offset_bottom = 720.0
 title = "Centro legislativo"
 icon = ExtResource("wi_legislacao")
 default_size = Vector2(1180, 720)
+metadata/opposition_text = "Projetos e emendas"
+
+[node name="w_oposicao" parent="desk" instance=ExtResource("fw_1") groups=["opposition_only"]]
+layout_mode = 0
+offset_right = 460.0
+offset_bottom = 640.0
+title = "Fiscalização do governo"
+icon = ExtResource("wi_oposicao")
+default_size = Vector2(460, 640)
+
+[node name="oposicao" parent="desk/w_oposicao" instance=ExtResource("sub_7")]
+unique_name_in_owner = true
+layout_mode = 2
 
 [node name="dock" parent="." instance=ExtResource("dock_1")]
 unique_name_in_owner = true

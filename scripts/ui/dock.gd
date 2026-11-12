@@ -54,9 +54,11 @@ func _process(_delta: float) -> void:
 	var base_w := 0.0
 	var gap := float(_row.get_theme_constant("separation"))
 	for child in _row.get_children():
+		if not (child as Control).visible:
+			continue
 		if child is DockItem:
 			base_w += child.base
-		elif child is Control and child.visible:
+		elif child is Control:
 			base_w += child.custom_minimum_size.x
 		base_w += gap
 	base_w -= gap
@@ -65,6 +67,8 @@ func _process(_delta: float) -> void:
 	var near := mouse.y > size.y - 100.0 and mouse.y <= size.y and absf(mouse.x - cx) < base_w * 0.5 + REACH
 	var x := cx - base_w * 0.5
 	for child in _row.get_children():
+		if not (child as Control).visible:
+			continue
 		if child is DockItem:
 			var it: DockItem = child
 			var center := x + it.base * 0.5
@@ -74,7 +78,7 @@ func _process(_delta: float) -> void:
 			if desk:
 				it.set_running(it.window_index >= 0 and desk.is_open(it.window_index))
 			x += it.base + gap
-		elif child is Control and child.visible:
+		elif child is Control:
 			x += child.custom_minimum_size.x + gap
 	_row.reset_size()
 	_row.position = Vector2(cx - _row.size.x * 0.5, size.y - BOTTOM_GAP - _row.size.y)

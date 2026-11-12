@@ -7,51 +7,67 @@ msgstr ""
 "Content-Transfer-Encoding: 8-bit\n"
 "X-Source-Language: pt_BR\n"
 
-#: scenes/ui/dock.tscn:75 scenes/ui/hud.tscn:1397
+#: scenes/ui/dock.tscn:76 scenes/ui/hud.tscn:1438
 msgid "Painel do governo"
 msgstr ""
 
-#: scenes/ui/dock.tscn:82 scenes/ui/hud.tscn:1453 scripts/ui/debug_menu.gd:395
+#: scenes/ui/dock.tscn:80 scenes/ui/hud.tscn:1441
+msgid "Painel da oposição"
+msgstr ""
+
+#: scenes/ui/dock.tscn:84 scenes/ui/hud.tscn:1495 scripts/ui/debug_menu.gd:395
 msgid "Política"
 msgstr ""
 
-#: scenes/ui/dock.tscn:89 scenes/ui/hud.tscn:1461
+#: scenes/ui/dock.tscn:88 scenes/ui/hud.tscn:1498
+msgid "Partido e pesquisas"
+msgstr ""
+
+#: scenes/ui/dock.tscn:92 scenes/ui/hud.tscn:1504
 msgid "Ministros"
 msgstr ""
 
-#: scenes/ui/dock.tscn:96 scenes/ui/hud.tscn:3883 scenes/ui/legislation/legislation_center.tscn:25
+#: scenes/ui/dock.tscn:99 scenes/ui/hud.tscn:3927 scenes/ui/legislation/legislation_center.tscn:25
 msgid "Centro legislativo"
 msgstr ""
 
-#: scenes/ui/dock.tscn:110 scenes/ui/hud.tscn:1405
+#: scenes/ui/dock.tscn:103 scenes/ui/hud.tscn:3930
+msgid "Projetos e emendas"
+msgstr ""
+
+#: scenes/ui/dock.tscn:108 scenes/ui/hud.tscn:3936
+msgid "Fiscalização do governo"
+msgstr ""
+
+#: scenes/ui/dock.tscn:122 scenes/ui/hud.tscn:1447
 msgid "Orçamento e impostos"
 msgstr ""
 
-#: scenes/ui/dock.tscn:117 scenes/ui/hud.tscn:1413
+#: scenes/ui/dock.tscn:129 scenes/ui/hud.tscn:1455
 msgid "Moeda e juros"
 msgstr ""
 
-#: scenes/ui/dock.tscn:124 scenes/ui/hud.tscn:1421
+#: scenes/ui/dock.tscn:136 scenes/ui/hud.tscn:1463
 msgid "Comércio exterior"
 msgstr ""
 
-#: scenes/ui/dock.tscn:131 scenes/ui/hud.tscn:1469
+#: scenes/ui/dock.tscn:143 scenes/ui/hud.tscn:1512
 msgid "Setores, empresas e bolsa"
 msgstr ""
 
-#: scenes/ui/dock.tscn:145 scenes/ui/hud.tscn:1429 scripts/sim/law_catalog.gd_(escolha_ministry_area)
+#: scenes/ui/dock.tscn:157 scenes/ui/hud.tscn:1471 scripts/sim/law_catalog.gd_(escolha_ministry_area)
 msgid "Forças armadas"
 msgstr ""
 
-#: scenes/ui/dock.tscn:152 scenes/ui/hud.tscn:1445
+#: scenes/ui/dock.tscn:164 scenes/ui/hud.tscn:1487
 msgid "Divisões do território"
 msgstr ""
 
-#: scenes/ui/dock.tscn:166 scenes/ui/hud.tscn:1437
+#: scenes/ui/dock.tscn:178 scenes/ui/hud.tscn:1479
 msgid "Mundo"
 msgstr ""
 
-#: scenes/ui/float_window.tscn:100 scenes/ui/hud.tscn:3974 scenes/ui/legislation/law_simulator.tscn:63 scenes/ui/legislation/legislation_center.tscn:43
+#: scenes/ui/float_window.tscn:100 scenes/ui/hud.tscn:4031 scenes/ui/legislation/law_simulator.tscn:63 scenes/ui/legislation/legislation_center.tscn:43
 msgid "Fechar"
 msgstr ""
 
@@ -75,863 +91,883 @@ msgstr ""
 msgid "◢"
 msgstr ""
 
-#: scenes/ui/hud.tscn:164
+#: scenes/ui/hud.tscn:174
+msgid "Você lidera a oposição: o governo é de outro partido. Critique, faça campanha, apresente projetos e dispute a próxima eleição. Orçamento, ministros e decretos são do governo."
+msgstr ""
+
+#: scenes/ui/hud.tscn:181
+msgid "OPOSIÇÃO"
+msgstr ""
+
+#: scenes/ui/hud.tscn:195
 msgid "Pausar (Espaço)"
 msgstr ""
 
-#: scenes/ui/hud.tscn:168
+#: scenes/ui/hud.tscn:199
 msgid "❚❚"
 msgstr ""
 
-#: scenes/ui/hud.tscn:174
+#: scenes/ui/hud.tscn:205
 msgid "Velocidade normal: 1 minuto a cada 0,05 s (tecla 1)"
 msgstr ""
 
-#: scenes/ui/hud.tscn:178
+#: scenes/ui/hud.tscn:209
 msgid "1x"
 msgstr ""
 
-#: scenes/ui/hud.tscn:184
+#: scenes/ui/hud.tscn:215
 msgid "Velocidade 2x (tecla 2)"
 msgstr ""
 
-#: scenes/ui/hud.tscn:188
+#: scenes/ui/hud.tscn:219
 msgid "2x"
 msgstr ""
 
-#: scenes/ui/hud.tscn:194
+#: scenes/ui/hud.tscn:225
 msgid "Velocidade 4x (teclas 3 ou 4)"
 msgstr ""
 
-#: scenes/ui/hud.tscn:198
+#: scenes/ui/hud.tscn:229
 msgid "4x"
 msgstr ""
 
-#: scenes/ui/hud.tscn:204
+#: scenes/ui/hud.tscn:235
 msgid "Avança 7 dias de uma vez e mostra um resumo."
 msgstr ""
 
-#: scenes/ui/hud.tscn:208
+#: scenes/ui/hud.tscn:239
 msgid "+7 dias"
 msgstr ""
 
-#: scenes/ui/hud.tscn:214
+#: scenes/ui/hud.tscn:245
 msgid "Avança 30 dias de uma vez e mostra um resumo."
 msgstr ""
 
-#: scenes/ui/hud.tscn:218
+#: scenes/ui/hud.tscn:249
 msgid "+30 dias"
 msgstr ""
 
-#: scenes/ui/hud.tscn:227
+#: scenes/ui/hud.tscn:258
 msgid "Ritmo real do relógio, em dias de jogo por segundo."
 msgstr ""
 
-#: scenes/ui/hud.tscn:234
+#: scenes/ui/hud.tscn:265
 msgid "PIB nominal em dólares correntes."
 msgstr ""
 
-#: scenes/ui/hud.tscn:241 scenes/ui/hud.tscn:569 scenes/ui/start_screen.tscn:122
+#: scenes/ui/hud.tscn:272 scenes/ui/hud.tscn:601 scenes/ui/start_screen.tscn:122
 msgid "PIB"
 msgstr ""
 
-#: scenes/ui/hud.tscn:248 scenes/ui/hud.tscn:266 scenes/ui/hud.tscn:284 scenes/ui/hud.tscn:302
+#: scenes/ui/hud.tscn:279 scenes/ui/hud.tscn:297 scenes/ui/hud.tscn:315 scenes/ui/hud.tscn:333
 msgid "—"
 msgstr ""
 
-#: scenes/ui/hud.tscn:252
+#: scenes/ui/hud.tscn:283
 msgid "Crescimento real do PIB em 12 meses."
 msgstr ""
 
-#: scenes/ui/hud.tscn:259
+#: scenes/ui/hud.tscn:290
 msgid "Crescim."
 msgstr ""
 
-#: scenes/ui/hud.tscn:270
+#: scenes/ui/hud.tscn:301
 msgid "Variação do índice de preços em 12 meses."
 msgstr ""
 
-#: scenes/ui/hud.tscn:277 scenes/ui/hud.tscn:661 scenes/ui/hud.tscn:1024 scenes/ui/hud.tscn:1282
+#: scenes/ui/hud.tscn:308 scenes/ui/hud.tscn:693 scenes/ui/hud.tscn:1056 scenes/ui/hud.tscn:1323
 msgid "Inflação"
 msgstr ""
 
-#: scenes/ui/hud.tscn:288
+#: scenes/ui/hud.tscn:319
 msgid "Taxa de desemprego."
 msgstr ""
 
-#: scenes/ui/hud.tscn:295 scenes/ui/hud.tscn:684 scenes/ui/hud.tscn:1290 scenes/ui/hud.tscn:1706
+#: scenes/ui/hud.tscn:326 scenes/ui/hud.tscn:716 scenes/ui/hud.tscn:1331 scenes/ui/hud.tscn:1750
 msgid "Desemprego"
 msgstr ""
 
-#: scenes/ui/hud.tscn:306
+#: scenes/ui/hud.tscn:337
 msgid "Dívida bruta do governo sobre o PIB."
 msgstr ""
 
-#: scenes/ui/hud.tscn:313 scenes/ui/hud.tscn:1717 scenes/ui/start_screen.tscn:276
+#: scenes/ui/hud.tscn:344 scenes/ui/hud.tscn:1761 scenes/ui/start_screen.tscn:276 scenes/ui/panels/opposition_panel.tscn:140
 msgid "Dívida/PIB"
 msgstr ""
 
-#: scenes/ui/hud.tscn:324
+#: scenes/ui/hud.tscn:355
 msgid "Aprovação do governo. Em democracias decide a próxima eleição."
 msgstr ""
 
-#: scenes/ui/hud.tscn:331 scenes/ui/hud.tscn:1727 scenes/ui/start_screen.tscn:340
+#: scenes/ui/hud.tscn:362 scenes/ui/hud.tscn:1771 scenes/ui/start_screen.tscn:340
 msgid "Aprovação"
 msgstr ""
 
-#: scenes/ui/hud.tscn:342
+#: scenes/ui/hud.tscn:363
+msgid "Aprov. governo"
+msgstr ""
+
+#: scenes/ui/hud.tscn:374
 msgid "Orçamento do Estado: resultado fiscal do ano (receita menos gastos e juros) em % do PIB. Detalhes na janela Orçamento e impostos."
 msgstr ""
 
-#: scenes/ui/hud.tscn:349
+#: scenes/ui/hud.tscn:381
 msgid "Orçam. Estado"
 msgstr ""
 
-#: scenes/ui/hud.tscn:365
+#: scenes/ui/hud.tscn:397
 msgid "Tensão global: guerras, potências nucleares e risco financeiro."
 msgstr ""
 
-#: scenes/ui/hud.tscn:372
+#: scenes/ui/hud.tscn:404
 msgid "Tensão"
 msgstr ""
 
-#: scenes/ui/hud.tscn:383
+#: scenes/ui/hud.tscn:415
 msgid "Petróleo (US$/bbl)"
 msgstr ""
 
-#: scenes/ui/hud.tscn:390 scenes/ui/hud.tscn:3307 scenes/ui/hud.tscn:3728 scripts/sim/markets.gd:12
+#: scenes/ui/hud.tscn:422 scenes/ui/hud.tscn:3351 scenes/ui/hud.tscn:3772 scripts/sim/markets.gd:12
 msgid "Petróleo"
 msgstr ""
 
-#: scenes/ui/hud.tscn:400
+#: scenes/ui/hud.tscn:432
 msgid "Gás (US$/MMBtu)"
 msgstr ""
 
-#: scenes/ui/hud.tscn:407 scenes/ui/hud.tscn:3330 scenes/ui/hud.tscn:3738 scripts/sim/markets.gd:12
+#: scenes/ui/hud.tscn:439 scenes/ui/hud.tscn:3374 scenes/ui/hud.tscn:3782 scripts/sim/markets.gd:12
 msgid "Gás"
 msgstr ""
 
-#: scenes/ui/hud.tscn:417
+#: scenes/ui/hud.tscn:449
 msgid "Grãos (US$/t)"
 msgstr ""
 
-#: scenes/ui/hud.tscn:424 scenes/ui/hud.tscn:3353 scenes/ui/hud.tscn:3747 scripts/sim/markets.gd:12
+#: scenes/ui/hud.tscn:456 scenes/ui/hud.tscn:3397 scenes/ui/hud.tscn:3791 scripts/sim/markets.gd:12
 msgid "Grãos"
 msgstr ""
 
-#: scenes/ui/hud.tscn:434
+#: scenes/ui/hud.tscn:466
 msgid "Chips (índice)"
 msgstr ""
 
-#: scenes/ui/hud.tscn:441 scenes/ui/hud.tscn:3399 scenes/ui/hud.tscn:3767 scripts/sim/markets.gd:12
+#: scenes/ui/hud.tscn:473 scenes/ui/hud.tscn:3443 scenes/ui/hud.tscn:3811 scripts/sim/markets.gd:12
 msgid "Chips"
 msgstr ""
 
-#: scenes/ui/hud.tscn:456
+#: scenes/ui/hud.tscn:488
 msgid "Menu (Esc)"
 msgstr ""
 
-#: scenes/ui/hud.tscn:459
+#: scenes/ui/hud.tscn:491
 msgid "☰"
 msgstr ""
 
-#: scenes/ui/hud.tscn:496
+#: scenes/ui/hud.tscn:528
 msgid "País"
 msgstr ""
 
-#: scenes/ui/hud.tscn:504 scenes/ui/hud.tscn:3977 scenes/ui/panels/debug_menu.tscn:62 scenes/ui/rows/type_row.tscn:38
+#: scenes/ui/hud.tscn:536 scenes/ui/hud.tscn:4034 scenes/ui/panels/debug_menu.tscn:62 scenes/ui/rows/type_row.tscn:38
 msgid "✕"
 msgstr ""
 
-#: scenes/ui/hud.tscn:529
+#: scenes/ui/hud.tscn:561
 msgid "Relação"
 msgstr ""
 
-#: scenes/ui/hud.tscn:592 scenes/ui/hud.tscn:1757 scenes/ui/start_screen.tscn:144
+#: scenes/ui/hud.tscn:624 scenes/ui/hud.tscn:1801 scenes/ui/start_screen.tscn:144
 msgid "PIB per capita"
 msgstr ""
 
-#: scenes/ui/hud.tscn:615 scenes/ui/hud.tscn:1780 scenes/ui/start_screen.tscn:166 scenes/ui/panels/economy_panel.tscn:78
+#: scenes/ui/hud.tscn:647 scenes/ui/hud.tscn:1824 scenes/ui/start_screen.tscn:166 scenes/ui/panels/economy_panel.tscn:78
 msgid "População"
 msgstr ""
 
-#: scenes/ui/hud.tscn:638 scenes/ui/hud.tscn:1014 scenes/ui/hud.tscn:1274 scenes/ui/hud.tscn:1684
+#: scenes/ui/hud.tscn:670 scenes/ui/hud.tscn:1046 scenes/ui/hud.tscn:1315 scenes/ui/hud.tscn:1728
 msgid "Crescimento"
 msgstr ""
 
-#: scenes/ui/hud.tscn:707 scenes/ui/hud.tscn:3067 scenes/ui/start_screen.tscn:254
+#: scenes/ui/hud.tscn:739 scenes/ui/hud.tscn:3111 scenes/ui/start_screen.tscn:254
 msgid "Juro básico"
 msgstr ""
 
-#: scenes/ui/hud.tscn:730 scenes/ui/hud.tscn:2370
+#: scenes/ui/hud.tscn:762 scenes/ui/hud.tscn:2414
 msgid "Dívida / PIB"
 msgstr ""
 
-#: scenes/ui/hud.tscn:753 scenes/ui/hud.tscn:1849 scenes/ui/start_screen.tscn:298
+#: scenes/ui/hud.tscn:785 scenes/ui/hud.tscn:1893 scenes/ui/start_screen.tscn:298 scenes/ui/panels/opposition_panel.tscn:168
 msgid "Nota de crédito"
 msgstr ""
 
-#: scenes/ui/hud.tscn:776 scenes/ui/hud.tscn:1314 scenes/ui/hud.tscn:1738 scenes/ui/start_screen.tscn:362
+#: scenes/ui/hud.tscn:808 scenes/ui/hud.tscn:1355 scenes/ui/hud.tscn:1782 scenes/ui/start_screen.tscn:362
 msgid "Estabilidade"
 msgstr ""
 
-#: scenes/ui/hud.tscn:799
+#: scenes/ui/hud.tscn:831 scenes/ui/panels/opposition_panel.tscn:84
 msgid "Aprovação do governo"
 msgstr ""
 
-#: scenes/ui/hud.tscn:822 scenes/ui/hud.tscn:3438
+#: scenes/ui/hud.tscn:854 scenes/ui/hud.tscn:3482
 msgid "Poder militar (EUA = 100)"
 msgstr ""
 
-#: scenes/ui/hud.tscn:845 scenes/ui/hud.tscn:3530
+#: scenes/ui/hud.tscn:877 scenes/ui/hud.tscn:3574
 msgid "Ogivas nucleares"
 msgstr ""
 
-#: scenes/ui/hud.tscn:868 scenes/ui/hud.tscn:3153
+#: scenes/ui/hud.tscn:900 scenes/ui/hud.tscn:3197
 msgid "Exportações"
 msgstr ""
 
-#: scenes/ui/hud.tscn:891
+#: scenes/ui/hud.tscn:923
 msgid "Unidades subnacionais"
 msgstr ""
 
-#: scenes/ui/hud.tscn:914 scenes/ui/hud.tscn:1559
+#: scenes/ui/hud.tscn:946 scenes/ui/hud.tscn:1602
 msgid "Capital"
 msgstr ""
 
-#: scenes/ui/hud.tscn:937 scripts/sim/character.gd:88 scripts/sim/legislation.gd:38 scripts/sim/legislation.gd:39
+#: scenes/ui/hud.tscn:969 scripts/sim/character.gd:88 scripts/sim/legislation.gd:38 scripts/sim/legislation.gd:39
 msgid "Chefe de governo"
 msgstr ""
 
-#: scenes/ui/hud.tscn:958
+#: scenes/ui/hud.tscn:990
 msgid "Partido do chefe de governo."
 msgstr ""
 
-#: scenes/ui/hud.tscn:965
+#: scenes/ui/hud.tscn:997
 msgid "Partido no governo"
 msgstr ""
 
-#: scenes/ui/hud.tscn:981
+#: scenes/ui/hud.tscn:1013
 msgid "Assentos da coalizão de governo."
 msgstr ""
 
-#: scenes/ui/hud.tscn:988 scenes/ui/hud.tscn:1605
+#: scenes/ui/hud.tscn:1020 scenes/ui/hud.tscn:1648
 msgid "Apoio no parlamento"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1031 scenes/ui/panels/politics_panel.tscn:130
+#: scenes/ui/hud.tscn:1063 scenes/ui/panels/politics_panel.tscn:130
 msgid "PARLAMENTO"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1051
+#: scenes/ui/hud.tscn:1078
+msgid "Na oposição, quem conduz a política externa é o governo. Você só acompanha."
+msgstr ""
+
+#: scenes/ui/hud.tscn:1092
 msgid "CONVERSA COM O LÍDER"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1057
+#: scenes/ui/hud.tscn:1098
 msgid "O líder responde conforme a relação, as ideias e o seu chanceler."
 msgstr ""
 
-#: scenes/ui/hud.tscn:1060
+#: scenes/ui/hud.tscn:1101
 msgid "Falar com o líder"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1066
+#: scenes/ui/hud.tscn:1107
 msgid "Negocia um tratado: assinado, ele ainda precisa ser ratificado pelos parlamentos."
 msgstr ""
 
-#: scenes/ui/hud.tscn:1069
+#: scenes/ui/hud.tscn:1110
 msgid "Propor tratado"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1082
+#: scenes/ui/hud.tscn:1123
 msgid "POLÍTICA EXTERNA"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1095
+#: scenes/ui/hud.tscn:1136
 msgid "Melhora a relação em 4 a 9 pontos."
 msgstr ""
 
-#: scenes/ui/hud.tscn:1099 scripts/ui/debug_menu.gd:9
+#: scenes/ui/hud.tscn:1140 scripts/ui/debug_menu.gd:9
 msgid "Missão diplomática"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1107
+#: scenes/ui/hud.tscn:1148
 msgid "Doa 0,1% do seu PIB. Melhora muito a relação com países pobres."
 msgstr ""
 
-#: scenes/ui/hud.tscn:1111 scripts/ui/debug_menu.gd:9
+#: scenes/ui/hud.tscn:1152 scripts/ui/debug_menu.gd:9
 msgid "Enviar ajuda"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1119
+#: scenes/ui/hud.tscn:1160
 msgid "Exige relação +15. Eleva o comércio bilateral em até 35%."
 msgstr ""
 
-#: scenes/ui/hud.tscn:1123 scripts/sim/treaties.gd:34 scripts/ui/debug_menu.gd:9 scripts/ui/hud.gd:493
+#: scenes/ui/hud.tscn:1164 scripts/sim/treaties.gd:34 scripts/ui/debug_menu.gd:9 scripts/ui/hud.gd:496
 msgid "Livre comércio"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1131
+#: scenes/ui/hud.tscn:1172
 msgid "Exige relação +10. Estimula sua indústria e fortalece o comprador."
 msgstr ""
 
-#: scenes/ui/hud.tscn:1135 scripts/ui/debug_menu.gd:9
+#: scenes/ui/hud.tscn:1176 scripts/ui/debug_menu.gd:9
 msgid "Vender armas"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1143
+#: scenes/ui/hud.tscn:1184
 msgid "Liga/desliga. Protege o mercado, encarece importações e pode gerar retaliação."
 msgstr ""
 
-#: scenes/ui/hud.tscn:1147 scripts/ui/debug_menu.gd:9 scripts/ui/hud.gd:507
+#: scenes/ui/hud.tscn:1188 scripts/ui/debug_menu.gd:9 scripts/ui/hud.gd:510
 msgid "Tarifa de 20%"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1155
+#: scenes/ui/hud.tscn:1196
 msgid "Relação -10. Pequeno ganho de aprovação interna."
 msgstr ""
 
-#: scenes/ui/hud.tscn:1159 scripts/ui/debug_menu.gd:9
+#: scenes/ui/hud.tscn:1200 scripts/ui/debug_menu.gd:9
 msgid "Condenar"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1167
+#: scenes/ui/hud.tscn:1208
 msgid "Liga/desliga. Corta 60% do comércio bilateral."
 msgstr ""
 
-#: scenes/ui/hud.tscn:1171 scripts/ui/debug_menu.gd:9 scripts/ui/hud.gd:505
+#: scenes/ui/hud.tscn:1212 scripts/ui/debug_menu.gd:9 scripts/ui/hud.gd:508
 msgid "Sanções"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1179
+#: scenes/ui/hud.tscn:1220
 msgid "Corta 88% do comércio. Reduz a oferta de energia do alvo conforme seu peso."
 msgstr ""
 
-#: scenes/ui/hud.tscn:1183 scripts/ui/debug_menu.gd:9 scripts/ui/hud.gd:506
+#: scenes/ui/hud.tscn:1224 scripts/ui/debug_menu.gd:9 scripts/ui/hud.gd:509
 msgid "Embargo total"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1191
+#: scenes/ui/hud.tscn:1232
 msgid "Desestabiliza o alvo. Pode ser descoberta, o que custa caro."
 msgstr ""
 
-#: scenes/ui/hud.tscn:1195 scripts/ui/debug_menu.gd:9
+#: scenes/ui/hud.tscn:1236 scripts/ui/debug_menu.gd:9
 msgid "Operação secreta"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1203
+#: scenes/ui/hud.tscn:1244
 msgid "Exige relação +55. Uma vez assinado, ataque a um é ataque ao outro."
 msgstr ""
 
-#: scenes/ui/hud.tscn:1207 scripts/sim/world.gd:624 scripts/ui/debug_menu.gd:9 scripts/ui/hud.gd:504
+#: scenes/ui/hud.tscn:1248 scripts/sim/world.gd:624 scripts/ui/debug_menu.gd:9 scripts/ui/hud.gd:507
 msgid "Pacto de defesa"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1215
+#: scenes/ui/hud.tscn:1256
 msgid "O inimigo avalia desgaste e situação da frente."
 msgstr ""
 
-#: scenes/ui/hud.tscn:1219 scenes/ui/rows/war_card.tscn:49 scripts/ui/debug_menu.gd:9
+#: scenes/ui/hud.tscn:1260 scenes/ui/rows/war_card.tscn:49 scripts/ui/debug_menu.gd:9
 msgid "Propor paz"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1227
+#: scenes/ui/hud.tscn:1268
 msgid "Provoca reação global, sanções e pode acionar alianças."
 msgstr ""
 
-#: scenes/ui/hud.tscn:1232 scripts/ui/debug_menu.gd:9
+#: scenes/ui/hud.tscn:1273 scripts/ui/debug_menu.gd:9
 msgid "Declarar guerra"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1258 scripts/ui/map_view.gd:37
+#: scenes/ui/hud.tscn:1299 scripts/ui/map_view.gd:37
 msgid "Político"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1266 scripts/ui/map_view.gd:38
+#: scenes/ui/hud.tscn:1307 scripts/ui/map_view.gd:38
 msgid "Relações"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1298 scripts/ui/map_view.gd:42
+#: scenes/ui/hud.tscn:1339 scripts/ui/map_view.gd:42
 msgid "Dívida"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1306 scripts/ui/map_view.gd:43
+#: scenes/ui/hud.tscn:1347 scripts/ui/map_view.gd:43
 msgid "Renda"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1322 scripts/ui/map_view.gd:45
+#: scenes/ui/hud.tscn:1363 scripts/ui/map_view.gd:45
 msgid "Militar"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1355
+#: scenes/ui/hud.tscn:1396
 msgid "NOTICIÁRIO"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1519 scripts/ui/debug_menu.gd:162
+#: scenes/ui/hud.tscn:1562 scripts/ui/debug_menu.gd:162
 msgid "Editar personagem"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1536 scripts/sim/legislation.gd:1676 scripts/sim/legislation.gd:1676 scripts/sim/legislation.gd:2467
+#: scenes/ui/hud.tscn:1579 scripts/sim/legislation.gd:1676 scripts/sim/legislation.gd:1676 scripts/sim/legislation.gd:2467
 msgid "Sistema"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1582 scenes/ui/rows/party_pick_row.tscn:23 scenes/ui/rows/party_row.tscn:22
+#: scenes/ui/hud.tscn:1625 scenes/ui/rows/party_pick_row.tscn:23 scenes/ui/rows/party_row.tscn:22
 msgid "Partido"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1628
+#: scenes/ui/hud.tscn:1649
+msgid "Governo no parlamento"
+msgstr ""
+
+#: scenes/ui/hud.tscn:1672
 msgid "Próxima eleição"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1644
+#: scenes/ui/hud.tscn:1688
 msgid "Ranking entre as nações, combinando economia, força militar, alianças e estabilidade."
 msgstr ""
 
-#: scenes/ui/hud.tscn:1651
+#: scenes/ui/hud.tscn:1695
 msgid "Influência global"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1796
+#: scenes/ui/hud.tscn:1840
 msgid "Saldo com o exterior. Déficit persistente enfraquece a moeda."
 msgstr ""
 
-#: scenes/ui/hud.tscn:1803 scenes/ui/hud.tscn:3199
+#: scenes/ui/hud.tscn:1847 scenes/ui/hud.tscn:3243
 msgid "Conta corrente / PIB"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1826 scenes/ui/hud.tscn:2745
+#: scenes/ui/hud.tscn:1870 scenes/ui/hud.tscn:2789
 msgid "Reservas internacionais"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1842
+#: scenes/ui/hud.tscn:1886
 msgid "Calculada pelo prêmio de risco que o mercado cobra da sua dívida."
 msgstr ""
 
-#: scenes/ui/hud.tscn:1872 scenes/ui/hud.tscn:3100
+#: scenes/ui/hud.tscn:1916 scenes/ui/hud.tscn:3144
 msgid "Juro da dívida"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1895
+#: scenes/ui/hud.tscn:1939
 msgid "Bolsa (base 100)"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1930
+#: scenes/ui/hud.tscn:1974
 msgid "ORÇAMENTO"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1937
+#: scenes/ui/hud.tscn:1981
 msgid "O governo define os gastos sozinho, e a mudança vale na hora. Só fica travado o que uma lei em vigor obrigar."
 msgstr ""
 
-#: scenes/ui/hud.tscn:1951
+#: scenes/ui/hud.tscn:1995
 msgid "IMPOSTOS (% DO PIB)"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1962 scripts/sim/law_catalog.gd_(escolha_tax_field)
+#: scenes/ui/hud.tscn:2006 scripts/sim/law_catalog.gd_(escolha_tax_field)
 msgid "Renda e folha"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1984 scripts/sim/law_catalog.gd_(escolha_tax_field)
+#: scenes/ui/hud.tscn:2028 scripts/sim/law_catalog.gd_(escolha_tax_field)
 msgid "Consumo"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2006 scripts/sim/law_catalog.gd_(escolha_tax_field)
+#: scenes/ui/hud.tscn:2050 scripts/sim/law_catalog.gd_(escolha_tax_field)
 msgid "Empresas e capital"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2022 scenes/ui/hud.tscn:3261
+#: scenes/ui/hud.tscn:2066 scenes/ui/hud.tscn:3305
 msgid "Abre o editor de blocos com as alíquotas em vigor. A mudança passa pelo parlamento como qualquer lei."
 msgstr ""
 
-#: scenes/ui/hud.tscn:2025
+#: scenes/ui/hud.tscn:2069
 msgid "Mudar tributos por lei"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2038
+#: scenes/ui/hud.tscn:2082
 msgid "GASTOS (% DO PIB)"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2054 scripts/sim/politics.gd:104 scripts/sim/law_catalog.gd_(escolha_budget_field)
+#: scenes/ui/hud.tscn:2098 scripts/sim/politics.gd:104 scripts/sim/law_catalog.gd_(escolha_budget_field)
 msgid "Previdência e assistência"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2071
+#: scenes/ui/hud.tscn:2115
 msgid "Sustenta a aprovação e reduz a dor do desemprego."
 msgstr ""
 
-#: scenes/ui/hud.tscn:2090 scripts/sim/politics.gd:56 scripts/sim/politics.gd:104 scripts/sim/law_catalog.gd_(escolha_budget_field)
+#: scenes/ui/hud.tscn:2134 scripts/sim/politics.gd:56 scripts/sim/politics.gd:104 scripts/sim/law_catalog.gd_(escolha_budget_field)
 msgid "Saúde"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2107
+#: scenes/ui/hud.tscn:2151
 msgid "Melhora a aprovação e, aos poucos, a produtividade."
 msgstr ""
 
-#: scenes/ui/hud.tscn:2126 scripts/sim/politics.gd:104 scripts/sim/law_catalog.gd_(escolha_budget_field)
+#: scenes/ui/hud.tscn:2170 scripts/sim/politics.gd:104 scripts/sim/law_catalog.gd_(escolha_budget_field)
 msgid "Educação e ciência"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2143
+#: scenes/ui/hud.tscn:2187
 msgid "O maior efeito de longo prazo: eleva capital humano e PTF."
 msgstr ""
 
-#: scenes/ui/hud.tscn:2162 scenes/ui/panels/economy_panel.tscn:48 scripts/sim/politics.gd:58 scripts/sim/politics.gd:105
+#: scenes/ui/hud.tscn:2206 scenes/ui/panels/economy_panel.tscn:48 scripts/sim/politics.gd:58 scripts/sim/politics.gd:105
 msgid "Infraestrutura"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2179
+#: scenes/ui/hud.tscn:2223
 msgid "Vira capital público e amplia o PIB potencial."
 msgstr ""
 
-#: scenes/ui/hud.tscn:2198 scripts/sim/politics.gd:55 scripts/sim/politics.gd:105 scripts/sim/law_catalog.gd_(escolha_budget_field)
+#: scenes/ui/hud.tscn:2242 scripts/sim/politics.gd:55 scripts/sim/politics.gd:105 scripts/sim/law_catalog.gd_(escolha_budget_field)
 msgid "Defesa"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2215
+#: scenes/ui/hud.tscn:2259
 msgid "Compra equipamento militar; o estoque se deprecia 6% ao ano."
 msgstr ""
 
-#: scenes/ui/hud.tscn:2234 scripts/sim/politics.gd:105 scripts/sim/law_catalog.gd_(escolha_budget_field)
+#: scenes/ui/hud.tscn:2278 scripts/sim/politics.gd:105 scripts/sim/law_catalog.gd_(escolha_budget_field)
 msgid "Administração"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2251
+#: scenes/ui/hud.tscn:2295
 msgid "Cortes fáceis, mas a estabilidade depende de um Estado funcional."
 msgstr ""
 
-#: scenes/ui/hud.tscn:2267
+#: scenes/ui/hud.tscn:2311
 msgid "RESULTADO ANUAL"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2278
+#: scenes/ui/hud.tscn:2322
 msgid "Receita"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2301
+#: scenes/ui/hud.tscn:2345
 msgid "Despesa primária"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2324
+#: scenes/ui/hud.tscn:2368
 msgid "Juros da dívida"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2340
+#: scenes/ui/hud.tscn:2384
 msgid "Déficit nominal: acima de ~4% do PIB, o mercado cobra mais caro."
 msgstr ""
 
-#: scenes/ui/hud.tscn:2347
+#: scenes/ui/hud.tscn:2391
 msgid "Déficit / PIB"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2386
+#: scenes/ui/hud.tscn:2430
 msgid "Nível de dívida a partir do qual o prêmio de risco acelera."
 msgstr ""
 
-#: scenes/ui/hud.tscn:2393
+#: scenes/ui/hud.tscn:2437
 msgid "Limite de tolerância"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2421 scripts/sim/law_catalog.gd_(escolha_param_field)
+#: scenes/ui/hud.tscn:2465 scripts/sim/law_catalog.gd_(escolha_param_field)
 msgid "Emissão monetária (% do déficit)"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2438
+#: scenes/ui/hud.tscn:2482
 msgid "Evita dívida, mas gera inflação e destrói a credibilidade do banco central."
 msgstr ""
 
-#: scenes/ui/hud.tscn:2445
+#: scenes/ui/hud.tscn:2489
 msgid "Empréstimo de 8% do PIB em troca de ajuste fiscal e perda de aprovação."
 msgstr ""
 
-#: scenes/ui/hud.tscn:2448
+#: scenes/ui/hud.tscn:2492
 msgid "Pedir socorro ao FMI"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2471
+#: scenes/ui/hud.tscn:2515
 msgid "BANCO CENTRAL"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2482
+#: scenes/ui/hud.tscn:2526
 msgid "Regime"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2499 scripts/ui/hud.gd:831
+#: scenes/ui/hud.tscn:2543 scripts/ui/hud.gd:867
 msgid "Manual dá controle direto, mas interferência reduz a credibilidade do banco central."
 msgstr ""
 
-#: scenes/ui/hud.tscn:2502
+#: scenes/ui/hud.tscn:2546
 msgid "Alternar: regra de Taylor / juro manual"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2518
+#: scenes/ui/hud.tscn:2562
 msgid "Juro básico alvo"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2535
+#: scenes/ui/hud.tscn:2579
 msgid "Mais juros: menos inflação e mais câmbio valorizado, ao custo de recessão e dívida mais cara."
 msgstr ""
 
-#: scenes/ui/hud.tscn:2548
+#: scenes/ui/hud.tscn:2592
 msgid "Juro básico atual"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2564
+#: scenes/ui/hud.tscn:2608
 msgid "Juro nominal menos inflação esperada."
 msgstr ""
 
-#: scenes/ui/hud.tscn:2571
+#: scenes/ui/hud.tscn:2615
 msgid "Juro real"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2587
+#: scenes/ui/hud.tscn:2631
 msgid "Juro real que nem estimula nem freia a economia."
 msgstr ""
 
-#: scenes/ui/hud.tscn:2594
+#: scenes/ui/hud.tscn:2638
 msgid "Juro neutro"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2617
+#: scenes/ui/hud.tscn:2661
 msgid "Meta de inflação"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2640
+#: scenes/ui/hud.tscn:2684
 msgid "Inflação esperada"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2656
+#: scenes/ui/hud.tscn:2700
 msgid "Quanto as expectativas se ancoram na meta. Sobe devagar quando a meta é cumprida."
 msgstr ""
 
-#: scenes/ui/hud.tscn:2663
+#: scenes/ui/hud.tscn:2707
 msgid "Credibilidade"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2688
+#: scenes/ui/hud.tscn:2732
 msgid "CÂMBIO"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2699
+#: scenes/ui/hud.tscn:2743
 msgid "Moeda por US$ (índice 2025 = 1)"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2715
+#: scenes/ui/hud.tscn:2759
 msgid "Acima de 1: moeda real mais fraca que em 2025, exportações mais competitivas."
 msgstr ""
 
-#: scenes/ui/hud.tscn:2722
+#: scenes/ui/hud.tscn:2766
 msgid "Câmbio real"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2738
+#: scenes/ui/hud.tscn:2782
 msgid "Dólares do banco central, em meses de importação entre parênteses. Abaixo de 3 meses o risco sobe."
 msgstr ""
 
-#: scenes/ui/hud.tscn:2761
+#: scenes/ui/hud.tscn:2805
 msgid "Venda líquida de reservas para segurar a moeda; negativa quando o banco central compra dólares."
 msgstr ""
 
-#: scenes/ui/hud.tscn:2768
+#: scenes/ui/hud.tscn:2812
 msgid "Intervenção no câmbio (ao ano)"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2784
+#: scenes/ui/hud.tscn:2828
 msgid "Quanto do movimento do câmbio o banco central segura, definido pela Lei Cambial."
 msgstr ""
 
-#: scenes/ui/hud.tscn:2791
+#: scenes/ui/hud.tscn:2835
 msgid "Política cambial"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2807
+#: scenes/ui/hud.tscn:2851
 msgid "Freia a fuga de capitais, mas afasta investimento estrangeiro e eleva um pouco o risco."
 msgstr ""
 
-#: scenes/ui/hud.tscn:2814
+#: scenes/ui/hud.tscn:2858
 msgid "Controle de capitais"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2830
+#: scenes/ui/hud.tscn:2874
 msgid "Dinheiro que sai do país quando o risco ou a inflação sobem. Pressiona o câmbio e as reservas."
 msgstr ""
 
-#: scenes/ui/hud.tscn:2837
+#: scenes/ui/hud.tscn:2881
 msgid "Fuga de capitais (ao ano)"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2853
+#: scenes/ui/hud.tscn:2897
 msgid "Parte dos depósitos e preços em dólar. Sobe com inflação alta e tira força do juro."
 msgstr ""
 
-#: scenes/ui/hud.tscn:2860
+#: scenes/ui/hud.tscn:2904
 msgid "Dolarização"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2876
+#: scenes/ui/hud.tscn:2920
 msgid "Paridade descoberta: i = i* + depreciação esperada + prêmio de risco."
 msgstr ""
 
-#: scenes/ui/hud.tscn:2883
+#: scenes/ui/hud.tscn:2927
 msgid "Depreciação esperada (paridade de juros)"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2900
+#: scenes/ui/hud.tscn:2944
 msgid "A âncora importa a política monetária dos EUA e exige reservas para ser defendida."
 msgstr ""
 
-#: scenes/ui/hud.tscn:2903
+#: scenes/ui/hud.tscn:2947
 msgid "Alternar: flutuante / âncora no dólar"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2916
+#: scenes/ui/hud.tscn:2960
 msgid "FUNDO SOBERANO"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2920
+#: scenes/ui/hud.tscn:2964
 msgid "O fundo é criado e alterado pela Lei Cambial e do Fundo Soberano, no centro legislativo."
 msgstr ""
 
-#: scenes/ui/hud.tscn:2927 scripts/ui/law_editor.gd:443
+#: scenes/ui/hud.tscn:2971 scripts/ui/law_editor.gd:443
 msgid "Situação"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2943
+#: scenes/ui/hud.tscn:2987
 msgid "Investido fora do país: os aportes não valorizam a moeda. Um fundo grande reduz o risco."
 msgstr ""
 
-#: scenes/ui/hud.tscn:2950
+#: scenes/ui/hud.tscn:2994
 msgid "Saldo aplicado no exterior"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2966
+#: scenes/ui/hud.tscn:3010
 msgid "Parte da renda de commodities e dos superávits que vai para o fundo."
 msgstr ""
 
-#: scenes/ui/hud.tscn:2973
+#: scenes/ui/hud.tscn:3017
 msgid "Aportes do ano"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2989
+#: scenes/ui/hud.tscn:3033
 msgid "O saque entra no orçamento. Cobre parte das quedas da renda de commodities."
 msgstr ""
 
-#: scenes/ui/hud.tscn:2996
+#: scenes/ui/hud.tscn:3040
 msgid "Saques do ano"
 msgstr ""
 
-#: scenes/ui/hud.tscn:3012
+#: scenes/ui/hud.tscn:3056
 msgid "Saque anual máximo, em fração do saldo. Acima de 4% ao ano o fundo encolhe e a aprovação cai."
 msgstr ""
 
-#: scenes/ui/hud.tscn:3019
+#: scenes/ui/hud.tscn:3063
 msgid "Regra de saque"
 msgstr ""
 
-#: scenes/ui/hud.tscn:3035
+#: scenes/ui/hud.tscn:3079
 msgid "Retorno anualizado do último mês: ações e títulos no exterior."
 msgstr ""
 
-#: scenes/ui/hud.tscn:3042
+#: scenes/ui/hud.tscn:3086
 msgid "Retorno da carteira"
 msgstr ""
 
-#: scenes/ui/hud.tscn:3089 scripts/sim/law_catalog.gd_(categorias)
+#: scenes/ui/hud.tscn:3133 scripts/sim/law_catalog.gd_(categorias)
 msgid "Câmbio"
 msgstr ""
 
-#: scenes/ui/hud.tscn:3111 scripts/sim/law_catalog.gd_(escolha_game_value)
+#: scenes/ui/hud.tscn:3155 scripts/sim/law_catalog.gd_(escolha_game_value)
 msgid "Reservas (US$ bi)"
 msgstr ""
 
-#: scenes/ui/hud.tscn:3123
+#: scenes/ui/hud.tscn:3167
 msgid "Fundo soberano (US$ bi)"
 msgstr ""
 
-#: scenes/ui/hud.tscn:3176
+#: scenes/ui/hud.tscn:3220
 msgid "Importações"
 msgstr ""
 
-#: scenes/ui/hud.tscn:3215
+#: scenes/ui/hud.tscn:3259
 msgid "Efeito líquido de sanções, tarifas e acordos sobre suas exportações."
 msgstr ""
 
-#: scenes/ui/hud.tscn:3222
+#: scenes/ui/hud.tscn:3266
 msgid "Acesso a mercados"
 msgstr ""
 
-#: scenes/ui/hud.tscn:3245
+#: scenes/ui/hud.tscn:3289
 msgid "Tarifa geral de importação"
 msgstr ""
 
-#: scenes/ui/hud.tscn:3264
+#: scenes/ui/hud.tscn:3308
 msgid "Mudar a tarifa por lei"
 msgstr ""
 
-#: scenes/ui/hud.tscn:3277
+#: scenes/ui/hud.tscn:3321
 msgid "PRINCIPAIS DESTINOS"
 msgstr ""
 
-#: scenes/ui/hud.tscn:3296
+#: scenes/ui/hud.tscn:3340
 msgid "COMMODITIES (PRODUÇÃO - CONSUMO)"
 msgstr ""
 
-#: scenes/ui/hud.tscn:3376 scenes/ui/hud.tscn:3757 scripts/sim/markets.gd:12
+#: scenes/ui/hud.tscn:3420 scenes/ui/hud.tscn:3801 scripts/sim/markets.gd:12
 msgid "Metais"
 msgstr ""
 
-#: scenes/ui/hud.tscn:3461
+#: scenes/ui/hud.tscn:3505
 msgid "Ranking militar"
 msgstr ""
 
-#: scenes/ui/hud.tscn:3484
+#: scenes/ui/hud.tscn:3528
 msgid "Tropas ativas"
 msgstr ""
 
-#: scenes/ui/hud.tscn:3507
+#: scenes/ui/hud.tscn:3551
 msgid "Equipamento"
 msgstr ""
 
-#: scenes/ui/hud.tscn:3553
+#: scenes/ui/hud.tscn:3597
 msgid "Cansaço de guerra"
 msgstr ""
 
-#: scenes/ui/hud.tscn:3581
+#: scenes/ui/hud.tscn:3625
 msgid "Mobilização"
 msgstr ""
 
-#: scenes/ui/hud.tscn:3598
+#: scenes/ui/hud.tscn:3642
 msgid "Aumenta o poder de combate. Tira trabalhadores da economia e custa até 3,5% do PIB."
 msgstr ""
 
-#: scenes/ui/hud.tscn:3613
+#: scenes/ui/hud.tscn:3657
 msgid "GUERRAS"
 msgstr ""
 
-#: scenes/ui/hud.tscn:3626
+#: scenes/ui/hud.tscn:3670
 msgid "Em paz."
 msgstr ""
 
-#: scenes/ui/hud.tscn:3646
+#: scenes/ui/hud.tscn:3690
 msgid "ALIADOS DE DEFESA"
 msgstr ""
 
-#: scenes/ui/hud.tscn:3681
+#: scenes/ui/hud.tscn:3725
 msgid "PIB mundial"
 msgstr ""
 
-#: scenes/ui/hud.tscn:3697
+#: scenes/ui/hud.tscn:3741
 msgid "Quando sobe, dinheiro foge de emergentes e os juros deles disparam."
 msgstr ""
 
-#: scenes/ui/hud.tscn:3704
+#: scenes/ui/hud.tscn:3748
 msgid "Aversão a risco"
 msgstr ""
 
-#: scenes/ui/hud.tscn:3777
+#: scenes/ui/hud.tscn:3821
 msgid "Tensão global"
 msgstr ""
 
-#: scenes/ui/hud.tscn:3791
+#: scenes/ui/hud.tscn:3835
 msgid "MAIORES ECONOMIAS"
 msgstr ""
 
@@ -967,7 +1003,7 @@ msgstr ""
 msgid "POLÍTICA E DEFESA"
 msgstr ""
 
-#: scenes/ui/start_screen.tscn:384 scripts/ui/hud.gd:443 scripts/ui/hud.gd:772 scripts/ui/main.gd:349
+#: scenes/ui/start_screen.tscn:384 scripts/ui/hud.gd:446 scripts/ui/hud.gd:808 scripts/ui/main.gd:351
 msgid "Democracia"
 msgstr ""
 
@@ -1011,7 +1047,7 @@ msgstr ""
 msgid "Continuar partida salva"
 msgstr ""
 
-#: scenes/ui/chat/chat.tscn:78 scripts/ui/main.gd:716
+#: scenes/ui/chat/chat.tscn:78 scripts/ui/main.gd:718
 msgid "Conversas"
 msgstr ""
 
@@ -1603,7 +1639,7 @@ msgstr ""
 msgid "Texto da confirmação"
 msgstr ""
 
-#: scenes/ui/modals/corruption.tscn:50 scenes/ui/panels/politics_panel.tscn:64 scripts/ui/main.gd:681
+#: scenes/ui/modals/corruption.tscn:50 scenes/ui/panels/politics_panel.tscn:64 scripts/ui/main.gd:683
 msgid "Caixa dois"
 msgstr ""
 
@@ -1687,7 +1723,7 @@ msgstr ""
 msgid "Aleatório"
 msgstr ""
 
-#: scenes/ui/modals/game_over.tscn:48 scripts/ui/debug_menu.gd:489 scripts/ui/main.gd:1030
+#: scenes/ui/modals/game_over.tscn:48 scripts/ui/debug_menu.gd:489 scripts/ui/main.gd:1032
 msgid "Fim de jogo"
 msgstr ""
 
@@ -2077,6 +2113,46 @@ msgstr ""
 msgid "AEROPORTOS"
 msgstr ""
 
+#: scenes/ui/panels/opposition_panel.tscn:18
+msgid "VOCÊ LIDERA A OPOSIÇÃO"
+msgstr ""
+
+#: scenes/ui/panels/opposition_panel.tscn:63
+msgid "DESEMPENHO DO GOVERNO"
+msgstr ""
+
+#: scenes/ui/panels/opposition_panel.tscn:70
+msgid "Cada número ruim do governo é munição para a oposição."
+msgstr ""
+
+#: scenes/ui/panels/opposition_panel.tscn:154
+msgid "Resultado fiscal"
+msgstr ""
+
+#: scenes/ui/panels/opposition_panel.tscn:188
+msgid "O QUE FAZER"
+msgstr ""
+
+#: scenes/ui/panels/opposition_panel.tscn:195
+msgid "Critique o governo, faça campanha ou apresente moção de censura na janela Política. Projetos e emendas da oposição passam pelo centro legislativo."
+msgstr ""
+
+#: scenes/ui/panels/opposition_panel.tscn:201
+msgid "Abre a janela Política: pesquisas, bancadas, críticas, campanha e moção de censura."
+msgstr ""
+
+#: scenes/ui/panels/opposition_panel.tscn:204
+msgid "Pesquisas, partido e coalizão"
+msgstr ""
+
+#: scenes/ui/panels/opposition_panel.tscn:209
+msgid "Abre o centro legislativo para apresentar projetos e emendas."
+msgstr ""
+
+#: scenes/ui/panels/opposition_panel.tscn:212
+msgid "Projetos e emendas da oposição"
+msgstr ""
+
 #: scenes/ui/panels/politics_panel.tscn:36
 msgid "O fundo paga pesquisas, campanhas, críticas, moções e convites. Cada gasto tem o próprio preço."
 msgstr ""
@@ -2333,7 +2409,7 @@ msgstr ""
 msgid "Pasta vaga."
 msgstr ""
 
-#: scenes/ui/rows/party_row.tscn:31 scripts/sim/party_talk.gd:47 scripts/ui/politics_panel.gd:160
+#: scenes/ui/rows/party_row.tscn:31 scripts/sim/party_talk.gd:47 scripts/ui/politics_panel.gd:162
 msgid "governo"
 msgstr ""
 
@@ -2421,7 +2497,7 @@ msgstr ""
 msgid "Ofensiva acelera a frente, mas aumenta as baixas dos dois lados."
 msgstr ""
 
-#: scenes/ui/rows/war_card.tscn:42 scripts/ui/hud.gd:941
+#: scenes/ui/rows/war_card.tscn:42 scripts/ui/hud.gd:977
 msgid "Postura: ofensiva"
 msgstr ""
 
@@ -3601,7 +3677,7 @@ msgstr ""
 msgid "US$ %s bi"
 msgstr ""
 
-#: scripts/sim/infrastructure.gd:430 scripts/ui/main.gd:937 scripts/ui/main.gd:940
+#: scripts/sim/infrastructure.gd:430 scripts/ui/main.gd:939 scripts/ui/main.gd:942
 #, c-format
 msgid "%d anos"
 msgstr ""
@@ -4561,7 +4637,7 @@ msgstr ""
 msgid "não"
 msgstr ""
 
-#: scripts/sim/legislation.gd:313 scripts/ui/hud.gd:857 scripts/sim/law_catalog.gd_(escolha_cb_controle)
+#: scripts/sim/legislation.gd:313 scripts/ui/hud.gd:893 scripts/sim/law_catalog.gd_(escolha_cb_controle)
 msgid "nenhum"
 msgstr ""
 
@@ -5457,7 +5533,7 @@ msgstr ""
 msgid "índice"
 msgstr ""
 
-#: scripts/sim/party_talk.gd:47 scripts/ui/politics_panel.gd:162
+#: scripts/sim/party_talk.gd:47 scripts/ui/politics_panel.gd:164
 msgid "oposição"
 msgstr ""
 
@@ -6023,7 +6099,7 @@ msgstr ""
 msgid "%s custa %s, e o fundo de %s tem %s."
 msgstr ""
 
-#: scripts/sim/politics.gd:501 scripts/ui/legislation_center.gd:36 scripts/ui/negotiation_screen.gd:36 scripts/ui/politics_panel.gd:162
+#: scripts/sim/politics.gd:501 scripts/ui/legislation_center.gd:36 scripts/ui/negotiation_screen.gd:36 scripts/ui/politics_panel.gd:164
 msgid "seu partido"
 msgstr ""
 
@@ -6084,7 +6160,7 @@ msgstr ""
 msgid "Escolha uma família política."
 msgstr ""
 
-#: scripts/sim/politics.gd:823 scripts/ui/main.gd:806
+#: scripts/sim/politics.gd:823 scripts/ui/main.gd:808
 msgid "Já existe um partido com esse nome."
 msgstr ""
 
@@ -7436,7 +7512,7 @@ msgid ""
 "Competência: %d%%%s"
 msgstr ""
 
-#: scripts/ui/cabinet_panel.gd:71 scripts/ui/main.gd:650
+#: scripts/ui/cabinet_panel.gd:71 scripts/ui/main.gd:652
 msgid "  ·  doente"
 msgstr ""
 
@@ -7448,7 +7524,7 @@ msgstr ""
 msgid "PAÍSES"
 msgstr ""
 
-#: scripts/ui/chat_window.gd:101 scripts/ui/hud.gd:470
+#: scripts/ui/chat_window.gd:101 scripts/ui/hud.gd:473
 msgid "o líder"
 msgstr ""
 
@@ -8425,398 +8501,398 @@ msgstr ""
 msgid "%s agora é capital de %s."
 msgstr ""
 
-#: scripts/ui/economy_panel.gd:65
+#: scripts/ui/economy_panel.gd:72
 #, c-format
 msgid "População: %s milhões"
 msgstr ""
 
-#: scripts/ui/economy_panel.gd:70
+#: scripts/ui/economy_panel.gd:77
 #, c-format
 msgid "Natalidade %s · mortalidade %s · migração %s ao ano"
 msgstr ""
 
-#: scripts/ui/economy_panel.gd:72
+#: scripts/ui/economy_panel.gd:79
 #, c-format
 msgid "Aposentadorias além da base: %s do PIB"
 msgstr ""
 
-#: scripts/ui/hud.gd:190
+#: scripts/ui/hud.gd:194
 msgid "parado"
 msgstr ""
 
-#: scripts/ui/hud.gd:190
+#: scripts/ui/hud.gd:194
 #, c-format
 msgid "%s dia/s"
 msgstr ""
 
-#: scripts/ui/hud.gd:213
+#: scripts/ui/hud.gd:217
 #, c-format
 msgid "PIB: %s → %s"
 msgstr ""
 
-#: scripts/ui/hud.gd:214
+#: scripts/ui/hud.gd:218
 #, c-format
 msgid "Crescimento: %s → %s  ·  Inflação: %s → %s"
 msgstr ""
 
-#: scripts/ui/hud.gd:215
+#: scripts/ui/hud.gd:219
 #, c-format
 msgid "Desemprego: %s → %s  ·  Dívida/PIB: %s → %s"
 msgstr ""
 
-#: scripts/ui/hud.gd:216
+#: scripts/ui/hud.gd:220
 #, c-format
 msgid "Aprovação: %d%% → %d%%  ·  Estabilidade: %d%% → %d%%"
 msgstr ""
 
-#: scripts/ui/hud.gd:217
+#: scripts/ui/hud.gd:221
 #, c-format
 msgid "Fundo do partido: %s → %s  ·  Petróleo: $%.0f → $%.0f"
 msgstr ""
 
-#: scripts/ui/hud.gd:219
+#: scripts/ui/hud.gd:223
 #, c-format
 msgid "Resumo de %d dias"
 msgstr ""
 
-#: scripts/ui/hud.gd:222
+#: scripts/ui/hud.gd:226
 msgid "Nenhum acontecimento no noticiário."
 msgstr ""
 
-#: scripts/ui/hud.gd:224
+#: scripts/ui/hud.gd:228
 #, c-format
 msgid "%d acontecimento(s) no noticiário:"
 msgstr ""
 
-#: scripts/ui/hud.gd:230
+#: scripts/ui/hud.gd:234
 #, c-format
 msgid "e mais %d no noticiário."
 msgstr ""
 
-#: scripts/ui/hud.gd:250
+#: scripts/ui/hud.gd:254
 #, c-format
 msgid "%s, %d anos%s"
 msgstr ""
 
-#: scripts/ui/hud.gd:250
+#: scripts/ui/hud.gd:254
 #, c-format
 msgid " (enfrenta %s)"
 msgstr ""
 
-#: scripts/ui/hud.gd:345
+#: scripts/ui/hud.gd:351
 msgid "Por lei: "
 msgstr ""
 
-#: scripts/ui/hud.gd:371
+#: scripts/ui/hud.gd:377
 msgid "Membros do euro não têm moeda própria."
 msgstr ""
 
-#: scripts/ui/hud.gd:374
+#: scripts/ui/hud.gd:380
 #, c-format
 msgid "%s adota câmbio flutuante."
 msgstr ""
 
-#: scripts/ui/hud.gd:378
+#: scripts/ui/hud.gd:384
 #, c-format
 msgid "%s ancora a moeda no dólar."
 msgstr ""
 
-#: scripts/ui/hud.gd:380
+#: scripts/ui/hud.gd:386
 msgid "Reservas insuficientes para sustentar uma âncora (mínimo de 4 meses de importação)."
 msgstr ""
 
-#: scripts/ui/hud.gd:414
+#: scripts/ui/hud.gd:417
 #, c-format
 msgid "Declarar guerra a %s? O mundo vai reagir e pactos de defesa podem ser acionados."
 msgstr ""
 
-#: scripts/ui/hud.gd:443 scripts/ui/hud.gd:772 scripts/ui/main.gd:349
+#: scripts/ui/hud.gd:446 scripts/ui/hud.gd:808 scripts/ui/main.gd:351
 msgid "Regime híbrido"
 msgstr ""
 
-#: scripts/ui/hud.gd:443 scripts/ui/main.gd:349
+#: scripts/ui/hud.gd:446 scripts/ui/main.gd:351
 msgid "Regime autoritário"
 msgstr ""
 
-#: scripts/ui/hud.gd:447 scripts/ui/hud.gd:783
+#: scripts/ui/hud.gd:450 scripts/ui/hud.gd:819
 #, c-format
 msgid "US$ %s"
 msgstr ""
 
-#: scripts/ui/hud.gd:448 scripts/ui/hud.gd:784 scripts/ui/main.gd:355
+#: scripts/ui/hud.gd:451 scripts/ui/hud.gd:820 scripts/ui/main.gd:357
 #, c-format
 msgid "%s mi"
 msgstr ""
 
-#: scripts/ui/hud.gd:456 scripts/ui/hud.gd:787
+#: scripts/ui/hud.gd:459 scripts/ui/hud.gd:823
 msgid "D (moratória)"
 msgstr ""
 
-#: scripts/ui/hud.gd:470
+#: scripts/ui/hud.gd:473
 #, c-format
 msgid "Falar com %s"
 msgstr ""
 
-#: scripts/ui/hud.gd:470
+#: scripts/ui/hud.gd:473
 msgid "Nova conversa no mês que vem"
 msgstr ""
 
-#: scripts/ui/hud.gd:474
+#: scripts/ui/hud.gd:477
 #, c-format
 msgid "%d de %d"
 msgstr ""
 
-#: scripts/ui/hud.gd:489
+#: scripts/ui/hud.gd:492
 msgid "EM GUERRA"
 msgstr ""
 
-#: scripts/ui/hud.gd:491
+#: scripts/ui/hud.gd:494
 msgid "Aliado de defesa"
 msgstr ""
 
-#: scripts/ui/hud.gd:496
+#: scripts/ui/hud.gd:499
 msgid "Você aplica embargo"
 msgstr ""
 
-#: scripts/ui/hud.gd:496
+#: scripts/ui/hud.gd:499
 msgid "Você aplica sanções"
 msgstr ""
 
-#: scripts/ui/hud.gd:499
+#: scripts/ui/hud.gd:502
 msgid "Sancionado por este país"
 msgstr ""
 
-#: scripts/ui/hud.gd:501
+#: scripts/ui/hud.gd:504
 #, c-format
 msgid "%s das suas exportações"
 msgstr ""
 
-#: scripts/ui/hud.gd:504
+#: scripts/ui/hud.gd:507
 msgid "Cancelar pacto"
 msgstr ""
 
-#: scripts/ui/hud.gd:505
+#: scripts/ui/hud.gd:508
 msgid "Suspender sanções"
 msgstr ""
 
-#: scripts/ui/hud.gd:506
+#: scripts/ui/hud.gd:509
 msgid "Reduzir embargo"
 msgstr ""
 
-#: scripts/ui/hud.gd:507
+#: scripts/ui/hud.gd:510
 msgid "Remover tarifa"
 msgstr ""
 
-#: scripts/ui/hud.gd:513
+#: scripts/ui/hud.gd:516
 #, c-format
 msgid "%s (%d dias)"
 msgstr ""
 
-#: scripts/ui/hud.gd:540
+#: scripts/ui/hud.gd:543
 msgid "vermelho hostil · verde amigo · azul aliado"
 msgstr ""
 
-#: scripts/ui/hud.gd:542
+#: scripts/ui/hud.gd:545
 msgid "relativa ao limite do país"
 msgstr ""
 
-#: scripts/ui/hud.gd:542
+#: scripts/ui/hud.gd:545
 msgid "US$ 300 a 90 mil per capita"
 msgstr ""
 
-#: scripts/ui/hud.gd:543
+#: scripts/ui/hud.gd:546
 msgid "vermelho instável"
 msgstr ""
 
-#: scripts/ui/hud.gd:543
+#: scripts/ui/hud.gd:546
 msgid "em relação aos EUA"
 msgstr ""
 
-#: scripts/ui/hud.gd:563
+#: scripts/ui/hud.gd:566
 #, c-format
 msgid "%s  ·  %s  ·  %s  ·  cerca de %s mi de habitantes"
 msgstr ""
 
-#: scripts/ui/hud.gd:565
+#: scripts/ui/hud.gd:568
 #, c-format
 msgid "  ·  capital de %s"
 msgstr ""
 
-#: scripts/ui/hud.gd:572
+#: scripts/ui/hud.gd:575
 #, c-format
 msgid "%s  ·  PIB %s  ·  cresc. %s  ·  infl. %s"
 msgstr ""
 
-#: scripts/ui/hud.gd:574
+#: scripts/ui/hud.gd:577
 #, c-format
 msgid "  ·  relação %+d"
 msgstr ""
 
-#: scripts/ui/hud.gd:643
+#: scripts/ui/hud.gd:646
 msgid "Fixado por lei em vigor. Para mudar, altere ou revogue a lei."
 msgstr ""
 
-#: scripts/ui/hud.gd:652
+#: scripts/ui/hud.gd:685
 #, c-format
 msgid "%s · oposição"
 msgstr ""
 
-#: scripts/ui/hud.gd:747
+#: scripts/ui/hud.gd:783
 #, c-format
 msgid "%s, %d anos, %s%s"
 msgstr ""
 
-#: scripts/ui/hud.gd:747
+#: scripts/ui/hud.gd:783
 msgid ", doente"
 msgstr ""
 
-#: scripts/ui/hud.gd:752
+#: scripts/ui/hud.gd:788
 msgid "Sem parlamento livre: o líder governa por decreto."
 msgstr ""
 
-#: scripts/ui/hud.gd:757
+#: scripts/ui/hud.gd:793
 #, c-format
 msgid "Em debate: %s"
 msgstr ""
 
-#: scripts/ui/hud.gd:759 scripts/ui/norm_page.gd:89
+#: scripts/ui/hud.gd:795 scripts/ui/norm_page.gd:89
 msgid "aprovado"
 msgstr ""
 
-#: scripts/ui/hud.gd:759 scripts/ui/norm_page.gd:89
+#: scripts/ui/hud.gd:795 scripts/ui/norm_page.gd:89
 msgid "rejeitado"
 msgstr ""
 
-#: scripts/ui/hud.gd:760
+#: scripts/ui/hud.gd:796
 msgid "Nenhuma votação recente."
 msgstr ""
 
-#: scripts/ui/hud.gd:772
+#: scripts/ui/hud.gd:808
 msgid "Autoritário"
 msgstr ""
 
-#: scripts/ui/hud.gd:775
+#: scripts/ui/hud.gd:811
 #, c-format
 msgid "em %s anos"
 msgstr ""
 
-#: scripts/ui/hud.gd:778
+#: scripts/ui/hud.gd:814
 msgid "sem eleições: cuide da estabilidade"
 msgstr ""
 
-#: scripts/ui/hud.gd:780
+#: scripts/ui/hud.gd:816
 #, c-format
 msgid "%dº  (%s pts)"
 msgstr ""
 
-#: scripts/ui/hud.gd:813
+#: scripts/ui/hud.gd:849
 msgid "Banco central independente"
 msgstr ""
 
-#: scripts/ui/hud.gd:813
+#: scripts/ui/hud.gd:849
 msgid "Banco central subordinado, regra de Taylor"
 msgstr ""
 
-#: scripts/ui/hud.gd:815
+#: scripts/ui/hud.gd:851
 msgid "Zona do euro: decisão do BCE"
 msgstr ""
 
-#: scripts/ui/hud.gd:817
+#: scripts/ui/hud.gd:853
 msgid "Âncora no dólar: segue o Fed"
 msgstr ""
 
-#: scripts/ui/hud.gd:819
+#: scripts/ui/hud.gd:855
 msgid "Juro definido pelo governo"
 msgstr ""
 
-#: scripts/ui/hud.gd:831
+#: scripts/ui/hud.gd:867
 msgid "O banco central é independente: o governo não escolhe o juro. A Constituição pode mudar isso por emenda."
 msgstr ""
 
-#: scripts/ui/hud.gd:849
+#: scripts/ui/hud.gd:885
 #, c-format
 msgid "%s  (%s meses)"
 msgstr ""
 
-#: scripts/ui/hud.gd:852 scripts/ui/hud.gd:861
+#: scripts/ui/hud.gd:888 scripts/ui/hud.gd:897
 msgid "não se aplica"
 msgstr ""
 
-#: scripts/ui/hud.gd:854
+#: scripts/ui/hud.gd:890
 #, c-format
 msgid "vende %s"
 msgstr ""
 
-#: scripts/ui/hud.gd:854
+#: scripts/ui/hud.gd:890
 #, c-format
 msgid "compra %s"
 msgstr ""
 
-#: scripts/ui/hud.gd:855
+#: scripts/ui/hud.gd:891
 msgid "câmbio fixo"
 msgstr ""
 
-#: scripts/ui/hud.gd:855 scripts/sim/law_catalog.gd_(escolha_cb_modo)
+#: scripts/ui/hud.gd:891 scripts/sim/law_catalog.gd_(escolha_cb_modo)
 msgid "forte"
 msgstr ""
 
-#: scripts/ui/hud.gd:855 scripts/sim/law_catalog.gd_(escolha_cb_modo)
+#: scripts/ui/hud.gd:891 scripts/sim/law_catalog.gd_(escolha_cb_modo)
 msgid "suave"
 msgstr ""
 
-#: scripts/ui/hud.gd:855
+#: scripts/ui/hud.gd:891
 msgid "flutuação livre"
 msgstr ""
 
-#: scripts/ui/hud.gd:856
+#: scripts/ui/hud.gd:892
 msgid "euro"
 msgstr ""
 
-#: scripts/ui/hud.gd:868
+#: scripts/ui/hud.gd:904
 msgid "ativo"
 msgstr ""
 
-#: scripts/ui/hud.gd:870
+#: scripts/ui/hud.gd:906
 msgid "fora da lei: só rende"
 msgstr ""
 
-#: scripts/ui/hud.gd:872
+#: scripts/ui/hud.gd:908
 msgid "sem fundo: crie pela Lei Cambial"
 msgstr ""
 
-#: scripts/ui/hud.gd:873
+#: scripts/ui/hud.gd:909
 #, c-format
 msgid "%s  (%s do PIB)"
 msgstr ""
 
-#: scripts/ui/hud.gd:878
+#: scripts/ui/hud.gd:914
 #, c-format
 msgid "até %s do saldo ao ano"
 msgstr ""
 
-#: scripts/ui/hud.gd:912 scripts/ui/main.gd:365
+#: scripts/ui/hud.gd:948 scripts/ui/main.gd:367
 #, c-format
 msgid "%s mil"
 msgstr ""
 
-#: scripts/ui/hud.gd:914
+#: scripts/ui/hud.gd:950
 msgid "nenhuma"
 msgstr ""
 
-#: scripts/ui/hud.gd:920
+#: scripts/ui/hud.gd:956
 msgid "Nenhum"
 msgstr ""
 
-#: scripts/ui/hud.gd:939
+#: scripts/ui/hud.gd:975
 #, c-format
 msgid "Contra %s"
 msgstr ""
 
-#: scripts/ui/hud.gd:941
+#: scripts/ui/hud.gd:977
 msgid "Postura: defensiva"
 msgstr ""
 
-#: scripts/ui/hud.gd:959
+#: scripts/ui/hud.gd:995
 #, c-format
 msgid "Frente: %s do território de %s ocupado · baixas: %s / %s mil"
 msgstr ""
@@ -9475,195 +9551,195 @@ msgstr ""
 msgid "%d registro(s) guardado(s)"
 msgstr ""
 
-#: scripts/ui/main.gd:259 scripts/ui/main.gd:1112
+#: scripts/ui/main.gd:261 scripts/ui/main.gd:1114
 msgid "Preparando o mundo..."
 msgstr ""
 
-#: scripts/ui/main.gd:269
+#: scripts/ui/main.gd:271
 msgid "Desenhando o mapa..."
 msgstr ""
 
-#: scripts/ui/main.gd:347
+#: scripts/ui/main.gd:349
 msgid "África"
 msgstr ""
 
-#: scripts/ui/main.gd:347
+#: scripts/ui/main.gd:349
 msgid "Ásia"
 msgstr ""
 
-#: scripts/ui/main.gd:347
+#: scripts/ui/main.gd:349
 msgid "Europa"
 msgstr ""
 
-#: scripts/ui/main.gd:347
+#: scripts/ui/main.gd:349
 msgid "América Latina"
 msgstr ""
 
-#: scripts/ui/main.gd:348
+#: scripts/ui/main.gd:350
 msgid "Oriente Médio"
 msgstr ""
 
-#: scripts/ui/main.gd:348
+#: scripts/ui/main.gd:350
 msgid "América do Norte"
 msgstr ""
 
-#: scripts/ui/main.gd:348
+#: scripts/ui/main.gd:350
 msgid "Oceania"
 msgstr ""
 
-#: scripts/ui/main.gd:352
+#: scripts/ui/main.gd:354
 #, c-format
 msgid "PIB  ·  #%d"
 msgstr ""
 
-#: scripts/ui/main.gd:367 scripts/ui/stock_panel.gd:57
+#: scripts/ui/main.gd:369 scripts/ui/stock_panel.gd:57
 #, c-format
 msgid "%s do PIB"
 msgstr ""
 
-#: scripts/ui/main.gd:371
+#: scripts/ui/main.gd:373
 #, c-format
 msgid "Governo: %s (%s das cadeiras)"
 msgstr ""
 
-#: scripts/ui/main.gd:373
+#: scripts/ui/main.gd:375
 msgid "Eleição a cada 4 anos"
 msgstr ""
 
-#: scripts/ui/main.gd:375
+#: scripts/ui/main.gd:377
 msgid "Sem eleições livres: risco de golpe e revolta"
 msgstr ""
 
-#: scripts/ui/main.gd:385
+#: scripts/ui/main.gd:387
 msgid "Moeda: euro (juros definidos pelo BCE)"
 msgstr ""
 
-#: scripts/ui/main.gd:387
+#: scripts/ui/main.gd:389
 msgid "Moeda ancorada no dólar"
 msgstr ""
 
-#: scripts/ui/main.gd:389
+#: scripts/ui/main.gd:391
 msgid "EM GUERRA no início da partida"
-msgstr ""
-
-#: scripts/ui/main.gd:406
-#, c-format
-msgid "%s toma posse em %s. O mundo observa."
 msgstr ""
 
 #: scripts/ui/main.gd:408
 #, c-format
+msgid "%s toma posse em %s. O mundo observa."
+msgstr ""
+
+#: scripts/ui/main.gd:410
+#, c-format
 msgid "%s lidera a oposição em %s contra o governo de %s."
 msgstr ""
 
-#: scripts/ui/main.gd:650
+#: scripts/ui/main.gd:652
 #, c-format
 msgid "%s, %d anos  ·  %s  ·  competência %d%%%s"
 msgstr ""
 
-#: scripts/ui/main.gd:659
+#: scripts/ui/main.gd:661
 msgid "Você: "
 msgstr ""
 
-#: scripts/ui/main.gd:667
+#: scripts/ui/main.gd:669
 #, c-format
 msgid "%s  ·  %d assentos  ·  %s dos votos. A bússola do partido é a média dos políticos."
 msgstr ""
 
-#: scripts/ui/main.gd:681
+#: scripts/ui/main.gd:683
 msgid "Dinheiro por fora do orçamento oficial, pago por enquanto com o fundo do partido. Rende hoje e cobra amanhã."
 msgstr ""
 
-#: scripts/ui/main.gd:694
+#: scripts/ui/main.gd:696
 #, c-format
 msgid "Ministério: %s"
 msgstr ""
 
-#: scripts/ui/main.gd:699
+#: scripts/ui/main.gd:701
 #, c-format
 msgid "%s assume a pasta."
 msgstr ""
 
-#: scripts/ui/main.gd:722
+#: scripts/ui/main.gd:724
 msgid "Todo político pertence a um partido. Escolha um deles ou crie o seu, e decida se começa no governo ou na oposição."
 msgstr ""
 
-#: scripts/ui/main.gd:722
+#: scripts/ui/main.gd:724
 msgid "Só é possível mudar de partido uma vez por ano. O partido novo só ganha assentos na próxima eleição."
 msgstr ""
 
-#: scripts/ui/main.gd:723
+#: scripts/ui/main.gd:725
 #, c-format
 msgid "Escolha seu partido em %s"
 msgstr ""
 
-#: scripts/ui/main.gd:760
+#: scripts/ui/main.gd:762
 msgid "Regimes fechados não têm eleições."
 msgstr ""
 
-#: scripts/ui/main.gd:762
+#: scripts/ui/main.gd:764
 #, c-format
 msgid "Hoje governa: %s."
 msgstr ""
 
-#: scripts/ui/main.gd:762
+#: scripts/ui/main.gd:764
 msgid "Regime fechado, sem eleições: só é possível governar."
 msgstr ""
 
-#: scripts/ui/main.gd:770
+#: scripts/ui/main.gd:772
 #, c-format
 msgid "Ficar em %s  ·  %s  ·  %s dos votos  ·  %d de %d assentos"
 msgstr ""
 
-#: scripts/ui/main.gd:770
+#: scripts/ui/main.gd:772
 #, c-format
 msgid "%s  ·  %s  ·  %s dos votos  ·  %d de %d assentos"
 msgstr ""
 
-#: scripts/ui/main.gd:771
+#: scripts/ui/main.gd:773
 #, c-format
 msgid "%s. Clique para escolher."
 msgstr ""
 
-#: scripts/ui/main.gd:802
+#: scripts/ui/main.gd:804
 msgid "Dê um nome ao partido."
 msgstr ""
 
-#: scripts/ui/main.gd:905
+#: scripts/ui/main.gd:907
 #, c-format
 msgid "Bandeira: %s"
 msgstr ""
 
-#: scripts/ui/main.gd:1018
+#: scripts/ui/main.gd:1020
 msgid "Renunciar ao cargo? Isso encerra a sua carreira, e depois você escolhe entre um novo jogo e um novo personagem."
 msgstr ""
 
-#: scripts/ui/main.gd:1028
+#: scripts/ui/main.gd:1030
 msgid "Impeachment"
 msgstr ""
 
-#: scripts/ui/main.gd:1028
+#: scripts/ui/main.gd:1030
 msgid "Deposto"
 msgstr ""
 
-#: scripts/ui/main.gd:1028
+#: scripts/ui/main.gd:1030
 msgid "Renúncia"
 msgstr ""
 
-#: scripts/ui/main.gd:1028
+#: scripts/ui/main.gd:1030
 msgid "Assassinato"
 msgstr ""
 
-#: scripts/ui/main.gd:1028
+#: scripts/ui/main.gd:1030
 msgid "Fim da vida"
 msgstr ""
 
-#: scripts/ui/main.gd:1033
+#: scripts/ui/main.gd:1035
 #, c-format
 msgid "Pontuação final: %s"
 msgstr ""
 
-#: scripts/ui/main.gd:1034
+#: scripts/ui/main.gd:1036
 #, c-format
 msgid ""
 "Tempo no poder: %s anos  ·  Reeleições: %d\n"
@@ -9671,74 +9747,74 @@ msgid ""
 "Dívida/PIB: %s  ·  Inflação: %s  ·  Influência: %dº no mundo"
 msgstr ""
 
-#: scripts/ui/main.gd:1064
+#: scripts/ui/main.gd:1066
 #, c-format
 msgid "Tratado com %s"
 msgstr ""
 
-#: scripts/ui/main.gd:1064
+#: scripts/ui/main.gd:1066
 #, c-format
 msgid "O líder de lá é %s (%s)."
 msgstr ""
 
-#: scripts/ui/main.gd:1072
+#: scripts/ui/main.gd:1074
 #, c-format
 msgid "Vale por %d anos."
 msgstr ""
 
-#: scripts/ui/main.gd:1072
+#: scripts/ui/main.gd:1074
 msgid "Sem prazo."
-msgstr ""
-
-#: scripts/ui/main.gd:1088
-#, c-format
-msgid "Eleição de %s em %s"
 msgstr ""
 
 #: scripts/ui/main.gd:1090
 #, c-format
-msgid "[color=#8ba2af]Sistema:[/color] %s  ·  cláusula de barreira de %d%%"
-msgstr ""
-
-#: scripts/ui/main.gd:1091
-#, c-format
-msgid "[color=#8ba2af]Regime:[/color] %s"
+msgid "Eleição de %s em %s"
 msgstr ""
 
 #: scripts/ui/main.gd:1092
 #, c-format
+msgid "[color=#8ba2af]Sistema:[/color] %s  ·  cláusula de barreira de %d%%"
+msgstr ""
+
+#: scripts/ui/main.gd:1093
+#, c-format
+msgid "[color=#8ba2af]Regime:[/color] %s"
+msgstr ""
+
+#: scripts/ui/main.gd:1094
+#, c-format
 msgid "[color=#8ba2af]Comparecimento:[/color] %s  ·  %d distritos"
 msgstr ""
 
-#: scripts/ui/main.gd:1095
+#: scripts/ui/main.gd:1097
 #, c-format
 msgid "[color=#8ba2af]Chefe de governo:[/color] %s, com %s, em %d turno(s)"
 msgstr ""
 
-#: scripts/ui/main.gd:1098
+#: scripts/ui/main.gd:1100
 #, c-format
 msgid "[color=#%s]■[/color] %s: %s dos votos, %d deputados, %d senadores"
 msgstr ""
 
-#: scripts/ui/main.gd:1102
+#: scripts/ui/main.gd:1104
 #, c-format
 msgid "%s: %d cadeiras, %s mi de habitantes, maioria de %s"
 msgstr ""
 
-#: scripts/ui/main.gd:1134
+#: scripts/ui/main.gd:1136
 #, c-format
 msgid "Não foi possível salvar: erro %d."
 msgstr ""
 
-#: scripts/ui/main.gd:1143
+#: scripts/ui/main.gd:1145
 msgid "Não foi possível salvar: o arquivo não pôde ser conferido."
 msgstr ""
 
-#: scripts/ui/main.gd:1149
+#: scripts/ui/main.gd:1151
 msgid "Partida salva."
 msgstr ""
 
-#: scripts/ui/main.gd:1157
+#: scripts/ui/main.gd:1159
 msgid "Carregando a partida..."
 msgstr ""
 
@@ -9896,6 +9972,43 @@ msgstr ""
 msgid "A norma tem %d artigo(s)."
 msgstr ""
 
+#: scripts/ui/opposition_panel.gd:42
+#, c-format
+msgid "Governo: %s  ·  %d de %d assentos (%s), %s"
+msgstr ""
+
+#: scripts/ui/opposition_panel.gd:42 scripts/ui/politics_panel.gd:104
+msgid "com maioria"
+msgstr ""
+
+#: scripts/ui/opposition_panel.gd:42 scripts/ui/politics_panel.gd:104
+msgid "sem maioria"
+msgstr ""
+
+#: scripts/ui/opposition_panel.gd:44
+#, c-format
+msgid "Sua bancada: %s  ·  %d assentos  ·  %s nas pesquisas"
+msgstr ""
+
+#: scripts/ui/opposition_panel.gd:46
+#, c-format
+msgid "A oposição soma %d de %d assentos: já dá para tentar uma moção de censura."
+msgstr ""
+
+#: scripts/ui/opposition_panel.gd:49
+#, c-format
+msgid "A oposição soma %d de %d assentos: faltam %d para a maioria que derruba o governo."
+msgstr ""
+
+#: scripts/ui/opposition_panel.gd:53
+#, c-format
+msgid "Próxima eleição em %s anos"
+msgstr ""
+
+#: scripts/ui/opposition_panel.gd:55
+msgid "Sem eleições neste regime"
+msgstr ""
+
 #: scripts/ui/politics_panel.gd:87
 #, c-format
 msgid "Fundo de %s: %s  ·  entra %s por mês"
@@ -9921,38 +10034,35 @@ msgstr ""
 msgid "Governo: %d de %d assentos (%s), %s"
 msgstr ""
 
-#: scripts/ui/politics_panel.gd:104
-msgid "com maioria"
+#: scripts/ui/politics_panel.gd:106
+#, c-format
+msgid "Sua bancada: %d assentos. A oposição soma %d."
 msgstr ""
 
-#: scripts/ui/politics_panel.gd:104
-msgid "sem maioria"
-msgstr ""
-
-#: scripts/ui/politics_panel.gd:136
+#: scripts/ui/politics_panel.gd:138
 #, c-format
 msgid "%d assentos  ·  governo com %d"
 msgstr ""
 
-#: scripts/ui/politics_panel.gd:148
+#: scripts/ui/politics_panel.gd:150
 #, c-format
 msgid "%s. %s. Fundo: %s. Clique para ver os políticos e a bússola."
 msgstr ""
 
-#: scripts/ui/politics_panel.gd:160
+#: scripts/ui/politics_panel.gd:162
 msgid "seu governo"
 msgstr ""
 
-#: scripts/ui/politics_panel.gd:162
+#: scripts/ui/politics_panel.gd:164
 msgid "aliado do governo"
 msgstr ""
 
-#: scripts/ui/politics_panel.gd:164
+#: scripts/ui/politics_panel.gd:166
 #, c-format
 msgid "Convidar (%s)"
 msgstr ""
 
-#: scripts/ui/politics_panel.gd:172
+#: scripts/ui/politics_panel.gd:174
 #, c-format
 msgid "%s (%d meses)"
 msgstr ""

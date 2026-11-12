@@ -51,7 +51,8 @@ const LEGISLATION_WINDOW := 10
 var _divisions_tab := -1
 var _politics_tab := -1
 var _cabinet_tab := -1
-var _office_shown := true
+## Último papel aplicado às janelas: 1 governo, 0 oposição, -1 ainda nenhum (força a aplicar ao ligar uma partida).
+var _office_shown := -1
 var _hover_country: Country
 var _hover_unit := -1
 
@@ -83,6 +84,7 @@ var _hover_unit := -1
 @onready var _leader_name: Label = %leader_name
 @onready var _politics: PoliticsPanel = %politics
 @onready var _cabinet: CabinetPanel = %cabinet
+@onready var _oposicao: OppositionPanel = %oposicao
 @onready var economy: EconomyPanel = %economy
 @onready var _banner: PanelContainer = %banner
 @onready var _banner_label: Label = %banner_label
@@ -149,6 +151,8 @@ func _connect_buttons() -> void:
 	_dock.desk = _desk
 	_dock.item_pressed.connect(_on_dock_item)
 	_cabinet.pick_requested.connect(func(post): minister_pick_requested.emit(post))
+	_oposicao.politics_requested.connect(func(): _desk.open(_politics_tab))
+	_oposicao.legislation_requested.connect(func(): legislation_requested.emit())
 	_politics.party_requested.connect(func(): party_requested.emit())
 	_politics.legislation_requested.connect(func(): legislation_requested.emit())
 	_politics.corruption_requested.connect(func(): corruption_requested.emit())
@@ -259,6 +263,8 @@ func bind(w: GameWorld, m: MapView) -> void:
 	_divisions.bind(w, m)
 	_politics.bind(w)
 	_cabinet.bind(w)
+	_oposicao.bind(w)
+	_office_shown = -1
 	economy.bind(w)
 	border.bind(w, m)
 	refresh_leader()
@@ -321,7 +327,7 @@ func legislation_center() -> LegislationCenter:
 
 
 func start_drawing() -> void:
-	if border.active:
+	if border.active or not world.in_office:
 		return
 	_desk.current_tab = _divisions_tab
 	_divisions.start_drawing()
@@ -399,10 +405,7 @@ func _build_dossier_for(c: Country) -> void:
 	if c == null:
 		return
 	(%dossier_title as Label).text = c.name
-	var foreign: bool = world.player != null and c != world.player
-	for n: Node in _dossier_body.get_children():
-		if n.is_in_group("foreign_only"):
-			(n as Control).visible = foreign
+	_apply_role()
 	_set_feedback("")
 
 
@@ -645,14 +648,46 @@ func _sync_budget_sliders(c: Country) -> void:
 	_syncing = was_syncing
 
 
+## Mostra só o que cabe ao papel do jogador. Nós da cena marcam o que é de cada papel pelos grupos
+## gov_only (só no governo), opposition_only (só na oposição) e foreign_only (só no dossiê de outro país);
+## role_text troca o texto (ou o título da janela, ou o nome do ícone do dock) pelo metadado
+## opposition_text enquanto o jogador está na oposição. Janelas de outro papel fecham e não abrem.
+func _apply_role() -> void:
+	var office := world.in_office
+	var foreign: bool = world.player != null and selected != null and selected != world.player
+	var seen := {}
+	for group: String in ["gov_only", "opposition_only", "foreign_only"]:
+		for n: Node in get_tree().get_nodes_in_group(group):
+			if seen.has(n) or not is_ancestor_of(n):
+				continue
+			seen[n] = true
+			var shown := not (n.is_in_group("gov_only") and not office) and not (n.is_in_group("opposition_only") and office) and not (n.is_in_group("foreign_only") and not foreign)
+			if n is FloatWindow:
+				var w: FloatWindow = n
+				w.locked = not shown
+				if not shown and w.is_open:
+					w.close()
+			else:
+				(n as CanvasItem).visible = shown
+	for n: Node in get_tree().get_nodes_in_group("role_text"):
+		if not is_ancestor_of(n) or not n.has_meta("opposition_text"):
+			continue
+		var prop := "title" if n is FloatWindow else ("label" if n is DockItem else "text")
+		if not n.has_meta("office_text"):
+			n.set_meta("office_text", n.get(prop))
+		n.set(prop, n.get_meta("office_text" if office else "opposition_text"))
+
+
 ## No governo tudo fica à disposição; na oposição, os controles só mostram o que a IA decide.
 func _refresh_office() -> void:
 	var office := world.in_office
 	if world.player:
 		_player_name.text = world.player.name if office else tr("%s · oposição") % world.player.name
-	if office == _office_shown:
+	if int(office) == _office_shown:
 		return
-	_office_shown = office
+	_office_shown = int(office)
+	_apply_role()
+	economy.set_office(office)
 	for key: String in _sliders:
 		if key != "rate_set":
 			(_sliders[key] as HSlider).editable = office
@@ -738,6 +773,7 @@ func _refresh_window(i: int, c: Country) -> void:
 		7: _politics.refresh()
 		8: _cabinet.refresh()
 		9: economy.refresh()
+		11: _oposicao.refresh()
 
 
 func _leader_text(leader: Dictionary) -> String:

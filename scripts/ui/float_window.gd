@@ -23,6 +23,8 @@ const ANIM_TIME := 0.16
 @export var default_size := Vector2(460, 600)
 
 var is_open := false
+## Janela do papel que o jogador não tem (governo ou oposição): fica fechada e não abre.
+var locked := false
 ## De onde a janela sai e para onde volta ao minimizar (o ícone do dock), em coordenadas globais.
 var origin := Vector2.ZERO
 var _dragging := false

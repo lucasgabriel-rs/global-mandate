@@ -20,7 +20,7 @@ extends SceneTree
 const POT_PATH := "res://locale/messages.pot"
 const LANGS := ["en", "es"]
 ## "label" é o nome dos ícones do dock (DockItem).
-const TSCN_KEYS := ["text", "tooltip_text", "placeholder_text", "title", "label"]
+const TSCN_KEYS := ["text", "tooltip_text", "placeholder_text", "title", "label", "metadata/opposition_text"]
 
 ## msgid -> lista de referências "arquivo:linha", na ordem em que apareceram.
 var _entries := {}

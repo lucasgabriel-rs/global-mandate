@@ -102,6 +102,8 @@ func _rebuild() -> void:
 	var total: int = data.seats_total
 	var majority := seats * 2 > total
 	_majority.text = tr("Governo: %d de %d assentos (%s), %s") % [seats, total, UiKit.pct(float(seats) / total, 0), tr("com maioria") if majority else tr("sem maioria")]
+	if not world.in_office:
+		_majority.text += "\n" + tr("Sua bancada: %d assentos. A oposição soma %d.") % [int(mine.get("seats", 0)), total - seats]
 	_majority.add_theme_color_override("font_color", UiKit.GREEN if majority else UiKit.RED)
 	for child in _rows.get_children():
 		_rows.remove_child(child)
