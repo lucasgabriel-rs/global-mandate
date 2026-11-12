@@ -19,6 +19,19 @@ var area := 1.0
 # Produção
 var pop := 1.0                 # milhões
 var popg := 0.0
+# Demografia (ver Demography): frações da população por faixa e taxas anuais.
+var young := 0.0               # 0-14 anos
+var adult := 0.0               # 15-64 anos
+var old := 0.0                 # 65+
+var adult0 := 0.0
+var old0 := 0.0
+var birth := 0.0               # nascimentos por habitante ao ano
+var birth0 := 0.0
+var death := 0.0
+var k_young := 0.0             # fração dos jovens que vira adulta por ano
+var k_adult := 0.0             # fração dos adultos que se aposenta por ano
+var mort_old := 0.0
+var migration := 0.0           # migração líquida ao ano, fração da população
 var y := 1.0                   # PIB real
 var y_pot := 1.0               # PIB potencial
 var y0 := 1.0

@@ -655,6 +655,7 @@ func transfer(from: Country, to: Country, share: float, world: GameWorld) -> voi
 	from.pop -= pop
 	from.capital -= from.capital * share
 	to.capital += cap
+	Demography.absorb(to, from, pop)
 	to.pop += pop
 	for i in 5:
 		var moved := from.prod[i] * share

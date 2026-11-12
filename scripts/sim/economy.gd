@@ -175,6 +175,7 @@ static func finish_init(c: Country, world: GameWorld) -> void:
 	# As contas do ano e a nota já valem no primeiro dia, antes da primeira etapa mensal.
 	_fiscal_flows(c)
 	c.rating = _rating_from(c.risk)
+	Demography.init_country(c)
 
 
 static func step_month(c: Country, world: GameWorld) -> void:
@@ -194,10 +195,10 @@ static func step_month(c: Country, world: GameWorld) -> void:
 
 
 static func _supply(c: Country, world: GameWorld) -> void:
-	c.pop *= 1.0 + c.popg * DT
+	Demography.step_month(c, world)
 	# Oferta de trabalho responde à tributação da renda (elasticidade baixa).
 	var tax_wedge := clampf((c.tax_income - c.tax0 * 0.45) * 0.25, -0.03, 0.08)
-	var labor := c.pop * (1.0 - tax_wedge) * (1.0 - 0.12 * c.mobilization) * (1.0 + clampf(c.law_labor, -0.1, 0.05))
+	var labor := c.pop * Demography.labor_factor(c) * (1.0 - tax_wedge) * (1.0 - 0.12 * c.mobilization) * (1.0 + clampf(c.law_labor, -0.1, 0.05))
 
 	var r_effect := clampf(1.0 - 2.5 * c.rgap, 0.5, 1.4)
 	var conf_effect := clampf(0.7 + 0.5 * c.conf, 0.6, 1.2)
@@ -459,6 +460,8 @@ static func _fiscal_flows(c: Country) -> void:
 	var prog := yn_pot * (c.sp_health + c.sp_education + c.sp_infra + c.sp_defense + c.sp_admin)
 	# Estabilizador automático: gasto social sobe quando há desemprego.
 	var social := c.sp_social * yn_pot * (1.0 + 2.0 * clampf(c.unemp - c.unemp_n, -0.03, 0.2))
+	# Aposentadorias: mais idosos que no início pesam no gasto social.
+	social += Demography.pension_extra(c) * yn_pot
 	var war_cost := c.mobilization * 0.035 * yn_pot
 	c.interest = c.debt_loc * c.avg_rate + c.debt_fx * c.e * c.avg_fx
 	c.spending = prog + social + war_cost + c.interest + c.reparations * c.e + (c.law_spend_bucket + c.extra_spend_bucket) * 12.0 * c.e

@@ -75,6 +75,13 @@ func _run() -> void:
 		hud.refresh(true)
 		await _wait()
 	await _shot("e2_bolsa")
+	(panel.get_node("%sub_tabs") as TabContainer).current_tab = 4
+	hud.refresh(true)
+	await _wait()
+	var adult_bar: ProgressBar = panel.get_node("%adult_bar")
+	_check(absf(adult_bar.value - w.player.adult) < 0.01 and adult_bar.value > 0.4, "a subaba População mostra a idade ativa")
+	_check((panel.get_node("%pop_total") as Label).text.contains("milh") or (panel.get_node("%pop_total") as Label).text.contains("mill"), "mostra a população total")
+	await _shot("e2b_populacao")
 	(panel.get_node("%sub_tabs") as TabContainer).current_tab = 0
 	get_window().size = Vector2i(1100, 700)
 	await _wait(8)

@@ -269,7 +269,7 @@ msgid "PIB per capita"
 msgstr "PIB per cápita"
 
 #: scenes/ui/hud.tscn:615 scenes/ui/hud.tscn:1780
-#: scenes/ui/start_screen.tscn:166
+#: scenes/ui/start_screen.tscn:166 scenes/ui/panels/economy_panel.tscn:78
 msgid "População"
 msgstr "Población"
 
@@ -447,7 +447,7 @@ msgstr "Operación encubierta"
 msgid "Exige relação +55. Uma vez assinado, ataque a um é ataque ao outro."
 msgstr "Exige relación +55. Una vez firmado, atacar a uno es atacar al otro."
 
-#: scenes/ui/hud.tscn:1207 scripts/sim/world.gd:610 scripts/ui/debug_menu.gd:9
+#: scenes/ui/hud.tscn:1207 scripts/sim/world.gd:618 scripts/ui/debug_menu.gd:9
 #: scripts/ui/hud.gd:502
 msgid "Pacto de defesa"
 msgstr "Pacto de defensa"
@@ -928,7 +928,7 @@ msgstr "Normal"
 msgid "Difícil"
 msgstr "Difícil"
 
-#: scenes/ui/start_screen.tscn:542 scripts/sim/world.gd:476
+#: scenes/ui/start_screen.tscn:542 scripts/sim/world.gd:484
 msgid "Assumir o governo"
 msgstr "Asumir el gobierno"
 
@@ -1564,7 +1564,7 @@ msgid "Aleatório"
 msgstr "Aleatorio"
 
 #: scenes/ui/modals/game_over.tscn:48 scripts/ui/debug_menu.gd:489
-#: scripts/ui/main.gd:1047
+#: scripts/ui/main.gd:1049
 msgid "Fim de jogo"
 msgstr "Fin del juego"
 
@@ -1688,7 +1688,7 @@ msgstr "Gobernar"
 msgid "O governo atual segue com a IA, e você o enfrenta até a próxima eleição."
 msgstr "El gobierno actual sigue con la IA, y te enfrentas a él hasta la próxima elección."
 
-#: scenes/ui/modals/party_picker.tscn:131 scripts/sim/world.gd:458
+#: scenes/ui/modals/party_picker.tscn:131 scripts/sim/world.gd:466
 msgid "Liderar a oposição"
 msgstr "Liderar la oposición"
 
@@ -1900,6 +1900,26 @@ msgstr "Empresas"
 #: scenes/ui/panels/economy_panel.tscn:68 scenes/ui/panels/stock_panel.tscn:25
 msgid "Bolsa"
 msgstr "Bolsa"
+
+#: scenes/ui/panels/economy_panel.tscn:89
+msgid "ESTRUTURA ETÁRIA"
+msgstr "ESTRUCTURA ETARIA"
+
+#: scenes/ui/panels/economy_panel.tscn:96
+msgid "Menos gente em idade de trabalhar reduz a produção; mais idosos pesam nas aposentadorias. Renda, paz e estabilidade atraem migrantes."
+msgstr "Menos gente en edad de trabajar reduce la producción; más adultos mayores pesan en las jubilaciones. Ingresos, paz y estabilidad atraen migrantes."
+
+#: scenes/ui/panels/economy_panel.tscn:110
+msgid "Jovens (0-14)"
+msgstr "Jóvenes (0-14)"
+
+#: scenes/ui/panels/economy_panel.tscn:134
+msgid "Idade ativa (15-64)"
+msgstr "Edad activa (15-64)"
+
+#: scenes/ui/panels/economy_panel.tscn:158
+msgid "Idosos (65+)"
+msgstr "Mayores (65+)"
 
 #: scenes/ui/panels/infra_build.tscn:35 scenes/ui/rows/infra_row.tscn:106
 msgid "Ampliar"
@@ -2439,7 +2459,7 @@ msgstr "Estatal"
 msgid "Mista"
 msgstr "Mixta"
 
-#: scripts/sim/dialogue.gd:24 scripts/sim/world.gd:821
+#: scripts/sim/dialogue.gd:24 scripts/sim/world.gd:829
 msgid "Na oposição, você não fala em nome do país."
 msgstr "En la oposición, no hablas en nombre del país."
 
@@ -2748,76 +2768,76 @@ msgstr "%s capitula; %s instala un gobierno aliado."
 msgid "Cessar-fogo entre %s e %s: nenhuma área do tamanho negociado, as fronteiras não mudam."
 msgstr "Alto el fuego entre %s y %s: ningún área del tamaño negociado, las fronteras no cambian."
 
-#: scripts/sim/economy.gd:409
+#: scripts/sim/economy.gd:410
 #, c-format
 msgid "%s abandona a âncora cambial: moeda desvaloriza %d%%."
 msgstr "%s abandona el ancla cambiaria: la moneda se devalúa un %d%%."
 
-#: scripts/sim/economy.gd:441
+#: scripts/sim/economy.gd:442
 #, c-format
 msgid "Agências rebaixam a nota de crédito de %s de %s para %s."
 msgstr "Las agencias rebajan la calificación de %s de %s a %s."
 
-#: scripts/sim/economy.gd:441
+#: scripts/sim/economy.gd:442
 #, c-format
 msgid "Agências elevam a nota de crédito de %s de %s para %s."
 msgstr "Las agencias elevan la calificación de %s de %s a %s."
 
-#: scripts/sim/economy.gd:553
+#: scripts/sim/economy.gd:557
 #, c-format
 msgid "%s declara moratória da dívida soberana; credores aceitam corte de 45%%."
 msgstr "%s declara impago de la deuda soberana; los acreedores aceptan una quita del 45%%."
 
-#: scripts/sim/economy.gd:574
+#: scripts/sim/economy.gd:578
 #, c-format
 msgid "FMI aprova pacote de US$ %.0f bi para %s, com ajuste fiscal."
 msgstr "El FMI aprueba un paquete de US$ %.0f mil M para %s, con ajuste fiscal."
 
-#: scripts/sim/economy.gd:634
+#: scripts/sim/economy.gd:638
 #, c-format
 msgid "Eleições em %s: oposição vence e promete mudar o rumo."
 msgstr "Elecciones en %s: la oposición gana y promete cambiar el rumbo."
 
-#: scripts/sim/economy.gd:643
+#: scripts/sim/economy.gd:647
 #, c-format
 msgid "Golpe de Estado em %s: junta militar assume o poder."
 msgstr "Golpe de Estado en %s: una junta militar toma el poder."
 
-#: scripts/sim/economy.gd:667
+#: scripts/sim/economy.gd:671
 #, c-format
 msgid "Crise bancária em %s: crédito congela e o Tesouro socorre bancos."
 msgstr "Crisis bancaria en %s: el crédito se congela y el Tesoro rescata a los bancos."
 
-#: scripts/sim/economy.gd:681
+#: scripts/sim/economy.gd:685
 #, c-format
 msgid "%s entra em recessão: o PIB encolhe %s em 12 meses."
 msgstr "%s entra en recesión: el PIB se contrae un %s en 12 meses."
 
-#: scripts/sim/economy.gd:683
+#: scripts/sim/economy.gd:687
 #, c-format
 msgid "%s sai da recessão: o PIB volta a crescer."
 msgstr "%s sale de la recesión: el PIB vuelve a crecer."
 
-#: scripts/sim/economy.gd:690
+#: scripts/sim/economy.gd:694
 #, c-format
 msgid "Inflação em %s passa de %s ao ano."
 msgstr "La inflación en %s supera el %s anual."
 
-#: scripts/sim/economy.gd:695
+#: scripts/sim/economy.gd:699
 msgid "O BCE"
 msgstr "El BCE"
 
-#: scripts/sim/economy.gd:695
+#: scripts/sim/economy.gd:699
 #, c-format
 msgid "O banco central de %s"
 msgstr "El banco central de %s"
 
-#: scripts/sim/economy.gd:696
+#: scripts/sim/economy.gd:700
 #, c-format
 msgid "%s eleva o juro básico para %s ao ano."
 msgstr "%s eleva el tipo básico al %s anual."
 
-#: scripts/sim/economy.gd:696
+#: scripts/sim/economy.gd:700
 #, c-format
 msgid "%s reduz o juro básico para %s ao ano."
 msgstr "%s reduce el tipo básico al %s anual."
@@ -3285,8 +3305,8 @@ msgstr "Concesión firmada: %s entran en el Tesoro."
 msgid "US$ %s bi"
 msgstr "US$ %s mil M"
 
-#: scripts/sim/infrastructure.gd:430 scripts/ui/main.gd:954
-#: scripts/ui/main.gd:957
+#: scripts/sim/infrastructure.gd:430 scripts/ui/main.gd:956
+#: scripts/ui/main.gd:959
 #, c-format
 msgid "%d anos"
 msgstr "%d años"
@@ -5656,7 +5676,7 @@ msgstr "El partido necesita un nombre."
 msgid "Escolha uma família política."
 msgstr "Elige una familia política."
 
-#: scripts/sim/politics.gd:823 scripts/ui/main.gd:823
+#: scripts/sim/politics.gd:823 scripts/ui/main.gd:825
 msgid "Já existe um partido com esse nome."
 msgstr "Ya existe un partido con ese nombre."
 
@@ -6098,559 +6118,559 @@ msgstr "Nov"
 msgid "Dez"
 msgstr "Dic"
 
-#: scripts/sim/world.gd:253
+#: scripts/sim/world.gd:261
 #, c-format
 msgid "%s deixou de existir, e sua carreira política acabou junto com o país."
 msgstr "%s dejó de existir, y tu carrera política terminó junto con el país."
 
-#: scripts/sim/world.gd:399
+#: scripts/sim/world.gd:407
 #, c-format
 msgid "Começa a campanha eleitoral em %s. Faltam cerca de três meses para a votação."
 msgstr "Comienza la campaña electoral en %s. Faltan unos tres meses para la votación."
 
-#: scripts/sim/world.gd:408
+#: scripts/sim/world.gd:416
 #, c-format
 msgid "Sem apoio no parlamento e com a aprovação em %d%%, %s sofreu impeachment. %s assume o governo."
 msgstr "Sin apoyo en el parlamento y con la aprobación en %d%%, %s sufrió un impeachment. %s asume el gobierno."
 
-#: scripts/sim/world.gd:408
+#: scripts/sim/world.gd:416
 msgid "o governo"
 msgstr "el gobierno"
 
-#: scripts/sim/world.gd:408 scripts/sim/world.gd:675
+#: scripts/sim/world.gd:416 scripts/sim/world.gd:683
 msgid "Outro partido"
 msgstr "Otro partido"
 
-#: scripts/sim/world.gd:411 scripts/ui/debug_menu.gd:502
+#: scripts/sim/world.gd:419 scripts/ui/debug_menu.gd:502
 msgid "Generais e a elite política perderam a paciência. Um golpe encerrou seu governo."
 msgstr "Los generales y la élite política perdieron la paciencia. Un golpe terminó con tu gobierno."
 
-#: scripts/sim/world.gd:413
+#: scripts/sim/world.gd:421
 msgid "Multidões tomaram o palácio, e os militares não defenderam o regime. Você foi deposto."
 msgstr "Multitudes tomaron el palacio, y los militares no defendieron al régimen. Fuiste depuesto."
 
-#: scripts/sim/world.gd:425
+#: scripts/sim/world.gd:433
 msgid "Reeleito!"
 msgstr "¡Reelegido!"
 
-#: scripts/sim/world.gd:426
+#: scripts/sim/world.gd:434
 #, c-format
 msgid "Seu partido fez %.1f%% dos votos e %d de %d assentos. Você conquista seu %dº mandato consecutivo em %s."
 msgstr "Tu partido obtuvo el %.1f%% de los votos y %d de %d escaños. Conquistas tu %d.º mandato consecutivo en %s."
 
-#: scripts/sim/world.gd:427
+#: scripts/sim/world.gd:435
 msgid "Seguir governando"
 msgstr "Seguir gobernando"
 
-#: scripts/sim/world.gd:430
+#: scripts/sim/world.gd:438
 #, c-format
 msgid "%s venceu a eleição com %d de %d assentos. Sua aprovação de %d%% não bastou. Você passa a liderar a oposição até a próxima eleição."
 msgstr "%s ganó la elección con %d de %d escaños. Tu aprobación del %d%% no bastó. Pasas a liderar la oposición hasta la próxima elección."
 
-#: scripts/sim/world.gd:430 scripts/ui/debug_menu.gd:494
+#: scripts/sim/world.gd:438 scripts/ui/debug_menu.gd:494
 msgid "Derrotado nas urnas"
 msgstr "Derrotado en las urnas"
 
-#: scripts/sim/world.gd:437
+#: scripts/sim/world.gd:445
 msgid "Este regime não tem eleições: não há como disputar o poder pela oposição."
 msgstr "Este régimen no tiene elecciones: no hay forma de disputar el poder desde la oposición."
 
-#: scripts/sim/world.gd:455
+#: scripts/sim/world.gd:463
 #, c-format
 msgid "%s deixa o governo de %s."
 msgstr "%s deja el gobierno de %s."
 
-#: scripts/sim/world.gd:458
+#: scripts/sim/world.gd:466
 msgid "Critique o governo, faça campanha e dispute a próxima eleição"
 msgstr "Critica al gobierno, haz campaña y disputa la próxima elección"
 
-#: scripts/sim/world.gd:473
+#: scripts/sim/world.gd:481
 #, c-format
 msgid "%s vence a eleição em %s e volta ao poder."
 msgstr "%s gana la elección en %s y vuelve al poder."
 
-#: scripts/sim/world.gd:475
+#: scripts/sim/world.gd:483
 msgid "De volta ao poder!"
 msgstr "¡De vuelta al poder!"
 
-#: scripts/sim/world.gd:475
+#: scripts/sim/world.gd:483
 #, c-format
 msgid "Seu partido fez %.1f%% dos votos e %d de %d assentos. O governo é seu novamente."
 msgstr "Tu partido obtuvo el %.1f%% de los votos y %d de %d escaños. El gobierno vuelve a ser tuyo."
 
-#: scripts/sim/world.gd:476
+#: scripts/sim/world.gd:484
 msgid "Revise o orçamento e escolha os ministros"
 msgstr "Revisa el presupuesto y elige a los ministros"
 
-#: scripts/sim/world.gd:480
+#: scripts/sim/world.gd:488
 msgid "Oposição mais quatro anos"
 msgstr "Cuatro años más en la oposición"
 
-#: scripts/sim/world.gd:480
+#: scripts/sim/world.gd:488
 #, c-format
 msgid "%s venceu com %d de %d assentos. Seu partido fez %.1f%% dos votos e ficou com %d."
 msgstr "%s ganó con %d de %d escaños. Tu partido obtuvo el %.1f%% de los votos y se quedó con %d."
 
-#: scripts/sim/world.gd:481
+#: scripts/sim/world.gd:489
 msgid "Seguir na oposição"
 msgstr "Seguir en la oposición"
 
-#: scripts/sim/world.gd:490
+#: scripts/sim/world.gd:498
 #, c-format
 msgid "%s renunciou ao cargo.%s"
 msgstr "%s renunció al cargo.%s"
 
-#: scripts/sim/world.gd:490
+#: scripts/sim/world.gd:498
 #, c-format
 msgid " %s assume o governo."
 msgstr " %s asume el gobierno."
 
-#: scripts/sim/world.gd:529
+#: scripts/sim/world.gd:537
 #, c-format
 msgid "%s entra na política de %s."
 msgstr "%s entra en la política de %s."
 
-#: scripts/sim/world.gd:529
+#: scripts/sim/world.gd:537
 msgid "Um novo nome"
 msgstr "Un nuevo nombre"
 
-#: scripts/sim/world.gd:539
+#: scripts/sim/world.gd:547
 msgid "aproximar os dois países"
 msgstr "acercar a los dos países"
 
-#: scripts/sim/world.gd:541
+#: scripts/sim/world.gd:549
 msgid "discutir a guerra"
 msgstr "discutir la guerra"
 
-#: scripts/sim/world.gd:543
+#: scripts/sim/world.gd:551
 msgid "cobrar explicações sobre o seu governo"
 msgstr "pedir explicaciones sobre su gobierno"
 
-#: scripts/sim/world.gd:545
+#: scripts/sim/world.gd:553
 msgid "propor um novo acordo"
 msgstr "proponer un nuevo acuerdo"
 
-#: scripts/sim/world.gd:548
+#: scripts/sim/world.gd:556
 #, c-format
 msgid "%s quer falar com você"
 msgstr "%s quiere hablar contigo"
 
-#: scripts/sim/world.gd:548
+#: scripts/sim/world.gd:556
 msgid "Um líder"
 msgstr "Un líder"
 
-#: scripts/sim/world.gd:549
+#: scripts/sim/world.gd:557
 #, c-format
 msgid "O líder de %s (%s) pede uma conversa para %s."
 msgstr "El líder de %s (%s) pide una conversación para %s."
 
-#: scripts/sim/world.gd:551
+#: scripts/sim/world.gd:559
 msgid "Atender"
 msgstr "Atender"
 
-#: scripts/sim/world.gd:551
+#: scripts/sim/world.gd:559
 msgid "Abre a conversa agora."
 msgstr "Abre la conversación ahora."
 
-#: scripts/sim/world.gd:552
+#: scripts/sim/world.gd:560
 msgid "Não atender"
 msgstr "No atender"
 
-#: scripts/sim/world.gd:552
+#: scripts/sim/world.gd:560
 msgid "Relação -3."
 msgstr "Relación -3."
 
-#: scripts/sim/world.gd:581
+#: scripts/sim/world.gd:589
 msgid "Colapso do financiamento"
 msgstr "Colapso de la financiación"
 
-#: scripts/sim/world.gd:582
+#: scripts/sim/world.gd:590
 #, c-format
 msgid "Os credores não rolam mais a dívida de %s. O juro chegou a %.1f%% e as reservas estão em US$ %.1f bi."
 msgstr "Los acreedores ya no refinancian la deuda de %s. El interés llegó al %.1f%% y las reservas están en US$ %.1f mil M."
 
-#: scripts/sim/world.gd:584
+#: scripts/sim/world.gd:592
 msgid "Aceitar pacote do FMI"
 msgstr "Aceptar el paquete del FMI"
 
-#: scripts/sim/world.gd:584
+#: scripts/sim/world.gd:592
 #, c-format
 msgid "US$ %.0f bi, com corte de gastos e aumento de impostos"
 msgstr "US$ %.0f mil M, con recorte de gastos y aumento de impuestos"
 
-#: scripts/sim/world.gd:586
+#: scripts/sim/world.gd:594
 msgid "Declarar moratória"
 msgstr "Declarar impago"
 
-#: scripts/sim/world.gd:586
+#: scripts/sim/world.gd:594
 msgid "Corta 45% da dívida; 3 anos sem mercado, recessão severa"
 msgstr "Corta el 45% de la deuda; 3 años sin mercado, recesión severa"
 
-#: scripts/sim/world.gd:596
+#: scripts/sim/world.gd:604
 #, c-format
 msgid "Proposta comercial de %s"
 msgstr "Propuesta comercial de %s"
 
-#: scripts/sim/world.gd:597
+#: scripts/sim/world.gd:605
 #, c-format
 msgid "O governo de %s propõe um acordo de livre comércio. Hoje ele responde por %.1f%% das suas exportações."
 msgstr "El gobierno de %s propone un acuerdo de libre comercio. Hoy representa el %.1f%% de tus exportaciones."
 
-#: scripts/sim/world.gd:599 scripts/sim/world.gd:613
+#: scripts/sim/world.gd:607 scripts/sim/world.gd:621
 msgid "Assinar"
 msgstr "Firmar"
 
-#: scripts/sim/world.gd:599
+#: scripts/sim/world.gd:607
 msgid "Vale depois de ratificado pelos dois parlamentos"
 msgstr "Vale tras ser ratificado por ambos parlamentos"
 
-#: scripts/sim/world.gd:601
+#: scripts/sim/world.gd:609
 msgid "Recusar"
 msgstr "Rechazar"
 
-#: scripts/sim/world.gd:601
+#: scripts/sim/world.gd:609
 msgid "Relação -5"
 msgstr "Relación -5"
 
-#: scripts/sim/world.gd:611
+#: scripts/sim/world.gd:619
 #, c-format
 msgid "%s propõe um pacto de defesa mútua. Se um dos dois for atacado, o outro entra na guerra."
 msgstr "%s propone un pacto de defensa mutua. Si uno de los dos es atacado, el otro entra en la guerra."
 
-#: scripts/sim/world.gd:613
+#: scripts/sim/world.gd:621
 msgid "Vale depois de ratificado. Proteção mútua; arrisca arrastar você para guerras alheias"
 msgstr "Vale tras ser ratificado. Protección mutua; puede arrastrarte a guerras ajenas"
 
-#: scripts/sim/world.gd:615
+#: scripts/sim/world.gd:623
 msgid "Recusar educadamente"
 msgstr "Rechazar con cortesía"
 
-#: scripts/sim/world.gd:615
+#: scripts/sim/world.gd:623
 msgid "Relação -3"
 msgstr "Relación -3"
 
-#: scripts/sim/world.gd:624
+#: scripts/sim/world.gd:632
 #, c-format
 msgid "Ultimato de %s"
 msgstr "Ultimátum de %s"
 
-#: scripts/sim/world.gd:625
+#: scripts/sim/world.gd:633
 #, c-format
 msgid "%s concentra forças e exige que você reduza a presença militar e retire apoio aos rivais dele."
 msgstr "%s concentra fuerzas y exige que reduzcas la presencia militar y retires el apoyo a sus rivales."
 
-#: scripts/sim/world.gd:627
+#: scripts/sim/world.gd:635
 msgid "Ceder para ganhar tempo"
 msgstr "Ceder para ganar tiempo"
 
-#: scripts/sim/world.gd:627
+#: scripts/sim/world.gd:635
 msgid "Relação +15; aprovação -6 pontos"
 msgstr "Relación +15; aprobación -6 puntos"
 
-#: scripts/sim/world.gd:630
+#: scripts/sim/world.gd:638
 msgid "Rejeitar publicamente"
 msgstr "Rechazar públicamente"
 
-#: scripts/sim/world.gd:630
+#: scripts/sim/world.gd:638
 msgid "Aprovação +3 pontos; relação -12 e tensão maior"
 msgstr "Aprobación +3 puntos; relación -12 y mayor tensión"
 
-#: scripts/sim/world.gd:643
+#: scripts/sim/world.gd:651
 msgid "Fomos invadidos!"
 msgstr "¡Nos han invadido!"
 
-#: scripts/sim/world.gd:644
+#: scripts/sim/world.gd:652
 #, c-format
 msgid "Tropas de %s cruzaram a fronteira. A guerra começou e a economia sente o choque."
 msgstr "Tropas de %s cruzaron la frontera. La guerra empezó y la economía siente el golpe."
 
-#: scripts/sim/world.gd:645
+#: scripts/sim/world.gd:653
 msgid "Mobilizar o país"
 msgstr "Movilizar el país"
 
-#: scripts/sim/world.gd:645
+#: scripts/sim/world.gd:653
 msgid "Mobilização a 60%"
 msgstr "Movilización al 60%"
 
-#: scripts/sim/world.gd:653
+#: scripts/sim/world.gd:661
 msgid "Aliado sob ataque"
 msgstr "Aliado bajo ataque"
 
-#: scripts/sim/world.gd:654
+#: scripts/sim/world.gd:662
 #, c-format
 msgid "%s invocou o pacto de defesa: %s atacou. Se honrar o tratado, seu país entra em guerra."
 msgstr "%s invocó el pacto de defensa: %s atacó. Si honras el tratado, tu país entra en guerra."
 
-#: scripts/sim/world.gd:656
+#: scripts/sim/world.gd:664
 msgid "Honrar o pacto e entrar na guerra"
 msgstr "Honrar el pacto y entrar en la guerra"
 
-#: scripts/sim/world.gd:656
+#: scripts/sim/world.gd:664
 msgid "Mobilização 25%; alta de gastos"
 msgstr "Movilización 25%; alza de gastos"
 
-#: scripts/sim/world.gd:659
+#: scripts/sim/world.gd:667
 msgid "Quebrar o pacto"
 msgstr "Romper el pacto"
 
-#: scripts/sim/world.gd:659
+#: scripts/sim/world.gd:667
 msgid "Pacto cancelado; relações com aliados despencam"
 msgstr "Pacto cancelado; las relaciones con los aliados se desploman"
 
-#: scripts/sim/world.gd:672
+#: scripts/sim/world.gd:680
 #, c-format
 msgid "As tropas de %s tomaram a capital, e o regime caiu com a rendição."
 msgstr "Las tropas de %s tomaron la capital, y el régimen cayó con la rendición."
 
-#: scripts/sim/world.gd:675
+#: scripts/sim/world.gd:683
 #, c-format
 msgid "As tropas de %s tomaram a capital, e seu governo assinou a rendição. %s assume, e você passa a liderar a oposição."
 msgstr "Las tropas de %s tomaron la capital, y tu gobierno firmó la rendición. %s asume, y pasas a liderar la oposición."
 
-#: scripts/sim/world.gd:675
+#: scripts/sim/world.gd:683
 msgid "Rendição"
 msgstr "Rendición"
 
-#: scripts/sim/world.gd:684
+#: scripts/sim/world.gd:692
 #, c-format
 msgid "%s capitulou"
 msgstr "%s capituló"
 
-#: scripts/sim/world.gd:685
+#: scripts/sim/world.gd:693
 #, c-format
 msgid "As forças de %s se renderam. Qual será o futuro do país?"
 msgstr "Las fuerzas de %s se rindieron. ¿Cuál será el futuro del país?"
 
-#: scripts/sim/world.gd:687
+#: scripts/sim/world.gd:695
 msgid "Anexar"
 msgstr "Anexionar"
 
-#: scripts/sim/world.gd:687
+#: scripts/sim/world.gd:695
 msgid "Ganha população e recursos; reputação global despenca"
 msgstr "Gana población y recursos; la reputación global se desploma"
 
-#: scripts/sim/world.gd:689
+#: scripts/sim/world.gd:697
 #, c-format
 msgid "%s anexa %s depois de vencer a guerra."
 msgstr "%s anexiona %s tras ganar la guerra."
 
-#: scripts/sim/world.gd:690
+#: scripts/sim/world.gd:698
 msgid "Instalar governo aliado"
 msgstr "Instalar un gobierno aliado"
 
-#: scripts/sim/world.gd:690
+#: scripts/sim/world.gd:698
 msgid "Vira Estado-cliente e aliado militar"
 msgstr "Se convierte en Estado cliente y aliado militar"
 
-#: scripts/sim/world.gd:692
+#: scripts/sim/world.gd:700
 #, c-format
 msgid "%s vence e instala governo aliado em %s."
 msgstr "%s gana e instala un gobierno aliado en %s."
 
-#: scripts/sim/world.gd:693 scripts/sim/world.gd:712
+#: scripts/sim/world.gd:701 scripts/sim/world.gd:720
 msgid "Demarcar novas fronteiras"
 msgstr "Demarcar nuevas fronteras"
 
-#: scripts/sim/world.gd:693 scripts/sim/world.gd:712
+#: scripts/sim/world.gd:701 scripts/sim/world.gd:720
 msgid "Você desenha no mapa as áreas que ficam com o seu país"
 msgstr "Dibujas en el mapa las áreas que quedan para tu país"
 
-#: scripts/sim/world.gd:695 scripts/sim/world.gd:714
+#: scripts/sim/world.gd:703 scripts/sim/world.gd:722
 #: scripts/ui/border_panel.gd:59
 msgid "Não ficar com território"
 msgstr "No quedarse con territorio"
 
-#: scripts/sim/world.gd:695 scripts/sim/world.gd:714
+#: scripts/sim/world.gd:703 scripts/sim/world.gd:722
 msgid "Retira as tropas e melhora a reputação internacional"
 msgstr "Retira las tropas y mejora la reputación internacional"
 
-#: scripts/sim/world.gd:709
+#: scripts/sim/world.gd:717
 #, c-format
 msgid "Vitória sobre %s"
 msgstr "Victoria sobre %s"
 
-#: scripts/sim/world.gd:710
+#: scripts/sim/world.gd:718
 #, c-format
 msgid "Suas tropas controlam cerca de %s do território de %s. Fica com alguma parte?"
 msgstr "Tus tropas controlan cerca del %s del territorio de %s. ¿Te quedas con alguna parte?"
 
-#: scripts/sim/world.gd:722
+#: scripts/sim/world.gd:730
 msgid "Negociação de fronteiras"
 msgstr "Negociación de fronteras"
 
-#: scripts/sim/world.gd:723
+#: scripts/sim/world.gd:731
 #, c-format
 msgid "O cessar-fogo com %s saiu sem vencedor. Como ficam as fronteiras?"
 msgstr "El alto el fuego con %s salió sin vencedor. ¿Cómo quedan las fronteras?"
 
-#: scripts/sim/world.gd:725 scripts/ui/border_panel.gd:64
+#: scripts/sim/world.gd:733 scripts/ui/border_panel.gd:64
 msgid "Restabelecer fronteiras antigas"
 msgstr "Restablecer las fronteras antiguas"
 
-#: scripts/sim/world.gd:725
+#: scripts/sim/world.gd:733
 msgid "Cada lado volta para onde estava antes da guerra"
 msgstr "Cada lado vuelve adonde estaba antes de la guerra"
 
-#: scripts/sim/world.gd:727
+#: scripts/sim/world.gd:735
 msgid "Propor novas fronteiras"
 msgstr "Proponer nuevas fronteras"
 
-#: scripts/sim/world.gd:727
+#: scripts/sim/world.gd:735
 #, c-format
 msgid "Desenhe o que pede e o que oferece. %s pode recusar"
 msgstr "Dibuja lo que pides y lo que ofreces. %s puede rechazar"
 
-#: scripts/sim/world.gd:742
+#: scripts/sim/world.gd:750
 #, c-format
 msgid "%s vence a guerra, retira as tropas e não fica com território de %s."
 msgstr "%s gana la guerra, retira las tropas y no se queda con territorio de %s."
 
-#: scripts/sim/world.gd:749
+#: scripts/sim/world.gd:757
 #, c-format
 msgid "Novas fronteiras: %s fica com %s do território de %s."
 msgstr "Nuevas fronteras: %s se queda con el %s del territorio de %s."
 
-#: scripts/sim/world.gd:754
+#: scripts/sim/world.gd:762
 #, c-format
 msgid "%s e %s restabelecem as fronteiras de antes da guerra."
 msgstr "%s y %s restablecen las fronteras de antes de la guerra."
 
-#: scripts/sim/world.gd:771
+#: scripts/sim/world.gd:779
 #, c-format
 msgid "%s recusou: a troca tira território demais. O saldo aceitável é cerca de %s do país."
 msgstr "%s se negó: el canje quita demasiado territorio. El saldo aceptable es cerca del %s del país."
 
-#: scripts/sim/world.gd:777
+#: scripts/sim/world.gd:785
 #, c-format
 msgid "Acordo de paz: %s e %s estabelecem novas fronteiras."
 msgstr "Acuerdo de paz: %s y %s establecen nuevas fronteras."
 
-#: scripts/sim/world.gd:793
+#: scripts/sim/world.gd:801
 #, c-format
 msgid "ATAQUE NUCLEAR: %s usa armas atômicas diante da derrota."
 msgstr "ATAQUE NUCLEAR: %s usa armas atómicas ante la derrota."
 
-#: scripts/sim/world.gd:800
+#: scripts/sim/world.gd:808
 #, c-format
 msgid "%s lançou armas nucleares. O mundo inteiro entra em choque."
 msgstr "%s lanzó armas nucleares. El mundo entero queda en shock."
 
-#: scripts/sim/world.gd:819
+#: scripts/sim/world.gd:827
 msgid "Ação inválida."
 msgstr "Acción inválida."
 
-#: scripts/sim/world.gd:823
+#: scripts/sim/world.gd:831
 #, c-format
 msgid "Essa ação com %s só pode ser repetida em %d dia(s)."
 msgstr "Esa acción con %s solo puede repetirse en %d día(s)."
 
-#: scripts/sim/world.gd:829
+#: scripts/sim/world.gd:837
 #, c-format
 msgid "Missão diplomática melhora relações com %s."
 msgstr "La misión diplomática mejora las relaciones con %s."
 
-#: scripts/sim/world.gd:836
+#: scripts/sim/world.gd:844
 #, c-format
 msgid "Pacote de ajuda de US$ %.1f bi enviado a %s."
 msgstr "Paquete de ayuda de US$ %.1f mil M enviado a %s."
 
-#: scripts/sim/world.gd:839
+#: scripts/sim/world.gd:847
 msgid "Já existe acordo comercial."
 msgstr "Ya existe un acuerdo comercial."
 
-#: scripts/sim/world.gd:841
+#: scripts/sim/world.gd:849
 #, c-format
 msgid "%s não negocia: relação abaixo de +15."
 msgstr "%s no negocia: relación por debajo de +15."
 
-#: scripts/sim/world.gd:853
+#: scripts/sim/world.gd:861
 #, c-format
 msgid "Pacto de defesa com %s cancelado."
 msgstr "Pacto de defensa con %s cancelado."
 
-#: scripts/sim/world.gd:856
+#: scripts/sim/world.gd:864
 #, c-format
 msgid "%s recusa: relação abaixo de +55."
 msgstr "%s rechaza: relación por debajo de +55."
 
-#: scripts/sim/world.gd:864
+#: scripts/sim/world.gd:872
 #, c-format
 msgid "Seu governo condena %s publicamente."
 msgstr "Tu gobierno condena públicamente a %s."
 
-#: scripts/sim/world.gd:869
+#: scripts/sim/world.gd:877
 #, c-format
 msgid "Sanções contra %s suspensas."
 msgstr "Sanciones contra %s suspendidas."
 
-#: scripts/sim/world.gd:872
+#: scripts/sim/world.gd:880
 #, c-format
 msgid "Sanções financeiras contra %s em vigor."
 msgstr "Sanciones financieras contra %s vigentes."
 
-#: scripts/sim/world.gd:877
+#: scripts/sim/world.gd:885
 #, c-format
 msgid "Embargo contra %s reduzido a sanções."
 msgstr "Embargo contra %s reducido a sanciones."
 
-#: scripts/sim/world.gd:880
+#: scripts/sim/world.gd:888
 #, c-format
 msgid "Embargo total contra %s decretado."
 msgstr "Embargo total contra %s decretado."
 
-#: scripts/sim/world.gd:885
+#: scripts/sim/world.gd:893
 #, c-format
 msgid "Tarifa contra %s removida."
 msgstr "Arancel contra %s retirado."
 
-#: scripts/sim/world.gd:888
+#: scripts/sim/world.gd:896
 #, c-format
 msgid "Tarifa de 20%% sobre produtos de %s."
 msgstr "Arancel del 20%% a los productos de %s."
 
-#: scripts/sim/world.gd:894
+#: scripts/sim/world.gd:902
 #, c-format
 msgid "Operação secreta descoberta em %s: escândalo internacional."
 msgstr "Operación encubierta descubierta en %s: escándalo internacional."
 
-#: scripts/sim/world.gd:899
+#: scripts/sim/world.gd:907
 #, c-format
 msgid "Operação secreta desestabiliza %s."
 msgstr "Una operación encubierta desestabiliza %s."
 
-#: scripts/sim/world.gd:902
+#: scripts/sim/world.gd:910
 #, c-format
 msgid "%s não compra de você: relação abaixo de +10."
 msgstr "%s no te compra: relación por debajo de +10."
 
-#: scripts/sim/world.gd:907
+#: scripts/sim/world.gd:915
 #, c-format
 msgid "Venda de armas de US$ %.1f bi para %s."
 msgstr "Venta de armas de US$ %.1f mil M a %s."
 
-#: scripts/sim/world.gd:910
+#: scripts/sim/world.gd:918
 #, c-format
 msgid "Cancele o pacto com %s antes."
 msgstr "Cancela antes el pacto con %s."
 
-#: scripts/sim/world.gd:912
+#: scripts/sim/world.gd:920
 msgid "Já em guerra."
 msgstr "Ya en guerra."
 
-#: scripts/sim/world.gd:918
+#: scripts/sim/world.gd:926
 msgid "Ação desconhecida."
 msgstr "Acción desconocida."
 
-#: scripts/sim/world.gd:930
+#: scripts/sim/world.gd:938
 msgid "Vocês não estão em guerra."
 msgstr "No están en guerra."
 
-#: scripts/sim/world.gd:939
+#: scripts/sim/world.gd:947
 #, c-format
 msgid "%s rejeitou a proposta de paz."
 msgstr "%s rechazó la propuesta de paz."
 
-#: scripts/sim/world.gd:946 scripts/ui/debug_menu.gd:279
+#: scripts/sim/world.gd:954 scripts/ui/debug_menu.gd:279
 #, c-format
 msgid "Paz assinada: %s cede {pct} do território a %s."
 msgstr "Paz firmada: %s cede {pct} del territorio a %s."
@@ -7037,7 +7057,7 @@ msgstr ""
 "%s, %d años  ·  %s\n"
 "Competencia: %d%%%s"
 
-#: scripts/ui/cabinet_panel.gd:71 scripts/ui/main.gd:647
+#: scripts/ui/cabinet_panel.gd:71 scripts/ui/main.gd:649
 msgid "  ·  doente"
 msgstr "  ·  enfermo"
 
@@ -7932,6 +7952,21 @@ msgstr "%s dejó de ser capital de %s."
 msgid "%s agora é capital de %s."
 msgstr "%s es ahora capital de %s."
 
+#: scripts/ui/economy_panel.gd:65
+#, c-format
+msgid "População: %s milhões"
+msgstr "Población: %s millones"
+
+#: scripts/ui/economy_panel.gd:70
+#, c-format
+msgid "Natalidade %s · mortalidade %s · migração %s ao ano"
+msgstr "Natalidad %s · mortalidad %s · migración %s al año"
+
+#: scripts/ui/economy_panel.gd:72
+#, c-format
+msgid "Aposentadorias além da base: %s do PIB"
+msgstr "Jubilaciones por encima de la base: %s del PIB"
+
 #: scripts/ui/hud.gd:188
 msgid "parado"
 msgstr "parado"
@@ -8049,7 +8084,7 @@ msgstr "D (impago)"
 msgid "Falar com %s"
 msgstr "Hablar con %s"
 
-#: scripts/ui/hud.gd:468 scripts/ui/main.gd:701
+#: scripts/ui/hud.gd:468 scripts/ui/main.gd:703
 msgid "o líder"
 msgstr "el líder"
 
@@ -8914,7 +8949,7 @@ msgstr "  [evento: %s]"
 msgid "%d registro(s) guardado(s)"
 msgstr "%d registro(s) guardado(s)"
 
-#: scripts/ui/main.gd:258 scripts/ui/main.gd:1129
+#: scripts/ui/main.gd:258 scripts/ui/main.gd:1131
 msgid "Preparando o mundo..."
 msgstr "Preparando el mundo..."
 
@@ -8995,138 +9030,138 @@ msgstr "%s asume el cargo en %s. El mundo observa."
 msgid "%s lidera a oposição em %s contra o governo de %s."
 msgstr "%s lidera la oposición en %s contra el gobierno de %s."
 
-#: scripts/ui/main.gd:647
+#: scripts/ui/main.gd:649
 #, c-format
 msgid "%s, %d anos  ·  %s  ·  competência %d%%%s"
 msgstr "%s, %d años  ·  %s  ·  competencia %d%%%s"
 
-#: scripts/ui/main.gd:656
+#: scripts/ui/main.gd:658
 msgid "Você: "
 msgstr "Tú: "
 
-#: scripts/ui/main.gd:664
+#: scripts/ui/main.gd:666
 #, c-format
 msgid "%s  ·  %d assentos  ·  %s dos votos. A bússola do partido é a média dos políticos."
 msgstr "%s  ·  %d escaños  ·  %s de los votos. La brújula del partido es la media de sus políticos."
 
-#: scripts/ui/main.gd:682
+#: scripts/ui/main.gd:684
 #, c-format
 msgid "Ministério: %s"
 msgstr "Ministerio: %s"
 
-#: scripts/ui/main.gd:687
+#: scripts/ui/main.gd:689
 #, c-format
 msgid "%s assume a pasta."
 msgstr "%s asume la cartera."
 
-#: scripts/ui/main.gd:701
+#: scripts/ui/main.gd:703
 #, c-format
 msgid "Conversa com %s"
 msgstr "Conversación con %s"
 
-#: scripts/ui/main.gd:701
+#: scripts/ui/main.gd:703
 #, c-format
 msgid "%s  ·  %s  ·  %s, %d anos, %s"
 msgstr "%s  ·  %s  ·  %s, %d años, %s"
 
-#: scripts/ui/main.gd:705
+#: scripts/ui/main.gd:707
 #, c-format
 msgid "Dourado: %s. Branco: seu partido."
 msgstr "Dorado: %s. Blanco: tu partido."
 
-#: scripts/ui/main.gd:705
+#: scripts/ui/main.gd:707
 msgid "líder"
 msgstr "líder"
 
-#: scripts/ui/main.gd:720
+#: scripts/ui/main.gd:722
 #, c-format
 msgid "Falas restantes: %d"
 msgstr "Intervenciones restantes: %d"
 
-#: scripts/ui/main.gd:720
+#: scripts/ui/main.gd:722
 msgid "A conversa terminou."
 msgstr "La conversación terminó."
 
-#: scripts/ui/main.gd:739
+#: scripts/ui/main.gd:741
 msgid "Todo político pertence a um partido. Escolha um deles ou crie o seu, e decida se começa no governo ou na oposição."
 msgstr "Todo político pertenece a un partido. Elige uno o crea el tuyo, y decide si empiezas en el gobierno o en la oposición."
 
-#: scripts/ui/main.gd:739
+#: scripts/ui/main.gd:741
 msgid "Só é possível mudar de partido uma vez por ano. O partido novo só ganha assentos na próxima eleição."
 msgstr "Solo se puede cambiar de partido una vez al año. El partido nuevo solo gana escaños en la próxima elección."
 
-#: scripts/ui/main.gd:740
+#: scripts/ui/main.gd:742
 #, c-format
 msgid "Escolha seu partido em %s"
 msgstr "Elige tu partido en %s"
 
-#: scripts/ui/main.gd:777
+#: scripts/ui/main.gd:779
 msgid "Regimes fechados não têm eleições."
 msgstr "Los regímenes cerrados no tienen elecciones."
 
-#: scripts/ui/main.gd:779
+#: scripts/ui/main.gd:781
 #, c-format
 msgid "Hoje governa: %s."
 msgstr "Hoy gobierna: %s."
 
-#: scripts/ui/main.gd:779
+#: scripts/ui/main.gd:781
 msgid "Regime fechado, sem eleições: só é possível governar."
 msgstr "Régimen cerrado, sin elecciones: solo se puede gobernar."
 
-#: scripts/ui/main.gd:787
+#: scripts/ui/main.gd:789
 #, c-format
 msgid "Ficar em %s  ·  %s  ·  %s dos votos  ·  %d de %d assentos"
 msgstr "Quedarse en %s  ·  %s  ·  %s de los votos  ·  %d de %d escaños"
 
-#: scripts/ui/main.gd:787
+#: scripts/ui/main.gd:789
 #, c-format
 msgid "%s  ·  %s  ·  %s dos votos  ·  %d de %d assentos"
 msgstr "%s  ·  %s  ·  %s de los votos  ·  %d de %d escaños"
 
-#: scripts/ui/main.gd:788
+#: scripts/ui/main.gd:790
 #, c-format
 msgid "%s. Clique para escolher."
 msgstr "%s. Haz clic para elegir."
 
-#: scripts/ui/main.gd:819
+#: scripts/ui/main.gd:821
 msgid "Dê um nome ao partido."
 msgstr "Dale un nombre al partido."
 
-#: scripts/ui/main.gd:922
+#: scripts/ui/main.gd:924
 #, c-format
 msgid "Bandeira: %s"
 msgstr "Bandera: %s"
 
-#: scripts/ui/main.gd:1035
+#: scripts/ui/main.gd:1037
 msgid "Renunciar ao cargo? Isso encerra a sua carreira, e depois você escolhe entre um novo jogo e um novo personagem."
 msgstr "¿Renunciar al cargo? Eso termina tu carrera, y después eliges entre una nueva partida y un nuevo personaje."
 
-#: scripts/ui/main.gd:1045
+#: scripts/ui/main.gd:1047
 msgid "Impeachment"
 msgstr "Impeachment"
 
-#: scripts/ui/main.gd:1045
+#: scripts/ui/main.gd:1047
 msgid "Deposto"
 msgstr "Depuesto"
 
-#: scripts/ui/main.gd:1045
+#: scripts/ui/main.gd:1047
 msgid "Renúncia"
 msgstr "Renuncia"
 
-#: scripts/ui/main.gd:1045
+#: scripts/ui/main.gd:1047
 msgid "Assassinato"
 msgstr "Asesinato"
 
-#: scripts/ui/main.gd:1045
+#: scripts/ui/main.gd:1047
 msgid "Fim da vida"
 msgstr "Fin de la vida"
 
-#: scripts/ui/main.gd:1050
+#: scripts/ui/main.gd:1052
 #, c-format
 msgid "Pontuação final: %s"
 msgstr "Puntuación final: %s"
 
-#: scripts/ui/main.gd:1051
+#: scripts/ui/main.gd:1053
 #, c-format
 msgid ""
 "Tempo no poder: %s anos  ·  Reeleições: %d\n"
@@ -9137,74 +9172,74 @@ msgstr ""
 "PIB per cápita real: %s veces el de 2025\n"
 "Deuda/PIB: %s  ·  Inflación: %s  ·  Influencia: %d.º del mundo"
 
-#: scripts/ui/main.gd:1081
+#: scripts/ui/main.gd:1083
 #, c-format
 msgid "Tratado com %s"
 msgstr "Tratado con %s"
 
-#: scripts/ui/main.gd:1081
+#: scripts/ui/main.gd:1083
 #, c-format
 msgid "O líder de lá é %s (%s)."
 msgstr "El líder de allí es %s (%s)."
 
-#: scripts/ui/main.gd:1089
+#: scripts/ui/main.gd:1091
 #, c-format
 msgid "Vale por %d anos."
 msgstr "Vale por %d años."
 
-#: scripts/ui/main.gd:1089
+#: scripts/ui/main.gd:1091
 msgid "Sem prazo."
 msgstr "Sin plazo."
 
-#: scripts/ui/main.gd:1105
+#: scripts/ui/main.gd:1107
 #, c-format
 msgid "Eleição de %s em %s"
 msgstr "Elección de %s en %s"
 
-#: scripts/ui/main.gd:1107
+#: scripts/ui/main.gd:1109
 #, c-format
 msgid "[color=#8ba2af]Sistema:[/color] %s  ·  cláusula de barreira de %d%%"
 msgstr "[color=#8ba2af]Sistema:[/color] %s  ·  barrera del %d%%"
 
-#: scripts/ui/main.gd:1108
+#: scripts/ui/main.gd:1110
 #, c-format
 msgid "[color=#8ba2af]Regime:[/color] %s"
 msgstr "[color=#8ba2af]Régimen:[/color] %s"
 
-#: scripts/ui/main.gd:1109
+#: scripts/ui/main.gd:1111
 #, c-format
 msgid "[color=#8ba2af]Comparecimento:[/color] %s  ·  %d distritos"
 msgstr "[color=#8ba2af]Participación:[/color] %s  ·  %d distritos"
 
-#: scripts/ui/main.gd:1112
+#: scripts/ui/main.gd:1114
 #, c-format
 msgid "[color=#8ba2af]Chefe de governo:[/color] %s, com %s, em %d turno(s)"
 msgstr "[color=#8ba2af]Jefe de gobierno:[/color] %s, con %s, en %d vuelta(s)"
 
-#: scripts/ui/main.gd:1115
+#: scripts/ui/main.gd:1117
 #, c-format
 msgid "[color=#%s]■[/color] %s: %s dos votos, %d deputados, %d senadores"
 msgstr "[color=#%s]■[/color] %s: %s de los votos, %d diputados, %d senadores"
 
-#: scripts/ui/main.gd:1119
+#: scripts/ui/main.gd:1121
 #, c-format
 msgid "%s: %d cadeiras, %s mi de habitantes, maioria de %s"
 msgstr "%s: %d escaños, %s M de habitantes, mayoría de %s"
 
-#: scripts/ui/main.gd:1151
+#: scripts/ui/main.gd:1153
 #, c-format
 msgid "Não foi possível salvar: erro %d."
 msgstr "No se pudo guardar: error %d."
 
-#: scripts/ui/main.gd:1160
+#: scripts/ui/main.gd:1162
 msgid "Não foi possível salvar: o arquivo não pôde ser conferido."
 msgstr "No se pudo guardar: el archivo no pudo verificarse."
 
-#: scripts/ui/main.gd:1166
+#: scripts/ui/main.gd:1168
 msgid "Partida salva."
 msgstr "Partida guardada."
 
-#: scripts/ui/main.gd:1174
+#: scripts/ui/main.gd:1176
 msgid "Carregando a partida..."
 msgstr "Cargando la partida..."
 
