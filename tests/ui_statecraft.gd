@@ -114,7 +114,7 @@ func _process(delta: float) -> void:
 			_check(me.get("player", false) and absf(float(me.econ) - float(w.leader.econ)) < 0.001, "o jogador é um político do partido")
 			hud._desk.current_tab = hud._cabinet_tab
 		6:
-			_check(hud._dock.items().size() == hud._desk.get_tab_count(), "o dock tem um ícone por janela")
+			_check(hud._dock.items().filter(func(i): return i.window_index >= 0).size() == hud._desk.get_tab_count(), "o dock tem um ícone por janela")
 			_check(hud._cabinet._rows.get_child_count() == Politics.PORTFOLIOS.size(), "uma linha por pasta")
 			_shot("s2_ministros")
 			_click(_named(hud._cabinet, "pick_finance"))

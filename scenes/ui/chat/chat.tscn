@@ -70,12 +70,24 @@ theme_override_constants/margin_top = 12
 theme_override_constants/margin_right = 14
 theme_override_constants/margin_bottom = 4
 
-[node name="title" type="Label" parent="Centro/Painel/Linha/Contatos/Topo"]
+[node name="Titulo" type="HBoxContainer" parent="Centro/Painel/Linha/Contatos/Topo"]
+layout_mode = 2
+
+[node name="title" type="Label" parent="Centro/Painel/Linha/Contatos/Topo/Titulo"]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.9490196, 0.7019608, 0.23921569, 1)
 theme_override_font_sizes/font_size = 22
 text = "Conversas"
+
+[node name="open_agenda" type="Button" parent="Centro/Painel/Linha/Contatos/Topo/Titulo"]
+unique_name_in_owner = true
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+tooltip_text = "Escolha qualquer líder de partido ou de país para conversar."
+text = "Agenda"
 
 [node name="Rolagem" type="ScrollContainer" parent="Centro/Painel/Linha/Contatos"]
 layout_mode = 2

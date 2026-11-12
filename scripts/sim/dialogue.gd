@@ -29,8 +29,36 @@ static func start(world: GameWorld, target: Country, invited := false) -> Dictio
 	world.talks[target.iso] = world.months_elapsed
 	world.talk_turns[target.iso] = TURNS_PER_MEETING
 	var hello := greeting(world, target)
-	ChatLog.add(world, ChatLog.country_key(target.iso), false, hello)
+	var key := ChatLog.country_key(target.iso)
+	ChatLog.add(world, key, false, hello)
+	# Quem puxa a conversa chega com uma proposta concreta na mão.
+	if invited:
+		var offer := Proposals.pending(world, target)
+		if offer.is_empty():
+			offer = Proposals.make(world, target)
+			world.offers[target.iso] = offer
+		ChatLog.add(world, key, false, Proposals.text(world, target, offer))
 	return {"ok": true, "msg": "", "greeting": hello}
+
+
+## Responde à proposta em aberto: "accept", "refuse" ou "counter". Não gasta falas da conversa.
+static func answer(world: GameWorld, target: Country, choice: String) -> Dictionary:
+	var offer := Proposals.pending(world, target)
+	if offer.is_empty():
+		return {"ok": false, "accepted": false, "reply": TranslationServer.translate("Não há proposta em aberto.")}
+	var label := ""
+	for c: Dictionary in Proposals.choices(world, target, offer):
+		if c.id == choice:
+			label = c.label
+	if label == "":
+		return {"ok": false, "accepted": false, "reply": TranslationServer.translate("Não entendi o que você quis dizer.")}
+	var key := ChatLog.country_key(target.iso)
+	ChatLog.add(world, key, true, label)
+	world.offers.erase(target.iso)
+	var r := Proposals.resolve(world, target, offer, choice)
+	ChatLog.add(world, key, false, r.reply, r.accepted)
+	r["ok"] = true
+	return r
 
 
 ## Falas que ainda restam na conversa em curso com o líder.

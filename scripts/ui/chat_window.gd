@@ -24,6 +24,7 @@ func setup(owner_main: Node, key: String) -> void:
 	main = owner_main
 	world = main.world
 	%say_end.pressed.connect(func(): main._close_modal(self))
+	%open_agenda.pressed.connect(func(): main.open_agenda(self))
 	%info_toggle.toggled.connect(func(on: bool): (%info_panel as Control).visible = on)
 	select(key)
 
@@ -153,6 +154,15 @@ func _add_option(id: String, label: String, hint: String, action: Callable) -> v
 
 func _fill_country_choices() -> void:
 	var target: Country = world.by_iso[current.trim_prefix("pais:")]
+	var offer := Proposals.pending(world, target)
+	if not offer.is_empty():
+		_remaining.text = tr("Ele traz uma proposta. Responda para seguir.")
+		for choice: Dictionary in Proposals.choices(world, target, offer):
+			_add_option("offer_" + String(choice.id), choice.label, choice.hint, func():
+				Dialogue.answer(world, target, choice.id)
+				main.hud.refresh(true)
+				select(current))
+		return
 	var turns := Dialogue.turns_left(world, target)
 	var going: bool = turns > 0 and target.alive and main.prompts.is_empty()
 	if going:

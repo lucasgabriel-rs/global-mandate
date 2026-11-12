@@ -23,6 +23,7 @@ const CORRUPTION := preload("res://scenes/ui/modals/corruption.tscn")
 const PARTY_DETAIL := preload("res://scenes/ui/modals/party_detail.tscn")
 const MINISTER_PICKER := preload("res://scenes/ui/modals/minister_picker.tscn")
 const CHAT := preload("res://scenes/ui/chat/chat.tscn")
+const AGENDA := preload("res://scenes/ui/agenda.tscn")
 const MEMBER_ROW := preload("res://scenes/ui/rows/member_row.tscn")
 const PARTY_PICK_ROW := preload("res://scenes/ui/rows/party_pick_row.tscn")
 const PROMPT_OPTION := preload("res://scenes/ui/rows/prompt_option.tscn")
@@ -91,6 +92,7 @@ func _ready() -> void:
 	hud.minister_pick_requested.connect(_open_minister_picker)
 	hud.talk_requested.connect(_open_talk)
 	hud.legislation_requested.connect(open_legislation)
+	hud.agenda_requested.connect(open_agenda)
 	hud.corruption_requested.connect(_open_corruption)
 	hud.treaty_requested.connect(open_treaty)
 	hud.election_requested.connect(open_election_report)
@@ -154,6 +156,8 @@ func _ready() -> void:
 		autotest = load("res://tests/ui_layout.gd")
 	if OS.get_cmdline_user_args().has("--ui-creator"):
 		autotest = load("res://tests/ui_creator.gd")
+	if OS.get_cmdline_user_args().has("--ui-diplomacy"):
+		autotest = load("res://tests/ui_diplomacy.gd")
 	if OS.get_cmdline_user_args().has("--ui-locale"):
 		autotest = load("res://tests/ui_locale.gd")
 	if autotest:
@@ -715,6 +719,24 @@ func _open_talk(target: Country, invited := false) -> void:
 func open_chat(key: String) -> void:
 	var dim: ChatWindow = _modal(CHAT, tr("Conversas"))
 	dim.setup(self, key)
+
+
+## Agenda de contatos: todos os líderes partidários e de países. Dentro da janela de conversas, escolhe o contato nela mesma.
+func open_agenda(chat: ChatWindow = null) -> void:
+	var dim: AgendaWindow = _modal(AGENDA, tr("Agenda"))
+	dim.setup(self, chat)
+
+
+## Chama o contato da agenda ("pais:ISO" ou "partido:ID"): abre uma conversa nova com o líder, se der, e mostra o histórico.
+func call_contact(key: String, chat: ChatWindow = null) -> void:
+	if key.begins_with("pais:"):
+		var c: Country = world.by_iso.get(key.trim_prefix("pais:"))
+		if c and world.in_office and c.alive and Dialogue.turns_left(world, c) == 0 and Dialogue.wait_months(world, c) == 0:
+			Dialogue.start(world, c)
+	if chat and is_instance_valid(chat) and not chat.is_queued_for_deletion():
+		chat.select(key)
+	else:
+		open_chat(key)
 
 
 func _open_party_picker(country: Country, at_start: bool, on_done: Callable) -> void:
