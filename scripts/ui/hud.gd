@@ -709,7 +709,9 @@ func _refresh_top(c: Country) -> void:
 	t.debt.add_theme_color_override("font_color", UiKit.RED if c.debt_ratio > c.debt_tol else UiKit.TEXT)
 	t.approval.text = "%d%%" % int(c.approval * 100.0)
 	t.approval.add_theme_color_override("font_color", UiKit.RED if c.approval < 0.4 else (UiKit.GREEN if c.approval > 0.55 else UiKit.TEXT))
-	t.fund.text = UiKit.millions(world.politics.party_fund(world))
+	var balance := -c.deficit / maxf(c.y_nominal(), 0.001)
+	t.budget.text = "%s%.1f%%" % ["+" if balance > 0.0 else "", balance * 100.0]
+	t.budget.add_theme_color_override("font_color", UiKit.RED if balance < -0.05 else (UiKit.GREEN if balance >= -0.01 else UiKit.TEXT))
 
 
 func _set_chart(key: String, c: Country) -> void:
