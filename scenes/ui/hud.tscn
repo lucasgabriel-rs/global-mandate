@@ -339,16 +339,16 @@ text = "—"
 
 [node name="Coluna8" type="VBoxContainer" parent="Painel/Linha" unique_id=163072725]
 layout_mode = 2
-tooltip_text = "Fundo do seu partido: paga pesquisas, campanhas e outros gastos. Recebe todo mês conforme a votação."
+tooltip_text = "Orçamento do Estado: resultado fiscal do ano (receita menos gastos e juros) em % do PIB. Detalhes na janela Orçamento e impostos."
 theme_override_constants/separation = 0
 
 [node name="FundoTitulo" type="Label" parent="Painel/Linha/Coluna8" unique_id=409634875]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_font_sizes/font_size = 11
-text = "Fundo partid."
+text = "Orçam. Estado"
 
-[node name="top_fund" type="Label" parent="Painel/Linha/Coluna8" unique_id=917996054]
+[node name="top_budget" type="Label" parent="Painel/Linha/Coluna8" unique_id=917996054]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)

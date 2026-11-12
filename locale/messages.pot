@@ -180,11 +180,11 @@ msgid "Aprovação"
 msgstr ""
 
 #: scenes/ui/hud.tscn:342
-msgid "Fundo do seu partido: paga pesquisas, campanhas e outros gastos. Recebe todo mês conforme a votação."
+msgid "Orçamento do Estado: resultado fiscal do ano (receita menos gastos e juros) em % do PIB. Detalhes na janela Orçamento e impostos."
 msgstr ""
 
 #: scenes/ui/hud.tscn:349
-msgid "Fundo partid."
+msgid "Orçam. Estado"
 msgstr ""
 
 #: scenes/ui/hud.tscn:365
@@ -655,7 +655,7 @@ msgstr ""
 msgid "Regime"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2499 scripts/ui/hud.gd:827
+#: scenes/ui/hud.tscn:2499 scripts/ui/hud.gd:829
 msgid "Manual dá controle direto, mas interferência reduz a credibilidade do banco central."
 msgstr ""
 
@@ -835,7 +835,7 @@ msgstr ""
 msgid "Retorno da carteira"
 msgstr ""
 
-#: scenes/ui/hud.tscn:3089
+#: scenes/ui/hud.tscn:3089 scripts/sim/law_catalog.gd_(categorias)
 msgid "Câmbio"
 msgstr ""
 
@@ -967,7 +967,7 @@ msgstr ""
 msgid "POLÍTICA E DEFESA"
 msgstr ""
 
-#: scenes/ui/start_screen.tscn:384 scripts/ui/hud.gd:441 scripts/ui/hud.gd:768 scripts/ui/main.gd:348
+#: scenes/ui/start_screen.tscn:384 scripts/ui/hud.gd:441 scripts/ui/hud.gd:770 scripts/ui/main.gd:348
 msgid "Democracia"
 msgstr ""
 
@@ -2365,7 +2365,7 @@ msgstr ""
 msgid "Ofensiva acelera a frente, mas aumenta as baixas dos dois lados."
 msgstr ""
 
-#: scenes/ui/rows/war_card.tscn:42 scripts/ui/hud.gd:937
+#: scenes/ui/rows/war_card.tscn:42 scripts/ui/hud.gd:939
 msgid "Postura: ofensiva"
 msgstr ""
 
@@ -2522,7 +2522,7 @@ msgstr ""
 msgid "libertário"
 msgstr ""
 
-#: scripts/sim/dialogue.gd:63
+#: scripts/sim/dialogue.gd:63 scripts/sim/law_catalog.gd_(escolha_dr_level)
 msgid "moderado"
 msgstr ""
 
@@ -2873,19 +2873,19 @@ msgstr ""
 msgid "%s reduz o juro básico para %s ao ano."
 msgstr ""
 
-#: scripts/sim/elections.gd:7
+#: scripts/sim/elections.gd:7 scripts/sim/law_catalog.gd_(escolha_el_system)
 msgid "Proporcional por distritos"
 msgstr ""
 
-#: scripts/sim/elections.gd:7
+#: scripts/sim/elections.gd:7 scripts/sim/law_catalog.gd_(escolha_el_system)
 msgid "Distrital de maioria simples"
 msgstr ""
 
-#: scripts/sim/elections.gd:7
+#: scripts/sim/elections.gd:7 scripts/sim/law_catalog.gd_(escolha_el_system)
 msgid "Distrital em dois turnos"
 msgstr ""
 
-#: scripts/sim/elections.gd:7
+#: scripts/sim/elections.gd:7 scripts/sim/law_catalog.gd_(escolha_el_system)
 msgid "Misto: distrital e proporcional"
 msgstr ""
 
@@ -4106,7 +4106,7 @@ msgstr ""
 msgid "Texto original"
 msgstr ""
 
-#: scripts/sim/legislation.gd:211
+#: scripts/sim/legislation.gd:211 scripts/sim/codes_(tributario)
 msgid "Código Tributário"
 msgstr ""
 
@@ -4295,7 +4295,7 @@ msgstr ""
 msgid "não"
 msgstr ""
 
-#: scripts/sim/legislation.gd:313 scripts/ui/hud.gd:853
+#: scripts/sim/legislation.gd:313 scripts/ui/hud.gd:855 scripts/sim/law_catalog.gd_(escolha_cb_controle)
 msgid "nenhum"
 msgstr ""
 
@@ -5295,7 +5295,7 @@ msgstr ""
 msgid "sério"
 msgstr ""
 
-#: scripts/sim/people.gd:189
+#: scripts/sim/people.gd:189 scripts/sim/law_catalog.gd_(escolha_dr_level)
 msgid "leve"
 msgstr ""
 
@@ -6706,123 +6706,123 @@ msgstr ""
 msgid "empresa aberta em até %d dias"
 msgstr ""
 
-#: scripts/sim/codes/code_direitos.gd:16
+#: scripts/sim/codes/code_direitos.gd:16 scripts/sim/law_catalog.gd_(escolha_dr_right)
 msgid "a liberdade de expressão"
 msgstr ""
 
-#: scripts/sim/codes/code_direitos.gd:16
+#: scripts/sim/codes/code_direitos.gd:16 scripts/sim/law_catalog.gd_(escolha_dr_right)
 msgid "a liberdade de imprensa"
 msgstr ""
 
-#: scripts/sim/codes/code_direitos.gd:16
+#: scripts/sim/codes/code_direitos.gd:16 scripts/sim/law_catalog.gd_(escolha_dr_right)
 msgid "a liberdade de reunião e associação"
 msgstr ""
 
-#: scripts/sim/codes/code_direitos.gd:17
+#: scripts/sim/codes/code_direitos.gd:17 scripts/sim/law_catalog.gd_(escolha_dr_right)
 msgid "a liberdade de culto"
 msgstr ""
 
-#: scripts/sim/codes/code_direitos.gd:17
+#: scripts/sim/codes/code_direitos.gd:17 scripts/sim/law_catalog.gd_(escolha_dr_right)
 msgid "a privacidade e o sigilo das comunicações"
 msgstr ""
 
-#: scripts/sim/codes/code_direitos.gd:17
+#: scripts/sim/codes/code_direitos.gd:17 scripts/sim/law_catalog.gd_(escolha_dr_right)
 msgid "o direito de greve"
 msgstr ""
 
-#: scripts/sim/codes/code_direitos.gd:18
+#: scripts/sim/codes/code_direitos.gd:18 scripts/sim/law_catalog.gd_(escolha_dr_right)
 msgid "a propriedade privada"
 msgstr ""
 
-#: scripts/sim/codes/code_direitos.gd:18
+#: scripts/sim/codes/code_direitos.gd:18 scripts/sim/law_catalog.gd_(escolha_dr_right)
 msgid "a liberdade de ir e vir"
 msgstr ""
 
-#: scripts/sim/codes/code_direitos.gd:18
+#: scripts/sim/codes/code_direitos.gd:18 scripts/sim/law_catalog.gd_(escolha_dr_right)
 msgid "a educação pública gratuita"
 msgstr ""
 
-#: scripts/sim/codes/code_direitos.gd:19
+#: scripts/sim/codes/code_direitos.gd:19 scripts/sim/law_catalog.gd_(escolha_dr_right)
 msgid "a saúde pública gratuita"
 msgstr ""
 
-#: scripts/sim/codes/code_direitos.gd:19
+#: scripts/sim/codes/code_direitos.gd:19 scripts/sim/law_catalog.gd_(escolha_dr_right)
 msgid "a moradia digna"
 msgstr ""
 
-#: scripts/sim/codes/code_direitos.gd:19
+#: scripts/sim/codes/code_direitos.gd:19 scripts/sim/law_catalog.gd_(escolha_dr_right)
 msgid "o acesso à internet"
 msgstr ""
 
-#: scripts/sim/codes/code_direitos.gd:19
+#: scripts/sim/codes/code_direitos.gd:19 scripts/sim/law_catalog.gd_(escolha_dr_right)
 msgid "o voto"
 msgstr ""
 
-#: scripts/sim/codes/code_direitos.gd:20
+#: scripts/sim/codes/code_direitos.gd:20 scripts/sim/law_catalog.gd_(escolha_dr_right)
 msgid "o porte de arma"
 msgstr ""
 
-#: scripts/sim/codes/code_direitos.gd:20
+#: scripts/sim/codes/code_direitos.gd:20 scripts/sim/law_catalog.gd_(escolha_dr_right)
 msgid "o aborto legal"
 msgstr ""
 
-#: scripts/sim/codes/code_direitos.gd:26
+#: scripts/sim/codes/code_direitos.gd:26 scripts/sim/law_catalog.gd_(escolha_dr_scope)
 msgid "todas as pessoas"
 msgstr ""
 
-#: scripts/sim/codes/code_direitos.gd:26
+#: scripts/sim/codes/code_direitos.gd:26 scripts/sim/law_catalog.gd_(escolha_dr_scope)
 msgid "os maiores de 18 anos"
 msgstr ""
 
-#: scripts/sim/codes/code_direitos.gd:26
+#: scripts/sim/codes/code_direitos.gd:26 scripts/sim/law_catalog.gd_(escolha_dr_scope)
 msgid "os cidadãos"
 msgstr ""
 
-#: scripts/sim/codes/code_direitos.gd:45
+#: scripts/sim/codes/code_direitos.gd:45 scripts/sim/law_catalog.gd_(escolha_dr_duty)
 msgid "pagar os tributos"
 msgstr ""
 
-#: scripts/sim/codes/code_direitos.gd:45
+#: scripts/sim/codes/code_direitos.gd:45 scripts/sim/law_catalog.gd_(escolha_dr_duty)
 msgid "vacinar-se e vacinar os filhos"
 msgstr ""
 
-#: scripts/sim/codes/code_direitos.gd:45
+#: scripts/sim/codes/code_direitos.gd:45 scripts/sim/law_catalog.gd_(escolha_dr_duty)
 msgid "alistar-se nas Forças Armadas aos 18 anos"
 msgstr ""
 
-#: scripts/sim/codes/code_direitos.gd:46
+#: scripts/sim/codes/code_direitos.gd:46 scripts/sim/law_catalog.gd_(escolha_dr_duty)
 msgid "votar nas eleições"
 msgstr ""
 
-#: scripts/sim/codes/code_direitos.gd:56
+#: scripts/sim/codes/code_direitos.gd:56 scripts/sim/law_catalog.gd_(escolha_dr_draftees)
 msgid "os homens"
 msgstr ""
 
-#: scripts/sim/codes/code_direitos.gd:56
+#: scripts/sim/codes/code_direitos.gd:56 scripts/sim/law_catalog.gd_(escolha_dr_draftees)
 msgid "homens e mulheres"
 msgstr ""
 
-#: scripts/sim/codes/code_direitos.gd:59
+#: scripts/sim/codes/code_direitos.gd:59 scripts/sim/law_catalog.gd_(escolha_dr_outlet)
 msgid "a imprensa"
 msgstr ""
 
-#: scripts/sim/codes/code_direitos.gd:59
+#: scripts/sim/codes/code_direitos.gd:59 scripts/sim/law_catalog.gd_(escolha_dr_outlet)
 msgid "a internet"
 msgstr ""
 
-#: scripts/sim/codes/code_direitos.gd:59
+#: scripts/sim/codes/code_direitos.gd:59 scripts/sim/law_catalog.gd_(escolha_dr_outlet)
 msgid "as artes e os espetáculos"
 msgstr ""
 
-#: scripts/sim/codes/code_direitos.gd:63
+#: scripts/sim/codes/code_direitos.gd:63 scripts/sim/law_catalog.gd_(escolha_dr_service)
 msgid "as redes sociais estrangeiras"
 msgstr ""
 
-#: scripts/sim/codes/code_direitos.gd:63
+#: scripts/sim/codes/code_direitos.gd:63 scripts/sim/law_catalog.gd_(escolha_dr_service)
 msgid "os sites de notícias estrangeiros"
 msgstr ""
 
-#: scripts/sim/codes/code_direitos.gd:63
+#: scripts/sim/codes/code_direitos.gd:63 scripts/sim/law_catalog.gd_(escolha_dr_service)
 msgid "as VPNs e ferramentas de anonimato"
 msgstr ""
 
@@ -7306,7 +7306,7 @@ msgstr ""
 msgid "Tensão global 100%"
 msgstr ""
 
-#: scripts/ui/debug_menu.gd:196
+#: scripts/ui/debug_menu.gd:196 scripts/sim/law_catalog.gd_(categorias)
 msgid "Eventos"
 msgstr ""
 
@@ -8042,7 +8042,7 @@ msgstr ""
 msgid "Declarar guerra a %s? O mundo vai reagir e pactos de defesa podem ser acionados."
 msgstr ""
 
-#: scripts/ui/hud.gd:441 scripts/ui/hud.gd:768 scripts/ui/main.gd:348
+#: scripts/ui/hud.gd:441 scripts/ui/hud.gd:770 scripts/ui/main.gd:348
 msgid "Regime híbrido"
 msgstr ""
 
@@ -8050,17 +8050,17 @@ msgstr ""
 msgid "Regime autoritário"
 msgstr ""
 
-#: scripts/ui/hud.gd:445 scripts/ui/hud.gd:779
+#: scripts/ui/hud.gd:445 scripts/ui/hud.gd:781
 #, c-format
 msgid "US$ %s"
 msgstr ""
 
-#: scripts/ui/hud.gd:446 scripts/ui/hud.gd:780 scripts/ui/main.gd:354
+#: scripts/ui/hud.gd:446 scripts/ui/hud.gd:782 scripts/ui/main.gd:354
 #, c-format
 msgid "%s mi"
 msgstr ""
 
-#: scripts/ui/hud.gd:454 scripts/ui/hud.gd:783
+#: scripts/ui/hud.gd:454 scripts/ui/hud.gd:785
 msgid "D (moratória)"
 msgstr ""
 
@@ -8177,162 +8177,162 @@ msgstr ""
 msgid "%s · oposição"
 msgstr ""
 
-#: scripts/ui/hud.gd:743
+#: scripts/ui/hud.gd:745
 #, c-format
 msgid "%s, %d anos, %s%s"
 msgstr ""
 
-#: scripts/ui/hud.gd:743
+#: scripts/ui/hud.gd:745
 msgid ", doente"
 msgstr ""
 
-#: scripts/ui/hud.gd:748
+#: scripts/ui/hud.gd:750
 msgid "Sem parlamento livre: o líder governa por decreto."
 msgstr ""
 
-#: scripts/ui/hud.gd:753
+#: scripts/ui/hud.gd:755
 #, c-format
 msgid "Em debate: %s"
 msgstr ""
 
-#: scripts/ui/hud.gd:755 scripts/ui/norm_page.gd:89
+#: scripts/ui/hud.gd:757 scripts/ui/norm_page.gd:89
 msgid "aprovado"
 msgstr ""
 
-#: scripts/ui/hud.gd:755 scripts/ui/norm_page.gd:89
+#: scripts/ui/hud.gd:757 scripts/ui/norm_page.gd:89
 msgid "rejeitado"
 msgstr ""
 
-#: scripts/ui/hud.gd:756
+#: scripts/ui/hud.gd:758
 msgid "Nenhuma votação recente."
 msgstr ""
 
-#: scripts/ui/hud.gd:768
+#: scripts/ui/hud.gd:770
 msgid "Autoritário"
 msgstr ""
 
-#: scripts/ui/hud.gd:771
+#: scripts/ui/hud.gd:773
 #, c-format
 msgid "em %s anos"
 msgstr ""
 
-#: scripts/ui/hud.gd:774
+#: scripts/ui/hud.gd:776
 msgid "sem eleições: cuide da estabilidade"
 msgstr ""
 
-#: scripts/ui/hud.gd:776
+#: scripts/ui/hud.gd:778
 #, c-format
 msgid "%dº  (%s pts)"
 msgstr ""
 
-#: scripts/ui/hud.gd:809
+#: scripts/ui/hud.gd:811
 msgid "Banco central independente"
 msgstr ""
 
-#: scripts/ui/hud.gd:809
+#: scripts/ui/hud.gd:811
 msgid "Banco central subordinado, regra de Taylor"
 msgstr ""
 
-#: scripts/ui/hud.gd:811
+#: scripts/ui/hud.gd:813
 msgid "Zona do euro: decisão do BCE"
 msgstr ""
 
-#: scripts/ui/hud.gd:813
+#: scripts/ui/hud.gd:815
 msgid "Âncora no dólar: segue o Fed"
 msgstr ""
 
-#: scripts/ui/hud.gd:815
+#: scripts/ui/hud.gd:817
 msgid "Juro definido pelo governo"
 msgstr ""
 
-#: scripts/ui/hud.gd:827
+#: scripts/ui/hud.gd:829
 msgid "O banco central é independente: o governo não escolhe o juro. A Constituição pode mudar isso por emenda."
 msgstr ""
 
-#: scripts/ui/hud.gd:845
+#: scripts/ui/hud.gd:847
 #, c-format
 msgid "%s  (%s meses)"
 msgstr ""
 
-#: scripts/ui/hud.gd:848 scripts/ui/hud.gd:857
+#: scripts/ui/hud.gd:850 scripts/ui/hud.gd:859
 msgid "não se aplica"
 msgstr ""
 
-#: scripts/ui/hud.gd:850
+#: scripts/ui/hud.gd:852
 #, c-format
 msgid "vende %s"
 msgstr ""
 
-#: scripts/ui/hud.gd:850
+#: scripts/ui/hud.gd:852
 #, c-format
 msgid "compra %s"
 msgstr ""
 
-#: scripts/ui/hud.gd:851
+#: scripts/ui/hud.gd:853
 msgid "câmbio fixo"
 msgstr ""
 
-#: scripts/ui/hud.gd:851
+#: scripts/ui/hud.gd:853 scripts/sim/law_catalog.gd_(escolha_cb_modo)
 msgid "forte"
 msgstr ""
 
-#: scripts/ui/hud.gd:851
+#: scripts/ui/hud.gd:853 scripts/sim/law_catalog.gd_(escolha_cb_modo)
 msgid "suave"
 msgstr ""
 
-#: scripts/ui/hud.gd:851
+#: scripts/ui/hud.gd:853
 msgid "flutuação livre"
 msgstr ""
 
-#: scripts/ui/hud.gd:852
+#: scripts/ui/hud.gd:854
 msgid "euro"
 msgstr ""
 
-#: scripts/ui/hud.gd:864
+#: scripts/ui/hud.gd:866
 msgid "ativo"
 msgstr ""
 
-#: scripts/ui/hud.gd:866
+#: scripts/ui/hud.gd:868
 msgid "fora da lei: só rende"
 msgstr ""
 
-#: scripts/ui/hud.gd:868
+#: scripts/ui/hud.gd:870
 msgid "sem fundo: crie pela Lei Cambial"
 msgstr ""
 
-#: scripts/ui/hud.gd:869
+#: scripts/ui/hud.gd:871
 #, c-format
 msgid "%s  (%s do PIB)"
 msgstr ""
 
-#: scripts/ui/hud.gd:874
+#: scripts/ui/hud.gd:876
 #, c-format
 msgid "até %s do saldo ao ano"
 msgstr ""
 
-#: scripts/ui/hud.gd:908 scripts/ui/main.gd:364
+#: scripts/ui/hud.gd:910 scripts/ui/main.gd:364
 #, c-format
 msgid "%s mil"
 msgstr ""
 
-#: scripts/ui/hud.gd:910
+#: scripts/ui/hud.gd:912
 msgid "nenhuma"
 msgstr ""
 
-#: scripts/ui/hud.gd:916
+#: scripts/ui/hud.gd:918
 msgid "Nenhum"
 msgstr ""
 
-#: scripts/ui/hud.gd:935
+#: scripts/ui/hud.gd:937
 #, c-format
 msgid "Contra %s"
 msgstr ""
 
-#: scripts/ui/hud.gd:937
+#: scripts/ui/hud.gd:939
 msgid "Postura: defensiva"
 msgstr ""
 
-#: scripts/ui/hud.gd:955
+#: scripts/ui/hud.gd:957
 #, c-format
 msgid "Frente: %s do território de %s ocupado · baixas: %s / %s mil"
 msgstr ""
@@ -9624,11 +9624,779 @@ msgstr ""
 msgid "US$ %s mi"
 msgstr ""
 
-#: scripts/sim/law_catalog.gd_(escolha_profession) scripts/sim/law_catalog.gd_(escolha_sector) scripts/sim/sectors.gd_(NAMES)
+#: scripts/sim/law_catalog.gd_(categorias)
+msgid "Tributos"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(categorias)
+msgid "Trabalho"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(categorias)
+msgid "Penal"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(categorias)
+msgid "Civil"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(categorias)
+msgid "Eleições"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(categorias) scripts/sim/codes_(direitos)
+msgid "Direitos e deveres"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(categorias)
+msgid "Condições"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(categorias)
+msgid "Operadores lógicos"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(categorias)
+msgid "Consultas"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(categorias)
+msgid "Variáveis"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(categorias)
+msgid "Ações administrativas"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(categorias)
+msgid "Economia e tributação"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(categorias)
+msgid "Direitos e obrigações"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(categorias)
+msgid "Controle de fluxo"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_tr_irpf_isencao)
+msgid "IRPF: isenção para rendas de até {limite} por mês"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_tr_irpf_faixa)
+msgid "IRPF, faixa {faixa}: renda até {limite} por mês paga {aliquota}%"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_tr_irpf_topo)
+msgid "IRPF: acima da última faixa, alíquota de {aliquota}%"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_tr_prev)
+msgid "Contribuição previdenciária do {quem}: {aliquota}% do salário"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_tr_irpj)
+msgid "IRPJ: {aliquota}% sobre o lucro das empresas"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_tr_csll)
+msgid "CSLL: {aliquota}% sobre o lucro líquido"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_tr_simples)
+msgid "Regime simplificado: empresas com faturamento de até {limite} por ano pagam {aliquota}% do faturamento"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_tr_isencao_setor)
+msgid "Isenção de {parcela}% do IRPJ e da CSLL para o setor {setor}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_tr_consumo)
+msgid "{tributo}: alíquota padrão de {aliquota}%"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_tr_reduzida)
+msgid "Alíquota reduzida de {aliquota}% sobre {grupo}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_tr_seletivo)
+msgid "Imposto seletivo de {aliquota}% sobre {produto}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_tr_importacao)
+msgid "Imposto de importação geral de {aliquota}%"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_tr_iof)
+msgid "IOF: {aliquota}% sobre crédito, câmbio e seguros"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_tr_patrimonio)
+msgid "{tributo}: {aliquota}% ao ano sobre o valor do bem"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_tr_heranca)
+msgid "ITCMD: {aliquota}% sobre heranças e doações"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_tr_fortunas)
+msgid "Imposto sobre grandes fortunas: {aliquota}% ao ano sobre patrimônios acima de {limite}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_tr_fiscalizacao)
+msgid "Orçamento da Receita para fiscalização: {verba}% do PIB por ano"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_tb_minwage)
+msgid "Salário mínimo de {amount} por mês"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_tb_hours)
+msgid "Jornada máxima de {hours} horas por semana"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_tb_overtime)
+msgid "Hora extra paga com adicional de {pct}%"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_tb_vacation)
+msgid "Férias anuais remuneradas de {days} dias"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_tb_13th)
+msgid "Décimo terceiro salário obrigatório: {on}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_tb_fgts)
+msgid "Fundo de garantia com depósito de {deposit}% do salário ao mês e multa de {fine}% do saldo na demissão sem justa causa"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_tb_severance)
+msgid "Indenização de {weeks} semanas de salário por ano trabalhado na demissão sem justa causa"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_tb_unemp_ins)
+msgid "Seguro-desemprego por {months} meses, pagando {pct}% do último salário"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_tb_parental)
+msgid "Licença-maternidade de {maternity} dias e licença-paternidade de {paternity} dias"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_tb_unions)
+msgid "Sindicalização {mode}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_tb_strike)
+msgid "Greve em {sector}: {mode}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_tb_outsourcing)
+msgid "Terceirização {mode}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_tb_gig)
+msgid "Quem trabalha por aplicativo é {mode}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_tb_min_age)
+msgid "Idade mínima para trabalhar de {age} anos, ou {apprentice} como aprendiz"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_tb_retirement)
+msgid "Aposentadoria aos {men} anos (homens) e {women} anos (mulheres), com {years} anos de contribuição"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_tb_pension_cap)
+msgid "Teto do benefício previdenciário de {amount} por mês"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_pn_crime)
+msgid "Tipificar {conduct} como crime, com pena de {min} a {max} anos de prisão"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_pn_fine)
+msgid "Punir {conduct} só com multa de até {amount}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_pn_decrim)
+msgid "Descriminalizar {conduct}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_pn_age)
+msgid "Fixar a maioridade penal em {age} anos"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_pn_guns)
+msgid "Tornar o porte e a posse de armas {regime}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_pn_death)
+msgid "Pena de morte: {status}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_pn_life)
+msgid "Prisão perpétua: {status}, com cumprimento máximo de {years} anos nas demais penas"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_pn_regime)
+msgid "Cumprir as penas em regime {regime}, com progressão após {share}% da pena"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_pn_budget)
+msgid "Destinar {value}% do PIB a {area}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_pn_alternative)
+msgid "Substituir penas de até {years} anos por penas alternativas (serviço comunitário, tornozeleira)"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_cv_marriage_age)
+msgid "Fixar a idade mínima para casar em {age} anos"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_cv_same_sex)
+msgid "União entre pessoas do mesmo sexo: {status}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_cv_divorce)
+msgid "Divórcio {mode}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_cv_goods)
+msgid "Adotar a {regime} como regime de bens padrão do casamento"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_cv_property)
+msgid "Garantir a propriedade privada, com desapropriação {mode}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_cv_adverse)
+msgid "Admitir usucapião após {years} anos de posse mansa e pacífica"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_cv_inheritance)
+msgid "Reservar {share}% da herança aos herdeiros necessários"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_cv_contracts)
+msgid "Liberdade contratual {level}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_cv_usury)
+msgid "Limitar os juros dos contratos privados a {rate}% ao ano"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_cv_business)
+msgid "Abrir uma empresa em até {days} dias, com {steps} procedimentos"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_cv_bankruptcy)
+msgid "Tratar a insolvência com {mode}, com prazo de {days} dias para o plano"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_cv_prescription)
+msgid "Fixar a prescrição das dívidas civis em {years} anos"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_el_vote)
+msgid "Voto {mode}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_el_age)
+msgid "Idade mínima para votar de {age} anos"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_el_system)
+msgid "O parlamento é eleito pelo sistema {system}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_el_threshold)
+msgid "Cláusula de barreira de {pct}% dos votos nacionais"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_el_funding)
+msgid "Financiamento de campanha {mode}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_el_reelection)
+msgid "Reeleição do chefe de governo: {mode}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_el_term)
+msgid "Mandato do parlamento de {years} anos"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_el_quota)
+msgid "Cota mínima de {pct}% de mulheres nas listas dos partidos"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_el_ballot)
+msgid "Votação em {mode}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_el_free_ads)
+msgid "Propaganda eleitoral gratuita no rádio e na TV: {on}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_dr_right)
+msgid "Garantir {right} a {scope}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_dr_suspend)
+msgid "Suspender {right}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_dr_duty)
+msgid "Todos têm o dever de {duty}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_dr_military)
+msgid "Serviço militar obrigatório de {months} meses para {who}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_dr_school)
+msgid "Escolaridade obrigatória até os {age} anos"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_dr_censor)
+msgid "Submeter {outlet} à censura prévia"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_dr_regulate)
+msgid "Regular {outlet} por um conselho de rigor {level}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_dr_block)
+msgid "Bloquear {service} na internet"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_dr_emergency)
+msgid "Decretar estado de emergência por {days} dias"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_cb_intervencao)
+msgid "O banco central intervém no câmbio de forma {modo}, vendendo e comprando reservas"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_cb_controle)
+msgid "Controle de capitais: {nivel}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_fs_fundo)
+msgid "Fundo soberano: recebe {renda}% da renda pública de commodities e {superavit}% dos superávits"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_fs_saque)
+msgid "Saque anual do fundo soberano limitado a {limite}% do saldo"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_ev_citizen_enter)
+msgid "Quando um cidadão ingressar no território"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_ev_transaction)
+msgid "Quando um cidadão realizar uma transação"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_ev_property)
+msgid "Quando uma propriedade for adquirida"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_ev_death)
+msgid "Quando um cidadão morrer"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_ev_age)
+msgid "Quando um cidadão completar {age} anos"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_ev_company)
+msgid "Quando uma empresa for registrada"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_ev_due)
+msgid "Quando uma obrigação vencer"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_ev_election)
+msgid "Quando uma eleição for iniciada"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_ev_fiscal)
+msgid "Quando um exercício financeiro começar"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_ev_date)
+msgid "Em {date}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_ev_month)
+msgid "Todo mês"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_ev_enact)
+msgid "Quando esta norma entrar em vigor"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_ev_war)
+msgid "Quando o país entrar em guerra"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_cd_profession)
+msgid "cidadão trabalha em {profession}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_cd_territory)
+msgid "cidadão vive em {unit}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_cd_money)
+msgid "cidadão tem pelo menos {amount} em dinheiro"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_cd_owner)
+msgid "a propriedade pertence ao cidadão"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_cd_license)
+msgid "cidadão tem a licença {license}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_cd_period)
+msgid "a data está entre {from} e {to}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_cd_institution)
+msgid "a instituição {institution} está ativa"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_cd_norm)
+msgid "a norma nº {norm} está em vigor"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_op_and)
+msgid "{a} E {b}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_op_or)
+msgid "{a} OU {b}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_op_not)
+msgid "NÃO {a}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_op_eq)
+msgid "{a} igual a {b}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_op_ne)
+msgid "{a} diferente de {b}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_op_gt)
+msgid "{a} maior que {b}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_op_lt)
+msgid "{a} menor que {b}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_op_ge)
+msgid "{a} maior ou igual a {b}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_op_le)
+msgid "{a} menor ou igual a {b}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_op_between)
+msgid "{a} está entre {lo} e {hi}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_sb_age)
+msgid "idade do cidadão"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_sb_money)
+msgid "dinheiro do cidadão"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_sb_income)
+msgid "renda anual do cidadão"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_sb_value)
+msgid "valor tributável da propriedade"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_sb_tx)
+msgid "valor da transação"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_gm_value)
+msgid "{field} do país"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_var_set)
+msgid "Definir {name} ({vtype}) como {value}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_var_get)
+msgid "variável {name}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_var_change)
+msgid "Alterar {name} para {value}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_m_add)
+msgid "{a} + {b}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_m_sub)
+msgid "{a} − {b}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_m_mul)
+msgid "{a} × {b}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_m_div)
+msgid "{a} ÷ {b}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_m_pct)
+msgid "{rate}% de {base}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_ac_obligation)
+msgid "Criar obrigação tributária de {amount} com prazo de {days} dias"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_ac_fine)
+msgid "Aplicar multa de {amount}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_ac_benefit)
+msgid "Conceder benefício de {amount}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_ac_revoke_license)
+msgid "Revogar a licença {license}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_ac_issue_license)
+msgid "Emitir autorização: licença {license}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_ac_register)
+msgid "Registrar o cidadão no cadastro"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_ac_status)
+msgid "Alterar situação cadastral para {status}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_ac_post)
+msgid "Criar o cargo público {name} com {posts} vagas e salário anual de {salary}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_ac_expense)
+msgid "Registrar despesa pública de {amount} bilhões para {purpose}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_ac_institution)
+msgid "Criar a instituição {name} com custo anual de {cost} bilhões"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_ac_param)
+msgid "Alterar {field} para {value}%"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_ad_min_create)
+msgid "Criar o ministério {name}, responsável por {area}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_ad_min_merge)
+msgid "Fundir os ministérios {a} e {b} em {name}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_ad_min_abolish)
+msgid "Extinguir o ministério {a}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_ec_rate)
+msgid "Definir alíquota de {field} em {value}% do PIB"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_ec_calc)
+msgid "imposto de {rate}% sobre {base}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_ec_charge)
+msgid "Cobrar o tributo {name} no valor de {amount}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_ec_fee)
+msgid "Criar a taxa {name} de {amount}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_ec_contribution)
+msgid "Criar a contribuição {name} de {rate}% da renda mensal"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_ec_exempt)
+msgid "Definir isenção de {share}% no tributo {name}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_ec_cap)
+msgid "Limitar a cobrança de {name} a {max} por pessoa"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_ec_treasury)
+msgid "Transferir {amount} bilhões das reservas ao Tesouro"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_ec_subsidy)
+msgid "Criar subsídio de {amount} bilhões por ano para {sector}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_ec_minwage)
+msgid "Estabelecer salário mínimo de {amount} por mês"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_ec_spend)
+msgid "Criar despesa permanente de {amount} bilhões por ano para {purpose}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_ec_privatize)
+msgid "Privatizar {stake}% da participação do Estado em {company}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_ec_nationalize)
+msgid "Estatizar {company}, levando a participação do Estado a {stake}% do capital"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_ec_budget)
+msgid "Obrigar o orçamento de {field} a {value}% do PIB"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_rg_grant)
+msgid "Conceder o direito: {right}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_rg_remove)
+msgid "Remover o direito: {right}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_rg_duty)
+msgid "Criar a obrigação: {name}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_rg_deadline)
+msgid "Estabelecer prazo de {days} dias para {name}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_rg_restrict)
+msgid "Definir a restrição: {name}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_rg_require)
+msgid "Estabelecer o requisito: {name}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_rg_exception)
+msgid "Criar exceção à obrigação {name}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_rg_penalty)
+msgid "Definir penalidade de {amount} para {name}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_fl_if) scripts/sim/law_catalog.gd_(bloco_fl_ifelse)
+msgid "Se {cond}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_fl_while)
+msgid "Enquanto {cond}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_fl_repeat)
+msgid "Repetir {times} vezes"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_fl_foreach)
+msgid "Para cada {set}"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_fl_wait)
+msgid "Aguardar {days} dias"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_fl_break)
+msgid "Interromper a repetição"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(bloco_fl_end)
+msgid "Encerrar a execução"
+msgstr ""
+
+#: scripts/sim/codes_(tributario)
+msgid "Tributos, alíquotas, faixas, isenções e contribuições."
+msgstr ""
+
+#: scripts/sim/codes_(trabalhista)
+msgid "Código Trabalhista"
+msgstr ""
+
+#: scripts/sim/codes_(trabalhista)
+msgid "Salário mínimo, jornada, férias, sindicatos, greve e previdência."
+msgstr ""
+
+#: scripts/sim/codes_(penal)
+msgid "Código Penal"
+msgstr ""
+
+#: scripts/sim/codes_(penal)
+msgid "Crimes, penas, maioridade penal, drogas, armas e sistema prisional."
+msgstr ""
+
+#: scripts/sim/codes_(civil)
+msgid "Código Civil"
+msgstr ""
+
+#: scripts/sim/codes_(civil)
+msgid "Família, casamento, propriedade, contratos, herança e empresas."
+msgstr ""
+
+#: scripts/sim/codes_(eleitoral)
+msgid "Código Eleitoral"
+msgstr ""
+
+#: scripts/sim/codes_(eleitoral)
+msgid "Voto, idade eleitoral, financiamento de campanha, reeleição e cotas."
+msgstr ""
+
+#: scripts/sim/codes_(direitos)
+msgid "Direitos fundamentais e deveres dos cidadãos."
+msgstr ""
+
+#: scripts/sim/codes_(cambial)
+msgid "Lei Cambial e do Fundo Soberano"
+msgstr ""
+
+#: scripts/sim/codes_(cambial)
+msgid "Intervenção no câmbio, controle de capitais e fundo soberano."
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_profession) scripts/sim/law_catalog.gd_(escolha_sector) scripts/sim/law_catalog.gd_(escolha_tr_setor) scripts/sim/sectors.gd_(NAMES)
 msgid "Agropecuária"
 msgstr ""
 
-#: scripts/sim/law_catalog.gd_(escolha_profession) scripts/sim/law_catalog.gd_(escolha_sector) scripts/sim/sectors.gd_(NAMES)
+#: scripts/sim/law_catalog.gd_(escolha_profession) scripts/sim/law_catalog.gd_(escolha_sector) scripts/sim/law_catalog.gd_(escolha_tr_setor) scripts/sim/sectors.gd_(NAMES)
 msgid "Indústria"
 msgstr ""
 
@@ -9780,36 +10548,364 @@ msgstr ""
 msgid "Identificador"
 msgstr ""
 
-#: scripts/sim/sectors.gd_(NAMES)
+#: scripts/sim/law_catalog.gd_(escolha_tr_contribuinte)
+msgid "empregado"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_tr_contribuinte)
+msgid "empregador"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_tr_consumo)
+msgid "IVA"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_tr_consumo)
+msgid "ICMS (mercadorias)"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_tr_consumo)
+msgid "IPI (industrializados)"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_tr_consumo)
+msgid "ISS (serviços)"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_tr_grupo)
+msgid "a cesta básica"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_tr_grupo)
+msgid "saúde"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_tr_grupo)
+msgid "educação"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_tr_produto)
+msgid "tabaco"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_tr_produto)
+msgid "bebidas alcoólicas"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_tr_produto)
+msgid "combustíveis"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_tr_produto)
+msgid "bebidas açucaradas"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_tr_patrimonio)
+msgid "IPTU (imóveis)"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_tr_patrimonio)
+msgid "IPVA (veículos)"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_tr_setor) scripts/sim/sectors.gd_(NAMES)
 msgid "Mineração e energia"
 msgstr ""
 
-#: scripts/sim/sectors.gd_(NAMES)
+#: scripts/sim/law_catalog.gd_(escolha_tr_setor) scripts/sim/sectors.gd_(NAMES)
 msgid "Construção"
 msgstr ""
 
-#: scripts/sim/sectors.gd_(NAMES)
+#: scripts/sim/law_catalog.gd_(escolha_tr_setor) scripts/sim/sectors.gd_(NAMES)
 msgid "Comércio"
 msgstr ""
 
-#: scripts/sim/sectors.gd_(NAMES)
+#: scripts/sim/law_catalog.gd_(escolha_tr_setor) scripts/sim/sectors.gd_(NAMES)
 msgid "Transporte e logística"
 msgstr ""
 
-#: scripts/sim/sectors.gd_(NAMES)
+#: scripts/sim/law_catalog.gd_(escolha_tr_setor) scripts/sim/sectors.gd_(NAMES)
 msgid "Serviços financeiros"
 msgstr ""
 
-#: scripts/sim/sectors.gd_(NAMES)
+#: scripts/sim/law_catalog.gd_(escolha_tr_setor) scripts/sim/sectors.gd_(NAMES)
 msgid "Tecnologia e comunicação"
 msgstr ""
 
-#: scripts/sim/sectors.gd_(NAMES)
+#: scripts/sim/law_catalog.gd_(escolha_tr_setor) scripts/sim/sectors.gd_(NAMES)
 msgid "Turismo"
 msgstr ""
 
-#: scripts/sim/sectors.gd_(NAMES)
+#: scripts/sim/law_catalog.gd_(escolha_tr_setor) scripts/sim/sectors.gd_(NAMES)
 msgid "Serviços públicos"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_tb_union_mode)
+msgid "obrigatória, com contribuição de todos"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_tb_union_mode)
+msgid "livre"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_tb_union_mode) scripts/sim/law_catalog.gd_(escolha_tb_strike_mode) scripts/sim/law_catalog.gd_(escolha_tb_outsourcing_mode) scripts/sim/law_catalog.gd_(escolha_life_status)
+msgid "proibida"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_tb_strike_sector)
+msgid "o setor privado"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_tb_strike_sector)
+msgid "o serviço público"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_tb_strike_sector)
+msgid "os serviços essenciais"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_tb_strike_mode)
+msgid "permitida"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_tb_strike_mode)
+msgid "permitida com serviço mínimo"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_tb_outsourcing_mode)
+msgid "permitida em qualquer atividade"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_tb_outsourcing_mode)
+msgid "permitida só em atividades-meio"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_tb_gig_mode)
+msgid "autônomo, sem vínculo"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_tb_gig_mode)
+msgid "autônomo com contribuição e seguro"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_tb_gig_mode)
+msgid "empregado com carteira"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_penal_conduct)
+msgid "o porte de drogas para uso próprio"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_penal_conduct)
+msgid "o tráfico de drogas"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_penal_conduct)
+msgid "o aborto"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_penal_conduct)
+msgid "os jogos de azar"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_penal_conduct)
+msgid "a sonegação fiscal"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_penal_conduct)
+msgid "a corrupção"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_penal_conduct)
+msgid "o dano ambiental"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_penal_conduct)
+msgid "o discurso de ódio"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_penal_conduct)
+msgid "a invasão de sistemas informáticos"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_penal_conduct)
+msgid "a prostituição"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_penal_conduct)
+msgid "a eutanásia"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_penal_conduct)
+msgid "a lavagem de dinheiro"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_gun_regime)
+msgid "proibidos aos civis"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_gun_regime)
+msgid "restritos, com licença e registro"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_gun_regime)
+msgid "livres para maiores de idade"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_death_status)
+msgid "abolida"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_death_status)
+msgid "só em tempo de guerra"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_death_status) scripts/sim/law_catalog.gd_(escolha_life_status)
+msgid "admitida para crimes hediondos"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_prison_regime)
+msgid "progressivo, por bom comportamento"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_prison_regime)
+msgid "integralmente fechado para crimes graves"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_prison_regime)
+msgid "progressivo, com livramento condicional"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_security_area)
+msgid "policiamento"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_security_area)
+msgid "sistema prisional"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_same_sex)
+msgid "casamento civil permitido"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_same_sex)
+msgid "só união civil"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_divorce)
+msgid "direto, a pedido de qualquer cônjuge"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_divorce)
+msgid "só consensual ou com causa provada"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_divorce)
+msgid "proibido"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_goods_regime)
+msgid "comunhão parcial"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_goods_regime)
+msgid "comunhão universal"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_goods_regime)
+msgid "separação total"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_expropriation)
+msgid "só com indenização prévia em dinheiro"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_expropriation)
+msgid "paga em títulos públicos"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_expropriation)
+msgid "sem indenização, por interesse social"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_contract_freedom)
+msgid "ampla"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_contract_freedom)
+msgid "com cláusulas protetivas obrigatórias"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_contract_freedom)
+msgid "restrita a contratos-padrão do Estado"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_bankruptcy)
+msgid "recuperação judicial antes da falência"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_bankruptcy)
+msgid "liquidação rápida dos bens"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_bankruptcy)
+msgid "falência sem proteção ao devedor"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_el_vote_mode)
+msgid "obrigatório"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_el_vote_mode)
+msgid "facultativo"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_el_funding)
+msgid "só público"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_el_funding)
+msgid "misto, público e privado"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_el_funding)
+msgid "privado, com teto por doador"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_el_funding)
+msgid "privado, sem teto"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_el_reelection)
+msgid "permitida uma vez"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_el_reelection)
+msgid "ilimitada"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_el_ballot)
+msgid "urna eletrônica"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_el_ballot)
+msgid "cédula de papel"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_dr_level)
+msgid "rigoroso"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_cb_modo)
+msgid "livre (sem intervenção)"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_cb_controle)
+msgid "imposto sobre a saída de capitais"
+msgstr ""
+
+#: scripts/sim/law_catalog.gd_(escolha_cb_controle)
+msgid "cotas e autorização prévia"
 msgstr ""
 
 #: data/countries.csv_(USA)
