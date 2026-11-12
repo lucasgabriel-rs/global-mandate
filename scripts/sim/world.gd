@@ -39,6 +39,7 @@ var in_office := true
 var talks := {}
 var chats := {}           # contato -> mensagens (ChatLog)
 var talk_turns := {}      # iso -> falas que ainda restam na conversa em curso
+var offers := {}          # iso -> proposta em aberto que o líder trouxe (Proposals)
 var markets := Markets.new()
 var diplomacy := Diplomacy.new()
 var subdivisions := Subdivisions.new()
@@ -549,20 +550,29 @@ func request_talk(c: Country) -> void:
 	next_talk_month = months_elapsed + TALK_COOLDOWN_MONTHS
 	var theirs: Dictionary = politics.leader_of(c.iso)
 	var rel: float = diplomacy.relation(player.idx, c.idx)
+	var offer := Proposals.make(self, c)
+	offers[c.iso] = offer
 	var subject := tr("aproximar os dois países")
-	if diplomacy.at_war(player.idx, c.idx):
-		subject = tr("discutir a guerra")
-	elif rel < -20.0:
-		subject = tr("cobrar explicações sobre o seu governo")
-	elif rel > 30.0:
-		subject = tr("propor um novo acordo")
+	match String(offer.kind):
+		"peace":
+			subject = tr("discutir a guerra")
+		"threat":
+			subject = tr("cobrar explicações sobre o seu governo")
+		"treaty":
+			subject = tr("propor um novo acordo")
+		"request":
+			subject = tr("pedir a sua ajuda")
+		"offer":
+			subject = tr("fazer uma oferta")
 	var pl := player
 	ask_player({
 		"title": tr("%s quer falar com você") % theirs.get("name", tr("Um líder")),
 		"text": tr("O líder de %s (%s) pede uma conversa para %s.") % [c.name, Dialogue.temper(theirs), subject],
 		"options": [
 			{"label": tr("Atender"), "hint": tr("Abre a conversa agora."), "fn": func(): _send(talk_requested, [c])},
-			{"label": tr("Não atender"), "hint": tr("Relação -3."), "fn": func(): diplomacy.add_relation(pl.idx, c.idx, -3.0)},
+			{"label": tr("Não atender"), "hint": tr("Relação -3."), "fn": func():
+				offers.erase(c.iso)
+				diplomacy.add_relation(pl.idx, c.idx, -3.0)},
 		],
 	})
 
@@ -976,7 +986,7 @@ func to_dict() -> Dictionary:
 		"player": player.idx if player else -1, "world_gdp": _world_gdp,
 		"rng_state": rng.state, "rng_seed": rng.seed, "subdivisions": subdivisions.to_dict(),
 		"territories": territories.to_dict(), "leader": leader, "politics": politics.to_dict(),
-		"in_office": in_office, "talks": talks, "chats": chats, "talk_turns": talk_turns, "legislation": legislation.to_dict(), "treaties": treaties.to_dict(), "next_talk_month": next_talk_month,
+		"in_office": in_office, "talks": talks, "chats": chats, "talk_turns": talk_turns, "offers": offers, "legislation": legislation.to_dict(), "treaties": treaties.to_dict(), "next_talk_month": next_talk_month,
 		"infra": infra.to_dict(), "corporate": corporate.to_dict(), "corruption": corruption.to_dict(),
 	}
 
@@ -1007,6 +1017,7 @@ func load_dict(d: Dictionary) -> void:
 	talks = d.get("talks", {})
 	chats = d.get("chats", {})
 	talk_turns = d.get("talk_turns", {})
+	offers = d.get("offers", {})
 	action_used = d.get("action_used", {})
 	next_talk_month = d.get("next_talk_month", months_elapsed + TALK_COOLDOWN_MONTHS)
 	treaties = Treaties.new()

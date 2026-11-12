@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" path="res://assets/ui/dock/militar.svg" id="ic_militar"]
 [ext_resource type="Texture2D" path="res://assets/ui/dock/divisoes.svg" id="ic_divisoes"]
 [ext_resource type="Texture2D" path="res://assets/ui/dock/mundo.svg" id="ic_mundo"]
+[ext_resource type="Texture2D" path="res://assets/ui/dock/agenda.svg" id="ic_agenda"]
 
 [sub_resource type="StyleBoxFlat" id="Shelf"]
 bg_color = Color(0.1, 0.15, 0.19, 0.72)
@@ -167,6 +168,13 @@ label = "Mundo"
 icon = ExtResource("ic_mundo")
 window_index = 5
 action = ""
+
+[node name="dock_agenda" parent="items" instance=ExtResource("2_item")]
+layout_mode = 2
+label = "Agenda de contatos"
+icon = ExtResource("ic_agenda")
+window_index = -1
+action = "agenda"
 
 [node name="tip" type="PanelContainer" parent="."]
 unique_name_in_owner = true

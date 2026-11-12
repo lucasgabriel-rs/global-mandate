@@ -8,6 +8,7 @@ signal menu_requested
 signal character_requested
 signal party_requested
 signal legislation_requested
+signal agenda_requested
 signal corruption_requested
 signal tax_law_requested
 signal treaty_requested(target: Country)
@@ -295,6 +296,9 @@ func _on_tab_changed(_i: int) -> void:
 
 
 func _on_dock_item(item: DockItem) -> void:
+	if item.action == "agenda":
+		agenda_requested.emit()
+		return
 	if item.action == "legislation":
 		# O centro é montado de novo a cada abertura; clicar com ele na frente minimiza.
 		if _desk.is_open(LEGISLATION_WINDOW) and _desk.current_tab == LEGISLATION_WINDOW:

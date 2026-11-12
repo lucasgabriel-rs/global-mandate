@@ -1,0 +1,82 @@
+[gd_scene format=3]
+
+[ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="1_t"]
+[ext_resource type="Script" path="res://scripts/ui/agenda_window.gd" id="2_s"]
+
+[sub_resource type="StyleBoxFlat" id="Painel"]
+content_margin_left = 14.0
+content_margin_top = 12.0
+content_margin_right = 14.0
+content_margin_bottom = 12.0
+bg_color = Color(0.05, 0.09, 0.12, 0.99)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.9490196, 0.7019608, 0.23921569, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[node name="Agenda" type="ColorRect"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource("1_t")
+color = Color(0.01, 0.03, 0.05, 0.62)
+script = ExtResource("2_s")
+
+[node name="Centro" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Painel" type="PanelContainer" parent="Centro"]
+custom_minimum_size = Vector2(620, 640)
+layout_mode = 2
+theme_override_styles/panel = SubResource("Painel")
+
+[node name="Coluna" type="VBoxContainer" parent="Centro/Painel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="title" type="Label" parent="Centro/Painel/Coluna"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9490196, 0.7019608, 0.23921569, 1)
+theme_override_font_sizes/font_size = 22
+text = "Agenda"
+
+[node name="hint" type="Label" parent="Centro/Painel/Coluna"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 12
+text = "Converse com qualquer líder de partido ou de país, quando quiser."
+autowrap_mode = 3
+
+[node name="search" type="LineEdit" parent="Centro/Painel/Coluna"]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "Buscar por nome, país ou partido"
+clear_button_enabled = true
+
+[node name="Rolagem" type="ScrollContainer" parent="Centro/Painel/Coluna"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="list" type="VBoxContainer" parent="Centro/Painel/Coluna/Rolagem"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="close" type="Button" parent="Centro/Painel/Coluna"]
+unique_name_in_owner = true
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Fechar"

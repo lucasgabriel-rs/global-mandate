@@ -65,7 +65,7 @@ func _run() -> void:
 	await _wait()
 	_check(not (hud.get_node("%date") as Label).text.contains(":"), "a data aparece sem a hora: " + (hud.get_node("%date") as Label).text)
 	_check(desk.open_count() == 0, "o jogo começa sem janelas abertas, com o mapa livre")
-	_check(dock.items().size() == desk.get_tab_count(), "o dock tem um ícone por janela: %d" % dock.items().size())
+	_check(dock.items().filter(func(i): return i.window_index >= 0).size() == desk.get_tab_count(), "o dock tem um ícone por janela: %d" % dock.items().size())
 	await _shot("d1_mapa_livre")
 
 	# Abrir pelo dock.

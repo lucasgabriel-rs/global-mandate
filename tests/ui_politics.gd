@@ -116,7 +116,7 @@ func _process(delta: float) -> void:
 			hud._desk.current_tab = hud._politics_tab
 		9:
 			_shot("p4_parlamento")
-			_check(hud._dock.items().size() == hud._desk.get_tab_count(), "o dock tem um ícone por janela")
+			_check(hud._dock.items().filter(func(i): return i.window_index >= 0).size() == hud._desk.get_tab_count(), "o dock tem um ícone por janela")
 			_check(not hud._politics._hemicycle._seats.is_empty(), "plenário desenhado")
 			var total: int = w.politics.data_of("BRA").seats_total
 			_check(hud._politics._hemicycle._seats.size() == total, "um ponto por assento")
