@@ -200,6 +200,10 @@ var law_inequality := 0.0      # desvio do Gini em relação à base do país
 var law_labor := 0.0           # fração a mais ou a menos de oferta de trabalho
 var law_tfp := 0.0             # crescimento anual extra da PTF
 var law_evasion := 0.0         # fração da arrecadação perdida para a sonegação
+# Corrupção (ver Corruption): nível real, nível de partida e o que a opinião enxerga, de 0 a 1.
+var corruption := 0.0
+var corruption0 := 0.0
+var corr_seen := 0.0
 var inequality0 := 0.38        # Gini de partida, para onde a desigualdade volta devagar
 ## Indicadores próprios dos códigos (criminalidade, cobertura previdenciária...), por chave.
 var code_stats := {}

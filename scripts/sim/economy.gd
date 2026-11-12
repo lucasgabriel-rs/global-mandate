@@ -233,7 +233,7 @@ static func _supply(c: Country, world: GameWorld) -> void:
 	var conf_effect := clampf(0.7 + 0.5 * c.conf, 0.6, 1.2)
 	var corp_effect := clampf(1.0 - 1.2 * (c.tax_corporate - c.tax0 * 0.17), 0.6, 1.2)
 	var infra_extra: float = c.sp_infra - float(c.sp0.get("infra", c.sp_infra))
-	var inv_share := c.inv_share0 * r_effect * conf_effect * corp_effect * (1.0 + c.law_invest) + infra_extra * 0.8
+	var inv_share := c.inv_share0 * r_effect * conf_effect * corp_effect * (1.0 + c.law_invest) * Corruption.invest_factor(c) + infra_extra * 0.8
 	var crowding := clampf(1.0 - 0.15 * maxf(c.debt_ratio / c.debt_tol - 1.0, 0.0), 0.75, 1.0)
 	inv_share *= crowding
 	c.capital += (inv_share * c.y - DELTA * c.capital) * DT
@@ -522,7 +522,7 @@ static func _fiscal_flows(c: Country) -> void:
 	var yn_pot := c.y_pot * c.p
 	var tax_rate := c.tax_total()
 	# Curva de Laffer: acima de ~48% a evasão corrói a arrecadação. Elasticidade cíclica de 1,1.
-	var collection := clampf(1.0 - 2.2 * maxf(tax_rate - 0.48, 0.0) ** 1.3, 0.55, 1.0) * (1.0 - clampf(c.law_evasion, -0.05, 0.3))
+	var collection := clampf(1.0 - 2.2 * maxf(tax_rate - 0.48, 0.0) ** 1.3, 0.55, 1.0) * (1.0 - clampf(c.law_evasion, -0.05, 0.3)) * Corruption.collection_factor(c)
 	var tax_rev := tax_rate * yn * (1.0 + 0.1 * c.gap) * collection
 	var rent := c.comm_exports * c.e * c.rent_take
 	var tariff_rev := c.tariff * c.imports * c.e * 0.7
@@ -593,6 +593,7 @@ static func _risk_premium(c: Country, world: GameWorld) -> float:
 	# Um fundo soberano grande é colchão: paga a dívida externa se for preciso. Controle de capitais assusta.
 	r -= 0.02 * clampf(c.swf / maxf(c.y_usd(), 0.001), 0.0, 1.5)
 	r += 0.004 * c.cap_controls
+	r += Corruption.risk_extra(c)
 	var pc := c.gdp_pc()
 	var ems := clampf(1.0 - pc / 30000.0, 0.0, 1.0)
 	r += ems * (0.012 + 0.05 * world.global_risk)

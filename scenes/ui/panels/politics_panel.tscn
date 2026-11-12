@@ -55,6 +55,14 @@ focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "Centro legislativo (L)"
 
+[node name="CaixaDois" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Usar o fundo do partido em ações corruptas: comprar votos, abafar escândalos, favorecer aliados. Rende agora e cobra depois."
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Caixa dois"
+
 [node name="UltimaEleicao" type="Button" parent="."]
 unique_name_in_owner = true
 layout_mode = 2

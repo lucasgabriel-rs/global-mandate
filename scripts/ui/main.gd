@@ -19,6 +19,7 @@ const PROMPT := preload("res://scenes/ui/modals/prompt.tscn")
 const GAME_OVER := preload("res://scenes/ui/modals/game_over.tscn")
 const CREATOR := preload("res://scenes/ui/modals/creator.tscn")
 const PARTY_PICKER := preload("res://scenes/ui/modals/party_picker.tscn")
+const CORRUPTION := preload("res://scenes/ui/modals/corruption.tscn")
 const PARTY_DETAIL := preload("res://scenes/ui/modals/party_detail.tscn")
 const MINISTER_PICKER := preload("res://scenes/ui/modals/minister_picker.tscn")
 const TALK := preload("res://scenes/ui/modals/talk.tscn")
@@ -91,6 +92,7 @@ func _ready() -> void:
 	hud.minister_pick_requested.connect(_open_minister_picker)
 	hud.talk_requested.connect(_open_talk)
 	hud.legislation_requested.connect(open_legislation)
+	hud.corruption_requested.connect(_open_corruption)
 	hud.treaty_requested.connect(open_treaty)
 	hud.election_requested.connect(open_election_report)
 	hud.tax_law_requested.connect(func():
@@ -674,6 +676,15 @@ func _open_party_detail(id: int) -> void:
 	for m: Dictionary in party.members:
 		rows.add_child(_member_row(m, party))
 	dim.get_node("%Fechar").pressed.connect(func(): _close_modal(dim))
+
+
+func _open_corruption() -> void:
+	var dim := _modal(CORRUPTION, tr("Caixa dois"), tr("Dinheiro por fora do orçamento oficial, pago por enquanto com o fundo do partido. Rende hoje e cobra amanhã."))
+	var window: CorruptionWindow = dim as CorruptionWindow
+	window.setup(world)
+	window.closed.connect(func():
+		_close_modal(dim)
+		hud.refresh(true))
 
 
 func _open_minister_picker(post: String) -> void:

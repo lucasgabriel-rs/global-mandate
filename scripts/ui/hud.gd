@@ -8,6 +8,7 @@ signal menu_requested
 signal character_requested
 signal party_requested
 signal legislation_requested
+signal corruption_requested
 signal tax_law_requested
 signal treaty_requested(target: Country)
 signal election_requested
@@ -150,6 +151,7 @@ func _connect_buttons() -> void:
 	_cabinet.pick_requested.connect(func(post): minister_pick_requested.emit(post))
 	_politics.party_requested.connect(func(): party_requested.emit())
 	_politics.legislation_requested.connect(func(): legislation_requested.emit())
+	_politics.corruption_requested.connect(func(): corruption_requested.emit())
 	_politics.party_detail_requested.connect(func(id): party_detail_requested.emit(id))
 	_politics.values_changed.connect(func(): refresh(true))
 	_divisions.confirm_requested.connect(func(text, fn): confirm_requested.emit(text, fn))

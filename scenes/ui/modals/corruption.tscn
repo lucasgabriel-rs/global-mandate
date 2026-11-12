@@ -1,0 +1,159 @@
+[gd_scene format=3]
+
+[ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="1_theme"]
+[ext_resource type="Script" path="res://scripts/ui/corruption_window.gd" id="2_script"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+content_margin_left = 20.0
+content_margin_top = 20.0
+content_margin_right = 20.0
+content_margin_bottom = 20.0
+bg_color = Color(0.05, 0.09, 0.12, 0.99)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.85, 0.3, 0.25, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="Corruption" type="ColorRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource("1_theme")
+color = Color(0.01, 0.03, 0.05, 0.62)
+script = ExtResource("2_script")
+
+[node name="Centro" type="CenterContainer" parent="."]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Painel" type="PanelContainer" parent="Centro"]
+custom_minimum_size = Vector2(760, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="col" type="VBoxContainer" parent="Centro/Painel"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
+
+[node name="title" type="Label" parent="Centro/Painel/col"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.3, 0.25, 1)
+theme_override_font_sizes/font_size = 24
+text = "Caixa dois"
+
+[node name="body" type="Label" parent="Centro/Painel/col"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 14
+text = "Dinheiro por fora do orçamento oficial. Rende hoje e cobra amanhã."
+autowrap_mode = 3
+
+[node name="status" type="Label" parent="Centro/Painel/col"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "Percepção: 0"
+autowrap_mode = 3
+
+[node name="Rolagem" type="ScrollContainer" parent="Centro/Painel/col"]
+custom_minimum_size = Vector2(0, 340)
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="Conteudo" type="VBoxContainer" parent="Centro/Painel/col/Rolagem"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_constants/separation = 8
+
+[node name="Votos" type="VBoxContainer" parent="Centro/Painel/col/Rolagem/Conteudo"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="votos_titulo" type="Label" parent="Centro/Painel/col/Rolagem/Conteudo/Votos"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.949, 0.702, 0.239, 1)
+theme_override_font_sizes/font_size = 15
+text = "Comprar votos"
+
+[node name="votos_desc" type="Label" parent="Centro/Painel/col/Rolagem/Conteudo/Votos"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 12
+autowrap_mode = 3
+
+[node name="Escolhas" type="HBoxContainer" parent="Centro/Painel/col/Rolagem/Conteudo/Votos"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="norm_pick" type="OptionButton" parent="Centro/Painel/col/Rolagem/Conteudo/Votos/Escolhas"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_font_sizes/font_size = 12
+fit_to_longest_item = false
+
+[node name="party_pick" type="OptionButton" parent="Centro/Painel/col/Rolagem/Conteudo/Votos/Escolhas"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_font_sizes/font_size = 12
+fit_to_longest_item = false
+
+[node name="side_pick" type="OptionButton" parent="Centro/Painel/col/Rolagem/Conteudo/Votos/Escolhas"]
+unique_name_in_owner = true
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 12
+
+[node name="bribe" type="Button" parent="Centro/Painel/col/Rolagem/Conteudo/Votos"]
+unique_name_in_owner = true
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Comprar voto"
+
+[node name="Acoes" type="VBoxContainer" parent="Centro/Painel/col/Rolagem/Conteudo"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 6
+
+[node name="Historico" type="Label" parent="Centro/Painel/col/Rolagem/Conteudo"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 12
+autowrap_mode = 3
+
+[node name="feedback" type="Label" parent="Centro/Painel/col"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+autowrap_mode = 3
+
+[node name="Fechar" type="Button" parent="Centro/Painel/col"]
+unique_name_in_owner = true
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Fechar"
