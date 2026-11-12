@@ -46,6 +46,7 @@ func _init() -> void:
 	_central_bank()
 	_budget_and_taxes()
 	_law_money()
+	_territory()
 	print("RESULTADO: %d falhas" % failures)
 	quit()
 
@@ -215,3 +216,28 @@ func _law_money() -> void:
 		_months(world, 1)
 	var expected := 12.0 / c.y_usd()
 	_check(c.law_tax > expected * 0.9, "law_tax conta toda a receita das normas: %.4f (esperado ≥ %.4f)" % [c.law_tax, expected * 0.9])
+
+
+## Anexar ou ceder território não aparece como crescimento ou recessão: o histórico do PIB passa a
+## contar as fronteiras novas.
+func _territory() -> void:
+	var ax := _fresh("SAU")
+	_months(ax, 13)
+	var sau: Country = ax.by_iso["SAU"]
+	var g_sau := sau.growth_yoy()
+	ax.diplomacy.annex(sau, ax.by_iso["IRN"], ax)
+	var worst := 0.0
+	for m in 14:
+		_months(ax, 1)
+		worst = maxf(worst, absf(sau.growth_yoy() - g_sau))
+	_check(worst < 0.06, "anexar o Irã não infla o crescimento saudita (desvio máximo %.1f pp)" % (worst * 100.0))
+	var cede := _fresh("IRQ")
+	_months(cede, 13)
+	var iq: Country = cede.by_iso["IRQ"]
+	var g_iq := iq.growth_yoy()
+	cede.diplomacy.transfer(iq, cede.by_iso["SYR"], 0.3, cede)
+	var worst_iq := 0.0
+	for m in 14:
+		_months(cede, 1)
+		worst_iq = maxf(worst_iq, absf(iq.growth_yoy() - g_iq))
+	_check(worst_iq < 0.06, "ceder 30%% do território não vira recessão no Iraque (desvio máximo %.1f pp)" % (worst_iq * 100.0))

@@ -490,15 +490,16 @@ static func _risk_premium(c: Country, world: GameWorld) -> float:
 	return clampf(r, 0.0, 0.6)
 
 
-## A nota só muda quando o risco passa do limite com folga de 10%: agências não oscilam todo mês.
+## A nota só muda quando o risco passa do limite com folga de 20%: agências não oscilam todo mês, e
+## um país perto de um limite não troca de nota a cada solavanco do risco global.
 static func _rating_for(c: Country) -> String:
 	var now := RATINGS.find(c.rating)
 	if now < 0:
 		return _rating_from(c.risk)
-	var worse := RATINGS.find(_rating_from(c.risk * 0.9))
+	var worse := RATINGS.find(_rating_from(c.risk * 0.8))
 	if worse > now:
 		return RATINGS[worse]
-	var better := RATINGS.find(_rating_from(c.risk * 1.1))
+	var better := RATINGS.find(_rating_from(c.risk * 1.2))
 	if better < now:
 		return RATINGS[better]
 	return c.rating

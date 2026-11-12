@@ -648,6 +648,8 @@ func _end_war(w: Dictionary, world: GameWorld, msg: String, gainer: Country, los
 
 
 func transfer(from: Country, to: Country, share: float, world: GameWorld) -> void:
+	var to_pop0 := to.pop
+	var to_cap0 := to.capital
 	var pop := from.pop * share
 	var cap := from.capital * share * 0.8
 	from.pop -= pop
@@ -665,6 +667,17 @@ func transfer(from: Country, to: Country, share: float, world: GameWorld) -> voi
 	from.y *= 1.0 - share
 	from.y0 *= 1.0 - share
 	var gdp_moved := from.y0 * share / maxf(1.0 - share, 0.01)
+	var gain := (to.y0 + gdp_moved) / maxf(to.y0, 0.001)
+	# A área nova produz o que já produzia: sem esse ajuste, a população anexada passaria a render com
+	# a produtividade de quem ganhou, e um país rico que anexa um pobre quase dobraria o PIB do nada.
+	var factors := pow(to.capital / maxf(to_cap0, 0.001), Economy.ALPHA) * pow(to.pop / maxf(to_pop0, 0.001), 1.0 - Economy.ALPHA)
+	to.tfp *= gain / maxf(factors, 0.001)
+	# A base de renda por habitante da convergência acompanha a média do país novo.
+	to.pc0 *= gain / maxf(to.pop / maxf(to_pop0, 0.001), 0.001)
+	# O PIB de quem ganha sobe aos poucos, com o capital e a população novos; o histórico já passa a
+	# contar o território como se sempre tivesse sido dele.
+	from.rebase_territory(1.0 - share)
+	to.rebase_territory(gain)
 	to.y0 += gdp_moved
 	world.refresh_map = true
 
