@@ -77,13 +77,22 @@ Companies change hands by law: the **Privatize** and **Nationalize** blocks in t
 
 The first day of the game already has budget figures, a credit rating and reserves. The central bank works with a target rate, and the news feed reports major macro moves (growth, inflation, rating changes, crises).
 
+### Exchange rate, reserves and sovereign fund
+
+The **Currency** window shows the exchange rate, reserves (in US$ and in months of imports), the central bank's net intervention, the exchange rate policy, capital controls, capital flight, dollarization and the depreciation implied by uncovered interest parity (i = i* + expected depreciation + risk premium), plus a section for the sovereign wealth fund with charts of reserves and of the fund.
+
+- **Intervention:** a floating central bank sells dollars when its currency is under pressure and buys them when it weakens too much. It leans against moves beyond what inflation already explains, sells only what its reserves allow (below three months of imports it holds back) and slowly rebuilds its starting buffer. Under a dollar peg it buys and sells whatever the fixed rate requires.
+- **Capital flight and controls:** money leaves when risk or inflation rises, pushing the currency down and draining reserves. Capital controls cut the flight but scare off investment and add a little risk.
+- **Dollarization:** rises quickly with high inflation, falls slowly, and weakens the interest rate's grip on the exchange rate.
+- **Sovereign wealth fund:** receives a share of the state's commodity revenue (`rent_take`) and of budget surpluses, invests abroad (60% equities following the US stock market, 40% bonds) without strengthening the currency, and pays a yearly withdrawal into the budget, capped by law (Norway's 3% rule). When commodity revenue falls below its average, the fund covers part of the drop. A large fund lowers the risk premium; withdrawing more than about 4% a year shrinks it and costs approval. Norway, Saudi Arabia, the United Arab Emirates, Kuwait, Qatar, China and Singapore start with balances close to the real ones (`swf` column of `data/countries.csv`); any other country can create one through the Exchange and Sovereign Fund Law in the legislative center.
+
 ## Legislation
 
 The **legislative center** (L key or the document icon in the dock) lists the country's legal codes at the top, then the bills in progress, the norms in force and, last, the option to write a standalone law. Laws are built with visual blocks, as in Scratch: each stack that starts with an event is an article. The editor has a block library, a programming area, block properties, validation and a simulator. Its screens are in `scenes/ui/legislation/`.
 
 ### Legal codes
 
-The country starts with six codes in force, all of them **complementary laws** (they need an absolute majority to change):
+The country starts with seven codes in force. Six are **complementary laws** (they need an absolute majority to change); the Exchange and Sovereign Fund Law is an ordinary law:
 
 | Code | What it covers |
 | --- | --- |
@@ -93,6 +102,7 @@ The country starts with six codes in force, all of them **complementary laws** (
 | **Civil Code** | Marriage age, same-sex marriage, divorce, property regime, property rights and expropriation, adverse possession, inheritance, contracts and usury, business registration, bankruptcy and statute of limitations. |
 | **Electoral Code** | Compulsory voting, voting age, electoral system, threshold, campaign finance, reelection limits, gender quotas, electronic voting and free airtime. |
 | **Rights and duties** | Fundamental rights from a closed list with their scope, duties such as military service and compulsory schooling, press and internet censorship and state of emergency. |
+| **Exchange and Sovereign Fund Law** | Central bank intervention in the exchange rate (free, mild or strong), capital controls (none, outflow tax or quotas), the sovereign wealth fund's share of commodity revenue and surpluses, and its yearly withdrawal cap. |
 
 Each code has its own concrete blocks, with choices and numbers instead of typed names. The starting text depends on the country (democracy level, income per capita and, where it exists, the political data of the country), and the starting text is neutral: only what the player changes has an effect. Each code feeds the economy and politics every month through approval, stability, investment, unemployment, inequality, labor supply, productivity and tax evasion, and keeps its own indicators, such as crime rate, legal certainty, pension coverage and deficit, labor rigidity, turnout and civil liberties.
 
@@ -270,7 +280,8 @@ There are 170 countries with their own GDP, population, debt, inflation, interes
 - **Demand:** output gap driven by the real interest rate, fiscal impulse, partner demand, real exchange rate, terms of trade, credit and confidence, plus the logistics of ports and airports.
 - **Prices:** Phillips curve with expectations anchored by central bank credibility, exchange rate pass-through and energy and food shocks.
 - **Monetary policy:** Taylor rule, the euro zone with a common ECB, dollar pegs that can break.
-- **Exchange rate:** purchasing power parity, real interest rate differential, current account and risk premium.
+- **Exchange rate:** purchasing power parity, real interest rate differential, current account, uncovered interest parity and risk premium, with central bank intervention, capital flight, capital controls and dollarization.
+- **Sovereign wealth funds:** commodity revenue and surpluses saved abroad, a withdrawal rule and a cushion against commodity price falls.
 - **Public finances:** taxes with a Laffer curve and tax evasion, automatic stabilizers, debt in local currency and in dollars, endogenous risk premium, credit rating, IMF and default.
 - **Trade:** gravity-based bilateral matrix, changed by tariffs, agreements, sanctions and wars.
 - **Commodities:** oil, gas, grains, metals and chips with supply by country, stocks and OPEC+.
@@ -320,6 +331,7 @@ godot --path . -- --ui-legislation --shots=/tmp/shots
 | `sectors.gd`, `infra.gd`, `corporate.gd` | Sectors, ports and airports, companies and the stock exchange. |
 | `legislation.gd` | Laws, legislative process, party fund, polls, amendments and block dragging. |
 | `code_tributario.gd`, `code_penal_civil.gd`, `code_trabalho_eleicoes.gd`, `direitos.gd` | Each legal code: starting text, changes by bill, revocation and monthly effects. |
+| `fx_swf.gd` | Central bank intervention, capital flight and controls, dollarization, interest parity, sovereign funds (starting balances, returns, withdrawal rule, commodity cushion, risk and approval) and the Exchange Law. |
 | `politics.gd` | Parties, parliament, votes, elections and the character creator. |
 | `statecraft.gd` | Opposition, politicians, compass, ministers and conversations. |
 | `society.gd` | Age and death, elections, plebiscite, units with formal procedure, ministries, end of career, conversations and treaties. |
@@ -330,7 +342,7 @@ godot --path . -- --ui-legislation --shots=/tmp/shots
 | --- | --- |
 | `--ui-desk` | Dock and floating windows: open, bring to front, drag, resize, minimize, centered opening and small screens. |
 | `--ui-legislation`, `--ui-society` | Legislative center, code cards, filtered library, expected effects, step tracker, amendments and society systems. |
-| `--ui-economy`, `--ui-infra`, `--ui-corporate`, `--ui-econ-audit` | Economy windows, infrastructure, companies and stock exchange. |
+| `--ui-economy`, `--ui-infra`, `--ui-corporate`, `--ui-econ-audit` | Economy windows (including Currency with reserves and the sovereign fund), infrastructure, companies and stock exchange. |
 | `--ui-creator` | Countryball creator, with male and female portraits and names, and a gallery of every country's countryball (`galeria_bandeiras.png`). |
 | `--ui-locale` | Switches to English and Spanish and takes screenshots of the start screen, HUD, legislative center and block editor. |
 | `--ui-politics`, `--ui-statecraft` | Politics and statecraft through the interface. |

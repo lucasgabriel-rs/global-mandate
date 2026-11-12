@@ -79,3 +79,31 @@ func _run() -> void:
 	get_window().size = Vector2i(1100, 700)
 	await _wait(8)
 	await _shot("e3_janela_menor")
+	get_window().size = Vector2i(1600, 900)
+	await _wait(4)
+	await _moeda(hud, tabs, w)
+
+
+## Janela Moeda: reservas, intervenção, capitais, dolarização, paridade e o fundo soberano.
+func _moeda(hud: Hud, tabs: WindowDesk, w: GameWorld) -> void:
+	tabs.current_tab = 2
+	hud.refresh(true)
+	await _wait()
+	for key in ["m_res", "m_interv", "m_lean", "m_controls", "m_flight", "m_dollar", "m_uip", "m_swf_status", "m_swf", "m_swf_in", "m_swf_out", "m_swf_rule", "m_swf_ret"]:
+		var label: Label = hud._dyn.get(key)
+		_check(label != null and label.is_visible_in_tree() and label.text != "", "Moeda mostra %s: %s" % [key, label.text if label else "?"])
+	_check((hud._dyn.m_res as Label).text.contains("US$"), "reservas em dólares")
+	_check((hud._dyn.mc_res as MiniChart).is_visible_in_tree() and (hud._dyn.mc_swf as MiniChart).is_visible_in_tree(), "gráficos de reservas e do fundo")
+	_check((hud._dyn.m_swf_status as Label).text == tr("sem fundo: crie pela Lei Cambial"), "o Brasil aparece sem fundo soberano")
+	await _shot("e4_moeda")
+	# Com um fundo como o norueguês, a janela mostra saldo, fluxos e regra.
+	var c := w.player
+	c.swf = 300.0
+	c.swf_active = true
+	c.swf_limit = 0.03
+	c.swf_rent_share = 0.5
+	hud.refresh(true)
+	await _wait()
+	_check((hud._dyn.m_swf as Label).text.contains("US$"), "saldo do fundo: " + (hud._dyn.m_swf as Label).text)
+	_check((hud._dyn.m_swf_rule as Label).text.contains("3"), "regra de saque: " + (hud._dyn.m_swf_rule as Label).text)
+	await _shot("e5_moeda_fundo")

@@ -2733,6 +2733,167 @@ theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
 theme_override_font_sizes/font_size = 13
 text = "—"
 
+[node name="LinhaReservas" type="HBoxContainer" parent="desk/w_moeda/Moeda/Margem/Coluna" unique_id=1086084612]
+layout_mode = 2
+tooltip_text = "Dólares do banco central, em meses de importação entre parênteses. Abaixo de 3 meses o risco sobe."
+theme_override_constants/separation = 4
+
+[node name="Rotulo" type="Label" parent="desk/w_moeda/Moeda/Margem/Coluna/LinhaReservas" unique_id=442224509]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Reservas internacionais"
+
+[node name="Espaco" type="Control" parent="desk/w_moeda/Moeda/Margem/Coluna/LinhaReservas" unique_id=822422348]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="m_res" type="Label" parent="desk/w_moeda/Moeda/Margem/Coluna/LinhaReservas" unique_id=1759734096]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="LinhaIntervencao" type="HBoxContainer" parent="desk/w_moeda/Moeda/Margem/Coluna" unique_id=1577893677]
+layout_mode = 2
+tooltip_text = "Venda líquida de reservas para segurar a moeda; negativa quando o banco central compra dólares."
+theme_override_constants/separation = 4
+
+[node name="Rotulo" type="Label" parent="desk/w_moeda/Moeda/Margem/Coluna/LinhaIntervencao" unique_id=1903659720]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Intervenção no câmbio (ao ano)"
+
+[node name="Espaco" type="Control" parent="desk/w_moeda/Moeda/Margem/Coluna/LinhaIntervencao" unique_id=537475716]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="m_interv" type="Label" parent="desk/w_moeda/Moeda/Margem/Coluna/LinhaIntervencao" unique_id=2056609292]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="LinhaPolitica" type="HBoxContainer" parent="desk/w_moeda/Moeda/Margem/Coluna" unique_id=1298200435]
+layout_mode = 2
+tooltip_text = "Quanto do movimento do câmbio o banco central segura, definido pela Lei Cambial."
+theme_override_constants/separation = 4
+
+[node name="Rotulo" type="Label" parent="desk/w_moeda/Moeda/Margem/Coluna/LinhaPolitica" unique_id=2100741073]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Política cambial"
+
+[node name="Espaco" type="Control" parent="desk/w_moeda/Moeda/Margem/Coluna/LinhaPolitica" unique_id=249750688]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="m_lean" type="Label" parent="desk/w_moeda/Moeda/Margem/Coluna/LinhaPolitica" unique_id=1901119909]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="LinhaControle" type="HBoxContainer" parent="desk/w_moeda/Moeda/Margem/Coluna" unique_id=1633811356]
+layout_mode = 2
+tooltip_text = "Freia a fuga de capitais, mas afasta investimento estrangeiro e eleva um pouco o risco."
+theme_override_constants/separation = 4
+
+[node name="Rotulo" type="Label" parent="desk/w_moeda/Moeda/Margem/Coluna/LinhaControle" unique_id=523860321]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Controle de capitais"
+
+[node name="Espaco" type="Control" parent="desk/w_moeda/Moeda/Margem/Coluna/LinhaControle" unique_id=935946354]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="m_controls" type="Label" parent="desk/w_moeda/Moeda/Margem/Coluna/LinhaControle" unique_id=761461625]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="LinhaFuga" type="HBoxContainer" parent="desk/w_moeda/Moeda/Margem/Coluna" unique_id=378745767]
+layout_mode = 2
+tooltip_text = "Dinheiro que sai do país quando o risco ou a inflação sobem. Pressiona o câmbio e as reservas."
+theme_override_constants/separation = 4
+
+[node name="Rotulo" type="Label" parent="desk/w_moeda/Moeda/Margem/Coluna/LinhaFuga" unique_id=1705488277]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Fuga de capitais (ao ano)"
+
+[node name="Espaco" type="Control" parent="desk/w_moeda/Moeda/Margem/Coluna/LinhaFuga" unique_id=1019508521]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="m_flight" type="Label" parent="desk/w_moeda/Moeda/Margem/Coluna/LinhaFuga" unique_id=1166914484]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="LinhaDolarizacao" type="HBoxContainer" parent="desk/w_moeda/Moeda/Margem/Coluna" unique_id=446637945]
+layout_mode = 2
+tooltip_text = "Parte dos depósitos e preços em dólar. Sobe com inflação alta e tira força do juro."
+theme_override_constants/separation = 4
+
+[node name="Rotulo" type="Label" parent="desk/w_moeda/Moeda/Margem/Coluna/LinhaDolarizacao" unique_id=2074008014]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Dolarização"
+
+[node name="Espaco" type="Control" parent="desk/w_moeda/Moeda/Margem/Coluna/LinhaDolarizacao" unique_id=498066083]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="m_dollar" type="Label" parent="desk/w_moeda/Moeda/Margem/Coluna/LinhaDolarizacao" unique_id=1061142201]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="LinhaParidade" type="HBoxContainer" parent="desk/w_moeda/Moeda/Margem/Coluna" unique_id=926444074]
+layout_mode = 2
+tooltip_text = "Paridade descoberta: i = i* + depreciação esperada + prêmio de risco."
+theme_override_constants/separation = 4
+
+[node name="Rotulo" type="Label" parent="desk/w_moeda/Moeda/Margem/Coluna/LinhaParidade" unique_id=940365679]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Depreciação esperada (paridade de juros)"
+
+[node name="Espaco" type="Control" parent="desk/w_moeda/Moeda/Margem/Coluna/LinhaParidade" unique_id=55427388]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="m_uip" type="Label" parent="desk/w_moeda/Moeda/Margem/Coluna/LinhaParidade" unique_id=1116975471]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
+
 [node name="AlternarFlutuanteAncoraNoDolar" type="Button" parent="desk/w_moeda/Moeda/Margem/Coluna" unique_id=1868752990]
 unique_name_in_owner = true
 layout_mode = 2
@@ -2740,6 +2901,157 @@ tooltip_text = "A âncora importa a política monetária dos EUA e exige reserva
 focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "Alternar: flutuante / âncora no dólar"
+
+[node name="SeparadorFundo" type="ColorRect" parent="desk/w_moeda/Moeda/Margem/Coluna" unique_id=453483222]
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 2
+mouse_filter = 2
+color = Color(0.15294118, 0.2509804, 0.30980393, 1)
+
+[node name="FUNDOSOBERANO" type="Label" parent="desk/w_moeda/Moeda/Margem/Coluna" unique_id=1696653104]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_constants/line_spacing = 0
+theme_override_font_sizes/font_size = 11
+text = "FUNDO SOBERANO"
+
+[node name="LinhaFundoStatus" type="HBoxContainer" parent="desk/w_moeda/Moeda/Margem/Coluna" unique_id=654939952]
+layout_mode = 2
+tooltip_text = "O fundo é criado e alterado pela Lei Cambial e do Fundo Soberano, no centro legislativo."
+theme_override_constants/separation = 4
+
+[node name="Rotulo" type="Label" parent="desk/w_moeda/Moeda/Margem/Coluna/LinhaFundoStatus" unique_id=2057069297]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Situação"
+
+[node name="Espaco" type="Control" parent="desk/w_moeda/Moeda/Margem/Coluna/LinhaFundoStatus" unique_id=197750080]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="m_swf_status" type="Label" parent="desk/w_moeda/Moeda/Margem/Coluna/LinhaFundoStatus" unique_id=1135099079]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="LinhaFundoSaldo" type="HBoxContainer" parent="desk/w_moeda/Moeda/Margem/Coluna" unique_id=1477986238]
+layout_mode = 2
+tooltip_text = "Investido fora do país: os aportes não valorizam a moeda. Um fundo grande reduz o risco."
+theme_override_constants/separation = 4
+
+[node name="Rotulo" type="Label" parent="desk/w_moeda/Moeda/Margem/Coluna/LinhaFundoSaldo" unique_id=1854237951]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Saldo aplicado no exterior"
+
+[node name="Espaco" type="Control" parent="desk/w_moeda/Moeda/Margem/Coluna/LinhaFundoSaldo" unique_id=1851461459]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="m_swf" type="Label" parent="desk/w_moeda/Moeda/Margem/Coluna/LinhaFundoSaldo" unique_id=537541052]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="LinhaFundoAporte" type="HBoxContainer" parent="desk/w_moeda/Moeda/Margem/Coluna" unique_id=1440661688]
+layout_mode = 2
+tooltip_text = "Parte da renda de commodities e dos superávits que vai para o fundo."
+theme_override_constants/separation = 4
+
+[node name="Rotulo" type="Label" parent="desk/w_moeda/Moeda/Margem/Coluna/LinhaFundoAporte" unique_id=256913756]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Aportes do ano"
+
+[node name="Espaco" type="Control" parent="desk/w_moeda/Moeda/Margem/Coluna/LinhaFundoAporte" unique_id=733843035]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="m_swf_in" type="Label" parent="desk/w_moeda/Moeda/Margem/Coluna/LinhaFundoAporte" unique_id=1567669093]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="LinhaFundoSaque" type="HBoxContainer" parent="desk/w_moeda/Moeda/Margem/Coluna" unique_id=1803800595]
+layout_mode = 2
+tooltip_text = "O saque entra no orçamento. Cobre parte das quedas da renda de commodities."
+theme_override_constants/separation = 4
+
+[node name="Rotulo" type="Label" parent="desk/w_moeda/Moeda/Margem/Coluna/LinhaFundoSaque" unique_id=1956151661]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Saques do ano"
+
+[node name="Espaco" type="Control" parent="desk/w_moeda/Moeda/Margem/Coluna/LinhaFundoSaque" unique_id=2020786568]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="m_swf_out" type="Label" parent="desk/w_moeda/Moeda/Margem/Coluna/LinhaFundoSaque" unique_id=1162606665]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="LinhaFundoRegra" type="HBoxContainer" parent="desk/w_moeda/Moeda/Margem/Coluna" unique_id=36341655]
+layout_mode = 2
+tooltip_text = "Saque anual máximo, em fração do saldo. Acima de 4% ao ano o fundo encolhe e a aprovação cai."
+theme_override_constants/separation = 4
+
+[node name="Rotulo" type="Label" parent="desk/w_moeda/Moeda/Margem/Coluna/LinhaFundoRegra" unique_id=235480638]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Regra de saque"
+
+[node name="Espaco" type="Control" parent="desk/w_moeda/Moeda/Margem/Coluna/LinhaFundoRegra" unique_id=1338061772]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="m_swf_rule" type="Label" parent="desk/w_moeda/Moeda/Margem/Coluna/LinhaFundoRegra" unique_id=2111853078]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="LinhaFundoRetorno" type="HBoxContainer" parent="desk/w_moeda/Moeda/Margem/Coluna" unique_id=703699127]
+layout_mode = 2
+tooltip_text = "Retorno anualizado do último mês: ações e títulos no exterior."
+theme_override_constants/separation = 4
+
+[node name="Rotulo" type="Label" parent="desk/w_moeda/Moeda/Margem/Coluna/LinhaFundoRetorno" unique_id=2075649094]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 13
+text = "Retorno da carteira"
+
+[node name="Espaco" type="Control" parent="desk/w_moeda/Moeda/Margem/Coluna/LinhaFundoRetorno" unique_id=1823916337]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="m_swf_ret" type="Label" parent="desk/w_moeda/Moeda/Margem/Coluna/LinhaFundoRetorno" unique_id=407467916]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
+theme_override_font_sizes/font_size = 13
+text = "—"
 
 [node name="Grade" type="GridContainer" parent="desk/w_moeda/Moeda/Margem/Coluna" unique_id=1719146685]
 layout_mode = 2
@@ -2788,6 +3100,30 @@ script = ExtResource("5_erw67")
 title = "Juro da dívida"
 color = Color(0.29803923, 0.78039217, 0.5803922, 1)
 series_key = "yield"
+
+[node name="mc_res" type="Control" parent="desk/w_moeda/Moeda/Margem/Coluna/Grade" unique_id=887519879]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+script = ExtResource("5_erw67")
+title = "Reservas (US$ bi)"
+color = Color(0.43529412, 0.6431373, 0.9254902, 1)
+format = "num0"
+series_key = "reserves"
+
+[node name="mc_swf" type="Control" parent="desk/w_moeda/Moeda/Margem/Coluna/Grade" unique_id=809422666]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+script = ExtResource("5_erw67")
+title = "Fundo soberano (US$ bi)"
+color = Color(0.18431373, 0.47843137, 0.5411765, 1)
+format = "num0"
+series_key = "swf"
 
 [node name="Comércio" type="ScrollContainer" parent="desk/w_comercio" unique_id=807492480]
 layout_mode = 2

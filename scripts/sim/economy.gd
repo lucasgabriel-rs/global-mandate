@@ -17,6 +17,16 @@ const MAX_RATE := 1.2
 const RATINGS := ["AAA", "AA", "A", "BBB", "BB", "B", "CCC", "CC"]
 ## Economias acima desta fatia do PIB mundial viram notícia quando entram em recessão ou mudam de nota.
 const NEWS_SHARE := 0.02
+## Fundos soberanos de partida: [fração da renda de commodities, fração do superávit, saque anual máximo].
+## Noruega: toda a renda do petróleo e a regra dos 3%. China e Singapura vivem de superávits.
+const SWF_POLICY := {
+	"NOR": [1.0, 0.0, 0.03], "SAU": [0.15, 0.3, 0.01], "ARE": [0.25, 0.3, 0.02], "KWT": [0.1, 0.5, 0.01],
+	"QAT": [0.2, 0.3, 0.02], "CHN": [0.0, 0.0, 0.0], "SGP": [0.0, 0.5, 0.02],
+}
+## Retorno real de longo prazo de uma carteira global; sacar acima disso come o principal.
+const SWF_SAFE_DRAW := 0.04
+## Controle de capitais de partida, 0-1.
+const CAP_CONTROLS := {"CHN": 0.6, "IND": 0.3, "ARG": 0.5, "VNM": 0.3}
 
 
 static func init_country(c: Country, row: Dictionary, world: GameWorld) -> void:
@@ -61,7 +71,18 @@ static func init_country(c: Country, row: Dictionary, world: GameWorld) -> void:
 	c.dem = row.dem
 	c.peg = row.peg
 	c.cb_independent = c.dem >= CB_INDEPENDENT_DEM or c.peg == 2
+	# Bancos centrais ricos deixam o câmbio flutuar; emergentes seguram parte dos solavancos.
+	c.fx_lean = 0.05 if c.dem >= 7.5 else 0.3
 	c.reserves = maxf(row.res, 0.1)
+	c.swf = float(row.get("swf", 0.0))
+	var swf_policy: Array = SWF_POLICY.get(c.iso, [0.0, 0.0, 0.0])
+	c.swf_active = c.swf > 0.0
+	if c.swf_active:
+		c.swf_rent_share = swf_policy[0]
+		c.swf_surplus_share = swf_policy[1]
+		c.swf_limit = swf_policy[2]
+	c.cap_controls = CAP_CONTROLS.get(c.iso, 0.0)
+	c.dollarization = 0.0 if c.peg != 0 else clampf(row.infl / 100.0 * 1.2, 0.0, 0.6)
 	c.nukes = row.nukes
 	c.troops = maxf(row.troops, 0.5)
 	c.troops0 = c.troops
@@ -162,7 +183,13 @@ static func finish_init(c: Country, world: GameWorld) -> void:
 	# Parte da receita pública vem de renda de commodities (Golfo, Noruega, Angola...).
 	var rent := minf(comm_x * 0.55, c.tax0 * gdp * 0.75)
 	c.rent_take = rent / maxf(comm_x, 0.001)
-	var new_tax := c.tax0 - rent / gdp
+	# O fundo soberano fica com parte da renda e devolve o saque: o resto dos tributos fecha a conta de partida.
+	var swf_net := c.swf * c.swf_limit - rent * c.swf_rent_share
+	c.rent_ref = rent
+	var new_tax := c.tax0 - rent / gdp - swf_net / gdp
+	if new_tax < 0.02 and c.swf_limit > 0.0:
+		c.swf_limit = maxf(c.swf_limit - (0.02 - new_tax) * gdp / maxf(c.swf, 0.001), 0.0)
+		new_tax = c.tax0 - rent / gdp - (c.swf * c.swf_limit - rent * c.swf_rent_share) / gdp
 	var k := new_tax / maxf(c.tax0, 0.001)
 	c.tax_income *= k
 	c.tax_consumption *= k
@@ -174,6 +201,8 @@ static func finish_init(c: Country, world: GameWorld) -> void:
 		c.p_ref[i] = 1.0
 	# As contas do ano e a nota já valem no primeiro dia, antes da primeira etapa mensal.
 	_fiscal_flows(c)
+	c.swf_flow0 = (c.swf_in - c.swf_out) / maxf(c.y_usd(), 0.001)
+	c.res_ratio0 = c.reserves / maxf(c.y_usd(), 0.001)
 	c.rating = _rating_from(c.risk)
 
 
@@ -351,14 +380,54 @@ static func _exchange(c: Country, world: GameWorld) -> void:
 	if c.peg == 2:
 		c.e = world.eur_rate
 	elif c.peg == 0:
-		var rd := (c.rate - c.pi_e - c.r_n) - (us.rate - us.pi_e - us.r_n)
-		var ppp := log(c.p / us.p)
-		var target := ppp - 1.1 * clampf(rd, -0.15, 0.2) - 0.7 * clampf(c.ca_ratio - c.ca0, -0.2, 0.2)
-		target += 1.6 * clampf(c.risk - c.risk0, -0.03, 0.4) + 0.6 * clampf(world.global_risk - 0.2, -0.2, 0.8) * (0.0 if c.debt_tol > 0.9 else 0.25)
-		var le := log(c.e)
-		le += (target - le) * 0.10 + world.rng.randfn(0.0, 0.006)
-		c.e = exp(le)
+		_float_exchange(c, world)
 	c.rer = c.e * us.p / c.p
+
+
+## Câmbio flutuante. Paridade descoberta: i = i* + Δeᵉ + prêmio de risco, então a depreciação esperada é
+## i - i* - prêmio. O nível pula para que o retorno esperado em moeda forte se iguale; o banco central
+## vende ou compra reservas para segurar parte do movimento; capital foge quando o risco sobe e a
+## dolarização tira força do juro.
+static func _float_exchange(c: Country, world: GameWorld) -> void:
+	var us := world.usa
+	var yusd := c.y_usd()
+	_capital_flight(c, world, yusd)
+	var premium := c.risk + 0.5 * c.cap_flight / maxf(yusd, 0.001)
+	c.uip_dep = c.rate - us.rate - premium
+	var rd := (c.rate - c.pi_e - c.r_n) - (us.rate - us.pi_e - us.r_n)
+	var ppp := log(c.p / us.p)
+	# O fundo soberano aplica fora: a renda que ele guarda não entra no mercado de câmbio.
+	var fund := (c.swf_in - c.swf_out) / maxf(c.e, 0.001) / maxf(yusd, 0.001) - c.swf_flow0
+	var target := ppp - 1.1 * (1.0 - 0.6 * c.dollarization) * clampf(rd, -0.15, 0.2) - 0.7 * clampf(c.ca_ratio - c.ca0 - fund, -0.2, 0.2)
+	target += 1.6 * clampf(c.risk - c.risk0, -0.03, 0.4) + 0.6 * clampf(world.global_risk - 0.2, -0.2, 0.8) * (0.0 if c.debt_tol > 0.9 else 0.25)
+	target += 0.8 * c.cap_flight / maxf(yusd, 0.001)
+	var le := log(c.e)
+	var pressure := (target - le) * 0.10
+	# Intervenção: o banco central segura o desvio, não a tendência que a inflação já explica, e só vende
+	# o que as reservas permitem (3 meses de importação = folga plena).
+	var dev := pressure - (c.pi_yoy - us.pi_yoy) * DT
+	var lean := clampf(c.fx_lean, 0.0, 1.0)
+	var cover := c.reserves / maxf(c.imports / 12.0, 0.001)
+	if dev > 0.0:
+		lean *= clampf(cover / 3.0, 0.0, 1.0)
+	var held := 0.8 * lean * dev
+	var sold := held * yusd * 0.6 + c.cap_flight * lean * DT
+	# Fora das crises, quem intervém recompõe (ou devolve) devagar o colchão de partida, que cresce com o
+	# PIB em dólar. No câmbio livre o banco central não mexe nas reservas.
+	sold -= (c.res_ratio0 * yusd - c.reserves) * 0.15 * DT * clampf(c.fx_lean / 0.3, 0.0, 1.0)
+	sold = minf(sold, c.reserves)
+	c.reserves = maxf(c.reserves - sold, 0.0)
+	c.fx_interv = sold * 12.0
+	le += pressure - held + world.rng.randfn(0.0, 0.006)
+	c.e = exp(le)
+
+
+## Fuga de capitais (anualizada, US$ bi) e dolarização, que sobe rápido com inflação alta e desce devagar.
+static func _capital_flight(c: Country, world: GameWorld, yusd: float) -> void:
+	var fear := (c.risk - c.risk0) * 8.0 + 3.0 * maxf(c.pi_yoy - 0.15, 0.0) + 0.5 * maxf(world.global_risk - 0.3, 0.0) + 0.5 * maxf(c.uip_dep * -1.0 - 0.05, 0.0)
+	c.cap_flight = clampf(fear, 0.0, 1.0) * 0.06 * yusd * (1.0 - 0.85 * clampf(c.cap_controls, 0.0, 1.0)) * (1.0 + c.dollarization)
+	var dz_target := clampf(1.5 * maxf(c.pi_yoy - 0.1, 0.0) + 0.3 * clampf(c.risk - c.risk0, 0.0, 0.5), 0.0, 0.8)
+	c.dollarization += (dz_target - c.dollarization) * (0.02 if dz_target > c.dollarization else 0.003)
 
 
 static func _external(c: Country, world: GameWorld) -> void:
@@ -388,13 +457,14 @@ static func _external(c: Country, world: GameWorld) -> void:
 	# Reservas: âncora absorve o balanço; flutuante intervém pouco.
 	var cap_flow := 0.0
 	if c.peg == 1:
-		cap_flow = clampf((c.rate - world.usa.rate - c.risk * 0.5) * 2.0, -0.08, 0.08) * yusd
-		c.reserves += (c.ca + cap_flow) * 0.5 * DT
+		_capital_flight(c, world, yusd)
+		cap_flow = clampf((c.rate - world.usa.rate - c.risk * 0.5) * 2.0, -0.08, 0.08) * yusd * (1.0 - 0.7 * c.cap_controls)
+		# Na âncora o banco central compra e vende tudo que for preciso ao câmbio fixo.
+		c.fx_interv = -(c.ca + cap_flow) * 0.5 + c.cap_flight
+		c.reserves += (c.ca + cap_flow - c.cap_flight * 2.0) * 0.5 * DT
 	elif c.peg == 0:
-		# Flutuante: o câmbio e o capital estrangeiro fecham o balanço. O banco central guarda parte dos
-		# superávits e só queima reservas quando o capital foge (risco acima do de partida).
-		var flight := clampf((c.risk - c.risk0) * 8.0, 0.0, 1.0)
-		c.reserves += c.ca * 0.08 * (1.0 if c.ca > 0.0 else flight) * DT
+		# Flutuante: o câmbio e o capital estrangeiro fecham o balanço; a intervenção sai em `_float_exchange`.
+		c.reserves += c.ca * 0.08 * (1.0 if c.ca > 0.0 else 0.0) * DT
 	c.reserves = maxf(c.reserves, 0.0)
 	if c.peg == 1 and c.reserves < c.imports / 12.0 * 0.7 and c.ca < 0.0:
 		_break_peg(c, world)
@@ -434,6 +504,7 @@ static func _fiscal(c: Country, world: GameWorld) -> void:
 	# Dívida rola em ~6 anos: o custo médio segue o rendimento de mercado com atraso.
 	c.avg_rate += (c.yield_gov * c.yield_mult - c.avg_rate) * DT / 6.0
 	c.avg_fx += ((world.usa.rate + 0.005 + minf(c.risk, 0.25)) * c.yield_mult - c.avg_fx) * DT / 6.0
+	_fund_month(c, world)
 	var old_rating := c.rating
 	c.rating = _rating_for(c)
 	if c.rating != old_rating and old_rating != "D" and world.year_float() >= c.default_until and _newsworthy(c, world):
@@ -467,6 +538,44 @@ static func _fiscal_flows(c: Country) -> void:
 	c.extra_rev_bucket = 0.0
 	c.extra_spend_bucket = 0.0
 	c.deficit = c.spending - c.revenue
+	_fund_flows(c, rent)
+
+
+## Aportes e saques do fundo soberano no ano, em moeda local. O saque segue a regra (fração do saldo) e,
+## quando a renda de commodities cai abaixo da média, cobre parte da queda até mais meio limite.
+static func _fund_flows(c: Country, rent: float) -> void:
+	c.swf_in = 0.0
+	c.swf_out = 0.0
+	if not c.swf_active:
+		return
+	var surplus := maxf(-c.deficit, 0.0)
+	c.swf_in = rent * c.swf_rent_share + surplus * c.swf_surplus_share
+	var fund := c.swf * c.e
+	var cushion := clampf((c.rent_ref - rent) * 0.5, 0.0, fund * c.swf_limit * 0.5)
+	c.swf_out = minf(fund * c.swf_limit + cushion, fund)
+	c.revenue += c.swf_out - c.swf_in
+	c.deficit = c.spending - c.revenue
+
+
+## Um mês do fundo: aporte, saque e retorno da carteira global, 60% ações (segue a bolsa americana do
+## mês anterior) e 40% títulos (juro americano). Sacar acima do retorno seguro tira aprovação.
+static func _fund_month(c: Country, world: GameWorld) -> void:
+	c.rent_ref += (c.comm_exports * c.e * c.rent_take - c.rent_ref) * DT / 3.0
+	if not c.swf_active and c.swf <= 0.0:
+		c.swf_pain = 0.0
+		return
+	var stock: PackedFloat32Array = world.usa.hist.get("stock", PackedFloat32Array())
+	var equity := 0.0
+	if stock.size() >= 2 and stock[-2] > 0.0:
+		equity = clampf(log(stock[-1] / stock[-2]), -0.3, 0.3)
+	var monthly := 0.6 * equity + 0.4 * world.usa.rate * DT + 0.001
+	c.swf_return = monthly * 12.0
+	c.swf = maxf(c.swf * exp(monthly) + (c.swf_in - c.swf_out) / maxf(c.e, 0.001) * DT, 0.0)
+	if not c.swf_active:
+		c.swf_pain = 0.0
+		return
+	var draw := c.swf_out / maxf(c.swf * c.e, 0.001)
+	c.swf_pain = clampf((draw - SWF_SAFE_DRAW) * 1.5, 0.0, 0.12) if c.swf > 1.0 else 0.0
 
 
 static func _risk_premium(c: Country, world: GameWorld) -> float:
@@ -478,6 +587,9 @@ static func _risk_premium(c: Country, world: GameWorld) -> float:
 	r += 0.04 * maxf(0.5 - c.stability, 0.0)
 	var cover := c.reserves / maxf(c.imports / 12.0, 0.001)
 	r += 0.006 * maxf(3.0 - cover, 0.0) * (0.0 if c.peg == 2 else 1.0)
+	# Um fundo soberano grande é colchão: paga a dívida externa se for preciso. Controle de capitais assusta.
+	r -= 0.02 * clampf(c.swf / maxf(c.y_usd(), 0.001), 0.0, 1.5)
+	r += 0.004 * c.cap_controls
 	var pc := c.gdp_pc()
 	var ems := clampf(1.0 - pc / 30000.0, 0.0, 1.0)
 	r += ems * (0.012 + 0.05 * world.global_risk)
@@ -601,6 +713,7 @@ static func _labor_and_politics(c: Country, world: GameWorld) -> void:
 	target -= 0.25 * c.occupied
 	target -= 0.5 * c.tariff
 	target += 0.0 if c.client_of < 0 else -0.08
+	target -= c.swf_pain
 	var drift := 0.05 if c.dem >= 6.0 else 0.035
 	c.approval += (clampf(target, 0.04, 0.9) - c.approval) * drift + world.rng.randfn(0.0, 0.005)
 	c.approval = clampf(c.approval, 0.02, 0.95)
@@ -725,3 +838,5 @@ static func _push_series(c: Country) -> void:
 	c.push_hist("stability", c.stability)
 	c.push_hist("stock", c.stock)
 	c.push_hist("yield", c.yield_gov)
+	c.push_hist("reserves", c.reserves)
+	c.push_hist("swf", c.swf)

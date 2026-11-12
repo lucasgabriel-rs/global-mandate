@@ -833,8 +833,46 @@ func _refresh_monetary(c: Country) -> void:
 	_dyn.m_cred.text = "%d%%" % int(c.cred * 100.0)
 	_dyn.m_fx.text = UiKit.num(c.e, 2)
 	_dyn.m_rer.text = UiKit.num(c.rer, 2)
-	for key in ["mc_rate", "mc_infl", "mc_fx", "mc_yield"]:
+	_refresh_fx_reserves(c)
+	_refresh_fund(c)
+	for key in ["mc_rate", "mc_infl", "mc_fx", "mc_yield", "mc_res", "mc_swf"]:
 		_set_chart(key, c)
+
+
+## Reservas, intervenção, controle de capitais, fuga, dolarização e paridade descoberta.
+func _refresh_fx_reserves(c: Country) -> void:
+	var cover := c.reserves / maxf(c.imports / 12.0, 0.001)
+	_dyn.m_res.text = tr("%s  (%s meses)") % [UiKit.money(c.reserves), UiKit.num(cover, 1)]
+	_dyn.m_res.add_theme_color_override("font_color", UiKit.RED if cover < 3.0 else UiKit.TEXT)
+	if c == world.usa or c.peg == 2:
+		_dyn.m_interv.text = tr("não se aplica")
+	else:
+		_dyn.m_interv.text = (tr("vende %s") if c.fx_interv >= 0.0 else tr("compra %s")) % UiKit.money(absf(c.fx_interv))
+	var lean := tr("câmbio fixo") if c.peg == 1 else (tr("forte") if c.fx_lean >= 0.5 else (tr("suave") if c.fx_lean >= 0.15 else tr("flutuação livre")))
+	_dyn.m_lean.text = tr("euro") if c.peg == 2 else lean
+	_dyn.m_controls.text = tr("nenhum") if c.cap_controls < 0.05 else UiKit.pct(c.cap_controls, 0)
+	_dyn.m_flight.text = UiKit.money(c.cap_flight)
+	_dyn.m_flight.add_theme_color_override("font_color", UiKit.RED if c.cap_flight > 0.01 * c.y_usd() else UiKit.TEXT)
+	_dyn.m_dollar.text = UiKit.pct(c.dollarization, 0)
+	_dyn.m_uip.text = UiKit.pct(c.uip_dep, 1) if c.peg == 0 and c != world.usa else tr("não se aplica")
+
+
+## Fundo soberano: saldo, fluxos do ano, regra de saque e retorno.
+func _refresh_fund(c: Country) -> void:
+	var share := c.swf / maxf(c.y_usd(), 0.001)
+	if c.swf_active:
+		_dyn.m_swf_status.text = tr("ativo")
+	elif c.swf > 0.0:
+		_dyn.m_swf_status.text = tr("fora da lei: só rende")
+	else:
+		_dyn.m_swf_status.text = tr("sem fundo: crie pela Lei Cambial")
+	_dyn.m_swf.text = tr("%s  (%s do PIB)") % [UiKit.money(c.swf), UiKit.pct(share, 0)]
+	_dyn.m_swf_in.text = UiKit.money(c.swf_in / maxf(c.e, 0.001))
+	_dyn.m_swf_out.text = UiKit.money(c.swf_out / maxf(c.e, 0.001))
+	var draw := c.swf_out / maxf(c.swf * c.e, 0.001) if c.swf > 0.0 else 0.0
+	_dyn.m_swf_out.add_theme_color_override("font_color", UiKit.RED if draw > Economy.SWF_SAFE_DRAW else UiKit.TEXT)
+	_dyn.m_swf_rule.text = tr("até %s do saldo ao ano") % UiKit.pct(c.swf_limit, 1) if c.swf_active else "—"
+	_dyn.m_swf_ret.text = UiKit.pct(c.swf_return, 1) if c.swf > 0.0 else "—"
 
 
 func _refresh_trade(c: Country) -> void:

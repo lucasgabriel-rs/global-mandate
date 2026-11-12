@@ -9,6 +9,7 @@ const SCRIPTS := [
 	preload("res://scripts/sim/codes/code_civil.gd"),
 	preload("res://scripts/sim/codes/code_eleitoral.gd"),
 	preload("res://scripts/sim/codes/code_direitos.gd"),
+	preload("res://scripts/sim/codes/code_cambial.gd"),
 ]
 
 static var _codes: Array = []
