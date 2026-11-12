@@ -1,7 +1,7 @@
 extends SceneTree
 ## Age and death, district elections, plebiscite, units with a rite, ministries by law, end of career,
 ## conversations by compass, leaders' initiative and treaties.
-## Uso: godot --headless --path . --script tests/society.gd
+## Usage: godot --headless --path . --script tests/society.gd
 
 var failures := 0
 
@@ -130,7 +130,7 @@ func _ages() -> void:
 	for id: int in before:
 		if not now.has(id):
 			gone += 1
-	print("  em 10 anos: saíram %d, entraram %d, doentes agora %d" % [gone, fresh, ill[0]])
+	print("  in 10 years: %d left, %d came in, %d ill now" % [gone, fresh, ill[0]])
 	_check(gone > 0, "politicians die or retire")
 	_check(fresh > 0, "new politicians appear")
 	var youngest := 200
@@ -473,7 +473,7 @@ func _talks() -> void:
 	world.player.mil_stock = target.mil_stock * 4.0
 	world.player.troops = target.troops * 1.0
 	var ratio := world.player.military_power() / maxf(target.military_power(), 0.01)
-	print("  ameaça: força %.2f vezes" % ratio)
+	print("  threat: force %.2f times" % ratio)
 	theirs.social = 1.0
 	var soft: Dictionary = Dialogue.choose(world, target, "threat")
 	theirs.social = -1.0
@@ -540,7 +540,7 @@ func _treaties() -> void:
 			ratification = n
 	_check(not ratification.is_empty(), "goes to parliament")
 	_settle(world, ratification)
-	print("  ratificação: ", ratification.state, " tratado: ", treaty.state)
+	print("  ratification: ", ratification.state, " treaty: ", treaty.state)
 	for i in 120:
 		world.player.next_election = 9999.0
 		world.tick_day()

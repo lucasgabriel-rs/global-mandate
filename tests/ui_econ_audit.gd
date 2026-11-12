@@ -173,7 +173,7 @@ func _snapshot_all(tag: String) -> Dictionary:
 	all["_top"] = {}
 	for k: String in hud._top_values:
 		all["_top"][k] = (hud._top_values[k] as Label).text
-	print("  topo: ", all["_top"])
+	print("  top: ", all["_top"])
 	var comm := []
 	for l: Label in hud._commodity_labels:
 		comm.append(l.text)
@@ -214,7 +214,7 @@ func _run() -> void:
 	for y in years:
 		await _advance(365)
 		if w.over:
-			print("fim de jogo em ", w.date_string(), ": ", w.final_result if "final_result" in w else "")
+			print("game over on ", w.date_string(), ": ", w.final_result if "final_result" in w else "")
 			break
 		_check(absf(c.sp_infra - sp_after_slider) < 0.003 or not w.legislation.budget_lock("sp_infra").is_empty(), "year %d: the spending chosen on the slider holds (%.3f)" % [y + 1, c.sp_infra])
 		history.append(await _snapshot_all("a%d" % (y + 1)))

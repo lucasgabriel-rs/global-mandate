@@ -7470,16 +7470,6 @@ msgstr ""
 msgid "%s rejeitou a proposta de paz."
 msgstr ""
 
-#: scripts/sim/codes/code_cambial.gd:72
-#, c-format
-msgid "fundo soberano recebe %s%% da renda de commodities"
-msgstr ""
-
-#: scripts/sim/codes/code_cambial.gd:76
-#, c-format
-msgid "saque do fundo limitado a %s%% ao ano"
-msgstr ""
-
 #: scripts/sim/codes/code_civil.gd:120
 #, c-format
 msgid "juros limitados a %s%% ao ano"
@@ -7490,186 +7480,34 @@ msgstr ""
 msgid "empresa aberta em até %d dias"
 msgstr ""
 
-#: scripts/sim/codes/code_direitos.gd:16 scripts/sim/law_catalog.gd_(escolha_dr_right)
-msgid "a liberdade de expressão"
-msgstr ""
-
-#: scripts/sim/codes/code_direitos.gd:16 scripts/sim/law_catalog.gd_(escolha_dr_right)
-msgid "a liberdade de imprensa"
-msgstr ""
-
-#: scripts/sim/codes/code_direitos.gd:16 scripts/sim/law_catalog.gd_(escolha_dr_right)
-msgid "a liberdade de reunião e associação"
-msgstr ""
-
-#: scripts/sim/codes/code_direitos.gd:17 scripts/sim/law_catalog.gd_(escolha_dr_right)
-msgid "a liberdade de culto"
-msgstr ""
-
-#: scripts/sim/codes/code_direitos.gd:17 scripts/sim/law_catalog.gd_(escolha_dr_right)
-msgid "a privacidade e o sigilo das comunicações"
-msgstr ""
-
-#: scripts/sim/codes/code_direitos.gd:17 scripts/sim/law_catalog.gd_(escolha_dr_right)
-msgid "o direito de greve"
-msgstr ""
-
-#: scripts/sim/codes/code_direitos.gd:18 scripts/sim/law_catalog.gd_(escolha_dr_right)
-msgid "a propriedade privada"
-msgstr ""
-
-#: scripts/sim/codes/code_direitos.gd:18 scripts/sim/law_catalog.gd_(escolha_dr_right)
-msgid "a liberdade de ir e vir"
-msgstr ""
-
-#: scripts/sim/codes/code_direitos.gd:18 scripts/sim/law_catalog.gd_(escolha_dr_right)
-msgid "a educação pública gratuita"
-msgstr ""
-
-#: scripts/sim/codes/code_direitos.gd:19 scripts/sim/law_catalog.gd_(escolha_dr_right)
-msgid "a saúde pública gratuita"
-msgstr ""
-
-#: scripts/sim/codes/code_direitos.gd:19 scripts/sim/law_catalog.gd_(escolha_dr_right)
-msgid "a moradia digna"
-msgstr ""
-
-#: scripts/sim/codes/code_direitos.gd:19 scripts/sim/law_catalog.gd_(escolha_dr_right)
-msgid "o acesso à internet"
-msgstr ""
-
-#: scripts/sim/codes/code_direitos.gd:19 scripts/sim/law_catalog.gd_(escolha_dr_right)
-msgid "o voto"
-msgstr ""
-
-#: scripts/sim/codes/code_direitos.gd:20 scripts/sim/law_catalog.gd_(escolha_dr_right)
-msgid "o porte de arma"
-msgstr ""
-
-#: scripts/sim/codes/code_direitos.gd:20 scripts/sim/law_catalog.gd_(escolha_dr_right)
-msgid "o aborto legal"
-msgstr ""
-
-#: scripts/sim/codes/code_direitos.gd:26 scripts/sim/law_catalog.gd_(escolha_dr_scope)
-msgid "todas as pessoas"
-msgstr ""
-
-#: scripts/sim/codes/code_direitos.gd:26 scripts/sim/law_catalog.gd_(escolha_dr_scope)
-msgid "os maiores de 18 anos"
-msgstr ""
-
-#: scripts/sim/codes/code_direitos.gd:26 scripts/sim/law_catalog.gd_(escolha_dr_scope)
-msgid "os cidadãos"
-msgstr ""
-
-#: scripts/sim/codes/code_direitos.gd:45 scripts/sim/law_catalog.gd_(escolha_dr_duty)
-msgid "pagar os tributos"
-msgstr ""
-
-#: scripts/sim/codes/code_direitos.gd:45 scripts/sim/law_catalog.gd_(escolha_dr_duty)
-msgid "vacinar-se e vacinar os filhos"
-msgstr ""
-
-#: scripts/sim/codes/code_direitos.gd:45 scripts/sim/law_catalog.gd_(escolha_dr_duty)
-msgid "alistar-se nas Forças Armadas aos 18 anos"
-msgstr ""
-
-#: scripts/sim/codes/code_direitos.gd:46 scripts/sim/law_catalog.gd_(escolha_dr_duty)
-msgid "votar nas eleições"
-msgstr ""
-
-#: scripts/sim/codes/code_direitos.gd:56 scripts/sim/law_catalog.gd_(escolha_dr_draftees)
-msgid "os homens"
-msgstr ""
-
-#: scripts/sim/codes/code_direitos.gd:56 scripts/sim/law_catalog.gd_(escolha_dr_draftees)
-msgid "homens e mulheres"
-msgstr ""
-
-#: scripts/sim/codes/code_direitos.gd:59 scripts/sim/law_catalog.gd_(escolha_dr_outlet)
-msgid "a imprensa"
-msgstr ""
-
-#: scripts/sim/codes/code_direitos.gd:59 scripts/sim/law_catalog.gd_(escolha_dr_outlet)
-msgid "a internet"
-msgstr ""
-
-#: scripts/sim/codes/code_direitos.gd:59 scripts/sim/law_catalog.gd_(escolha_dr_outlet)
-msgid "as artes e os espetáculos"
-msgstr ""
-
-#: scripts/sim/codes/code_direitos.gd:63 scripts/sim/law_catalog.gd_(escolha_dr_service)
-msgid "as redes sociais estrangeiras"
-msgstr ""
-
-#: scripts/sim/codes/code_direitos.gd:63 scripts/sim/law_catalog.gd_(escolha_dr_service)
-msgid "os sites de notícias estrangeiros"
-msgstr ""
-
-#: scripts/sim/codes/code_direitos.gd:63 scripts/sim/law_catalog.gd_(escolha_dr_service)
-msgid "as VPNs e ferramentas de anonimato"
-msgstr ""
-
-#: scripts/sim/codes/code_direitos.gd:223
-#, c-format
-msgid "garante %s"
-msgstr ""
-
-#: scripts/sim/codes/code_direitos.gd:227
-#, c-format
-msgid "suspende %s"
-msgstr ""
-
-#: scripts/sim/codes/code_direitos.gd:231
-#, c-format
-msgid "dever de %s"
-msgstr ""
-
-#: scripts/sim/codes/code_direitos.gd:235
-#, c-format
-msgid "serviço militar de %d meses"
-msgstr ""
-
-#: scripts/sim/codes/code_direitos.gd:239
-#, c-format
-msgid "escola obrigatória até os %d anos"
-msgstr ""
-
-#: scripts/sim/codes/code_direitos.gd:242
-msgid "censura prévia"
-msgstr ""
-
-#: scripts/sim/codes/code_direitos.gd:245
-msgid "conselho de regulação"
-msgstr ""
-
-#: scripts/sim/codes/code_direitos.gd:248
-msgid "bloqueio na internet"
-msgstr ""
-
-#: scripts/sim/codes/code_direitos.gd:252
-#, c-format
-msgid "Estado de emergência decretado por %d dias."
-msgstr ""
-
-#: scripts/sim/codes/code_direitos.gd:253
-#, c-format
-msgid "estado de emergência por %d dias"
-msgstr ""
-
-#: scripts/sim/codes/code_eleitoral.gd:102
+#: scripts/sim/codes/code_electoral.gd:102
 #, c-format
 msgid "sistema sem efeito: a Constituição (Art. 18) fixa %s"
 msgstr ""
 
-#: scripts/sim/codes/code_eleitoral.gd:106
+#: scripts/sim/codes/code_electoral.gd:106
 #, c-format
 msgid "barreira abaixo do piso constitucional de %d%%: vale a Constituição"
 msgstr ""
 
-#: scripts/sim/codes/code_eleitoral.gd:109
+#: scripts/sim/codes/code_electoral.gd:109
 #, c-format
 msgid "mandato sem efeito: a Constituição (Art. 4º) fixa %d anos"
+msgstr ""
+
+#: scripts/sim/codes/code_exchange.gd:72
+#, c-format
+msgid "fundo soberano recebe %s%% da renda de commodities"
+msgstr ""
+
+#: scripts/sim/codes/code_exchange.gd:76
+#, c-format
+msgid "saque do fundo limitado a %s%% ao ano"
+msgstr ""
+
+#: scripts/sim/codes/code_labor.gd:145
+#, c-format
+msgid "salário mínimo de US$ %d"
 msgstr ""
 
 #: scripts/sim/codes/code_penal.gd:122
@@ -7692,9 +7530,171 @@ msgstr ""
 msgid "%s%% do PIB para %s"
 msgstr ""
 
-#: scripts/sim/codes/code_trabalhista.gd:145
+#: scripts/sim/codes/code_rights.gd:16 scripts/sim/law_catalog.gd_(escolha_dr_right)
+msgid "a liberdade de expressão"
+msgstr ""
+
+#: scripts/sim/codes/code_rights.gd:16 scripts/sim/law_catalog.gd_(escolha_dr_right)
+msgid "a liberdade de imprensa"
+msgstr ""
+
+#: scripts/sim/codes/code_rights.gd:16 scripts/sim/law_catalog.gd_(escolha_dr_right)
+msgid "a liberdade de reunião e associação"
+msgstr ""
+
+#: scripts/sim/codes/code_rights.gd:17 scripts/sim/law_catalog.gd_(escolha_dr_right)
+msgid "a liberdade de culto"
+msgstr ""
+
+#: scripts/sim/codes/code_rights.gd:17 scripts/sim/law_catalog.gd_(escolha_dr_right)
+msgid "a privacidade e o sigilo das comunicações"
+msgstr ""
+
+#: scripts/sim/codes/code_rights.gd:17 scripts/sim/law_catalog.gd_(escolha_dr_right)
+msgid "o direito de greve"
+msgstr ""
+
+#: scripts/sim/codes/code_rights.gd:18 scripts/sim/law_catalog.gd_(escolha_dr_right)
+msgid "a propriedade privada"
+msgstr ""
+
+#: scripts/sim/codes/code_rights.gd:18 scripts/sim/law_catalog.gd_(escolha_dr_right)
+msgid "a liberdade de ir e vir"
+msgstr ""
+
+#: scripts/sim/codes/code_rights.gd:18 scripts/sim/law_catalog.gd_(escolha_dr_right)
+msgid "a educação pública gratuita"
+msgstr ""
+
+#: scripts/sim/codes/code_rights.gd:19 scripts/sim/law_catalog.gd_(escolha_dr_right)
+msgid "a saúde pública gratuita"
+msgstr ""
+
+#: scripts/sim/codes/code_rights.gd:19 scripts/sim/law_catalog.gd_(escolha_dr_right)
+msgid "a moradia digna"
+msgstr ""
+
+#: scripts/sim/codes/code_rights.gd:19 scripts/sim/law_catalog.gd_(escolha_dr_right)
+msgid "o acesso à internet"
+msgstr ""
+
+#: scripts/sim/codes/code_rights.gd:19 scripts/sim/law_catalog.gd_(escolha_dr_right)
+msgid "o voto"
+msgstr ""
+
+#: scripts/sim/codes/code_rights.gd:20 scripts/sim/law_catalog.gd_(escolha_dr_right)
+msgid "o porte de arma"
+msgstr ""
+
+#: scripts/sim/codes/code_rights.gd:20 scripts/sim/law_catalog.gd_(escolha_dr_right)
+msgid "o aborto legal"
+msgstr ""
+
+#: scripts/sim/codes/code_rights.gd:26 scripts/sim/law_catalog.gd_(escolha_dr_scope)
+msgid "todas as pessoas"
+msgstr ""
+
+#: scripts/sim/codes/code_rights.gd:26 scripts/sim/law_catalog.gd_(escolha_dr_scope)
+msgid "os maiores de 18 anos"
+msgstr ""
+
+#: scripts/sim/codes/code_rights.gd:26 scripts/sim/law_catalog.gd_(escolha_dr_scope)
+msgid "os cidadãos"
+msgstr ""
+
+#: scripts/sim/codes/code_rights.gd:45 scripts/sim/law_catalog.gd_(escolha_dr_duty)
+msgid "pagar os tributos"
+msgstr ""
+
+#: scripts/sim/codes/code_rights.gd:45 scripts/sim/law_catalog.gd_(escolha_dr_duty)
+msgid "vacinar-se e vacinar os filhos"
+msgstr ""
+
+#: scripts/sim/codes/code_rights.gd:45 scripts/sim/law_catalog.gd_(escolha_dr_duty)
+msgid "alistar-se nas Forças Armadas aos 18 anos"
+msgstr ""
+
+#: scripts/sim/codes/code_rights.gd:46 scripts/sim/law_catalog.gd_(escolha_dr_duty)
+msgid "votar nas eleições"
+msgstr ""
+
+#: scripts/sim/codes/code_rights.gd:56 scripts/sim/law_catalog.gd_(escolha_dr_draftees)
+msgid "os homens"
+msgstr ""
+
+#: scripts/sim/codes/code_rights.gd:56 scripts/sim/law_catalog.gd_(escolha_dr_draftees)
+msgid "homens e mulheres"
+msgstr ""
+
+#: scripts/sim/codes/code_rights.gd:59 scripts/sim/law_catalog.gd_(escolha_dr_outlet)
+msgid "a imprensa"
+msgstr ""
+
+#: scripts/sim/codes/code_rights.gd:59 scripts/sim/law_catalog.gd_(escolha_dr_outlet)
+msgid "a internet"
+msgstr ""
+
+#: scripts/sim/codes/code_rights.gd:59 scripts/sim/law_catalog.gd_(escolha_dr_outlet)
+msgid "as artes e os espetáculos"
+msgstr ""
+
+#: scripts/sim/codes/code_rights.gd:63 scripts/sim/law_catalog.gd_(escolha_dr_service)
+msgid "as redes sociais estrangeiras"
+msgstr ""
+
+#: scripts/sim/codes/code_rights.gd:63 scripts/sim/law_catalog.gd_(escolha_dr_service)
+msgid "os sites de notícias estrangeiros"
+msgstr ""
+
+#: scripts/sim/codes/code_rights.gd:63 scripts/sim/law_catalog.gd_(escolha_dr_service)
+msgid "as VPNs e ferramentas de anonimato"
+msgstr ""
+
+#: scripts/sim/codes/code_rights.gd:223
 #, c-format
-msgid "salário mínimo de US$ %d"
+msgid "garante %s"
+msgstr ""
+
+#: scripts/sim/codes/code_rights.gd:227
+#, c-format
+msgid "suspende %s"
+msgstr ""
+
+#: scripts/sim/codes/code_rights.gd:231
+#, c-format
+msgid "dever de %s"
+msgstr ""
+
+#: scripts/sim/codes/code_rights.gd:235
+#, c-format
+msgid "serviço militar de %d meses"
+msgstr ""
+
+#: scripts/sim/codes/code_rights.gd:239
+#, c-format
+msgid "escola obrigatória até os %d anos"
+msgstr ""
+
+#: scripts/sim/codes/code_rights.gd:242
+msgid "censura prévia"
+msgstr ""
+
+#: scripts/sim/codes/code_rights.gd:245
+msgid "conselho de regulação"
+msgstr ""
+
+#: scripts/sim/codes/code_rights.gd:248
+msgid "bloqueio na internet"
+msgstr ""
+
+#: scripts/sim/codes/code_rights.gd:252
+#, c-format
+msgid "Estado de emergência decretado por %d dias."
+msgstr ""
+
+#: scripts/sim/codes/code_rights.gd:253
+#, c-format
+msgid "estado de emergência por %d dias"
 msgstr ""
 
 #: scripts/ui/agenda_window.gd:33 scripts/ui/chat_window.gd:40

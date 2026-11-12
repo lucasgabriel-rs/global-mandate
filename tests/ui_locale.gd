@@ -69,7 +69,7 @@ func _scan(node: Node, found: Array) -> void:
 func _no_portuguese(root: Node, what: String) -> void:
 	var found := _portuguese(root)
 	for text: String in found.slice(0, 8):
-		print("   português: ", text)
+		print("   Portuguese: ", text)
 	_check(found.is_empty(), "%s without Portuguese (%d texts)" % [what, found.size()])
 
 
@@ -126,7 +126,7 @@ func _run() -> void:
 	await _wait(8)
 	var reopened: LegislationCenter = main.legislation_center()
 	_check(reopened != null and (reopened.get_node("%role_note") as Label).text.begins_with("You act as"), "the open center redoes itself when the language switches")
-	await _shot("en_5_troca_com_centro")
+	await _shot("en_5_swap_with_center")
 	main.close_legislation()
 	_check(UiKit.thousand(1234567) == "1,234,567", "thousands with a comma in English (%s)" % UiKit.thousand(1234567))
 	Lang.apply("es", false)

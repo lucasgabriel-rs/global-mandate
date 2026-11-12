@@ -104,7 +104,7 @@ func _process(delta: float) -> void:
 			_click_at(r.position + Vector2(r.size.x * 0.9, r.size.y * 0.1))
 			var me: Dictionary = compass.points[-1]
 			_check(float(me.econ) > 0.5 and float(me.social) < -0.5, "click marks right and authoritarian (%.2f, %.2f)" % [me.econ, me.social])
-			_shot("s1_escolha")
+			_shot("s1_choice")
 			_click(_text(root, "assentos"))
 		5:
 			_check(main.playing, "match starts")
@@ -116,11 +116,11 @@ func _process(delta: float) -> void:
 		6:
 			_check(hud._dock.items().filter(func(i): return i.window_index >= 0).size() == hud._desk.get_tab_count(), "the dock has one icon per window")
 			_check(hud._cabinet._rows.get_child_count() == Politics.PORTFOLIOS.size(), "one row per portfolio")
-			_shot("s2_ministros")
+			_shot("s2_ministers")
 			_click(_named(hud._cabinet, "pick_finance"))
 		7:
 			_check(main.modal_open, "choosing opens the list")
-			_shot("s3_escolha_ministro")
+			_shot("s3_choice_minister")
 			var first := _text(root, "competência")
 			_check(first != null, "list brings the competence:" + (first.text if first else ""))
 			first.pressed.emit()
@@ -128,12 +128,12 @@ func _process(delta: float) -> void:
 			_check(not main.modal_open and not w.politics.minister(w, "finance").is_empty(), "nomeia: " + hud._cabinet._status.text)
 			hud._desk.current_tab = hud._politics_tab
 		9:
-			_shot("s4_politica")
+			_shot("s4_politics")
 			var party: Dictionary = w.politics.player_party(w)
 			_click(_named(hud._politics, "party_%d" % int(party.id)))
 		10:
 			_check(main.modal_open and _named(root, "party_compass") != null, "party shows the compass")
-			_shot("s5_partido")
+			_shot("s5_party")
 			var compass: CompassView = _named(root, "party_compass")
 			var party: Dictionary = w.politics.player_party(w)
 			_check(compass.points.size() == party.members.size() + 1, "one dot per politician, plus the average")
@@ -142,14 +142,14 @@ func _process(delta: float) -> void:
 			main.map.select(w.by_iso["ARG"])
 			hud.show_country(w.by_iso["ARG"])
 		12:
-			_shot("s6_dossie")
+			_shot("s6_dossier")
 			_check(hud._dossier_dyn.leader.text != "—", "dossier shows the leader:" + hud._dossier_dyn.leader.text)
 			var talk: Button = hud._dossier_dyn.talk
 			_check(talk.text.begins_with("Falar com"), talk.text)
 			_click(talk)
 		13:
 			_check(main.modal_open and _named(root, "talk_compass") != null, "conversation opens with the leader's compass")
-			_shot("s7_conversa")
+			_shot("s7_conversation")
 			mark = w.diplomacy.relation(w.player.idx, w.by_iso["ARG"].idx)
 			_click(_named(root, "say_praise"))
 		14:
@@ -158,7 +158,7 @@ func _process(delta: float) -> void:
 			_check(thread.size() == 3 and thread[1].me and not thread[2].me, "the line and the answer become bubbles:" + str(thread.size()))
 			_check((_named(root, "thread") as Control).get_child_count() == 3, "the conversation shows one bubble per message")
 			_check(_named(root, "contact_party_%d" % int(PartyTalk.contacts(w)[0].id)) != null, "party leaders appear as contacts")
-			_shot("s8_resposta")
+			_shot("s8_answer")
 			_click(_named(root, "say_protest"))
 		15:
 			_click(_named(root, "say_protest"))
@@ -177,7 +177,7 @@ func _process(delta: float) -> void:
 			w.check_player_politics(w.player)
 		18:
 			_check(main.modal_open and not w.over, "lost election opens the notice, without game over")
-			_shot("s9_derrota")
+			_shot("s9_defeat")
 			_dismiss()
 		19:
 			_check(not w.in_office and hud._player_name.text.contains("oposição"), "bar shows the opposition:" + hud._player_name.text)
@@ -198,7 +198,7 @@ func _process(delta: float) -> void:
 			hud.show_country(w.by_iso["ARG"])
 		23:
 			_check((hud._dossier_dyn.talk as Button).disabled, "no conversation in opposition")
-			_shot("s11_opposition_dossie")
+			_shot("s11_opposition_dossier")
 			main.map.select(null)
 			hud.show_country(null)
 			# Advance with the AI governing.
@@ -224,7 +224,7 @@ func _process(delta: float) -> void:
 			wait = 0.6
 		27:
 			_check(w.in_office, "election returns power")
-			_shot("s12_volta")
+			_shot("s12_return")
 			_dismiss()
 		28:
 			hud.refresh(true)
@@ -246,7 +246,7 @@ func _process(delta: float) -> void:
 		32:
 			var ruling: Dictionary = w.politics.ruling_party("DEU")
 			_check(_text(root, ruling.name).disabled, "in opposition, the government party is unavailable")
-			_shot("s13_papel_opposition")
+			_shot("s13_role_opposition")
 			mark = ruling.id
 			var other: Dictionary = {}
 			for p: Dictionary in w.politics.data_of("DEU").parties:
@@ -264,7 +264,7 @@ func _process(delta: float) -> void:
 			hud._desk.current_tab = hud._politics_tab
 		34:
 			_check(hud._politics._opposition.visible, "opposition actions from the start")
-			_shot("s14_comeca_opposition")
+			_shot("s14_starts_opposition")
 			main._restart()
 		35:
 			# New match in opposition, with their own party.
@@ -306,6 +306,6 @@ func _process(delta: float) -> void:
 			_click(_text(root, "Confirmar"))
 		45:
 			_check((_named(root, "role_opposition") as Button).disabled, "a closed regime has no playable opposition")
-			_shot("s15_regime_fechado")
+			_shot("s15_regime_closed")
 			print("RESULT: ", failures, " failures")
 			get_tree().quit(1 if failures > 0 else 0)

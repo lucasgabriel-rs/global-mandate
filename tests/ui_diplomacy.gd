@@ -161,13 +161,13 @@ func _chat_flow(w: GameWorld) -> void:
 	_check(thread.size() >= 2 and String(thread[-1].text).contains("cooperação climática"), "the leader opens with the proposal in the chat")
 	for id: String in ["accept", "refuse", "counter"]:
 		_check(chat.find_child("say_offer_" + id, true, false) != null, "answer button:" + id)
-	await _shot("d1_proposta")
+	await _shot("d1_proposal")
 	(chat.find_child("say_offer_accept", true, false) as Button).pressed.emit()
 	await _frames(3)
 	_check(not w.treaties.between(me, fra, "climate").is_empty(), "aceitar assina o tratado")
 	_check(chat.find_child("say_offer_accept", true, false) == null, "after the answer the buttons disappear")
 	_check(chat.find_child("say_praise", true, false) != null, "the conversation continues with the usual lines")
-	await _shot("d2_depois_de_aceitar")
+	await _shot("d2_after_of_accept")
 	main._close_modal(chat)
 	await _frames(2)
 
@@ -183,7 +183,7 @@ func _agenda_flow(w: GameWorld) -> void:
 	_check(rows == parties and parties > 0, "the contact book lists the party leaders: %d of %d" % [rows, parties])
 	rows = agenda.find_children("agenda_country_*", "", true, false).size()
 	_check(rows == countries, "the contact book lists the country leaders: %d of %d" % [rows, countries])
-	await _shot("d3_agenda")
+	await _shot("d3_contacts")
 	var search: LineEdit = agenda.find_child("search", true, false)
 	search.text = "ger"
 	search.text_changed.emit("ger")
@@ -213,6 +213,6 @@ func _agenda_flow(w: GameWorld) -> void:
 	await _frames(4)
 	var chats: Array = main.modal_root.get_children().filter(func(c): return c is ChatWindow and not c.is_queued_for_deletion())
 	_check(chats.size() == 1 and chat.current == "partido:%d" % party_id, "choosing a party swaps the contact in the same window")
-	await _shot("d4_partido")
+	await _shot("d4_party")
 	main._close_modal(chat)
 	await _frames(2)

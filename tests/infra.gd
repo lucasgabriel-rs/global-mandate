@@ -1,6 +1,6 @@
 extends SceneTree
 ## Ports and airports: data, demand, saturation, war, works, concessions and saving/loading, without the interface.
-## Uso: godot --headless --path . --script tests/infra.gd
+## Usage: godot --headless --path . --script tests/infra.gd
 
 var failures := 0
 

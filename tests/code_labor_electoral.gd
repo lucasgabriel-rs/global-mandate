@@ -1,6 +1,6 @@
 extends SceneTree
 ## Labor and Electoral Codes: seeding, minimum wage and unemployment, electoral threshold and reelection.
-## Uso: godot --headless --path . --script tests/code_labor_electoral.gd
+## Usage: godot --headless --path . --script tests/code_labor_electoral.gd
 
 var failures := 0
 ## Priority above any norm: the test fixes the value on top of the original text.
@@ -73,7 +73,7 @@ func _minimum_wage() -> void:
 	_check(absf(float(high.legislation.standing.minwage.valor.value) - wage) < 0.01, "the labor block writes the minimum wage in the same place as the advanced one")
 	_months(base, 18)
 	_months(high, 18)
-	print("  desemprego: base %.2f%%, mínimo alto %.2f%%" % [base.player.unemp * 100.0, high.player.unemp * 100.0])
+	print("  unemployment: base %.2f%%, high minimum %.2f%%" % [base.player.unemp * 100.0, high.player.unemp * 100.0])
 	_check(high.player.unemp > base.player.unemp + 0.01, "a high minimum wage raises unemployment over time")
 	# Retiring later increases labor supply and reduces the pension deficit.
 	var deficit0 := float(base.player.code_stats.deficit_previdencia)

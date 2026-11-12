@@ -1,7 +1,7 @@
 extends SceneTree
 ## Tax Code: the initial text reproduces the starting burden, brackets change collection by law,
 ## repealing restores what applied and evasion responds to rates and enforcement.
-## Uso: godot --headless --path . --script tests/code_tax.gd
+## Usage: godot --headless --path . --script tests/code_tax.gd
 
 var failures := 0
 
@@ -115,7 +115,7 @@ func _bracket_by_law() -> void:
 	_check(r.ok, "projeto apresentado: " + str(r.get("msg", "")))
 	_settle(world, bill)
 	_check(bill.state == Legislation.STATE_IN_FORCE, "the amendment takes effect:" + bill.state)
-	print("  renda: ", income0, " -> ", c.tax_income)
+	print("  income: ", income0, " -> ", c.tax_income)
 	_check(c.tax_income > income0 + 0.005, "higher brackets collect more")
 	var top := float(leg.code_standing("tributario").irpf_topo.aliquota)
 	_check(top > 30.0, "the code in force has the new rate: %.1f%%" % top)
@@ -163,7 +163,7 @@ func _evasion() -> void:
 	tr.apply(world, leg, "tr_irpf_topo", {"aliquota": 55.0}, 1.0, int(code.id), prio + 1.0)
 	tr.apply(world, leg, "tr_fiscalizacao", {"verba": 0.0}, 1.0, int(code.id), prio + 1.0)
 	_to_month_end(world)
-	print("  sonegação: ", stat0, " -> ", c.code_stats.sonegacao, " (law_evasion ", evasion0, " -> ", c.law_evasion, ")")
+	print("  evasion: ", stat0, " -> ", c.code_stats.sonegacao, " (law_evasion ", evasion0, " -> ", c.law_evasion, ")")
 	_check(c.law_evasion > evasion0 + 0.02, "a high rate without enforcement increases evasion")
 	var lax := c.law_evasion
 	tr.apply(world, leg, "tr_fiscalizacao", {"verba": 0.6}, 1.0, int(code.id), prio + 2.0)

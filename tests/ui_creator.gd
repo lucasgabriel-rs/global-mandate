@@ -23,7 +23,7 @@ func _ready() -> void:
 func _check(ok: bool, what: String) -> void:
 	if not ok:
 		failures += 1
-		print("FALHOU: ", what)
+		print("FAIL: ", what)
 	else:
 		print("ok: ", what)
 
@@ -88,13 +88,13 @@ func _run() -> void:
 	_check((dim.get_node("%country_label") as Label).text.contains("Brasil"), "the country appears below the ball")
 
 	(dim.get_node("%gender_m") as Button).pressed.emit()
-	var img := await _shot("criador_masculino")
+	var img := await _shot("creator_male")
 	_check(ch.gender == "m" and String(ch.first_name) in Names.GROUPS.pt.m, "male with a male first name: %s" % ch.first_name)
 	_check(first.text == ch.first_name, "the field shows the new first name")
 	_check(_pink_pixels(img, view) == 0, "no bow on the male")
 
 	(dim.get_node("%gender_f") as Button).pressed.emit()
-	img = await _shot("criador_feminino")
+	img = await _shot("creator_female")
 	_check(ch.gender == "f" and String(ch.first_name) in Names.GROUPS.pt.f, "female with a female first name: %s" % ch.first_name)
 	_check((dim.get_node("%gender_f") as Button).button_pressed and not (dim.get_node("%gender_m") as Button).button_pressed, "gender button checked")
 	var pink := _pink_pixels(img, view)
@@ -120,7 +120,7 @@ func _run() -> void:
 	_type(last, "Moreira")
 	var age: HSlider = dim.get_node("%age_slider")
 	age.value = 47
-	await _shot("criador_digitado")
+	await _shot("creator_typed")
 	(dim.get_node("%Confirm") as Button).pressed.emit()
 	await _frames()
 	await _close()
@@ -138,7 +138,7 @@ func _run() -> void:
 	Character.set_names(rus, rus.first_name, "Petrov")
 	(dim.get_node("%gender_f") as Button).pressed.emit()
 	_check(rus.last_name == "Petrova" and String(rus.first_name) in Names.GROUPS.ru.f, "russa: %s" % rus.name)
-	await _shot("criador_russia_feminino")
+	await _shot("creator_russia_female")
 	await _close()
 
 	# In the game: the HUD portrait and the politicians are also countryballs.
@@ -149,7 +149,7 @@ func _run() -> void:
 	var hud: Hud = main.hud
 	_check(hud._portrait is Countryball and hud._portrait.iso == "BRA" and hud._portrait.is_female(), "HUD portrait is the countryball with a bow")
 	_check(w.leader.name == "Helena Moreira" and w.politics.player_politician(w).get("gender", "") == "f", "the name and gender reach the match")
-	await _shot("hud_retrato")
+	await _shot("hud_portrait")
 	var party: Dictionary = w.politics.ruling_party("BRA")
 	main._open_party_detail(int(party.id))
 	await _frames()
@@ -158,7 +158,7 @@ func _run() -> void:
 	for b: Countryball in balls:
 		women += 1 if b.is_female() else 0
 	_check(balls.size() >= 3 and women > 0 and women < balls.size(), "politicians as countryballs, of both genders (%d of %d)" % [women, balls.size()])
-	await _shot("partido_politicos")
+	await _shot("party_politicians")
 	await _close()
 
 	# Gallery with all the flags, alternating genders.
@@ -179,6 +179,6 @@ func _run() -> void:
 		v.custom_minimum_size = Vector2(cell, cell)
 		v.show_person({"gender": "f" if i % 4 == 3 else "m"}, c.iso)
 		grid.add_child(v)
-	await _shot("galeria_bandeiras")
+	await _shot("gallery_flags")
 	main.modal_root.remove_child(gallery)
 	gallery.queue_free()

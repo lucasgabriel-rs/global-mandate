@@ -1,7 +1,7 @@
 extends SceneTree
 ## Companies and the exchange: data, revenue by sector, interest, index, banking crisis, bankruptcies, state company dividends,
 ## privatization and nationalization by law, IPOs, national champions, saving and loading, and CPU cost.
-## Uso: godot --headless --path . --script tests/corporate.gd
+## Usage: godot --headless --path . --script tests/corporate.gd
 
 var failures := 0
 
@@ -253,14 +253,14 @@ func _time_and_save() -> void:
 	for i in 365:
 		world.tick_day()
 	var ms := Time.get_ticks_msec() - t0
-	print("  um ano de jogo: %d ms" % ms)
+	print("  one year of game: %d ms" % ms)
 	for i in 365 * 4:
 		world.tick_day()
 	var counts := {}
 	for iso: String in world.corporate.markets:
 		for e: Dictionary in world.corporate.markets[iso].events:
 			counts[e.kind] = int(counts.get(e.kind, 0)) + 1
-	print("  em cinco anos: ", counts)
+	print("  in five years: ", counts)
 	_check(int(counts.get("ipo", 0)) > 0, "companies open their capital over time")
 	_check(int(counts.get("fechamento", 0)) > 0, "companies close their capital over time")
 	_check(int(counts.get("nova", 0)) > 0, "empresas nascem")

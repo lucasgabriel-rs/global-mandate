@@ -1,7 +1,7 @@
 extends SceneTree
 ## Sectors of the economy: starting composition, closing on GDP, reaction to the cycle and to shocks,
 ## sector impulse on potential and saving/loading.
-## Uso: godot --headless --path . --script tests/sectors.gd
+## Usage: godot --headless --path . --script tests/sectors.gd
 
 var failures := 0
 
@@ -88,7 +88,7 @@ func _init() -> void:
 		oil.tick_day()
 	_check(os.sector_share[Sectors.MINING] > m0 * 1.04, "expensive oil increases Saudi mining (%.1f%% → %.1f%%)" % [m0 * 100.0, os.sector_share[Sectors.MINING] * 100.0])
 
-	# Guerra derruba o turismo.
+	# War brings down tourism.
 	var war := _fresh()
 	var wb: Country = war.by_iso["BRA"]
 	var t0 := wb.sector_share[Sectors.TOURISM]

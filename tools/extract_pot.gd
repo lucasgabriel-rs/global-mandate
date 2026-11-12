@@ -2,7 +2,7 @@ extends SceneTree
 ## Generates locale/messages.pot with all the game's translatable texts and, with --merge, updates the .po files with
 ## msgmerge. The msgid is always the original text in Portuguese.
 ##
-## Uso:
+## Usage:
 ##   godot --headless --path . --script tools/extract_pot.gd              .pot only
 ##   godot --headless --path . --script tools/extract_pot.gd -- --merge   .pot and msgmerge on the .po files
 ##

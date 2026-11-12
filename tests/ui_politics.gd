@@ -75,7 +75,7 @@ func _process(delta: float) -> void:
 			main._start_button.pressed.emit()
 		2:
 			_check(main.modal_open, "criador abriu")
-			_shot("p1_criador")
+			_shot("p1_creator")
 			for key: String in ["first_name_edit", "last_name_edit", "gender_m", "gender_f", "roll_name", "age_slider"]:
 				_check(_named(root, key) != null, "option" + key)
 			var view := _view(root)
@@ -88,11 +88,11 @@ func _process(delta: float) -> void:
 			_check(leader.gender == "f" and leader.first_name == "Palito", "gender switches and the typed name stays")
 			_check(_view(root).is_female(), "the ball shows the bow")
 		4:
-			_shot("p2_personalizado")
+			_shot("p2_customized")
 			_click(_text(root, "Confirmar"))
 		5:
 			_check(main.modal_open and not main.playing, "a party is required before starting")
-			_shot("p3_partidos")
+			_shot("p3_parties")
 			_check(not (_named(root, "my_compass") as Control).is_visible_in_tree(), "without creating a party, there is no compass to choose")
 			(_named(root, "found_toggle") as Button).pressed.emit()
 			_check((_named(root, "my_compass") as Control).is_visible_in_tree(), "creating a party opens the compass")
@@ -115,7 +115,7 @@ func _process(delta: float) -> void:
 			main._set_speed(0)
 			hud._desk.current_tab = hud._politics_tab
 		9:
-			_shot("p4_parlamento")
+			_shot("p4_parliament")
 			_check(hud._dock.items().filter(func(i): return i.window_index >= 0).size() == hud._desk.get_tab_count(), "the dock has one icon per window")
 			_check(not hud._politics._hemicycle._seats.is_empty(), "chamber drawn")
 			var total: int = w.politics.data_of("BRA").seats_total
@@ -130,7 +130,7 @@ func _process(delta: float) -> void:
 			hud._politics.party_requested.emit()
 		11:
 			_check(main.modal_open, "switching party opens the choice")
-			_shot("p5_trocar")
+			_shot("p5_swap")
 			_check(_text(root, "Ficar em Partido do Palito") != null, "current party appears as stay")
 			_click(_text(root, "Cancelar"))
 		12:
@@ -139,7 +139,7 @@ func _process(delta: float) -> void:
 			hud.show_country(w.by_iso["ARG"])
 		13:
 			_check(hud._dossier_dyn.gov_party.text != "—", "dossier shows the party in government:" + hud._dossier_dyn.gov_party.text)
-			_shot("p6_dossie")
+			_shot("p6_dossier")
 			main.map.select(null)
 			hud.show_country(null)
 			# Direct budget through the Fiscal tab controls.
@@ -150,9 +150,9 @@ func _process(delta: float) -> void:
 			_check(absf(w.player.sp_social - income0 - 0.02) < 0.002, "the control changes spending right away: %s" % w.player.sp_social)
 			_check(not hud._sliders.has("tax_income") and not hud._sliders.has("tariff"), "taxes have no slider")
 			_check(hud._dyn.f_rate_tax_income.text.ends_with("%"), "the tab shows the rate in force:" + hud._dyn.f_rate_tax_income.text)
-			_shot("p7_orcamento")
+			_shot("p7_budget")
 		15:
-			# Uma lei obriga o valor e trava o controle.
+			# A law requires the value and locks the control.
 			var lock_law: Dictionary = w.legislation.new_norm(w, "ordinaria")
 			lock_law.title = "Piso"
 			lock_law.ementa = "Teste"
@@ -165,7 +165,7 @@ func _process(delta: float) -> void:
 			_check(not (hud._sliders.sp_health as HSlider).editable, "law locks the control")
 			_check(hud._slider_labels.sp_health.text.begins_with("Por lei"), "control says it is by law:" + hud._slider_labels.sp_health.text)
 			_check(absf(w.player.sp_health - 0.09) < 0.001, "spending follows the law")
-			_shot("p8_aprovado")
+			_shot("p8_approved")
 			# A bill that is approved also appears in the control.
 			hud._desk.current_tab = hud._politics_tab
 		17:

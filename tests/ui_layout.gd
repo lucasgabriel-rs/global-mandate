@@ -1,7 +1,7 @@
 extends Node
 ## Records the geometry and style of each visible control on every screen, plus a capture of
 ## each one. Running before and after touching the scenes and comparing shows whether something moved.
-## Uso: godot --path . -- --ui-layout --shots=DIR
+## Usage: godot --path . -- --ui-layout --shots=DIR
 
 const CONTAINERS := ["VBoxContainer", "HBoxContainer", "GridContainer", "CenterContainer", "MarginContainer", "ScrollContainer", "CanvasLayer"]
 

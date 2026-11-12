@@ -1,6 +1,6 @@
 extends SceneTree
 ## Demography: initial groups, aging, work, pensions and migration.
-## Uso: godot --headless --path . --script tests/demography.gd
+## Usage: godot --headless --path . --script tests/demography.gd
 
 var failures := 0
 

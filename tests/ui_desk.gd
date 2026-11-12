@@ -66,7 +66,7 @@ func _run() -> void:
 	_check(not (hud.get_node("%date") as Label).text.contains(":"), "the date appears without the hour:" + (hud.get_node("%date") as Label).text)
 	_check(desk.open_count() == 0, "the game starts with no open windows, with the map free")
 	_check(dock.items().filter(func(i): return i.window_index >= 0).size() == desk.get_tab_count(), "the dock has one icon per window: %d" % dock.items().size())
-	await _shot("d1_mapa_livre")
+	await _shot("d1_map_free")
 
 	# Open from the dock.
 	await _press(dock.item_for_window(0))
@@ -77,7 +77,7 @@ func _run() -> void:
 	_check(desk.open_count() == 3 and desk.current_tab == 9, "three open windows, the last in front")
 	_check(dock.item_for_window(1)._dot.visible, "the dot marks the open windows in the dock")
 	hud.refresh(true)
-	await _shot("d2_tres_janelas")
+	await _shot("d2_three_windows")
 
 	# Bring to the front and minimize.
 	await _press(dock.item_for_window(1))
@@ -131,7 +131,7 @@ func _run() -> void:
 	_check(not main.modal_open, "the center does not block the rest of the screen")
 	var center_rect := desk.window(hud.LEGISLATION_WINDOW).get_rect()
 	_check(absf(center_rect.get_center().x - desk.size.x * 0.5) < 60.0, "the window opens in the center of the screen")
-	await _shot("d3_legislacao")
+	await _shot("d3_legislation")
 	for it in dock.items():
 		if it.action == "legislation":
 			await _press(it)
@@ -145,13 +145,13 @@ func _run() -> void:
 	await _wait(30)
 	_check(target.magnify > 1.3, "the icon under the mouse grows: %.2f" % target.magnify)
 	hud.refresh(true)
-	await _shot("d4_dock_ampliado")
+	await _shot("d4_dock_expanded")
 
-	# Tela menor.
+	# Smaller screen.
 	get_window().size = Vector2i(1100, 680)
 	await _wait(12)
 	for i in desk.get_tab_count():
 		if desk.is_open(i):
 			var r := desk.window(i).get_rect()
 			_check(r.end.x <= desk.size.x + 1.0 and r.end.y <= desk.size.y + 1.0, "window %d fits on the smaller screen" % i)
-	await _shot("d5_tela_menor")
+	await _shot("d5_screen_smaller")

@@ -69,23 +69,23 @@ func _run() -> void:
 			top = i
 	_check(first.text == Sectors.NAMES[top], "o maior setor vem primeiro: " + first.text)
 	_check((rows.get_child(0).get_node("%sector_value") as Label).text.contains("US$"), "shows the value in dollars")
-	await _shot("e1_setores")
+	await _shot("e1_sectors")
 	for t in [1, 2, 3]:
 		(panel.get_node("%sub_tabs") as TabContainer).current_tab = t
 		hud.refresh(true)
 		await _wait()
-	await _shot("e2_bolsa")
+	await _shot("e2_exchange")
 	(panel.get_node("%sub_tabs") as TabContainer).current_tab = 4
 	hud.refresh(true)
 	await _wait()
 	var adult_bar: ProgressBar = panel.get_node("%adult_bar")
 	_check(absf(adult_bar.value - w.player.adult) < 0.01 and adult_bar.value > 0.4, "the Population sub-tab shows the working age")
 	_check((panel.get_node("%pop_total") as Label).text.contains("milh") or (panel.get_node("%pop_total") as Label).text.contains("mill"), "shows the total population")
-	await _shot("e2b_populacao")
+	await _shot("e2b_population")
 	(panel.get_node("%sub_tabs") as TabContainer).current_tab = 0
 	get_window().size = Vector2i(1100, 700)
 	await _wait(8)
-	await _shot("e3_janela_menor")
+	await _shot("e3_window_smaller")
 	get_window().size = Vector2i(1600, 900)
 	await _wait(4)
 	await _moeda(hud, tabs, w)
@@ -102,7 +102,7 @@ func _moeda(hud: Hud, tabs: WindowDesk, w: GameWorld) -> void:
 	_check((hud._dyn.m_res as Label).text.contains("US$"), "reserves in dollars")
 	_check((hud._dyn.mc_res as MiniChart).is_visible_in_tree() and (hud._dyn.mc_swf as MiniChart).is_visible_in_tree(), "charts of reserves and of the fund")
 	_check((hud._dyn.m_swf_status as Label).text == tr("sem fundo: crie pela Lei Cambial"), "Brazil appears without a sovereign fund")
-	await _shot("e4_moeda")
+	await _shot("e4_currency")
 	# With a fund like Norway's, the window shows balance, flows and rule.
 	var c := w.player
 	c.swf = 300.0
@@ -113,4 +113,4 @@ func _moeda(hud: Hud, tabs: WindowDesk, w: GameWorld) -> void:
 	await _wait()
 	_check((hud._dyn.m_swf as Label).text.contains("US$"), "fund balance:" + (hud._dyn.m_swf as Label).text)
 	_check((hud._dyn.m_swf_rule as Label).text.contains("3"), "withdrawal rule:" + (hud._dyn.m_swf_rule as Label).text)
-	await _shot("e5_moeda_fundo")
+	await _shot("e5_currency_fund")

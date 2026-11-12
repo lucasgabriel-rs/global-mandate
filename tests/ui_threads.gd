@@ -1,6 +1,6 @@
 extends Node
 ## Simulation on another thread: frames keep flowing, nothing is lost, and clicks in the middle are safe.
-## Uso: godot --path . -- --ui-threads
+## Usage: godot --path . -- --ui-threads
 
 const FRAME_LIMIT_MS := 50.0
 
@@ -101,7 +101,7 @@ func _month_turn() -> void:
 			break
 	main._set_speed(0)
 	main.join_sim()
-	print("  pior quadro na virada de mês e de ano: %.1f ms" % worst)
+	print("  worst frame on the month and year turn: %.1f ms" % worst)
 	_check(w.months_elapsed == month + 1, "the month turned")
 	_check(got_month[0], "the month's signal was delivered")
 	_check(worst < FRAME_LIMIT_MS, "the screen does not freeze: %.1f ms" % worst)
@@ -193,7 +193,7 @@ func _save_and_load() -> void:
 		var now := Time.get_ticks_usec()
 		worst = maxf(worst, (now - stamp) / 1000.0)
 		stamp = now
-	print("  pior quadro ao carregar: %.1f ms" % worst)
+	print("  worst frame when loading: %.1f ms" % worst)
 	_check(worst < FRAME_LIMIT_MS, "loading does not freeze the screen")
 	_check(Game.world != w and Game.world.day_index == day, "the save came back: day %d" % Game.world.day_index)
 	_check(main.playing, "the game continues after loading")

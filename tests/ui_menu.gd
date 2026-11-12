@@ -50,7 +50,7 @@ func _run() -> void:
 		_check(b.text == labels[key] and b.is_visible_in_tree(), "button %s" % labels[key])
 	_check((menu.get_node("%load_game") as Button).disabled == not SaveService.has_save(), "Load only turns on with a save")
 	_check(main.modal_open and not main.map.interactive, "the map stays still behind the menu")
-	await _shot("menu_inicial")
+	await _shot("menu_initial")
 
 	(menu.get_node("%settings") as Button).pressed.emit()
 	await _wait()
@@ -59,7 +59,7 @@ func _run() -> void:
 		if c is SettingsMenu:
 			settings = c
 	_check(settings != null, "Settings opens")
-	await _shot("configuracoes")
+	await _shot("settings")
 	var vsync: CheckButton = settings.get_node("%vsync")
 	vsync.button_pressed = false
 	_check(not GameSettings.vsync, "sincronia vertical desligada")
@@ -68,7 +68,7 @@ func _run() -> void:
 	scale.drag_ended.emit(true)
 	await _wait()
 	_check(is_equal_approx(get_tree().root.content_scale_factor, 1.25), "interface scale applied")
-	await _shot("configuracoes_escala")
+	await _shot("settings_scale")
 	var cfg := ConfigFile.new()
 	_check(cfg.load(GameSettings.path) == OK and not cfg.get_value("video", "vsync", true) and is_equal_approx(float(cfg.get_value("interface", "scale", 1.0)), 1.25), "the options are saved")
 	(settings.get_node("%restore") as Button).pressed.emit()

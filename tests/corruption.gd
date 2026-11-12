@@ -1,6 +1,6 @@
 extends SceneTree
 ## Corruption tests, without the interface: neutrality without actions, price in the fund, scandal, investigation and save.
-## Uso: godot --headless --path . -s tests/corruption.gd
+## Usage: godot --headless --path . -s tests/corruption.gd
 
 var failures := 0
 

@@ -1,6 +1,6 @@
 extends SceneTree
 ## Criminal and Civil Codes: initial text, effect in force, approved change and repeal.
-## Uso: godot --headless --path . --script tests/code_penal_civil.gd
+## Usage: godot --headless --path . --script tests/code_penal_civil.gd
 
 var failures := 0
 
@@ -108,7 +108,7 @@ func _reform_penal(world: GameWorld, leg: Legislation, crime0: float) -> void:
 	var crime1 := float(c.code_stats.criminalidade)
 	_advance(world, 150)
 	var crime2 := float(c.code_stats.criminalidade)
-	print("criminalidade: %.3f → %.3f → %.3f" % [crime0, crime1, crime2])
+	print("crime: %.3f → %.3f → %.3f" % [crime0, crime1, crime2])
 	_check(crime2 < crime1 and crime1 <= crime0 + 0.01, "more police and fewer weapons lower crime gradually")
 	_check(crime0 - crime2 < 0.25, "the drop is neither instant nor absurd")
 	_check(c.law_spend > spend0, "extra policing enters spending: %.4f → %.4f of GDP" % [spend0, c.law_spend])
@@ -125,7 +125,7 @@ func _reform_civil(world: GameWorld, leg: Legislation, trust0: float) -> void:
 	leg._enter_force(world, bill)
 	_advance(world, 120)
 	var trust := float(c.code_stats.seguranca_juridica)
-	print("segurança jurídica: %.3f → %.3f; invest %.3f, tfp %.4f" % [trust0, trust, c.law_invest, c.law_tfp])
+	print("legal security: %.3f → %.3f; invest %.3f, tfp %.4f" % [trust0, trust, c.law_invest, c.law_tfp])
 	_check(trust < trust0 - 0.05, "expropriating without paying and freezing contracts brings down legal security")
 	_check(c.law_tfp < 0.0, "bureaucracy weighs on productivity")
 

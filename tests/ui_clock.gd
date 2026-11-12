@@ -79,11 +79,11 @@ func _rate_ok(expected: float) -> void:
 	_check(main.hud._rate_label.text.ends_with("dia/s") and absf(shown - expected) <= expected * 0.2, "indicator shows:" + main.hud._rate_label.text)
 
 
-## Recorte só da barra com o relógio, para comparar o que foi desenhado no início e no fim da medição.
+## Crop of just the bar with the clock, to compare what was drawn at the start and at the end of the measurement.
 func _clock_shot(name_: String) -> void:
 	var img := get_viewport().get_texture().get_image()
 	img.get_region(Rect2i(0, 0, 620, 58)).save_png("%s/%s.png" % [out, name_])
-	print("relógio ", name_, ": ", main.hud._date.text)
+	print("clock ", name_, ": ", main.hud._date.text)
 
 
 func _start_measure() -> void:
@@ -186,14 +186,14 @@ func _process(delta: float) -> void:
 			_check(w.day_index == day0 + 7, "+7 days advances 7 days (%d)" % (w.day_index - day0))
 			_check(hud._skip_card.visible and hud._skip_title.text == "Resumo de 7 dias", "resumo aparece")
 			_check(hud._date.text == w.date_string(), "date updated in the bar")
-			_shot("t2_resumo_7")
+			_shot("t2_summary_7")
 			day0 = w.day_index
 			_click(hud._skip_buttons[1])
 			wait = 0.6
 		17:
 			_check(w.day_index == day0 + 30, "+30 days advances 30 days (%d)" % (w.day_index - day0))
 			_check(hud._skip_title.text == "Resumo de 30 dias", "30-day summary")
-			_shot("t3_resumo_30")
+			_shot("t3_summary_30")
 			_check(_contains_gdp(hud), "summary brings the indicators")
 			# Decision midway through the advance: stops, waits for the answer and completes the days.
 			day0 = w.day_index
@@ -206,7 +206,7 @@ func _process(delta: float) -> void:
 		18:
 			_check(main.modal_open and main._skip_left == 30, "decision interrupts the advance (%d days left)" % main._skip_left)
 			_check(w.day_index == day0, "no day passes while the decision waits")
-			_shot("t4_decisao")
+			_shot("t4_decision")
 			_dismiss()
 			wait = 0.6
 		19:

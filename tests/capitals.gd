@@ -1,6 +1,6 @@
 extends SceneTree
 ## Tests of the capitals of units and countries, without the interface.
-## Uso: godot --headless --path . -s tests/capitals.gd
+## Usage: godot --headless --path . -s tests/capitals.gd
 
 var failures := 0
 
@@ -199,7 +199,7 @@ func _init() -> void:
 	_check(far.distance_to(s5.units[ssa].center) > 12.0, "test case: municipality far from Salvador")
 	_check(s5.split_unit(ba, _box(far, 5.0), "LAM").ok and s5.capital_of(ba) == ssa, "capital far from the cut stays in the original")
 
-	# Guerra: unidade inteira cedida e capital nacional perdida.
+	# War: whole unit ceded and national capital lost.
 	var w6 := _world()
 	var s6 := w6.subdivisions
 	var news := []

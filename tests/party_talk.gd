@@ -1,6 +1,6 @@
 extends SceneTree
 ## Conversation with party leaders: asking them to support or vote against a law in procedure.
-## Uso: godot --headless --path . -s tests/party_talk.gd
+## Usage: godot --headless --path . -s tests/party_talk.gd
 
 var failures := 0
 

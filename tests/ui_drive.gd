@@ -46,10 +46,10 @@ func _process(delta: float) -> void:
 	var w: GameWorld = Game.world
 	match step:
 		1:
-			_shot("01_inicio")
+			_shot("01_start")
 			main._pick_start(w.by_iso["BRA"])
 		2:
-			_shot("02_escolha")
+			_shot("02_choice")
 			_check(not main._start_button.disabled, "start button enabled")
 			main._begin()
 			main._set_speed(3)
@@ -60,7 +60,7 @@ func _process(delta: float) -> void:
 			wait = 6.0
 		5:
 			_dismiss_prompts()
-			_shot("03_painel")
+			_shot("03_panel")
 			# A random decision may pause the game already in the first month.
 			_check(w.day_index > 25, "tempo passou (dia %d)" % w.day_index)
 			main.hud._desk.current_tab = 1
@@ -70,25 +70,25 @@ func _process(delta: float) -> void:
 			main.hud._desk.current_tab = 2
 		7:
 			_dismiss_prompts()
-			_shot("05_moeda")
+			_shot("05_currency")
 			main.hud._desk.current_tab = 3
 		8:
 			_dismiss_prompts()
-			_shot("06_comercio")
+			_shot("06_trade")
 			main.hud._desk.current_tab = 4
 		9:
 			_dismiss_prompts()
-			_shot("07_militar")
+			_shot("07_military")
 			main.hud._desk.current_tab = 5
 		10:
 			_dismiss_prompts()
-			_shot("08_mundo")
+			_shot("08_world")
 			main.hud._desk.current_tab = 0
 			main.map.select(w.by_iso["CHN"])
 			main.hud.show_country(w.by_iso["CHN"])
 		11:
 			_dismiss_prompts()
-			_shot("09_dossie")
+			_shot("09_dossier")
 			var rel: float = w.diplomacy.relation(w.player.idx, w.by_iso["CHN"].idx)
 			main.hud._on_action("mission")
 			_check(w.action_wait("mission", w.by_iso["CHN"]) > 0, "the same action only repeats after an interval")
@@ -96,11 +96,11 @@ func _process(delta: float) -> void:
 			main.hud._on_mode("inflacao")
 		12:
 			_dismiss_prompts()
-			_shot("10_modo_inflacao")
+			_shot("10_mode_inflation")
 			main.hud._on_mode("relacoes")
 		13:
 			_dismiss_prompts()
-			_shot("11_modo_relacoes")
+			_shot("11_mode_relations")
 			main.hud._on_mode("politico")
 			w.offer_alliance(w.by_iso["PER"])
 			w.diplomacy.declare_war(w.by_iso["IND"], w.by_iso["BGD"], w)
@@ -108,9 +108,9 @@ func _process(delta: float) -> void:
 			main.hud.show_country(w.by_iso["ARG"])
 			main.hud._desk.current_tab = 4
 		14:
-			_shot("11b_decisao")
+			_shot("11b_decision")
 			_dismiss_prompts()
-			_shot("12_guerra_alheia")
+			_shot("12_war_foreign")
 			_dismiss_prompts()
 			var r: Dictionary = w.do_action("war", w.by_iso["ARG"])
 			_check(r.ok, "player declares war")
@@ -118,7 +118,7 @@ func _process(delta: float) -> void:
 			wait = 3.0
 		16:
 			_dismiss_prompts()
-			_shot("13_guerra_jogador")
+			_shot("13_war_player")
 			main._save_game()
 			main.join_sim()
 			_check(FileAccess.file_exists(SaveService.path), "arquivo salvo")
@@ -137,7 +137,7 @@ func _process(delta: float) -> void:
 		19:
 			_dismiss_prompts()
 			_check(Game.world.day_index > 0, "game goes on after loading")
-			_shot("14_depois_de_carregar")
+			_shot("14_after_of_load")
 			Game.world.player.approval = 0.02
 			Game.world.player.next_election = Game.world.year_float()
 			Game.world.player.dem = 7.0
@@ -149,7 +149,7 @@ func _process(delta: float) -> void:
 			if not Game.world.over:
 				_dismiss_prompts()
 		27:
-			_shot("15_fim")
+			_shot("15_end")
 			_check(not Game.world.in_office and not Game.world.over, "electoral defeat leads to opposition (next election %.2f, year %.2f)" % [Game.world.player.next_election, Game.world.year_float()])
 			print("RESULT: ", failures, " failures")
 			get_tree().quit(1 if failures > 0 else 0)
@@ -158,7 +158,7 @@ func _process(delta: float) -> void:
 func _dismiss_prompts() -> void:
 	# The demarcation stops the clock until the player decides: here they give up the territory.
 	if main.hud.border.active:
-		print("demarcação aberta durante o roteiro: encerrando sem território")
+		print("demarcation open during the script: ending with no territory")
 		main.hud.border._on_decline()
 	# Closes pending decisions by choosing the first option, as a player would.
 	for dim in main.modal_root.get_children():

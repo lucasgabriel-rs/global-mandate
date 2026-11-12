@@ -1,6 +1,6 @@
 extends SceneTree
 ## Tests of opposition, politicians, compass, ministers and conversations, without the interface.
-## Uso: godot --headless --path . -s tests/statecraft.gd
+## Usage: godot --headless --path . -s tests/statecraft.gd
 
 var failures := 0
 
@@ -278,7 +278,7 @@ func _opposition() -> void:
 			e.check_player_politics(e.player)
 			if e.in_office:
 				result[key] += 1
-	print("voltas ao poder em 20 eleições: ", result)
+	print("returns to power in 20 elections: ", result)
 	_check(result.baixa >= 15, "an unpopular government makes the comeback easier")
 	_check(result.alta <= 3, "a popular government makes the comeback harder")
 	var back := _world("DEU", 300)

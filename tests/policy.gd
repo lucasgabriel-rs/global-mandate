@@ -1,7 +1,7 @@
 extends SceneTree
 ## Checks whether the player's levers have the expected economic effect.
 ## Compares each policy with a control, with the same seed and without player events.
-## Uso: godot --headless --path . -s tests/policy.gd
+## Usage: godot --headless --path . -s tests/policy.gd
 
 const YEARS := 4
 var failures := 0

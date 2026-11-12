@@ -77,13 +77,13 @@ func _process(delta: float) -> void:
 			main._set_speed(0)
 			hud._desk.current_tab = 0
 		2:
-			_shot("k1_mundo")
+			_shot("k1_world")
 			_check(hud._dyn.o_capital.text == "Brasília", "panel shows the country's capital")
 			map._camera.position = s.units[_state(s, "São Paulo")].center
 			map._camera.zoom = Vector2.ONE * 3.2
 			hud._desk.current_tab = hud._divisions_tab
 		3:
-			_shot("k2_estados")
+			_shot("k2_states")
 			_check(_find(panel._detail_box, "Brasília") != null, "tab shows the country's capital")
 			# Double level: state and then the municipality under the cursor.
 			var at: Vector2 = map.get_canvas_transform() * (s.units[_state(s, "São Paulo")].center as Vector2)
@@ -99,7 +99,7 @@ func _process(delta: float) -> void:
 			var state: int = s.chain_of(mun)[0]
 			_check(s.units[mun].parent == state and s.units[state].name == "São Paulo", "selected municipality:" + String(s.units[mun].name))
 			_check(s.capital_of(state) != mun, "is not yet the capital")
-			_shot("k3_controles")
+			_shot("k3_controls")
 			_click(_find(panel._detail_box, "Tornar capital de São Paulo").get_global_rect().get_center())
 		5:
 			var mun: int = panel.selected_unit
@@ -115,7 +115,7 @@ func _process(delta: float) -> void:
 			_check(hud._dossier_dyn.capital.text == s.units[mun].name, "dossier shows the new capital:" + hud._dossier_dyn.capital.text)
 			main.map.select(null)
 			hud.show_country(null)
-			_shot("k4_nova_capital")
+			_shot("k4_new_capital")
 			var move := InputEventMouseMotion.new()
 			move.position = map.get_canvas_transform() * (s.units[mun].center as Vector2)
 			move.global_position = move.position

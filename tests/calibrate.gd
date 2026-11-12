@@ -1,6 +1,6 @@
 extends SceneTree
 ## Runs the simulation without the interface and prints indicators to calibrate the model.
-## Uso: godot --headless --path . -s tests/calibrate.gd -- [anos] [semente] [cenario]
+## Usage: godot --headless --path . -s tests/calibrate.gd -- [years] [seed] [scenario]
 
 const WATCH := ["USA", "CHN", "DEU", "JPN", "IND", "BRA", "RUS", "UKR", "ARG", "TUR", "SAU", "NGA", "TWN"]
 
@@ -27,19 +27,19 @@ func _init() -> void:
 				w.markets.shock[Markets.OIL] = 0.18
 				w.markets.shock[Markets.GAS] = 0.18
 			if scenario != "" and d == 90 and y == 2:
-				print("  3 meses depois: oil=%.0f gas=%.1f chip=%.0f" % [w.markets.price[0], w.markets.price[1], w.markets.price[4]])
+				print("  3 months later: oil=%.0f gas=%.1f chip=%.0f" % [w.markets.price[0], w.markets.price[1], w.markets.price[4]])
 			if scenario != "" and d == 270 and y == 2:
-				print("  9 meses depois: oil=%.0f gas=%.1f chip=%.0f" % [w.markets.price[0], w.markets.price[1], w.markets.price[4]])
+				print("  9 months later: oil=%.0f gas=%.1f chip=%.0f" % [w.markets.price[0], w.markets.price[1], w.markets.price[4]])
 		issues += _report(w, 2025 + y)
 	var ms := Time.get_ticks_msec() - t0
-	print("tempo: %d ms para %d anos (%.2f ms/dia)" % [ms, years, float(ms) / (years * 365.0)])
-	print("guerras ativas: ", w.diplomacy.wars.map(func(x): return "%s>%s %.0f%%" % [w.countries[x.main_a].iso, w.countries[x.main_d].iso, x.front]))
+	print("time: %d ms for %d years (%.2f ms/day)" % [ms, years, float(ms) / (years * 365.0)])
+	print("active wars: ", w.diplomacy.wars.map(func(x): return "%s>%s %.0f%%" % [w.countries[x.main_a].iso, w.countries[x.main_d].iso, x.front]))
 	var dead := w.countries.filter(func(c): return not c.alive).map(func(c): return c.iso)
-	print("anexados: ", dead)
-	print("--- notícias (%d) ---" % news.size())
+	print("annexed: ", dead)
+	print("--- news (%d) ---" % news.size())
 	for line in news.slice(maxi(0, news.size() - 45)):
 		print(line)
-	print("problemas numéricos: ", issues)
+	print("numeric problems: ", issues)
 	quit(1 if issues > 0 else 0)
 
 
@@ -55,7 +55,7 @@ func _report(w: GameWorld, y: int) -> int:
 		for v in [c.y, c.p, c.e, c.pi_yoy, c.rate, c.debt_ratio, c.unemp, c.risk, c.gap, c.capital, c.tfp]:
 			if is_nan(v) or is_inf(v):
 				bad += 1
-				print("NaN em ", c.iso)
+				print("NaN in ", c.iso)
 				break
 		total += c.y_usd()
 		growth += c.growth_yoy() * c.y_usd()
@@ -64,7 +64,7 @@ func _report(w: GameWorld, y: int) -> int:
 			defaults += 1
 	infl.sort()
 	var m := w.markets
-	print("%d PIBm=%.0f g=%.1f%% infl.med=%.1f%% risco=%.2f tensao=%.2f defaults=%d | oil=%.0f gas=%.1f gr=%.0f met=%.0f chip=%.0f" % [
+	print("%d worldGDP=%.0f g=%.1f%% infl.med=%.1f%% risk=%.2f tension=%.2f defaults=%d | oil=%.0f gas=%.1f gr=%.0f met=%.0f chip=%.0f" % [
 		y, total, growth / total * 100.0, infl[infl.size() / 2] * 100.0, w.global_risk, w.global_tension, defaults,
 		m.price[0], m.price[1], m.price[2], m.price[3], m.price[4]])
 	var parts := []

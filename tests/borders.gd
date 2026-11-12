@@ -1,6 +1,6 @@
 extends SceneTree
 ## Tests of merging, splitting off, territorial cessions and the end of a war, without the interface.
-## Uso: godot --headless --path . -s tests/borders.gd
+## Usage: godot --headless --path . -s tests/borders.gd
 
 var failures := 0
 
@@ -251,7 +251,7 @@ func _war_endings() -> void:
 	if r5.ok:
 		_check(p5.size() == 1 and p5[0].title.begins_with("Vitória") and w5.territories.cessions.is_empty(), "winner by treaty chooses, nothing changes on its own")
 	else:
-		print("rival recusou nesta rodada; repetir com outra semente")
+		print("rival refused this round; repeat with another seed")
 
 	# The winning enemy imposes the cession on the player, with whole units.
 	var w6 := _world()

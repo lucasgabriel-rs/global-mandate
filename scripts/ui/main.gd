@@ -356,7 +356,7 @@ func _open_settings() -> void:
 	dim.closed.connect(func(): _close_modal(dim))
 
 
-# --- Tela inicial --------------------------------------------------------------
+# --- Start screen --------------------------------------------------------------
 
 func _build_start_screen() -> void:
 	start_screen = START_SCREEN.instantiate()
@@ -618,7 +618,7 @@ func _unhandled_key_input(event: InputEvent) -> void:
 			_open_menu()
 
 
-# --- Mapa ----------------------------------------------------------------------
+# --- Map ----------------------------------------------------------------------
 
 func _on_country_clicked(c: Country) -> void:
 	if loading:

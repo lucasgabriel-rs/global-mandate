@@ -1,6 +1,6 @@
 extends SceneTree
 ## Tests of parties and parliaments, without the interface.
-## Uso: godot --headless --path . -s tests/politics.gd
+## Usage: godot --headless --path . -s tests/politics.gd
 
 var failures := 0
 
@@ -39,7 +39,7 @@ func _init() -> void:
 			bad.append(c.iso + "(tamanho)")
 		sizes[c.iso] = data.seats_total
 	_check(bad.is_empty(), "the 170 countries have coherent parties and parliament %s" % str(bad.slice(0, 5)))
-	print("assentos: China %d, Brasil %d, Portugal %d, Luxemburgo %d" % [sizes.CHN, sizes.BRA, sizes.PRT, sizes.LUX])
+	print("seats: China %d, Brazil %d, Portugal %d, Luxembourg %d" % [sizes.CHN, sizes.BRA, sizes.PRT, sizes.LUX])
 	_check(sizes.CHN > sizes.BRA and sizes.BRA > sizes.PRT and sizes.PRT > sizes.LUX, "parliament grows with the population")
 	var closed := 0
 	var closed_bad := []
@@ -65,7 +65,7 @@ func _init() -> void:
 	# Quotas: 51.53, 30.92 and 18.55. The 2 seats left over go to the largest remainders: .92 and .55.
 	_check(d.parties[0].seats == 51 and d.parties[1].seats == 31 and d.parties[2].seats == 19, "largest remainders over valid votes (%d, %d, %d)" % [d.parties[0].seats, d.parties[1].seats, d.parties[2].seats])
 
-	# Escolher partido no início.
+	# Choosing a party at the start.
 	var w2 := _world()
 	var data2 := w2.politics.data_of("BRA")
 	var ordered: Array = data2.parties.duplicate()
@@ -114,7 +114,7 @@ func _init() -> void:
 	var w5 := _world()
 	var data5 := w5.politics.data_of("BRA")
 	var outs: Array = data5.parties.filter(func(p): return not p.id in data5.coalition)
-	print("coalizão inicial: ", data5.coalition.size(), " de ", data5.parties.size(), " partidos, ", w5.politics.government_seats("BRA"), " de ", data5.seats_total)
+	print("initial coalition: ", data5.coalition.size(), " of ", data5.parties.size(), " parties, ", w5.politics.government_seats("BRA"), " de ", data5.seats_total)
 	if not outs.is_empty():
 		var near: Dictionary = outs[0]
 		var ruling := w5.politics.ruling_party("BRA")
@@ -123,7 +123,7 @@ func _init() -> void:
 				near = p
 		w5.player.approval = 0.6
 		var inv := w5.politics.invite(w5, near.id)
-		print("convite: ", inv.msg)
+		print("invitation: ", inv.msg)
 		_check(inv.ok == (Politics.distance(ruling, near) <= Politics.COALITION_MAX_DISTANCE), "invitation follows ideological distance")
 		if inv.ok:
 			_check(near.id in data5.coalition, "invitee joins")
@@ -218,7 +218,7 @@ func _init() -> void:
 		lo.player.approval = 0.08
 		if lo.politics.player_election(lo).won:
 			wins.baixa += 1
-	print("vitórias em 20 eleições: ", wins)
+	print("wins in 20 elections: ", wins)
 	_check(wins.alta >= 18, "high approval wins almost always")
 	_check(wins.baixa <= 2, "very low approval loses almost always")
 	var ended := {}

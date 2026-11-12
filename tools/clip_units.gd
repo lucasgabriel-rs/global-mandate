@@ -2,7 +2,7 @@ extends SceneTree
 ## Limits the subnational units to whatever contains them: states by the country's outline on the map and
 ## municipalities by the state. Runs after build_admin1.mjs and build_municipalities.mjs and rewrites
 ## data/admin1.json and data/municipalities.json. Running it again does not change the result.
-## Uso: godot --headless --path . -s tools/clip_units.gd -- [--dry]
+## Usage: godot --headless --path . -s tools/clip_units.gd -- [--dry]
 ## To generate everything from scratch: build_map.mjs, build_admin1.mjs, build_municipalities.mjs and this script.
 ##
 ## A unit that falls entirely outside the outline, like an island that the map omits, becomes a small

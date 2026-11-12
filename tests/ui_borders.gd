@@ -129,14 +129,14 @@ func _process(delta: float) -> void:
 			main._start_button.pressed.emit()
 		2:
 			_check(main.modal_open, "taking office opens the creator")
-			_shot("c1_criador")
+			_shot("c1_creator")
 			_press_named(main.modal_root, "gender_f")
 		3:
-			_shot("c2_alterado")
+			_shot("c2_changed")
 			# One countryball for each country, to check all the flags in a gallery.
 			_gallery()
 		4:
-			_shot("c3_galeria")
+			_shot("c3_gallery")
 			_clear_gallery()
 			_press(main.modal_root, "Confirmar")
 			# The party is mandatory: picks the first on the list.
@@ -146,7 +146,7 @@ func _process(delta: float) -> void:
 			_check(not main.modal_open, "creator closes")
 			main._set_speed(0)
 		6:
-			_shot("c4_jogo")
+			_shot("c4_game")
 			map._camera.position = w.player.center
 			map._camera.zoom = Vector2.ONE * 3.2
 			hud._desk.current_tab = hud._divisions_tab
@@ -159,12 +159,12 @@ func _process(delta: float) -> void:
 			_click(_at(_center("BRA", "Amazonas")))
 			_check(panel._merge_ids.size() == 2, "click adds the neighbor")
 		9:
-			_shot("f1_fusao")
+			_shot("f1_merge")
 			_press(panel, "Confirmar fusão")
 		10:
 			merged_id = panel.selected_unit
 			_check(merged_id >= 0 and s.units[merged_id].name == "Pará" and _unit(s, "BRA", "Amazonas") == -1, "merge through the interface")
-			_shot("f2_fundido")
+			_shot("f2_merged")
 			_press(panel, "Desmembrar")
 		11:
 			_check(map.drawing and panel._splitting, "splitting opens the drawing")
@@ -172,10 +172,10 @@ func _process(delta: float) -> void:
 		12:
 			_check(s.custom_ids.size() >= 2 and not map.drawing, "splitting through the interface")
 			print("status: ", panel._status.text)
-			_shot("f3_desmembrado")
+			_shot("f3_split")
 			hud._desk.current_tab = 0
 			panel.select_unit(-1)
-			# Guerra vencida contra a Argentina.
+			# War won against Argentina.
 			var arg: Country = w.by_iso["ARG"]
 			w.diplomacy.declare_war(w.player, arg, w)
 			war = w.diplomacy.war_between(w.player.idx, arg.idx)
@@ -185,7 +185,7 @@ func _process(delta: float) -> void:
 			w.diplomacy._capitulation(war, w.player, arg, w)
 		13:
 			_check(main.modal_open, "victory opens the decision")
-			_shot("b1_decisao")
+			_shot("b1_decision")
 			_press(main.modal_root, "Demarcar novas fronteiras")
 		14:
 			wait = 0.8
@@ -202,7 +202,7 @@ func _process(delta: float) -> void:
 			_polygon(_center("ARG", "Mendoza"), 60.0)
 		17:
 			_check(hud.border._areas.size() == 2, "second area marked")
-			_shot("b2_demarcando")
+			_shot("b2_demarcating")
 			_press(hud.border, "Desfazer última área")
 		18:
 			_check(hud.border._areas.size() == 1, "undo removes the last one")
@@ -215,11 +215,11 @@ func _process(delta: float) -> void:
 			_check(arg.pop < pop0, "territory takes the population")
 			main._set_speed(0)
 		20:
-			_shot("b3_fronteira_nova")
+			_shot("b3_border_new")
 			main.map.select(w.player)
 			main.hud.show_country(w.player)
 		21:
-			_shot("b4_selecionado")
+			_shot("b4_selected")
 			main.map.select(null)
 			main.hud.show_country(null)
 			# Peace with no winner with Paraguay.
@@ -232,7 +232,7 @@ func _process(delta: float) -> void:
 			w._offer_negotiation(war, pry)
 		22:
 			_check(main.modal_open, "peace with no winner opens the negotiation")
-			_shot("n1_escolha")
+			_shot("n1_choice")
 			_press(main.modal_root, "Propor novas fronteiras")
 		23:
 			map._camera.position = w.by_iso["PRY"].center
@@ -241,20 +241,20 @@ func _process(delta: float) -> void:
 			# Exaggerated request: a good part of Paraguay, offering nothing.
 			_polygon(w.by_iso["PRY"].center, 60.0)
 		25:
-			_shot("n2_pedido")
+			_shot("n2_request")
 			print(hud.border._usage.text)
 			_press(hud.border, "Enviar proposta")
 		26:
 			_check(hud.border.active and w.diplomacy.wars.has(war), "rival recusa pedido exagerado")
-			print("resposta: ", hud.border._feedback.text)
-			_shot("n3_recusa")
+			print("answer: ", hud.border._feedback.text)
+			_shot("n3_refusal")
 			_press(hud.border, "Desfazer última área")
 			_polygon(w.by_iso["PRY"].center + Vector2(0, -6), 8.0)
 		27:
 			_press(hud.border, "Enviar proposta")
 		28:
 			_check(not hud.border.active and not w.diplomacy.wars.has(war), "reasonable proposal is accepted")
-			_shot("n4_acordo")
+			_shot("n4_deal")
 			main._save_game()
 		29:
 			var count: int = w.territories.cessions.size()
@@ -263,7 +263,7 @@ func _process(delta: float) -> void:
 		30:
 			_check(Game.world.territories.cessions.size() == int(hud.get_meta("count")), "loading restores the borders")
 			_check(not Game.world.leader.is_empty(), "carregar restaura o personagem")
-			_shot("n5_carregado")
+			_shot("n5_loaded")
 			SaveService.delete_files()
 			print("RESULT: ", failures, " failures")
 			get_tree().quit(1 if failures > 0 else 0)

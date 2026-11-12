@@ -1,7 +1,7 @@
 extends SceneTree
 ## The world moves on its own: governments act according to the leader's compass, free parliaments vote on projects and
 ## the economy stays sound. Prints what happened over years of play, without the player doing anything.
-## Uso: godot --headless --path . --script tests/world_ai.gd -- [anos] [semente]
+## Usage: godot --headless --path . --script tests/world_ai.gd -- [years] [seed]
 
 var failures := 0
 
@@ -28,7 +28,7 @@ func _force_leader(world: GameWorld, iso: String, econ: float, social: float) ->
 	leader.social = social
 
 
-## O mesmo país, com líderes opostos, toma caminhos diferentes.
+## The same country, with opposite leaders, takes different paths.
 func _compass_changes_behavior() -> void:
 	var results := {}
 	for label: String in ["esquerda", "direita"]:
@@ -77,8 +77,8 @@ func _run(years: int, seed_value: int) -> void:
 	for text: String in news:
 		if text.contains("guerra") or text.contains("Guerra") or text.contains("invade") or text.contains("ataca"):
 			war_news += 1
-	print("em %d anos (%.1f s de cálculo): %d notícias, %s" % [years, seconds, news.size(), str(kinds)])
-	print("sanções %d -> %d, alianças %d -> %d, livre comércio %d -> %d, guerras %d -> %d, notícias de guerra %d" % [sanctions0, world.diplomacy.sanctions.size(), alliances0, world.diplomacy.alliances.size(), fta0, world.diplomacy.fta.size(), wars0, world.diplomacy.wars.size(), war_news])
+	print("in %d years (%.1f s of computing): %d news items, %s" % [years, seconds, news.size(), str(kinds)])
+	print("sanctions %d -> %d, alliances %d -> %d, free trade %d -> %d, wars %d -> %d, war news %d" % [sanctions0, world.diplomacy.sanctions.size(), alliances0, world.diplomacy.alliances.size(), fta0, world.diplomacy.fta.size(), wars0, world.diplomacy.wars.size(), war_news])
 	var passed := 0
 	var rejected := 0
 	var closed_with_laws := 0
@@ -92,9 +92,9 @@ func _run(years: int, seed_value: int) -> void:
 				rejected += 1
 		if c.dem < Politics.FREE_PARLIAMENT_DEM and (not laws.is_empty() or data.has("pending_bill")):
 			closed_with_laws += 1
-	print("parlamentos: %d aprovados e %d rejeitados nas listas recentes" % [passed, rejected])
+	print("parliaments: %d approved and %d rejected in the recent lists" % [passed, rejected])
 	var player_bills: Array = world.legislation.norms.values().filter(func(n): return not n.get("by_player", false) and not n.get("base_code", false) and n.type != "constituicao")
-	print("projetos da IA no parlamento do jogador: %d" % player_bills.size())
+	print("AI projects in the player parliament: %d" % player_bills.size())
 	for line: String in news.slice(maxi(news.size() - 12, 0)):
 		print("  · ", line)
 	_check(news.size() > years * 12, "the news feed has more than one news item per month: %d" % news.size())
@@ -116,6 +116,6 @@ func _run(years: int, seed_value: int) -> void:
 				bad.append(c.iso)
 		if c.tax_total() > 0.75 or c.spend_total() > 0.85 or c.debt_ratio > 6.0:
 			bad.append("%s imposto %.2f gasto %.2f dívida %.2f" % [c.iso, c.tax_total(), c.spend_total(), c.debt_ratio])
-	print("países vivos: ", living)
+	print("countries alive: ", living)
 	_check(bad.size() <= 3, "economies without absurd values: %s" % str(bad.slice(0, 6)))
 	_check(living > 120, "the world does not destroy itself: %d countries" % living)

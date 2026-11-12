@@ -115,18 +115,18 @@ func _process(delta: float) -> void:
 		1:
 			main._pick_start(w.by_iso["BRA"])
 		2:
-			_shot("d0_inicio")
+			_shot("d0_start")
 			main._begin()
 			main._set_speed(0)
 		3:
-			_shot("d0b_mundo")
+			_shot("d0b_world")
 			# The two sources of borders must agree on who controls each unit.
 			var differ := []
 			for u: Dictionary in subs.units.values():
 				var land: Country = map.country_at(u.center)
 				if land and land.iso != u.owner:
 					differ.append("%s(%s/%s)" % [u.name, u.owner, land.iso])
-			print("unidades em país diferente no mapa: %d  %s" % [differ.size(), ", ".join(differ.slice(0, 40))])
+			print("units in a different country on the map: %d  %s" % [differ.size(), ", ".join(differ.slice(0, 40))])
 			_check(differ.size() < subs.base_count * 0.02, "units match the countries on the map")
 			map._camera.position = w.player.center
 			map._camera.zoom = Vector2.ONE * 3.2
@@ -135,7 +135,7 @@ func _process(delta: float) -> void:
 			_check(map.unit_pick, "Divisions tab turns on unit selection")
 			_check(panel._tree_box.get_child_count() == 28, "tree lists the country and Brazil's 27 units")
 			_check(subs.get_type(panel.active_type).owner == "BRA", "panel types are those of the player's country")
-			_shot("d1_cenario")
+			_shot("d1_scenario")
 			panel._on_new_type()
 		5:
 			var mine := subs.types_of("BRA")
@@ -155,7 +155,7 @@ func _process(delta: float) -> void:
 			_check(map.draft.size() == 4, "vertices placed by click")
 			_move(_screen(Vector2(-60, -40)))
 		8:
-			_shot("d2_desenhando")
+			_shot("d2_drawing")
 			_click(_screen(Vector2(40, 40)), MOUSE_BUTTON_RIGHT)
 			_check(map.draft.size() == 3, "right click undoes the last vertex")
 			_key(KEY_ESCAPE)
@@ -171,7 +171,7 @@ func _process(delta: float) -> void:
 			_click(_screen(Vector2(0, -160)))
 			_check(map.draft.size() == 3, "crossed edge is refused")
 		10:
-			_shot("d3_recusa")
+			_shot("d3_refusal")
 			_click(_screen(Vector2(-100, 0)))
 			_click(_screen(Vector2(-100, -100)))
 			_check(subs.custom_ids.is_empty() and not map.drawing, "polygon over existing states is refused at the country level")
@@ -182,7 +182,7 @@ func _process(delta: float) -> void:
 			state_id = panel.selected_unit
 			_check(state_id >= 0 and subs.units[state_id].owner == "BRA" and subs.units[state_id].parent == -1, "first click selects the state")
 			state_name = subs.units[state_id].name
-			print("estado: ", state_name)
+			print("state: ", state_name)
 			_click(_screen(Vector2.ZERO))
 			mun_id = panel.selected_unit
 			_check(subs.units[mun_id].parent == state_id, "second click goes down to the municipality:" + String(subs.units[mun_id].name))
@@ -195,7 +195,7 @@ func _process(delta: float) -> void:
 			_check(subs.custom_ids.size() == 1 and not map.drawing, "going back to the first point creates the unit")
 			child_id = subs.custom_ids[0]
 			var child: Dictionary = subs.units[child_id]
-			print("criada: ", child.name)
+			print("created: ", child.name)
 			_check(child.parent == mun_id, "unit stays inside the selected municipality")
 			_check(subs.get_type(child.type).name == "Região Autônoma", "unidade usa o tipo ativo")
 			panel.select_unit(child_id)
@@ -216,14 +216,14 @@ func _process(delta: float) -> void:
 			_check(subs.custom_ids.size() == 3, "coastal unit created")
 			var coast: Dictionary = subs.units[subs.custom_ids[2]]
 			var raw := 150.0 * 60.0 / pow(map._camera.zoom.x, 2.0)
-			print("costa: área %.1f do polígono de %.1f" % [coast.area, raw])
+			print("coast: area %.1f of the polygon of %.1f" % [coast.area, raw])
 			_check(coast.area < raw * 0.9, "polygon is clipped by the municipality")
 			# Search by name and collapsed list.
 			panel.select_unit(-1)
 			panel._search.text = "Belém"
 			panel._rebuild_tree()
 			_check(panel._tree_box.get_child_count() >= 1 and panel._tree_box.get_child_count() < 10, "search finds Belém (%d)" % panel._tree_box.get_child_count())
-			_shot("d3b_busca")
+			_shot("d3b_search")
 			panel._search.text = ""
 			panel._rebuild_tree()
 			# Foreign state: hovering identifies, clicking opens the dossier and does not select.
@@ -236,7 +236,7 @@ func _process(delta: float) -> void:
 			_check(hud._dossier_dyn.units.text != "0", "dossier shows the country's units:" + hud._dossier_dyn.units.text)
 			panel.select_unit(state_id)
 		17:
-			_shot("d4_hierarquia")
+			_shot("d4_hierarchy")
 			map._camera.position = _state_center(subs, "São Paulo")
 			map._camera.zoom = Vector2.ONE * 7.0
 		170:
@@ -250,7 +250,7 @@ func _process(delta: float) -> void:
 			map._camera.zoom = Vector2.ONE * 1.8
 			map._camera.position = w.usa.center
 		19:
-			_shot("d4c_eua")
+			_shot("d4c_usa")
 			map._camera.position = w.player.center
 			map._camera.zoom = Vector2.ONE * 3.2
 			subs.rename_unit(coast_id, "Litoral Renomeado")
@@ -268,12 +268,12 @@ func _process(delta: float) -> void:
 			hud._desk.current_tab = hud._divisions_tab
 			hud._on_mode("inflacao")
 		22:
-			_shot("d5_carregado_modo_dados")
+			_shot("d5_loaded_mode_data")
 			hud._on_mode("politico")
 			panel.select_unit(state_id)
 			panel._ask_delete(panel.selected_unit)
 		23:
-			_shot("d6_confirmar")
+			_shot("d6_confirm")
 			for dim in main.modal_root.get_children():
 				if dim is ColorRect:
 					_press(dim, "Confirmar")
@@ -282,13 +282,13 @@ func _process(delta: float) -> void:
 			_check(not s2.units.has(state_id) and s2.custom_ids.size() == 1, "deleting the state removes the units inside it")
 			# Country and the 26 states that were left, collapsed.
 			_check(panel._tree_box.get_child_count() == 27, "tree updated (%d)" % panel._tree_box.get_child_count())
-			_shot("d7_apagado")
+			_shot("d7_deleted")
 			main._set_speed(3)
 			wait = 4.0
 		25:
 			_dismiss()
 			print("fps com o jogo correndo: ", Engine.get_frames_per_second())
-			print("tempo por quadro: médio %.1f ms, máximo %.1f ms em %d quadros" % [frame_sum / maxi(frame_count, 1) * 1000.0, frame_max * 1000.0, frame_count])
+			print("frame time: average %.1f ms, maximum %.1f ms over %d frames" % [frame_sum / maxi(frame_count, 1) * 1000.0, frame_max * 1000.0, frame_count])
 			main._set_speed(0)
 			SaveService.delete_files()
 			print("RESULT: ", failures, " failures")

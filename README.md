@@ -270,9 +270,36 @@ All menus are scenes in `scenes/ui/`, opened and edited in Godot:
 - `rows/`: rows repeated in lists, such as news, party, minister, unit and sector.
 - `theme.tres`: general theme. The slider images are in `assets/ui/`.
 
-Texts, sizes, colors and positions can be changed freely in the editor. Scripts find nodes by unique name (`%`), so renaming a node marked with `%` requires changing the name in the script. Nodes with a prefix, such as `top_gdp`, `slider_tax_income`, `dossier_pop` or `action_war`, receive values by name and can be moved anywhere in the same scene. The parts of the dossier that only appear for another country are in the `foreign_only` group, and the parts of the party choice that only appear at the start are in `at_start_only`. Windows are children of the desk in `hud.tscn`, and their order there is their index in the dock.
+Texts, sizes, colors and positions can be changed freely in the editor. Scripts find nodes by unique name (`%`), so renaming a node marked with `%` requires changing the name in the script. The title of a `TabContainer` tab is the node name, or `metadata/_tab_name` when set (the translation key stays the Portuguese title). Nodes with a prefix, such as `top_gdp`, `slider_tax_income`, `dossier_pop` or `action_war`, receive values by name and can be moved anywhere in the same scene. The parts of the dossier that only appear for another country are in the `foreign_only` group, and the parts of the party choice that only appear at the start are in `at_start_only`. Windows are children of the desk in `hud.tscn`, and their order there is their index in the dock.
 
 Some texts change during the game: what the script writes into a label, such as values and country names, replaces the scene text. Charts, portraits, compasses and countryballs are drawn by script and appear empty in the editor. The debug menu commands are generated from the list in `debug_menu.gd`.
+
+## Code structure
+
+| Folder | Content |
+| --- | --- |
+| `scripts/sim/` | The simulation: world, economy, politics, legislation, diplomacy. No nodes and no autoloads: it runs on worker threads and from headless test scripts, where autoloads do not exist. `scripts/sim/codes/` has the legal codes. |
+| `scripts/ui/` | Scripts of the interface scenes in `scenes/`. |
+| `scripts/autoload/` | Autoload singletons (below). |
+| `tests/`, `tools/` | Tests (see Tests) and generators: data builders, `extract_pot.gd`, `run_tests.sh`. |
+
+Identifiers, node names, file names, comments and test names are in English. The texts the player sees keep their Portuguese `msgid` (it is the key of `locale/*.po`).
+
+### Autoloads
+
+Autoloads are registered in `project.godot` and hold state or services that the whole interface shares, instead of passing them from window to window:
+
+| Autoload | What it is for |
+| --- | --- |
+| `Game` | The match in progress: `Game.world` is the current world. `Main` sets it when a match starts, loads or restarts, and emits `world_changed`. |
+| `SaveService` | The save file: its path (interface tests use their own file, so they never touch the player's save), the safe write (temporary file, check, backup copy) and the read with fallback to the backup. |
+| `GameSettings` | Video and interface options (window mode, vsync, interface scale), saved in `user://settings.cfg`; also starts the language on launch. |
+
+The language is `Lang`, a static class and not an autoload: the simulation reads it (number format, `Lang.tr_if`) and the simulation cannot depend on autoloads. Everything else (`UiKit`, `GameData`, the catalogs) is a static class with constants, which does not need a singleton.
+
+### Save compatibility
+
+The save keeps some Portuguese ids so that old saves load without migration: norm types and fields (`emenda`, `constituicao`, `ementa`...), legal code ids (`tributario`, `penal`, `trabalhista`...), block and statement ids and their field names (`tr_irpf_topo`, `aliquota`...), the keys of `Country.code_stats` and of the code items, and the chat contact keys (`pais:ISO`, `partido:ID`). They are data, not identifiers; renaming any of them needs a migration in `load_dict`.
 
 ## Exporting
 
@@ -320,6 +347,8 @@ Each day's simulation, saving, loading and starting the game run on other thread
 `--ui-profile` measures the time of each heavy operation, and `--ui-threads` tests the turn of the month, clicks in the middle of the simulation, decisions during day skips and saving.
 
 ## Tests
+
+`tools/run_tests.sh [sim|ui|all] [filter]` runs the whole suite and prints one line per test.
 
 Headless tests run as scripts and print `RESULT: N failures`. Interface tests run the game with a flag and save screenshots to the folder given in `--shots`.
 

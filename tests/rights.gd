@@ -1,6 +1,6 @@
 extends SceneTree
 ## Rights and duties code: initial text, effect only of what changes, Constitution and military service.
-## Uso: godot --headless --path . --script tests/rights.gd
+## Usage: godot --headless --path . --script tests/rights.gd
 
 var failures := 0
 
@@ -80,7 +80,7 @@ func _seed() -> void:
 	_check(total < 1e-6, "with no change, the code does not move anything: %s" % str(got))
 	_check(is_equal_approx(c.troops0, troops0), "the base force stays as it was")
 	_check(float(c.code_stats.get("liberdades", -1.0)) > 60.0, "Brazil has a high freedom index: %s" % str(c.code_stats.get("liberdades")))
-	print("  aprovação das leis: ", approval, " -> ", c.law_approval)
+	print("  approval from laws: ", approval, " -> ", c.law_approval)
 
 
 func _change() -> void:

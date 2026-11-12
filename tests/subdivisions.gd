@@ -1,6 +1,6 @@
 extends SceneTree
 ## Tests of the subnational unit model and of the scenario data, without the interface.
-## Uso: godot --headless --path . -s tests/subdivisions.gd
+## Usage: godot --headless --path . -s tests/subdivisions.gd
 
 var failures := 0
 
@@ -103,11 +103,11 @@ func _model() -> void:
 func _scenario() -> void:
 	var t0 := Time.get_ticks_msec()
 	GameData.load_admin1()
-	print("leitura de admin1.json: %d ms" % (Time.get_ticks_msec() - t0))
+	print("admin1.json read: %d ms" % (Time.get_ticks_msec() - t0))
 	t0 = Time.get_ticks_msec()
 	var w := GameWorld.new()
 	w.setup(77)
-	print("montagem do mundo: %d ms" % (Time.get_ticks_msec() - t0))
+	print("world setup: %d ms" % (Time.get_ticks_msec() - t0))
 	var s := w.subdivisions
 
 	_check(s.units.size() == s.base_count and s.base_count >= 4220 + 5564, "scenario brings %d units" % s.base_count)
@@ -157,7 +157,7 @@ func _scenario() -> void:
 		if hit < 0 or s.units[hit].owner != u.owner:
 			misses += 1
 	var usec := Time.get_ticks_usec() - t0
-	print("busca por ponto: %.1f µs por consulta" % (float(usec) / s.base_count))
+	print("point lookup: %.1f µs per query" % (float(usec) / s.base_count))
 	_check(misses < s.base_count * 0.01, "centros encontram a unidade certa (%d erros)" % misses)
 
 	# Small and faithful save: without the scenario's geometry, with the player's edits and removals.
@@ -176,7 +176,7 @@ func _scenario() -> void:
 	var child := s.create_unit(_square(s.units[pa_mun].center.x, s.units[pa_mun].center.y, 1.0), mun, pa_mun, territory, "LAM", "BRA")
 	_check(child.ok, "unit created inside a municipality:" + str(child.get("msg", "")))
 	var bytes := var_to_bytes(s.to_dict())
-	print("unidades no save: %d KB" % (bytes.size() / 1024))
+	print("units in the save: %d KB" % (bytes.size() / 1024))
 	_check(bytes.size() < 800 * 1024, "save does not load the scenario's geometry")
 	var w2 := GameWorld.new()
 	w2.setup(77)
@@ -242,13 +242,13 @@ func _containment() -> void:
 		# Margin for the rounding of coordinates on writing, about 18 km² on the map.
 		if outside > maxf(float(u.area) * 0.005, 0.05):
 			over += 1
-			print("transborda: %s (%s) %.4f de %.4f" % [u.name, u.owner, outside, float(u.area)])
+			print("overflows: %s (%s) %.4f of %.4f" % [u.name, u.owner, outside, float(u.area)])
 			if outside > worst:
 				worst = outside
 				worst_name = "%s (%s)" % [u.name, u.owner]
 		if float(u.area) < 0.05:
 			islets += 1
-	print("unidades menores que 0,05: %d; pior transbordo: %.3f em %s" % [islets, worst, worst_name])
+	print("units smaller than 0.05: %d; worst overflow: %.3f in %s" % [islets, worst, worst_name])
 	_check(over == 0, "no unit goes beyond what contains it (%d go beyond)" % over)
 	var arc_groups := [[s.arcs, false], [s.mun_arcs, true]]
 	for group: Array in arc_groups:
@@ -262,7 +262,7 @@ func _containment() -> void:
 				total += 1
 				if not Territories._inside_any((pts[i] + pts[i + 1]) * 0.5, container):
 					bad += 1
-		print("divisas %s: %d trechos fora de %d" % ["de município" if group[1] else "de estado", bad, total])
+		print("borders %s: %d segments outside of %d" % ["of municipality" if group[1] else "of state", bad, total])
 		_check(bad == 0, "borders stay within the limit (%d of %d)" % [bad, total])
 	var rio := -1
 	for id: int in s.roots_of("BRA"):

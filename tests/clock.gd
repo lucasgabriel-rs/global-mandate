@@ -1,6 +1,6 @@
 extends SceneTree
 ## Tests of the day clock and of the absence of random events, without the interface.
-## Uso: godot --headless --path . -s tests/clock.gd
+## Usage: godot --headless --path . -s tests/clock.gd
 
 var failures := 0
 
@@ -62,7 +62,7 @@ func _init() -> void:
 	var titles := {}
 	for t: String in all_prompts:
 		titles[t.split(" ")[0]] = int(titles.get(t.split(" ")[0], 0)) + 1
-	print("janelas em 20 anos: ", titles)
+	print("windows in 20 years: ", titles)
 	_check(hits.is_empty(), "no random event in 20 years %s" % str(hits.slice(0, 5)))
 	_check(sim.markets.shock[Markets.GRAIN] == 0.0 or sim.markets.shock[Markets.GRAIN] <= prices0 + 0.0001, "no grain shock")
 	# The debug menu can still fire them.

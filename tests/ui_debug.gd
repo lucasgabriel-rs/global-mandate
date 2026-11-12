@@ -67,7 +67,7 @@ func _command(label: String) -> int:
 		if menu.commands[i].label == label:
 			return i
 	failures += 1
-	print("FAIL: comando não existe: ", label)
+	print("FAIL: command does not exist: ", label)
 	return 0
 
 
@@ -154,7 +154,7 @@ func _process(delta: float) -> void:
 			phase = 4
 			wait = 0.3
 		4:
-			_shot("g2_filtro")
+			_shot("g2_filter")
 			var shown := 0
 			for row: Dictionary in menu._rows:
 				for b: Button in row.buttons:
@@ -178,14 +178,14 @@ func _process(delta: float) -> void:
 			_click(pos)
 			_check(menu.target == Game.world.by_iso["USA"], "clicking the map switches the target to USA (%s)" % (menu.target.name if menu.target else "nenhum"))
 			_check(menu._options.get_item_text(menu._options.selected) == "Estados Unidos", "list shows the target")
-			_shot("g3_alvo")
+			_shot("g3_target")
 			phase = 42
 		42:
 			_click(main.map.get_canvas_transform() * Game.world.player.center)
 			phase = 43
 			wait = 0.3
 		43:
-			_shot("g4_proprio_pais")
+			_shot("g4_own_country")
 			_own_country()
 			phase = 5
 		5:
@@ -194,7 +194,7 @@ func _process(delta: float) -> void:
 		6:
 			_run_next()
 		7:
-			print("comandos executados: %d, reinícios: %d" % [menu.commands.size(), restarts])
+			print("commands run: %d, restarts: %d" % [menu.commands.size(), restarts])
 			SaveService.delete_files()
 			print("RESULT: ", failures, " failures")
 			get_tree().quit(1 if failures > 0 else 0)
@@ -307,7 +307,7 @@ func _run_next() -> void:
 	menu.run(index)
 	index += 1
 	if main.loading:
-		# Carregar e voltar ao início rodam em outra thread: o teste segue quando terminarem.
+		# Loading and going back to the start run on another thread: the test continues when they finish.
 		want_start = true
 		return
 	_settle()
@@ -344,6 +344,6 @@ func _run_next() -> void:
 func _sane(w: GameWorld) -> bool:
 	for c: Country in w.countries:
 		if c.alive and (is_nan(c.y) or is_inf(c.y) or is_nan(c.pop) or c.pop <= 0.0 or is_nan(c.e)):
-			print("país inválido: ", c.iso)
+			print("invalid country: ", c.iso)
 			return false
 	return true

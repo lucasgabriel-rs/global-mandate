@@ -2,7 +2,7 @@ extends SceneTree
 ## Exchange and sovereign fund: central bank intervention with reserves, capital controls and flight,
 ## dollarization, uncovered parity, starting fund balances, return, withdrawal rule, commodity
 ## buffer, risk, approval and the Exchange Law in the legislative center.
-## Uso: godot --headless --path . --script tests/fx_swf.gd
+## Usage: godot --headless --path . --script tests/fx_swf.gd
 
 var failures := 0
 
@@ -91,7 +91,7 @@ func _intervention() -> void:
 		for m in 6:
 			Economy._float_exchange(c, world)
 		results[lean] = [c.e / e0, r0 - c.reserves, c.fx_interv]
-	print("  câmbio sem intervenção x%.3f, com intervenção x%.3f; reservas vendidas %.1f" % [results[0.0][0], results[0.7][0], results[0.7][1]])
+	print("  exchange rate without intervention x%.3f, with intervention x%.3f; reserves sold %.1f" % [results[0.0][0], results[0.7][0], results[0.7][1]])
 	_check(results[0.7][1] > 1.0 and results[0.7][2] > 0.0, "the central bank sells reserves when the currency falls (US$ %.1f bn)" % results[0.7][1])
 	_check(absf(results[0.0][1]) < 0.5, "with no intervention reserves stay still")
 	_check(results[0.7][0] < results[0.0][0], "the intervention holds back the depreciation")

@@ -1,6 +1,6 @@
 extends SceneTree
 ## Core of the legislation system: compiler, engine, simulator, procedure, Constitution and effects.
-## Uso: godot --headless --path . --script tests/legislation.gd
+## Usage: godot --headless --path . --script tests/legislation.gd
 
 var failures := 0
 
@@ -242,10 +242,10 @@ func _procedure(world: GameWorld) -> void:
 	norm.ementa = "Teste"
 	r = leg.present(world, norm)
 	_check(r.ok and norm.state == Legislation.STATE_PROCESS, "law enters procedure")
-	# O Código Trabalhista já fixa um salário mínimo desde o início; o que conta é esta norma não valer.
+	# The Labor Code already fixes a minimum wage from the start; what matters is this norm not applying.
 	_check(int(leg.standing.minwage.get("valor", {}).get("norm", -1)) != int(norm.id), "before taking effect the norm does not apply")
 	_settle(world, norm)
-	print("  estado: ", norm.state, " votos: ", norm.votes.map(func(v): return "%d/%d" % [v.yes, v.needed]))
+	print("  state: ", norm.state, " votos: ", norm.votes.map(func(v): return "%d/%d" % [v.yes, v.needed]))
 	_check(norm.process.log.size() >= 4, "each stage was recorded: %d" % norm.process.log.size())
 	if norm.state == Legislation.STATE_IN_FORCE:
 		_check(leg.standing.minwage.has("valor"), "in force, the minimum wage applies")
@@ -628,7 +628,7 @@ func _negotiation() -> void:
 	var politics := world.politics
 	var data: Dictionary = politics.data_of("BRA")
 	politics.player_party(world).funds = 100000.0
-	# Sem acordo, a proposta distante cai.
+	# Without an agreement, the distant proposal falls.
 	var hostile := func() -> Dictionary:
 		var norm: Dictionary = leg.new_norm(world, "ordinaria")
 		norm.title = "Dura"
@@ -666,7 +666,7 @@ func _negotiation() -> void:
 			again = leg.negotiate(world, bought, p.id, true)
 			break
 	_check(not again.ok, "the same party does not negotiate the same proposal twice")
-	# Acordo força o voto, a favor e contra.
+	# An agreement forces the vote, for and against.
 	var forced: Dictionary = hostile.call()
 	forced["deals"] = {}
 	for p: Dictionary in data.parties:

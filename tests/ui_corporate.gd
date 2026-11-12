@@ -71,18 +71,18 @@ func _run() -> void:
 	_check(visible_rows.size() >= 10, "a subaba Empresas lista %d empresas" % visible_rows.size())
 	_check((visible_rows[0].get_node("%company_name") as Label).text != "", "the row shows the name")
 	_check(companies.get_node("%summary").text.contains("empresas"), "o resumo aparece: " + companies.get_node("%summary").text)
-	await _shot("c1_empresas")
+	await _shot("c1_companies")
 	companies.set_filters(Sectors.FINANCE, CompaniesPanel.CAPITAL_ALL)
 	await _wait()
 	visible_rows = rows.get_children().filter(func(r): return r.visible)
 	var all_finance := visible_rows.all(func(r): return (r.get_node("%company_info") as Label).text.begins_with(Sectors.NAMES[Sectors.FINANCE]))
 	_check(visible_rows.size() >= 3 and all_finance, "the sector filter shows only banks: %d" % visible_rows.size())
-	await _shot("c2_filtro_financas")
+	await _shot("c2_filter_finance")
 	companies.set_filters(-1, CompaniesPanel.CAPITAL_CLOSED)
 	await _wait()
 	visible_rows = rows.get_children().filter(func(r): return r.visible)
 	_check(visible_rows.size() >= 2 and visible_rows.all(func(r): return (r.get_node("%company_info") as Label).text.contains("Capital fechado")), "the closed-capital filter works: %d" % visible_rows.size())
-	await _shot("c3_fechadas")
+	await _shot("c3_closed")
 	companies.set_filters(-1, CompaniesPanel.CAPITAL_ALL)
 	# Bolsa.
 	tabs.current_tab = 3
@@ -94,7 +94,7 @@ func _run() -> void:
 	_check(stock.get_node("%gainers").get_children().any(func(r): return r.visible), "there are top gainers")
 	_check(stock.get_node("%losers").get_children().any(func(r): return r.visible), "there are top losers")
 	_check(stock.get_node("%total_cap").text.contains("US$"), "total market value:" + stock.get_node("%total_cap").text)
-	await _shot("c4_bolsa")
+	await _shot("c4_exchange")
 	# IPOs and privatization appear in the recent moves.
 	w.corporate.privatize(w, w.player, "Caixa Econômica Federal", 0.4)
 	hud.refresh(true)
@@ -106,7 +106,7 @@ func _run() -> void:
 		scroll = scroll.get_parent()
 	if scroll:
 		(scroll as ScrollContainer).scroll_vertical = 100000
-	await _shot("c5_bolsa_movimentos")
+	await _shot("c5_exchange_moves")
 	if scroll:
 		(scroll as ScrollContainer).scroll_vertical = 0
 	# Norm editor: privatization block with the list of companies.
@@ -130,6 +130,6 @@ func _run() -> void:
 			option.item_selected.emit(i)
 	await _wait()
 	_check(editor.last_compile.ok, "with Petrobras chosen, it compiles: %s" % str(editor.last_compile.errors))
-	await _shot("c6_privatizar")
+	await _shot("c6_privatize")
 	editor.close_editor()
 	await _wait()

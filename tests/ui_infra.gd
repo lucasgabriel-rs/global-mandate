@@ -93,7 +93,7 @@ func _run() -> void:
 	await _wait()
 	_check(panel.form.visible and (panel.form.get_node("%quote") as Label).text.contains("US$"), "the form shows cost and term")
 	await _scroll_to(panel, panel.get_node("%Actions"))
-	await _shot("i2_ampliar")
+	await _shot("i2_expand")
 	panel.form.get_node("%form_confirm").pressed.emit()
 	await _wait()
 	_check(inf.projects_of(c).size() == 1, "the project starts")
@@ -110,7 +110,7 @@ func _run() -> void:
 	size.select(2)
 	size.item_selected.emit(2)
 	await _wait()
-	await _shot("i3_construir")
+	await _shot("i3_build")
 	panel.form.get_node("%form_confirm").pressed.emit()
 	await _wait()
 	_check(inf.projects_of(c).size() == 2 and (panel.get_node("%project_rows") as Node).get_child_count() == 2, "two projects in the list")
@@ -120,7 +120,7 @@ func _run() -> void:
 	await _wait()
 	_check((panel.form.get_node("%quote") as Label).text.contains("Outorga"), "the concession shows the grant")
 	await _scroll_to(panel, panel.get_node("%Actions"))
-	await _shot("i4_conceder")
+	await _shot("i4_concede")
 	panel.form.get_node("%form_confirm").pressed.emit()
 	await _wait()
 	_check(inf.facility(int(sd.get_meta("id"))).owner == "concession", "Santos Dumont becomes a concession")
@@ -128,7 +128,7 @@ func _run() -> void:
 	hud.refresh(true)
 	await _wait()
 	await _scroll_to(panel, panel.get_node("%WorksTitle"))
-	await _shot("i5_obras")
+	await _shot("i5_works")
 	# War: occupation closes facilities.
 	c.occupied = c.occ0 + 0.6
 	inf.step_month(w)
@@ -142,7 +142,7 @@ func _run() -> void:
 				closed += 1
 	_check(closed > 0, "closed facilities appear as closed: %d" % closed)
 	await _scroll_to(panel, panel.get_node("%PortsTitle"))
-	await _shot("i6_fechados")
+	await _shot("i6_closed")
 	# Map: markers of the country's assets.
 	var map: MapView = main.map
 	map._target_zoom = 2.2
@@ -151,12 +151,12 @@ func _run() -> void:
 	hud._desk.current_tab = 0
 	await _wait(6)
 	_check(map._infra_marks.size() == inf.facilities_of(c, w).size(), "one marker per facility: %d" % map._infra_marks.size())
-	await _shot("i7_mapa")
+	await _shot("i7_map")
 	map._target_zoom = 4.5
 	map._camera.zoom = Vector2.ONE * 4.5
 	map._camera.position = map._project(-45.0, -23.0)
 	await _wait(6)
-	await _shot("i8_mapa_nomes")
+	await _shot("i8_map_names")
 	c.occupied = c.occ0
 	inf.step_month(w)
 	# Time moves along with all this.

@@ -1,7 +1,7 @@
 extends SceneTree
 ## Every interface scene must open without errors and without two nodes of the same name under the same parent: repeated
 ## names make the containers leave nodes out of the screen layout.
-## Uso: godot --headless --path . --script tests/scenes.gd
+## Usage: godot --headless --path . --script tests/scenes.gd
 
 var failures := 0
 
@@ -31,9 +31,9 @@ func _init() -> void:
 		var node := scene.instantiate(PackedScene.GEN_EDIT_STATE_MAIN) if scene else null
 		if node == null:
 			failures += 1
-			print("FAIL: não abre: ", path)
+			print("FAIL: does not open: ", path)
 		else:
 			node.free()
-	print("%d cenas conferidas" % all.size())
+	print("%d scenes checked" % all.size())
 	print("RESULT: %d failures" % failures)
 	quit()

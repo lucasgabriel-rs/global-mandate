@@ -1,8 +1,8 @@
 extends SceneTree
 ## Economy health in long matches: first-day accounts, reserves, exchange volatility, rating and
-## crédito, notícias macro, juro sob governo, sliders e impostos por lei, normas no peso fiscal e séries
-## plausible over 15 years.
-## Uso: godot --headless --path . --script tests/economy_health.gd
+## credit, macro news, interest under government, sliders and taxes by law, norms in the fiscal weight and
+## plausible series over 15 years.
+## Usage: godot --headless --path . --script tests/economy_health.gd
 
 var failures := 0
 
@@ -105,7 +105,7 @@ func _long_run() -> void:
 			bad_stock += 1
 	_check(bad_stock == 0, "exchange indices positive and finite (%d bad)" % bad_stock)
 
-	# Nota de crédito não pisca todo mês, e cada mudança do jogador vira notícia.
+	# The credit rating does not flicker every month, and each change of the player becomes news.
 	_check(bra_ratings.size() - 1 <= 8, "Brazil's rating changes few times in 15 years: %s" % str(bra_ratings))
 	var rating_news := news.filter(func(t): return String(t).contains("nota de crédito")).size()
 	_check(rating_news == bra_ratings.size() - 1, "each rating change of the player makes the news (%d news, %d changes)" % [rating_news, bra_ratings.size() - 1])

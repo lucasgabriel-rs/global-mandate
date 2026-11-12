@@ -1,25 +1,25 @@
 class_name Lang
 extends RefCounted
-## Idioma do jogo. O português do Brasil é o original: os textos em português são os msgid dos
-## catálogos em locale/*.po, então o que faltar traduzir aparece em português.
+## Game language. Brazilian Portuguese is the original: the Portuguese texts are the msgids of the
+## catalogs in locale/*.po, so whatever is missing a translation shows up in Portuguese.
 ##
-## A escolha fica em user://settings.cfg. Na primeira vez vale o idioma do sistema, se for inglês ou
-## espanhol. Os testes rodam sempre em português, porque comparam os textos originais.
+## The choice is kept in user://settings.cfg. The first time, the system language applies, if it is English or
+## Spanish. Tests always run in Portuguese, because they compare the original texts.
 
 const SETTINGS_PATH := "user://settings.cfg"
 const DEFAULT := "pt_BR"
-## Códigos na ordem do seletor.
+## Codes in the order of the selector.
 const CODES := ["pt_BR", "en", "es"]
-## Nome de cada idioma nele mesmo, como aparece no seletor.
+## Name of each language in itself, as it appears in the selector.
 const NATIVE_NAMES := {"pt_BR": "Português", "en": "English", "es": "Español"}
 
-## Números no estilo inglês (ponto decimal, vírgula nos milhares). Lido por UiKit, também na thread da
-## simulação; só muda na thread principal, ao trocar o idioma.
+## English-style numbers (decimal point, comma for thousands). Read by UiKit, also on the simulation
+## thread; it only changes on the main thread, when the language is switched.
 static var english_numbers := false
 
 
-## Idioma do começo do jogo: --lang=xx na linha de comando, o português nos testes de interface, o
-## salvo em settings.cfg ou o do sistema.
+## Language at the start of the game: --lang=xx on the command line, Portuguese in interface tests, the one
+## saved in settings.cfg or the system's.
 static func startup() -> void:
 	for arg: String in OS.get_cmdline_user_args():
 		if arg.begins_with("--lang="):
@@ -46,8 +46,8 @@ static func current() -> String:
 	return lang if lang in ["en", "es"] else DEFAULT
 
 
-## Troca o idioma. Os nós recebem NOTIFICATION_TRANSLATION_CHANGED; com save, a escolha fica para as
-## próximas partidas.
+## Switches the language. Nodes receive NOTIFICATION_TRANSLATION_CHANGED; with save, the choice is kept for
+## the next matches.
 static func apply(code: String, save := true) -> void:
 	if not code in CODES:
 		code = DEFAULT
@@ -60,7 +60,7 @@ static func apply(code: String, save := true) -> void:
 		cfg.save(SETTINGS_PATH)
 
 
-## Traduz só quando pedido: para textos que às vezes são guardados (em português) e às vezes mostrados.
-## O extrator reconhece tr_if("...") como texto traduzível.
+## Translates only when asked: for texts that are sometimes stored (in Portuguese) and sometimes shown.
+## The extractor recognizes tr_if("...") as translatable text.
 static func tr_if(text: String, localized: bool) -> String:
 	return TranslationServer.translate(text) if localized else text
