@@ -1,0 +1,57 @@
+[gd_scene format=3]
+
+[ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="1_theme"]
+
+[node name="ImfRow" type="HBoxContainer"]
+mouse_filter = 2
+theme = ExtResource("1_theme")
+theme_override_constants/separation = 8
+
+[node name="imf_name" type="Label" parent="."]
+size_flags_horizontal = 3
+custom_minimum_size = Vector2(130, 0)
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "País"
+horizontal_alignment = 0
+
+[node name="imf_g0" type="Label" parent="."]
+custom_minimum_size = Vector2(64, 0)
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "—"
+horizontal_alignment = 2
+
+[node name="imf_g1" type="Label" parent="."]
+custom_minimum_size = Vector2(64, 0)
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "—"
+horizontal_alignment = 2
+
+[node name="imf_p0" type="Label" parent="."]
+custom_minimum_size = Vector2(64, 0)
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "—"
+horizontal_alignment = 2
+
+[node name="imf_p1" type="Label" parent="."]
+custom_minimum_size = Vector2(64, 0)
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "—"
+horizontal_alignment = 2
+
+[node name="imf_d2" type="Label" parent="."]
+custom_minimum_size = Vector2(64, 0)
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "—"
+horizontal_alignment = 2

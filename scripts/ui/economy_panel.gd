@@ -1,6 +1,6 @@
 class_name EconomyPanel
 extends VBoxContainer
-## Aba "Economia": setores, portos e aeroportos, empresas e bolsa, cada um em uma subaba.
+## Aba "Economia": setores, portos e aeroportos, empresas, bolsa e informação econômica, cada um em uma subaba.
 
 const SECTOR_ROW := preload("res://scenes/ui/rows/sector_row.tscn")
 
@@ -12,6 +12,7 @@ var _sector_rows: Array = []
 @onready var infra: InfraPanel = %infra
 @onready var companies: CompaniesPanel = %companies
 @onready var stock: StockPanel = %stock
+@onready var info: InfoPanel = %info
 
 
 func bind(w: GameWorld) -> void:
@@ -19,6 +20,7 @@ func bind(w: GameWorld) -> void:
 	infra.bind(w)
 	companies.bind(w)
 	stock.bind(w)
+	info.bind(w)
 	_tabs.tab_changed.connect(func(_i): refresh())
 
 
@@ -30,6 +32,7 @@ func refresh() -> void:
 		1: infra.refresh()
 		2: companies.refresh()
 		3: stock.refresh()
+		4: info.refresh()
 
 
 func _refresh_sectors(c: Country) -> void:

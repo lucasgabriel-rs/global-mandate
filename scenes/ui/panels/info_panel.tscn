@@ -1,0 +1,441 @@
+[gd_scene format=3]
+
+[ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="1_theme"]
+[ext_resource type="Script" path="res://scripts/ui/info_panel.gd" id="2_script"]
+[ext_resource type="Script" path="res://scripts/ui/compare_chart.gd" id="3_chart"]
+
+[node name="info" type="VBoxContainer"]
+size_flags_horizontal = 3
+mouse_filter = 2
+theme = ExtResource("1_theme")
+theme_override_constants/separation = 6
+script = ExtResource("2_script")
+
+[node name="info_tabs" type="TabContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+current_tab = 0
+
+[node name="Gráficos" type="VBoxContainer" parent="info_tabs"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
+metadata/_tab_index = 0
+
+[node name="Titulo" type="Label" parent="info_tabs/Gráficos"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 11
+text = "HISTÓRICO COMPARADO"
+
+[node name="Nota" type="Label" parent="info_tabs/Gráficos"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 12
+text = "Compare a mesma série do seu país com a de outros. Os dados são mensais."
+autowrap_mode = 3
+custom_minimum_size = Vector2(60, 0)
+
+[node name="Serie" type="HBoxContainer" parent="info_tabs/Gráficos"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
+
+[node name="series_pick" type="OptionButton" parent="info_tabs/Gráficos/Serie"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 12
+selected = 0
+item_count = 11
+popup/item_0/text = "Crescimento do PIB (12 meses)"
+popup/item_0/id = 0
+popup/item_1/text = "Inflação (12 meses)"
+popup/item_1/id = 1
+popup/item_2/text = "Desemprego"
+popup/item_2/id = 2
+popup/item_3/text = "Juro básico"
+popup/item_3/id = 3
+popup/item_4/text = "Juro do título público"
+popup/item_4/id = 4
+popup/item_5/text = "Dívida pública / PIB"
+popup/item_5/id = 5
+popup/item_6/text = "Resultado fiscal / PIB"
+popup/item_6/id = 6
+popup/item_7/text = "Conta corrente / PIB"
+popup/item_7/id = 7
+popup/item_8/text = "Câmbio (índice, moeda por US$)"
+popup/item_8/id = 8
+popup/item_9/text = "PIB (US$ bi)"
+popup/item_9/id = 9
+popup/item_10/text = "Bolsa (índice)"
+popup/item_10/id = 10
+
+[node name="period_pick" type="OptionButton" parent="info_tabs/Gráficos/Serie"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+selected = 0
+item_count = 4
+popup/item_0/text = "1 ano"
+popup/item_0/id = 0
+popup/item_1/text = "5 anos"
+popup/item_1/id = 1
+popup/item_2/text = "10 anos"
+popup/item_2/id = 2
+popup/item_3/text = "40 anos"
+popup/item_3/id = 3
+
+[node name="Paises" type="HBoxContainer" parent="info_tabs/Gráficos"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
+
+[node name="Comparar" type="Label" parent="info_tabs/Gráficos/Paises"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 12
+text = "Comparar com"
+
+[node name="country_1" type="OptionButton" parent="info_tabs/Gráficos/Paises"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 12
+
+[node name="country_2" type="OptionButton" parent="info_tabs/Gráficos/Paises"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 12
+
+[node name="country_3" type="OptionButton" parent="info_tabs/Gráficos/Paises"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 12
+
+[node name="compare_chart" type="Control" parent="info_tabs/Gráficos"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 280)
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+script = ExtResource("3_chart")
+
+[node name="chart_note" type="Label" parent="info_tabs/Gráficos"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 12
+text = ""
+autowrap_mode = 3
+custom_minimum_size = Vector2(60, 0)
+
+[node name="Expectativas" type="VBoxContainer" parent="info_tabs"]
+visible = false
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
+metadata/_tab_index = 1
+
+[node name="Titulo" type="Label" parent="info_tabs/Expectativas"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 11
+text = "EXPECTATIVAS DE MERCADO"
+
+[node name="focus_country" type="Label" parent="info_tabs/Expectativas"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+text = "País"
+
+[node name="Nota" type="Label" parent="info_tabs/Expectativas"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 12
+text = "Mediana das projeções de bancos e consultorias para o fim de cada ano. A seta compara com o relatório de um mês atrás."
+autowrap_mode = 3
+custom_minimum_size = Vector2(60, 0)
+
+[node name="Grade" type="GridContainer" parent="info_tabs/Expectativas"]
+layout_mode = 2
+theme_override_constants/h_separation = 12
+theme_override_constants/v_separation = 8
+columns = 4
+
+[node name="Indicador" type="Label" parent="info_tabs/Expectativas/Grade"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 11
+text = "Indicador"
+horizontal_alignment = 0
+
+[node name="year_0" type="Label" parent="info_tabs/Expectativas/Grade"]
+custom_minimum_size = Vector2(80, 0)
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 11
+text = "2026"
+horizontal_alignment = 2
+
+[node name="year_1" type="Label" parent="info_tabs/Expectativas/Grade"]
+custom_minimum_size = Vector2(80, 0)
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 11
+text = "2027"
+horizontal_alignment = 2
+
+[node name="year_2" type="Label" parent="info_tabs/Expectativas/Grade"]
+custom_minimum_size = Vector2(80, 0)
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 11
+text = "2028"
+horizontal_alignment = 2
+
+[node name="Nome_infl" type="Label" parent="info_tabs/Expectativas/Grade"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "Inflação (IPC)"
+horizontal_alignment = 0
+
+[node name="fc_infl_0" type="Label" parent="info_tabs/Expectativas/Grade"]
+custom_minimum_size = Vector2(80, 0)
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "—"
+horizontal_alignment = 2
+
+[node name="fc_infl_1" type="Label" parent="info_tabs/Expectativas/Grade"]
+custom_minimum_size = Vector2(80, 0)
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "—"
+horizontal_alignment = 2
+
+[node name="fc_infl_2" type="Label" parent="info_tabs/Expectativas/Grade"]
+custom_minimum_size = Vector2(80, 0)
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "—"
+horizontal_alignment = 2
+
+[node name="Nome_growth" type="Label" parent="info_tabs/Expectativas/Grade"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "PIB (crescimento)"
+horizontal_alignment = 0
+
+[node name="fc_growth_0" type="Label" parent="info_tabs/Expectativas/Grade"]
+custom_minimum_size = Vector2(80, 0)
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "—"
+horizontal_alignment = 2
+
+[node name="fc_growth_1" type="Label" parent="info_tabs/Expectativas/Grade"]
+custom_minimum_size = Vector2(80, 0)
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "—"
+horizontal_alignment = 2
+
+[node name="fc_growth_2" type="Label" parent="info_tabs/Expectativas/Grade"]
+custom_minimum_size = Vector2(80, 0)
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "—"
+horizontal_alignment = 2
+
+[node name="Nome_rate" type="Label" parent="info_tabs/Expectativas/Grade"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "Juro básico"
+horizontal_alignment = 0
+
+[node name="fc_rate_0" type="Label" parent="info_tabs/Expectativas/Grade"]
+custom_minimum_size = Vector2(80, 0)
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "—"
+horizontal_alignment = 2
+
+[node name="fc_rate_1" type="Label" parent="info_tabs/Expectativas/Grade"]
+custom_minimum_size = Vector2(80, 0)
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "—"
+horizontal_alignment = 2
+
+[node name="fc_rate_2" type="Label" parent="info_tabs/Expectativas/Grade"]
+custom_minimum_size = Vector2(80, 0)
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "—"
+horizontal_alignment = 2
+
+[node name="Nome_fx" type="Label" parent="info_tabs/Expectativas/Grade"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "Câmbio (moeda por US$)"
+horizontal_alignment = 0
+
+[node name="fc_fx_0" type="Label" parent="info_tabs/Expectativas/Grade"]
+custom_minimum_size = Vector2(80, 0)
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "—"
+horizontal_alignment = 2
+
+[node name="fc_fx_1" type="Label" parent="info_tabs/Expectativas/Grade"]
+custom_minimum_size = Vector2(80, 0)
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "—"
+horizontal_alignment = 2
+
+[node name="fc_fx_2" type="Label" parent="info_tabs/Expectativas/Grade"]
+custom_minimum_size = Vector2(80, 0)
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "—"
+horizontal_alignment = 2
+
+[node name="focus_note" type="Label" parent="info_tabs/Expectativas"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 12
+text = ""
+autowrap_mode = 3
+custom_minimum_size = Vector2(60, 0)
+
+[node name="FMI" type="VBoxContainer" parent="info_tabs"]
+visible = false
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
+metadata/_tab_index = 2
+
+[node name="Titulo" type="Label" parent="info_tabs/FMI"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 11
+text = "PERSPECTIVAS DA ECONOMIA MUNDIAL"
+
+[node name="Nota" type="Label" parent="info_tabs/FMI"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 12
+text = "Projeções do FMI: mais presas aos fundamentos que as do mercado. Crescimento e inflação no ano; dívida pública ao fim do horizonte."
+autowrap_mode = 3
+custom_minimum_size = Vector2(60, 0)
+
+[node name="Cabecalho" type="HBoxContainer" parent="info_tabs/FMI"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
+
+[node name="Pais" type="Label" parent="info_tabs/FMI/Cabecalho"]
+size_flags_horizontal = 3
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 11
+text = "País"
+horizontal_alignment = 0
+
+[node name="imf_g0" type="Label" parent="info_tabs/FMI/Cabecalho"]
+custom_minimum_size = Vector2(64, 0)
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 11
+text = "PIB"
+horizontal_alignment = 2
+
+[node name="imf_g1" type="Label" parent="info_tabs/FMI/Cabecalho"]
+custom_minimum_size = Vector2(64, 0)
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 11
+text = "PIB"
+horizontal_alignment = 2
+
+[node name="imf_p0" type="Label" parent="info_tabs/FMI/Cabecalho"]
+custom_minimum_size = Vector2(64, 0)
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 11
+text = "Inflação"
+horizontal_alignment = 2
+
+[node name="imf_p1" type="Label" parent="info_tabs/FMI/Cabecalho"]
+custom_minimum_size = Vector2(64, 0)
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 11
+text = "Inflação"
+horizontal_alignment = 2
+
+[node name="imf_d2" type="Label" parent="info_tabs/FMI/Cabecalho"]
+custom_minimum_size = Vector2(64, 0)
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 11
+text = "Dívida"
+horizontal_alignment = 2
+
+[node name="imf_rows" type="VBoxContainer" parent="info_tabs/FMI"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="Separador" type="ColorRect" parent="info_tabs/FMI"]
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 2
+mouse_filter = 2
+color = Color(0.15294118, 0.2509804, 0.30980393, 1)
+
+[node name="Avaliacao" type="Label" parent="info_tabs/FMI"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 11
+text = "AVALIAÇÃO DO FMI SOBRE O SEU PAÍS"
+
+[node name="imf_risks" type="Label" parent="info_tabs/FMI"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = ""
+autowrap_mode = 3
+custom_minimum_size = Vector2(60, 0)
