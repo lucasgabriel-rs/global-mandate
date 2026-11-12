@@ -21,10 +21,9 @@ const CREATOR := preload("res://scenes/ui/modals/creator.tscn")
 const PARTY_PICKER := preload("res://scenes/ui/modals/party_picker.tscn")
 const PARTY_DETAIL := preload("res://scenes/ui/modals/party_detail.tscn")
 const MINISTER_PICKER := preload("res://scenes/ui/modals/minister_picker.tscn")
-const TALK := preload("res://scenes/ui/modals/talk.tscn")
+const CHAT := preload("res://scenes/ui/chat/chat.tscn")
 const MEMBER_ROW := preload("res://scenes/ui/rows/member_row.tscn")
 const PARTY_PICK_ROW := preload("res://scenes/ui/rows/party_pick_row.tscn")
-const TALK_OPTION := preload("res://scenes/ui/rows/talk_option.tscn")
 const PROMPT_OPTION := preload("res://scenes/ui/rows/prompt_option.tscn")
 const LEGISLATION_CENTER := preload("res://scenes/ui/legislation/legislation_center.tscn")
 const LAW_EDITOR := preload("res://scenes/ui/legislation/law_editor.tscn")
@@ -698,42 +697,13 @@ func _open_talk(target: Country, invited := false) -> void:
 	if not opened.ok:
 		hud._set_feedback(opened.msg)
 		return
-	var theirs := Dialogue.leader_of(world, target)
-	var party_now: Dictionary = world.politics.player_party(world)
-	var dim := _modal(TALK, tr("Conversa com %s") % theirs.get("name", tr("o líder")), tr("%s  ·  %s  ·  %s, %d anos, %s") % [target.name, world.politics.ruling_party(target.iso).get("name", ""), theirs.get("name", ""), People.age_of(theirs, world), Dialogue.temper(theirs)])
-	(dim.get_node("%face") as Countryball).show_person(Character.for_politician(theirs), target.iso)
-	var compass: CompassView = dim.get_node("%talk_compass")
-	compass.points = [{"econ": theirs.get("econ", 0.0), "social": theirs.get("social", 0.0), "color": Color("f2b33d"), "big": true}, {"econ": party_now.get("econ", 0.0), "social": party_now.get("social", 0.0), "color": Color.WHITE, "big": true}]
-	(dim.get_node("%legend") as Label).text = tr("Dourado: %s. Branco: seu partido.") % theirs.get("name", tr("líder"))
-	(dim.get_node("%talk_reply") as Label).text = "“%s”" % opened.greeting
-	dim.get_node("%say_end").pressed.connect(func(): _close_modal(dim))
-	_fill_talk(dim, target, Dialogue.TURNS_PER_MEETING)
+	open_chat(ChatLog.country_key(target.iso))
 
 
-func _fill_talk(dim: Control, target: Country, turns: int) -> void:
-	var box: Control = dim.get_node("%choices")
-	var remaining: Label = dim.get_node("%remaining")
-	var reply: Label = dim.get_node("%talk_reply")
-	for child in box.get_children():
-		box.remove_child(child)
-		child.queue_free()
-	var going: bool = turns > 0 and target.alive and prompts.is_empty()
-	box.visible = going
-	remaining.text = tr("Falas restantes: %d") % turns if going else tr("A conversa terminou.")
-	if not going:
-		return
-	for option: Dictionary in Dialogue.options(world, target):
-		var b: Button = TALK_OPTION.instantiate()
-		b.name = "say_" + String(option.id)
-		b.text = option.label
-		b.tooltip_text = option.hint
-		b.pressed.connect(func():
-			var result := Dialogue.choose(world, target, option.id)
-			reply.text = "“%s”" % result.reply
-			reply.add_theme_color_override("font_color", UiKit.GREEN if result.accepted else UiKit.RED)
-			hud.refresh(true)
-			_fill_talk(dim, target, turns - 1))
-		box.add_child(b)
+## Abre a janela de conversas já no contato indicado: "pais:ISO" ou "partido:ID".
+func open_chat(key: String) -> void:
+	var dim: ChatWindow = _modal(CHAT, tr("Conversas"))
+	dim.setup(self, key)
 
 
 func _open_party_picker(country: Country, at_start: bool, on_done: Callable) -> void:

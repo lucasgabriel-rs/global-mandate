@@ -1,0 +1,68 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/chat_bubble.gd" id="1_s"]
+
+[sub_resource type="StyleBoxFlat" id="Me"]
+content_margin_left = 12.0
+content_margin_top = 7.0
+content_margin_right = 12.0
+content_margin_bottom = 5.0
+bg_color = Color(0.07, 0.33, 0.27, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 3
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="Them"]
+content_margin_left = 12.0
+content_margin_top = 7.0
+content_margin_right = 12.0
+content_margin_bottom = 5.0
+bg_color = Color(0.15, 0.21, 0.26, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[node name="ChatBubble" type="HBoxContainer"]
+mouse_filter = 2
+script = ExtResource("1_s")
+style_me = SubResource("Me")
+style_them = SubResource("Them")
+
+[node name="left" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+
+[node name="bubble" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+
+[node name="col" type="VBoxContainer" parent="bubble"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 2
+
+[node name="text" type="Label" parent="bubble/col"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.93, 0.95, 0.96, 1)
+theme_override_font_sizes/font_size = 14
+text = "Mensagem"
+autowrap_mode = 3
+
+[node name="time" type="Label" parent="bubble/col"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.7, 0.74, 1)
+theme_override_font_sizes/font_size = 10
+text = "01 Jan 2024"
+horizontal_alignment = 2
+
+[node name="right" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2

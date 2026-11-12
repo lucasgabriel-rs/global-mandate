@@ -77,6 +77,14 @@ focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "Negociar votos"
 
+[node name="chat" type="Button" parent="Coluna/Botoes"]
+unique_name_in_owner = true
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+tooltip_text = "Conversa com os líderes dos partidos para pedir que apoiem ou votem contra a lei."
+text = "Conversar com líderes"
+
 [node name="sanction" type="Button" parent="Coluna/Botoes"]
 unique_name_in_owner = true
 text = "Sancionar"

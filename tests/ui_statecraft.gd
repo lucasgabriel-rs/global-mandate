@@ -154,7 +154,10 @@ func _process(delta: float) -> void:
 			_click(_named(root, "say_praise"))
 		14:
 			_check(w.diplomacy.relation(w.player.idx, w.by_iso["ARG"].idx) > mark, "elogiar melhora a relação")
-			_check((_named(root, "talk_reply") as Label).text.begins_with("“"), "líder responde: " + (_named(root, "talk_reply") as Label).text)
+			var thread: Array = ChatLog.thread(w, ChatLog.country_key("ARG"))
+			_check(thread.size() == 3 and thread[1].me and not thread[2].me, "a fala e a resposta viram balões: " + str(thread.size()))
+			_check((_named(root, "thread") as Control).get_child_count() == 3, "a conversa mostra um balão por mensagem")
+			_check(_named(root, "contact_party_%d" % int(PartyTalk.contacts(w)[0].id)) != null, "líderes partidários aparecem como contatos")
 			_shot("s8_resposta")
 			_click(_named(root, "say_protest"))
 		15:

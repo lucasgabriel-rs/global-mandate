@@ -958,6 +958,74 @@ func offer_post(world: GameWorld, norm: Dictionary, party_id: int) -> Dictionary
 	return {"ok": true, "accepted": true, "msg": tr("%s entra no governo e vota a favor. Lembre de dar um ministério ao novo aliado.") % party.short}
 
 
+# --- Conversa com líderes partidários -----------------------------------------------------
+# Pedido informal, sem dinheiro: o líder do partido pondera ideias, afinidade com o seu partido e a
+# popularidade da lei. A resposta vira acordo de voto (norm.deals), o mesmo que a negociação paga usa.
+
+const CHAT_MIN_CHANCE := 0.03
+const CHAT_MAX_CHANCE := 0.95
+
+
+## Como o partido votaria hoje, sem nenhum acordo fechado.
+func chat_stance(world: GameWorld, norm: Dictionary, party: Dictionary) -> bool:
+	var probe := {"position": norm.get("position", position_for(world, norm)), "by_player": norm.get("by_player", false), "author_party": norm.get("author_party", -1)}
+	return _party_votes_yes(world, party, probe, false)
+
+
+## Quanto o partido pesa cada coisa ao decidir ouvir o pedido. Devolve {chance, aff, pop, gap, aligned}.
+func chat_factors(world: GameWorld, norm: Dictionary, party: Dictionary, want_yes: bool, bonus := 0.0) -> Dictionary:
+	var aligned := chat_stance(world, norm, party) == want_yes
+	var mine: Dictionary = world.politics.player_party(world)
+	var aff := clampf(1.0 - Politics.distance(party, mine) / 2.8, 0.0, 1.0)
+	var pop := popularity_of(world, norm)
+	var gap := Politics.distance(party, norm.get("position", position_for(world, norm)))
+	var chance := 0.95
+	if not aligned:
+		var pop_term := (pop - 0.5) * (0.6 if want_yes else -0.6)
+		chance = deal_chance(world, norm, party, want_yes, 0.0) * 0.8 + pop_term + (aff - 0.5) * 0.3 + bonus + counterpart_bonus(world, norm, party, want_yes)
+	return {"chance": clampf(chance, CHAT_MIN_CHANCE, CHAT_MAX_CHANCE), "aff": aff, "pop": pop, "gap": gap, "aligned": aligned}
+
+
+## PONTO DE EXTENSÃO: contrapartidas que o jogador oferece junto do pedido (cargos, favores, verba
+## partidária). Devolve um acréscimo à chance do pedido. Hoje não há contrapartida: 0.
+func counterpart_bonus(_world: GameWorld, _norm: Dictionary, _party: Dictionary, _want_yes: bool) -> float:
+	return 0.0
+
+
+func chat_closed(norm: Dictionary, party_id: int) -> bool:
+	return norm.get("chat_asked", {}).has(str(party_id)) or norm.get("deals", {}).has(str(party_id)) or norm.get("asked", {}).has(str(party_id))
+
+
+## Pede ao líder do partido que apoie (want_yes) ou vote contra a lei. Cada partido responde uma vez por lei.
+## Devolve {ok, accepted, msg, chance, aff, pop, gap, aligned}.
+func chat_request(world: GameWorld, norm: Dictionary, party_id: int, want_yes: bool, bonus := 0.0) -> Dictionary:
+	if not can_negotiate(norm):
+		return {"ok": false, "msg": tr("Não há mais votação a negociar nesta proposta.")}
+	var data: Dictionary = world.politics.data_of(iso)
+	var party: Dictionary = Politics._find(data, party_id)
+	if party.is_empty() or party_id == int(data.player_party):
+		return {"ok": false, "msg": tr("Esse partido não existe.")}
+	if chat_closed(norm, party_id):
+		return {"ok": false, "msg": tr("%s já deu a resposta sobre esta proposta.") % party.short}
+	var f := chat_factors(world, norm, party, want_yes, bonus)
+	f["ok"] = true
+	norm.get_or_add("chat_asked", {})[str(party_id)] = true
+	var who: String = String(world.leader.get("name", tr("Jogador")))
+	var word: String = tr("a favor") if want_yes else tr("contra")
+	if _rng.randf() >= float(f.chance):
+		_log(world, norm, "Conversa", "", "", tr("%s recusou votar %s") % [party.short, word], who)  # i18n
+		revision += 1
+		f["accepted"] = false
+		f["msg"] = tr("%s recusou votar %s.") % [party.short, word]
+		return f
+	norm.get_or_add("deals", {})[str(party_id)] = want_yes
+	_log(world, norm, "Conversa", "", "", tr("%s combinou votar %s") % [party.short, word], who)  # i18n
+	revision += 1
+	f["accepted"] = true
+	f["msg"] = tr("%s vai votar %s.") % [party.short, word]
+	return f
+
+
 ## Onde a norma cai na bússola. Tributos valem pelo que mudam: cortar puxa para a direita, subir para a esquerda.
 func position_for(world: GameWorld, norm: Dictionary) -> Dictionary:
 	if not norm.get("position", {}).is_empty():
