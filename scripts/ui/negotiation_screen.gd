@@ -20,6 +20,7 @@ func setup(owner_main: Node, target: Dictionary) -> void:
 	leg = world.legislation
 	norm = target
 	(%title as Label).text = tr("Negociar votos  ·  %s: %s") % [leg.norm_label(norm), tr(norm.title)]
+	%chat.pressed.connect(func(): main.open_chat(PartyTalk.first_key(world)))
 	%close.pressed.connect(func(): main.reopen_legislation(0))
 	_generous.toggled.connect(func(_on): _fill())
 	(%poll as PollBox).setup(world, func(): return norm)

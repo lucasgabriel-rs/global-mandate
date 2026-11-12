@@ -175,6 +175,9 @@ func _fill_process() -> void:
 		var deal: Button = row.get_node("%negotiate")
 		deal.visible = leg.can_negotiate(norm)
 		deal.pressed.connect(func(): main.open_negotiation(norm))
+		var talk: Button = row.get_node("%chat")
+		talk.visible = leg.can_negotiate(norm)
+		talk.pressed.connect(func(): main.open_chat(PartyTalk.first_key(world)))
 		var yes: Button = row.get_node("%sanction")
 		var no: Button = row.get_node("%veto")
 		yes.visible = waiting

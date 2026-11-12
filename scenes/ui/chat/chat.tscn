@@ -1,0 +1,215 @@
+[gd_scene format=3]
+
+[ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="1_t"]
+[ext_resource type="Script" path="res://scripts/ui/chat_window.gd" id="2_s"]
+[ext_resource type="PackedScene" path="res://scenes/ui/countryball.tscn" id="3_c"]
+[ext_resource type="Script" path="res://scripts/ui/compass_view.gd" id="4_k"]
+
+[sub_resource type="StyleBoxFlat" id="Painel"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.05, 0.09, 0.12, 0.99)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.9490196, 0.7019608, 0.23921569, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="Fundo"]
+content_margin_left = 10.0
+content_margin_top = 8.0
+content_margin_right = 10.0
+content_margin_bottom = 8.0
+bg_color = Color(0.03, 0.06, 0.08, 1)
+
+[sub_resource type="StyleBoxFlat" id="Cabeca"]
+content_margin_left = 12.0
+content_margin_top = 8.0
+content_margin_right = 12.0
+content_margin_bottom = 8.0
+bg_color = Color(0.09, 0.14, 0.18, 1)
+
+[node name="Chat" type="ColorRect"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource("1_t")
+color = Color(0.01, 0.03, 0.05, 0.62)
+script = ExtResource("2_s")
+
+[node name="Centro" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Painel" type="PanelContainer" parent="Centro"]
+custom_minimum_size = Vector2(1040, 640)
+layout_mode = 2
+theme_override_styles/panel = SubResource("Painel")
+
+[node name="Linha" type="HBoxContainer" parent="Centro/Painel"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Contatos" type="VBoxContainer" parent="Centro/Painel/Linha"]
+custom_minimum_size = Vector2(290, 0)
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Topo" type="MarginContainer" parent="Centro/Painel/Linha/Contatos"]
+layout_mode = 2
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 4
+
+[node name="title" type="Label" parent="Centro/Painel/Linha/Contatos/Topo"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9490196, 0.7019608, 0.23921569, 1)
+theme_override_font_sizes/font_size = 22
+text = "Conversas"
+
+[node name="Rolagem" type="ScrollContainer" parent="Centro/Painel/Linha/Contatos"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="contacts" type="VBoxContainer" parent="Centro/Painel/Linha/Contatos/Rolagem"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 3
+
+[node name="Divisor" type="VSeparator" parent="Centro/Painel/Linha"]
+layout_mode = 2
+
+[node name="Conversa" type="VBoxContainer" parent="Centro/Painel/Linha"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+
+[node name="Cabecalho" type="PanelContainer" parent="Centro/Painel/Linha/Conversa"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("Cabeca")
+
+[node name="Dados" type="HBoxContainer" parent="Centro/Painel/Linha/Conversa/Cabecalho"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="face" parent="Centro/Painel/Linha/Conversa/Cabecalho/Dados" instance=ExtResource("3_c")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(56, 56)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Nomes" type="VBoxContainer" parent="Centro/Painel/Linha/Conversa/Cabecalho/Dados"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+
+[node name="contact_name" type="Label" parent="Centro/Painel/Linha/Conversa/Cabecalho/Dados/Nomes"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Contato"
+
+[node name="contact_info" type="Label" parent="Centro/Painel/Linha/Conversa/Cabecalho/Dados/Nomes"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 12
+text = "Informações do contato"
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="info_toggle" type="Button" parent="Centro/Painel/Linha/Conversa/Cabecalho/Dados"]
+unique_name_in_owner = true
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+toggle_mode = true
+text = "Ideias"
+
+[node name="info_panel" type="PanelContainer" parent="Centro/Painel/Linha/Conversa"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("Cabeca")
+
+[node name="Ideias" type="HBoxContainer" parent="Centro/Painel/Linha/Conversa/info_panel"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="talk_compass" type="Control" parent="Centro/Painel/Linha/Conversa/info_panel/Ideias"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(130, 130)
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("4_k")
+
+[node name="legend" type="Label" parent="Centro/Painel/Linha/Conversa/info_panel/Ideias"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 12
+text = "Dourado: o contato. Branco: seu partido."
+autowrap_mode = 3
+
+[node name="Fundo" type="PanelContainer" parent="Centro/Painel/Linha/Conversa"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("Fundo")
+
+[node name="scroll" type="ScrollContainer" parent="Centro/Painel/Linha/Conversa/Fundo"]
+unique_name_in_owner = true
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="thread" type="VBoxContainer" parent="Centro/Painel/Linha/Conversa/Fundo/scroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 6
+
+[node name="Respostas" type="PanelContainer" parent="Centro/Painel/Linha/Conversa"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("Cabeca")
+
+[node name="col" type="VBoxContainer" parent="Centro/Painel/Linha/Conversa/Respostas"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="remaining" type="Label" parent="Centro/Painel/Linha/Conversa/Respostas/col"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 12
+text = "Falas restantes: 3"
+
+[node name="ChoicesScroll" type="ScrollContainer" parent="Centro/Painel/Linha/Conversa/Respostas/col"]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="choices" type="VBoxContainer" parent="Centro/Painel/Linha/Conversa/Respostas/col/ChoicesScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="say_end" type="Button" parent="Centro/Painel/Linha/Conversa/Respostas/col"]
+unique_name_in_owner = true
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Fechar as conversas"

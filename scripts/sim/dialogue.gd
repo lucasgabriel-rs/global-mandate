@@ -27,7 +27,32 @@ static func start(world: GameWorld, target: Country, invited := false) -> Dictio
 	if wait_months(world, target) > 0 and not invited:
 		return {"ok": false, "msg": TranslationServer.translate("Vocês conversaram há pouco. Tente no mês que vem.")}
 	world.talks[target.iso] = world.months_elapsed
-	return {"ok": true, "msg": "", "greeting": greeting(world, target)}
+	world.talk_turns[target.iso] = TURNS_PER_MEETING
+	var hello := greeting(world, target)
+	ChatLog.add(world, ChatLog.country_key(target.iso), false, hello)
+	return {"ok": true, "msg": "", "greeting": hello}
+
+
+## Falas que ainda restam na conversa em curso com o líder.
+static func turns_left(world: GameWorld, target: Country) -> int:
+	return int(world.talk_turns.get(target.iso, 0))
+
+
+## A fala escolhida vai para o histórico, com a resposta do líder. Cada fala gasta uma das da conversa.
+static func say(world: GameWorld, target: Country, id: String) -> Dictionary:
+	var label := ""
+	for o: Dictionary in options(world, target):
+		if o.id == id:
+			label = o.label
+	if label == "" or turns_left(world, target) <= 0:
+		return {"accepted": false, "reply": TranslationServer.translate("Não entendi o que você quis dizer."), "ok": false}
+	var key := ChatLog.country_key(target.iso)
+	ChatLog.add(world, key, true, label)
+	var r := choose(world, target, id)
+	world.talk_turns[target.iso] = turns_left(world, target) - 1
+	ChatLog.add(world, key, false, r.reply, r.accepted)
+	r["ok"] = true
+	return r
 
 
 static func leader_of(world: GameWorld, target: Country) -> Dictionary:

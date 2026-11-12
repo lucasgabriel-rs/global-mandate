@@ -39,6 +39,13 @@ theme_override_colors/font_color = Color(0.9490196, 0.7019608, 0.23921569, 1)
 theme_override_font_sizes/font_size = 22
 text = "Negociar votos"
 
+[node name="chat" type="Button" parent="Centro/Painel/col/Cabeca"]
+unique_name_in_owner = true
+layout_mode = 2
+focus_mode = 0
+tooltip_text = "Conversa com os líderes dos partidos para pedir que apoiem ou votem contra a lei."
+text = "Conversar com líderes"
+
 [node name="close" type="Button" parent="Centro/Painel/col/Cabeca"]
 unique_name_in_owner = true
 layout_mode = 2

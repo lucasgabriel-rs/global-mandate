@@ -37,6 +37,8 @@ var player: Country
 var in_office := true
 ## Último mês em que cada líder estrangeiro recebeu o jogador: {iso: mês}.
 var talks := {}
+var chats := {}           # contato -> mensagens (ChatLog)
+var talk_turns := {}      # iso -> falas que ainda restam na conversa em curso
 var markets := Markets.new()
 var diplomacy := Diplomacy.new()
 var subdivisions := Subdivisions.new()
@@ -970,7 +972,7 @@ func to_dict() -> Dictionary:
 		"player": player.idx if player else -1, "world_gdp": _world_gdp,
 		"rng_state": rng.state, "rng_seed": rng.seed, "subdivisions": subdivisions.to_dict(),
 		"territories": territories.to_dict(), "leader": leader, "politics": politics.to_dict(),
-		"in_office": in_office, "talks": talks, "legislation": legislation.to_dict(), "treaties": treaties.to_dict(), "next_talk_month": next_talk_month,
+		"in_office": in_office, "talks": talks, "chats": chats, "talk_turns": talk_turns, "legislation": legislation.to_dict(), "treaties": treaties.to_dict(), "next_talk_month": next_talk_month,
 		"infra": infra.to_dict(), "corporate": corporate.to_dict(),
 	}
 
@@ -999,6 +1001,8 @@ func load_dict(d: Dictionary) -> void:
 	politics.from_dict(d.get("politics", {}))
 	in_office = d.get("in_office", true)
 	talks = d.get("talks", {})
+	chats = d.get("chats", {})
+	talk_turns = d.get("talk_turns", {})
 	action_used = d.get("action_used", {})
 	next_talk_month = d.get("next_talk_month", months_elapsed + TALK_COOLDOWN_MONTHS)
 	treaties = Treaties.new()
