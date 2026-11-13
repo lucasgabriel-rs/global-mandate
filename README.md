@@ -374,6 +374,7 @@ godot --path . -- --ui-legislation --shots=/tmp/shots
 | `statecraft.gd` | Opposition, politicians, compass, ministers and conversations. |
 | `society.gd` | Age and death, elections, plebiscite, units with formal procedure, ministries, end of career, conversations and treaties. |
 | `world_ai.gd` | Lets the world run on its own and prints what happened. |
+| `save_compat.gd` | Loads saves written by v0.1.2 (`tests/fixtures`, government and opposition): same country, date, fund, norms, parties and diplomacy; the simulation keeps running; save and load round trip. |
 | `clock.gd`, `capitals.gd`, `borders.gd`, `subdivisions.gd` | Clock and day skips, capitals, borders and wars, subnational units. |
 
 | Interface (`-- --ui-X --shots=DIR`) | What it covers |
@@ -389,6 +390,7 @@ godot --path . -- --ui-legislation --shots=/tmp/shots
 | `--ui-clock`, `--ui-capitals`, `--ui-divisions`, `--ui-borders` | Clock, capitals, drawing units and borders with clicks on the map. |
 | `--ui-debug` | Presses every debug menu command, one at a time. |
 | `--ui-threads`, `--ui-profile` | Threading and timing. |
+| `--ui-saves` | The same old saves through Load Game in the start menu and in the pause menu, the backup fallback, and a save and load round trip. |
 | `--ui-scenes` | Opens every scene and rejects repeated names under the same parent. |
 | `--ui-layout` | Records the position and style of each control on every screen in `layout.txt`, with a screenshot of each. Running it before and after changing a scene shows what moved. |
 | `--ui-test` | Plays on its own through the interface and saves screenshots. |
