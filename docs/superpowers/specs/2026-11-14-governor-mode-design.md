@@ -35,6 +35,10 @@ O jogador governa uma unidade subnacional (estado, província, região) em vez d
 
 ## Design (v1)
 
+### Oposição
+
+Ao perder o cargo, o jogador volta a ser presidente do partido, como em `World.enter_opposition`. Fundo, pesquisa, campanha e crítica valem para o estado. A **moção de censura** depende de uma assembleia estadual e fica desligada até a v2. O construtor verifica quais dessas ações em `politics.gd` assumem o parlamento nacional e adapta só o que for preciso.
+
 ### Quem é o jogador
 
 Qualquer escolha aqui mexe nos ~246 usos de `world.player` e nos 74 de `in_office`, então a regra é reaproveitar o que já existe: o caminho da **oposição**, que já deixa o jogador ligado a um país que a IA governa (`in_office = false`, `NationAI.step_month` roda para o país dele, `governed()` devolve `null`).
@@ -82,11 +86,12 @@ Fórmulas de PIB e receita estadual, valores iniciais da tabela de competências
 
 ## Decidido pelo autor
 
-- Perder a eleição para governador **não** encerra a partida: o jogador segue como oposição estadual, como no modo país, e disputa a eleição seguinte. O estado passa a ser governado pela IA nesse período.
+- Perder a eleição para governador **não** encerra a partida: o jogador segue na oposição e disputa a eleição seguinte, com a IA governando o estado nesse período.
+- A oposição é **o mesmo sistema do modo país**: o jogador é o presidente do partido, não um papel novo de "oposição estadual". Ele usa o que já existe em `politics.gd` (fundo do partido, pesquisa, campanha, crítica ao governo), apontado para a aprovação e a eleição do estado. O partido é o partido do jogador na política do país-mãe, então o jogador já pertence a um partido antes de ser governador.
 
 - A unidade pode ser escolhida em **qualquer país**. A tabela de competências faz de países unitários um desafio maior, sem proibição.
 - Se a unidade passar a outro país, a nova União decide se o governador permanece. Se ela for dividida, o governador fica com a parte que contém a capital. A partida só acaba se a unidade deixar de existir.
-  - Chamada minha: se a nova União não o mantém, o jogador perde o cargo e segue como oposição estadual, como na derrota eleitoral, em vez de encerrar a partida. A decisão da União usa a mesma afinidade partidária dos repasses, com um empurrão para manter quando o governador é popular.
+  - Chamada minha: se a nova União não o mantém, o jogador perde o cargo e segue na oposição, como na derrota eleitoral, em vez de encerrar a partida. A decisão da União usa a mesma afinidade partidária dos repasses, com um empurrão para manter quando o governador é popular.
 
 ## Perguntas para o autor
 
