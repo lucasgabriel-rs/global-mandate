@@ -1,6 +1,7 @@
 class_name EconomyPanel
 extends VBoxContainer
-## "Economia" tab: sectors, ports and airports, companies, stock exchange and population, each in a sub-tab.
+## "Economia" tab: sectors, ports and airports, companies, stock exchange, population, how it works and economic
+## information, each in a sub-tab.
 
 const SECTOR_ROW := preload("res://scenes/ui/rows/sector_row.tscn")
 const FORMULA_WINDOW := preload("res://scenes/ui/modals/formula_window.tscn")
@@ -14,6 +15,7 @@ var _sector_rows: Array = []
 @onready var companies: CompaniesPanel = %companies
 @onready var stock: StockPanel = %stock
 @onready var _formula_buttons: GridContainer = %formula_buttons
+@onready var info: InfoPanel = %info
 
 
 func bind(w: GameWorld) -> void:
@@ -21,6 +23,7 @@ func bind(w: GameWorld) -> void:
 	infra.bind(w)
 	companies.bind(w)
 	stock.bind(w)
+	info.bind(w)
 	_tabs.tab_changed.connect(func(_i): refresh())
 	for b: Button in _formula_buttons.get_children():
 		var key := String(b.name)
@@ -31,15 +34,15 @@ func bind(w: GameWorld) -> void:
 func show_formula(key: String) -> Control:
 	if world == null or world.player == null:
 		return null
-	var info := FormulaExplain.build(key, world.player, world)
+	var content := FormulaExplain.build(key, world.player, world)
 	var dim: Control = FORMULA_WINDOW.instantiate()
 	var main := get_tree().current_scene
 	var host: Node = main.get("modal_root") if main != null and main.get("modal_root") != null else get_tree().root
 	host.add_child(dim)
-	(dim.get_node("%title") as Label).text = info.title
-	(dim.get_node("%formula") as Label).text = info.formula
-	(dim.get_node("%numbers") as Label).text = info.numbers
-	(dim.get_node("%body") as Label).text = info.body
+	(dim.get_node("%title") as Label).text = content.title
+	(dim.get_node("%formula") as Label).text = content.formula
+	(dim.get_node("%numbers") as Label).text = content.numbers
+	(dim.get_node("%body") as Label).text = content.body
 	dim.get_node("%Close").pressed.connect(dim.queue_free)
 	return dim
 
@@ -60,6 +63,7 @@ func refresh() -> void:
 		2: companies.refresh()
 		3: stock.refresh()
 		4: _refresh_population(world.player)
+		6: info.refresh()
 
 
 func _refresh_sectors(c: Country) -> void:

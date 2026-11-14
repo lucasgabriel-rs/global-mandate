@@ -83,7 +83,7 @@ msgstr "Fuerzas armadas"
 msgid "Divisões do território"
 msgstr "Divisiones territoriales"
 
-#: scenes/ui/dock.tscn:179 scenes/ui/hud.tscn:1480
+#: scenes/ui/dock.tscn:179 scenes/ui/hud.tscn:1480 scripts/ui/info_panel.gd:148
 msgid "Mundo"
 msgstr "Mundo"
 
@@ -176,7 +176,7 @@ msgid "PIB nominal em dólares correntes."
 msgstr "PIB nominal en dólares corrientes."
 
 #: scenes/ui/hud.tscn:273 scenes/ui/hud.tscn:602
-#: scenes/ui/start_screen.tscn:122
+#: scenes/ui/start_screen.tscn:122 scenes/ui/panels/info_panel.tscn:381
 msgid "PIB"
 msgstr "PIB"
 
@@ -293,7 +293,8 @@ msgstr "Menú (Esc)"
 msgid "☰"
 msgstr "☰"
 
-#: scenes/ui/hud.tscn:529
+#: scenes/ui/hud.tscn:529 scenes/ui/panels/info_panel.tscn:155
+#: scenes/ui/panels/info_panel.tscn:372 scenes/ui/rows/imf_row.tscn:16
 msgid "País"
 msgstr "País"
 
@@ -312,7 +313,7 @@ msgid "PIB per capita"
 msgstr "PIB per cápita"
 
 #: scenes/ui/hud.tscn:648 scenes/ui/hud.tscn:1825
-#: scenes/ui/start_screen.tscn:166 scenes/ui/panels/economy_panel.tscn:88
+#: scenes/ui/start_screen.tscn:166 scenes/ui/panels/economy_panel.tscn:89
 msgid "População"
 msgstr "Población"
 
@@ -322,7 +323,7 @@ msgid "Crescimento"
 msgstr "Crecimiento"
 
 #: scenes/ui/hud.tscn:740 scenes/ui/hud.tscn:3116
-#: scenes/ui/start_screen.tscn:254
+#: scenes/ui/start_screen.tscn:254 scenes/ui/panels/info_panel.tscn:59
 msgid "Juro básico"
 msgstr "Tipo de interés básico"
 
@@ -524,7 +525,8 @@ msgstr "Político"
 msgid "Relações"
 msgstr "Relaciones"
 
-#: scenes/ui/hud.tscn:1340 scripts/ui/map_view.gd:42
+#: scenes/ui/hud.tscn:1340 scenes/ui/panels/info_panel.tscn:417
+#: scripts/ui/map_view.gd:42
 msgid "Dívida"
 msgstr "Deuda"
 
@@ -575,6 +577,7 @@ msgid "Saldo com o exterior. Déficit persistente enfraquece a moeda."
 msgstr "Saldo con el exterior. Un déficit persistente debilita la moneda."
 
 #: scenes/ui/hud.tscn:1848 scenes/ui/hud.tscn:3248
+#: scenes/ui/panels/info_panel.tscn:67
 msgid "Conta corrente / PIB"
 msgstr "Cuenta corriente / PIB"
 
@@ -658,7 +661,7 @@ msgstr "Educación y ciencia"
 msgid "O maior efeito de longo prazo: eleva capital humano e PTF."
 msgstr "El mayor efecto a largo plazo: eleva el capital humano y la PTF."
 
-#: scenes/ui/hud.tscn:2207 scenes/ui/panels/economy_panel.tscn:54
+#: scenes/ui/hud.tscn:2207 scenes/ui/panels/economy_panel.tscn:55
 #: scripts/sim/politics.gd:58 scripts/sim/politics.gd:105
 msgid "Infraestrutura"
 msgstr "Infraestructura"
@@ -922,7 +925,7 @@ msgstr "Rendimiento anualizado del último mes: acciones y bonos en el exterior.
 msgid "Retorno da carteira"
 msgstr "Rendimiento de la cartera"
 
-#: scenes/ui/hud.tscn:3138 scenes/ui/panels/economy_panel.tscn:252
+#: scenes/ui/hud.tscn:3138 scenes/ui/panels/economy_panel.tscn:253
 #: scripts/sim/law_catalog.gd_(categorias)
 msgid "Câmbio"
 msgstr "Tipo de cambio"
@@ -2231,95 +2234,95 @@ msgstr "JERARQUÍA"
 msgid "Buscar unidade pelo nome"
 msgstr "Buscar unidad por nombre"
 
-#: scenes/ui/panels/economy_panel.tscn:27
+#: scenes/ui/panels/economy_panel.tscn:28
 msgid "Setores"
 msgstr "Sectores"
 
-#: scenes/ui/panels/economy_panel.tscn:33
+#: scenes/ui/panels/economy_panel.tscn:34
 msgid "SETORES DA ECONOMIA"
 msgstr "SECTORES DE LA ECONOMÍA"
 
-#: scenes/ui/panels/economy_panel.tscn:40
+#: scenes/ui/panels/economy_panel.tscn:41
 msgid "Quanto cada atividade produz por ano e quanto cresceu em 12 meses. Construção sente o juro, mineração o preço das commodities, turismo a guerra e a instabilidade."
 msgstr "Cuánto produce cada actividad al año y cuánto creció en 12 meses. La construcción siente el interés, la minería el precio de las materias primas, el turismo la guerra y la inestabilidad."
 
-#: scenes/ui/panels/economy_panel.tscn:65
+#: scenes/ui/panels/economy_panel.tscn:66
 msgid "Empresas"
 msgstr "Empresas"
 
-#: scenes/ui/panels/economy_panel.tscn:76 scenes/ui/panels/stock_panel.tscn:25
+#: scenes/ui/panels/economy_panel.tscn:77 scenes/ui/panels/stock_panel.tscn:25
 msgid "Bolsa"
 msgstr "Bolsa"
 
-#: scenes/ui/panels/economy_panel.tscn:94
+#: scenes/ui/panels/economy_panel.tscn:95
 msgid "ESTRUTURA ETÁRIA"
 msgstr "ESTRUCTURA ETARIA"
 
-#: scenes/ui/panels/economy_panel.tscn:101
+#: scenes/ui/panels/economy_panel.tscn:102
 msgid "Menos gente em idade de trabalhar reduz a produção; mais idosos pesam nas aposentadorias. Renda, paz e estabilidade atraem migrantes."
 msgstr "Menos gente en edad de trabajar reduce la producción; más adultos mayores pesan en las jubilaciones. Ingresos, paz y estabilidad atraen migrantes."
 
-#: scenes/ui/panels/economy_panel.tscn:115
+#: scenes/ui/panels/economy_panel.tscn:116
 #, fuzzy
 msgid "Jovens (0-14)"
 msgstr "Jóvenes"
 
-#: scenes/ui/panels/economy_panel.tscn:139
+#: scenes/ui/panels/economy_panel.tscn:140
 msgid "Idade ativa (15-64)"
 msgstr "Edad activa (15-64)"
 
-#: scenes/ui/panels/economy_panel.tscn:163
+#: scenes/ui/panels/economy_panel.tscn:164
 msgid "Idosos (65+)"
 msgstr "Mayores (65+)"
 
 #
-#: scenes/ui/panels/economy_panel.tscn:196
+#: scenes/ui/panels/economy_panel.tscn:197
 msgid "Como funciona"
 msgstr "Cómo funciona"
 
-#: scenes/ui/panels/economy_panel.tscn:202
+#: scenes/ui/panels/economy_panel.tscn:203
 msgid "COMO FUNCIONA CADA INDICADOR"
 msgstr "CÓMO FUNCIONA CADA INDICADOR"
 
-#: scenes/ui/panels/economy_panel.tscn:209
+#: scenes/ui/panels/economy_panel.tscn:210
 msgid "A fórmula que a simulação usa em cada indicador, com os números atuais do seu país."
 msgstr "La fórmula que la simulación usa en cada indicador, con los números actuales de su país."
 
 #
-#: scenes/ui/panels/economy_panel.tscn:224
+#: scenes/ui/panels/economy_panel.tscn:225
 msgid "PIB potencial"
 msgstr "PIB potencial"
 
-#: scenes/ui/panels/economy_panel.tscn:238
+#: scenes/ui/panels/economy_panel.tscn:239
 msgid "Juros"
 msgstr "Tasas de interés"
 
 #
-#: scenes/ui/panels/economy_panel.tscn:259
+#: scenes/ui/panels/economy_panel.tscn:260
 msgid "Balança comercial"
 msgstr "Balanza comercial"
 
 #
-#: scenes/ui/panels/economy_panel.tscn:266
+#: scenes/ui/panels/economy_panel.tscn:267
 msgid "Gasto e impostos"
 msgstr "Gasto e impuestos"
 
 #
-#: scenes/ui/panels/economy_panel.tscn:273
+#: scenes/ui/panels/economy_panel.tscn:274
 msgid "Arrecadação"
 msgstr "Recaudación"
 
 #
-#: scenes/ui/panels/economy_panel.tscn:280
+#: scenes/ui/panels/economy_panel.tscn:281
 msgid "Desigualdade"
 msgstr "Desigualdad"
 
 #
-#: scenes/ui/panels/economy_panel.tscn:287
+#: scenes/ui/panels/economy_panel.tscn:288
 msgid "Petróleo e minérios"
 msgstr "Petróleo y minerales"
 
-#: scenes/ui/panels/economy_panel.tscn:294
+#: scenes/ui/panels/economy_panel.tscn:295
 #: scripts/sim/law_catalog.gd_(escolha_profession)
 #: scripts/sim/law_catalog.gd_(escolha_sector)
 #: scripts/sim/law_catalog.gd_(escolha_tr_setor)
@@ -2327,9 +2330,122 @@ msgid "Indústria"
 msgstr "Industria"
 
 #
-#: scenes/ui/panels/economy_panel.tscn:301
+#: scenes/ui/panels/economy_panel.tscn:302
 msgid "Parceiros comerciais"
 msgstr "Socios comerciales"
+
+#: scenes/ui/panels/economy_panel.tscn:309
+msgid "Informação"
+msgstr "Información"
+
+#: scenes/ui/panels/info_panel.tscn:25
+msgid "Gráficos"
+msgstr "Gráficos"
+
+#: scenes/ui/panels/info_panel.tscn:31
+msgid "HISTÓRICO COMPARADO"
+msgstr "HISTÓRICO COMPARADO"
+
+#: scenes/ui/panels/info_panel.tscn:37
+msgid "Compare a mesma série do seu país com a de outros. Os dados são mensais."
+msgstr "Compare la misma serie de su país con la de otros. Los datos son mensuales."
+
+#: scenes/ui/panels/info_panel.tscn:53
+msgid "Crescimento do PIB (12 meses)"
+msgstr "Crecimiento del PIB (12 meses)"
+
+#: scenes/ui/panels/info_panel.tscn:55
+msgid "Inflação (12 meses)"
+msgstr "Inflación (12 meses)"
+
+#: scenes/ui/panels/info_panel.tscn:61
+msgid "Juro do título público"
+msgstr "Rendimiento del bono público"
+
+#: scenes/ui/panels/info_panel.tscn:63
+msgid "Dívida pública / PIB"
+msgstr "Deuda pública / PIB"
+
+#: scenes/ui/panels/info_panel.tscn:65
+msgid "Resultado fiscal / PIB"
+msgstr "Resultado fiscal / PIB"
+
+#: scenes/ui/panels/info_panel.tscn:69
+msgid "Câmbio (índice, moeda por US$)"
+msgstr "Tipo de cambio (índice, moneda por US$)"
+
+#: scenes/ui/panels/info_panel.tscn:71
+#: scripts/sim/law_catalog.gd_(escolha_game_value)
+msgid "PIB (US$ bi)"
+msgstr "PIB (US$ mil M)"
+
+#: scenes/ui/panels/info_panel.tscn:73
+msgid "Bolsa (índice)"
+msgstr "Bolsa (índice)"
+
+#: scenes/ui/panels/info_panel.tscn:82 scripts/sim/infrastructure.gd:430
+msgid "1 ano"
+msgstr "1 año"
+
+#: scenes/ui/panels/info_panel.tscn:84
+msgid "5 anos"
+msgstr "5 años"
+
+#: scenes/ui/panels/info_panel.tscn:86
+msgid "10 anos"
+msgstr "10 años"
+
+#: scenes/ui/panels/info_panel.tscn:88
+msgid "40 anos"
+msgstr "40 años"
+
+#: scenes/ui/panels/info_panel.tscn:100
+msgid "Comparar com"
+msgstr "Comparar con"
+
+#: scenes/ui/panels/info_panel.tscn:143
+msgid "Expectativas"
+msgstr "Expectativas"
+
+#: scenes/ui/panels/info_panel.tscn:149
+msgid "EXPECTATIVAS DE MERCADO"
+msgstr "EXPECTATIVAS DEL MERCADO"
+
+#: scenes/ui/panels/info_panel.tscn:161
+msgid "Mediana das projeções de bancos e consultorias para o fim de cada ano. A seta compara com o relatório de um mês atrás."
+msgstr "Mediana de las proyecciones de bancos y consultoras para el fin de cada año. La flecha compara con el informe de hace un mes."
+
+#: scenes/ui/panels/info_panel.tscn:176
+msgid "Indicador"
+msgstr "Indicador"
+
+#: scenes/ui/panels/info_panel.tscn:210
+msgid "Inflação (IPC)"
+msgstr "Inflación (IPC)"
+
+#: scenes/ui/panels/info_panel.tscn:241
+msgid "PIB (crescimento)"
+msgstr "PIB (crecimiento)"
+
+#: scenes/ui/panels/info_panel.tscn:303
+msgid "Câmbio (moeda por US$)"
+msgstr "Tipo de cambio (moneda por US$)"
+
+#: scenes/ui/panels/info_panel.tscn:345
+msgid "FMI"
+msgstr "FMI"
+
+#: scenes/ui/panels/info_panel.tscn:351
+msgid "PERSPECTIVAS DA ECONOMIA MUNDIAL"
+msgstr "PERSPECTIVAS DE LA ECONOMÍA MUNDIAL"
+
+#: scenes/ui/panels/info_panel.tscn:357
+msgid "Projeções do FMI: mais presas aos fundamentos que as do mercado. Crescimento e inflação no ano; dívida pública ao fim do horizonte."
+msgstr "Proyecciones del FMI: más ligadas a los fundamentos que las del mercado. Crecimiento e inflación del año; deuda pública al final del horizonte."
+
+#: scenes/ui/panels/info_panel.tscn:436
+msgid "AVALIAÇÃO DO FMI SOBRE O SEU PAÍS"
+msgstr "EVALUACIÓN DEL FMI SOBRE SU PAÍS"
 
 #: scenes/ui/panels/infra_build.tscn:35 scenes/ui/rows/infra_row.tscn:106
 msgid "Ampliar"
@@ -4017,10 +4133,6 @@ msgstr "US$ %s mil M"
 #, c-format
 msgid "%d anos"
 msgstr "%d años"
-
-#: scripts/sim/infrastructure.gd:430
-msgid "1 ano"
-msgstr "1 año"
 
 #: scripts/sim/infrastructure.gd:431
 #, c-format
@@ -5885,6 +5997,34 @@ msgstr "US$/t"
 #: scripts/sim/markets.gd:15
 msgid "índice"
 msgstr "índice"
+
+#: scripts/sim/outlook.gd:109
+msgid "A dívida pública segue acima do que o mercado tolera; recomenda-se ajuste fiscal."
+msgstr "La deuda pública sigue por encima de lo que el mercado tolera; se recomienda un ajuste fiscal."
+
+#: scripts/sim/outlook.gd:111
+msgid "A trajetória da dívida é de alta."
+msgstr "La trayectoria de la deuda es al alza."
+
+#: scripts/sim/outlook.gd:114
+msgid "A inflação está longe da meta; a política monetária deve seguir apertada."
+msgstr "La inflación está lejos de la meta; la política monetaria debe seguir restrictiva."
+
+#: scripts/sim/outlook.gd:116
+msgid "O banco central tem pouca credibilidade, e as expectativas não se ancoram."
+msgstr "El banco central tiene poca credibilidad y las expectativas no se anclan."
+
+#: scripts/sim/outlook.gd:118
+msgid "O déficit em conta corrente deixa o país vulnerável a uma parada súbita de capitais."
+msgstr "El déficit de cuenta corriente deja al país vulnerable a una parada súbita de capitales."
+
+#: scripts/sim/outlook.gd:120
+msgid "O desemprego está bem acima do natural; há espaço para estímulo."
+msgstr "El desempleo está muy por encima del natural; hay espacio para estímulos."
+
+#: scripts/sim/outlook.gd:122
+msgid "Os fundamentos estão em ordem; o FMI não vê riscos imediatos."
+msgstr "Los fundamentos están en orden; el FMI no ve riesgos inmediatos."
 
 #: scripts/sim/party_talk.gd:47 scripts/ui/politics_panel.gd:164
 msgid "oposição"
@@ -8297,6 +8437,10 @@ msgstr "PER %s · div. %s"
 msgid "valor estimado"
 msgstr "valor estimado"
 
+#: scripts/ui/compare_chart.gd:49
+msgid "Ainda sem histórico suficiente."
+msgstr "Aún no hay historial suficiente."
+
 #: scripts/ui/corruption_window.gd:31
 #, fuzzy
 msgid "A favor"
@@ -9170,17 +9314,17 @@ msgstr "%s dejó de ser capital de %s."
 msgid "%s agora é capital de %s."
 msgstr "%s es ahora capital de %s."
 
-#: scripts/ui/economy_panel.gd:94
+#: scripts/ui/economy_panel.gd:98
 #, fuzzy, c-format
 msgid "População: %s milhões"
 msgstr "Población (M)"
 
-#: scripts/ui/economy_panel.gd:99
+#: scripts/ui/economy_panel.gd:103
 #, c-format
 msgid "Natalidade %s · mortalidade %s · migração %s ao ano"
 msgstr "Natalidad %s · mortalidad %s · migración %s al año"
 
-#: scripts/ui/economy_panel.gd:101
+#: scripts/ui/economy_panel.gd:105
 #, c-format
 msgid "Aposentadorias além da base: %s do PIB"
 msgstr "Jubilaciones por encima de la base: %s del PIB"
@@ -9761,7 +9905,7 @@ msgstr "%s mil"
 msgid "nenhuma"
 msgstr "ninguna"
 
-#: scripts/ui/hud.gd:962
+#: scripts/ui/hud.gd:962 scripts/ui/info_panel.gd:61
 msgid "Nenhum"
 msgstr "Ninguno"
 
@@ -9778,6 +9922,45 @@ msgstr "Postura: defensiva"
 #, c-format
 msgid "Frente: %s do território de %s ocupado · baixas: %s / %s mil"
 msgstr "Frente: %s del territorio de %s ocupado · bajas: %s / %s mil"
+
+#: scripts/ui/info_panel.gd:101
+#, c-format
+msgid "Último dado: %s"
+msgstr "Último dato: %s"
+
+#: scripts/ui/info_panel.gd:109
+#, c-format
+msgid "Boletim de expectativas: %s"
+msgstr "Boletín de expectativas: %s"
+
+#: scripts/ui/info_panel.gd:123
+#, c-format
+msgid "Há um mês: %s"
+msgstr "Hace un mes: %s"
+
+#: scripts/ui/info_panel.gd:128
+#, c-format
+msgid "Meta de inflação: %s. O mercado espera %s em %d."
+msgstr "Meta de inflación: %s. El mercado espera %s en %d."
+
+#: scripts/ui/info_panel.gd:130
+msgid "O câmbio é fixo; o mercado não projeta desvalorização."
+msgstr "El tipo de cambio es fijo; el mercado no proyecta devaluación."
+
+#: scripts/ui/info_panel.gd:135
+#, c-format
+msgid "PIB %d"
+msgstr "PIB %d"
+
+#: scripts/ui/info_panel.gd:137
+#, c-format
+msgid "Infl. %d"
+msgstr "Infl. %d"
+
+#: scripts/ui/info_panel.gd:138
+#, c-format
+msgid "Dívida %d"
+msgstr "Deuda %d"
 
 #: scripts/ui/infra_panel.gd:63
 #, c-format
@@ -11893,10 +12076,6 @@ msgstr "Vivienda"
 #: scripts/sim/law_catalog.gd_(escolha_sector)
 msgid "Energia"
 msgstr "Energía"
-
-#: scripts/sim/law_catalog.gd_(escolha_game_value)
-msgid "PIB (US$ bi)"
-msgstr "PIB (US$ mil M)"
 
 #: scripts/sim/law_catalog.gd_(escolha_game_value)
 msgid "PIB per capita (US$)"

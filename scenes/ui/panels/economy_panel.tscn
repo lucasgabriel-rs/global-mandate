@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" path="res://scenes/ui/panels/infra_panel.tscn" id="3_infra"]
 [ext_resource type="PackedScene" path="res://scenes/ui/panels/companies_panel.tscn" id="4_companies"]
 [ext_resource type="PackedScene" path="res://scenes/ui/panels/stock_panel.tscn" id="5_stock"]
+[ext_resource type="PackedScene" path="res://scenes/ui/panels/info_panel.tscn" id="6_info"]
 
 [node name="economy" type="VBoxContainer"]
 size_flags_horizontal = 3
@@ -299,3 +300,15 @@ size_flags_horizontal = 3
 focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "Parceiros comerciais"
+
+[node name="Information" type="VBoxContainer" parent="sub_tabs"]
+visible = false
+layout_mode = 2
+mouse_filter = 2
+metadata/_tab_index = 6
+metadata/_tab_name = "Informação"
+
+[node name="info" parent="sub_tabs/Information" instance=ExtResource("6_info")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
