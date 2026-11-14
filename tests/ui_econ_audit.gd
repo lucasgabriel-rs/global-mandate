@@ -53,7 +53,15 @@ func _dismiss() -> void:
 		main.hud.border._on_decline()
 	for dim in main.modal_root.get_children():
 		if dim is ColorRect:
-			var btn := _first_button(dim)
+			# Closing buttons first: the first button of a conversation opens the agenda, and the agenda's opens a conversation.
+			var btn: Button = null
+			for closer in ["close", "say_end"]:
+				btn = dim.find_child(closer, true, false) as Button
+				if btn and btn.visible and not btn.disabled:
+					break
+				btn = null
+			if btn == null:
+				btn = _first_button(dim)
 			if btn:
 				btn.pressed.emit()
 
