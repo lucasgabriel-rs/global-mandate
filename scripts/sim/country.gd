@@ -178,6 +178,10 @@ var p_ref := PackedFloat32Array([1, 1, 1, 1, 1])
 # Labor market and politics
 var unemp := 0.05
 var unemp_n := 0.05
+var real_wage := 1.0           # average real wage, index (1 = start of the game)
+var informal := 0.2            # share of the employed in informality
+var informal0 := 0.2           # starting informality, which it slowly returns to
+var minwage_ratio := 0.5       # Kaitz index: annual minimum wage over the median wage (60% of GDP per capita)
 var approval := 0.5
 var stability := 0.6
 var inequality := 0.38

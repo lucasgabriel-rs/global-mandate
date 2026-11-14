@@ -2274,7 +2274,9 @@ func _update_macro(c: Country) -> void:
 	if standing.minwage.has("valor"):
 		var ratio := float(standing.minwage.valor.value) * 12.0 / maxf(c.gdp_pc() * 0.6, 1.0)
 		approval += minf(ratio, 0.8) * 0.02
-		unemp = clampf((ratio - 0.6) * 0.05, 0.0, 0.06)
+		# A Kaitz index above ~0.6 cuts jobs held by workers who produce less than the minimum; above 1 the cut accelerates.
+		unemp = clampf((ratio - 0.6) * 0.06 + maxf(ratio - 1.0, 0.0) * 0.08, 0.0, 0.08)
+		c.minwage_ratio = ratio
 	var extra := {"inequality": 0.0, "labor": 0.0, "tfp": 0.0, "evasion": 0.0}
 	var world: GameWorld = _world.get_ref() if _world else null
 	if world:

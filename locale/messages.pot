@@ -519,7 +519,7 @@ msgstr ""
 msgid "Editar personagem"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1579 scripts/sim/legislation.gd:1676 scripts/sim/legislation.gd:1676 scripts/sim/legislation.gd:2467
+#: scenes/ui/hud.tscn:1579 scripts/sim/legislation.gd:1676 scripts/sim/legislation.gd:1676 scripts/sim/legislation.gd:2469
 msgid "Sistema"
 msgstr ""
 
@@ -3230,76 +3230,81 @@ msgstr ""
 msgid "Cessar-fogo entre %s e %s: nenhuma área do tamanho negociado, as fronteiras não mudam."
 msgstr ""
 
-#: scripts/sim/economy.gd:480
+#: scripts/sim/economy.gd:485
 #, c-format
 msgid "%s abandona a âncora cambial: moeda desvaloriza %d%%."
 msgstr ""
 
-#: scripts/sim/economy.gd:513
+#: scripts/sim/economy.gd:518
 #, c-format
 msgid "Agências rebaixam a nota de crédito de %s de %s para %s."
 msgstr ""
 
-#: scripts/sim/economy.gd:513
+#: scripts/sim/economy.gd:518
 #, c-format
 msgid "Agências elevam a nota de crédito de %s de %s para %s."
 msgstr ""
 
-#: scripts/sim/economy.gd:670
+#: scripts/sim/economy.gd:676
 #, c-format
 msgid "%s declara moratória da dívida soberana; credores aceitam corte de 45%%."
 msgstr ""
 
-#: scripts/sim/economy.gd:691
+#: scripts/sim/economy.gd:697
 #, c-format
 msgid "FMI aprova pacote de US$ %.0f bi para %s, com ajuste fiscal."
 msgstr ""
 
-#: scripts/sim/economy.gd:752
+#: scripts/sim/economy.gd:778
+#, c-format
+msgid "Desemprego em %s chega a %.1f%%; demissões se espalham."
+msgstr ""
+
+#: scripts/sim/economy.gd:793
 #, c-format
 msgid "Eleições em %s: oposição vence e promete mudar o rumo."
 msgstr ""
 
-#: scripts/sim/economy.gd:761
+#: scripts/sim/economy.gd:802
 #, c-format
 msgid "Golpe de Estado em %s: junta militar assume o poder."
 msgstr ""
 
-#: scripts/sim/economy.gd:785
+#: scripts/sim/economy.gd:826
 #, c-format
 msgid "Crise bancária em %s: crédito congela e o Tesouro socorre bancos."
 msgstr ""
 
-#: scripts/sim/economy.gd:799
+#: scripts/sim/economy.gd:840
 #, c-format
 msgid "%s entra em recessão: o PIB encolhe %s em 12 meses."
 msgstr ""
 
-#: scripts/sim/economy.gd:801
+#: scripts/sim/economy.gd:842
 #, c-format
 msgid "%s sai da recessão: o PIB volta a crescer."
 msgstr ""
 
-#: scripts/sim/economy.gd:808
+#: scripts/sim/economy.gd:849
 #, c-format
 msgid "Inflação em %s passa de %s ao ano."
 msgstr ""
 
-#: scripts/sim/economy.gd:813
+#: scripts/sim/economy.gd:854
 msgid "O BCE"
 msgstr ""
 
-#: scripts/sim/economy.gd:813
+#: scripts/sim/economy.gd:854
 #, c-format
 msgid "O banco central de %s"
 msgstr ""
 
-#: scripts/sim/economy.gd:814
+#: scripts/sim/economy.gd:855
 #, c-format
 msgid "%s eleva o juro básico para %s ao ano."
 msgstr ""
 
-#: scripts/sim/economy.gd:814
+#: scripts/sim/economy.gd:855
 #, c-format
 msgid "%s reduz o juro básico para %s ao ano."
 msgstr ""
@@ -4682,7 +4687,7 @@ msgstr ""
 msgid "Art. 17."
 msgstr ""
 
-#: scripts/sim/legislation.gd:269 scripts/sim/legislation.gd:2457
+#: scripts/sim/legislation.gd:269 scripts/sim/legislation.gd:2459
 msgid "O banco central é independente do governo: {v}."
 msgstr ""
 
@@ -5442,7 +5447,7 @@ msgstr ""
 msgid "ADT %dº"
 msgstr ""
 
-#: scripts/sim/legislation.gd:1755 scripts/sim/legislation.gd:2457
+#: scripts/sim/legislation.gd:1755 scripts/sim/legislation.gd:2459
 #, c-format
 msgid "Art. %d."
 msgstr ""
@@ -5502,7 +5507,7 @@ msgstr ""
 msgid "%s foi suspensa: a execução falhou repetidas vezes."
 msgstr ""
 
-#: scripts/sim/legislation.gd:1900 scripts/sim/legislation.gd:1900 scripts/sim/legislation.gd:2383
+#: scripts/sim/legislation.gd:1900 scripts/sim/legislation.gd:1900 scripts/sim/legislation.gd:2385
 #, c-format
 msgid "Art. %d: %s"
 msgstr ""
@@ -5551,50 +5556,50 @@ msgstr ""
 msgid "Extinto o ministério %s."
 msgstr ""
 
-#: scripts/sim/legislation.gd:2362
+#: scripts/sim/legislation.gd:2364
 msgid "A norma tem erros: corrija antes de simular."
 msgstr ""
 
-#: scripts/sim/legislation.gd:2387
+#: scripts/sim/legislation.gd:2389
 #, c-format
 msgid "ERRO: %s"
 msgstr ""
 
-#: scripts/sim/legislation.gd:2390
+#: scripts/sim/legislation.gd:2392
 msgid "O restante roda depois da espera."
 msgstr ""
 
-#: scripts/sim/legislation.gd:2392
+#: scripts/sim/legislation.gd:2394
 msgid "Nenhum artigo responde a esse evento."
 msgstr ""
 
-#: scripts/sim/legislation.gd:2420
+#: scripts/sim/legislation.gd:2422
 msgid "Arquivo não encontrado."
 msgstr ""
 
-#: scripts/sim/legislation.gd:2423
+#: scripts/sim/legislation.gd:2425
 msgid "Arquivo incompatível."
 msgstr ""
 
-#: scripts/sim/legislation.gd:2425
+#: scripts/sim/legislation.gd:2427
 msgid "A Constituição é de cada país e não pode ser importada."
 msgstr ""
 
-#: scripts/sim/legislation.gd:2432
+#: scripts/sim/legislation.gd:2434
 #, c-format
 msgid " Há %d erro(s) de compatibilidade para corrigir."
 msgstr ""
 
-#: scripts/sim/legislation.gd:2433
+#: scripts/sim/legislation.gd:2435
 #, c-format
 msgid "%s importada como rascunho.%s"
 msgstr ""
 
-#: scripts/sim/legislation.gd:2467 scripts/sim/legislation.gd:2467
+#: scripts/sim/legislation.gd:2469 scripts/sim/legislation.gd:2469
 msgid "Versão publicada não confere: norma suspensa"
 msgstr ""
 
-#: scripts/sim/legislation.gd:2467
+#: scripts/sim/legislation.gd:2469
 msgid "Integridade"
 msgstr ""
 
