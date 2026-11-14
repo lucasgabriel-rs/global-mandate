@@ -18,6 +18,7 @@ const STATE_COLORS := {
 var main: Node
 var world: GameWorld
 var leg: Legislation
+var _last_sig := 0
 
 @onready var _tabs: TabContainer = %tabs
 @onready var _feedback: Label = %feedback
@@ -81,10 +82,12 @@ func setup(owner_main: Node, tab := 0, message := "") -> void:
 		audit_filter.set_item_metadata(audit_filter.item_count - 1, kind)
 	audit_filter.item_selected.connect(func(_i): _fill_audit())
 	_fill_audit()
+	_last_sig = _signature()
 
 
 func _fill_codes() -> void:
 	var box: Control = %code_cards
+	_clear(box)
 	for code: LawCode in LawCodes.all():
 		var card: Control = CODE_CARD.instantiate()
 		card.name = "code_%s" % code.id
@@ -105,6 +108,41 @@ func _fill_codes() -> void:
 		read.visible = not norm.is_empty()
 		read.pressed.connect(func(): main.open_norm(norm))
 		box.add_child(card)
+
+
+func _clear(box: Control) -> void:
+	for child in box.get_children():
+		box.remove_child(child)
+		child.queue_free()
+
+
+## Chamado pelo HUD enquanto a janela está aberta. Só refaz as listas quando o estado da legislação mudou,
+## para não destruir os botões no meio de um clique.
+func refresh() -> void:
+	if leg == null:
+		return
+	var sig := _signature()
+	if sig == _last_sig:
+		return
+	_last_sig = sig
+	_fill_codes()
+	_fill_norms()
+	_fill_process()
+	_fill_treaties()
+	_fill_institutions()
+	_fill_audit()
+	(%role_note as Label).text = tr("Você atua como %s. Fundo de %s: %s.") % [tr(Legislation.ROLE_LABELS[leg.role(world)]), world.politics.player_party(world).get("short", tr("seu partido")), UiKit.millions(world.politics.party_fund(world))]
+
+
+func _signature() -> int:
+	var parts := [leg.audit.size(), leg.norms.size(), leg.role(world), world.politics.party_fund(world)]
+	for id in leg.norms:
+		var norm: Dictionary = leg.norms[id]
+		var process: Dictionary = norm.get("process", {})
+		parts.append([id, norm.state, process.get("waiting_player", false), process.get("log", []).size()])
+	for t: Dictionary in world.treaties.of_country(leg.iso):
+		parts.append([t.id, t.state])
+	return hash(parts)
 
 
 func _alter_code(id: String) -> void:
@@ -158,6 +196,7 @@ func _fill_norms() -> void:
 
 func _fill_process() -> void:
 	var box: Control = %process_rows
+	_clear(box)
 	var list := leg.in_process()
 	(%process_empty as Control).visible = list.is_empty()
 	(%process_count as Label).text = tr("%d projeto(s)") % list.size() if not list.is_empty() else ""

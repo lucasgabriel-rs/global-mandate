@@ -738,6 +738,10 @@ func _refresh_window(i: int, c: Country) -> void:
 		7: _politics.refresh()
 		8: _cabinet.refresh()
 		9: economy.refresh()
+		10:
+			var center := legislation_center()
+			if center:
+				center.refresh()
 
 
 func _leader_text(leader: Dictionary) -> String:
