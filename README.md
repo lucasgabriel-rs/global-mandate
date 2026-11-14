@@ -47,6 +47,20 @@ Each window is dragged by its title bar and resized by its bottom-right corner. 
 
 The top bar shows the date, the speed buttons, the main indicators and the party fund. The news feed sits in the bottom-left corner and the map modes in the top-left corner.
 
+## Governor mode
+
+Instead of a whole country, you can govern one of its first-level units (a state, province or region). Pick a country on the start screen and choose a unit from the list below its name; only countries with at least two first-level units offer it.
+
+A unit is not sovereign. There is no foreign policy, currency, trade or armed forces, and no national legislation: the **union** (the country the unit belongs to) keeps running on the AI. You get the **Unit panel**, the **Unit budget**, **Relations with the Union** and, after losing office, the **Party directory**.
+
+- **Office title.** The name of your office belongs to the unit type: governor for states, mayor for municipalities and cities, and any name you give to a type you create (Divisions window, field next to the type name).
+- **Competences.** `data/competences.json` says who decides health, education, public security, infrastructure and taxes in each country: the unit, the union, or both. Federal countries (Brazil, the US and others) give the unit a say in most areas; the rest are treated as unitary, and their regions decide very little. Budget sliders for areas the union keeps are locked.
+- **Money.** The unit's GDP, population and revenue are derived from the union's, in one direction only: nothing the unit does changes the national accounts. The union sends monthly transfers that depend on how close your party is to the party in power; you can ask for extra money every six months, with a chance that grows with affinity and approval.
+- **Elections.** In a democratic union you face the vote every mandate. If you lose, you stay in the game as president of your party's directory in the unit: it holds a share of the party fund, criticizes the incumbent and campaigns for the next vote, and answers to the national party line (a leader far from it is vetoed as a candidate). The union has no unit elections when it is a dictatorship.
+- **Change of union.** If the unit passes to another country, the new union keeps you or removes you by the political compass (your position against the party in power). In a democracy you pick the party you join, and if you were removed you continue as directory president. In a dictatorship, being removed ends the game, and staying means joining the ruling party. If the unit is cut, you follow the part that holds the capital; if the unit ceases to exist, the game ends.
+
+There is no state assembly or state legislation yet, so the motion of censure is off and the legislative center is closed in this mode.
+
 ## Time
 
 At normal speed (1x) one game day passes per real second; at 2x, two days, and at 4x, four. The game has no hours: the top bar shows only the date. Next to the buttons, the bar shows the actual rate in days per second, in red if it is far from the expected value. The economy is calculated once a month, on the 1st, for every country at the same time, together with commodity prices and global risk; wars, parliament and the AI's decisions move day by day.
@@ -377,7 +391,8 @@ godot --path . -- --ui-legislation --shots=/tmp/shots
 | `society.gd` | Age and death, elections, plebiscite, units with formal procedure, ministries, end of career, conversations and treaties. |
 | `world_ai.gd` | Lets the world run on its own and prints what happened. |
 | `save_compat.gd` | Loads saves written by v0.1.2 (`tests/fixtures`, government and opposition): same country, date, fund, norms, parties and diplomacy; the simulation keeps running; save and load round trip. |
-| `clock.gd`, `capitals.gd`, `borders.gd`, `subdivisions.gd` | Clock and day skips, capitals, borders and wars, subnational units. |
+| `clock.gd`, `capitals.gd`, `borders.gd`, `subdivisions.gd` | Clock and day skips, capitals, borders and wars, subnational units and the office title of each type. |
+| `competences.gd`, `governor.gd` | Governor mode: the competences table, the state's derived economy and budget (with no feedback into the country), transfers and funding requests, roles, saves, unit elections, the party directory, change of union by compass and the life cycle of the governed unit. |
 
 | Interface (`-- --ui-X --shots=DIR`) | What it covers |
 | --- | --- |
@@ -389,6 +404,7 @@ godot --path . -- --ui-legislation --shots=/tmp/shots
 | `--ui-locale` | Switches to English and Spanish and takes screenshots of the start screen, HUD, legislative center and block editor. |
 | `--ui-politics`, `--ui-statecraft` | Politics and statecraft through the interface. |
 | `--ui-opposition` | Starts in opposition and checks the dock, badge, window names and locked government windows; switches to government and back (also when losing office with a window open), with screenshots of both modes. |
+| `--ui-governor` | Starts as the governor of a state: the unit list on the start screen, the dock and windows of the role, office title, budget, transfers and the party directory after a defeat. |
 | `--ui-clock`, `--ui-capitals`, `--ui-divisions`, `--ui-borders` | Clock, capitals, drawing units and borders with clicks on the map. |
 | `--ui-debug` | Presses every debug menu command, one at a time. |
 | `--ui-threads`, `--ui-profile` | Threading and timing. |

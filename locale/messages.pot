@@ -7,7 +7,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8-bit\n"
 "X-Source-Language: pt_BR\n"
 
-#: scenes/ui/agenda.tscn:50 scenes/ui/chat/chat.tscn:90 scripts/ui/main.gd:742
+#: scenes/ui/agenda.tscn:50 scenes/ui/chat/chat.tscn:90 scripts/ui/main.gd:786
 msgid "Agenda"
 msgstr ""
 
@@ -19,71 +19,87 @@ msgstr ""
 msgid "Buscar por nome, país ou partido"
 msgstr ""
 
-#: scenes/ui/agenda.tscn:82 scenes/ui/float_window.tscn:100 scenes/ui/hud.tscn:4036 scenes/ui/legislation/law_simulator.tscn:63
+#: scenes/ui/agenda.tscn:82 scenes/ui/float_window.tscn:100 scenes/ui/hud.tscn:4088 scenes/ui/legislation/law_simulator.tscn:63
 msgid "Fechar"
 msgstr ""
 
-#: scenes/ui/dock.tscn:77 scenes/ui/hud.tscn:1439
+#: scenes/ui/dock.tscn:77 scenes/ui/hud.tscn:1443
 msgid "Painel do governo"
 msgstr ""
 
-#: scenes/ui/dock.tscn:81 scenes/ui/hud.tscn:1442
+#: scenes/ui/dock.tscn:81 scenes/ui/hud.tscn:1446
 msgid "Painel da oposição"
 msgstr ""
 
-#: scenes/ui/dock.tscn:85 scenes/ui/hud.tscn:1496 scripts/ui/debug_menu.gd:395
+#: scenes/ui/dock.tscn:85 scenes/ui/hud.tscn:1500 scripts/ui/debug_menu.gd:395
 msgid "Política"
 msgstr ""
 
-#: scenes/ui/dock.tscn:89 scenes/ui/hud.tscn:1499
+#: scenes/ui/dock.tscn:89 scenes/ui/hud.tscn:1503
 msgid "Partido e pesquisas"
 msgstr ""
 
-#: scenes/ui/dock.tscn:93 scenes/ui/hud.tscn:1505
+#: scenes/ui/dock.tscn:93 scenes/ui/hud.tscn:1509
 msgid "Ministros"
 msgstr ""
 
-#: scenes/ui/dock.tscn:100 scenes/ui/hud.tscn:3932 scenes/ui/legislation/legislation_center.tscn:25
+#: scenes/ui/dock.tscn:100 scenes/ui/hud.tscn:3936 scenes/ui/legislation/legislation_center.tscn:25
 msgid "Centro legislativo"
 msgstr ""
 
-#: scenes/ui/dock.tscn:104 scenes/ui/hud.tscn:3935
+#: scenes/ui/dock.tscn:104 scenes/ui/hud.tscn:3939
 msgid "Projetos e emendas"
 msgstr ""
 
-#: scenes/ui/dock.tscn:109 scenes/ui/hud.tscn:3941
+#: scenes/ui/dock.tscn:109 scenes/ui/hud.tscn:3945
 msgid "Fiscalização do governo"
 msgstr ""
 
-#: scenes/ui/dock.tscn:123 scenes/ui/hud.tscn:1448
+#: scenes/ui/dock.tscn:117 scenes/ui/hud.tscn:3957
+msgid "Painel da unidade"
+msgstr ""
+
+#: scenes/ui/dock.tscn:125 scenes/ui/hud.tscn:3969
+msgid "Orçamento da unidade"
+msgstr ""
+
+#: scenes/ui/dock.tscn:133 scenes/ui/hud.tscn:3981
+msgid "Relações com a União"
+msgstr ""
+
+#: scenes/ui/dock.tscn:141 scenes/ui/hud.tscn:3993
+msgid "Diretório do partido"
+msgstr ""
+
+#: scenes/ui/dock.tscn:155 scenes/ui/hud.tscn:1452
 msgid "Orçamento e impostos"
 msgstr ""
 
-#: scenes/ui/dock.tscn:130 scenes/ui/hud.tscn:1456
+#: scenes/ui/dock.tscn:162 scenes/ui/hud.tscn:1460
 msgid "Moeda e juros"
 msgstr ""
 
-#: scenes/ui/dock.tscn:137 scenes/ui/hud.tscn:1464
+#: scenes/ui/dock.tscn:169 scenes/ui/hud.tscn:1468
 msgid "Comércio exterior"
 msgstr ""
 
-#: scenes/ui/dock.tscn:144 scenes/ui/hud.tscn:1513
+#: scenes/ui/dock.tscn:176 scenes/ui/hud.tscn:1517
 msgid "Setores, empresas e bolsa"
 msgstr ""
 
-#: scenes/ui/dock.tscn:158 scenes/ui/hud.tscn:1472 scripts/sim/law_catalog.gd_(escolha_ministry_area)
+#: scenes/ui/dock.tscn:190 scenes/ui/hud.tscn:1476 scripts/sim/law_catalog.gd_(escolha_ministry_area)
 msgid "Forças armadas"
 msgstr ""
 
-#: scenes/ui/dock.tscn:165 scenes/ui/hud.tscn:1488
+#: scenes/ui/dock.tscn:197 scenes/ui/hud.tscn:1492
 msgid "Divisões do território"
 msgstr ""
 
-#: scenes/ui/dock.tscn:179 scenes/ui/hud.tscn:1480 scripts/ui/info_panel.gd:148
+#: scenes/ui/dock.tscn:211 scenes/ui/hud.tscn:1484 scripts/ui/info_panel.gd:148
 msgid "Mundo"
 msgstr ""
 
-#: scenes/ui/dock.tscn:186
+#: scenes/ui/dock.tscn:218
 msgid "Agenda de contatos"
 msgstr ""
 
@@ -107,883 +123,883 @@ msgstr ""
 msgid "◢"
 msgstr ""
 
-#: scenes/ui/hud.tscn:175
+#: scenes/ui/hud.tscn:179
 msgid "Você lidera a oposição: o governo é de outro partido. Critique, faça campanha, apresente projetos e dispute a próxima eleição. Orçamento, ministros e decretos são do governo."
 msgstr ""
 
-#: scenes/ui/hud.tscn:182
+#: scenes/ui/hud.tscn:186
 msgid "OPOSIÇÃO"
 msgstr ""
 
-#: scenes/ui/hud.tscn:196
+#: scenes/ui/hud.tscn:200
 msgid "Pausar (Espaço)"
 msgstr ""
 
-#: scenes/ui/hud.tscn:200
+#: scenes/ui/hud.tscn:204
 msgid "❚❚"
 msgstr ""
 
-#: scenes/ui/hud.tscn:206
+#: scenes/ui/hud.tscn:210
 msgid "Velocidade normal: 1 minuto a cada 0,05 s (tecla 1)"
 msgstr ""
 
-#: scenes/ui/hud.tscn:210
+#: scenes/ui/hud.tscn:214
 msgid "1x"
 msgstr ""
 
-#: scenes/ui/hud.tscn:216
+#: scenes/ui/hud.tscn:220
 msgid "Velocidade 2x (tecla 2)"
 msgstr ""
 
-#: scenes/ui/hud.tscn:220
+#: scenes/ui/hud.tscn:224
 msgid "2x"
 msgstr ""
 
-#: scenes/ui/hud.tscn:226
+#: scenes/ui/hud.tscn:230
 msgid "Velocidade 4x (teclas 3 ou 4)"
 msgstr ""
 
-#: scenes/ui/hud.tscn:230
+#: scenes/ui/hud.tscn:234
 msgid "4x"
 msgstr ""
 
-#: scenes/ui/hud.tscn:236
+#: scenes/ui/hud.tscn:240
 msgid "Avança 7 dias de uma vez e mostra um resumo."
 msgstr ""
 
-#: scenes/ui/hud.tscn:240
+#: scenes/ui/hud.tscn:244
 msgid "+7 dias"
 msgstr ""
 
-#: scenes/ui/hud.tscn:246
+#: scenes/ui/hud.tscn:250
 msgid "Avança 30 dias de uma vez e mostra um resumo."
 msgstr ""
 
-#: scenes/ui/hud.tscn:250
+#: scenes/ui/hud.tscn:254
 msgid "+30 dias"
 msgstr ""
 
-#: scenes/ui/hud.tscn:259
+#: scenes/ui/hud.tscn:263
 msgid "Ritmo real do relógio, em dias de jogo por segundo."
 msgstr ""
 
-#: scenes/ui/hud.tscn:266
+#: scenes/ui/hud.tscn:270
 msgid "PIB nominal em dólares correntes."
 msgstr ""
 
-#: scenes/ui/hud.tscn:273 scenes/ui/hud.tscn:602 scenes/ui/start_screen.tscn:122 scenes/ui/panels/info_panel.tscn:381
+#: scenes/ui/hud.tscn:277 scenes/ui/hud.tscn:606 scenes/ui/start_screen.tscn:122 scenes/ui/panels/info_panel.tscn:381
 msgid "PIB"
 msgstr ""
 
-#: scenes/ui/hud.tscn:280 scenes/ui/hud.tscn:298 scenes/ui/hud.tscn:316 scenes/ui/hud.tscn:334
+#: scenes/ui/hud.tscn:284 scenes/ui/hud.tscn:302 scenes/ui/hud.tscn:320 scenes/ui/hud.tscn:338
 msgid "—"
 msgstr ""
 
-#: scenes/ui/hud.tscn:284
+#: scenes/ui/hud.tscn:288
 msgid "Crescimento real do PIB em 12 meses."
 msgstr ""
 
-#: scenes/ui/hud.tscn:291
+#: scenes/ui/hud.tscn:295
 msgid "Crescim."
 msgstr ""
 
-#: scenes/ui/hud.tscn:302
+#: scenes/ui/hud.tscn:306
 msgid "Variação do índice de preços em 12 meses."
 msgstr ""
 
-#: scenes/ui/hud.tscn:309 scenes/ui/hud.tscn:694 scenes/ui/hud.tscn:1057 scenes/ui/hud.tscn:1324
+#: scenes/ui/hud.tscn:313 scenes/ui/hud.tscn:698 scenes/ui/hud.tscn:1061 scenes/ui/hud.tscn:1328
 msgid "Inflação"
 msgstr ""
 
-#: scenes/ui/hud.tscn:320
+#: scenes/ui/hud.tscn:324
 msgid "Taxa de desemprego."
 msgstr ""
 
-#: scenes/ui/hud.tscn:327 scenes/ui/hud.tscn:717 scenes/ui/hud.tscn:1332 scenes/ui/hud.tscn:1751
+#: scenes/ui/hud.tscn:331 scenes/ui/hud.tscn:721 scenes/ui/hud.tscn:1336 scenes/ui/hud.tscn:1755
 msgid "Desemprego"
 msgstr ""
 
-#: scenes/ui/hud.tscn:338
+#: scenes/ui/hud.tscn:342
 msgid "Dívida bruta do governo sobre o PIB."
 msgstr ""
 
-#: scenes/ui/hud.tscn:345 scenes/ui/hud.tscn:1762 scenes/ui/start_screen.tscn:276 scenes/ui/panels/opposition_panel.tscn:140
+#: scenes/ui/hud.tscn:349 scenes/ui/hud.tscn:1766 scenes/ui/start_screen.tscn:276 scenes/ui/panels/opposition_panel.tscn:140
 msgid "Dívida/PIB"
 msgstr ""
 
-#: scenes/ui/hud.tscn:356
+#: scenes/ui/hud.tscn:360
 msgid "Aprovação do governo. Em democracias decide a próxima eleição."
 msgstr ""
 
-#: scenes/ui/hud.tscn:363 scenes/ui/hud.tscn:1772 scenes/ui/start_screen.tscn:340
+#: scenes/ui/hud.tscn:367 scenes/ui/hud.tscn:1776 scenes/ui/start_screen.tscn:340
 msgid "Aprovação"
 msgstr ""
 
-#: scenes/ui/hud.tscn:364
+#: scenes/ui/hud.tscn:368
 msgid "Aprov. governo"
 msgstr ""
 
-#: scenes/ui/hud.tscn:375
+#: scenes/ui/hud.tscn:379
 msgid "Orçamento do Estado: resultado fiscal do ano (receita menos gastos e juros) em % do PIB. Detalhes na janela Orçamento e impostos."
 msgstr ""
 
-#: scenes/ui/hud.tscn:382
+#: scenes/ui/hud.tscn:386
 msgid "Orçam. Estado"
 msgstr ""
 
-#: scenes/ui/hud.tscn:398
+#: scenes/ui/hud.tscn:402
 msgid "Tensão global: guerras, potências nucleares e risco financeiro."
 msgstr ""
 
-#: scenes/ui/hud.tscn:405
+#: scenes/ui/hud.tscn:409
 msgid "Tensão"
 msgstr ""
 
-#: scenes/ui/hud.tscn:416
+#: scenes/ui/hud.tscn:420
 msgid "Petróleo (US$/bbl)"
 msgstr ""
 
-#: scenes/ui/hud.tscn:423 scenes/ui/hud.tscn:3356 scenes/ui/hud.tscn:3777 scripts/sim/markets.gd:12
+#: scenes/ui/hud.tscn:427 scenes/ui/hud.tscn:3360 scenes/ui/hud.tscn:3781 scripts/sim/markets.gd:12
 msgid "Petróleo"
 msgstr ""
 
-#: scenes/ui/hud.tscn:433
+#: scenes/ui/hud.tscn:437
 msgid "Gás (US$/MMBtu)"
 msgstr ""
 
-#: scenes/ui/hud.tscn:440 scenes/ui/hud.tscn:3379 scenes/ui/hud.tscn:3787 scripts/sim/markets.gd:12
+#: scenes/ui/hud.tscn:444 scenes/ui/hud.tscn:3383 scenes/ui/hud.tscn:3791 scripts/sim/markets.gd:12
 msgid "Gás"
 msgstr ""
 
-#: scenes/ui/hud.tscn:450
+#: scenes/ui/hud.tscn:454
 msgid "Grãos (US$/t)"
 msgstr ""
 
-#: scenes/ui/hud.tscn:457 scenes/ui/hud.tscn:3402 scenes/ui/hud.tscn:3796 scripts/sim/markets.gd:12
+#: scenes/ui/hud.tscn:461 scenes/ui/hud.tscn:3406 scenes/ui/hud.tscn:3800 scripts/sim/markets.gd:12
 msgid "Grãos"
 msgstr ""
 
-#: scenes/ui/hud.tscn:467
+#: scenes/ui/hud.tscn:471
 msgid "Chips (índice)"
 msgstr ""
 
-#: scenes/ui/hud.tscn:474 scenes/ui/hud.tscn:3448 scenes/ui/hud.tscn:3816 scripts/sim/markets.gd:12
+#: scenes/ui/hud.tscn:478 scenes/ui/hud.tscn:3452 scenes/ui/hud.tscn:3820 scripts/sim/markets.gd:12
 msgid "Chips"
 msgstr ""
 
-#: scenes/ui/hud.tscn:489
+#: scenes/ui/hud.tscn:493
 msgid "Menu (Esc)"
 msgstr ""
 
-#: scenes/ui/hud.tscn:492
+#: scenes/ui/hud.tscn:496
 msgid "☰"
 msgstr ""
 
-#: scenes/ui/hud.tscn:529 scenes/ui/panels/info_panel.tscn:155 scenes/ui/panels/info_panel.tscn:372 scenes/ui/rows/imf_row.tscn:16
+#: scenes/ui/hud.tscn:533 scenes/ui/panels/info_panel.tscn:155 scenes/ui/panels/info_panel.tscn:372 scenes/ui/rows/imf_row.tscn:16
 msgid "País"
 msgstr ""
 
-#: scenes/ui/hud.tscn:537 scenes/ui/hud.tscn:4039 scenes/ui/panels/debug_menu.tscn:62 scenes/ui/rows/type_row.tscn:38
+#: scenes/ui/hud.tscn:541 scenes/ui/hud.tscn:4091 scenes/ui/panels/debug_menu.tscn:62 scenes/ui/rows/type_row.tscn:46
 msgid "✕"
 msgstr ""
 
-#: scenes/ui/hud.tscn:562
+#: scenes/ui/hud.tscn:566
 msgid "Relação"
 msgstr ""
 
-#: scenes/ui/hud.tscn:625 scenes/ui/hud.tscn:1802 scenes/ui/start_screen.tscn:144
+#: scenes/ui/hud.tscn:629 scenes/ui/hud.tscn:1806 scenes/ui/start_screen.tscn:144
 msgid "PIB per capita"
 msgstr ""
 
-#: scenes/ui/hud.tscn:648 scenes/ui/hud.tscn:1825 scenes/ui/start_screen.tscn:166 scenes/ui/panels/economy_panel.tscn:89
+#: scenes/ui/hud.tscn:652 scenes/ui/hud.tscn:1829 scenes/ui/start_screen.tscn:166 scenes/ui/panels/economy_panel.tscn:89
 msgid "População"
 msgstr ""
 
-#: scenes/ui/hud.tscn:671 scenes/ui/hud.tscn:1047 scenes/ui/hud.tscn:1316 scenes/ui/hud.tscn:1729
+#: scenes/ui/hud.tscn:675 scenes/ui/hud.tscn:1051 scenes/ui/hud.tscn:1320 scenes/ui/hud.tscn:1733
 msgid "Crescimento"
 msgstr ""
 
-#: scenes/ui/hud.tscn:740 scenes/ui/hud.tscn:3116 scenes/ui/start_screen.tscn:254 scenes/ui/panels/info_panel.tscn:59
+#: scenes/ui/hud.tscn:744 scenes/ui/hud.tscn:3120 scenes/ui/start_screen.tscn:254 scenes/ui/panels/info_panel.tscn:59
 msgid "Juro básico"
 msgstr ""
 
-#: scenes/ui/hud.tscn:763 scenes/ui/hud.tscn:2415
+#: scenes/ui/hud.tscn:767 scenes/ui/hud.tscn:2419
 msgid "Dívida / PIB"
 msgstr ""
 
-#: scenes/ui/hud.tscn:786 scenes/ui/hud.tscn:1894 scenes/ui/start_screen.tscn:298 scenes/ui/panels/opposition_panel.tscn:168
+#: scenes/ui/hud.tscn:790 scenes/ui/hud.tscn:1898 scenes/ui/start_screen.tscn:298 scenes/ui/panels/opposition_panel.tscn:168
 msgid "Nota de crédito"
 msgstr ""
 
-#: scenes/ui/hud.tscn:809 scenes/ui/hud.tscn:1356 scenes/ui/hud.tscn:1783 scenes/ui/start_screen.tscn:362
+#: scenes/ui/hud.tscn:813 scenes/ui/hud.tscn:1360 scenes/ui/hud.tscn:1787 scenes/ui/start_screen.tscn:362
 msgid "Estabilidade"
 msgstr ""
 
-#: scenes/ui/hud.tscn:832 scenes/ui/panels/opposition_panel.tscn:84
+#: scenes/ui/hud.tscn:836 scenes/ui/panels/opposition_panel.tscn:84
 msgid "Aprovação do governo"
 msgstr ""
 
-#: scenes/ui/hud.tscn:855 scenes/ui/hud.tscn:3487
+#: scenes/ui/hud.tscn:859 scenes/ui/hud.tscn:3491
 msgid "Poder militar (EUA = 100)"
 msgstr ""
 
-#: scenes/ui/hud.tscn:878 scenes/ui/hud.tscn:3579
+#: scenes/ui/hud.tscn:882 scenes/ui/hud.tscn:3583
 msgid "Ogivas nucleares"
 msgstr ""
 
-#: scenes/ui/hud.tscn:901 scenes/ui/hud.tscn:3202
+#: scenes/ui/hud.tscn:905 scenes/ui/hud.tscn:3206
 msgid "Exportações"
 msgstr ""
 
-#: scenes/ui/hud.tscn:924
+#: scenes/ui/hud.tscn:928
 msgid "Unidades subnacionais"
 msgstr ""
 
-#: scenes/ui/hud.tscn:947 scenes/ui/hud.tscn:1603
+#: scenes/ui/hud.tscn:951 scenes/ui/hud.tscn:1607
 msgid "Capital"
 msgstr ""
 
-#: scenes/ui/hud.tscn:970 scripts/sim/character.gd:88 scripts/sim/legislation.gd:38 scripts/sim/legislation.gd:39
+#: scenes/ui/hud.tscn:974 scripts/sim/character.gd:88 scripts/sim/legislation.gd:38 scripts/sim/legislation.gd:39
 msgid "Chefe de governo"
 msgstr ""
 
-#: scenes/ui/hud.tscn:991
+#: scenes/ui/hud.tscn:995
 msgid "Partido do chefe de governo."
 msgstr ""
 
-#: scenes/ui/hud.tscn:998
+#: scenes/ui/hud.tscn:1002
 msgid "Partido no governo"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1014
+#: scenes/ui/hud.tscn:1018
 msgid "Assentos da coalizão de governo."
 msgstr ""
 
-#: scenes/ui/hud.tscn:1021 scenes/ui/hud.tscn:1649
+#: scenes/ui/hud.tscn:1025 scenes/ui/hud.tscn:1653
 msgid "Apoio no parlamento"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1064 scenes/ui/panels/politics_panel.tscn:130
+#: scenes/ui/hud.tscn:1068 scenes/ui/panels/politics_panel.tscn:130
 msgid "PARLAMENTO"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1079
+#: scenes/ui/hud.tscn:1083
 msgid "Na oposição, quem conduz a política externa é o governo. Você só acompanha."
 msgstr ""
 
-#: scenes/ui/hud.tscn:1093
+#: scenes/ui/hud.tscn:1097
 msgid "CONVERSA COM O LÍDER"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1099
+#: scenes/ui/hud.tscn:1103
 msgid "O líder responde conforme a relação, as ideias e o seu chanceler."
 msgstr ""
 
-#: scenes/ui/hud.tscn:1102
+#: scenes/ui/hud.tscn:1106
 msgid "Falar com o líder"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1108
+#: scenes/ui/hud.tscn:1112
 msgid "Negocia um tratado: assinado, ele ainda precisa ser ratificado pelos parlamentos."
 msgstr ""
 
-#: scenes/ui/hud.tscn:1111
+#: scenes/ui/hud.tscn:1115
 msgid "Propor tratado"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1124
+#: scenes/ui/hud.tscn:1128
 msgid "POLÍTICA EXTERNA"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1137
+#: scenes/ui/hud.tscn:1141
 msgid "Melhora a relação em 4 a 9 pontos."
 msgstr ""
 
-#: scenes/ui/hud.tscn:1141 scripts/ui/debug_menu.gd:9
+#: scenes/ui/hud.tscn:1145 scripts/ui/debug_menu.gd:9
 msgid "Missão diplomática"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1149
+#: scenes/ui/hud.tscn:1153
 msgid "Doa 0,1% do seu PIB. Melhora muito a relação com países pobres."
 msgstr ""
 
-#: scenes/ui/hud.tscn:1153 scripts/ui/debug_menu.gd:9
+#: scenes/ui/hud.tscn:1157 scripts/ui/debug_menu.gd:9
 msgid "Enviar ajuda"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1161
+#: scenes/ui/hud.tscn:1165
 msgid "Exige relação +15. Eleva o comércio bilateral em até 35%."
 msgstr ""
 
-#: scenes/ui/hud.tscn:1165 scripts/sim/treaties.gd:34 scripts/ui/debug_menu.gd:9 scripts/ui/hud.gd:501
+#: scenes/ui/hud.tscn:1169 scripts/sim/treaties.gd:34 scripts/ui/debug_menu.gd:9 scripts/ui/hud.gd:509
 msgid "Livre comércio"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1173
+#: scenes/ui/hud.tscn:1177
 msgid "Exige relação +10. Estimula sua indústria e fortalece o comprador."
 msgstr ""
 
-#: scenes/ui/hud.tscn:1177 scripts/ui/debug_menu.gd:9
+#: scenes/ui/hud.tscn:1181 scripts/ui/debug_menu.gd:9
 msgid "Vender armas"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1185
+#: scenes/ui/hud.tscn:1189
 msgid "Liga/desliga. Protege o mercado, encarece importações e pode gerar retaliação."
 msgstr ""
 
-#: scenes/ui/hud.tscn:1189 scripts/ui/debug_menu.gd:9 scripts/ui/hud.gd:515
+#: scenes/ui/hud.tscn:1193 scripts/ui/debug_menu.gd:9 scripts/ui/hud.gd:523
 msgid "Tarifa de 20%"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1197
+#: scenes/ui/hud.tscn:1201
 msgid "Relação -10. Pequeno ganho de aprovação interna."
 msgstr ""
 
-#: scenes/ui/hud.tscn:1201 scripts/ui/debug_menu.gd:9
+#: scenes/ui/hud.tscn:1205 scripts/ui/debug_menu.gd:9
 msgid "Condenar"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1209
+#: scenes/ui/hud.tscn:1213
 msgid "Liga/desliga. Corta 60% do comércio bilateral."
 msgstr ""
 
-#: scenes/ui/hud.tscn:1213 scripts/ui/debug_menu.gd:9 scripts/ui/hud.gd:513
+#: scenes/ui/hud.tscn:1217 scripts/ui/debug_menu.gd:9 scripts/ui/hud.gd:521
 msgid "Sanções"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1221
+#: scenes/ui/hud.tscn:1225
 msgid "Corta 88% do comércio. Reduz a oferta de energia do alvo conforme seu peso."
 msgstr ""
 
-#: scenes/ui/hud.tscn:1225 scripts/ui/debug_menu.gd:9 scripts/ui/hud.gd:514
+#: scenes/ui/hud.tscn:1229 scripts/ui/debug_menu.gd:9 scripts/ui/hud.gd:522
 msgid "Embargo total"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1233
+#: scenes/ui/hud.tscn:1237
 msgid "Desestabiliza o alvo. Pode ser descoberta, o que custa caro."
 msgstr ""
 
-#: scenes/ui/hud.tscn:1237 scripts/ui/debug_menu.gd:9
+#: scenes/ui/hud.tscn:1241 scripts/ui/debug_menu.gd:9
 msgid "Operação secreta"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1245
+#: scenes/ui/hud.tscn:1249
 msgid "Exige relação +55. Uma vez assinado, ataque a um é ataque ao outro."
 msgstr ""
 
-#: scenes/ui/hud.tscn:1249 scripts/sim/world.gd:634 scripts/ui/debug_menu.gd:9 scripts/ui/hud.gd:512
+#: scenes/ui/hud.tscn:1253 scripts/sim/world.gd:711 scripts/ui/debug_menu.gd:9 scripts/ui/hud.gd:520
 msgid "Pacto de defesa"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1257
+#: scenes/ui/hud.tscn:1261
 msgid "O inimigo avalia desgaste e situação da frente."
 msgstr ""
 
-#: scenes/ui/hud.tscn:1261 scenes/ui/rows/war_card.tscn:49 scripts/ui/debug_menu.gd:9
+#: scenes/ui/hud.tscn:1265 scenes/ui/rows/war_card.tscn:49 scripts/ui/debug_menu.gd:9
 msgid "Propor paz"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1269
+#: scenes/ui/hud.tscn:1273
 msgid "Provoca reação global, sanções e pode acionar alianças."
 msgstr ""
 
-#: scenes/ui/hud.tscn:1274 scripts/ui/debug_menu.gd:9
+#: scenes/ui/hud.tscn:1278 scripts/ui/debug_menu.gd:9
 msgid "Declarar guerra"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1300 scripts/ui/map_view.gd:37
+#: scenes/ui/hud.tscn:1304 scripts/ui/map_view.gd:37
 msgid "Político"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1308 scripts/ui/map_view.gd:38
+#: scenes/ui/hud.tscn:1312 scripts/ui/map_view.gd:38
 msgid "Relações"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1340 scenes/ui/panels/info_panel.tscn:417 scripts/ui/map_view.gd:42
+#: scenes/ui/hud.tscn:1344 scenes/ui/panels/info_panel.tscn:417 scripts/ui/map_view.gd:42
 msgid "Dívida"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1348 scripts/ui/map_view.gd:43
+#: scenes/ui/hud.tscn:1352 scripts/ui/map_view.gd:43
 msgid "Renda"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1364 scripts/ui/map_view.gd:45
+#: scenes/ui/hud.tscn:1368 scripts/ui/map_view.gd:45
 msgid "Militar"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1397
+#: scenes/ui/hud.tscn:1401
 msgid "NOTICIÁRIO"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1563 scripts/ui/debug_menu.gd:162
+#: scenes/ui/hud.tscn:1567 scripts/ui/debug_menu.gd:162
 msgid "Editar personagem"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1580 scripts/sim/legislation.gd:1676 scripts/sim/legislation.gd:1676 scripts/sim/legislation.gd:2469
+#: scenes/ui/hud.tscn:1584 scripts/sim/legislation.gd:1679 scripts/sim/legislation.gd:1679 scripts/sim/legislation.gd:2472
 msgid "Sistema"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1626 scenes/ui/rows/party_pick_row.tscn:23 scenes/ui/rows/party_row.tscn:22
+#: scenes/ui/hud.tscn:1630 scenes/ui/rows/party_pick_row.tscn:23 scenes/ui/rows/party_row.tscn:22
 msgid "Partido"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1650
+#: scenes/ui/hud.tscn:1654
 msgid "Governo no parlamento"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1673
+#: scenes/ui/hud.tscn:1677
 msgid "Próxima eleição"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1689
+#: scenes/ui/hud.tscn:1693
 msgid "Ranking entre as nações, combinando economia, força militar, alianças e estabilidade."
 msgstr ""
 
-#: scenes/ui/hud.tscn:1696
+#: scenes/ui/hud.tscn:1700
 msgid "Influência global"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1841
+#: scenes/ui/hud.tscn:1845
 msgid "Saldo com o exterior. Déficit persistente enfraquece a moeda."
 msgstr ""
 
-#: scenes/ui/hud.tscn:1848 scenes/ui/hud.tscn:3248 scenes/ui/panels/info_panel.tscn:67
+#: scenes/ui/hud.tscn:1852 scenes/ui/hud.tscn:3252 scenes/ui/panels/info_panel.tscn:67
 msgid "Conta corrente / PIB"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1871 scenes/ui/hud.tscn:2794
+#: scenes/ui/hud.tscn:1875 scenes/ui/hud.tscn:2798
 msgid "Reservas internacionais"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1887
+#: scenes/ui/hud.tscn:1891
 msgid "Calculada pelo prêmio de risco que o mercado cobra da sua dívida."
 msgstr ""
 
-#: scenes/ui/hud.tscn:1917 scenes/ui/hud.tscn:3149
+#: scenes/ui/hud.tscn:1921 scenes/ui/hud.tscn:3153
 msgid "Juro da dívida"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1940
+#: scenes/ui/hud.tscn:1944
 msgid "Bolsa (base 100)"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1975
+#: scenes/ui/hud.tscn:1979
 msgid "ORÇAMENTO"
 msgstr ""
 
-#: scenes/ui/hud.tscn:1982
+#: scenes/ui/hud.tscn:1986
 msgid "O governo define os gastos sozinho, e a mudança vale na hora. Só fica travado o que uma lei em vigor obrigar."
 msgstr ""
 
-#: scenes/ui/hud.tscn:1996
+#: scenes/ui/hud.tscn:2000
 msgid "IMPOSTOS (% DO PIB)"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2007 scripts/sim/law_catalog.gd_(escolha_tax_field)
+#: scenes/ui/hud.tscn:2011 scripts/sim/law_catalog.gd_(escolha_tax_field)
 msgid "Renda e folha"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2029 scripts/sim/law_catalog.gd_(escolha_tax_field)
+#: scenes/ui/hud.tscn:2033 scripts/sim/law_catalog.gd_(escolha_tax_field)
 msgid "Consumo"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2051 scripts/sim/law_catalog.gd_(escolha_tax_field)
+#: scenes/ui/hud.tscn:2055 scripts/sim/law_catalog.gd_(escolha_tax_field)
 msgid "Empresas e capital"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2067 scenes/ui/hud.tscn:3310
+#: scenes/ui/hud.tscn:2071 scenes/ui/hud.tscn:3314
 msgid "Abre o editor de blocos com as alíquotas em vigor. A mudança passa pelo parlamento como qualquer lei."
 msgstr ""
 
-#: scenes/ui/hud.tscn:2070
+#: scenes/ui/hud.tscn:2074
 msgid "Mudar tributos por lei"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2083
+#: scenes/ui/hud.tscn:2087
 msgid "GASTOS (% DO PIB)"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2099 scripts/sim/politics.gd:104 scripts/sim/law_catalog.gd_(escolha_budget_field)
+#: scenes/ui/hud.tscn:2103 scripts/sim/politics.gd:106 scripts/sim/law_catalog.gd_(escolha_budget_field)
 msgid "Previdência e assistência"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2116
+#: scenes/ui/hud.tscn:2120
 msgid "Sustenta a aprovação e reduz a dor do desemprego."
 msgstr ""
 
-#: scenes/ui/hud.tscn:2135 scripts/sim/politics.gd:56 scripts/sim/politics.gd:104 scripts/sim/law_catalog.gd_(escolha_budget_field)
+#: scenes/ui/hud.tscn:2139 scripts/sim/politics.gd:58 scripts/sim/politics.gd:106 scripts/sim/law_catalog.gd_(escolha_budget_field)
 msgid "Saúde"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2152
+#: scenes/ui/hud.tscn:2156
 msgid "Melhora a aprovação e, aos poucos, a produtividade."
 msgstr ""
 
-#: scenes/ui/hud.tscn:2171 scripts/sim/politics.gd:104 scripts/sim/law_catalog.gd_(escolha_budget_field)
+#: scenes/ui/hud.tscn:2175 scripts/sim/politics.gd:106 scripts/sim/law_catalog.gd_(escolha_budget_field)
 msgid "Educação e ciência"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2188
+#: scenes/ui/hud.tscn:2192
 msgid "O maior efeito de longo prazo: eleva capital humano e PTF."
 msgstr ""
 
-#: scenes/ui/hud.tscn:2207 scenes/ui/panels/economy_panel.tscn:55 scripts/sim/politics.gd:58 scripts/sim/politics.gd:105
+#: scenes/ui/hud.tscn:2211 scenes/ui/panels/economy_panel.tscn:55 scripts/sim/politics.gd:60 scripts/sim/politics.gd:107
 msgid "Infraestrutura"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2224
+#: scenes/ui/hud.tscn:2228
 msgid "Vira capital público e amplia o PIB potencial."
 msgstr ""
 
-#: scenes/ui/hud.tscn:2243 scripts/sim/politics.gd:55 scripts/sim/politics.gd:105 scripts/sim/law_catalog.gd_(escolha_budget_field)
+#: scenes/ui/hud.tscn:2247 scripts/sim/politics.gd:57 scripts/sim/politics.gd:107 scripts/sim/law_catalog.gd_(escolha_budget_field)
 msgid "Defesa"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2260
+#: scenes/ui/hud.tscn:2264
 msgid "Compra equipamento militar; o estoque se deprecia 6% ao ano."
 msgstr ""
 
-#: scenes/ui/hud.tscn:2279 scripts/sim/politics.gd:105 scripts/sim/law_catalog.gd_(escolha_budget_field)
+#: scenes/ui/hud.tscn:2283 scripts/sim/politics.gd:107 scripts/sim/law_catalog.gd_(escolha_budget_field)
 msgid "Administração"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2296
+#: scenes/ui/hud.tscn:2300
 msgid "Cortes fáceis, mas a estabilidade depende de um Estado funcional."
 msgstr ""
 
-#: scenes/ui/hud.tscn:2312
+#: scenes/ui/hud.tscn:2316
 msgid "RESULTADO ANUAL"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2323
+#: scenes/ui/hud.tscn:2327
 msgid "Receita"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2346
+#: scenes/ui/hud.tscn:2350
 msgid "Despesa primária"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2369
+#: scenes/ui/hud.tscn:2373
 msgid "Juros da dívida"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2385
+#: scenes/ui/hud.tscn:2389
 msgid "Déficit nominal: acima de ~4% do PIB, o mercado cobra mais caro."
 msgstr ""
 
-#: scenes/ui/hud.tscn:2392
+#: scenes/ui/hud.tscn:2396
 msgid "Déficit / PIB"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2431
+#: scenes/ui/hud.tscn:2435
 msgid "Nível de dívida a partir do qual o prêmio de risco acelera."
 msgstr ""
 
-#: scenes/ui/hud.tscn:2438
+#: scenes/ui/hud.tscn:2442
 msgid "Limite de tolerância"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2466 scripts/sim/law_catalog.gd_(escolha_param_field)
+#: scenes/ui/hud.tscn:2470 scripts/sim/law_catalog.gd_(escolha_param_field)
 msgid "Emissão monetária (% do déficit)"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2483
+#: scenes/ui/hud.tscn:2487
 msgid "Evita dívida, mas gera inflação e destrói a credibilidade do banco central."
 msgstr ""
 
-#: scenes/ui/hud.tscn:2490
+#: scenes/ui/hud.tscn:2494
 msgid "Empréstimo de 8% do PIB em troca de ajuste fiscal e perda de aprovação."
 msgstr ""
 
-#: scenes/ui/hud.tscn:2493
+#: scenes/ui/hud.tscn:2497
 msgid "Pedir socorro ao FMI"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2520
+#: scenes/ui/hud.tscn:2524
 msgid "BANCO CENTRAL"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2531
+#: scenes/ui/hud.tscn:2535
 msgid "Regime"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2548 scripts/ui/hud.gd:873
+#: scenes/ui/hud.tscn:2552 scripts/ui/hud.gd:904
 msgid "Manual dá controle direto, mas interferência reduz a credibilidade do banco central."
 msgstr ""
 
-#: scenes/ui/hud.tscn:2551
+#: scenes/ui/hud.tscn:2555
 msgid "Alternar: regra de Taylor / juro manual"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2567
+#: scenes/ui/hud.tscn:2571
 msgid "Juro básico alvo"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2584
+#: scenes/ui/hud.tscn:2588
 msgid "Mais juros: menos inflação e mais câmbio valorizado, ao custo de recessão e dívida mais cara."
 msgstr ""
 
-#: scenes/ui/hud.tscn:2597
+#: scenes/ui/hud.tscn:2601
 msgid "Juro básico atual"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2613
+#: scenes/ui/hud.tscn:2617
 msgid "Juro nominal menos inflação esperada."
 msgstr ""
 
-#: scenes/ui/hud.tscn:2620
+#: scenes/ui/hud.tscn:2624
 msgid "Juro real"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2636
+#: scenes/ui/hud.tscn:2640
 msgid "Juro real que nem estimula nem freia a economia."
 msgstr ""
 
-#: scenes/ui/hud.tscn:2643
+#: scenes/ui/hud.tscn:2647
 msgid "Juro neutro"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2666
+#: scenes/ui/hud.tscn:2670
 msgid "Meta de inflação"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2689
+#: scenes/ui/hud.tscn:2693
 msgid "Inflação esperada"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2705
+#: scenes/ui/hud.tscn:2709
 msgid "Quanto as expectativas se ancoram na meta. Sobe devagar quando a meta é cumprida."
 msgstr ""
 
-#: scenes/ui/hud.tscn:2712
+#: scenes/ui/hud.tscn:2716
 msgid "Credibilidade"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2737
+#: scenes/ui/hud.tscn:2741
 msgid "CÂMBIO"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2748
+#: scenes/ui/hud.tscn:2752
 msgid "Moeda por US$ (índice 2025 = 1)"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2764
+#: scenes/ui/hud.tscn:2768
 msgid "Acima de 1: moeda real mais fraca que em 2025, exportações mais competitivas."
 msgstr ""
 
-#: scenes/ui/hud.tscn:2771
+#: scenes/ui/hud.tscn:2775
 msgid "Câmbio real"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2787
+#: scenes/ui/hud.tscn:2791
 msgid "Dólares do banco central, em meses de importação entre parênteses. Abaixo de 3 meses o risco sobe."
 msgstr ""
 
-#: scenes/ui/hud.tscn:2810
+#: scenes/ui/hud.tscn:2814
 msgid "Venda líquida de reservas para segurar a moeda; negativa quando o banco central compra dólares."
 msgstr ""
 
-#: scenes/ui/hud.tscn:2817
+#: scenes/ui/hud.tscn:2821
 msgid "Intervenção no câmbio (ao ano)"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2833
+#: scenes/ui/hud.tscn:2837
 msgid "Quanto do movimento do câmbio o banco central segura, definido pela Lei Cambial."
 msgstr ""
 
-#: scenes/ui/hud.tscn:2840
+#: scenes/ui/hud.tscn:2844
 msgid "Política cambial"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2856
+#: scenes/ui/hud.tscn:2860
 msgid "Freia a fuga de capitais, mas afasta investimento estrangeiro e eleva um pouco o risco."
 msgstr ""
 
-#: scenes/ui/hud.tscn:2863
+#: scenes/ui/hud.tscn:2867
 msgid "Controle de capitais"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2879
+#: scenes/ui/hud.tscn:2883
 msgid "Dinheiro que sai do país quando o risco ou a inflação sobem. Pressiona o câmbio e as reservas."
 msgstr ""
 
-#: scenes/ui/hud.tscn:2886
+#: scenes/ui/hud.tscn:2890
 msgid "Fuga de capitais (ao ano)"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2902
+#: scenes/ui/hud.tscn:2906
 msgid "Parte dos depósitos e preços em dólar. Sobe com inflação alta e tira força do juro."
 msgstr ""
 
-#: scenes/ui/hud.tscn:2909
+#: scenes/ui/hud.tscn:2913
 msgid "Dolarização"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2925
+#: scenes/ui/hud.tscn:2929
 msgid "Paridade descoberta: i = i* + depreciação esperada + prêmio de risco."
 msgstr ""
 
-#: scenes/ui/hud.tscn:2932
+#: scenes/ui/hud.tscn:2936
 msgid "Depreciação esperada (paridade de juros)"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2949
+#: scenes/ui/hud.tscn:2953
 msgid "A âncora importa a política monetária dos EUA e exige reservas para ser defendida."
 msgstr ""
 
-#: scenes/ui/hud.tscn:2952
+#: scenes/ui/hud.tscn:2956
 msgid "Alternar: flutuante / âncora no dólar"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2965
+#: scenes/ui/hud.tscn:2969
 msgid "FUNDO SOBERANO"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2969
+#: scenes/ui/hud.tscn:2973
 msgid "O fundo é criado e alterado pela Lei Cambial e do Fundo Soberano, no centro legislativo."
 msgstr ""
 
-#: scenes/ui/hud.tscn:2976 scripts/ui/law_editor.gd:443
+#: scenes/ui/hud.tscn:2980 scripts/ui/law_editor.gd:443
 msgid "Situação"
 msgstr ""
 
-#: scenes/ui/hud.tscn:2992
+#: scenes/ui/hud.tscn:2996
 msgid "Investido fora do país: os aportes não valorizam a moeda. Um fundo grande reduz o risco."
 msgstr ""
 
-#: scenes/ui/hud.tscn:2999
+#: scenes/ui/hud.tscn:3003
 msgid "Saldo aplicado no exterior"
 msgstr ""
 
-#: scenes/ui/hud.tscn:3015
+#: scenes/ui/hud.tscn:3019
 msgid "Parte da renda de commodities e dos superávits que vai para o fundo."
 msgstr ""
 
-#: scenes/ui/hud.tscn:3022
+#: scenes/ui/hud.tscn:3026
 msgid "Aportes do ano"
 msgstr ""
 
-#: scenes/ui/hud.tscn:3038
+#: scenes/ui/hud.tscn:3042
 msgid "O saque entra no orçamento. Cobre parte das quedas da renda de commodities."
 msgstr ""
 
-#: scenes/ui/hud.tscn:3045
+#: scenes/ui/hud.tscn:3049
 msgid "Saques do ano"
 msgstr ""
 
-#: scenes/ui/hud.tscn:3061
+#: scenes/ui/hud.tscn:3065
 msgid "Saque anual máximo, em fração do saldo. Acima de 4% ao ano o fundo encolhe e a aprovação cai."
 msgstr ""
 
-#: scenes/ui/hud.tscn:3068
+#: scenes/ui/hud.tscn:3072
 msgid "Regra de saque"
 msgstr ""
 
-#: scenes/ui/hud.tscn:3084
+#: scenes/ui/hud.tscn:3088
 msgid "Retorno anualizado do último mês: ações e títulos no exterior."
 msgstr ""
 
-#: scenes/ui/hud.tscn:3091
+#: scenes/ui/hud.tscn:3095
 msgid "Retorno da carteira"
 msgstr ""
 
-#: scenes/ui/hud.tscn:3138 scenes/ui/panels/economy_panel.tscn:253 scripts/sim/law_catalog.gd_(categorias)
+#: scenes/ui/hud.tscn:3142 scenes/ui/panels/economy_panel.tscn:253 scripts/sim/law_catalog.gd_(categorias)
 msgid "Câmbio"
 msgstr ""
 
-#: scenes/ui/hud.tscn:3160 scripts/sim/law_catalog.gd_(escolha_game_value)
+#: scenes/ui/hud.tscn:3164 scripts/sim/law_catalog.gd_(escolha_game_value)
 msgid "Reservas (US$ bi)"
 msgstr ""
 
-#: scenes/ui/hud.tscn:3172
+#: scenes/ui/hud.tscn:3176
 msgid "Fundo soberano (US$ bi)"
 msgstr ""
 
-#: scenes/ui/hud.tscn:3225
+#: scenes/ui/hud.tscn:3229
 msgid "Importações"
 msgstr ""
 
-#: scenes/ui/hud.tscn:3264
+#: scenes/ui/hud.tscn:3268
 msgid "Efeito líquido de sanções, tarifas e acordos sobre suas exportações."
 msgstr ""
 
-#: scenes/ui/hud.tscn:3271
+#: scenes/ui/hud.tscn:3275
 msgid "Acesso a mercados"
 msgstr ""
 
-#: scenes/ui/hud.tscn:3294
+#: scenes/ui/hud.tscn:3298
 msgid "Tarifa geral de importação"
 msgstr ""
 
-#: scenes/ui/hud.tscn:3313
+#: scenes/ui/hud.tscn:3317
 msgid "Mudar a tarifa por lei"
 msgstr ""
 
-#: scenes/ui/hud.tscn:3326
+#: scenes/ui/hud.tscn:3330
 msgid "PRINCIPAIS DESTINOS"
 msgstr ""
 
-#: scenes/ui/hud.tscn:3345
+#: scenes/ui/hud.tscn:3349
 msgid "COMMODITIES (PRODUÇÃO - CONSUMO)"
 msgstr ""
 
-#: scenes/ui/hud.tscn:3425 scenes/ui/hud.tscn:3806 scripts/sim/markets.gd:12
+#: scenes/ui/hud.tscn:3429 scenes/ui/hud.tscn:3810 scripts/sim/markets.gd:12
 msgid "Metais"
 msgstr ""
 
-#: scenes/ui/hud.tscn:3510
+#: scenes/ui/hud.tscn:3514
 msgid "Ranking militar"
 msgstr ""
 
-#: scenes/ui/hud.tscn:3533
+#: scenes/ui/hud.tscn:3537
 msgid "Tropas ativas"
 msgstr ""
 
-#: scenes/ui/hud.tscn:3556
+#: scenes/ui/hud.tscn:3560
 msgid "Equipamento"
 msgstr ""
 
-#: scenes/ui/hud.tscn:3602
+#: scenes/ui/hud.tscn:3606
 msgid "Cansaço de guerra"
 msgstr ""
 
-#: scenes/ui/hud.tscn:3630
+#: scenes/ui/hud.tscn:3634
 msgid "Mobilização"
 msgstr ""
 
-#: scenes/ui/hud.tscn:3647
+#: scenes/ui/hud.tscn:3651
 msgid "Aumenta o poder de combate. Tira trabalhadores da economia e custa até 3,5% do PIB."
 msgstr ""
 
-#: scenes/ui/hud.tscn:3662
+#: scenes/ui/hud.tscn:3666
 msgid "GUERRAS"
 msgstr ""
 
-#: scenes/ui/hud.tscn:3675
+#: scenes/ui/hud.tscn:3679
 msgid "Em paz."
 msgstr ""
 
-#: scenes/ui/hud.tscn:3695
+#: scenes/ui/hud.tscn:3699
 msgid "ALIADOS DE DEFESA"
 msgstr ""
 
-#: scenes/ui/hud.tscn:3730
+#: scenes/ui/hud.tscn:3734
 msgid "PIB mundial"
 msgstr ""
 
-#: scenes/ui/hud.tscn:3746
+#: scenes/ui/hud.tscn:3750
 msgid "Quando sobe, dinheiro foge de emergentes e os juros deles disparam."
 msgstr ""
 
-#: scenes/ui/hud.tscn:3753
+#: scenes/ui/hud.tscn:3757
 msgid "Aversão a risco"
 msgstr ""
 
-#: scenes/ui/hud.tscn:3826
+#: scenes/ui/hud.tscn:3830
 msgid "Tensão global"
 msgstr ""
 
-#: scenes/ui/hud.tscn:3840
+#: scenes/ui/hud.tscn:3844
 msgid "MAIORES ECONOMIAS"
 msgstr ""
 
@@ -1039,7 +1055,7 @@ msgstr ""
 msgid "POLÍTICA E DEFESA"
 msgstr ""
 
-#: scenes/ui/start_screen.tscn:384 scripts/ui/hud.gd:451 scripts/ui/hud.gd:813 scripts/ui/main.gd:368
+#: scenes/ui/start_screen.tscn:384 scripts/ui/hud.gd:459 scripts/ui/hud.gd:844 scripts/ui/main.gd:375
 msgid "Democracia"
 msgstr ""
 
@@ -1075,15 +1091,15 @@ msgstr ""
 msgid "Difícil"
 msgstr ""
 
-#: scenes/ui/start_screen.tscn:542 scripts/sim/world.gd:490
+#: scenes/ui/start_screen.tscn:549 scripts/sim/state_gov.gd:210 scripts/sim/world.gd:567 scripts/ui/main.gd:439
 msgid "Assumir o governo"
 msgstr ""
 
-#: scenes/ui/start_screen.tscn:550
+#: scenes/ui/start_screen.tscn:557
 msgid "Continuar partida salva"
 msgstr ""
 
-#: scenes/ui/chat/chat.tscn:82 scripts/ui/main.gd:736
+#: scenes/ui/chat/chat.tscn:82 scripts/ui/main.gd:780
 msgid "Conversas"
 msgstr ""
 
@@ -1463,7 +1479,7 @@ msgstr ""
 msgid "Nenhum projeto em tramitação."
 msgstr ""
 
-#: scenes/ui/legislation/legislation_center.tscn:141 scripts/ui/legislation_center.gd:146
+#: scenes/ui/legislation/legislation_center.tscn:141 scripts/ui/legislation_center.gd:184
 msgid "Normas em vigor"
 msgstr ""
 
@@ -1519,7 +1535,7 @@ msgstr ""
 msgid "HISTÓRICO DE EMENDAS"
 msgstr ""
 
-#: scenes/ui/legislation/legislation_center.tscn:300 scripts/ui/legislation_center.gd:287
+#: scenes/ui/legislation/legislation_center.tscn:300 scripts/ui/legislation_center.gd:326
 msgid "Instituições"
 msgstr ""
 
@@ -1659,7 +1675,7 @@ msgstr ""
 msgid "Ver a norma"
 msgstr ""
 
-#: scenes/ui/legislation/step_chip.tscn:22 scripts/sim/legislation.gd:1201
+#: scenes/ui/legislation/step_chip.tscn:22 scripts/sim/legislation.gd:1204
 msgid "Comissão"
 msgstr ""
 
@@ -1679,7 +1695,7 @@ msgstr ""
 msgid "Texto da confirmação"
 msgstr ""
 
-#: scenes/ui/modals/corruption.tscn:50 scenes/ui/panels/politics_panel.tscn:64 scripts/ui/main.gd:701
+#: scenes/ui/modals/corruption.tscn:50 scenes/ui/panels/politics_panel.tscn:64 scripts/ui/main.gd:745
 msgid "Caixa dois"
 msgstr ""
 
@@ -1775,7 +1791,7 @@ msgstr ""
 msgid "Entendi"
 msgstr ""
 
-#: scenes/ui/modals/game_over.tscn:48 scripts/ui/debug_menu.gd:489 scripts/ui/main.gd:1071
+#: scenes/ui/modals/game_over.tscn:48 scripts/ui/debug_menu.gd:489 scripts/ui/main.gd:1115
 msgid "Fim de jogo"
 msgstr ""
 
@@ -1831,11 +1847,11 @@ msgstr ""
 msgid "Ministério: Fazenda"
 msgstr ""
 
-#: scenes/ui/modals/minister_picker.tscn:56 scripts/sim/politics.gd:53
+#: scenes/ui/modals/minister_picker.tscn:56 scripts/sim/politics.gd:55
 msgid "Sobe a credibilidade do banco central."
 msgstr ""
 
-#: scenes/ui/modals/party_detail.tscn:49 scripts/sim/politics.gd:79
+#: scenes/ui/modals/party_detail.tscn:49 scripts/sim/politics.gd:81
 msgid "Frente Nacional"
 msgstr ""
 
@@ -1877,7 +1893,7 @@ msgstr ""
 msgid "O governo atual segue com a IA, e você o enfrenta até a próxima eleição."
 msgstr ""
 
-#: scenes/ui/modals/party_picker.tscn:131 scripts/sim/world.gd:472
+#: scenes/ui/modals/party_picker.tscn:131 scripts/sim/world.gd:549
 msgid "Liderar a oposição"
 msgstr ""
 
@@ -2107,6 +2123,18 @@ msgstr ""
 
 #: scenes/ui/panels/debug_menu.tscn:92
 msgid "Clique em um país no mapa para torná-lo o alvo."
+msgstr ""
+
+#: scenes/ui/panels/directory_panel.tscn:17
+msgid "DIRETÓRIO DO PARTIDO NA UNIDADE"
+msgstr ""
+
+#: scenes/ui/panels/directory_panel.tscn:62
+msgid "Criticar o governo da unidade"
+msgstr ""
+
+#: scenes/ui/panels/directory_panel.tscn:69
+msgid "Fazer campanha"
 msgstr ""
 
 #: scenes/ui/panels/divisions_panel.tscn:18
@@ -2545,6 +2573,38 @@ msgstr ""
 msgid "Pesquisar um projeto antes de enviar:"
 msgstr ""
 
+#: scenes/ui/panels/state_budget.tscn:17
+msgid "ORÇAMENTO DA UNIDADE"
+msgstr ""
+
+#: scenes/ui/panels/state_budget.tscn:40
+msgid "Alíquota própria (% do PIB)"
+msgstr ""
+
+#: scenes/ui/panels/state_budget.tscn:66
+msgid "Saúde (% do PIB)"
+msgstr ""
+
+#: scenes/ui/panels/state_budget.tscn:92
+msgid "Educação (% do PIB)"
+msgstr ""
+
+#: scenes/ui/panels/state_budget.tscn:118
+msgid "Segurança pública (% do PIB)"
+msgstr ""
+
+#: scenes/ui/panels/state_budget.tscn:144
+msgid "Infraestrutura (% do PIB)"
+msgstr ""
+
+#: scenes/ui/panels/state_panel.tscn:17
+msgid "PAINEL DA UNIDADE"
+msgstr ""
+
+#: scenes/ui/panels/state_panel.tscn:61
+msgid "ECONOMIA E CONTAS"
+msgstr ""
+
 #: scenes/ui/panels/stock_panel.tscn:18
 msgid "BOLSA DE VALORES"
 msgstr ""
@@ -2607,6 +2667,18 @@ msgstr ""
 
 #: scenes/ui/panels/stock_panel.tscn:173
 msgid "O país não tem bolsa de valores: as empresas são todas de capital fechado. O índice acompanha só a economia."
+msgstr ""
+
+#: scenes/ui/panels/union_panel.tscn:17
+msgid "RELAÇÕES COM A UNIÃO"
+msgstr ""
+
+#: scenes/ui/panels/union_panel.tscn:53
+msgid "QUEM DECIDE"
+msgstr ""
+
+#: scenes/ui/panels/union_panel.tscn:74
+msgid "Pedir verba extra"
 msgstr ""
 
 #: scenes/ui/rows/agenda_row.tscn:31
@@ -2761,7 +2833,15 @@ msgstr ""
 msgid "●"
 msgstr ""
 
-#: scenes/ui/rows/type_row.tscn:35
+#: scenes/ui/rows/type_row.tscn:29
+msgid "Nome do cargo de quem chefia o executivo das unidades deste tipo (governador, prefeito...)."
+msgstr ""
+
+#: scenes/ui/rows/type_row.tscn:30
+msgid "Cargo"
+msgstr ""
+
+#: scenes/ui/rows/type_row.tscn:43
 msgid "Apagar tipo. Só é possível quando nenhuma unidade o usa."
 msgstr ""
 
@@ -2809,7 +2889,7 @@ msgstr ""
 msgid "Ofensiva acelera a frente, mas aumenta as baixas dos dois lados."
 msgstr ""
 
-#: scenes/ui/rows/war_card.tscn:42 scripts/ui/hud.gd:983
+#: scenes/ui/rows/war_card.tscn:42 scripts/ui/hud.gd:1014
 msgid "Postura: ofensiva"
 msgstr ""
 
@@ -3026,11 +3106,11 @@ msgstr ""
 msgid "%s vai votar %s. Pago por fora: %s."
 msgstr ""
 
-#: scripts/sim/corruption.gd:261 scripts/sim/legislation.gd:911 scripts/sim/legislation.gd:922 scripts/sim/legislation.gd:922
+#: scripts/sim/corruption.gd:261 scripts/sim/legislation.gd:914 scripts/sim/legislation.gd:925 scripts/sim/legislation.gd:925
 msgid "a favor"
 msgstr ""
 
-#: scripts/sim/corruption.gd:261 scripts/sim/legislation.gd:911 scripts/sim/legislation.gd:922 scripts/sim/legislation.gd:928
+#: scripts/sim/corruption.gd:261 scripts/sim/legislation.gd:914 scripts/sim/legislation.gd:925 scripts/sim/legislation.gd:931
 msgid "contra"
 msgstr ""
 
@@ -3148,7 +3228,7 @@ msgstr ""
 msgid "O governo"
 msgstr ""
 
-#: scripts/sim/corruption.gd:426 scripts/sim/world.gd:422 scripts/sim/world.gd:699
+#: scripts/sim/corruption.gd:426 scripts/sim/world.gd:467 scripts/sim/world.gd:776
 msgid "Outro partido"
 msgstr ""
 
@@ -3161,7 +3241,7 @@ msgstr ""
 msgid "A investigação sobre o governo de %s foi arquivada."
 msgstr ""
 
-#: scripts/sim/dialogue.gd:24 scripts/sim/world.gd:845
+#: scripts/sim/dialogue.gd:24 scripts/sim/world.gd:922
 msgid "Na oposição, você não fala em nome do país."
 msgstr ""
 
@@ -4007,7 +4087,7 @@ msgstr ""
 msgid "US$ %s bi"
 msgstr ""
 
-#: scripts/sim/infrastructure.gd:430 scripts/ui/main.gd:975 scripts/ui/main.gd:978
+#: scripts/sim/infrastructure.gd:430 scripts/ui/main.gd:1019 scripts/ui/main.gd:1022
 #, c-format
 msgid "%d anos"
 msgstr ""
@@ -4525,7 +4605,7 @@ msgstr ""
 msgid "Publicada"
 msgstr ""
 
-#: scripts/sim/legislation.gd:22 scripts/sim/legislation.gd:1550 scripts/sim/legislation.gd:1550 scripts/sim/treaties.gd:10
+#: scripts/sim/legislation.gd:22 scripts/sim/legislation.gd:1553 scripts/sim/legislation.gd:1553 scripts/sim/treaties.gd:10
 msgid "Em vigor"
 msgstr ""
 
@@ -4549,7 +4629,7 @@ msgstr ""
 msgid "Rejeitada"
 msgstr ""
 
-#: scripts/sim/legislation.gd:33 scripts/sim/legislation.gd:137 scripts/sim/legislation.gd:137 scripts/sim/legislation.gd:276
+#: scripts/sim/legislation.gd:33 scripts/sim/legislation.gd:140 scripts/sim/legislation.gd:140 scripts/sim/legislation.gd:279
 msgid "Assembleia Constituinte"
 msgstr ""
 
@@ -4557,7 +4637,7 @@ msgstr ""
 msgid "Parlamento"
 msgstr ""
 
-#: scripts/sim/legislation.gd:35 scripts/sim/legislation.gd:70 scripts/sim/legislation.gd:1204
+#: scripts/sim/legislation.gd:35 scripts/sim/legislation.gd:70 scripts/sim/legislation.gd:1207
 msgid "Plebiscito"
 msgstr ""
 
@@ -4617,7 +4697,7 @@ msgstr ""
 msgid "Port."
 msgstr ""
 
-#: scripts/sim/legislation.gd:67 scripts/sim/legislation.gd:578 scripts/sim/legislation.gd:596
+#: scripts/sim/legislation.gd:67 scripts/sim/legislation.gd:581 scripts/sim/legislation.gd:599
 msgid "Apresentação"
 msgstr ""
 
@@ -4653,7 +4733,7 @@ msgstr ""
 msgid "Verificação do quórum"
 msgstr ""
 
-#: scripts/sim/legislation.gd:69 scripts/sim/legislation.gd:1205
+#: scripts/sim/legislation.gd:69 scripts/sim/legislation.gd:1208
 msgid "Sanção"
 msgstr ""
 
@@ -4665,7 +4745,7 @@ msgstr ""
 msgid "Promulgação"
 msgstr ""
 
-#: scripts/sim/legislation.gd:70 scripts/sim/legislation.gd:1206
+#: scripts/sim/legislation.gd:70 scripts/sim/legislation.gd:1209
 msgid "Publicação"
 msgstr ""
 
@@ -4726,1120 +4806,1128 @@ msgid "Líder da oposição"
 msgstr ""
 
 #: scripts/sim/legislation.gd:81
+msgid "Chefe do executivo da unidade"
+msgstr ""
+
+#: scripts/sim/legislation.gd:81
+msgid "Presidente do diretório do partido"
+msgstr ""
+
+#: scripts/sim/legislation.gd:81
 msgid "Corte constitucional"
 msgstr ""
 
-#: scripts/sim/legislation.gd:94 scripts/sim/legislation.gd:1602
+#: scripts/sim/legislation.gd:97 scripts/sim/legislation.gd:1605
 msgid "Alteração"
 msgstr ""
 
-#: scripts/sim/legislation.gd:94
+#: scripts/sim/legislation.gd:97
 msgid "Acréscimo"
 msgstr ""
 
-#: scripts/sim/legislation.gd:94
+#: scripts/sim/legislation.gd:97
 msgid "Supressão"
 msgstr ""
 
-#: scripts/sim/legislation.gd:94
+#: scripts/sim/legislation.gd:97
 msgid "Substituição"
 msgstr ""
 
-#: scripts/sim/legislation.gd:97
+#: scripts/sim/legislation.gd:100
 msgid "Artigo"
 msgstr ""
 
-#: scripts/sim/legislation.gd:97
+#: scripts/sim/legislation.gd:100
 msgid "Parágrafo"
 msgstr ""
 
-#: scripts/sim/legislation.gd:97
+#: scripts/sim/legislation.gd:100
 msgid "Inciso"
 msgstr ""
 
-#: scripts/sim/legislation.gd:97
+#: scripts/sim/legislation.gd:100
 msgid "Disposição transitória"
 msgstr ""
 
-#: scripts/sim/legislation.gd:136
+#: scripts/sim/legislation.gd:139
 #, c-format
 msgid "Constituição de %s"
 msgstr ""
 
-#: scripts/sim/legislation.gd:137
+#: scripts/sim/legislation.gd:140
 msgid "Estrutura fundamental do Estado."
 msgstr ""
 
-#: scripts/sim/legislation.gd:161 scripts/sim/legislation.gd:216 scripts/sim/legislation.gd:276 scripts/sim/legislation.gd:1524
+#: scripts/sim/legislation.gd:164 scripts/sim/legislation.gd:219 scripts/sim/legislation.gd:279 scripts/sim/legislation.gd:1527
 msgid "Texto original"
 msgstr ""
 
-#: scripts/sim/legislation.gd:211 scripts/sim/codes_(tributario)
+#: scripts/sim/legislation.gd:214 scripts/sim/codes_(tributario)
 msgid "Código Tributário"
 msgstr ""
 
-#: scripts/sim/legislation.gd:212
+#: scripts/sim/legislation.gd:215
 msgid "Define as alíquotas de renda, consumo, empresas e importação."
 msgstr ""
 
-#: scripts/sim/legislation.gd:241
+#: scripts/sim/legislation.gd:244
 msgid "Reforma tributária"
 msgstr ""
 
-#: scripts/sim/legislation.gd:242
+#: scripts/sim/legislation.gd:245
 msgid "Altera as alíquotas dos tributos."
 msgstr ""
 
-#: scripts/sim/legislation.gd:253
+#: scripts/sim/legislation.gd:256
 msgid "Art. 1º"
 msgstr ""
 
-#: scripts/sim/legislation.gd:253
+#: scripts/sim/legislation.gd:256
 #, c-format
 msgid "%s é um Estado soberano, organizado em governo, parlamento e tribunais."
 msgstr ""
 
-#: scripts/sim/legislation.gd:254
+#: scripts/sim/legislation.gd:257
 msgid "Art. 2º"
 msgstr ""
 
-#: scripts/sim/legislation.gd:254
+#: scripts/sim/legislation.gd:257
 msgid "Os poderes são independentes e harmônicos entre si."
 msgstr ""
 
-#: scripts/sim/legislation.gd:254
+#: scripts/sim/legislation.gd:257
 msgid "O chefe de governo dirige o Estado e responde por todos os poderes."
 msgstr ""
 
-#: scripts/sim/legislation.gd:255
+#: scripts/sim/legislation.gd:258
 msgid "Art. 3º"
 msgstr ""
 
-#: scripts/sim/legislation.gd:255
+#: scripts/sim/legislation.gd:258
 msgid "São garantidos os direitos: {v}."
 msgstr ""
 
-#: scripts/sim/legislation.gd:256
+#: scripts/sim/legislation.gd:259
 msgid "Art. 4º"
 msgstr ""
 
-#: scripts/sim/legislation.gd:256
+#: scripts/sim/legislation.gd:259
 msgid "O mandato do chefe de governo terá duração de {v} anos."
 msgstr ""
 
-#: scripts/sim/legislation.gd:257
+#: scripts/sim/legislation.gd:260
 msgid "Art. 5º"
 msgstr ""
 
-#: scripts/sim/legislation.gd:257
+#: scripts/sim/legislation.gd:260
 msgid "O parlamento terá duas casas: {v}."
 msgstr ""
 
-#: scripts/sim/legislation.gd:258
+#: scripts/sim/legislation.gd:261
 msgid "Art. 6º"
 msgstr ""
 
-#: scripts/sim/legislation.gd:258
+#: scripts/sim/legislation.gd:261
 msgid "O chefe de governo poderá vetar projetos aprovados: {v}."
 msgstr ""
 
-#: scripts/sim/legislation.gd:259
+#: scripts/sim/legislation.gd:262
 msgid "Art. 7º"
 msgstr ""
 
-#: scripts/sim/legislation.gd:259
+#: scripts/sim/legislation.gd:262
 msgid "O veto só cai com {v}% dos votos do parlamento."
 msgstr ""
 
-#: scripts/sim/legislation.gd:260
+#: scripts/sim/legislation.gd:263
 msgid "Art. 8º"
 msgstr ""
 
-#: scripts/sim/legislation.gd:260
+#: scripts/sim/legislation.gd:263
 msgid "O chefe de governo poderá editar decreto autônomo: {v}."
 msgstr ""
 
-#: scripts/sim/legislation.gd:261
+#: scripts/sim/legislation.gd:264
 msgid "Art. 9º"
 msgstr ""
 
-#: scripts/sim/legislation.gd:261
+#: scripts/sim/legislation.gd:264
 msgid "A corte constitucional controla a validade das normas: {v}."
 msgstr ""
 
-#: scripts/sim/legislation.gd:262
+#: scripts/sim/legislation.gd:265
 msgid "Art. 10."
 msgstr ""
 
-#: scripts/sim/legislation.gd:262
+#: scripts/sim/legislation.gd:265
 msgid "A oposição poderá apresentar projetos: {v}."
 msgstr ""
 
-#: scripts/sim/legislation.gd:263
+#: scripts/sim/legislation.gd:266
 msgid "Art. 11."
 msgstr ""
 
-#: scripts/sim/legislation.gd:263
+#: scripts/sim/legislation.gd:266
 msgid "Emendas exigem apoio inicial de {v}% dos assentos."
 msgstr ""
 
-#: scripts/sim/legislation.gd:264
+#: scripts/sim/legislation.gd:267
 msgid "Art. 12."
 msgstr ""
 
-#: scripts/sim/legislation.gd:264
+#: scripts/sim/legislation.gd:267
 msgid "Emendas exigem {v}% dos votos do parlamento."
 msgstr ""
 
-#: scripts/sim/legislation.gd:265
+#: scripts/sim/legislation.gd:268
 msgid "Art. 13."
 msgstr ""
 
-#: scripts/sim/legislation.gd:265
+#: scripts/sim/legislation.gd:268
 msgid "Emendas passam por {v} votações."
 msgstr ""
 
-#: scripts/sim/legislation.gd:266
+#: scripts/sim/legislation.gd:269
 msgid "Art. 14."
 msgstr ""
 
-#: scripts/sim/legislation.gd:266
+#: scripts/sim/legislation.gd:269
 msgid "Entre as votações de uma emenda haverá intervalo de {v} dias."
 msgstr ""
 
-#: scripts/sim/legislation.gd:267
+#: scripts/sim/legislation.gd:270
 msgid "Art. 15."
 msgstr ""
 
-#: scripts/sim/legislation.gd:267
+#: scripts/sim/legislation.gd:270
 msgid "A Constituição não será emendada em tempo de guerra: {v}."
 msgstr ""
 
-#: scripts/sim/legislation.gd:268
+#: scripts/sim/legislation.gd:271
 msgid "Art. 16."
 msgstr ""
 
-#: scripts/sim/legislation.gd:268
+#: scripts/sim/legislation.gd:271
 msgid "Tramitarão ao mesmo tempo, no máximo, {v} emendas."
 msgstr ""
 
-#: scripts/sim/legislation.gd:269
+#: scripts/sim/legislation.gd:272
 msgid "Art. 17."
 msgstr ""
 
-#: scripts/sim/legislation.gd:269 scripts/sim/legislation.gd:2459
+#: scripts/sim/legislation.gd:272 scripts/sim/legislation.gd:2462
 msgid "O banco central é independente do governo: {v}."
 msgstr ""
 
-#: scripts/sim/legislation.gd:270
+#: scripts/sim/legislation.gd:273
 msgid "Art. 18."
 msgstr ""
 
-#: scripts/sim/legislation.gd:270
+#: scripts/sim/legislation.gd:273
 msgid "O parlamento é eleito pelo sistema: {v}."
 msgstr ""
 
-#: scripts/sim/legislation.gd:271
+#: scripts/sim/legislation.gd:274
 msgid "Art. 19."
 msgstr ""
 
-#: scripts/sim/legislation.gd:271
+#: scripts/sim/legislation.gd:274
 msgid "O regime de governo é: {v}."
 msgstr ""
 
-#: scripts/sim/legislation.gd:272
+#: scripts/sim/legislation.gd:275
 msgid "Art. 20."
 msgstr ""
 
-#: scripts/sim/legislation.gd:272
+#: scripts/sim/legislation.gd:275
 msgid "Partidos abaixo de {v}% dos votos não entram por lista."
 msgstr ""
 
-#: scripts/sim/legislation.gd:308
+#: scripts/sim/legislation.gd:311
 msgid "sim"
 msgstr ""
 
-#: scripts/sim/legislation.gd:308
+#: scripts/sim/legislation.gd:311
 msgid "não"
 msgstr ""
 
-#: scripts/sim/legislation.gd:313 scripts/ui/hud.gd:899 scripts/sim/law_catalog.gd_(escolha_cb_controle)
+#: scripts/sim/legislation.gd:316 scripts/ui/hud.gd:930 scripts/sim/law_catalog.gd_(escolha_cb_controle)
 msgid "nenhum"
 msgstr ""
 
-#: scripts/sim/legislation.gd:413 scripts/sim/legislation.gd:906 scripts/sim/legislation.gd:948 scripts/sim/legislation.gd:1013
+#: scripts/sim/legislation.gd:416 scripts/sim/legislation.gd:909 scripts/sim/legislation.gd:951 scripts/sim/legislation.gd:1016
 msgid "Jogador"
 msgstr ""
 
-#: scripts/sim/legislation.gd:419 scripts/sim/legislation.gd:419
+#: scripts/sim/legislation.gd:422 scripts/sim/legislation.gd:422
 msgid "Rascunho criado"
 msgstr ""
 
-#: scripts/sim/legislation.gd:419
+#: scripts/sim/legislation.gd:422
 msgid "Criação"
 msgstr ""
 
-#: scripts/sim/legislation.gd:431
+#: scripts/sim/legislation.gd:434
 #, c-format
 msgid "%s nº %d/%d"
 msgstr ""
 
-#: scripts/sim/legislation.gd:481
+#: scripts/sim/legislation.gd:484
 #, c-format
 msgid "Conflito com %s sobre %s: %s."
 msgstr ""
 
-#: scripts/sim/legislation.gd:481
+#: scripts/sim/legislation.gd:484
 msgid "a outra norma prevalece por ter hierarquia maior"
 msgstr ""
 
-#: scripts/sim/legislation.gd:481
+#: scripts/sim/legislation.gd:484
 msgid "vale a hierarquia, a especialidade e a data de vigência"
 msgstr ""
 
-#: scripts/sim/legislation.gd:485
+#: scripts/sim/legislation.gd:488
 msgid "A Constituição garante esse direito: a corte pode declarar a norma inválida."
 msgstr ""
 
-#: scripts/sim/legislation.gd:496
+#: scripts/sim/legislation.gd:499
 msgid "salário mínimo"
 msgstr ""
 
-#: scripts/sim/legislation.gd:498
+#: scripts/sim/legislation.gd:501
 #, c-format
 msgid "o direito %s"
 msgstr ""
 
-#: scripts/sim/legislation.gd:559 scripts/ui/legislation_center.gd:102
+#: scripts/sim/legislation.gd:562 scripts/ui/legislation_center.gd:105
 #, c-format
 msgid "%s não pode apresentar %s."
 msgstr ""
 
-#: scripts/sim/legislation.gd:561 scripts/ui/law_editor.gd:249
+#: scripts/sim/legislation.gd:564 scripts/ui/law_editor.gd:249
 msgid "Preencha o título e a ementa da norma."
 msgstr ""
 
-#: scripts/sim/legislation.gd:567
+#: scripts/sim/legislation.gd:570
 msgid "Os blocos da emenda têm erros: corrija antes de apresentar."
 msgstr ""
 
-#: scripts/sim/legislation.gd:571
+#: scripts/sim/legislation.gd:574
 #, c-format
 msgid "A norma tem %d erro(s): corrija antes de apresentar."
 msgstr ""
 
-#: scripts/sim/legislation.gd:578 scripts/sim/legislation.gd:578 scripts/sim/legislation.gd:596 scripts/sim/legislation.gd:596
+#: scripts/sim/legislation.gd:581 scripts/sim/legislation.gd:581 scripts/sim/legislation.gd:599 scripts/sim/legislation.gd:599
 msgid "Entrou em tramitação"
 msgstr ""
 
-#: scripts/sim/legislation.gd:579
+#: scripts/sim/legislation.gd:582
 #, c-format
 msgid "%s: %s entra em tramitação."
 msgstr ""
 
-#: scripts/sim/legislation.gd:581
+#: scripts/sim/legislation.gd:584
 #, c-format
 msgid "%s apresentada."
 msgstr ""
 
-#: scripts/sim/legislation.gd:597
+#: scripts/sim/legislation.gd:600
 #, c-format
 msgid "%s: %s vai ao parlamento."
 msgstr ""
 
-#: scripts/sim/legislation.gd:599
+#: scripts/sim/legislation.gd:602
 #, c-format
 msgid "%s foi ao parlamento: o rito leva cerca de %d dias."
 msgstr ""
 
-#: scripts/sim/legislation.gd:608
+#: scripts/sim/legislation.gd:611
 msgid "Criação de unidade: vale se o parlamento e o plebiscito aprovarem."
 msgstr ""
 
-#: scripts/sim/legislation.gd:622
+#: scripts/sim/legislation.gd:625
 msgid "arquivado com a queda do governo."
 msgstr ""
 
-#: scripts/sim/legislation.gd:656
+#: scripts/sim/legislation.gd:659
 msgid "Sanção tácita: o prazo acabou sem veto."
 msgstr ""
 
-#: scripts/sim/legislation.gd:691
+#: scripts/sim/legislation.gd:694
 #, c-format
 msgid "Protocolada em %s."
 msgstr ""
 
-#: scripts/sim/legislation.gd:691 scripts/sim/legislation.gd:732 scripts/sim/legislation.gd:736 scripts/sim/legislation.gd:739
+#: scripts/sim/legislation.gd:694 scripts/sim/legislation.gd:735 scripts/sim/legislation.gd:739 scripts/sim/legislation.gd:742
 msgid "Mesa do parlamento"
 msgstr ""
 
-#: scripts/sim/legislation.gd:693
+#: scripts/sim/legislation.gd:696
 #, c-format
 msgid "Assinada por %s."
 msgstr ""
 
-#: scripts/sim/legislation.gd:697
+#: scripts/sim/legislation.gd:700
 #, c-format
 msgid "Inadmitida: %s"
 msgstr ""
 
-#: scripts/sim/legislation.gd:697 scripts/sim/legislation.gd:700
+#: scripts/sim/legislation.gd:700 scripts/sim/legislation.gd:703
 msgid "Comissão de Justiça"
 msgstr ""
 
-#: scripts/sim/legislation.gd:698
+#: scripts/sim/legislation.gd:701
 #, c-format
 msgid "inadmitida. %s"
 msgstr ""
 
-#: scripts/sim/legislation.gd:700
+#: scripts/sim/legislation.gd:703
 msgid "Admitida."
 msgstr ""
 
-#: scripts/sim/legislation.gd:704
+#: scripts/sim/legislation.gd:707
 #, c-format
 msgid "Inconstitucional: %s"
 msgstr ""
 
-#: scripts/sim/legislation.gd:705
+#: scripts/sim/legislation.gd:708
 #, c-format
 msgid "declarada inválida pela corte. %s"
 msgstr ""
 
-#: scripts/sim/legislation.gd:707
+#: scripts/sim/legislation.gd:710
 msgid "Sem impedimento."
 msgstr ""
 
-#: scripts/sim/legislation.gd:707
+#: scripts/sim/legislation.gd:710
 #, c-format
 msgid "Dúvida arquivada: %s"
 msgstr ""
 
-#: scripts/sim/legislation.gd:709
+#: scripts/sim/legislation.gd:712
 msgid "Debate encerrado."
-msgstr ""
-
-#: scripts/sim/legislation.gd:715
-#, c-format
-msgid "%d a %d (precisava de %d)."
-msgstr ""
-
-#: scripts/sim/legislation.gd:717
-#, c-format
-msgid "Rejeitada por %s"
 msgstr ""
 
 #: scripts/sim/legislation.gd:718
 #, c-format
-msgid "rejeitada por %s"
+msgid "%d a %d (precisava de %d)."
 msgstr ""
 
 #: scripts/sim/legislation.gd:720
 #, c-format
+msgid "Rejeitada por %s"
+msgstr ""
+
+#: scripts/sim/legislation.gd:721
+#, c-format
+msgid "rejeitada por %s"
+msgstr ""
+
+#: scripts/sim/legislation.gd:723
+#, c-format
 msgid "Aprovada por %s"
-msgstr ""
-
-#: scripts/sim/legislation.gd:724
-#, c-format
-msgid "Sim %d%%, não %d%%, com %d%% de comparecimento."
-msgstr ""
-
-#: scripts/sim/legislation.gd:726
-#, c-format
-msgid "Rejeitado nas urnas. %s"
-msgstr ""
-
-#: scripts/sim/legislation.gd:726 scripts/sim/legislation.gd:729
-msgid "Eleitorado"
 msgstr ""
 
 #: scripts/sim/legislation.gd:727
 #, c-format
-msgid "rejeitado em plebiscito. %s"
+msgid "Sim %d%%, não %d%%, com %d%% de comparecimento."
 msgstr ""
 
 #: scripts/sim/legislation.gd:729
 #, c-format
-msgid "Aprovado nas urnas. %s"
+msgid "Rejeitado nas urnas. %s"
+msgstr ""
+
+#: scripts/sim/legislation.gd:729 scripts/sim/legislation.gd:732
+msgid "Eleitorado"
 msgstr ""
 
 #: scripts/sim/legislation.gd:730
 #, c-format
-msgid "%s: aprovado em plebiscito. %s"
+msgid "rejeitado em plebiscito. %s"
 msgstr ""
 
 #: scripts/sim/legislation.gd:732
+#, c-format
+msgid "Aprovado nas urnas. %s"
+msgstr ""
+
+#: scripts/sim/legislation.gd:733
+#, c-format
+msgid "%s: aprovado em plebiscito. %s"
+msgstr ""
+
+#: scripts/sim/legislation.gd:735
 msgid "Intervalo cumprido."
 msgstr ""
 
-#: scripts/sim/legislation.gd:736
+#: scripts/sim/legislation.gd:739
 msgid "Quórum insuficiente."
 msgstr ""
 
-#: scripts/sim/legislation.gd:737
+#: scripts/sim/legislation.gd:740
 msgid "sem o quórum qualificado."
 msgstr ""
 
-#: scripts/sim/legislation.gd:739
+#: scripts/sim/legislation.gd:742
 msgid "Quórum qualificado alcançado."
-msgstr ""
-
-#: scripts/sim/legislation.gd:751
-#, c-format
-msgid "Veto mantido: %d de %d votos."
-msgstr ""
-
-#: scripts/sim/legislation.gd:752
-msgid "o veto foi mantido."
 msgstr ""
 
 #: scripts/sim/legislation.gd:754
 #, c-format
-msgid "Veto derrubado por %d votos."
+msgid "Veto mantido: %d de %d votos."
+msgstr ""
+
+#: scripts/sim/legislation.gd:755
+msgid "o veto foi mantido."
 msgstr ""
 
 #: scripts/sim/legislation.gd:757
+#, c-format
+msgid "Veto derrubado por %d votos."
+msgstr ""
+
+#: scripts/sim/legislation.gd:760
 msgid "Promulgada."
 msgstr ""
 
-#: scripts/sim/legislation.gd:757 scripts/sim/legislation.gd:1806
+#: scripts/sim/legislation.gd:760 scripts/sim/legislation.gd:1809
 msgid "Presidência do parlamento"
 msgstr ""
 
-#: scripts/sim/legislation.gd:773
+#: scripts/sim/legislation.gd:776
 msgid "Sancionada pelo autor."
 msgstr ""
 
-#: scripts/sim/legislation.gd:777
+#: scripts/sim/legislation.gd:780
 #, c-format
 msgid "%s aprovada: você tem %d dias para sancionar ou vetar."
 msgstr ""
 
-#: scripts/sim/legislation.gd:783
+#: scripts/sim/legislation.gd:786
 msgid "Vetada pelo governo."
 msgstr ""
 
-#: scripts/sim/legislation.gd:786
+#: scripts/sim/legislation.gd:789
 msgid "Sancionada pelo governo."
 msgstr ""
 
-#: scripts/sim/legislation.gd:799
+#: scripts/sim/legislation.gd:802
 msgid "Esse projeto não aguarda sanção."
 msgstr ""
 
-#: scripts/sim/legislation.gd:801
+#: scripts/sim/legislation.gd:804
 msgid "Só o chefe de governo sanciona ou veta."
 msgstr ""
 
-#: scripts/sim/legislation.gd:805
-msgid "Sancionada."
-msgstr ""
-
-#: scripts/sim/legislation.gd:807
-#, c-format
-msgid "%s sancionada."
-msgstr ""
-
 #: scripts/sim/legislation.gd:808
-msgid "Vetada."
+msgid "Sancionada."
 msgstr ""
 
 #: scripts/sim/legislation.gd:810
 #, c-format
+msgid "%s sancionada."
+msgstr ""
+
+#: scripts/sim/legislation.gd:811
+msgid "Vetada."
+msgstr ""
+
+#: scripts/sim/legislation.gd:813
+#, c-format
 msgid "%s vetada: o parlamento pode derrubar o veto."
 msgstr ""
 
-#: scripts/sim/legislation.gd:864 scripts/sim/politics.gd:530
+#: scripts/sim/legislation.gd:867 scripts/sim/politics.gd:545
 msgid "Senado"
 msgstr ""
 
-#: scripts/sim/legislation.gd:864 scripts/sim/politics.gd:529
+#: scripts/sim/legislation.gd:867 scripts/sim/politics.gd:544
 msgid "Câmara"
 msgstr ""
 
-#: scripts/sim/legislation.gd:901 scripts/sim/legislation.gd:939 scripts/sim/legislation.gd:1003
+#: scripts/sim/legislation.gd:904 scripts/sim/legislation.gd:942 scripts/sim/legislation.gd:1006
 msgid "Não há mais votação a negociar nesta proposta."
 msgstr ""
 
-#: scripts/sim/legislation.gd:905 scripts/sim/legislation.gd:1007 scripts/sim/politics.gd:772
+#: scripts/sim/legislation.gd:908 scripts/sim/legislation.gd:1010 scripts/sim/politics.gd:801
 msgid "Esse partido não existe."
 msgstr ""
 
-#: scripts/sim/legislation.gd:911
+#: scripts/sim/legislation.gd:914
 #, c-format
 msgid "Sua bancada foi orientada a votar %s."
 msgstr ""
 
-#: scripts/sim/legislation.gd:914 scripts/sim/legislation.gd:946 scripts/sim/legislation.gd:1009
+#: scripts/sim/legislation.gd:917 scripts/sim/legislation.gd:949 scripts/sim/legislation.gd:1012
 #, c-format
 msgid "%s já deu a resposta sobre esta proposta."
 msgstr ""
 
-#: scripts/sim/legislation.gd:918
+#: scripts/sim/legislation.gd:921
 #, c-format
 msgid "O acordo custa %s, e o fundo tem %s."
 msgstr ""
 
-#: scripts/sim/legislation.gd:922 scripts/sim/legislation.gd:922 scripts/sim/legislation.gd:1016 scripts/sim/legislation.gd:1016
+#: scripts/sim/legislation.gd:925 scripts/sim/legislation.gd:925 scripts/sim/legislation.gd:1019 scripts/sim/legislation.gd:1019
 #, c-format
 msgid "%s recusou votar %s"
 msgstr ""
 
-#: scripts/sim/legislation.gd:922 scripts/sim/legislation.gd:928 scripts/sim/legislation.gd:950 scripts/sim/legislation.gd:956
+#: scripts/sim/legislation.gd:925 scripts/sim/legislation.gd:931 scripts/sim/legislation.gd:953 scripts/sim/legislation.gd:959
 msgid "Negociação"
 msgstr ""
 
-#: scripts/sim/legislation.gd:924
+#: scripts/sim/legislation.gd:927
 #, c-format
 msgid "%s recusou. Nada foi pago."
 msgstr ""
 
-#: scripts/sim/legislation.gd:928 scripts/sim/legislation.gd:928
+#: scripts/sim/legislation.gd:931 scripts/sim/legislation.gd:931
 #, c-format
 msgid "%s fechou voto %s por %s"
 msgstr ""
 
-#: scripts/sim/legislation.gd:930
+#: scripts/sim/legislation.gd:933
 #, c-format
 msgid "%s vai votar %s. Pago: %s."
 msgstr ""
 
-#: scripts/sim/legislation.gd:937
+#: scripts/sim/legislation.gd:940
 msgid "Na oposição, você não tem cargos a oferecer."
 msgstr ""
 
-#: scripts/sim/legislation.gd:943 scripts/sim/politics.gd:853
+#: scripts/sim/legislation.gd:946 scripts/sim/politics.gd:882
 msgid "Esse partido já está no governo."
 msgstr ""
 
-#: scripts/sim/legislation.gd:950 scripts/sim/legislation.gd:950
+#: scripts/sim/legislation.gd:953 scripts/sim/legislation.gd:953
 #, c-format
 msgid "%s recusou entrar no governo"
 msgstr ""
 
-#: scripts/sim/legislation.gd:952
+#: scripts/sim/legislation.gd:955
 #, c-format
 msgid "%s recusou entrar no governo."
 msgstr ""
 
-#: scripts/sim/legislation.gd:956 scripts/sim/legislation.gd:956
+#: scripts/sim/legislation.gd:959 scripts/sim/legislation.gd:959
 #, c-format
 msgid "%s entrou no governo e votará a favor"
 msgstr ""
 
-#: scripts/sim/legislation.gd:958
+#: scripts/sim/legislation.gd:961
 #, c-format
 msgid "%s entra no governo e vota a favor. Lembre de dar um ministério ao novo aliado."
 msgstr ""
 
-#: scripts/sim/legislation.gd:1016 scripts/sim/legislation.gd:1022
+#: scripts/sim/legislation.gd:1019 scripts/sim/legislation.gd:1025
 msgid "Conversa"
 msgstr ""
 
-#: scripts/sim/legislation.gd:1019
+#: scripts/sim/legislation.gd:1022
 #, c-format
 msgid "%s recusou votar %s."
 msgstr ""
 
-#: scripts/sim/legislation.gd:1022 scripts/sim/legislation.gd:1022
+#: scripts/sim/legislation.gd:1025 scripts/sim/legislation.gd:1025
 #, c-format
 msgid "%s combinou votar %s"
 msgstr ""
 
-#: scripts/sim/legislation.gd:1025
+#: scripts/sim/legislation.gd:1028
 #, c-format
 msgid "%s vai votar %s."
 msgstr ""
 
-#: scripts/sim/legislation.gd:1180
+#: scripts/sim/legislation.gd:1183
 #, c-format
 msgid "%s: cerca de %d de %d votos (margem de %d), precisa de %d. %s"
 msgstr ""
 
-#: scripts/sim/legislation.gd:1180
+#: scripts/sim/legislation.gd:1183
 msgid "Deve passar."
 msgstr ""
 
-#: scripts/sim/legislation.gd:1180
+#: scripts/sim/legislation.gd:1183
 msgid "Deve cair."
 msgstr ""
 
-#: scripts/sim/legislation.gd:1184
+#: scripts/sim/legislation.gd:1187
 msgid "A maioria aprova."
 msgstr ""
 
-#: scripts/sim/legislation.gd:1184
+#: scripts/sim/legislation.gd:1187
 msgid "A maioria rejeita."
 msgstr ""
 
-#: scripts/sim/legislation.gd:1184
+#: scripts/sim/legislation.gd:1187
 msgid "O eleitorado está dividido."
 msgstr ""
 
-#: scripts/sim/legislation.gd:1185
+#: scripts/sim/legislation.gd:1188
 #, c-format
 msgid "Favoráveis: %d%% (margem de %d pontos). %s"
 msgstr ""
 
-#: scripts/sim/legislation.gd:1202
+#: scripts/sim/legislation.gd:1205
 msgid "Plenário"
 msgstr ""
 
-#: scripts/sim/legislation.gd:1203
+#: scripts/sim/legislation.gd:1206
 msgid "Outra casa"
 msgstr ""
 
-#: scripts/sim/legislation.gd:1207
+#: scripts/sim/legislation.gd:1210
 msgid "Vigência"
 msgstr ""
 
-#: scripts/sim/legislation.gd:1213
+#: scripts/sim/legislation.gd:1216
 msgid "Trabalhadores"
 msgstr ""
 
-#: scripts/sim/legislation.gd:1214
+#: scripts/sim/legislation.gd:1217
 msgid "Empresários"
 msgstr ""
 
-#: scripts/sim/legislation.gd:1215
+#: scripts/sim/legislation.gd:1218
 msgid "Classe média"
 msgstr ""
 
-#: scripts/sim/legislation.gd:1216
+#: scripts/sim/legislation.gd:1219
 msgid "Religiosos"
 msgstr ""
 
-#: scripts/sim/legislation.gd:1217
+#: scripts/sim/legislation.gd:1220
 msgid "Jovens"
 msgstr ""
 
-#: scripts/sim/legislation.gd:1218
+#: scripts/sim/legislation.gd:1221
 msgid "Aposentados"
 msgstr ""
 
-#: scripts/sim/legislation.gd:1222 scripts/sim/legislation.gd:1378 scripts/ui/legislation_center.gd:269
+#: scripts/sim/legislation.gd:1225 scripts/sim/legislation.gd:1381 scripts/ui/legislation_center.gd:308
 msgid "sem votação"
 msgstr ""
 
-#: scripts/sim/legislation.gd:1222 scripts/ui/legislation_center.gd:269
+#: scripts/sim/legislation.gd:1225 scripts/ui/legislation_center.gd:308
 msgid "maioria simples"
 msgstr ""
 
-#: scripts/sim/legislation.gd:1222 scripts/ui/legislation_center.gd:269
+#: scripts/sim/legislation.gd:1225 scripts/ui/legislation_center.gd:308
 msgid "maioria absoluta"
 msgstr ""
 
-#: scripts/sim/legislation.gd:1222 scripts/ui/legislation_center.gd:269
+#: scripts/sim/legislation.gd:1225 scripts/ui/legislation_center.gd:308
 msgid "maioria qualificada"
 msgstr ""
 
-#: scripts/sim/legislation.gd:1222
+#: scripts/sim/legislation.gd:1225
 msgid "quórum de emenda"
 msgstr ""
 
-#: scripts/sim/legislation.gd:1264
+#: scripts/sim/legislation.gd:1267
 #, c-format
 msgid "%s: assinada por %s, sem votação no parlamento."
 msgstr ""
 
-#: scripts/sim/legislation.gd:1270
+#: scripts/sim/legislation.gd:1273
 #, c-format
 msgid "%d de %d votos %s"
 msgstr ""
 
-#: scripts/sim/legislation.gd:1270
+#: scripts/sim/legislation.gd:1273
 #, c-format
 msgid "na %s"
 msgstr ""
 
-#: scripts/sim/legislation.gd:1270
+#: scripts/sim/legislation.gd:1273
 msgid "no Parlamento"
 msgstr ""
 
-#: scripts/sim/legislation.gd:1271
+#: scripts/sim/legislation.gd:1274
 #, c-format
 msgid "%s exige %s: %s."
 msgstr ""
 
-#: scripts/sim/legislation.gd:1271
+#: scripts/sim/legislation.gd:1274
 msgid " e "
 msgstr ""
 
-#: scripts/sim/legislation.gd:1273
+#: scripts/sim/legislation.gd:1276
 msgid " Depois vai à sanção, e o chefe de governo pode vetar."
 msgstr ""
 
-#: scripts/sim/legislation.gd:1299
+#: scripts/sim/legislation.gd:1302
 msgid "Publicada, aguardando a vigência"
 msgstr ""
 
-#: scripts/sim/legislation.gd:1302
+#: scripts/sim/legislation.gd:1305
 #, c-format
 msgid "Em vigor desde %s"
 msgstr ""
 
-#: scripts/sim/legislation.gd:1320 scripts/ui/legislation_center.gd:170
+#: scripts/sim/legislation.gd:1323 scripts/ui/legislation_center.gd:209
 msgid "Aguardando sua sanção"
 msgstr ""
 
-#: scripts/sim/legislation.gd:1380
+#: scripts/sim/legislation.gd:1383
 msgid "muito provável"
 msgstr ""
 
-#: scripts/sim/legislation.gd:1382
+#: scripts/sim/legislation.gd:1385
 msgid "provável"
 msgstr ""
 
-#: scripts/sim/legislation.gd:1386
+#: scripts/sim/legislation.gd:1389
 msgid "difícil"
 msgstr ""
 
-#: scripts/sim/legislation.gd:1387
+#: scripts/sim/legislation.gd:1390
 msgid "muito difícil"
 msgstr ""
 
-#: scripts/sim/legislation.gd:1431
+#: scripts/sim/legislation.gd:1434
 msgid "dividido"
 msgstr ""
 
-#: scripts/sim/legislation.gd:1482
+#: scripts/sim/legislation.gd:1485
 msgid "a programação tem erros."
 msgstr ""
 
-#: scripts/sim/legislation.gd:1503
+#: scripts/sim/legislation.gd:1506
 msgid "remove um direito garantido no Art. 3º."
 msgstr ""
 
-#: scripts/sim/legislation.gd:1505
+#: scripts/sim/legislation.gd:1508
 msgid "tributo com efeito de confisco."
 msgstr ""
 
-#: scripts/sim/legislation.gd:1509
+#: scripts/sim/legislation.gd:1512
 msgid "norma inferior não revoga norma superior."
 msgstr ""
 
-#: scripts/sim/legislation.gd:1520
+#: scripts/sim/legislation.gd:1523
 msgid "Publicada no diário oficial."
 msgstr ""
 
-#: scripts/sim/legislation.gd:1520
+#: scripts/sim/legislation.gd:1523
 msgid "Imprensa Oficial"
 msgstr ""
 
-#: scripts/sim/legislation.gd:1524
+#: scripts/sim/legislation.gd:1527
 #, c-format
 msgid "Art. 1º %s"
 msgstr ""
 
-#: scripts/sim/legislation.gd:1530
+#: scripts/sim/legislation.gd:1533
 msgid "a programação deixou de ser válida."
 msgstr ""
 
-#: scripts/sim/legislation.gd:1550
+#: scripts/sim/legislation.gd:1553
 msgid "Entrada em vigor"
 msgstr ""
 
-#: scripts/sim/legislation.gd:1551
+#: scripts/sim/legislation.gd:1554
 #, c-format
 msgid "%s entra em vigor: %s."
 msgstr ""
 
-#: scripts/sim/legislation.gd:1572
+#: scripts/sim/legislation.gd:1575
 #, c-format
 msgid "%s vira realidade."
 msgstr ""
 
-#: scripts/sim/legislation.gd:1575
+#: scripts/sim/legislation.gd:1578
 msgid "A unidade não existe mais."
 msgstr ""
 
-#: scripts/sim/legislation.gd:1578
+#: scripts/sim/legislation.gd:1581
 #, c-format
 msgid "%s se separa e vira unidade própria."
 msgstr ""
 
-#: scripts/sim/legislation.gd:1599
+#: scripts/sim/legislation.gd:1602
 #, c-format
 msgid "Alterada por %s"
 msgstr ""
 
-#: scripts/sim/legislation.gd:1602 scripts/sim/legislation.gd:1602
+#: scripts/sim/legislation.gd:1605 scripts/sim/legislation.gd:1605
 #, c-format
 msgid "Nova versão %d"
 msgstr ""
 
-#: scripts/sim/legislation.gd:1612
+#: scripts/sim/legislation.gd:1615
 #, c-format
 msgid "Revogada por %s"
 msgstr ""
 
-#: scripts/sim/legislation.gd:1620
+#: scripts/sim/legislation.gd:1623
 #, c-format
 msgid "Revogação parcial por %s"
 msgstr ""
 
-#: scripts/sim/legislation.gd:1623 scripts/sim/legislation.gd:1623
+#: scripts/sim/legislation.gd:1626 scripts/sim/legislation.gd:1626
 #, c-format
 msgid "Artigos %s"
 msgstr ""
 
-#: scripts/sim/legislation.gd:1623
+#: scripts/sim/legislation.gd:1626
 msgid "Revogação parcial"
 msgstr ""
 
-#: scripts/sim/legislation.gd:1631
+#: scripts/sim/legislation.gd:1634
 msgid "Revogação"
 msgstr ""
 
-#: scripts/sim/legislation.gd:1632
+#: scripts/sim/legislation.gd:1635
 #, c-format
 msgid "%s revogada."
 msgstr ""
 
-#: scripts/sim/legislation.gd:1641
+#: scripts/sim/legislation.gd:1644
 #, c-format
 msgid "Altera %s"
 msgstr ""
 
-#: scripts/sim/legislation.gd:1642
+#: scripts/sim/legislation.gd:1645
 #, c-format
 msgid "Altera %s: %s."
 msgstr ""
 
-#: scripts/sim/legislation.gd:1651
+#: scripts/sim/legislation.gd:1654
 #, c-format
 msgid "Revoga %s"
 msgstr ""
 
-#: scripts/sim/legislation.gd:1652
+#: scripts/sim/legislation.gd:1655
 #, c-format
 msgid "Revoga os artigos %s de %s."
 msgstr ""
 
-#: scripts/sim/legislation.gd:1652
+#: scripts/sim/legislation.gd:1655
 #, c-format
 msgid "Revoga %s."
 msgstr ""
 
-#: scripts/sim/legislation.gd:1658
+#: scripts/sim/legislation.gd:1661
 msgid "Só o chefe de governo suspende normas."
 msgstr ""
 
-#: scripts/sim/legislation.gd:1660
+#: scripts/sim/legislation.gd:1663
 msgid "Só norma de hierarquia igual ou a corte suspende uma lei."
 msgstr ""
 
-#: scripts/sim/legislation.gd:1665
+#: scripts/sim/legislation.gd:1668
 msgid "Suspensão"
 msgstr ""
 
-#: scripts/sim/legislation.gd:1665
+#: scripts/sim/legislation.gd:1668
 msgid "Reativação"
 msgstr ""
 
-#: scripts/sim/legislation.gd:1676 scripts/sim/legislation.gd:1676
+#: scripts/sim/legislation.gd:1679 scripts/sim/legislation.gd:1679
 msgid "Prazo de vigência terminou"
 msgstr ""
 
-#: scripts/sim/legislation.gd:1676
+#: scripts/sim/legislation.gd:1679
 msgid "Expiração"
 msgstr ""
 
-#: scripts/sim/legislation.gd:1677
+#: scripts/sim/legislation.gd:1680
 #, c-format
 msgid "%s expirou."
 msgstr ""
 
-#: scripts/sim/legislation.gd:1691
+#: scripts/sim/legislation.gd:1694
 msgid "A emenda não muda nenhum dispositivo."
 msgstr ""
 
-#: scripts/sim/legislation.gd:1693
+#: scripts/sim/legislation.gd:1696
 msgid "A Constituição proíbe emendas em tempo de guerra."
 msgstr ""
 
-#: scripts/sim/legislation.gd:1696
+#: scripts/sim/legislation.gd:1699
 #, c-format
 msgid "Já tramitam %d emendas, o máximo permitido."
 msgstr ""
 
-#: scripts/sim/legislation.gd:1702
+#: scripts/sim/legislation.gd:1705
 msgid "Esse dispositivo não existe mais."
 msgstr ""
 
-#: scripts/sim/legislation.gd:1704
+#: scripts/sim/legislation.gd:1707
 #, c-format
 msgid "%s é cláusula pétrea e não pode ser alterado."
 msgstr ""
 
-#: scripts/sim/legislation.gd:1709
+#: scripts/sim/legislation.gd:1712
 #, c-format
 msgid "A emenda precisa do apoio inicial de %d assentos; você tem %d."
 msgstr ""
 
-#: scripts/sim/legislation.gd:1753
+#: scripts/sim/legislation.gd:1756
 #, c-format
 msgid "Inciso %d."
 msgstr ""
 
-#: scripts/sim/legislation.gd:1754
+#: scripts/sim/legislation.gd:1757
 #, c-format
 msgid "ADT %dº"
 msgstr ""
 
-#: scripts/sim/legislation.gd:1755 scripts/sim/legislation.gd:2459
+#: scripts/sim/legislation.gd:1758 scripts/sim/legislation.gd:2462
 #, c-format
 msgid "Art. %d."
 msgstr ""
 
-#: scripts/sim/legislation.gd:1773
+#: scripts/sim/legislation.gd:1776
 #, c-format
 msgid "%s (Suprimido.)"
 msgstr ""
 
-#: scripts/sim/legislation.gd:1799
+#: scripts/sim/legislation.gd:1802
 #, c-format
 msgid "%d votos em %d"
 msgstr ""
 
-#: scripts/sim/legislation.gd:1801
+#: scripts/sim/legislation.gd:1804
 msgid "Texto promulgado"
 msgstr ""
 
-#: scripts/sim/legislation.gd:1806
+#: scripts/sim/legislation.gd:1809
 #, c-format
 msgid "Constituição atualizada para a versão %d."
 msgstr ""
 
-#: scripts/sim/legislation.gd:1807
+#: scripts/sim/legislation.gd:1810
 #, c-format
 msgid "%s promulgada: a Constituição mudou."
 msgstr ""
 
-#: scripts/sim/legislation.gd:1836
+#: scripts/sim/legislation.gd:1839
 msgid "Artigo suprimido por emenda"
 msgstr ""
 
-#: scripts/sim/legislation.gd:1888 scripts/sim/legislation.gd:1888
+#: scripts/sim/legislation.gd:1891 scripts/sim/legislation.gd:1891
 #, c-format
 msgid "Falha no art. %d: %s"
 msgstr ""
 
-#: scripts/sim/legislation.gd:1888 scripts/sim/legislation.gd:1888 scripts/sim/legislation.gd:1892 scripts/sim/legislation.gd:1892
+#: scripts/sim/legislation.gd:1891 scripts/sim/legislation.gd:1891 scripts/sim/legislation.gd:1895 scripts/sim/legislation.gd:1895
 msgid "Motor"
 msgstr ""
 
-#: scripts/sim/legislation.gd:1888 scripts/sim/legislation.gd:1900
+#: scripts/sim/legislation.gd:1891 scripts/sim/legislation.gd:1903
 msgid "Execução"
 msgstr ""
 
-#: scripts/sim/legislation.gd:1892 scripts/sim/legislation.gd:1892
+#: scripts/sim/legislation.gd:1895 scripts/sim/legislation.gd:1895
 #, c-format
 msgid "Falhou %d vezes"
 msgstr ""
 
-#: scripts/sim/legislation.gd:1892
+#: scripts/sim/legislation.gd:1895
 msgid "Suspensão automática"
 msgstr ""
 
-#: scripts/sim/legislation.gd:1893
+#: scripts/sim/legislation.gd:1896
 #, c-format
 msgid "%s foi suspensa: a execução falhou repetidas vezes."
 msgstr ""
 
-#: scripts/sim/legislation.gd:1900 scripts/sim/legislation.gd:1900 scripts/sim/legislation.gd:2385
+#: scripts/sim/legislation.gd:1903 scripts/sim/legislation.gd:1903 scripts/sim/legislation.gd:2388
 #, c-format
 msgid "Art. %d: %s"
 msgstr ""
 
-#: scripts/sim/legislation.gd:1900 scripts/sim/legislation.gd:1900
+#: scripts/sim/legislation.gd:1903 scripts/sim/legislation.gd:1903
 msgid "sem efeitos"
 msgstr ""
 
-#: scripts/sim/legislation.gd:2044
+#: scripts/sim/legislation.gd:2047
 #, c-format
 msgid "obrigação de %s"
 msgstr ""
 
-#: scripts/sim/legislation.gd:2096
+#: scripts/sim/legislation.gd:2099
 #, c-format
 msgid "%s das reservas"
 msgstr ""
 
-#: scripts/sim/legislation.gd:2127
+#: scripts/sim/legislation.gd:2130
 #, c-format
 msgid "arrecadou %s"
 msgstr ""
 
-#: scripts/sim/legislation.gd:2130
+#: scripts/sim/legislation.gd:2133
 #, c-format
 msgid "pagou %s"
 msgstr ""
 
-#: scripts/sim/legislation.gd:2132
+#: scripts/sim/legislation.gd:2135
 #, c-format
 msgid "%d ação(ões)"
 msgstr ""
 
-#: scripts/sim/legislation.gd:2192
+#: scripts/sim/legislation.gd:2195
 #, c-format
 msgid "Criado o ministério %s."
 msgstr ""
 
-#: scripts/sim/legislation.gd:2192
+#: scripts/sim/legislation.gd:2195
 #, c-format
 msgid "Ministérios fundidos em %s."
 msgstr ""
 
-#: scripts/sim/legislation.gd:2192
+#: scripts/sim/legislation.gd:2195
 #, c-format
 msgid "Extinto o ministério %s."
 msgstr ""
 
-#: scripts/sim/legislation.gd:2364
+#: scripts/sim/legislation.gd:2367
 msgid "A norma tem erros: corrija antes de simular."
 msgstr ""
 
-#: scripts/sim/legislation.gd:2389
+#: scripts/sim/legislation.gd:2392
 #, c-format
 msgid "ERRO: %s"
 msgstr ""
 
-#: scripts/sim/legislation.gd:2392
+#: scripts/sim/legislation.gd:2395
 msgid "O restante roda depois da espera."
 msgstr ""
 
-#: scripts/sim/legislation.gd:2394
+#: scripts/sim/legislation.gd:2397
 msgid "Nenhum artigo responde a esse evento."
 msgstr ""
 
-#: scripts/sim/legislation.gd:2422
+#: scripts/sim/legislation.gd:2425
 msgid "Arquivo não encontrado."
 msgstr ""
 
-#: scripts/sim/legislation.gd:2425
+#: scripts/sim/legislation.gd:2428
 msgid "Arquivo incompatível."
 msgstr ""
 
-#: scripts/sim/legislation.gd:2427
+#: scripts/sim/legislation.gd:2430
 msgid "A Constituição é de cada país e não pode ser importada."
 msgstr ""
 
-#: scripts/sim/legislation.gd:2434
+#: scripts/sim/legislation.gd:2437
 #, c-format
 msgid " Há %d erro(s) de compatibilidade para corrigir."
 msgstr ""
 
-#: scripts/sim/legislation.gd:2435
+#: scripts/sim/legislation.gd:2438
 #, c-format
 msgid "%s importada como rascunho.%s"
 msgstr ""
 
-#: scripts/sim/legislation.gd:2469 scripts/sim/legislation.gd:2469
+#: scripts/sim/legislation.gd:2472 scripts/sim/legislation.gd:2472
 msgid "Versão publicada não confere: norma suspensa"
 msgstr ""
 
-#: scripts/sim/legislation.gd:2469
+#: scripts/sim/legislation.gd:2472
 msgid "Integridade"
 msgstr ""
 
@@ -6161,23 +6249,23 @@ msgstr ""
 msgid "Abertura comercial"
 msgstr ""
 
-#: scripts/sim/politics.gd:27 scripts/sim/politics.gd:87
+#: scripts/sim/politics.gd:27 scripts/sim/politics.gd:89
 msgid "Ampliação da previdência"
 msgstr ""
 
-#: scripts/sim/politics.gd:28 scripts/sim/politics.gd:88
+#: scripts/sim/politics.gd:28 scripts/sim/politics.gd:90
 msgid "Teto de gastos"
 msgstr ""
 
-#: scripts/sim/politics.gd:29 scripts/sim/politics.gd:89
+#: scripts/sim/politics.gd:29 scripts/sim/politics.gd:91
 msgid "Plano nacional de educação"
 msgstr ""
 
-#: scripts/sim/politics.gd:30 scripts/sim/politics.gd:90
+#: scripts/sim/politics.gd:30 scripts/sim/politics.gd:92
 msgid "Pacote de infraestrutura"
 msgstr ""
 
-#: scripts/sim/politics.gd:31 scripts/sim/politics.gd:91
+#: scripts/sim/politics.gd:31 scripts/sim/politics.gd:93
 msgid "Reforço da defesa"
 msgstr ""
 
@@ -6209,389 +6297,406 @@ msgstr ""
 msgid "Convite a um partido"
 msgstr ""
 
-#: scripts/sim/politics.gd:53
+#: scripts/sim/politics.gd:55
 msgid "Fazenda"
 msgstr ""
 
-#: scripts/sim/politics.gd:54
+#: scripts/sim/politics.gd:56
 msgid "Relações Exteriores"
 msgstr ""
 
-#: scripts/sim/politics.gd:54
+#: scripts/sim/politics.gd:56
 msgid "Melhores conversas com líderes."
 msgstr ""
 
-#: scripts/sim/politics.gd:55
+#: scripts/sim/politics.gd:57
 msgid "Fortalece o estoque militar."
 msgstr ""
 
-#: scripts/sim/politics.gd:56
+#: scripts/sim/politics.gd:58
 msgid "Sustenta a aprovação do governo."
 msgstr ""
 
-#: scripts/sim/politics.gd:57 scripts/sim/law_catalog.gd_(escolha_ministry_area)
+#: scripts/sim/politics.gd:59 scripts/sim/law_catalog.gd_(escolha_ministry_area)
 msgid "Educação"
 msgstr ""
 
-#: scripts/sim/politics.gd:57
+#: scripts/sim/politics.gd:59
 msgid "Eleva o capital humano."
 msgstr ""
 
-#: scripts/sim/politics.gd:58
+#: scripts/sim/politics.gd:60
 msgid "Faz o capital do país render mais."
 msgstr ""
 
-#: scripts/sim/politics.gd:59
+#: scripts/sim/politics.gd:61
 msgid "Justiça"
 msgstr ""
 
-#: scripts/sim/politics.gd:59
+#: scripts/sim/politics.gd:61
 msgid "Mantém a estabilidade."
 msgstr ""
 
-#: scripts/sim/politics.gd:71
+#: scripts/sim/politics.gd:73
 msgid "Socialista"
 msgstr ""
 
-#: scripts/sim/politics.gd:71
+#: scripts/sim/politics.gd:73
 msgid "Partido Socialista"
 msgstr ""
 
-#: scripts/sim/politics.gd:71
+#: scripts/sim/politics.gd:73
 msgid "Frente de Esquerda"
 msgstr ""
 
-#: scripts/sim/politics.gd:71
+#: scripts/sim/politics.gd:73
 msgid "Movimento Popular"
 msgstr ""
 
-#: scripts/sim/politics.gd:72
+#: scripts/sim/politics.gd:74
 msgid "Trabalhista"
 msgstr ""
 
-#: scripts/sim/politics.gd:72
+#: scripts/sim/politics.gd:74
 msgid "Partido Trabalhista"
 msgstr ""
 
-#: scripts/sim/politics.gd:72
+#: scripts/sim/politics.gd:74
 msgid "União dos Trabalhadores"
 msgstr ""
 
-#: scripts/sim/politics.gd:72
+#: scripts/sim/politics.gd:74
 msgid "Partido do Povo Trabalhador"
 msgstr ""
 
-#: scripts/sim/politics.gd:73
+#: scripts/sim/politics.gd:75
 msgid "Verde"
 msgstr ""
 
-#: scripts/sim/politics.gd:73
+#: scripts/sim/politics.gd:75
 msgid "Partido Verde"
 msgstr ""
 
-#: scripts/sim/politics.gd:73
+#: scripts/sim/politics.gd:75
 msgid "Aliança Ecológica"
 msgstr ""
 
-#: scripts/sim/politics.gd:73
+#: scripts/sim/politics.gd:75
 msgid "Movimento Terra"
 msgstr ""
 
-#: scripts/sim/politics.gd:74
+#: scripts/sim/politics.gd:76
 msgid "Social-democrata"
 msgstr ""
 
-#: scripts/sim/politics.gd:74
+#: scripts/sim/politics.gd:76
 msgid "Partido Social-Democrata"
 msgstr ""
 
-#: scripts/sim/politics.gd:74
+#: scripts/sim/politics.gd:76
 msgid "Aliança Progressista"
 msgstr ""
 
-#: scripts/sim/politics.gd:74
+#: scripts/sim/politics.gd:76
 msgid "Partido Democrático"
 msgstr ""
 
-#: scripts/sim/politics.gd:75
+#: scripts/sim/politics.gd:77
 msgid "Centro"
 msgstr ""
 
-#: scripts/sim/politics.gd:75
+#: scripts/sim/politics.gd:77
 msgid "Partido do Centro"
 msgstr ""
 
-#: scripts/sim/politics.gd:75
+#: scripts/sim/politics.gd:77
 msgid "União Democrática"
 msgstr ""
 
-#: scripts/sim/politics.gd:75
+#: scripts/sim/politics.gd:77
 msgid "Movimento Republicano"
 msgstr ""
 
-#: scripts/sim/politics.gd:76
+#: scripts/sim/politics.gd:78
 msgid "Liberal"
 msgstr ""
 
-#: scripts/sim/politics.gd:76
+#: scripts/sim/politics.gd:78
 msgid "Partido Liberal"
 msgstr ""
 
-#: scripts/sim/politics.gd:76
+#: scripts/sim/politics.gd:78
 msgid "Novo Caminho"
 msgstr ""
 
-#: scripts/sim/politics.gd:76
+#: scripts/sim/politics.gd:78
 msgid "Aliança Liberal"
 msgstr ""
 
-#: scripts/sim/politics.gd:77
+#: scripts/sim/politics.gd:79
 msgid "Democrata-cristão"
 msgstr ""
 
-#: scripts/sim/politics.gd:77
+#: scripts/sim/politics.gd:79
 msgid "Democracia Cristã"
 msgstr ""
 
-#: scripts/sim/politics.gd:77
+#: scripts/sim/politics.gd:79
 msgid "União Cívica"
 msgstr ""
 
-#: scripts/sim/politics.gd:77
+#: scripts/sim/politics.gd:79
 msgid "Partido Popular"
 msgstr ""
 
-#: scripts/sim/politics.gd:78
+#: scripts/sim/politics.gd:80
 msgid "Conservador"
 msgstr ""
 
-#: scripts/sim/politics.gd:78
+#: scripts/sim/politics.gd:80
 msgid "Partido Conservador"
 msgstr ""
 
-#: scripts/sim/politics.gd:78
+#: scripts/sim/politics.gd:80
 msgid "União Conservadora"
 msgstr ""
 
-#: scripts/sim/politics.gd:78
+#: scripts/sim/politics.gd:80
 msgid "Partido da Ordem"
 msgstr ""
 
-#: scripts/sim/politics.gd:79
+#: scripts/sim/politics.gd:81
 msgid "Nacionalista"
 msgstr ""
 
-#: scripts/sim/politics.gd:79
+#: scripts/sim/politics.gd:81
 msgid "Partido da Pátria"
 msgstr ""
 
-#: scripts/sim/politics.gd:79
+#: scripts/sim/politics.gd:81
 msgid "Movimento Soberano"
 msgstr ""
 
-#: scripts/sim/politics.gd:82
+#: scripts/sim/politics.gd:84
 msgid "Partido da União Nacional"
 msgstr ""
 
-#: scripts/sim/politics.gd:87
+#: scripts/sim/politics.gd:89
 msgid "Gastos sociais +1 p.p. do PIB. Aprovação sobe, déficit também."
 msgstr ""
 
-#: scripts/sim/politics.gd:88
+#: scripts/sim/politics.gd:90
 msgid "Gastos sociais -0,8 p.p. e administração -0,4 p.p. Reduz o déficit e custa aprovação."
 msgstr ""
 
-#: scripts/sim/politics.gd:89
+#: scripts/sim/politics.gd:91
 msgid "Educação +0,6 p.p. do PIB. Efeito longo sobre a produtividade."
 msgstr ""
 
-#: scripts/sim/politics.gd:90
+#: scripts/sim/politics.gd:92
 msgid "Infraestrutura +0,6 p.p. do PIB. Amplia o PIB potencial."
 msgstr ""
 
-#: scripts/sim/politics.gd:91
+#: scripts/sim/politics.gd:93
 msgid "Defesa +0,5 p.p. do PIB."
 msgstr ""
 
-#: scripts/sim/politics.gd:92
+#: scripts/sim/politics.gd:94
 msgid "Eleições antecipadas"
 msgstr ""
 
-#: scripts/sim/politics.gd:92
+#: scripts/sim/politics.gd:94
 msgid "Precisa de 3/5 dos assentos. Convoca eleições agora."
 msgstr ""
 
-#: scripts/sim/politics.gd:263
+#: scripts/sim/politics.gd:265
 msgid "Você"
 msgstr ""
 
-#: scripts/sim/politics.gd:300
+#: scripts/sim/politics.gd:302
 #, c-format
 msgid "Cuida de %s."
 msgstr ""
 
-#: scripts/sim/politics.gd:309
+#: scripts/sim/politics.gd:311
 #, c-format
 msgid "Fusão de %s e %s."
 msgstr ""
 
-#: scripts/sim/politics.gd:392
+#: scripts/sim/politics.gd:394
 msgid "Na oposição, você não nomeia ministros."
 msgstr ""
 
-#: scripts/sim/politics.gd:399
+#: scripts/sim/politics.gd:401
 msgid "Esse político não pode assumir a pasta."
 msgstr ""
 
-#: scripts/sim/politics.gd:467
+#: scripts/sim/politics.gd:469
 #, c-format
 msgid "%s deixa o governo: sem nenhum ministério, não vê motivo para ficar."
 msgstr ""
 
-#: scripts/sim/politics.gd:501
+#: scripts/sim/politics.gd:516
 #, c-format
 msgid "%s custa %s, e o fundo de %s tem %s."
 msgstr ""
 
-#: scripts/sim/politics.gd:501 scripts/ui/legislation_center.gd:36 scripts/ui/negotiation_screen.gd:36 scripts/ui/politics_panel.gd:164
+#: scripts/sim/politics.gd:516 scripts/ui/legislation_center.gd:37 scripts/ui/legislation_center.gd:134 scripts/ui/negotiation_screen.gd:36
 msgid "seu partido"
 msgstr ""
 
-#: scripts/sim/politics.gd:578
+#: scripts/sim/politics.gd:594 scripts/sim/politics.gd:599
 msgid "Você está no governo."
 msgstr ""
 
-#: scripts/sim/politics.gd:597
-msgid "Sua crítica repercute, e a aprovação do governo cai."
-msgstr ""
-
-#: scripts/sim/politics.gd:605
-msgid "A campanha percorre o país, e o partido cresce nas pesquisas."
+#: scripts/sim/politics.gd:596
+#, c-format
+msgid "O diretório só pode gastar %s do fundo do partido, e %s custa %s."
 msgstr ""
 
 #: scripts/sim/politics.gd:618
+msgid "Sua crítica repercute, e a aprovação do governo da unidade cai."
+msgstr ""
+
+#: scripts/sim/politics.gd:621
+msgid "Sua crítica repercute, e a aprovação do governo cai."
+msgstr ""
+
+#: scripts/sim/politics.gd:630
+msgid "A campanha percorre a unidade, e o partido cresce nas pesquisas."
+msgstr ""
+
+#: scripts/sim/politics.gd:632
+msgid "A campanha percorre o país, e o partido cresce nas pesquisas."
+msgstr ""
+
+#: scripts/sim/politics.gd:638
+msgid "Não há assembleia estadual nesta versão."
+msgstr ""
+
+#: scripts/sim/politics.gd:647
 #, c-format
 msgid "Moção de censura rejeitada: a oposição tem %d de %d assentos."
 msgstr ""
 
-#: scripts/sim/politics.gd:619
+#: scripts/sim/politics.gd:648
 #, c-format
 msgid "Moção de censura derruba o governo em %s: novas eleições."
 msgstr ""
 
-#: scripts/sim/politics.gd:622
+#: scripts/sim/politics.gd:651
 msgid "Moção aprovada: o governo caiu, e o país vai às urnas."
 msgstr ""
 
-#: scripts/sim/politics.gd:774
+#: scripts/sim/politics.gd:803
 #, c-format
 msgid "Você já é de %s."
 msgstr ""
 
-#: scripts/sim/politics.gd:777 scripts/sim/politics.gd:826
+#: scripts/sim/politics.gd:806 scripts/sim/politics.gd:855
 #, c-format
 msgid "Você mudou de partido há pouco. Tente em %d mês(es)."
 msgstr ""
 
-#: scripts/sim/politics.gd:794
+#: scripts/sim/politics.gd:823
 msgid "agora governa por"
 msgstr ""
 
-#: scripts/sim/politics.gd:794
+#: scripts/sim/politics.gd:823
 msgid "agora lidera"
 msgstr ""
 
-#: scripts/sim/politics.gd:795
+#: scripts/sim/politics.gd:824
 #, c-format
 msgid "%s troca de partido e %s %s."
 msgstr ""
 
-#: scripts/sim/politics.gd:816
+#: scripts/sim/politics.gd:845
 msgid "O partido precisa de um nome."
 msgstr ""
 
-#: scripts/sim/politics.gd:818
+#: scripts/sim/politics.gd:847
 msgid "Escolha uma família política."
 msgstr ""
 
-#: scripts/sim/politics.gd:823 scripts/ui/main.gd:844
+#: scripts/sim/politics.gd:852 scripts/ui/main.gd:888
 msgid "Já existe um partido com esse nome."
 msgstr ""
 
-#: scripts/sim/politics.gd:841
+#: scripts/sim/politics.gd:870
 #, c-format
 msgid "%s funda %s."
 msgstr ""
 
-#: scripts/sim/politics.gd:848 scripts/sim/politics.gd:868
+#: scripts/sim/politics.gd:877 scripts/sim/politics.gd:897
 msgid "Na oposição, você não monta o governo."
 msgstr ""
 
-#: scripts/sim/politics.gd:858
+#: scripts/sim/politics.gd:887
 #, c-format
 msgid "%s recusou: as ideias são distantes demais."
 msgstr ""
 
-#: scripts/sim/politics.gd:860
+#: scripts/sim/politics.gd:889
 #, c-format
 msgid "%s recusou: seu governo está impopular demais."
 msgstr ""
 
-#: scripts/sim/politics.gd:863
+#: scripts/sim/politics.gd:892
 #, c-format
 msgid "%s entra no governo. Lembre de dar um ministério ao novo aliado."
 msgstr ""
 
-#: scripts/sim/politics.gd:871
+#: scripts/sim/politics.gd:900
 msgid "Esse partido não pode sair do governo."
 msgstr ""
 
-#: scripts/sim/politics.gd:874
+#: scripts/sim/politics.gd:903
 #, c-format
 msgid "%s deixa o governo e leva os ministros."
 msgstr ""
 
-#: scripts/sim/politics.gd:895
+#: scripts/sim/politics.gd:924
 msgid "Na oposição, você não propõe projetos do governo."
 msgstr ""
 
-#: scripts/sim/politics.gd:900
+#: scripts/sim/politics.gd:929
 msgid "Projeto desconhecido."
 msgstr ""
 
-#: scripts/sim/politics.gd:902
+#: scripts/sim/politics.gd:931
 #, c-format
 msgid "Esse tema só volta à pauta em %d mês(es)."
 msgstr ""
 
-#: scripts/sim/politics.gd:904
+#: scripts/sim/politics.gd:933
 msgid "Este regime não realiza eleições."
 msgstr ""
 
-#: scripts/sim/politics.gd:929
+#: scripts/sim/politics.gd:958
 msgid "Na oposição, o orçamento é do governo."
 msgstr ""
 
-#: scripts/sim/politics.gd:931
+#: scripts/sim/politics.gd:960
 msgid "Esse campo não faz parte do orçamento."
 msgstr ""
 
-#: scripts/sim/politics.gd:934
+#: scripts/sim/politics.gd:963
 #, c-format
 msgid "%s é fixado em %s por lei."
 msgstr ""
 
-#: scripts/sim/politics.gd:1064
+#: scripts/sim/politics.gd:1093
 #, c-format
 msgid "Parlamento de %s aprova: %s (%s), por %d a %d."
 msgstr ""
 
-#: scripts/sim/politics.gd:1064
+#: scripts/sim/politics.gd:1093
 #, c-format
 msgid "Parlamento de %s rejeita: %s (%s), por %d a %d."
 msgstr ""
 
-#: scripts/sim/politics.gd:1084
+#: scripts/sim/politics.gd:1113
 #, c-format
 msgid "O Código Eleitoral de %s não permite outro mandato: o chefe de governo deixa o cargo, e %s assume."
 msgstr ""
@@ -6701,7 +6806,7 @@ msgstr ""
 msgid "Não posso agora."
 msgstr ""
 
-#: scripts/sim/proposals.gd:107 scripts/sim/world.gd:573
+#: scripts/sim/proposals.gd:107 scripts/sim/world.gd:650
 msgid "Relação -3."
 msgstr ""
 
@@ -6770,7 +6875,7 @@ msgstr ""
 msgid "Que seja. A guerra segue, e a responsabilidade é sua."
 msgstr ""
 
-#: scripts/sim/proposals.gd:166 scripts/sim/world.gd:970 scripts/ui/debug_menu.gd:279
+#: scripts/sim/proposals.gd:166 scripts/sim/world.gd:1047 scripts/ui/debug_menu.gd:279
 #, c-format
 msgid "Paz assinada: %s cede {pct} do território a %s."
 msgstr ""
@@ -6837,86 +6942,180 @@ msgstr ""
 msgid "Quebra de safra em %s: a agropecuária encolhe."
 msgstr ""
 
-#: scripts/sim/subdivisions.gd:157 scripts/sim/subdivisions.gd:160
+#: scripts/sim/state_gov.gd:54
+msgid "Só unidades de primeiro nível podem ser governadas."
+msgstr ""
+
+#: scripts/sim/state_gov.gd:57
+msgid "Este país tem uma só unidade de primeiro nível."
+msgstr ""
+
+#: scripts/sim/state_gov.gd:117
+msgid "Essa área não existe."
+msgstr ""
+
+#: scripts/sim/state_gov.gd:119
+msgid "Esta área é decidida pela União."
+msgstr ""
+
+#: scripts/sim/state_gov.gd:126
+msgid "Os tributos são decididos pela União."
+msgstr ""
+
+#: scripts/sim/state_gov.gd:155
+#, c-format
+msgid "O governo federal só recebe outro pedido em %d mês(es)."
+msgstr ""
+
+#: scripts/sim/state_gov.gd:159
+msgid "O governo federal recusou o pedido."
+msgstr ""
+
+#: scripts/sim/state_gov.gd:163
+msgid "O governo federal liberou verba extra."
+msgstr ""
+
+#: scripts/sim/state_gov.gd:196 scripts/sim/world.gd:546
+#, c-format
+msgid "%s deixa o governo de %s."
+msgstr ""
+
+#: scripts/sim/state_gov.gd:198 scripts/sim/world.gd:521 scripts/ui/debug_menu.gd:494
+msgid "Derrotado nas urnas"
+msgstr ""
+
+#: scripts/sim/state_gov.gd:199
+msgid "Liderar o diretório"
+msgstr ""
+
+#: scripts/sim/state_gov.gd:199 scripts/sim/world.gd:549
+msgid "Critique o governo, faça campanha e dispute a próxima eleição"
+msgstr ""
+
+#: scripts/sim/state_gov.gd:207
+#, c-format
+msgid "%s volta ao governo de %s."
+msgstr ""
+
+#: scripts/sim/state_gov.gd:209 scripts/sim/world.gd:566
+msgid "De volta ao poder!"
+msgstr ""
+
+#: scripts/sim/state_gov.gd:209
+msgid "Seu partido venceu a eleição da unidade."
+msgstr ""
+
+#: scripts/sim/state_gov.gd:210
+msgid "Revise o orçamento"
+msgstr ""
+
+#: scripts/sim/state_gov.gd:260
+msgid "Nova União"
+msgstr ""
+
+#: scripts/sim/state_gov.gd:261
+#, c-format
+msgid "%s passou a %s. Escolha o partido a que você se filia."
+msgstr ""
+
+#: scripts/sim/state_gov.gd:267
+#, c-format
+msgid "%s retirou você do cargo, e sua carreira política acabou."
+msgstr ""
+
+#: scripts/sim/state_gov.gd:285
+#, c-format
+msgid "%s não quis manter você no cargo. Você passa a presidir o diretório do partido na unidade."
+msgstr ""
+
+#: scripts/sim/subdivisions.gd:163 scripts/sim/subdivisions.gd:166
 msgid "Essa unidade não existe mais."
 msgstr ""
 
-#: scripts/sim/subdivisions.gd:162
+#: scripts/sim/subdivisions.gd:168
 #, c-format
 msgid "%s não fica dentro de %s."
 msgstr ""
 
-#: scripts/sim/subdivisions.gd:191
+#: scripts/sim/subdivisions.gd:197
 #, c-format
 msgid "Tipo %d"
 msgstr ""
 
-#: scripts/sim/subdivisions.gd:219
+#: scripts/sim/subdivisions.gd:233
+msgid "O cargo precisa de um nome."
+msgstr ""
+
+#: scripts/sim/subdivisions.gd:235
+msgid "Esse tipo não existe."
+msgstr ""
+
+#: scripts/sim/subdivisions.gd:244
 msgid "O tipo precisa de um nome."
 msgstr ""
 
-#: scripts/sim/subdivisions.gd:221
+#: scripts/sim/subdivisions.gd:246
 #, c-format
 msgid "Já existe um tipo chamado %s."
 msgstr ""
 
-#: scripts/sim/subdivisions.gd:244
+#: scripts/sim/subdivisions.gd:269
 msgid "É preciso manter pelo menos um tipo."
 msgstr ""
 
-#: scripts/sim/subdivisions.gd:247
+#: scripts/sim/subdivisions.gd:272
 #, c-format
 msgid "%s ainda tem %d unidade(s). Mude o tipo delas ou apague-as antes."
 msgstr ""
 
-#: scripts/sim/subdivisions.gd:360
+#: scripts/sim/subdivisions.gd:385
 msgid "A unidade precisa de um nome."
 msgstr ""
 
-#: scripts/sim/subdivisions.gd:369
+#: scripts/sim/subdivisions.gd:394
 msgid "Escolha pelo menos duas unidades."
 msgstr ""
 
-#: scripts/sim/subdivisions.gd:373
+#: scripts/sim/subdivisions.gd:398
 msgid "Só é possível fundir unidades do mesmo nível, dentro da mesma mãe."
 msgstr ""
 
-#: scripts/sim/subdivisions.gd:375
+#: scripts/sim/subdivisions.gd:400
 msgid "As unidades precisam fazer divisa entre si."
 msgstr ""
 
-#: scripts/sim/subdivisions.gd:514
+#: scripts/sim/subdivisions.gd:539
 #, c-format
 msgid "O polígono não cobre uma parte de %s."
 msgstr ""
 
-#: scripts/sim/subdivisions.gd:516
+#: scripts/sim/subdivisions.gd:541
 #, c-format
 msgid "O polígono cobre %s inteira: não sobra nada para desmembrar."
 msgstr ""
 
-#: scripts/sim/subdivisions.gd:669
+#: scripts/sim/subdivisions.gd:694
 msgid "São necessários pelo menos 3 vértices."
 msgstr ""
 
-#: scripts/sim/subdivisions.gd:671
+#: scripts/sim/subdivisions.gd:696
 msgid "Escolha um tipo de unidade."
 msgstr ""
 
-#: scripts/sim/subdivisions.gd:673
+#: scripts/sim/subdivisions.gd:698
 msgid "A unidade-mãe não existe mais."
 msgstr ""
 
-#: scripts/sim/subdivisions.gd:686
+#: scripts/sim/subdivisions.gd:711
 msgid "seu território"
 msgstr ""
 
-#: scripts/sim/subdivisions.gd:687
+#: scripts/sim/subdivisions.gd:712
 #, c-format
 msgid "O polígono não cobre área livre dentro de %s."
 msgstr ""
 
-#: scripts/sim/subdivisions.gd:689
+#: scripts/sim/subdivisions.gd:714
 msgid " Selecione uma unidade para desenhar dentro dela ou apague as que ocupam a área."
 msgstr ""
 
@@ -7192,553 +7391,549 @@ msgstr ""
 msgid "Dez"
 msgstr ""
 
-#: scripts/sim/world.gd:267
+#: scripts/sim/world.gd:311
 #, c-format
 msgid "%s deixou de existir, e sua carreira política acabou junto com o país."
 msgstr ""
 
-#: scripts/sim/world.gd:413
+#: scripts/sim/world.gd:458
 #, c-format
 msgid "Começa a campanha eleitoral em %s. Faltam cerca de três meses para a votação."
 msgstr ""
 
-#: scripts/sim/world.gd:422
+#: scripts/sim/world.gd:467
 #, c-format
 msgid "Sem apoio no parlamento e com a aprovação em %d%%, %s sofreu impeachment. %s assume o governo."
 msgstr ""
 
-#: scripts/sim/world.gd:422
+#: scripts/sim/world.gd:467
 msgid "o governo"
 msgstr ""
 
-#: scripts/sim/world.gd:425 scripts/ui/debug_menu.gd:502
+#: scripts/sim/world.gd:470 scripts/ui/debug_menu.gd:502
 msgid "Generais e a elite política perderam a paciência. Um golpe encerrou seu governo."
 msgstr ""
 
-#: scripts/sim/world.gd:427
+#: scripts/sim/world.gd:472
 msgid "Multidões tomaram o palácio, e os militares não defenderam o regime. Você foi deposto."
 msgstr ""
 
-#: scripts/sim/world.gd:439
+#: scripts/sim/world.gd:481
+msgid "A unidade que você governava deixou de existir, e sua carreira política acabou junto com ela."
+msgstr ""
+
+#: scripts/sim/world.gd:501
+msgid "A direção nacional do partido vetou sua candidatura."
+msgstr ""
+
+#: scripts/sim/world.gd:501
+#, c-format
+msgid "Sua aprovação de %d%% não bastou. Você passa a presidir o diretório do partido até a próxima eleição."
+msgstr ""
+
+#: scripts/sim/world.gd:516
 msgid "Reeleito!"
 msgstr ""
 
-#: scripts/sim/world.gd:440
+#: scripts/sim/world.gd:517
 #, c-format
 msgid "Seu partido fez %.1f%% dos votos e %d de %d assentos. Você conquista seu %dº mandato consecutivo em %s."
 msgstr ""
 
-#: scripts/sim/world.gd:441
+#: scripts/sim/world.gd:518
 msgid "Seguir governando"
 msgstr ""
 
-#: scripts/sim/world.gd:444
+#: scripts/sim/world.gd:521
 #, c-format
 msgid "%s venceu a eleição com %d de %d assentos. Sua aprovação de %d%% não bastou. Você passa a liderar a oposição até a próxima eleição."
 msgstr ""
 
-#: scripts/sim/world.gd:444 scripts/ui/debug_menu.gd:494
-msgid "Derrotado nas urnas"
-msgstr ""
-
-#: scripts/sim/world.gd:451
+#: scripts/sim/world.gd:528
 msgid "Este regime não tem eleições: não há como disputar o poder pela oposição."
 msgstr ""
 
-#: scripts/sim/world.gd:469
-#, c-format
-msgid "%s deixa o governo de %s."
-msgstr ""
-
-#: scripts/sim/world.gd:472
-msgid "Critique o governo, faça campanha e dispute a próxima eleição"
-msgstr ""
-
-#: scripts/sim/world.gd:487
+#: scripts/sim/world.gd:564
 #, c-format
 msgid "%s vence a eleição em %s e volta ao poder."
 msgstr ""
 
-#: scripts/sim/world.gd:489
-msgid "De volta ao poder!"
-msgstr ""
-
-#: scripts/sim/world.gd:489
+#: scripts/sim/world.gd:566
 #, c-format
 msgid "Seu partido fez %.1f%% dos votos e %d de %d assentos. O governo é seu novamente."
 msgstr ""
 
-#: scripts/sim/world.gd:490
+#: scripts/sim/world.gd:567
 msgid "Revise o orçamento e escolha os ministros"
 msgstr ""
 
-#: scripts/sim/world.gd:494
+#: scripts/sim/world.gd:571
 msgid "Oposição mais quatro anos"
 msgstr ""
 
-#: scripts/sim/world.gd:494
+#: scripts/sim/world.gd:571
 #, c-format
 msgid "%s venceu com %d de %d assentos. Seu partido fez %.1f%% dos votos e ficou com %d."
 msgstr ""
 
-#: scripts/sim/world.gd:495
+#: scripts/sim/world.gd:572
 msgid "Seguir na oposição"
 msgstr ""
 
-#: scripts/sim/world.gd:504
+#: scripts/sim/world.gd:581
 #, c-format
 msgid "%s renunciou ao cargo.%s"
 msgstr ""
 
-#: scripts/sim/world.gd:504
+#: scripts/sim/world.gd:581
 #, c-format
 msgid " %s assume o governo."
 msgstr ""
 
-#: scripts/sim/world.gd:543
+#: scripts/sim/world.gd:620
 #, c-format
 msgid "%s entra na política de %s."
 msgstr ""
 
-#: scripts/sim/world.gd:543
+#: scripts/sim/world.gd:620
 msgid "Um novo nome"
 msgstr ""
 
-#: scripts/sim/world.gd:555
+#: scripts/sim/world.gd:632
 msgid "aproximar os dois países"
 msgstr ""
 
-#: scripts/sim/world.gd:558
+#: scripts/sim/world.gd:635
 msgid "discutir a guerra"
 msgstr ""
 
-#: scripts/sim/world.gd:560
+#: scripts/sim/world.gd:637
 msgid "cobrar explicações sobre o seu governo"
 msgstr ""
 
-#: scripts/sim/world.gd:562
+#: scripts/sim/world.gd:639
 msgid "propor um novo acordo"
 msgstr ""
 
-#: scripts/sim/world.gd:564
+#: scripts/sim/world.gd:641
 msgid "pedir a sua ajuda"
 msgstr ""
 
-#: scripts/sim/world.gd:566
+#: scripts/sim/world.gd:643
 msgid "fazer uma oferta"
 msgstr ""
 
-#: scripts/sim/world.gd:569
+#: scripts/sim/world.gd:646
 #, c-format
 msgid "%s quer falar com você"
 msgstr ""
 
-#: scripts/sim/world.gd:569
+#: scripts/sim/world.gd:646
 msgid "Um líder"
 msgstr ""
 
-#: scripts/sim/world.gd:570
+#: scripts/sim/world.gd:647
 #, c-format
 msgid "O líder de %s (%s) pede uma conversa para %s."
 msgstr ""
 
-#: scripts/sim/world.gd:572
+#: scripts/sim/world.gd:649
 msgid "Atender"
 msgstr ""
 
-#: scripts/sim/world.gd:572
+#: scripts/sim/world.gd:649
 msgid "Abre a conversa agora."
 msgstr ""
 
-#: scripts/sim/world.gd:573
+#: scripts/sim/world.gd:650
 msgid "Não atender"
 msgstr ""
 
-#: scripts/sim/world.gd:605
+#: scripts/sim/world.gd:682
 msgid "Colapso do financiamento"
 msgstr ""
 
-#: scripts/sim/world.gd:606
+#: scripts/sim/world.gd:683
 #, c-format
 msgid "Os credores não rolam mais a dívida de %s. O juro chegou a %.1f%% e as reservas estão em US$ %.1f bi."
 msgstr ""
 
-#: scripts/sim/world.gd:608
+#: scripts/sim/world.gd:685
 msgid "Aceitar pacote do FMI"
 msgstr ""
 
-#: scripts/sim/world.gd:608
+#: scripts/sim/world.gd:685
 #, c-format
 msgid "US$ %.0f bi, com corte de gastos e aumento de impostos"
 msgstr ""
 
-#: scripts/sim/world.gd:610
+#: scripts/sim/world.gd:687
 msgid "Declarar moratória"
 msgstr ""
 
-#: scripts/sim/world.gd:610
+#: scripts/sim/world.gd:687
 msgid "Corta 45% da dívida; 3 anos sem mercado, recessão severa"
 msgstr ""
 
-#: scripts/sim/world.gd:620
+#: scripts/sim/world.gd:697
 #, c-format
 msgid "Proposta comercial de %s"
 msgstr ""
 
-#: scripts/sim/world.gd:621
+#: scripts/sim/world.gd:698
 #, c-format
 msgid "O governo de %s propõe um acordo de livre comércio. Hoje ele responde por %.1f%% das suas exportações."
 msgstr ""
 
-#: scripts/sim/world.gd:623 scripts/sim/world.gd:637
+#: scripts/sim/world.gd:700 scripts/sim/world.gd:714
 msgid "Assinar"
 msgstr ""
 
-#: scripts/sim/world.gd:623
+#: scripts/sim/world.gd:700
 msgid "Vale depois de ratificado pelos dois parlamentos"
 msgstr ""
 
-#: scripts/sim/world.gd:625
+#: scripts/sim/world.gd:702
 msgid "Recusar"
 msgstr ""
 
-#: scripts/sim/world.gd:625
+#: scripts/sim/world.gd:702
 msgid "Relação -5"
 msgstr ""
 
-#: scripts/sim/world.gd:635
+#: scripts/sim/world.gd:712
 #, c-format
 msgid "%s propõe um pacto de defesa mútua. Se um dos dois for atacado, o outro entra na guerra."
 msgstr ""
 
-#: scripts/sim/world.gd:637
+#: scripts/sim/world.gd:714
 msgid "Vale depois de ratificado. Proteção mútua; arrisca arrastar você para guerras alheias"
 msgstr ""
 
-#: scripts/sim/world.gd:639
+#: scripts/sim/world.gd:716
 msgid "Recusar educadamente"
 msgstr ""
 
-#: scripts/sim/world.gd:639
+#: scripts/sim/world.gd:716
 msgid "Relação -3"
 msgstr ""
 
-#: scripts/sim/world.gd:648
+#: scripts/sim/world.gd:725
 #, c-format
 msgid "Ultimato de %s"
 msgstr ""
 
-#: scripts/sim/world.gd:649
+#: scripts/sim/world.gd:726
 #, c-format
 msgid "%s concentra forças e exige que você reduza a presença militar e retire apoio aos rivais dele."
 msgstr ""
 
-#: scripts/sim/world.gd:651
+#: scripts/sim/world.gd:728
 msgid "Ceder para ganhar tempo"
 msgstr ""
 
-#: scripts/sim/world.gd:651
+#: scripts/sim/world.gd:728
 msgid "Relação +15; aprovação -6 pontos"
 msgstr ""
 
-#: scripts/sim/world.gd:654
+#: scripts/sim/world.gd:731
 msgid "Rejeitar publicamente"
 msgstr ""
 
-#: scripts/sim/world.gd:654
+#: scripts/sim/world.gd:731
 msgid "Aprovação +3 pontos; relação -12 e tensão maior"
 msgstr ""
 
-#: scripts/sim/world.gd:667
+#: scripts/sim/world.gd:744
 msgid "Fomos invadidos!"
 msgstr ""
 
-#: scripts/sim/world.gd:668
+#: scripts/sim/world.gd:745
 #, c-format
 msgid "Tropas de %s cruzaram a fronteira. A guerra começou e a economia sente o choque."
 msgstr ""
 
-#: scripts/sim/world.gd:669
+#: scripts/sim/world.gd:746
 msgid "Mobilizar o país"
 msgstr ""
 
-#: scripts/sim/world.gd:669
+#: scripts/sim/world.gd:746
 msgid "Mobilização a 60%"
 msgstr ""
 
-#: scripts/sim/world.gd:677
+#: scripts/sim/world.gd:754
 msgid "Aliado sob ataque"
 msgstr ""
 
-#: scripts/sim/world.gd:678
+#: scripts/sim/world.gd:755
 #, c-format
 msgid "%s invocou o pacto de defesa: %s atacou. Se honrar o tratado, seu país entra em guerra."
 msgstr ""
 
-#: scripts/sim/world.gd:680
+#: scripts/sim/world.gd:757
 msgid "Honrar o pacto e entrar na guerra"
 msgstr ""
 
-#: scripts/sim/world.gd:680
+#: scripts/sim/world.gd:757
 msgid "Mobilização 25%; alta de gastos"
 msgstr ""
 
-#: scripts/sim/world.gd:683
+#: scripts/sim/world.gd:760
 msgid "Quebrar o pacto"
 msgstr ""
 
-#: scripts/sim/world.gd:683
+#: scripts/sim/world.gd:760
 msgid "Pacto cancelado; relações com aliados despencam"
-msgstr ""
-
-#: scripts/sim/world.gd:696
-#, c-format
-msgid "As tropas de %s tomaram a capital, e o regime caiu com a rendição."
-msgstr ""
-
-#: scripts/sim/world.gd:699
-#, c-format
-msgid "As tropas de %s tomaram a capital, e seu governo assinou a rendição. %s assume, e você passa a liderar a oposição."
-msgstr ""
-
-#: scripts/sim/world.gd:699
-msgid "Rendição"
-msgstr ""
-
-#: scripts/sim/world.gd:708
-#, c-format
-msgid "%s capitulou"
-msgstr ""
-
-#: scripts/sim/world.gd:709
-#, c-format
-msgid "As forças de %s se renderam. Qual será o futuro do país?"
-msgstr ""
-
-#: scripts/sim/world.gd:711
-msgid "Anexar"
-msgstr ""
-
-#: scripts/sim/world.gd:711
-msgid "Ganha população e recursos; reputação global despenca"
-msgstr ""
-
-#: scripts/sim/world.gd:713
-#, c-format
-msgid "%s anexa %s depois de vencer a guerra."
-msgstr ""
-
-#: scripts/sim/world.gd:714
-msgid "Instalar governo aliado"
-msgstr ""
-
-#: scripts/sim/world.gd:714
-msgid "Vira Estado-cliente e aliado militar"
-msgstr ""
-
-#: scripts/sim/world.gd:716
-#, c-format
-msgid "%s vence e instala governo aliado em %s."
-msgstr ""
-
-#: scripts/sim/world.gd:717 scripts/sim/world.gd:736
-msgid "Demarcar novas fronteiras"
-msgstr ""
-
-#: scripts/sim/world.gd:717 scripts/sim/world.gd:736
-msgid "Você desenha no mapa as áreas que ficam com o seu país"
-msgstr ""
-
-#: scripts/sim/world.gd:719 scripts/sim/world.gd:738 scripts/ui/border_panel.gd:59
-msgid "Não ficar com território"
-msgstr ""
-
-#: scripts/sim/world.gd:719 scripts/sim/world.gd:738
-msgid "Retira as tropas e melhora a reputação internacional"
-msgstr ""
-
-#: scripts/sim/world.gd:733
-#, c-format
-msgid "Vitória sobre %s"
-msgstr ""
-
-#: scripts/sim/world.gd:734
-#, c-format
-msgid "Suas tropas controlam cerca de %s do território de %s. Fica com alguma parte?"
-msgstr ""
-
-#: scripts/sim/world.gd:746
-msgid "Negociação de fronteiras"
-msgstr ""
-
-#: scripts/sim/world.gd:747
-#, c-format
-msgid "O cessar-fogo com %s saiu sem vencedor. Como ficam as fronteiras?"
-msgstr ""
-
-#: scripts/sim/world.gd:749 scripts/ui/border_panel.gd:64
-msgid "Restabelecer fronteiras antigas"
-msgstr ""
-
-#: scripts/sim/world.gd:749
-msgid "Cada lado volta para onde estava antes da guerra"
-msgstr ""
-
-#: scripts/sim/world.gd:751
-msgid "Propor novas fronteiras"
-msgstr ""
-
-#: scripts/sim/world.gd:751
-#, c-format
-msgid "Desenhe o que pede e o que oferece. %s pode recusar"
-msgstr ""
-
-#: scripts/sim/world.gd:766
-#, c-format
-msgid "%s vence a guerra, retira as tropas e não fica com território de %s."
 msgstr ""
 
 #: scripts/sim/world.gd:773
 #, c-format
-msgid "Novas fronteiras: %s fica com %s do território de %s."
+msgid "As tropas de %s tomaram a capital, e o regime caiu com a rendição."
 msgstr ""
 
-#: scripts/sim/world.gd:778
+#: scripts/sim/world.gd:776
 #, c-format
-msgid "%s e %s restabelecem as fronteiras de antes da guerra."
+msgid "As tropas de %s tomaram a capital, e seu governo assinou a rendição. %s assume, e você passa a liderar a oposição."
 msgstr ""
 
-#: scripts/sim/world.gd:795
-#, c-format
-msgid "%s recusou: a troca tira território demais. O saldo aceitável é cerca de %s do país."
+#: scripts/sim/world.gd:776
+msgid "Rendição"
 msgstr ""
 
-#: scripts/sim/world.gd:801
+#: scripts/sim/world.gd:785
 #, c-format
-msgid "Acordo de paz: %s e %s estabelecem novas fronteiras."
+msgid "%s capitulou"
 msgstr ""
 
-#: scripts/sim/world.gd:817
+#: scripts/sim/world.gd:786
 #, c-format
-msgid "ATAQUE NUCLEAR: %s usa armas atômicas diante da derrota."
+msgid "As forças de %s se renderam. Qual será o futuro do país?"
+msgstr ""
+
+#: scripts/sim/world.gd:788
+msgid "Anexar"
+msgstr ""
+
+#: scripts/sim/world.gd:788
+msgid "Ganha população e recursos; reputação global despenca"
+msgstr ""
+
+#: scripts/sim/world.gd:790
+#, c-format
+msgid "%s anexa %s depois de vencer a guerra."
+msgstr ""
+
+#: scripts/sim/world.gd:791
+msgid "Instalar governo aliado"
+msgstr ""
+
+#: scripts/sim/world.gd:791
+msgid "Vira Estado-cliente e aliado militar"
+msgstr ""
+
+#: scripts/sim/world.gd:793
+#, c-format
+msgid "%s vence e instala governo aliado em %s."
+msgstr ""
+
+#: scripts/sim/world.gd:794 scripts/sim/world.gd:813
+msgid "Demarcar novas fronteiras"
+msgstr ""
+
+#: scripts/sim/world.gd:794 scripts/sim/world.gd:813
+msgid "Você desenha no mapa as áreas que ficam com o seu país"
+msgstr ""
+
+#: scripts/sim/world.gd:796 scripts/sim/world.gd:815 scripts/ui/border_panel.gd:59
+msgid "Não ficar com território"
+msgstr ""
+
+#: scripts/sim/world.gd:796 scripts/sim/world.gd:815
+msgid "Retira as tropas e melhora a reputação internacional"
+msgstr ""
+
+#: scripts/sim/world.gd:810
+#, c-format
+msgid "Vitória sobre %s"
+msgstr ""
+
+#: scripts/sim/world.gd:811
+#, c-format
+msgid "Suas tropas controlam cerca de %s do território de %s. Fica com alguma parte?"
+msgstr ""
+
+#: scripts/sim/world.gd:823
+msgid "Negociação de fronteiras"
 msgstr ""
 
 #: scripts/sim/world.gd:824
 #, c-format
-msgid "%s lançou armas nucleares. O mundo inteiro entra em choque."
+msgid "O cessar-fogo com %s saiu sem vencedor. Como ficam as fronteiras?"
+msgstr ""
+
+#: scripts/sim/world.gd:826 scripts/ui/border_panel.gd:64
+msgid "Restabelecer fronteiras antigas"
+msgstr ""
+
+#: scripts/sim/world.gd:826
+msgid "Cada lado volta para onde estava antes da guerra"
+msgstr ""
+
+#: scripts/sim/world.gd:828
+msgid "Propor novas fronteiras"
+msgstr ""
+
+#: scripts/sim/world.gd:828
+#, c-format
+msgid "Desenhe o que pede e o que oferece. %s pode recusar"
 msgstr ""
 
 #: scripts/sim/world.gd:843
-msgid "Ação inválida."
-msgstr ""
-
-#: scripts/sim/world.gd:847
 #, c-format
-msgid "Essa ação com %s só pode ser repetida em %d dia(s)."
+msgid "%s vence a guerra, retira as tropas e não fica com território de %s."
 msgstr ""
 
-#: scripts/sim/world.gd:853
+#: scripts/sim/world.gd:850
 #, c-format
-msgid "Missão diplomática melhora relações com %s."
+msgid "Novas fronteiras: %s fica com %s do território de %s."
 msgstr ""
 
-#: scripts/sim/world.gd:860
+#: scripts/sim/world.gd:855
 #, c-format
-msgid "Pacote de ajuda de US$ %.1f bi enviado a %s."
+msgid "%s e %s restabelecem as fronteiras de antes da guerra."
 msgstr ""
 
-#: scripts/sim/world.gd:863
-msgid "Já existe acordo comercial."
-msgstr ""
-
-#: scripts/sim/world.gd:865
+#: scripts/sim/world.gd:872
 #, c-format
-msgid "%s não negocia: relação abaixo de +15."
+msgid "%s recusou: a troca tira território demais. O saldo aceitável é cerca de %s do país."
 msgstr ""
 
-#: scripts/sim/world.gd:877
+#: scripts/sim/world.gd:878
 #, c-format
-msgid "Pacto de defesa com %s cancelado."
+msgid "Acordo de paz: %s e %s estabelecem novas fronteiras."
 msgstr ""
 
-#: scripts/sim/world.gd:880
+#: scripts/sim/world.gd:894
 #, c-format
-msgid "%s recusa: relação abaixo de +55."
-msgstr ""
-
-#: scripts/sim/world.gd:888
-#, c-format
-msgid "Seu governo condena %s publicamente."
-msgstr ""
-
-#: scripts/sim/world.gd:893
-#, c-format
-msgid "Sanções contra %s suspensas."
-msgstr ""
-
-#: scripts/sim/world.gd:896
-#, c-format
-msgid "Sanções financeiras contra %s em vigor."
+msgid "ATAQUE NUCLEAR: %s usa armas atômicas diante da derrota."
 msgstr ""
 
 #: scripts/sim/world.gd:901
 #, c-format
+msgid "%s lançou armas nucleares. O mundo inteiro entra em choque."
+msgstr ""
+
+#: scripts/sim/world.gd:920
+msgid "Ação inválida."
+msgstr ""
+
+#: scripts/sim/world.gd:924
+#, c-format
+msgid "Essa ação com %s só pode ser repetida em %d dia(s)."
+msgstr ""
+
+#: scripts/sim/world.gd:930
+#, c-format
+msgid "Missão diplomática melhora relações com %s."
+msgstr ""
+
+#: scripts/sim/world.gd:937
+#, c-format
+msgid "Pacote de ajuda de US$ %.1f bi enviado a %s."
+msgstr ""
+
+#: scripts/sim/world.gd:940
+msgid "Já existe acordo comercial."
+msgstr ""
+
+#: scripts/sim/world.gd:942
+#, c-format
+msgid "%s não negocia: relação abaixo de +15."
+msgstr ""
+
+#: scripts/sim/world.gd:954
+#, c-format
+msgid "Pacto de defesa com %s cancelado."
+msgstr ""
+
+#: scripts/sim/world.gd:957
+#, c-format
+msgid "%s recusa: relação abaixo de +55."
+msgstr ""
+
+#: scripts/sim/world.gd:965
+#, c-format
+msgid "Seu governo condena %s publicamente."
+msgstr ""
+
+#: scripts/sim/world.gd:970
+#, c-format
+msgid "Sanções contra %s suspensas."
+msgstr ""
+
+#: scripts/sim/world.gd:973
+#, c-format
+msgid "Sanções financeiras contra %s em vigor."
+msgstr ""
+
+#: scripts/sim/world.gd:978
+#, c-format
 msgid "Embargo contra %s reduzido a sanções."
 msgstr ""
 
-#: scripts/sim/world.gd:904
+#: scripts/sim/world.gd:981
 #, c-format
 msgid "Embargo total contra %s decretado."
 msgstr ""
 
-#: scripts/sim/world.gd:909
+#: scripts/sim/world.gd:986
 #, c-format
 msgid "Tarifa contra %s removida."
 msgstr ""
 
-#: scripts/sim/world.gd:912
+#: scripts/sim/world.gd:989
 #, c-format
 msgid "Tarifa de 20%% sobre produtos de %s."
 msgstr ""
 
-#: scripts/sim/world.gd:918
+#: scripts/sim/world.gd:995
 #, c-format
 msgid "Operação secreta descoberta em %s: escândalo internacional."
 msgstr ""
 
-#: scripts/sim/world.gd:923
+#: scripts/sim/world.gd:1000
 #, c-format
 msgid "Operação secreta desestabiliza %s."
 msgstr ""
 
-#: scripts/sim/world.gd:926
+#: scripts/sim/world.gd:1003
 #, c-format
 msgid "%s não compra de você: relação abaixo de +10."
 msgstr ""
 
-#: scripts/sim/world.gd:931
+#: scripts/sim/world.gd:1008
 #, c-format
 msgid "Venda de armas de US$ %.1f bi para %s."
 msgstr ""
 
-#: scripts/sim/world.gd:934
+#: scripts/sim/world.gd:1011
 #, c-format
 msgid "Cancele o pacto com %s antes."
 msgstr ""
 
-#: scripts/sim/world.gd:936
+#: scripts/sim/world.gd:1013
 msgid "Já em guerra."
 msgstr ""
 
-#: scripts/sim/world.gd:942
+#: scripts/sim/world.gd:1019
 msgid "Ação desconhecida."
 msgstr ""
 
-#: scripts/sim/world.gd:954
+#: scripts/sim/world.gd:1031
 msgid "Vocês não estão em guerra."
 msgstr ""
 
-#: scripts/sim/world.gd:963
+#: scripts/sim/world.gd:1040
 #, c-format
 msgid "%s rejeitou a proposta de paz."
 msgstr ""
@@ -7978,7 +8173,7 @@ msgstr ""
 msgid "LÍDERES DE PAÍSES"
 msgstr ""
 
-#: scripts/ui/agenda_window.gd:43 scripts/ui/chat_window.gd:102 scripts/ui/hud.gd:478
+#: scripts/ui/agenda_window.gd:43 scripts/ui/chat_window.gd:102 scripts/ui/hud.gd:486
 msgid "o líder"
 msgstr ""
 
@@ -7994,7 +8189,7 @@ msgstr ""
 msgid "Conversa em curso"
 msgstr ""
 
-#: scripts/ui/agenda_window.gd:67 scripts/ui/hud.gd:478
+#: scripts/ui/agenda_window.gd:67 scripts/ui/hud.gd:486
 msgid "Nova conversa no mês que vem"
 msgstr ""
 
@@ -8137,7 +8332,7 @@ msgid ""
 "Competência: %d%%%s"
 msgstr ""
 
-#: scripts/ui/cabinet_panel.gd:71 scripts/ui/main.gd:670
+#: scripts/ui/cabinet_panel.gd:71 scripts/ui/main.gd:714
 msgid "  ·  doente"
 msgstr ""
 
@@ -8993,6 +9188,33 @@ msgstr ""
 msgid " (usa o país-alvo)"
 msgstr ""
 
+#: scripts/ui/directory_panel.gd:34
+#, c-format
+msgid "Governa a unidade: %s  ·  aprovação %d%%"
+msgstr ""
+
+#: scripts/ui/directory_panel.gd:36 scripts/ui/opposition_panel.gd:55 scripts/ui/state_panel.gd:32
+msgid "Sem eleições neste regime"
+msgstr ""
+
+#: scripts/ui/directory_panel.gd:38 scripts/ui/opposition_panel.gd:53 scripts/ui/state_panel.gd:34
+#, c-format
+msgid "Próxima eleição em %s anos"
+msgstr ""
+
+#: scripts/ui/directory_panel.gd:39
+msgid "A direção nacional veta sua candidatura."
+msgstr ""
+
+#: scripts/ui/directory_panel.gd:39
+msgid "Você está alinhado com a direção nacional do partido."
+msgstr ""
+
+#: scripts/ui/directory_panel.gd:40
+#, c-format
+msgid "Verba do diretório: %s (do fundo do partido: %s)"
+msgstr ""
+
 #: scripts/ui/divisions_panel.gd:139
 #, c-format
 msgid "Desmembrar %s: contorne a parte que vai se separar  ·  %d vértice(s)  ·  %s  ·  Esc cancela"
@@ -9012,7 +9234,7 @@ msgstr ""
 msgid "%s (%s) criada em %s%s."
 msgstr ""
 
-#: scripts/ui/divisions_panel.gd:171 scripts/ui/divisions_panel.gd:336
+#: scripts/ui/divisions_panel.gd:171 scripts/ui/divisions_panel.gd:347
 msgid "Na oposição, você não propõe novas unidades."
 msgstr ""
 
@@ -9021,112 +9243,112 @@ msgstr ""
 msgid "Criação de %s em %s"
 msgstr ""
 
-#: scripts/ui/divisions_panel.gd:286
+#: scripts/ui/divisions_panel.gd:297
 #, c-format
 msgid "%s está em outro nível da hierarquia."
 msgstr ""
 
-#: scripts/ui/divisions_panel.gd:305
+#: scripts/ui/divisions_panel.gd:316
 #, c-format
 msgid "%s agora formam %s."
 msgstr ""
 
-#: scripts/ui/divisions_panel.gd:338
+#: scripts/ui/divisions_panel.gd:349
 #, c-format
 msgid "Desmembramento de %s"
 msgstr ""
 
-#: scripts/ui/divisions_panel.gd:344
+#: scripts/ui/divisions_panel.gd:355
 #, c-format
 msgid "%s se separou de %s."
 msgstr ""
 
-#: scripts/ui/divisions_panel.gd:373
+#: scripts/ui/divisions_panel.gd:384
 #, c-format
 msgid "Apagar %s?"
 msgstr ""
 
-#: scripts/ui/divisions_panel.gd:375
+#: scripts/ui/divisions_panel.gd:386
 #, c-format
 msgid "Apagar %s e as %d unidade(s) dentro dela?"
 msgstr ""
 
-#: scripts/ui/divisions_panel.gd:380
+#: scripts/ui/divisions_panel.gd:391
 #, c-format
 msgid "%s apagada."
 msgstr ""
 
-#: scripts/ui/divisions_panel.gd:412
+#: scripts/ui/divisions_panel.gd:423
 #, c-format
 msgid "Próxima unidade: %s em %s"
 msgstr ""
 
-#: scripts/ui/divisions_panel.gd:413
+#: scripts/ui/divisions_panel.gd:424
 msgid "Cancelar desenho (Esc)"
 msgstr ""
 
-#: scripts/ui/divisions_panel.gd:413
+#: scripts/ui/divisions_panel.gd:424
 msgid "Desenhar unidade (N)"
 msgstr ""
 
-#: scripts/ui/divisions_panel.gd:458
+#: scripts/ui/divisions_panel.gd:474
 msgid "Recolher"
 msgstr ""
 
-#: scripts/ui/divisions_panel.gd:458
+#: scripts/ui/divisions_panel.gd:474
 #, c-format
 msgid "Mostrar %d unidade(s) dentro desta"
 msgstr ""
 
-#: scripts/ui/divisions_panel.gd:503
+#: scripts/ui/divisions_panel.gd:519
 #, c-format
 msgid "Mostrando %d de %d resultados."
 msgstr ""
 
-#: scripts/ui/divisions_panel.gd:505
+#: scripts/ui/divisions_panel.gd:521
 msgid "Nenhuma unidade com esse nome."
 msgstr ""
 
-#: scripts/ui/divisions_panel.gd:515
+#: scripts/ui/divisions_panel.gd:531
 #, c-format
 msgid "%s  ·  país"
 msgstr ""
 
-#: scripts/ui/divisions_panel.gd:526
+#: scripts/ui/divisions_panel.gd:542
 msgid "Nenhuma unidade criada ainda."
 msgstr ""
 
-#: scripts/ui/divisions_panel.gd:558
+#: scripts/ui/divisions_panel.gd:574
 #, c-format
 msgid "≈ %s do território nacional  ·  cerca de %s mi de habitantes  ·  %d subunidade(s)"
 msgstr ""
 
-#: scripts/ui/divisions_panel.gd:585
+#: scripts/ui/divisions_panel.gd:601
 #, c-format
 msgid "%s está sem capital. Selecione uma unidade para escolher."
 msgstr ""
 
-#: scripts/ui/divisions_panel.gd:597
+#: scripts/ui/divisions_panel.gd:613
 #, c-format
 msgid "★ Capital desta unidade: %s"
 msgstr ""
 
-#: scripts/ui/divisions_panel.gd:607
+#: scripts/ui/divisions_panel.gd:623
 #, c-format
 msgid "★ Capital de %s: remover"
 msgstr ""
 
-#: scripts/ui/divisions_panel.gd:607
+#: scripts/ui/divisions_panel.gd:623
 #, c-format
 msgid "Tornar capital de %s"
 msgstr ""
 
-#: scripts/ui/divisions_panel.gd:619
+#: scripts/ui/divisions_panel.gd:635
 #, c-format
 msgid "%s deixou de ser capital de %s."
 msgstr ""
 
-#: scripts/ui/divisions_panel.gd:625
+#: scripts/ui/divisions_panel.gd:641
 #, c-format
 msgid "%s agora é capital de %s."
 msgstr ""
@@ -9342,379 +9564,383 @@ msgstr ""
 msgid "Quando o PIB fica abaixo do potencial, as empresas demitem. Desemprego alto por muito tempo eleva a própria taxa natural (histerese)."
 msgstr ""
 
-#: scripts/ui/hud.gd:196
+#: scripts/ui/hud.gd:200
 msgid "parado"
 msgstr ""
 
-#: scripts/ui/hud.gd:196
+#: scripts/ui/hud.gd:200
 #, c-format
 msgid "%s dia/s"
 msgstr ""
 
-#: scripts/ui/hud.gd:219
+#: scripts/ui/hud.gd:223
 #, c-format
 msgid "PIB: %s → %s"
 msgstr ""
 
-#: scripts/ui/hud.gd:220
+#: scripts/ui/hud.gd:224
 #, c-format
 msgid "Crescimento: %s → %s  ·  Inflação: %s → %s"
 msgstr ""
 
-#: scripts/ui/hud.gd:221
+#: scripts/ui/hud.gd:225
 #, c-format
 msgid "Desemprego: %s → %s  ·  Dívida/PIB: %s → %s"
 msgstr ""
 
-#: scripts/ui/hud.gd:222
+#: scripts/ui/hud.gd:226
 #, c-format
 msgid "Aprovação: %d%% → %d%%  ·  Estabilidade: %d%% → %d%%"
 msgstr ""
 
-#: scripts/ui/hud.gd:223
+#: scripts/ui/hud.gd:227
 #, c-format
 msgid "Fundo do partido: %s → %s  ·  Petróleo: $%.0f → $%.0f"
 msgstr ""
 
-#: scripts/ui/hud.gd:225
+#: scripts/ui/hud.gd:229
 #, c-format
 msgid "Resumo de %d dias"
 msgstr ""
 
-#: scripts/ui/hud.gd:228
+#: scripts/ui/hud.gd:232
 msgid "Nenhum acontecimento no noticiário."
 msgstr ""
 
-#: scripts/ui/hud.gd:230
+#: scripts/ui/hud.gd:234
 #, c-format
 msgid "%d acontecimento(s) no noticiário:"
 msgstr ""
 
-#: scripts/ui/hud.gd:236
+#: scripts/ui/hud.gd:240
 #, c-format
 msgid "e mais %d no noticiário."
 msgstr ""
 
-#: scripts/ui/hud.gd:256
+#: scripts/ui/hud.gd:260
 #, c-format
 msgid "%s, %d anos%s"
 msgstr ""
 
-#: scripts/ui/hud.gd:256
+#: scripts/ui/hud.gd:260
 #, c-format
 msgid " (enfrenta %s)"
 msgstr ""
 
-#: scripts/ui/hud.gd:356
+#: scripts/ui/hud.gd:364
 msgid "Por lei: "
 msgstr ""
 
-#: scripts/ui/hud.gd:382
+#: scripts/ui/hud.gd:390
 msgid "Membros do euro não têm moeda própria."
 msgstr ""
 
-#: scripts/ui/hud.gd:385
+#: scripts/ui/hud.gd:393
 #, c-format
 msgid "%s adota câmbio flutuante."
 msgstr ""
 
-#: scripts/ui/hud.gd:389
+#: scripts/ui/hud.gd:397
 #, c-format
 msgid "%s ancora a moeda no dólar."
 msgstr ""
 
-#: scripts/ui/hud.gd:391
+#: scripts/ui/hud.gd:399
 msgid "Reservas insuficientes para sustentar uma âncora (mínimo de 4 meses de importação)."
 msgstr ""
 
-#: scripts/ui/hud.gd:422
+#: scripts/ui/hud.gd:430
 #, c-format
 msgid "Declarar guerra a %s? O mundo vai reagir e pactos de defesa podem ser acionados."
 msgstr ""
 
-#: scripts/ui/hud.gd:451 scripts/ui/hud.gd:813 scripts/ui/main.gd:368
+#: scripts/ui/hud.gd:459 scripts/ui/hud.gd:844 scripts/ui/main.gd:375
 msgid "Regime híbrido"
 msgstr ""
 
-#: scripts/ui/hud.gd:451 scripts/ui/main.gd:368
+#: scripts/ui/hud.gd:459 scripts/ui/main.gd:375
 msgid "Regime autoritário"
 msgstr ""
 
-#: scripts/ui/hud.gd:455 scripts/ui/hud.gd:824
+#: scripts/ui/hud.gd:463 scripts/ui/hud.gd:855
 #, c-format
 msgid "US$ %s"
 msgstr ""
 
-#: scripts/ui/hud.gd:456 scripts/ui/hud.gd:825 scripts/ui/main.gd:374
+#: scripts/ui/hud.gd:464 scripts/ui/hud.gd:856 scripts/ui/main.gd:381
 #, c-format
 msgid "%s mi"
 msgstr ""
 
-#: scripts/ui/hud.gd:464 scripts/ui/hud.gd:828
+#: scripts/ui/hud.gd:472 scripts/ui/hud.gd:859
 msgid "D (moratória)"
 msgstr ""
 
-#: scripts/ui/hud.gd:478
+#: scripts/ui/hud.gd:486
 #, c-format
 msgid "Falar com %s"
 msgstr ""
 
-#: scripts/ui/hud.gd:482
+#: scripts/ui/hud.gd:490
 #, c-format
 msgid "%d de %d"
 msgstr ""
 
-#: scripts/ui/hud.gd:497
+#: scripts/ui/hud.gd:505
 msgid "EM GUERRA"
 msgstr ""
 
-#: scripts/ui/hud.gd:499
+#: scripts/ui/hud.gd:507
 msgid "Aliado de defesa"
 msgstr ""
 
-#: scripts/ui/hud.gd:504
+#: scripts/ui/hud.gd:512
 msgid "Você aplica embargo"
 msgstr ""
 
-#: scripts/ui/hud.gd:504
+#: scripts/ui/hud.gd:512
 msgid "Você aplica sanções"
 msgstr ""
 
-#: scripts/ui/hud.gd:507
+#: scripts/ui/hud.gd:515
 msgid "Sancionado por este país"
 msgstr ""
 
-#: scripts/ui/hud.gd:509
+#: scripts/ui/hud.gd:517
 #, c-format
 msgid "%s das suas exportações"
 msgstr ""
 
-#: scripts/ui/hud.gd:512
+#: scripts/ui/hud.gd:520
 msgid "Cancelar pacto"
 msgstr ""
 
-#: scripts/ui/hud.gd:513
+#: scripts/ui/hud.gd:521
 msgid "Suspender sanções"
 msgstr ""
 
-#: scripts/ui/hud.gd:514
+#: scripts/ui/hud.gd:522
 msgid "Reduzir embargo"
 msgstr ""
 
-#: scripts/ui/hud.gd:515
+#: scripts/ui/hud.gd:523
 msgid "Remover tarifa"
 msgstr ""
 
-#: scripts/ui/hud.gd:521
+#: scripts/ui/hud.gd:529
 #, c-format
 msgid "%s (%d dias)"
 msgstr ""
 
-#: scripts/ui/hud.gd:548
+#: scripts/ui/hud.gd:556
 msgid "vermelho hostil · verde amigo · azul aliado"
 msgstr ""
 
-#: scripts/ui/hud.gd:550
+#: scripts/ui/hud.gd:558
 msgid "relativa ao limite do país"
 msgstr ""
 
-#: scripts/ui/hud.gd:550
+#: scripts/ui/hud.gd:558
 msgid "US$ 300 a 90 mil per capita"
 msgstr ""
 
-#: scripts/ui/hud.gd:551
+#: scripts/ui/hud.gd:559
 msgid "vermelho instável"
 msgstr ""
 
-#: scripts/ui/hud.gd:551
+#: scripts/ui/hud.gd:559
 msgid "em relação aos EUA"
 msgstr ""
 
-#: scripts/ui/hud.gd:571
+#: scripts/ui/hud.gd:579
 #, c-format
 msgid "%s  ·  %s  ·  %s  ·  cerca de %s mi de habitantes"
 msgstr ""
 
-#: scripts/ui/hud.gd:573
+#: scripts/ui/hud.gd:581
 #, c-format
 msgid "  ·  capital de %s"
 msgstr ""
 
-#: scripts/ui/hud.gd:580
+#: scripts/ui/hud.gd:588
 #, c-format
 msgid "%s  ·  PIB %s  ·  cresc. %s  ·  infl. %s"
 msgstr ""
 
-#: scripts/ui/hud.gd:582
+#: scripts/ui/hud.gd:590
 #, c-format
 msgid "  ·  relação %+d"
 msgstr ""
 
-#: scripts/ui/hud.gd:651
+#: scripts/ui/hud.gd:659
 msgid "Fixado por lei em vigor. Para mudar, altere ou revogue a lei."
 msgstr ""
 
-#: scripts/ui/hud.gd:690
+#: scripts/ui/hud.gd:703 scripts/ui/state_panel.gd:26
+msgid "Presidente do diretório"
+msgstr ""
+
+#: scripts/ui/hud.gd:705
 #, c-format
 msgid "%s · oposição"
 msgstr ""
 
-#: scripts/ui/hud.gd:788
+#: scripts/ui/hud.gd:819
 #, c-format
 msgid "%s, %d anos, %s%s"
 msgstr ""
 
-#: scripts/ui/hud.gd:788
+#: scripts/ui/hud.gd:819
 msgid ", doente"
 msgstr ""
 
-#: scripts/ui/hud.gd:793
+#: scripts/ui/hud.gd:824
 msgid "Sem parlamento livre: o líder governa por decreto."
 msgstr ""
 
-#: scripts/ui/hud.gd:798
+#: scripts/ui/hud.gd:829
 #, c-format
 msgid "Em debate: %s"
 msgstr ""
 
-#: scripts/ui/hud.gd:800 scripts/ui/norm_page.gd:89
+#: scripts/ui/hud.gd:831 scripts/ui/norm_page.gd:89
 msgid "aprovado"
 msgstr ""
 
-#: scripts/ui/hud.gd:800 scripts/ui/norm_page.gd:89
+#: scripts/ui/hud.gd:831 scripts/ui/norm_page.gd:89
 msgid "rejeitado"
 msgstr ""
 
-#: scripts/ui/hud.gd:801
+#: scripts/ui/hud.gd:832
 msgid "Nenhuma votação recente."
 msgstr ""
 
-#: scripts/ui/hud.gd:813
+#: scripts/ui/hud.gd:844
 msgid "Autoritário"
 msgstr ""
 
-#: scripts/ui/hud.gd:816
+#: scripts/ui/hud.gd:847
 #, c-format
 msgid "em %s anos"
 msgstr ""
 
-#: scripts/ui/hud.gd:819
+#: scripts/ui/hud.gd:850
 msgid "sem eleições: cuide da estabilidade"
 msgstr ""
 
-#: scripts/ui/hud.gd:821
+#: scripts/ui/hud.gd:852
 #, c-format
 msgid "%dº  (%s pts)"
 msgstr ""
 
-#: scripts/ui/hud.gd:855
+#: scripts/ui/hud.gd:886
 msgid "Banco central independente"
 msgstr ""
 
-#: scripts/ui/hud.gd:855
+#: scripts/ui/hud.gd:886
 msgid "Banco central subordinado, regra de Taylor"
 msgstr ""
 
-#: scripts/ui/hud.gd:857
+#: scripts/ui/hud.gd:888
 msgid "Zona do euro: decisão do BCE"
 msgstr ""
 
-#: scripts/ui/hud.gd:859
+#: scripts/ui/hud.gd:890
 msgid "Âncora no dólar: segue o Fed"
 msgstr ""
 
-#: scripts/ui/hud.gd:861
+#: scripts/ui/hud.gd:892
 msgid "Juro definido pelo governo"
 msgstr ""
 
-#: scripts/ui/hud.gd:873
+#: scripts/ui/hud.gd:904
 msgid "O banco central é independente: o governo não escolhe o juro. A Constituição pode mudar isso por emenda."
 msgstr ""
 
-#: scripts/ui/hud.gd:891
+#: scripts/ui/hud.gd:922
 #, c-format
 msgid "%s  (%s meses)"
 msgstr ""
 
-#: scripts/ui/hud.gd:894 scripts/ui/hud.gd:903
+#: scripts/ui/hud.gd:925 scripts/ui/hud.gd:934
 msgid "não se aplica"
 msgstr ""
 
-#: scripts/ui/hud.gd:896
+#: scripts/ui/hud.gd:927
 #, c-format
 msgid "vende %s"
 msgstr ""
 
-#: scripts/ui/hud.gd:896
+#: scripts/ui/hud.gd:927
 #, c-format
 msgid "compra %s"
 msgstr ""
 
-#: scripts/ui/hud.gd:897
+#: scripts/ui/hud.gd:928
 msgid "câmbio fixo"
 msgstr ""
 
-#: scripts/ui/hud.gd:897 scripts/sim/law_catalog.gd_(escolha_cb_modo)
+#: scripts/ui/hud.gd:928 scripts/sim/law_catalog.gd_(escolha_cb_modo)
 msgid "forte"
 msgstr ""
 
-#: scripts/ui/hud.gd:897 scripts/sim/law_catalog.gd_(escolha_cb_modo)
+#: scripts/ui/hud.gd:928 scripts/sim/law_catalog.gd_(escolha_cb_modo)
 msgid "suave"
 msgstr ""
 
-#: scripts/ui/hud.gd:897
+#: scripts/ui/hud.gd:928
 msgid "flutuação livre"
 msgstr ""
 
-#: scripts/ui/hud.gd:898
+#: scripts/ui/hud.gd:929
 msgid "euro"
 msgstr ""
 
-#: scripts/ui/hud.gd:910
+#: scripts/ui/hud.gd:941
 msgid "ativo"
 msgstr ""
 
-#: scripts/ui/hud.gd:912
+#: scripts/ui/hud.gd:943
 msgid "fora da lei: só rende"
 msgstr ""
 
-#: scripts/ui/hud.gd:914
+#: scripts/ui/hud.gd:945
 msgid "sem fundo: crie pela Lei Cambial"
 msgstr ""
 
-#: scripts/ui/hud.gd:915
+#: scripts/ui/hud.gd:946
 #, c-format
 msgid "%s  (%s do PIB)"
 msgstr ""
 
-#: scripts/ui/hud.gd:920
+#: scripts/ui/hud.gd:951
 #, c-format
 msgid "até %s do saldo ao ano"
 msgstr ""
 
-#: scripts/ui/hud.gd:954 scripts/ui/main.gd:384
+#: scripts/ui/hud.gd:985 scripts/ui/main.gd:391
 #, c-format
 msgid "%s mil"
 msgstr ""
 
-#: scripts/ui/hud.gd:956
+#: scripts/ui/hud.gd:987
 msgid "nenhuma"
 msgstr ""
 
-#: scripts/ui/hud.gd:962 scripts/ui/info_panel.gd:61
+#: scripts/ui/hud.gd:993 scripts/ui/info_panel.gd:61
 msgid "Nenhum"
 msgstr ""
 
-#: scripts/ui/hud.gd:981
+#: scripts/ui/hud.gd:1012
 #, c-format
 msgid "Contra %s"
 msgstr ""
 
-#: scripts/ui/hud.gd:983
+#: scripts/ui/hud.gd:1014
 msgid "Postura: defensiva"
 msgstr ""
 
-#: scripts/ui/hud.gd:1001
+#: scripts/ui/hud.gd:1032
 #, c-format
 msgid "Frente: %s do território de %s ocupado · baixas: %s / %s mil"
 msgstr ""
@@ -10197,410 +10423,427 @@ msgstr ""
 msgid "Arraste uma condição para cá."
 msgstr ""
 
-#: scripts/ui/legislation_center.gd:36
+#: scripts/ui/legislation_center.gd:37 scripts/ui/legislation_center.gd:134
 #, c-format
 msgid "Você atua como %s. Fundo de %s: %s."
 msgstr ""
 
-#: scripts/ui/legislation_center.gd:58
+#: scripts/ui/legislation_center.gd:59
 msgid "Todas"
 msgstr ""
 
-#: scripts/ui/legislation_center.gd:74
+#: scripts/ui/legislation_center.gd:75
 msgid "Tudo"
-msgstr ""
-
-#: scripts/ui/legislation_center.gd:96
-#, c-format
-msgid "%s  ·  %d artigo"
-msgstr ""
-
-#: scripts/ui/legislation_center.gd:96
-#, c-format
-msgid "%s  ·  %d artigos"
-msgstr ""
-
-#: scripts/ui/legislation_center.gd:97
-msgid "Ainda não existe: alterar cria o código."
 msgstr ""
 
 #: scripts/ui/legislation_center.gd:99
 #, c-format
+msgid "%s  ·  %d artigo"
+msgstr ""
+
+#: scripts/ui/legislation_center.gd:99
+#, c-format
+msgid "%s  ·  %d artigos"
+msgstr ""
+
+#: scripts/ui/legislation_center.gd:100
+msgid "Ainda não existe: alterar cria o código."
+msgstr ""
+
+#: scripts/ui/legislation_center.gd:102
+#, c-format
 msgid "%d alteração(ões) em tramitação"
 msgstr ""
 
-#: scripts/ui/legislation_center.gd:145
+#: scripts/ui/legislation_center.gd:183
 #, c-format
 msgid "%d norma(s)"
 msgstr ""
 
-#: scripts/ui/legislation_center.gd:146
+#: scripts/ui/legislation_center.gd:184
 msgid "Todas as normas"
 msgstr ""
 
-#: scripts/ui/legislation_center.gd:146
+#: scripts/ui/legislation_center.gd:184
 #, c-format
 msgid "Normas: %s"
 msgstr ""
 
-#: scripts/ui/legislation_center.gd:152
+#: scripts/ui/legislation_center.gd:190
 msgid "(sem título)"
 msgstr ""
 
-#: scripts/ui/legislation_center.gd:163
+#: scripts/ui/legislation_center.gd:202
 #, c-format
 msgid "%d projeto(s)"
 msgstr ""
 
-#: scripts/ui/legislation_center.gd:173
+#: scripts/ui/legislation_center.gd:212
 #, c-format
 msgid "Último passo: %s"
 msgstr ""
 
-#: scripts/ui/legislation_center.gd:199
+#: scripts/ui/legislation_center.gd:238
 #, c-format
 msgid "%s  ·  %s, assinado em %s%s"
 msgstr ""
 
-#: scripts/ui/legislation_center.gd:199
+#: scripts/ui/legislation_center.gd:238
 #, c-format
 msgid "  ·  %d outros países"
 msgstr ""
 
-#: scripts/ui/legislation_center.gd:220
+#: scripts/ui/legislation_center.gd:259
 msgid "Sem comparação"
 msgstr ""
 
-#: scripts/ui/legislation_center.gd:224
+#: scripts/ui/legislation_center.gd:263
 #, c-format
 msgid "Versão %d (%s)"
 msgstr ""
 
-#: scripts/ui/legislation_center.gd:224
+#: scripts/ui/legislation_center.gd:263
 msgid "original"
 msgstr ""
 
-#: scripts/ui/legislation_center.gd:224
+#: scripts/ui/legislation_center.gd:263
 #, c-format
 msgid "emenda nº %d"
 msgstr ""
 
-#: scripts/ui/legislation_center.gd:237
+#: scripts/ui/legislation_center.gd:276
 #, c-format
 msgid "[color=#f2b33d]Emenda nº %d[/color]  ·  versão %d  ·  %s  ·  %s"
 msgstr ""
 
-#: scripts/ui/legislation_center.gd:241
+#: scripts/ui/legislation_center.gd:280
 msgid "Nenhuma emenda até agora."
 msgstr ""
 
-#: scripts/ui/legislation_center.gd:255
+#: scripts/ui/legislation_center.gd:294
 msgid " [color=#8ba2af](cláusula pétrea)[/color]"
 msgstr ""
 
-#: scripts/ui/legislation_center.gd:269
+#: scripts/ui/legislation_center.gd:308
 #, c-format
 msgid "%d%% em %d votação(ões)"
 msgstr ""
 
-#: scripts/ui/legislation_center.gd:270
+#: scripts/ui/legislation_center.gd:309
 msgid ", duas casas"
 msgstr ""
 
-#: scripts/ui/legislation_center.gd:271
+#: scripts/ui/legislation_center.gd:310
 msgid ", com sanção e veto"
-msgstr ""
-
-#: scripts/ui/legislation_center.gd:272
-#, c-format
-msgid "[color=#f2b33d]%s[/color] (hierarquia %d): %s, %s%s%s."
-msgstr ""
-
-#: scripts/ui/legislation_center.gd:281
-msgid "nada"
-msgstr ""
-
-#: scripts/ui/legislation_center.gd:285
-#, c-format
-msgid "Receita das normas nos últimos 12 meses: %s do PIB. Despesa: %s do PIB."
-msgstr ""
-
-#: scripts/ui/legislation_center.gd:286
-#, c-format
-msgid "Efeito na aprovação: %+.1f p.p. Na estabilidade: %+.1f p.p."
-msgstr ""
-
-#: scripts/ui/legislation_center.gd:287
-msgid "Direitos"
-msgstr ""
-
-#: scripts/ui/legislation_center.gd:287
-msgid "Salário mínimo"
-msgstr ""
-
-#: scripts/ui/legislation_center.gd:287
-msgid "Cargos"
-msgstr ""
-
-#: scripts/ui/legislation_center.gd:287
-msgid "Subsídios"
-msgstr ""
-
-#: scripts/ui/legislation_center.gd:287
-msgid "Despesas permanentes"
-msgstr ""
-
-#: scripts/ui/legislation_center.gd:287
-msgid "Obrigações"
-msgstr ""
-
-#: scripts/ui/legislation_center.gd:287
-msgid "Restrições"
-msgstr ""
-
-#: scripts/ui/legislation_center.gd:287
-msgid "Requisitos"
-msgstr ""
-
-#: scripts/ui/legislation_center.gd:287
-msgid "Isenções"
-msgstr ""
-
-#: scripts/ui/legislation_center.gd:287
-msgid "Limites de cobrança"
-msgstr ""
-
-#: scripts/ui/legislation_center.gd:287
-msgid "Penalidades"
-msgstr ""
-
-#: scripts/ui/legislation_center.gd:287
-msgid "Prazos"
-msgstr ""
-
-#: scripts/ui/legislation_center.gd:287
-msgid "Exceções"
-msgstr ""
-
-#: scripts/ui/legislation_center.gd:295
-#, c-format
-msgid "%s (%s da população)"
-msgstr ""
-
-#: scripts/ui/legislation_center.gd:296
-#, c-format
-msgid "Licenças: %s."
-msgstr ""
-
-#: scripts/ui/legislation_center.gd:297
-#, c-format
-msgid "Pessoas no cadastro: %s mi. Obrigações a vencer: %d."
 msgstr ""
 
 #: scripts/ui/legislation_center.gd:311
 #, c-format
+msgid "[color=#f2b33d]%s[/color] (hierarquia %d): %s, %s%s%s."
+msgstr ""
+
+#: scripts/ui/legislation_center.gd:320
+msgid "nada"
+msgstr ""
+
+#: scripts/ui/legislation_center.gd:324
+#, c-format
+msgid "Receita das normas nos últimos 12 meses: %s do PIB. Despesa: %s do PIB."
+msgstr ""
+
+#: scripts/ui/legislation_center.gd:325
+#, c-format
+msgid "Efeito na aprovação: %+.1f p.p. Na estabilidade: %+.1f p.p."
+msgstr ""
+
+#: scripts/ui/legislation_center.gd:326
+msgid "Direitos"
+msgstr ""
+
+#: scripts/ui/legislation_center.gd:326
+msgid "Salário mínimo"
+msgstr ""
+
+#: scripts/ui/legislation_center.gd:326
+msgid "Cargos"
+msgstr ""
+
+#: scripts/ui/legislation_center.gd:326
+msgid "Subsídios"
+msgstr ""
+
+#: scripts/ui/legislation_center.gd:326
+msgid "Despesas permanentes"
+msgstr ""
+
+#: scripts/ui/legislation_center.gd:326
+msgid "Obrigações"
+msgstr ""
+
+#: scripts/ui/legislation_center.gd:326
+msgid "Restrições"
+msgstr ""
+
+#: scripts/ui/legislation_center.gd:326
+msgid "Requisitos"
+msgstr ""
+
+#: scripts/ui/legislation_center.gd:326
+msgid "Isenções"
+msgstr ""
+
+#: scripts/ui/legislation_center.gd:326
+msgid "Limites de cobrança"
+msgstr ""
+
+#: scripts/ui/legislation_center.gd:326
+msgid "Penalidades"
+msgstr ""
+
+#: scripts/ui/legislation_center.gd:326
+msgid "Prazos"
+msgstr ""
+
+#: scripts/ui/legislation_center.gd:326
+msgid "Exceções"
+msgstr ""
+
+#: scripts/ui/legislation_center.gd:334
+#, c-format
+msgid "%s (%s da população)"
+msgstr ""
+
+#: scripts/ui/legislation_center.gd:335
+#, c-format
+msgid "Licenças: %s."
+msgstr ""
+
+#: scripts/ui/legislation_center.gd:336
+#, c-format
+msgid "Pessoas no cadastro: %s mi. Obrigações a vencer: %d."
+msgstr ""
+
+#: scripts/ui/legislation_center.gd:350
+#, c-format
 msgid "  (antes: %s; depois: %s)"
 msgstr ""
 
-#: scripts/ui/legislation_center.gd:313
+#: scripts/ui/legislation_center.gd:352
 #, c-format
 msgid "  [evento: %s]"
 msgstr ""
 
-#: scripts/ui/legislation_center.gd:317
+#: scripts/ui/legislation_center.gd:356
 #, c-format
 msgid "%d registro(s) guardado(s)"
 msgstr ""
 
-#: scripts/ui/main.gd:246 scripts/ui/main.gd:1153
+#: scripts/ui/main.gd:247 scripts/ui/main.gd:1197
 msgid "Preparando o mundo..."
 msgstr ""
 
-#: scripts/ui/main.gd:256
+#: scripts/ui/main.gd:257
 msgid "Desenhando o mapa..."
 msgstr ""
 
-#: scripts/ui/main.gd:366
+#: scripts/ui/main.gd:373
 msgid "África"
 msgstr ""
 
-#: scripts/ui/main.gd:366
+#: scripts/ui/main.gd:373
 msgid "Ásia"
 msgstr ""
 
-#: scripts/ui/main.gd:366
+#: scripts/ui/main.gd:373
 msgid "Europa"
 msgstr ""
 
-#: scripts/ui/main.gd:366
+#: scripts/ui/main.gd:373
 msgid "América Latina"
 msgstr ""
 
-#: scripts/ui/main.gd:367
+#: scripts/ui/main.gd:374
 msgid "Oriente Médio"
 msgstr ""
 
-#: scripts/ui/main.gd:367
+#: scripts/ui/main.gd:374
 msgid "América do Norte"
 msgstr ""
 
-#: scripts/ui/main.gd:367
+#: scripts/ui/main.gd:374
 msgid "Oceania"
 msgstr ""
 
-#: scripts/ui/main.gd:371
+#: scripts/ui/main.gd:378
 #, c-format
 msgid "PIB  ·  #%d"
 msgstr ""
 
-#: scripts/ui/main.gd:386 scripts/ui/stock_panel.gd:57
+#: scripts/ui/main.gd:393 scripts/ui/stock_panel.gd:57
 #, c-format
 msgid "%s do PIB"
 msgstr ""
 
-#: scripts/ui/main.gd:390
+#: scripts/ui/main.gd:397
 #, c-format
 msgid "Governo: %s (%s das cadeiras)"
 msgstr ""
 
-#: scripts/ui/main.gd:392
+#: scripts/ui/main.gd:399
 msgid "Eleição a cada 4 anos"
 msgstr ""
 
-#: scripts/ui/main.gd:394
+#: scripts/ui/main.gd:401
 msgid "Sem eleições livres: risco de golpe e revolta"
 msgstr ""
 
-#: scripts/ui/main.gd:404
+#: scripts/ui/main.gd:411
 msgid "Moeda: euro (juros definidos pelo BCE)"
 msgstr ""
 
-#: scripts/ui/main.gd:406
+#: scripts/ui/main.gd:413
 msgid "Moeda ancorada no dólar"
 msgstr ""
 
-#: scripts/ui/main.gd:408
+#: scripts/ui/main.gd:415
 msgid "EM GUERRA no início da partida"
 msgstr ""
 
-#: scripts/ui/main.gd:425
+#: scripts/ui/main.gd:429
+msgid "Governar o país inteiro"
+msgstr ""
+
+#: scripts/ui/main.gd:439
+msgid "Assumir o cargo"
+msgstr ""
+
+#: scripts/ui/main.gd:454
+#, c-format
+msgid "%s toma posse em %s como %s."
+msgstr ""
+
+#: scripts/ui/main.gd:469
 #, c-format
 msgid "%s toma posse em %s. O mundo observa."
 msgstr ""
 
-#: scripts/ui/main.gd:427
+#: scripts/ui/main.gd:471
 #, c-format
 msgid "%s lidera a oposição em %s contra o governo de %s."
 msgstr ""
 
-#: scripts/ui/main.gd:670
+#: scripts/ui/main.gd:714
 #, c-format
 msgid "%s, %d anos  ·  %s  ·  competência %d%%%s"
 msgstr ""
 
-#: scripts/ui/main.gd:679
+#: scripts/ui/main.gd:723
 msgid "Você: "
 msgstr ""
 
-#: scripts/ui/main.gd:687
+#: scripts/ui/main.gd:731
 #, c-format
 msgid "%s  ·  %d assentos  ·  %s dos votos. A bússola do partido é a média dos políticos."
 msgstr ""
 
-#: scripts/ui/main.gd:701
+#: scripts/ui/main.gd:745
 msgid "Dinheiro por fora do orçamento oficial, pago por enquanto com o fundo do partido. Rende hoje e cobra amanhã."
 msgstr ""
 
-#: scripts/ui/main.gd:714
+#: scripts/ui/main.gd:758
 #, c-format
 msgid "Ministério: %s"
 msgstr ""
 
-#: scripts/ui/main.gd:719
+#: scripts/ui/main.gd:763
 #, c-format
 msgid "%s assume a pasta."
 msgstr ""
 
-#: scripts/ui/main.gd:760
+#: scripts/ui/main.gd:804
 msgid "Todo político pertence a um partido. Escolha um deles ou crie o seu, e decida se começa no governo ou na oposição."
 msgstr ""
 
-#: scripts/ui/main.gd:760
+#: scripts/ui/main.gd:804
 msgid "Só é possível mudar de partido uma vez por ano. O partido novo só ganha assentos na próxima eleição."
 msgstr ""
 
-#: scripts/ui/main.gd:761
+#: scripts/ui/main.gd:805
 #, c-format
 msgid "Escolha seu partido em %s"
 msgstr ""
 
-#: scripts/ui/main.gd:798
+#: scripts/ui/main.gd:842
 msgid "Regimes fechados não têm eleições."
 msgstr ""
 
-#: scripts/ui/main.gd:800
+#: scripts/ui/main.gd:844
 #, c-format
 msgid "Hoje governa: %s."
 msgstr ""
 
-#: scripts/ui/main.gd:800
+#: scripts/ui/main.gd:844
 msgid "Regime fechado, sem eleições: só é possível governar."
 msgstr ""
 
-#: scripts/ui/main.gd:808
+#: scripts/ui/main.gd:852
 #, c-format
 msgid "Ficar em %s  ·  %s  ·  %s dos votos  ·  %d de %d assentos"
 msgstr ""
 
-#: scripts/ui/main.gd:808
+#: scripts/ui/main.gd:852
 #, c-format
 msgid "%s  ·  %s  ·  %s dos votos  ·  %d de %d assentos"
 msgstr ""
 
-#: scripts/ui/main.gd:809
+#: scripts/ui/main.gd:853
 #, c-format
 msgid "%s. Clique para escolher."
 msgstr ""
 
-#: scripts/ui/main.gd:840
+#: scripts/ui/main.gd:884
 msgid "Dê um nome ao partido."
 msgstr ""
 
-#: scripts/ui/main.gd:943
+#: scripts/ui/main.gd:987
 #, c-format
 msgid "Bandeira: %s"
 msgstr ""
 
-#: scripts/ui/main.gd:1059
+#: scripts/ui/main.gd:1103
 msgid "Renunciar ao cargo? Isso encerra a sua carreira, e depois você escolhe entre um novo jogo e um novo personagem."
 msgstr ""
 
-#: scripts/ui/main.gd:1069
+#: scripts/ui/main.gd:1113
 msgid "Impeachment"
 msgstr ""
 
-#: scripts/ui/main.gd:1069
+#: scripts/ui/main.gd:1113
 msgid "Deposto"
 msgstr ""
 
-#: scripts/ui/main.gd:1069
+#: scripts/ui/main.gd:1113
 msgid "Renúncia"
 msgstr ""
 
-#: scripts/ui/main.gd:1069
+#: scripts/ui/main.gd:1113
 msgid "Assassinato"
 msgstr ""
 
-#: scripts/ui/main.gd:1069
+#: scripts/ui/main.gd:1113
+msgid "Fim do mandato"
+msgstr ""
+
+#: scripts/ui/main.gd:1113
 msgid "Fim da vida"
 msgstr ""
 
-#: scripts/ui/main.gd:1074
+#: scripts/ui/main.gd:1118
 #, c-format
 msgid "Pontuação final: %s"
 msgstr ""
 
-#: scripts/ui/main.gd:1075
+#: scripts/ui/main.gd:1119
 #, c-format
 msgid ""
 "Tempo no poder: %s anos  ·  Reeleições: %d\n"
@@ -10608,65 +10851,65 @@ msgid ""
 "Dívida/PIB: %s  ·  Inflação: %s  ·  Influência: %dº no mundo"
 msgstr ""
 
-#: scripts/ui/main.gd:1105
+#: scripts/ui/main.gd:1149
 #, c-format
 msgid "Tratado com %s"
 msgstr ""
 
-#: scripts/ui/main.gd:1105
+#: scripts/ui/main.gd:1149
 #, c-format
 msgid "O líder de lá é %s (%s)."
 msgstr ""
 
-#: scripts/ui/main.gd:1113
+#: scripts/ui/main.gd:1157
 #, c-format
 msgid "Vale por %d anos."
 msgstr ""
 
-#: scripts/ui/main.gd:1113
+#: scripts/ui/main.gd:1157
 msgid "Sem prazo."
 msgstr ""
 
-#: scripts/ui/main.gd:1129
+#: scripts/ui/main.gd:1173
 #, c-format
 msgid "Eleição de %s em %s"
 msgstr ""
 
-#: scripts/ui/main.gd:1131
+#: scripts/ui/main.gd:1175
 #, c-format
 msgid "[color=#8ba2af]Sistema:[/color] %s  ·  cláusula de barreira de %d%%"
 msgstr ""
 
-#: scripts/ui/main.gd:1132
+#: scripts/ui/main.gd:1176
 #, c-format
 msgid "[color=#8ba2af]Regime:[/color] %s"
 msgstr ""
 
-#: scripts/ui/main.gd:1133
+#: scripts/ui/main.gd:1177
 #, c-format
 msgid "[color=#8ba2af]Comparecimento:[/color] %s  ·  %d distritos"
 msgstr ""
 
-#: scripts/ui/main.gd:1136
+#: scripts/ui/main.gd:1180
 #, c-format
 msgid "[color=#8ba2af]Chefe de governo:[/color] %s, com %s, em %d turno(s)"
 msgstr ""
 
-#: scripts/ui/main.gd:1139
+#: scripts/ui/main.gd:1183
 #, c-format
 msgid "[color=#%s]■[/color] %s: %s dos votos, %d deputados, %d senadores"
 msgstr ""
 
-#: scripts/ui/main.gd:1143
+#: scripts/ui/main.gd:1187
 #, c-format
 msgid "%s: %d cadeiras, %s mi de habitantes, maioria de %s"
 msgstr ""
 
-#: scripts/ui/main.gd:1176
+#: scripts/ui/main.gd:1220
 msgid "Partida salva."
 msgstr ""
 
-#: scripts/ui/main.gd:1184
+#: scripts/ui/main.gd:1228
 msgid "Carregando a partida..."
 msgstr ""
 
@@ -10852,15 +11095,6 @@ msgstr ""
 msgid "A oposição soma %d de %d assentos: faltam %d para a maioria que derruba o governo."
 msgstr ""
 
-#: scripts/ui/opposition_panel.gd:53
-#, c-format
-msgid "Próxima eleição em %s anos"
-msgstr ""
-
-#: scripts/ui/opposition_panel.gd:55
-msgid "Sem eleições neste regime"
-msgstr ""
-
 #: scripts/ui/politics_panel.gd:87
 #, c-format
 msgid "Fundo de %s: %s  ·  entra %s por mês"
@@ -10967,6 +11201,50 @@ msgstr ""
 msgid "Projeto pronto: passa pelo parlamento com o rito de lei ordinária."
 msgstr ""
 
+#: scripts/ui/state_budget.gd:51
+#, c-format
+msgid "Resultado: %s%.1f%% do PIB"
+msgstr ""
+
+#: scripts/ui/state_budget.gd:53
+msgid "As áreas travadas são decididas pela União."
+msgstr ""
+
+#: scripts/ui/state_panel.gd:28
+#, c-format
+msgid "Partido: %s"
+msgstr ""
+
+#: scripts/ui/state_panel.gd:29
+#, c-format
+msgid "Aprovação do governo da unidade: %d%%"
+msgstr ""
+
+#: scripts/ui/state_panel.gd:36
+#, c-format
+msgid "PIB: %s"
+msgstr ""
+
+#: scripts/ui/state_panel.gd:37
+#, c-format
+msgid "População: %s mi"
+msgstr ""
+
+#: scripts/ui/state_panel.gd:38
+#, c-format
+msgid "Receita: %s por ano (repasses: %s)"
+msgstr ""
+
+#: scripts/ui/state_panel.gd:39
+#, c-format
+msgid "Despesa: %s por ano"
+msgstr ""
+
+#: scripts/ui/state_panel.gd:40
+#, c-format
+msgid "Dívida: %s (%s do PIB)"
+msgstr ""
+
 #: scripts/ui/stock_panel.gd:10
 msgid "Fechou o capital"
 msgstr ""
@@ -11040,6 +11318,21 @@ msgstr ""
 #: scripts/ui/ui_kit.gd:51
 #, c-format
 msgid "US$ %s mi"
+msgstr ""
+
+#: scripts/ui/union_panel.gd:34
+#, c-format
+msgid "Governo federal: %s  ·  no poder: %s"
+msgstr ""
+
+#: scripts/ui/union_panel.gd:35
+#, c-format
+msgid "Afinidade com o governo federal: %d%%"
+msgstr ""
+
+#: scripts/ui/union_panel.gd:36
+#, c-format
+msgid "Repasses: %s por ano"
 msgstr ""
 
 #: scripts/sim/law_catalog.gd_(categorias)
