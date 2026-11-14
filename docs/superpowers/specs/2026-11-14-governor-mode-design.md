@@ -84,6 +84,10 @@ Fórmulas de PIB e receita estadual, valores iniciais da tabela de competências
 
 - Perder a eleição para governador **não** encerra a partida: o jogador segue como oposição estadual, como no modo país, e disputa a eleição seguinte. O estado passa a ser governado pela IA nesse período.
 
+- A unidade pode ser escolhida em **qualquer país**. A tabela de competências faz de países unitários um desafio maior, sem proibição.
+- Se a unidade passar a outro país, a nova União decide se o governador permanece. Se ela for dividida, o governador fica com a parte que contém a capital. A partida só acaba se a unidade deixar de existir.
+  - Chamada minha: se a nova União não o mantém, o jogador perde o cargo e segue como oposição estadual, como na derrota eleitoral, em vez de encerrar a partida. A decisão da União usa a mesma afinidade partidária dos repasses, com um empurrão para manter quando o governador é popular.
+
 ## Perguntas para o autor
-1. Dá para escolher unidade em qualquer país, ou só em federações?
-2. Se a unidade for anexada ou dividida, a partida acaba ou o governador acompanha o território?
+
+Nenhuma em aberto. Aguardando aprovação do documento.
