@@ -98,10 +98,11 @@ Fórmulas de PIB e receita estadual, valores iniciais da tabela de competências
 - Perder a eleição para governador **não** encerra a partida: o jogador segue na oposição e disputa a eleição seguinte, com a IA governando o estado nesse período.
 - Na oposição o jogador é o presidente do partido **na unidade**, subordinado à presidência nacional do partido (ver Oposição). Não vira líder de oposição do país.
 - O nome do cargo (governador, prefeito, ...) depende do tipo da unidade. No Brasil município tem prefeito, não governador.
+- Só unidades de **1º nível** são jogáveis na v1; municípios ficam para depois.
 - A unidade pode ser escolhida em **qualquer país**. A tabela de competências faz de países unitários um desafio maior, sem proibição.
 - Se a unidade passar a outro país, a nova União decide se o governador permanece. Se ela for dividida, o governador fica com a parte que contém a capital. A partida só acaba se a unidade deixar de existir.
   - Chamada minha: se a nova União não o mantém, o jogador perde o cargo e segue na oposição, como na derrota eleitoral, em vez de encerrar a partida. A decisão da União usa a mesma afinidade partidária dos repasses, com um empurrão para manter quando o governador é popular.
 
 ## Perguntas para o autor
 
-1. Municípios jogáveis ficam fora da v1 (só 1º nível). Você quer que já entrem na v1, já que o cargo por tipo existe?
+Nenhuma em aberto. Aguardando aprovação do documento.
