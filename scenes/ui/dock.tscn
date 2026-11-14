@@ -72,7 +72,7 @@ mouse_filter = 2
 theme_override_constants/separation = 6
 alignment = 1
 
-[node name="dock_panel" parent="items" instance=ExtResource("2_item") groups=["role_text"]]
+[node name="dock_panel" parent="items" instance=ExtResource("2_item") groups=["role_text", "sovereign_only"]]
 layout_mode = 2
 label = "Painel do governo"
 icon = ExtResource("ic_painel")
@@ -80,7 +80,7 @@ window_index = 0
 action = ""
 metadata/opposition_text = "Painel da oposição"
 
-[node name="dock_politics" parent="items" instance=ExtResource("2_item") groups=["role_text"]]
+[node name="dock_politics" parent="items" instance=ExtResource("2_item") groups=["role_text", "sovereign_only"]]
 layout_mode = 2
 label = "Política"
 icon = ExtResource("ic_politica")
@@ -95,7 +95,7 @@ icon = ExtResource("ic_ministros")
 window_index = 8
 action = ""
 
-[node name="dock_legislation" parent="items" instance=ExtResource("2_item") groups=["role_text"]]
+[node name="dock_legislation" parent="items" instance=ExtResource("2_item") groups=["role_text", "sovereign_only"]]
 layout_mode = 2
 label = "Centro legislativo"
 icon = ExtResource("ic_legislacao")
@@ -139,7 +139,7 @@ icon = ExtResource("ic_comercio")
 window_index = 3
 action = ""
 
-[node name="dock_economy" parent="items" instance=ExtResource("2_item")]
+[node name="dock_economy" parent="items" instance=ExtResource("2_item") groups=["sovereign_only"]]
 layout_mode = 2
 label = "Setores, empresas e bolsa"
 icon = ExtResource("ic_economia")
@@ -174,7 +174,7 @@ size_flags_vertical = 8
 mouse_filter = 2
 color = Color(1, 1, 1, 0.18)
 
-[node name="dock_world" parent="items" instance=ExtResource("2_item")]
+[node name="dock_world" parent="items" instance=ExtResource("2_item") groups=["sovereign_only"]]
 layout_mode = 2
 label = "Mundo"
 icon = ExtResource("ic_mundo")

@@ -68,6 +68,7 @@ var playing := false
 var _start_pick: Country
 var _start_info: Label
 var _start_button: Button
+var _start_unit: OptionButton
 var _start_title: Label
 var _difficulty := "normal"
 var _autotest := ""
@@ -334,6 +335,8 @@ func _build_start_screen() -> void:
 	_start_title = start_screen.get_node("%start_title")
 	_start_info = start_screen.get_node("%start_info")
 	_start_button = start_screen.get_node("%start_button")
+	_start_unit = start_screen.get_node("%start_unit")
+	_start_unit.item_selected.connect(func(_i: int): _sync_start_button())
 	var diff_buttons := {"facil": start_screen.get_node("%diff_easy"), "normal": start_screen.get_node("%diff_normal"), "dificil": start_screen.get_node("%diff_hard")}
 	var style_diff := func(sel: String):
 		_difficulty = sel
@@ -343,7 +346,10 @@ func _build_start_screen() -> void:
 		diff_buttons[k].pressed.connect(style_diff.bind(k))
 	style_diff.call("normal")
 	_start_button.pressed.connect(func(): _open_creator(Character.random(world.rng, _start_pick.iso, _start_pick.region), func(ch):
-		_open_party_picker(_start_pick, true, func(choice): _begin(ch, choice))))
+		if _start_unit.selected > 0:
+			_begin_governor(ch, int(_start_unit.get_item_metadata(_start_unit.selected)))
+		else:
+			_open_party_picker(_start_pick, true, func(choice): _begin(ch, choice))))
 	var saved: Button = start_screen.get_node("%continue_game")
 	saved.visible = SaveService.has_save()
 	saved.pressed.connect(_load_game)
@@ -356,6 +362,7 @@ func _pick_start(c: Country) -> void:
 	map.select(c)
 	_start_title.text = c.name
 	_start_button.disabled = false
+	_fill_start_units(c)
 	var stat := func(key: String, value: String, color := UiKit.TEXT) -> void:
 		var l: Label = start_screen.get_node("%stat_" + key)
 		l.text = value
@@ -408,6 +415,43 @@ func _pick_start(c: Country) -> void:
 		notes.append(tr("EM GUERRA no início da partida"))
 	_start_info.text = "\n".join(notes)
 	_start_info.visible = not notes.is_empty()
+
+
+## The units the player may govern instead of the country: first-level ones, in a country that has at least two.
+func _fill_start_units(c: Country) -> void:
+	_start_unit.clear()
+	var roots: Array = world.subdivisions.roots_of(c.iso).duplicate()
+	_start_unit.visible = roots.size() >= StateGov.MIN_ROOT_UNITS
+	if not _start_unit.visible:
+		_sync_start_button()
+		return
+	roots.sort_custom(func(a: int, b: int): return String(world.subdivisions.units[a].name) < String(world.subdivisions.units[b].name))
+	_start_unit.add_item(tr("Governar o país inteiro"))
+	for id: int in roots:
+		var office: String = world.subdivisions.office_of(int(world.subdivisions.units[id].type)).name
+		_start_unit.add_item("%s (%s)" % [world.subdivisions.units[id].name, office])
+		_start_unit.set_item_metadata(_start_unit.item_count - 1, id)
+	_start_unit.select(0)
+	_sync_start_button()
+
+
+func _sync_start_button() -> void:
+	_start_button.text = tr("Assumir o governo") if _start_unit.selected <= 0 or not _start_unit.visible else tr("Assumir o cargo")
+
+
+## Starts the match as the head of a unit of the chosen country.
+func _begin_governor(character: Dictionary, unit_id: int) -> void:
+	if _start_pick == null:
+		return
+	world.leader = character if not character.is_empty() else Character.random(world.rng, _start_pick.iso, _start_pick.region)
+	if not world.set_governor(unit_id, _difficulty).ok:
+		return
+	world.diplomacy.update_prod_factors(world)
+	_enter_game()
+	map.select(null)
+	map.reset_view()
+	map.focus_on(_start_pick)
+	world.emit_news(tr("%s toma posse em %s como %s.") % [world.leader.name, world.governor.unit(world).get("name", "?"), world.office_title()], "politica", _start_pick)
 
 
 func _begin(character := {}, choice := {}) -> void:

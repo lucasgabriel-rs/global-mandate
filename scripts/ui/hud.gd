@@ -52,8 +52,8 @@ const LEGISLATION_WINDOW := 10
 var _divisions_tab := -1
 var _politics_tab := -1
 var _cabinet_tab := -1
-## Last role applied to the windows: 1 government, 0 opposition, -1 none yet (forces applying when a match starts).
-var _office_shown := -1
+## Last role applied to the windows (see GameWorld.role), empty when none yet: forces applying when a match starts.
+var _role_shown := ""
 var _hover_country: Country
 var _hover_unit := -1
 
@@ -266,7 +266,7 @@ func bind(w: GameWorld, m: MapView) -> void:
 	_politics.bind(w)
 	_cabinet.bind(w)
 	_opposition.bind(w)
-	_office_shown = -1
+	_role_shown = ""
 	economy.bind(w)
 	border.bind(w, m)
 	refresh_leader()
@@ -654,19 +654,23 @@ func _sync_budget_sliders(c: Country) -> void:
 
 
 ## Shows only what suits the player's role. Scene nodes mark what belongs to each role through the groups
-## gov_only (government only), opposition_only (opposition only) and foreign_only (only in another country's dossier);
+## gov_only (government only), opposition_only (opposition only), governor_only and unit_opposition_only (the two roles
+## of governor mode), sovereign_only (hidden while governing a unit) and foreign_only (only in another country's dossier);
 ## role_text swaps the text (or the window title, or the dock icon name) for the metadata
 ## opposition_text while the player is in opposition. Windows of the other role close and do not open.
 func _apply_role() -> void:
 	var office := world.in_office
+	var role := world.role()
 	var foreign: bool = world.player != null and selected != null and selected != world.player
 	var seen := {}
-	for group: String in ["gov_only", "opposition_only", "foreign_only"]:
+	for group: String in ["gov_only", "opposition_only", "governor_only", "unit_opposition_only", "sovereign_only", "foreign_only"]:
 		for n: Node in get_tree().get_nodes_in_group(group):
 			if seen.has(n) or not is_ancestor_of(n):
 				continue
 			seen[n] = true
-			var shown := not (n.is_in_group("gov_only") and not office) and not (n.is_in_group("opposition_only") and office) and not (n.is_in_group("foreign_only") and not foreign)
+			var shown := not (n.is_in_group("gov_only") and role != "head") and not (n.is_in_group("opposition_only") and role != "opposition") \
+				and not (n.is_in_group("governor_only") and role != "governor") and not (n.is_in_group("unit_opposition_only") and role != "unit_opposition") \
+				and not (n.is_in_group("sovereign_only") and world.governor != null) and not (n.is_in_group("foreign_only") and not foreign)
 			if n is FloatWindow:
 				var w: FloatWindow = n
 				w.locked = not shown
@@ -687,10 +691,13 @@ func _apply_role() -> void:
 func _refresh_office() -> void:
 	var office := world.in_office
 	if world.player:
-		_player_name.text = world.player.name if office else tr("%s · oposição") % world.player.name
-	if int(office) == _office_shown:
+		if world.governor != null:
+			_player_name.text = "%s · %s" % [world.governor.unit(world).get("name", world.player.name), world.office_title() if world.governor.in_office else tr("Presidente do diretório")]
+		else:
+			_player_name.text = world.player.name if office else tr("%s · oposição") % world.player.name
+	if world.role() == _role_shown:
 		return
-	_office_shown = int(office)
+	_role_shown = world.role()
 	_apply_role()
 	economy.set_office(office)
 	for key: String in _sliders:
@@ -749,9 +756,17 @@ func _refresh_top(c: Country) -> void:
 	t.unemp.text = UiKit.pct(c.unemp)
 	t.debt.text = UiKit.pct(c.debt_ratio, 0)
 	t.debt.add_theme_color_override("font_color", UiKit.RED if c.debt_ratio > c.debt_tol else UiKit.TEXT)
-	t.approval.text = "%d%%" % int(c.approval * 100.0)
-	t.approval.add_theme_color_override("font_color", UiKit.RED if c.approval < 0.4 else (UiKit.GREEN if c.approval > 0.55 else UiKit.TEXT))
+	var approval := c.approval
+	if world.governor != null and c == world.player:
+		approval = world.governor.approval
+		var gdp := maxf(world.governor.gdp(world), 0.001)
+		t.gdp.text = UiKit.money(gdp)
+		t.debt.text = UiKit.pct(world.governor.debt / gdp, 0)
+	t.approval.text = "%d%%" % int(approval * 100.0)
+	t.approval.add_theme_color_override("font_color", UiKit.RED if approval < 0.4 else (UiKit.GREEN if approval > 0.55 else UiKit.TEXT))
 	var balance := -c.deficit / maxf(c.y_nominal(), 0.001)
+	if world.governor != null and c == world.player:
+		balance = (world.governor.revenue(world) - world.governor.spending(world)) / maxf(world.governor.gdp(world), 0.001)
 	t.budget.text = "%s%.1f%%" % ["+" if balance > 0.0 else "", balance * 100.0]
 	t.budget.add_theme_color_override("font_color", UiKit.RED if balance < -0.05 else (UiKit.GREEN if balance >= -0.01 else UiKit.TEXT))
 

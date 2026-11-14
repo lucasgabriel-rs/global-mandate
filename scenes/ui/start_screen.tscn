@@ -531,6 +531,13 @@ focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "Difícil"
 
+[node name="start_unit" type="OptionButton" parent="Panel/Column"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+
 [node name="start_button" type="Button" parent="Panel/Column" unique_id=904970469]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 44)
