@@ -17,6 +17,12 @@ const CITY_TYPE := "Cidade"
 ## Own range for the capital types, so they do not collide with the ids stored in old saves.
 const CITY_TYPE_FIRST_ID := 1000000
 const DEFAULT_LOWER_TYPE := "Município"
+## Title of the executive office of a unit, by type. A type may override it (`office` and `office_female` keys).
+const DEFAULT_OFFICE := {"name": "Governador", "female": false}
+const OFFICE_BY_TYPE_NAME := {
+	"Município": {"name": "Prefeito", "female": false},
+	"Cidade": {"name": "Prefeito", "female": false},
+}
 ## Scenario capitals. Only Brazil has municipalities, and therefore only it has ready-made capitals.
 const BRAZIL_CAPITAL := "Brasília"
 const BRAZIL_STATE_CAPITALS := {
@@ -211,6 +217,25 @@ func has_type_name(type_name: String, owner: String, except_id: int) -> bool:
 
 func get_type(id: int) -> Dictionary:
 	return types.get(id, {})
+
+
+## The executive office of the units of a type: {name, female}.
+func office_of(type_id: int) -> Dictionary:
+	var t := get_type(type_id)
+	if t.has("office"):
+		return {"name": String(t.office), "female": bool(t.get("office_female", false))}
+	return OFFICE_BY_TYPE_NAME.get(String(t.get("name", "")), DEFAULT_OFFICE).duplicate()
+
+
+func set_office(type_id: int, office_name: String, female := false) -> Dictionary:
+	var clean := office_name.strip_edges()
+	if clean == "":
+		return {"ok": false, "msg": tr("O cargo precisa de um nome.")}
+	if not types.has(type_id):
+		return {"ok": false, "msg": tr("Esse tipo não existe.")}
+	types[type_id]["office"] = clean
+	types[type_id]["office_female"] = female
+	return {"ok": true, "msg": ""}
 
 
 func rename_type(id: int, type_name: String) -> Dictionary:

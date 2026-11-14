@@ -274,7 +274,24 @@ func _containment() -> void:
 	_check(s.base_count >= 4220 + 5564, "clipping does not lose units")
 
 
+func _offices() -> void:
+	var s := Subdivisions.new()
+	var state := s.add_type("Estado", "BRA")
+	var muni := s.add_type("Município", "BRA")
+	var canton := s.add_type("Cantão", "TST")
+	_check(s.office_of(muni).name == "Prefeito" and not s.office_of(muni).female, "a municipality type has a mayor")
+	_check(s.office_of(state).name == "Governador" and s.office_of(canton).name == "Governador", "other types default to governor")
+	_check(not s.set_office(canton, "   ").ok, "an empty office name is refused")
+	_check(s.set_office(canton, "Intendente").ok and s.office_of(canton).name == "Intendente", "the office can be renamed")
+	_check(s.set_office(canton, "Intendenta", true).ok and s.office_of(canton).female, "the office can be feminine")
+	var loaded := Subdivisions.new()
+	loaded.from_dict(bytes_to_var(var_to_bytes(s.to_dict())), "TST")
+	_check(loaded.office_of(canton).name == "Intendenta", "the custom office survives a save")
+	_check(loaded.office_of(muni).name == "Prefeito", "default offices survive a save")
+
+
 func _init() -> void:
+	_offices()
 	_model()
 	_scenario()
 	_containment()
