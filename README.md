@@ -319,7 +319,7 @@ There are 170 countries with their own GDP, population, debt, inflation, interes
 - **Exchange rate:** purchasing power parity, real interest rate differential, current account, uncovered interest parity and risk premium, with central bank intervention, capital flight, capital controls and dollarization.
 - **Sovereign wealth funds:** commodity revenue and surpluses saved abroad, a withdrawal rule and a cushion against commodity price falls.
 - **Labor market:** Okun's law in level and growth form (layoffs come faster than hiring), hysteresis in the natural rate, a real wage that follows labor productivity and falls with slack and inflation surprises, a minimum wage whose Kaitz index cuts jobs above ~60% of the median wage, and an informal sector that grows with unemployment and a high minimum wage and shrinks the tax base.
-- **Public finances:** taxes with a Laffer curve and tax evasion, automatic stabilizers, debt in local currency and in dollars, endogenous risk premium, credit rating, IMF and default.
+- **Public finances:** taxes with a Laffer curve and tax evasion, automatic stabilizers, a yield curve built from the Fisher effect (i = r + πᵉ), fixed-rate, inflation-linked and dollar bonds with an average maturity that must be rolled over, the exact debt identity Δb = (r − g)/(1 + g)·b − primary balance, endogenous risk premium, credit rating, IMF and default. AI governments tighten the primary balance when debt passes their tolerance.
 - **Trade:** gravity-based bilateral matrix, changed by tariffs, agreements, sanctions and wars.
 - **Commodities:** oil, gas, grains, metals and chips with supply by country, stocks and OPEC+.
 - **Financial crises:** credit cycle that produces banking crises and global contagion.
@@ -367,6 +367,7 @@ godot --path . -- --ui-legislation --shots=/tmp/shots
 | `calibrate.gd` | Prints world indicators and populations by age group year by year (`-- 15 42`), with optional `taiwan` and `hormuz` scenarios. |
 | `economy_health.gd` | Long runs of the world economy within sane bounds. |
 | `demography.gd` | Starting age structures, ageing, labor supply, pensions, migration and old saves. |
+| `debt.gd` | Yield curve, Fisher effect, fixed-rate, inflation-linked and dollar bonds, maturities and rollover, and the debt identity Δb = (r − g)/(1 + g)·b − primary balance. |
 | `sectors.gd`, `infra.gd`, `corporate.gd` | Sectors, ports and airports, companies and the stock exchange. |
 | `legislation.gd` | Laws, legislative process, party fund, polls, amendments and block dragging. |
 | `code_tax.gd`, `code_penal_civil.gd`, `code_labor_electoral.gd`, `rights.gd` | Each legal code: starting text, changes by bill, revocation and monthly effects. |

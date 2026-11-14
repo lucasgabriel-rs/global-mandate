@@ -82,6 +82,18 @@ func _run() -> void:
 	_check(absf(adult_bar.value - w.player.adult) < 0.01 and adult_bar.value > 0.4, "the Population sub-tab shows the working age")
 	_check((panel.get_node("%pop_total") as Label).text.contains("milh") or (panel.get_node("%pop_total") as Label).text.contains("mill"), "shows the total population")
 	await _shot("e2b_population")
+	tabs.current_tab = 1
+	hud.refresh(true)
+	await _wait()
+	var debt: DebtPanel = hud.debt_panel
+	_check(debt.is_visible_in_tree(), "the Fiscal window shows the debt")
+	_check((debt.get_node("%debt_curve") as DebtChart).values.size() == Economy.TENORS.size(), "yield curve with every tenor")
+	_check((debt.get_node("%debt_maturities") as DebtChart).values.size() == 5, "maturities for the next 5 years")
+	_check((debt.get_node("%debt_maturity_value") as Label).text != "—", "average maturity filled in")
+	var scroll: ScrollContainer = debt.get_parent().get_parent().get_parent()
+	scroll.scroll_vertical = 100000
+	await _wait()
+	await _shot("e2c_fiscal_debt")
 	(panel.get_node("%sub_tabs") as TabContainer).current_tab = 0
 	get_window().size = Vector2i(1100, 700)
 	await _wait(8)

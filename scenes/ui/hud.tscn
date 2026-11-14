@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" path="res://scenes/ui/panels/border_panel.tscn" id="sub_4"]
 [ext_resource type="PackedScene" path="res://scenes/ui/panels/debug_menu.tscn" id="sub_5"]
 [ext_resource type="PackedScene" path="res://scenes/ui/panels/economy_panel.tscn" id="sub_6"]
+[ext_resource type="PackedScene" path="res://scenes/ui/panels/debt_panel.tscn" id="sub_debt"]
 
 [ext_resource type="PackedScene" path="res://scenes/ui/float_window.tscn" id="fw_1"]
 [ext_resource type="PackedScene" path="res://scenes/ui/dock.tscn" id="dock_1"]
@@ -2490,6 +2491,10 @@ tooltip_text = "Empréstimo de 8% do PIB em troca de ajuste fiscal e perda de ap
 focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "Pedir socorro ao FMI"
+
+[node name="debt" parent="desk/w_fiscal/Fiscal/Margin/Column" instance=ExtResource("sub_debt")]
+unique_name_in_owner = true
+layout_mode = 2
 
 [node name="Currency" type="ScrollContainer" parent="desk/w_currency" unique_id=1946392384]
 layout_mode = 2
