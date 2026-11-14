@@ -362,6 +362,9 @@ func _run() -> void:
 	await _shot("l6_conversa_partido")
 	await _click(chat.get_node("%say_end"))
 	await _wait()
+	# A tela se reconstrói ao fechar a conversa: a linha da tramitação é outra.
+	center = _top()
+	process_row = center.get_node("%process_rows").get_node("process_%d" % int(norm.id))
 	await _click(process_row.get_node("%negotiate"))
 	var deal: NegotiationScreen = _top()
 	_check(deal is NegotiationScreen, "abre a negociação de votos")
@@ -383,6 +386,24 @@ func _run() -> void:
 	center.get_node("%close").pressed.emit()
 	await _wait()
 	_check(main.legislation_center() == null and not main.modal_open, "fechar tira a janela")
+	# With the window open, time runs and the panel follows without closing and reopening.
+	main.open_legislation(0)
+	await _wait()
+	center = main.legislation_center()
+	var process_box: Control = center.get_node("%process_rows")
+	_check(process_box.has_node("process_%d" % int(norm.id)), "a tramitação aparece na janela aberta")
+	for i in 150:
+		main.world.player.next_election = 9999.0
+		main.world.tick_day()
+		main.hud.refresh(true)
+		if not norm.state in [Legislation.STATE_PROCESS, Legislation.STATE_APPROVED, Legislation.STATE_AWAITING, Legislation.STATE_PUBLISHED]:
+			break
+	await _wait()
+	_check(not process_box.has_node("process_%d" % int(norm.id)), "a janela aberta tira a norma da tramitação sozinha: %s" % norm.state)
+	if norm.state == Legislation.STATE_IN_FORCE:
+		_check(center.get_node("%norm_rows").find_child("norm_%d" % int(norm.id), true, false) != null, "a norma aparece entre as em vigor sem reabrir")
+	main.close_legislation()
+	await _wait()
 	for i in 150:
 		main.world.player.next_election = 9999.0
 		main.world.tick_day()

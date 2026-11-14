@@ -116,8 +116,8 @@ func _clear(box: Control) -> void:
 		child.queue_free()
 
 
-## Chamado pelo HUD enquanto a janela está aberta. Só refaz as listas quando o estado da legislação mudou,
-## para não destruir os botões no meio de um clique.
+## Called by the HUD while the window is open. Rebuilds the lists only when the legislation state changed,
+## so buttons are not destroyed in the middle of a click.
 func refresh() -> void:
 	if leg == null:
 		return
