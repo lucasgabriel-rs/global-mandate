@@ -188,8 +188,87 @@ func _directory() -> void:
 	_check(pol.national_veto(w), "a leader far from the national line is vetoed")
 
 
+## Puts the leader's compass at (or as far as possible from) the ruling party of a country.
+func _compass(w: GameWorld, iso: String, close: bool) -> void:
+	var ruling: Dictionary = w.politics.ruling_party(iso)
+	var spot := {"econ": float(ruling.econ), "social": float(ruling.social)}
+	if not close:
+		var far := {"econ": 1.0, "social": 1.0}
+		for corner in [{"econ": -1.0, "social": -1.0}, {"econ": -1.0, "social": 1.0}, {"econ": 1.0, "social": -1.0}]:
+			if Politics.distance(corner, ruling) > Politics.distance(far, ruling):
+				far = corner
+		spot = far
+	w.leader["econ"] = spot.econ
+	w.leader["social"] = spot.social
+
+
+## Moves the governed unit to another country by annexing the union.
+func _annexed_by(iso: String, close: bool) -> GameWorld:
+	var w := _governed("BRA")
+	_compass(w, iso, close)
+	w.diplomacy.annex(w.by_iso[iso], w.by_iso["BRA"], w)
+	w.check_governor_unit()
+	return w
+
+
+func _union_change() -> void:
+	var arg: Country = _world("ARG").by_iso["ARG"]
+	_check(arg.dem >= 4.0 and (_world("CHN").by_iso["CHN"] as Country).dem < 4.0, "the test countries have the expected regimes")
+	# Democracy: the player picks the party, and the compass decides the post.
+	var kept := _annexed_by("ARG", true)
+	_check(kept.governor.union_iso == "ARG" and kept.player.iso == "ARG" and kept.governor.pending_party, "a democratic union asks which party to join")
+	var pick := int(kept.politics.ruling_party("ARG").id)
+	kept.governor.choose_party(kept, pick)
+	_check(kept.role() == "governor" and kept.governor.party_id == pick and not kept.governor.pending_party, "a close compass keeps the post and the chosen party")
+	var removed := _annexed_by("ARG", false)
+	removed.governor.choose_party(removed, int(removed.politics.ruling_party("ARG").id))
+	_check(removed.role() == "unit_opposition" and removed.governor.party_id >= 0, "a far compass loses the post but joins the chosen party")
+	# Dictatorship: no choice. Removed means game over, kept means the ruling party.
+	var served := _annexed_by("CHN", true)
+	_check(served.role() == "governor" and not served.over and served.governor.party_id == int(served.politics.ruling_party("CHN").id) and not served.governor.pending_party, "a dictatorship that keeps the governor enrolls them in the ruling party")
+	_check(served.governor.next_election == -1.0, "and the unit has no election there")
+	var purged := _annexed_by("CHN", false)
+	_check(purged.over, "a dictatorship that removes the governor ends the game")
+
+
+func _lifecycle() -> void:
+	var w := _governed("BRA")
+	var sub := w.subdivisions
+	var id: int = w.governor.unit_id
+	var cap := sub.capital_of(id)
+	_check(cap >= 0, "the governed state has a capital to follow")
+	# A cut that leaves the capital in place keeps the governor on the same unit.
+	var far_kid := -1
+	var far := -1.0
+	for kid: int in sub.children_of(id):
+		var d := (sub.units[kid].center as Vector2).distance_to(sub.units[cap].center)
+		if d > far:
+			far = d
+			far_kid = kid
+	var away := _square(sub.units[far_kid].center, 0.25)
+	_check(sub.split_unit(id, away, "LAM").ok, "the state can be cut away from its capital")
+	w.check_governor_unit()
+	_check(w.governor.unit_id == id and not w.over, "cutting the state elsewhere keeps the governor in place")
+	# A cut around the capital takes the governor along with it.
+	var around := _square(sub.units[cap].center, 0.25)
+	var made := sub.split_unit(id, around, "LAM")
+	_check(made.ok, "the state can be cut around its capital")
+	w.check_governor_unit()
+	_check(w.governor.unit_id == int(made.id) and sub.capital_of(w.governor.unit_id) == cap, "the governor follows the part that holds the capital")
+	# The unit disappearing ends the game.
+	sub.delete_unit(w.governor.unit_id)
+	w.check_governor_unit()
+	_check(w.over, "a unit that ceased to exist ends the game")
+
+
+func _square(c: Vector2, r: float) -> PackedVector2Array:
+	return PackedVector2Array([c + Vector2(-r, -r), c + Vector2(r, -r), c + Vector2(r, r), c + Vector2(-r, r)])
+
+
 func _init() -> void:
 	_core()
+	_union_change()
+	_lifecycle()
 	_transfers()
 	_integration()
 	_election()

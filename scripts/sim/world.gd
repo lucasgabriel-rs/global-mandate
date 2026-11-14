@@ -303,6 +303,7 @@ func _on_month() -> void:
 		diplomacy._compute_shares(self)
 	if governor != null:
 		governor.step_month(self)
+		check_governor_unit()
 		check_governor_election()
 	elif player and not in_office:
 		if not player.alive:
@@ -468,6 +469,22 @@ func check_player_politics(c: Country) -> void:
 			_finish("golpe", tr("Generais e a elite política perderam a paciência. Um golpe encerrou seu governo."))
 		elif c.approval < 0.1 and c.unrest > 0.3 and rng.randf() < 0.05:
 			_finish("golpe", tr("Multidões tomaram o palácio, e os militares não defenderam o regime. Você foi deposto."))
+
+
+## The map can change under the governor: the unit may be cut, taken by another country or erased.
+func check_governor_unit() -> void:
+	if governor == null or over:
+		return
+	var id := governor.follow_unit(self)
+	if id < 0:
+		_finish("unidade", tr("A unidade que você governava deixou de existir, e sua carreira política acabou junto com ela."))
+		return
+	if id != governor.unit_id:
+		governor.unit_id = id
+		governor.capital_unit = subdivisions.capital_of(id)
+	var now := governor.current_union(self)
+	if now != null and now.iso != governor.union_iso and not governor.pending_party:
+		governor.change_union(self, now)
 
 
 ## The vote of the governed unit, when its date comes. Unions without elections never schedule one.

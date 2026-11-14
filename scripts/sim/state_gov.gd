@@ -35,6 +35,11 @@ var tax_rate := 0.0
 var spend := {}
 var debt := 0.0
 var transfers_in := 0.0
+## The unit that holds the capital of this one, if any: the governor follows it when the unit is cut.
+var capital_unit := -1
+## After a change of union in a democracy, the player still has to pick the party to join.
+var pending_party := false
+var _keeps_post := true
 var transfer_bonus := 0.0
 var last_request_month := -1000
 
@@ -53,6 +58,7 @@ static func create(world: GameWorld, id: int) -> Dictionary:
 	var gov := StateGov.new()
 	gov.unit_id = id
 	gov.union_iso = owner
+	gov.capital_unit = sub.capital_of(id)
 	var iso := gov.union_iso
 	gov.tax_rate = DEFAULT_TAX_RATE if Competences.decides(iso, "taxes") else 0.0
 	for area: String in DEFAULT_SPEND:
@@ -205,6 +211,80 @@ func take_office(world: GameWorld) -> void:
 	})
 
 
+## The unit the governor holds now: the same one, or the one that took the capital when it was cut.
+## -1 when the unit ceased to exist.
+func follow_unit(world: GameWorld) -> int:
+	var sub := world.subdivisions
+	if capital_unit >= 0 and sub.units.has(capital_unit):
+		var root := capital_unit
+		while int(sub.units[root].parent) >= 0 and sub.units.has(int(sub.units[root].parent)):
+			root = int(sub.units[root].parent)
+		return root
+	return unit_id if sub.units.has(unit_id) else -1
+
+
+## The country that holds the unit now, whatever happened to the union's flag.
+func current_union(world: GameWorld) -> Country:
+	var u := unit(world)
+	if u.is_empty():
+		return null
+	var ceded := world.territories.owner_at(u.center, world)
+	return ceded if ceded != null else world.resolve_owner(String(u.owner))
+
+
+## The new union keeps the governor when their compass is not too far from the party that runs it.
+func compass_keeps(world: GameWorld, new_union: Country) -> bool:
+	var ruling := world.politics.ruling_party(new_union.iso)
+	if ruling.is_empty():
+		return true
+	var mine := {"econ": float(world.leader.get("econ", 0.0)), "social": float(world.leader.get("social", 0.0))}
+	return Politics.distance(mine, ruling) <= Politics.COALITION_MAX_DISTANCE
+
+
+## The unit passed to another country. Democracies let the player pick a party (and the compass decides the post);
+## dictatorships decide for them: out means the end of the game, in means the ruling party.
+func change_union(world: GameWorld, new_union: Country) -> void:
+	_keeps_post = compass_keeps(world, new_union)
+	union_iso = new_union.iso
+	world.player = new_union
+	world.legislation = Legislation.new()
+	world.legislation.setup(world)
+	world.politics.init_funds(world)
+	if new_union.dem >= 4.0:
+		pending_party = true
+		next_election = world.year_float() + world.legislation.mandate_years() - 0.1
+		var options := []
+		for p: Dictionary in world.politics.data_of(new_union.iso).parties:
+			options.append({"label": String(p.name), "hint": "", "fn": choose_party.bind(world, int(p.id))})
+		world.ask_player({
+			"title": TranslationServer.translate("Nova União"), "always": true,
+			"text": TranslationServer.translate("%s passou a %s. Escolha o partido a que você se filia.") % [unit(world).get("name", "?"), new_union.name],
+			"options": options,
+		})
+		return
+	next_election = -1.0
+	if not _keeps_post:
+		world._finish("unidade", TranslationServer.translate("%s retirou você do cargo, e sua carreira política acabou.") % new_union.name)
+		return
+	var ruling := world.politics.ruling_party(new_union.iso)
+	world.politics.join_party(world, int(ruling.id), true)
+	party_id = int(ruling.id)
+	incumbent_party = party_id
+
+
+## The party the player joins in the new union (democracies). Out of the post, the player leads the directory.
+func choose_party(world: GameWorld, id: int) -> void:
+	if not pending_party:
+		return
+	pending_party = false
+	world.politics.join_party(world, id, true)
+	party_id = id
+	if _keeps_post:
+		incumbent_party = id
+	else:
+		enter_unit_opposition(world, TranslationServer.translate("%s não quis manter você no cargo. Você passa a presidir o diretório do partido na unidade.") % union(world).name)
+
+
 ## A month of the state's accounts. Reads the union, writes only the state.
 func step_month(world: GameWorld) -> void:
 	transfer_bonus *= FUNDS_BONUS_DECAY
@@ -218,6 +298,7 @@ func to_dict() -> Dictionary:
 		"unit_id": unit_id, "union_iso": union_iso, "party_id": party_id, "approval": approval, "next_election": next_election,
 		"in_office": in_office, "incumbent_party": incumbent_party, "campaign_bonus": campaign_bonus, "tax_rate": tax_rate, "spend": spend, "debt": debt, "transfers_in": transfers_in,
 		"transfer_bonus": transfer_bonus, "last_request_month": last_request_month,
+		"capital_unit": capital_unit, "pending_party": pending_party, "keeps_post": _keeps_post,
 	}
 
 
@@ -233,4 +314,7 @@ static func from_dict(d: Dictionary) -> StateGov:
 	gov.campaign_bonus = float(d.get("campaign_bonus", 0.0))
 	gov.spend = d.get("spend", {}).duplicate()
 	gov.last_request_month = int(d.get("last_request_month", -1000))
+	gov.capital_unit = int(d.get("capital_unit", -1))
+	gov.pending_party = bool(d.get("pending_party", false))
+	gov._keeps_post = bool(d.get("keeps_post", true))
 	return gov

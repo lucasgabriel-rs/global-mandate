@@ -1066,7 +1066,7 @@ func _show_help() -> void:
 
 func _on_game_ended(result: Dictionary) -> void:
 	var titles := {
-		"impeachment": tr("Impeachment"), "golpe": tr("Deposto"), "renuncia": tr("Renúncia"), "assassinato": tr("Assassinato"), "morte": tr("Fim da vida"),
+		"impeachment": tr("Impeachment"), "golpe": tr("Deposto"), "renuncia": tr("Renúncia"), "assassinato": tr("Assassinato"), "unidade": tr("Fim do mandato"), "morte": tr("Fim da vida"),
 	}
 	var dim := _modal(GAME_OVER, titles.get(result.reason, tr("Fim de jogo")), result.text)
 	var c := world.player
