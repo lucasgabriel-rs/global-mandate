@@ -303,8 +303,9 @@ func _on_month() -> void:
 	if month == 0:
 		diplomacy._compute_shares(self)
 	if governor != null:
-		governor.step_month(self)
 		check_governor_unit()
+	if governor != null and not over:
+		governor.step_month(self)
 		check_governor_election()
 	elif player and not in_office:
 		if not player.alive:
@@ -585,6 +586,8 @@ func resign() -> void:
 ## In a democracy, they start in opposition; in a closed regime, it is whoever succeeds to power.
 func assume_new_character(character: Dictionary) -> void:
 	over = false
+	# A new life starts in the country, not in the unit the last governor held.
+	governor = null
 	if not player.alive:
 		var heir: Country = countries[player.annexed_by] if player.annexed_by >= 0 else usa
 		player = heir

@@ -19,6 +19,8 @@ const FUNDS_BONUS_DECAY := 0.9
 const ELECTION_BASELINE := 0.46
 const ELECTION_NOISE := 0.03
 const CAMPAIGN_BONUS := 0.03
+## Monthly pull of the approval towards what the economy and the budget justify.
+const APPROVAL_PULL := 0.06
 const DEFAULT_SPEND := {"health": 0.015, "education": 0.015, "public_security": 0.01, "infrastructure": 0.005}
 
 var unit_id := -1
@@ -45,6 +47,7 @@ var last_request_month := -1000
 
 var _share := 0.0
 var _share_revision := -1
+var _share_unit := -1
 
 
 ## Starts governing a unit: {ok, msg, gov}.
@@ -77,7 +80,9 @@ func unit(world: GameWorld) -> Dictionary:
 ## Share of the union's GDP produced here: population share weighted by income, normalized over the sibling units.
 func gdp_share(world: GameWorld) -> float:
 	var sub := world.subdivisions
-	if _share_revision == sub.revision:
+	if unit(world).is_empty():
+		return 0.0
+	if _share_revision == sub.revision and _share_unit == unit_id:
 		return _share
 	var owner: String = unit(world).get("owner", union_iso)
 	var weights := {}
@@ -88,6 +93,7 @@ func gdp_share(world: GameWorld) -> float:
 		total += w
 	_share = float(weights.get(unit_id, 0.0)) / maxf(total, 0.0001)
 	_share_revision = sub.revision
+	_share_unit = unit_id
 	return _share
 
 
@@ -97,6 +103,8 @@ func gdp(world: GameWorld) -> float:
 
 ## Population in millions.
 func pop(world: GameWorld) -> float:
+	if unit(world).is_empty():
+		return 0.0
 	return union(world).pop * world.subdivisions.pop_share(unit_id)
 
 
@@ -139,6 +147,8 @@ func affinity(world: GameWorld) -> float:
 
 ## What the union hands over this month, from the areas it keeps and the governor's standing with it.
 func monthly_transfer(world: GameWorld) -> float:
+	if unit(world).is_empty():
+		return 0.0
 	var u := union(world)
 	var weight := 1.0 - Competences.state_weight(union_iso)
 	return u.revenue * world.subdivisions.pop_share(unit_id) * weight * (0.6 + 0.8 * affinity(world)) / 12.0
@@ -269,6 +279,8 @@ func change_union(world: GameWorld, new_union: Country) -> void:
 	var ruling := world.politics.ruling_party(new_union.iso)
 	world.politics.join_party(world, int(ruling.id), true)
 	party_id = int(ruling.id)
+	# A dictatorship has no elections to win the post back: whoever it keeps, it keeps in office.
+	in_office = true
 	incumbent_party = party_id
 
 
@@ -280,13 +292,33 @@ func choose_party(world: GameWorld, id: int) -> void:
 	world.politics.join_party(world, id, true)
 	party_id = id
 	if _keeps_post:
-		incumbent_party = id
+		incumbent_party = id if in_office else rival_party(world)
+	elif not in_office:
+		incumbent_party = rival_party(world)
 	else:
 		enter_unit_opposition(world, TranslationServer.translate("%s não quis manter você no cargo. Você passa a presidir o diretório do partido na unidade.") % union(world).name)
 
 
+## Where the approval of the unit's government settles: it follows the union's growth and, for the player in office,
+## the budget (services above or below the usual, taxes above or below the usual, and debt).
+func approval_target(world: GameWorld) -> float:
+	var target := 0.5 + (union(world).growth_yoy() - 0.02) * 4.0
+	if in_office:
+		var usual_spend := 0.0
+		var spent := 0.0
+		for area: String in DEFAULT_SPEND:
+			if Competences.decides(union_iso, area):
+				usual_spend += float(DEFAULT_SPEND[area])
+				spent += float(spend.get(area, 0.0))
+		var usual_tax := DEFAULT_TAX_RATE if Competences.decides(union_iso, "taxes") else 0.0
+		target += (spent - usual_spend) * 6.0 - (tax_rate - usual_tax) * 4.0
+		target -= clampf(debt / maxf(gdp(world), 0.001), 0.0, 1.0) * 0.3
+	return clampf(target, 0.15, 0.85)
+
+
 ## A month of the state's accounts. Reads the union, writes only the state.
 func step_month(world: GameWorld) -> void:
+	approval += (approval_target(world) - approval) * APPROVAL_PULL
 	transfer_bonus *= FUNDS_BONUS_DECAY
 	# Transfers are not taken from the union's accounts in v1: the state only receives them.
 	transfers_in = monthly_transfer(world) * 12.0 + transfer_bonus

@@ -267,7 +267,11 @@ func _seat_player(world: GameWorld, data: Dictionary, party: Dictionary) -> void
 	me["birth_year"] = int(world.leader.get("birth_year", world.start_year - 50))
 	me["econ"] = float(world.leader.get("econ", party.econ))
 	me["social"] = float(world.leader.get("social", party.social))
-	party.members.push_front(me)
+	# A governor does not lead the national party: the AI-run union keeps its own leader.
+	if world.governor != null and not party.members.is_empty():
+		party.members.append(me)
+	else:
+		party.members.push_front(me)
 	refresh_compass(party)
 
 

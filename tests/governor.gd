@@ -266,7 +266,64 @@ func _square(c: Vector2, r: float) -> PackedVector2Array:
 	return PackedVector2Array([c + Vector2(-r, -r), c + Vector2(r, -r), c + Vector2(r, r), c + Vector2(-r, r)])
 
 
+func _review() -> void:
+	# 1. A new character after a governor game over is not a governor any more.
+	var over := _governed("BRA")
+	over._finish("unidade", "x")
+	over.assume_new_character(Character.random(over.rng, "BRA", "LAM"))
+	_check(over.governor == null and over.role() in ["head", "opposition"], "a new character after a governor game over plays the country")
+	# 2. A deleted unit does not raise errors before the game ends.
+	var gone := _governed("BRA")
+	gone.subdivisions.delete_unit(gone.governor.unit_id)
+	_check(gone.governor.pop(gone) == 0.0 and gone.governor.monthly_transfer(gone) == 0.0 and gone.governor.gdp_share(gone) == 0.0, "a missing unit has no population, share or transfers")
+	gone._on_month()
+	_check(gone.over, "the month closes the game for a unit that no longer exists")
+	# 3. Following the capital recomputes the GDP share of the new unit.
+	var cut := _governed("BRA")
+	var sub := cut.subdivisions
+	var id: int = cut.governor.unit_id
+	var cap := sub.capital_of(id)
+	var made := sub.split_unit(id, _square(sub.units[cap].center, 0.25), "LAM")
+	cut.governor.gdp_share(cut)
+	cut.check_governor_unit()
+	var fresh := StateGov.new()
+	fresh.unit_id = cut.governor.unit_id
+	fresh.union_iso = "BRA"
+	_check(made.ok and cut.governor.unit_id != id and is_equal_approx(cut.governor.gdp_share(cut), fresh.gdp_share(cut)), "the GDP share follows the unit the governor holds now")
+	# 4. A union change while in the opposition keeps the roles consistent.
+	var stuck := _governed("BRA")
+	stuck.governor.enter_unit_opposition(stuck, "x")
+	_compass(stuck, "CHN", true)
+	stuck.diplomacy.annex(stuck.by_iso["CHN"], stuck.by_iso["BRA"], stuck)
+	stuck.check_governor_unit()
+	_check(stuck.role() == "governor" and stuck.governor.incumbent_party == stuck.governor.party_id, "a dictatorship that keeps an opposition leader gives them the post")
+	var dem := _governed("BRA")
+	dem.governor.enter_unit_opposition(dem, "x")
+	_compass(dem, "ARG", true)
+	dem.diplomacy.annex(dem.by_iso["ARG"], dem.by_iso["BRA"], dem)
+	dem.check_governor_unit()
+	dem.governor.choose_party(dem, int(dem.politics.ruling_party("ARG").id))
+	_check(dem.role() == "unit_opposition" and dem.governor.incumbent_party != dem.governor.party_id, "a democracy keeps the opposition leader in the opposition, with a rival in power")
+	# 5. The budget moves the approval.
+	var base_w := _governed("BRA")
+	var plain: StateGov = StateGov.create(base_w, _root(base_w, "BRA")).gov
+	var austere: StateGov = StateGov.create(base_w, _root(base_w, "BRA")).gov
+	var generous: StateGov = StateGov.create(base_w, _root(base_w, "BRA")).gov
+	austere.set_tax(0.15)
+	for area: String in StateGov.DEFAULT_SPEND:
+		austere.set_spend(area, 0.0)
+		generous.set_spend(area, 0.05)
+	for i in 36:
+		for g: StateGov in [plain, austere, generous]:
+			g.step_month(base_w)
+	_check(austere.approval < plain.approval and generous.approval > plain.approval, "heavy taxes and no services sink the approval, generous services lift it (%.2f < %.2f < %.2f)" % [austere.approval, plain.approval, generous.approval])
+	# 6. The governor is not the national leader of the ruling party.
+	var seat := _governed("BRA")
+	_check(not seat.politics.leader_of("BRA").get("player", false), "the AI-run union keeps its own leader")
+
+
 func _init() -> void:
+	_review()
 	_core()
 	_union_change()
 	_lifecycle()
