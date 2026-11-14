@@ -80,8 +80,10 @@ Repasses mensais definidos pela tabela e pela relação política: afinidade par
 
 Fórmulas de PIB e receita estadual, valores iniciais da tabela de competências, textos, balanceamento, escolha exata do formato da tabela e do save.
 
-## Perguntas para o autor
+## Decidido pelo autor
 
-1. Perder a eleição para governador encerra a partida, ou o jogador segue como oposição, como no modo país?
-2. Dá para escolher unidade em qualquer país, ou só em federações?
-3. Se a unidade for anexada ou dividida, a partida acaba ou o governador acompanha o território?
+- Perder a eleição para governador **não** encerra a partida: o jogador segue como oposição estadual, como no modo país, e disputa a eleição seguinte. O estado passa a ser governado pela IA nesse período.
+
+## Perguntas para o autor
+1. Dá para escolher unidade em qualquer país, ou só em federações?
+2. Se a unidade for anexada ou dividida, a partida acaba ou o governador acompanha o território?
