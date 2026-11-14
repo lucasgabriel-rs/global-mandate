@@ -47,6 +47,10 @@ var noise := PackedFloat64Array([0, 0, 0, 0, 0])
 var chokepoint := 0.0  # share of oil/gas supply blocked by a strait
 var opec_quota := 0.0
 var hist := {}
+var years := 0.0  # years since the start, for the Hotelling path
+## Hotelling rule: share of the price that is scarcity rent (oil, gas, metals) and the real rate used.
+const HOTELLING_RENT := [0.35, 0.25, 0.0, 0.2, 0.0]
+const HOTELLING_R := 0.02
 
 
 func setup(world: GameWorld) -> void:
@@ -115,10 +119,12 @@ func step_month(world: GameWorld, rng: RandomNumberGenerator) -> void:
 		capacity[i] *= 1.0 + (SUPPLY_RESP[i] * clampf(log(rel_price), -1.0, 1.2) + CAPACITY_TREND[i]) * dt
 		capacity[i] = clampf(capacity[i], 0.4, 6.0)
 		noise[i] = noise[i] * NOISE_KEEP_MONTH + rng.randfn(0.0, VOL[i] * NOISE_SD_MONTH)
-		var target: float = log(P0[i] * world.global_price_index()) - log(inv[i]) / PRICE_ELAST[i] + noise[i]
+		var base_p: float = EconFormulas.hotelling_price(P0[i], HOTELLING_RENT[i], HOTELLING_R, years)
+		var target: float = log(base_p * world.global_price_index()) - log(inv[i]) / PRICE_ELAST[i] + noise[i]
 		var lp: float = log(price[i])
 		price[i] = exp(lp + (target - lp) * PRICE_PULL_MONTH)
 		shock[i] *= SHOCK_KEEP_MONTH
+	years += dt
 
 
 func relative_price(market: int, world: GameWorld) -> float:
@@ -137,7 +143,7 @@ func to_dict() -> Dictionary:
 	return {
 		"price": price, "inv": inv, "supply": supply, "demand": demand, "supply0": supply0,
 		"capacity": capacity, "shock": shock, "noise": noise, "chokepoint": chokepoint,
-		"opec_quota": opec_quota, "hist": hist,
+		"opec_quota": opec_quota, "hist": hist, "years": years,
 	}
 
 

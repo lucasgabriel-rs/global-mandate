@@ -100,6 +100,22 @@ func _run() -> void:
 	await _shot("e3_window_smaller")
 	get_window().size = Vector2i(1600, 900)
 	await _wait(4)
+	tabs.current_tab = 9
+	(panel.get_node("%sub_tabs") as TabContainer).current_tab = 5
+	hud.refresh(true)
+	await _wait()
+	var buttons: GridContainer = panel.get_node("%formula_buttons")
+	_check(buttons.get_child_count() == FormulaExplain.KEYS.size(), "one button per indicator: %d" % buttons.get_child_count())
+	for b: Button in buttons.get_children():
+		_check(String(b.name) in FormulaExplain.KEYS, "button with known formula: " + b.name)
+		var dim := panel.show_formula(String(b.name))
+		await _wait(2)
+		var nums := (dim.get_node("%numbers") as Label).text
+		_check((dim.get_node("%formula") as Label).text != "" and nums != "" and not nums.containsn(" nan") and not nums.containsn(" inf "), "window %s with numbers: %s" % [b.name, nums.replace("\n", " | ")])
+		if String(b.name) == "fiscal":
+			await _shot("e4_how_it_works")
+		dim.queue_free()
+		await _wait(1)
 	await _moeda(hud, tabs, w)
 
 

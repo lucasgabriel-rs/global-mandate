@@ -922,7 +922,8 @@ msgstr "Annualized return of the last month: foreign stocks and bonds."
 msgid "Retorno da carteira"
 msgstr "Portfolio return"
 
-#: scenes/ui/hud.tscn:3138 scripts/sim/law_catalog.gd_(categorias)
+#: scenes/ui/hud.tscn:3138 scenes/ui/panels/economy_panel.tscn:252
+#: scripts/sim/law_catalog.gd_(categorias)
 msgid "Câmbio"
 msgstr "Exchange rate"
 
@@ -1832,6 +1833,18 @@ msgstr "Randomizes gender, name and age."
 msgid "Aleatório"
 msgstr "Random"
 
+#: scenes/ui/modals/formula_window.tscn:57
+msgid "COMO FUNCIONA"
+msgstr "HOW IT WORKS"
+
+#: scenes/ui/modals/formula_window.tscn:83
+msgid "COM OS NÚMEROS DO SEU PAÍS"
+msgstr "WITH YOUR COUNTRY'S NUMBERS"
+
+#: scenes/ui/modals/formula_window.tscn:106 scenes/ui/modals/help.tscn:75
+msgid "Entendi"
+msgstr "Got it"
+
 #: scenes/ui/modals/game_over.tscn:48 scripts/ui/debug_menu.gd:489
 #: scripts/ui/main.gd:1071
 msgid "Fim de jogo"
@@ -1900,10 +1913,6 @@ msgstr ""
 "There is no time limit. If you lose an election or a war, you lead the opposition and can return to power. The game only ends with impeachment, a coup, resignation or death, and then you choose between a new game and taking on another character.\n"
 "\n"
 "Everyone ages, falls ill and dies, including you, and new politicians appear over time. In democratic countries, creating a subnational unit goes through parliament and a referendum."
-
-#: scenes/ui/modals/help.tscn:75
-msgid "Entendi"
-msgstr "Got it"
 
 #: scenes/ui/modals/minister_picker.tscn:48
 msgid "Ministério: Fazenda"
@@ -2262,6 +2271,65 @@ msgstr "Working age (15-64)"
 #: scenes/ui/panels/economy_panel.tscn:163
 msgid "Idosos (65+)"
 msgstr "Elderly (65+)"
+
+#
+#: scenes/ui/panels/economy_panel.tscn:196
+msgid "Como funciona"
+msgstr "How it works"
+
+#: scenes/ui/panels/economy_panel.tscn:202
+msgid "COMO FUNCIONA CADA INDICADOR"
+msgstr "HOW EACH INDICATOR WORKS"
+
+#: scenes/ui/panels/economy_panel.tscn:209
+msgid "A fórmula que a simulação usa em cada indicador, com os números atuais do seu país."
+msgstr "The formula the simulation uses for each indicator, with your country's current numbers."
+
+#
+#: scenes/ui/panels/economy_panel.tscn:224
+msgid "PIB potencial"
+msgstr "Potential GDP"
+
+#: scenes/ui/panels/economy_panel.tscn:238
+msgid "Juros"
+msgstr "Interest rates"
+
+#
+#: scenes/ui/panels/economy_panel.tscn:259
+msgid "Balança comercial"
+msgstr "Trade balance"
+
+#
+#: scenes/ui/panels/economy_panel.tscn:266
+msgid "Gasto e impostos"
+msgstr "Spending and taxes"
+
+#
+#: scenes/ui/panels/economy_panel.tscn:273
+msgid "Arrecadação"
+msgstr "Tax revenue"
+
+#
+#: scenes/ui/panels/economy_panel.tscn:280
+msgid "Desigualdade"
+msgstr "Inequality"
+
+#
+#: scenes/ui/panels/economy_panel.tscn:287
+msgid "Petróleo e minérios"
+msgstr "Oil and minerals"
+
+#: scenes/ui/panels/economy_panel.tscn:294
+#: scripts/sim/law_catalog.gd_(escolha_profession)
+#: scripts/sim/law_catalog.gd_(escolha_sector)
+#: scripts/sim/law_catalog.gd_(escolha_tr_setor)
+msgid "Indústria"
+msgstr "Industry"
+
+#
+#: scenes/ui/panels/economy_panel.tscn:301
+msgid "Parceiros comerciais"
+msgstr "Trade partners"
 
 #: scenes/ui/panels/infra_build.tscn:35 scenes/ui/rows/infra_row.tscn:106
 msgid "Ampliar"
@@ -3355,136 +3423,136 @@ msgstr "I accept. We sign, and each parliament ratifies."
 msgid "Isso não combina com o que eu defendo, ou ainda não confio o bastante."
 msgstr "That doesn't match what I stand for, or I don't trust you enough yet."
 
-#: scripts/sim/diplomacy.gd:344
+#: scripts/sim/diplomacy.gd:345
 #, c-format
 msgid "%s retalia com tarifa de %d%% contra %s."
 msgstr "%s retaliates with a %d%% tariff against %s."
 
-#: scripts/sim/diplomacy.gd:356
+#: scripts/sim/diplomacy.gd:357
 #, c-format
 msgid "%s e %s assinam pacto de defesa mútua."
 msgstr "%s and %s sign a mutual defense pact."
 
-#: scripts/sim/diplomacy.gd:402
+#: scripts/sim/diplomacy.gd:403
 #, c-format
 msgid "GUERRA: %s invade %s."
 msgstr "WAR: %s invades %s."
 
-#: scripts/sim/diplomacy.gd:441
+#: scripts/sim/diplomacy.gd:442
 #, c-format
 msgid "%s entra na guerra entre %s e %s."
 msgstr "%s joins the war between %s and %s."
 
-#: scripts/sim/diplomacy.gd:554
+#: scripts/sim/diplomacy.gd:555
 #, c-format
 msgid "%s expulsa os invasores e força %s a recuar."
 msgstr "%s expels the invaders and forces %s to retreat."
 
-#: scripts/sim/diplomacy.gd:591
+#: scripts/sim/diplomacy.gd:592
 #, c-format
 msgid "Cessar-fogo entre %s e %s: as fronteiras antigas voltam a valer."
 msgstr "Ceasefire between %s and %s: the old borders are restored."
 
-#: scripts/sim/diplomacy.gd:593 scripts/ui/debug_menu.gd:296
+#: scripts/sim/diplomacy.gd:594 scripts/ui/debug_menu.gd:296
 #, c-format
 msgid "Tratado de paz: %s cede {pct} do território a %s."
 msgstr "Peace treaty: %s cedes {pct} of its territory to %s."
 
-#: scripts/sim/diplomacy.gd:598
+#: scripts/sim/diplomacy.gd:599
 #, c-format
 msgid "Negociação entre %s e %s: %s cede {pct} do território."
 msgstr "Negotiation between %s and %s: %s cedes {pct} of its territory."
 
-#: scripts/sim/diplomacy.gd:613
+#: scripts/sim/diplomacy.gd:614
 #, c-format
 msgid "%s capitula e é anexado por %s."
 msgstr "%s capitulates and is annexed by %s."
 
-#: scripts/sim/diplomacy.gd:616
+#: scripts/sim/diplomacy.gd:617
 #, c-format
 msgid "%s capitula; %s instala governo aliado."
 msgstr "%s capitulates; %s installs an allied government."
 
-#: scripts/sim/diplomacy.gd:632
+#: scripts/sim/diplomacy.gd:633
 #, c-format
 msgid "Cessar-fogo entre %s e %s: nenhuma área do tamanho negociado, as fronteiras não mudam."
 msgstr "Ceasefire between %s and %s: no area of the negotiated size, borders unchanged."
 
-#: scripts/sim/economy.gd:487
+#: scripts/sim/economy.gd:509
 #, c-format
 msgid "%s abandona a âncora cambial: moeda desvaloriza %d%%."
 msgstr "%s abandons its currency peg: the currency devalues %d%%."
 
-#: scripts/sim/economy.gd:522
+#: scripts/sim/economy.gd:544
 #, c-format
 msgid "Agências rebaixam a nota de crédito de %s de %s para %s."
 msgstr "Agencies downgrade %s's credit rating from %s to %s."
 
-#: scripts/sim/economy.gd:522
+#: scripts/sim/economy.gd:544
 #, c-format
 msgid "Agências elevam a nota de crédito de %s de %s para %s."
 msgstr "Agencies upgrade %s's credit rating from %s to %s."
 
-#: scripts/sim/economy.gd:822
+#: scripts/sim/economy.gd:845
 #, c-format
 msgid "%s declara moratória da dívida soberana; credores aceitam corte de 45%%."
 msgstr "%s defaults on its sovereign debt; creditors accept a 45%% haircut."
 
-#: scripts/sim/economy.gd:843
+#: scripts/sim/economy.gd:866
 #, c-format
 msgid "FMI aprova pacote de US$ %.0f bi para %s, com ajuste fiscal."
 msgstr "IMF approves a US$ %.0f bn package for %s, with fiscal adjustment."
 
-#: scripts/sim/economy.gd:924
+#: scripts/sim/economy.gd:947
 #, c-format
 msgid "Desemprego em %s chega a %.1f%%; demissões se espalham."
 msgstr "Unemployment in %s reaches %.1f%%; layoffs spread."
 
-#: scripts/sim/economy.gd:939
+#: scripts/sim/economy.gd:962
 #, c-format
 msgid "Eleições em %s: oposição vence e promete mudar o rumo."
 msgstr "Elections in %s: the opposition wins and promises a change of course."
 
-#: scripts/sim/economy.gd:948
+#: scripts/sim/economy.gd:971
 #, c-format
 msgid "Golpe de Estado em %s: junta militar assume o poder."
 msgstr "Coup d'état in %s: a military junta takes power."
 
-#: scripts/sim/economy.gd:972
+#: scripts/sim/economy.gd:995
 #, c-format
 msgid "Crise bancária em %s: crédito congela e o Tesouro socorre bancos."
 msgstr "Banking crisis in %s: credit freezes and the Treasury bails out banks."
 
-#: scripts/sim/economy.gd:986
+#: scripts/sim/economy.gd:1009
 #, c-format
 msgid "%s entra em recessão: o PIB encolhe %s em 12 meses."
 msgstr "%s enters recession: GDP shrinks %s over 12 months."
 
-#: scripts/sim/economy.gd:988
+#: scripts/sim/economy.gd:1011
 #, c-format
 msgid "%s sai da recessão: o PIB volta a crescer."
 msgstr "%s exits recession: GDP grows again."
 
-#: scripts/sim/economy.gd:995
+#: scripts/sim/economy.gd:1018
 #, c-format
 msgid "Inflação em %s passa de %s ao ano."
 msgstr "Inflation in %s exceeds %s a year."
 
-#: scripts/sim/economy.gd:1000
+#: scripts/sim/economy.gd:1023
 msgid "O BCE"
 msgstr "The ECB"
 
-#: scripts/sim/economy.gd:1000
+#: scripts/sim/economy.gd:1023
 #, c-format
 msgid "O banco central de %s"
 msgstr "The central bank of %s"
 
-#: scripts/sim/economy.gd:1001
+#: scripts/sim/economy.gd:1024
 #, c-format
 msgid "%s eleva o juro básico para %s ao ano."
 msgstr "%s raises the policy rate to %s a year."
 
-#: scripts/sim/economy.gd:1001
+#: scripts/sim/economy.gd:1024
 #, c-format
 msgid "%s reduz o juro básico para %s ao ano."
 msgstr "%s cuts the policy rate to %s a year."
@@ -6768,7 +6836,7 @@ msgstr "That is more than I can give. I withdraw the offer."
 msgid "%s envia US$ %.1f bi em apoio a %s."
 msgstr "%s sends US$ %.1f bn in support of %s."
 
-#: scripts/sim/sectors.gd:162
+#: scripts/sim/sectors.gd:168
 #, c-format
 msgid "Quebra de safra em %s: a agropecuária encolhe."
 msgstr "Crop failure in %s: agriculture shrinks."
@@ -9102,20 +9170,237 @@ msgstr "%s is no longer the capital of %s."
 msgid "%s agora é capital de %s."
 msgstr "%s is now the capital of %s."
 
-#: scripts/ui/economy_panel.gd:72
+#: scripts/ui/economy_panel.gd:94
 #, fuzzy, c-format
 msgid "População: %s milhões"
 msgstr "Population (m)"
 
-#: scripts/ui/economy_panel.gd:77
+#: scripts/ui/economy_panel.gd:99
 #, c-format
 msgid "Natalidade %s · mortalidade %s · migração %s ao ano"
 msgstr "Births %s · deaths %s · migration %s per year"
 
-#: scripts/ui/economy_panel.gd:79
+#: scripts/ui/economy_panel.gd:101
 #, c-format
 msgid "Aposentadorias além da base: %s do PIB"
 msgstr "Pensions above baseline: %s of GDP"
+
+#: scripts/ui/formula_explain.gd:26
+msgid "PIB potencial: modelo de Solow"
+msgstr "Potential GDP: Solow model"
+
+#: scripts/ui/formula_explain.gd:28
+#, c-format
+msgid ""
+"α = %s  ·  s = %s  ·  n = %s  ·  δ = %s\n"
+"K/Y hoje = %s  ·  K/Y de equilíbrio = %s  ·  hiato do produto = %s"
+msgstr ""
+"α = %s  ·  s = %s  ·  n = %s  ·  δ = %s\n"
+"K/Y today = %s  ·  steady-state K/Y = %s  ·  output gap = %s"
+
+#: scripts/ui/formula_explain.gd:30
+msgid "O PIB de longo prazo depende de capital, trabalho, educação e produtividade (A). Investir acima da depreciação aproxima o capital do equilíbrio; daí em diante, só a produtividade sustenta o crescimento."
+msgstr "Long-run GDP depends on capital, labor, education and productivity (A). Investing more than depreciation brings capital toward its steady state; beyond that, only productivity sustains growth."
+
+#: scripts/ui/formula_explain.gd:35
+msgid "Inflação: curva de Phillips e equação quantitativa"
+msgstr "Inflation: Phillips curve and quantity equation"
+
+#: scripts/ui/formula_explain.gd:36
+msgid "π = πe + κ·hiato + choques      M·V = P·Y"
+msgstr "π = πe + κ·gap + shocks      M·V = P·Y"
+
+#: scripts/ui/formula_explain.gd:37
+#, c-format
+msgid ""
+"πe = %s  ·  κ = %s  ·  hiato = %s  →  núcleo-alvo ≈ %s\n"
+"V = %s  ·  senhoriagem = %s/ano  ·  imposto inflacionário = %s/ano"
+msgstr ""
+"πe = %s  ·  κ = %s  ·  gap = %s  →  target core ≈ %s\n"
+"V = %s  ·  seigniorage = %s/year  ·  inflation tax = %s/year"
+
+#: scripts/ui/formula_explain.gd:40
+msgid "Com a economia acima do potencial os preços aceleram; expectativas ancoradas seguram a inflação. Financiar o déficit emitindo moeda aumenta M e, com V e Y dados, o nível de preços sobe na mesma proporção."
+msgstr "With the economy above potential, prices accelerate; anchored expectations hold inflation down. Financing the deficit by printing money raises M and, with V and Y given, the price level rises in the same proportion."
+
+#: scripts/ui/formula_explain.gd:44
+msgid "Juros: regra de Taylor"
+msgstr "Interest rates: Taylor rule"
+
+#: scripts/ui/formula_explain.gd:45
+msgid "i = r* + πe + 0,6·(π − π*) + 0,5·hiato"
+msgstr "i = r* + πe + 0.6·(π − π*) + 0.5·gap"
+
+#: scripts/ui/formula_explain.gd:46
+#, c-format
+msgid ""
+"r* = %s  ·  πe = %s  ·  π = %s  ·  meta π* = %s  ·  hiato = %s\n"
+"Taxa sugerida = %s  ·  taxa atual = %s"
+msgstr ""
+"r* = %s  ·  πe = %s  ·  π = %s  ·  target π* = %s  ·  gap = %s\n"
+"Suggested rate = %s  ·  current rate = %s"
+
+#: scripts/ui/formula_explain.gd:48
+msgid "O banco central sobe o juro mais que a inflação (princípio de Taylor) para que o juro real aumente e esfrie a demanda. Bancos centrais sem independência podem seguir o governo em vez da regra."
+msgstr "The central bank raises rates by more than inflation (Taylor principle) so the real rate rises and cools demand. Central banks without independence may follow the government instead of the rule."
+
+#: scripts/ui/formula_explain.gd:53
+msgid "Câmbio: paridade do poder de compra e Balassa-Samuelson"
+msgstr "Exchange rate: purchasing power parity and Balassa-Samuelson"
+
+#: scripts/ui/formula_explain.gd:55
+#, c-format
+msgid ""
+"PPC: E = %s  ·  câmbio atual = %s\n"
+"Depreciação pela PPC = %s/ano  ·  Balassa-Samuelson acumulado = %s"
+msgstr ""
+"PPP: E = %s  ·  current rate = %s\n"
+"PPP depreciation = %s/year  ·  cumulative Balassa-Samuelson = %s"
+
+#: scripts/ui/formula_explain.gd:57
+msgid "No longo prazo a moeda perde valor na proporção da inflação a mais que a dos EUA. Países que ganham produtividade mais rápido veem o câmbio real se apreciar, porque os serviços ficam mais caros."
+msgstr "In the long run the currency loses value in proportion to inflation above that of the US. Countries whose productivity grows faster see their real exchange rate appreciate, because services become more expensive."
+
+#: scripts/ui/formula_explain.gd:62
+msgid "Balança comercial: Marshall-Lerner e curva J"
+msgstr "Trade balance: Marshall-Lerner and the J-curve"
+
+#: scripts/ui/formula_explain.gd:63
+msgid "εx + εm > 1      ΔBC ≈ d · (ajuste · (εx + εm) − 1)"
+msgstr "εx + εm > 1      ΔTB ≈ d · (adjustment · (εx + εm) − 1)"
+
+#: scripts/ui/formula_explain.gd:64
+#, c-format
+msgid ""
+"εx = %s  ·  εm = %s  ·  soma = %s\n"
+"Câmbio real = %s  ·  câmbio real que os volumes já sentem = %s  ·  conta corrente = %s do PIB"
+msgstr ""
+"εx = %s  ·  εm = %s  ·  sum = %s\n"
+"Real exchange rate = %s  ·  rate already felt by volumes = %s  ·  current account = %s of GDP"
+
+#: scripts/ui/formula_explain.gd:66
+msgid "Depois de uma desvalorização, as importações encarecem na hora, mas os volumes levam cerca de um ano para reagir: a balança piora antes de melhorar. Como as elasticidades somam mais que 1, o efeito final é positivo."
+msgstr "After a devaluation, imports become more expensive right away, but volumes take about a year to react: the balance worsens before it improves. Since the elasticities add up to more than 1, the final effect is positive."
+
+#: scripts/ui/formula_explain.gd:73
+msgid "Política fiscal: multiplicador keynesiano"
+msgstr "Fiscal policy: Keynesian multiplier"
+
+#: scripts/ui/formula_explain.gd:75
+#, c-format
+msgid ""
+"c = %s  ·  t = %s  ·  m = %s  →  k = %s\n"
+"Fração ricardiana θ = %s  →  multiplicador do imposto = %s"
+msgstr ""
+"c = %s  ·  t = %s  ·  m = %s  →  k = %s\n"
+"Ricardian share θ = %s  →  tax multiplier = %s"
+
+#: scripts/ui/formula_explain.gd:77
+msgid "Cada real de gasto vira renda de alguém, que consome parte dela. Impostos e importações vazam do circuito. Com a economia aquecida, parte do estímulo vira juro e preço. Corte de imposto rende menos: as famílias poupam parte, à espera do imposto futuro, ainda mais com dívida alta."
+msgstr "Every unit of spending becomes someone's income, who consumes part of it. Taxes and imports leak out of the circuit. When the economy is overheated, part of the stimulus turns into interest and prices. Tax cuts yield less: households save part of them, expecting future taxes, even more so when debt is high."
+
+#: scripts/ui/formula_explain.gd:82
+msgid "Arrecadação: curva de Laffer"
+msgstr "Tax revenue: Laffer curve"
+
+#: scripts/ui/formula_explain.gd:84
+#, c-format
+msgid ""
+"ε = %s  ·  carga de partida t0 = %s  ·  carga atual t = %s\n"
+"Base tributável = %s da original  ·  alíquota de arrecadação máxima t* = %s"
+msgstr ""
+"ε = %s  ·  starting tax burden t0 = %s  ·  current burden t = %s\n"
+"Tax base = %s of the original  ·  revenue-maximizing rate t* = %s"
+
+#: scripts/ui/formula_explain.gd:86
+msgid "Imposto mais alto desestimula trabalho, investimento e declaração da renda. Até t* a arrecadação ainda sobe; acima, cai."
+msgstr "Higher taxes discourage work, investment and income reporting. Up to t* revenue still rises; above it, it falls."
+
+#: scripts/ui/formula_explain.gd:91
+msgid "Desigualdade: curva de Lorenz e índice de Gini"
+msgstr "Inequality: Lorenz curve and Gini index"
+
+#: scripts/ui/formula_explain.gd:93
+#, c-format
+msgid ""
+"Gini = %s\n"
+"Fatia da renda por quinto da população: %s · %s · %s · %s · %s"
+msgstr ""
+"Gini = %s\n"
+"Income share by population quintile: %s · %s · %s · %s · %s"
+
+#: scripts/ui/formula_explain.gd:95
+msgid "A curva de Lorenz mostra quanto da renda os p% mais pobres recebem. Quanto mais ela se afasta da diagonal, maior o Gini: 0 é igualdade total, 1 é um só com tudo."
+msgstr "The Lorenz curve shows how much income the poorest p% receive. The further it bends from the diagonal, the higher the Gini: 0 is total equality, 1 is one person with everything."
+
+#: scripts/ui/formula_explain.gd:100
+msgid "Petróleo e minérios: regra de Hotelling"
+msgstr "Oil and minerals: Hotelling rule"
+
+#: scripts/ui/formula_explain.gd:102
+#, c-format
+msgid ""
+"r = %s  ·  anos = %s  ·  renda de escassez do petróleo = %s do preço\n"
+"Preço de tendência = US$ %s  ·  preço atual = US$ %s"
+msgstr ""
+"r = %s  ·  years = %s  ·  oil scarcity rent = %s of the price\n"
+"Trend price = US$ %s  ·  current price = US$ %s"
+
+#: scripts/ui/formula_explain.gd:105
+msgid "Petróleo deixado no chão é um ativo: só vale extrair hoje se a renda do recurso crescer como o juro. Por isso o preço real dos recursos esgotáveis tende a subir com o tempo."
+msgstr "Oil left in the ground is an asset: extracting it today only pays if the resource rent grows like the interest rate. That is why the real price of exhaustible resources tends to rise over time."
+
+#: scripts/ui/formula_explain.gd:111
+msgid "Indústria: doença holandesa"
+msgstr "Manufacturing: Dutch disease"
+
+#: scripts/ui/formula_explain.gd:112
+msgid "Δ(indústria/PIB) ≈ −0,5 · Δ(renda de recursos/PIB)"
+msgstr "Δ(manufacturing/GDP) ≈ −0.5 · Δ(resource rent/GDP)"
+
+#: scripts/ui/formula_explain.gd:113
+#, c-format
+msgid ""
+"Renda de commodities = %s do PIB (partida: %s)\n"
+"Efeito na indústria = %s do PIB  ·  fatia atual da indústria = %s"
+msgstr ""
+"Commodity rent = %s of GDP (start: %s)\n"
+"Effect on manufacturing = %s of GDP  ·  current manufacturing share = %s"
+
+#: scripts/ui/formula_explain.gd:115
+msgid "Um boom de commodities traz dólares, aprecia o câmbio real e puxa trabalhadores e capital para os recursos e os serviços. A indústria perde competitividade."
+msgstr "A commodity boom brings in dollars, appreciates the real exchange rate and pulls workers and capital into resources and services. Manufacturing loses competitiveness."
+
+#: scripts/ui/formula_explain.gd:119
+msgid "Comércio: modelo gravitacional"
+msgstr "Trade: gravity model"
+
+#: scripts/ui/formula_explain.gd:121
+#, c-format
+msgid "PIB do país = %s  ·  exportações = %s  ·  importações = %s"
+msgstr "Country GDP = %s  ·  exports = %s  ·  imports = %s"
+
+#: scripts/ui/formula_explain.gd:122
+msgid "Países comerciam mais com parceiros grandes e próximos. Blocos comerciais, a mesma região e boas relações aumentam o fluxo; sanções e tarifas o reduzem."
+msgstr "Countries trade more with large, nearby partners. Trade blocs, a shared region and good relations increase the flow; sanctions and tariffs reduce it."
+
+#
+#: scripts/ui/formula_explain.gd:126
+msgid "Desemprego: lei de Okun"
+msgstr "Unemployment: Okun's law"
+
+#: scripts/ui/formula_explain.gd:127
+msgid "u = u* − β · hiato"
+msgstr "u = u* − β · gap"
+
+#: scripts/ui/formula_explain.gd:128
+#, c-format
+msgid "u* = %s  ·  β = %s  ·  hiato = %s  →  desemprego-alvo = %s  ·  atual = %s"
+msgstr "u* = %s  ·  β = %s  ·  gap = %s  →  target unemployment = %s  ·  current = %s"
+
+#: scripts/ui/formula_explain.gd:130
+msgid "Quando o PIB fica abaixo do potencial, as empresas demitem. Desemprego alto por muito tempo eleva a própria taxa natural (histerese)."
+msgstr "When GDP falls below potential, firms lay off workers. Prolonged high unemployment raises the natural rate itself (hysteresis)."
 
 #: scripts/ui/hud.gd:196
 msgid "parado"
@@ -11555,12 +11840,6 @@ msgstr "Exchange rate intervention, capital controls and sovereign fund."
 #: scripts/sim/law_catalog.gd_(escolha_tr_setor) scripts/sim/sectors.gd_(NAMES)
 msgid "Agropecuária"
 msgstr "Agriculture"
-
-#: scripts/sim/law_catalog.gd_(escolha_profession)
-#: scripts/sim/law_catalog.gd_(escolha_sector)
-#: scripts/sim/law_catalog.gd_(escolha_tr_setor) scripts/sim/sectors.gd_(NAMES)
-msgid "Indústria"
-msgstr "Industry"
 
 #: scripts/sim/law_catalog.gd_(escolha_profession)
 #: scripts/sim/law_catalog.gd_(escolha_sector)

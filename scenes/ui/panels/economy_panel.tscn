@@ -186,3 +186,116 @@ autowrap_mode = 3
 unique_name_in_owner = true
 layout_mode = 2
 autowrap_mode = 3
+
+[node name="HowItWorks" type="VBoxContainer" parent="sub_tabs"]
+visible = false
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 6
+metadata/_tab_index = 5
+metadata/_tab_name = "Como funciona"
+
+[node name="FormulasHeading" type="Label" parent="sub_tabs/HowItWorks"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 11
+text = "COMO FUNCIONA CADA INDICADOR"
+
+[node name="FormulasNote" type="Label" parent="sub_tabs/HowItWorks"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 12
+text = "A fórmula que a simulação usa em cada indicador, com os números atuais do seu país."
+autowrap_mode = 3
+
+[node name="formula_buttons" type="GridContainer" parent="sub_tabs/HowItWorks"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/h_separation = 6
+theme_override_constants/v_separation = 6
+columns = 2
+
+[node name="gdp" type="Button" parent="sub_tabs/HowItWorks/formula_buttons"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "PIB potencial"
+
+[node name="inflation" type="Button" parent="sub_tabs/HowItWorks/formula_buttons"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Inflação"
+
+[node name="rate" type="Button" parent="sub_tabs/HowItWorks/formula_buttons"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Juros"
+
+[node name="unemp" type="Button" parent="sub_tabs/HowItWorks/formula_buttons"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Desemprego"
+
+[node name="fx" type="Button" parent="sub_tabs/HowItWorks/formula_buttons"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Câmbio"
+
+[node name="trade" type="Button" parent="sub_tabs/HowItWorks/formula_buttons"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Balança comercial"
+
+[node name="fiscal" type="Button" parent="sub_tabs/HowItWorks/formula_buttons"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Gasto e impostos"
+
+[node name="tax" type="Button" parent="sub_tabs/HowItWorks/formula_buttons"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Arrecadação"
+
+[node name="inequality" type="Button" parent="sub_tabs/HowItWorks/formula_buttons"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Desigualdade"
+
+[node name="oil" type="Button" parent="sub_tabs/HowItWorks/formula_buttons"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Petróleo e minérios"
+
+[node name="industry" type="Button" parent="sub_tabs/HowItWorks/formula_buttons"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Indústria"
+
+[node name="partners" type="Button" parent="sub_tabs/HowItWorks/formula_buttons"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Parceiros comerciais"

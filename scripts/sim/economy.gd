@@ -260,8 +260,9 @@ static func _supply(c: Country, world: GameWorld) -> void:
 	c.inequality += (clampf(c.inequality0 + c.law_inequality, 0.2, 0.65) - c.inequality) * 0.02
 	c.human *= 1.0 + clampf(0.15 * edu_extra, -0.004, 0.006) * DT
 	c.tfp *= 1.0 + g_tfp * DT
+	c.hist["_gtfp"] = g_tfp
 	c.damage = maxf(c.damage - 0.05 * DT * c.damage - 0.01 * DT, 0.0)
-	var base := c.tfp * pow(c.capital, ALPHA) * pow(c.human * labor, 1.0 - ALPHA)
+	var base := EconFormulas.cobb_douglas(c.tfp, c.capital, c.human * labor, ALPHA)
 	c.y_pot = base * (1.0 - c.occupied * 0.85) * (1.0 - c.damage) * (1.0 + c.supply_shock) * (1.0 + Sectors.boost_total(c))
 	c.supply_shock *= 0.97
 
@@ -276,9 +277,15 @@ static func _demand(c: Country, world: GameWorld) -> void:
 	# Fiscal impulse: effect of the CHANGE in stance; the reference adapts in ~2 years.
 	var g := c.spend_total() + c.mobilization * 0.02 + c.law_spend
 	var t := c.tax_total() + c.law_tax
-	var mult_g := 0.9 if c.gap < -0.01 else 0.5
+	# Keynesian multiplier 1/(1 − c(1 − t) + m); with a hot economy, part turns into interest and prices
+	# (crowding out). On taxes, partial Ricardian equivalence makes part of the cut turn into saving.
+	var k := EconFormulas.keynes_multiplier(EconFormulas.MPC, clampf(t, 0.05, 0.6), clampf(c.m_share, 0.02, 0.8))
+	var mult_g := k * (0.8 if c.gap < -0.01 else 0.45)
+	var mult_t := EconFormulas.tax_multiplier(EconFormulas.MPC, clampf(t, 0.05, 0.6), clampf(c.m_share, 0.02, 0.8), EconFormulas.ricardian_share(c.debt_ratio, c.debt_tol))
+	c.hist["_mult_g"] = mult_g
+	c.hist["_mult_t"] = mult_t
 	var debt_drag := clampf(1.0 - 0.5 * maxf(c.debt_ratio / c.debt_tol - 1.0, 0.0), 0.3, 1.0)
-	var fiscal := (mult_g * (g - c.g_ref) - 0.45 * (t - c.t_ref)) * debt_drag
+	var fiscal := (mult_g * (g - c.g_ref) - mult_t * (t - c.t_ref)) * debt_drag
 	c.g_ref += (g - c.g_ref) * 0.04
 	c.t_ref += (t - c.t_ref) * 0.04
 
@@ -325,8 +332,14 @@ static func _prices(c: Country, world: GameWorld) -> void:
 	var mon_push := 0.0
 	if c.mon_fin > 0.0 or world.year_float() < c.default_until:
 		var financed := c.mon_fin if world.year_float() >= c.default_until else maxf(c.mon_fin, 0.5)
-		mon_push = 2.2 * financed * maxf(c.deficit / maxf(c.y_nominal(), 0.001), 0.0)
-	var core_target := c.pi_e + KAPPA * c.gap + mon_push + 0.08 * maxf(c.occupied - c.occ0, 0.0) + 0.04 * c.unrest
+		# Quantity equation M·V = P·Y: issuance makes money grow μ = (issuance/PY)·V, and with V and Y
+		# given, the price level follows. Seigniorage = ΔM/P; inflation tax = π/(1+π)·M/P.
+		mon_push = EconFormulas.monetized_money_growth(financed, c.deficit / maxf(c.y_nominal(), 0.001))
+		c.hist["_seign"] = financed * maxf(c.deficit, 0.0) / maxf(c.p, 0.001)
+	else:
+		c.hist["_seign"] = 0.0
+	c.hist["_inftax"] = EconFormulas.inflation_tax(maxf(c.pi_yoy, 0.0), c.y / EconFormulas.VELOCITY)
+	var core_target := EconFormulas.phillips(c.pi_e, KAPPA, c.gap, mon_push + 0.08 * maxf(c.occupied - c.occ0, 0.0) + 0.04 * c.unrest)
 	c.pi_core += (clampf(core_target, -0.03, 6.0) - c.pi_core) * 0.11
 	# Local-currency inflation of imported inputs passes to the index as a level shock.
 	var poor := clampf(1.0 - c.gdp_pc() / 30000.0, 0.0, 1.0)
@@ -343,7 +356,7 @@ static func _prices(c: Country, world: GameWorld) -> void:
 	var depr := log(c.e / e_last)
 	c.hist["_e"] = c.e
 	# Only depreciation above purchasing power parity generates additional pass-through.
-	var ppp_trend := (log(1.0 + c.pi_core) - log(1.0 + world.usa.pi_core)) * DT
+	var ppp_trend := log(1.0 + EconFormulas.ppp_depreciation(c.pi_core, world.usa.pi_core)) * DT
 	var openness := clampf(c.m_share + 0.08, 0.05, 0.7)
 	var passthrough := 0.35 * openness / 0.3
 	var shock := w_energy * d_oil + w_food * d_food + clampf(passthrough, 0.05, 0.5) * (depr - ppp_trend)
@@ -374,7 +387,9 @@ static func _monetary(c: Country, world: GameWorld) -> void:
 	if c.rate_manual and not c.cb_independent:
 		c.rate += (c.rate_set - c.rate) * 0.5
 		return
-	var target := c.r_n + c.pi_e + 0.6 * (c.pi_yoy - c.pi_target) + 0.5 * c.gap
+	# Taylor rule with the level of π in expectations and the reaction to the deviation of current inflation:
+	# i = r* + πe + 0.6·(π − π*) + 0.5·gap.
+	var target := EconFormulas.taylor(c.r_n, c.pi_e, c.pi_target, c.gap, 0.6, 0.5) + 0.6 * (c.pi_yoy - c.pi_e)
 	target = clampf(target, 0.0, MAX_RATE)
 	c.rate += (target - c.rate) * 0.14
 
@@ -407,6 +422,9 @@ static func _float_exchange(c: Country, world: GameWorld) -> void:
 	# The sovereign fund invests abroad: the revenue it keeps does not enter the foreign exchange market.
 	var fund := (c.swf_in - c.swf_out) / maxf(c.e, 0.001) / maxf(yusd, 0.001) - c.swf_flow0
 	var target := ppp - 1.1 * (1.0 - 0.6 * c.dollarization) * clampf(rd, -0.15, 0.2) - 0.7 * clampf(c.ca_ratio - c.ca0 - fund, -0.2, 0.2)
+	# Balassa-Samuelson: whoever gains productivity faster than the US appreciates the real exchange rate.
+	c.hist["_bs"] = float(c.hist.get("_bs", 0.0)) + EconFormulas.balassa_samuelson(float(c.hist.get("_gtfp", c.g_tfp0)), 0.0, float(us.hist.get("_gtfp", us.g_tfp0)), 0.0) * DT
+	target -= float(c.hist["_bs"])
 	target += 1.6 * clampf(c.risk - c.risk0, -0.03, 0.4) + 0.6 * clampf(world.global_risk - 0.2, -0.2, 0.8) * (0.0 if c.debt_tol > 0.9 else 0.25)
 	target += 0.8 * c.cap_flight / maxf(yusd, 0.001)
 	var le := log(c.e)
@@ -441,10 +459,14 @@ static func _capital_flight(c: Country, world: GameWorld, yusd: float) -> void:
 static func _external(c: Country, world: GameWorld) -> void:
 	var m := world.markets
 	var yusd := c.y_usd()
-	var rer_log := clampf(log(c.rer), -1.0, 1.0)
-	var x_nc := c.x_share * yusd * (1.0 + 0.6 * rer_log) * (1.0 + 1.2 * c.ext_demand) * (1.0 + clampf(c.trade_loss, -0.9, 0.5))
+	# J curve: volumes react to the real exchange rate with a lag, the dollar value reacts at once.
+	# No longo prazo vale Marshall-Lerner (εx + εm = 1,1 > 1).
+	var rer_j := EconFormulas.lagged_rer(float(c.hist.get("_rer_j", c.rer)), c.rer)
+	c.hist["_rer_j"] = rer_j
+	var rer_log := clampf(log(rer_j), -1.0, 1.0)
+	var x_nc := c.x_share * yusd * (1.0 + EconFormulas.ELAST_X * rer_log) * (1.0 + 1.2 * c.ext_demand) * (1.0 + clampf(c.trade_loss, -0.9, 0.5))
 	var tariff_cut := clampf(1.0 - 1.6 * c.tariff, 0.3, 1.0)
-	var m_nc := c.m_share * yusd * (1.0 - 0.5 * rer_log) * (1.0 + 1.3 * c.gap) * tariff_cut * (1.0 + 0.5 * clampf(c.trade_loss, -0.9, 0.5))
+	var m_nc := c.m_share * yusd * (1.0 - EconFormulas.ELAST_M * rer_log) * (1.0 + 1.3 * c.gap) * tariff_cut * (1.0 + 0.5 * clampf(c.trade_loss, -0.9, 0.5))
 	var comm_x := 0.0
 	var comm_m := 0.0
 	var sanctions_disc := 1.0 - 0.25 * world.diplomacy.sanction_pressure(c)
@@ -530,8 +552,9 @@ static func _fiscal_flows(c: Country) -> void:
 	var yn := c.y_nominal()
 	var yn_pot := c.y_pot * c.p
 	var tax_rate := c.tax_total()
-	# Laffer curve: above ~48% evasion erodes collection. Cyclical elasticity of 1.1.
-	var collection := clampf(1.0 - 2.2 * maxf(tax_rate - 0.48, 0.0) ** 1.3, 0.55, 1.0) * (1.0 - clampf(c.law_evasion, -0.05, 0.3)) * Corruption.collection_factor(c)
+	# Laffer curve: the taxable base shrinks with (1 − t)^ε (ε = 0.3, peak at t* ≈ 77%), measured from the starting
+	# burden. Cyclical elasticity of 1.1.
+	var collection := clampf(EconFormulas.laffer_base(tax_rate, c.tax0), 0.55, 1.1) * (1.0 - clampf(c.law_evasion, -0.05, 0.3)) * Corruption.collection_factor(c)
 	collection *= 1.0 - 0.5 * clampf(c.informal - c.informal0, -0.1, 0.4)
 	var tax_rev := tax_rate * yn * (1.0 + 0.1 * c.gap) * collection
 	var rent := c.comm_exports * c.e * c.rent_take

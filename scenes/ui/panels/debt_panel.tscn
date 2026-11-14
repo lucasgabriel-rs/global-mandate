@@ -9,13 +9,13 @@ mouse_filter = 2
 theme_override_constants/separation = 6
 script = ExtResource("1_panel")
 
-[node name="Separador" type="ColorRect" parent="."]
+[node name="Separator" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(0, 1)
 layout_mode = 2
 mouse_filter = 2
 color = Color(0.15294118, 0.2509804, 0.30980393, 1)
 
-[node name="DIVIDAEJUROS" type="Label" parent="."]
+[node name="DebtHeading" type="Label" parent="."]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_font_sizes/font_size = 11
@@ -30,69 +30,69 @@ script = ExtResource("2_chart")
 title = "Curva de juros (% ao ano)"
 mode = "curve"
 
-[node name="Prazo" type="HBoxContainer" parent="."]
+[node name="Maturity" type="HBoxContainer" parent="."]
 layout_mode = 2
 tooltip_text = "Tempo médio até o vencimento dos títulos. Com risco alto, o mercado só compra papéis curtos."
 theme_override_constants/separation = 4
 
-[node name="Titulo" type="Label" parent="Prazo"]
+[node name="Title" type="Label" parent="Maturity"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_font_sizes/font_size = 13
 text = "Prazo médio"
 
-[node name="Espaco" type="Control" parent="Prazo"]
+[node name="Space" type="Control" parent="Maturity"]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="debt_maturity_value" type="Label" parent="Prazo"]
+[node name="debt_maturity_value" type="Label" parent="Maturity"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
 theme_override_font_sizes/font_size = 13
 text = "—"
 
-[node name="Composicao" type="HBoxContainer" parent="."]
+[node name="Mix" type="HBoxContainer" parent="."]
 layout_mode = 2
 tooltip_text = "Prefixados travam o juro nominal; indexados pagam juro real mais a inflação; a dívida em dólar sobe quando a moeda cai."
 theme_override_constants/separation = 4
 
-[node name="Titulo" type="Label" parent="Composicao"]
+[node name="Title" type="Label" parent="Mix"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_font_sizes/font_size = 13
 text = "Prefixada / inflação / dólar"
 
-[node name="Espaco" type="Control" parent="Composicao"]
+[node name="Space" type="Control" parent="Mix"]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="debt_mix_value" type="Label" parent="Composicao"]
+[node name="debt_mix_value" type="Label" parent="Mix"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
 theme_override_font_sizes/font_size = 13
 text = "—"
 
-[node name="JuroReal" type="HBoxContainer" parent="."]
+[node name="RealRate" type="HBoxContainer" parent="."]
 layout_mode = 2
 tooltip_text = "Juro nominal de 10 anos menos a inflação esperada no período."
 theme_override_constants/separation = 4
 
-[node name="Titulo" type="Label" parent="JuroReal"]
+[node name="Title" type="Label" parent="RealRate"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_font_sizes/font_size = 13
 text = "Juro real de 10 anos"
 
-[node name="Espaco" type="Control" parent="JuroReal"]
+[node name="Space" type="Control" parent="RealRate"]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="debt_real_value" type="Label" parent="JuroReal"]
+[node name="debt_real_value" type="Label" parent="RealRate"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
@@ -108,92 +108,92 @@ script = ExtResource("2_chart")
 title = "Vencimentos por ano"
 mode = "bars"
 
-[node name="Rolagem" type="HBoxContainer" parent="."]
+[node name="Rollover" type="HBoxContainer" parent="."]
 layout_mode = 2
 tooltip_text = "Dívida que vence no próximo ano e será refinanciada aos juros de hoje."
 theme_override_constants/separation = 4
 
-[node name="Titulo" type="Label" parent="Rolagem"]
+[node name="Title" type="Label" parent="Rollover"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_font_sizes/font_size = 13
 text = "Vencimentos em 12 meses"
 
-[node name="Espaco" type="Control" parent="Rolagem"]
+[node name="Space" type="Control" parent="Rollover"]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="debt_rollover_value" type="Label" parent="Rolagem"]
+[node name="debt_rollover_value" type="Label" parent="Rollover"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
 theme_override_font_sizes/font_size = 13
 text = "—"
 
-[node name="BolaDeNeve" type="HBoxContainer" parent="."]
+[node name="Snowball" type="HBoxContainer" parent="."]
 layout_mode = 2
 tooltip_text = "Efeito bola de neve em 12 meses, (r − g)/(1 + g)·b, em pontos do PIB."
 theme_override_constants/separation = 4
 
-[node name="Titulo" type="Label" parent="BolaDeNeve"]
+[node name="Title" type="Label" parent="Snowball"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_font_sizes/font_size = 13
 text = "Juros menos crescimento"
 
-[node name="Espaco" type="Control" parent="BolaDeNeve"]
+[node name="Space" type="Control" parent="Snowball"]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="debt_snowball_value" type="Label" parent="BolaDeNeve"]
+[node name="debt_snowball_value" type="Label" parent="Snowball"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
 theme_override_font_sizes/font_size = 13
 text = "—"
 
-[node name="Primario" type="HBoxContainer" parent="."]
+[node name="Primary" type="HBoxContainer" parent="."]
 layout_mode = 2
 tooltip_text = "Receita menos gasto sem juros em 12 meses, em pontos do PIB. Superávit reduz a dívida."
 theme_override_constants/separation = 4
 
-[node name="Titulo" type="Label" parent="Primario"]
+[node name="Title" type="Label" parent="Primary"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_font_sizes/font_size = 13
 text = "Saldo primário"
 
-[node name="Espaco" type="Control" parent="Primario"]
+[node name="Space" type="Control" parent="Primary"]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="debt_primary_value" type="Label" parent="Primario"]
+[node name="debt_primary_value" type="Label" parent="Primary"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
 theme_override_font_sizes/font_size = 13
 text = "—"
 
-[node name="Ajuste" type="HBoxContainer" parent="."]
+[node name="Adjustment" type="HBoxContainer" parent="."]
 layout_mode = 2
 tooltip_text = "Variação da dívida que não vem de juros nem do primário: câmbio, emissão monetária, socorros e calotes."
 theme_override_constants/separation = 4
 
-[node name="Titulo" type="Label" parent="Ajuste"]
+[node name="Title" type="Label" parent="Adjustment"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 theme_override_font_sizes/font_size = 13
 text = "Câmbio e outros"
 
-[node name="Espaco" type="Control" parent="Ajuste"]
+[node name="Space" type="Control" parent="Adjustment"]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="debt_adjust_value" type="Label" parent="Ajuste"]
+[node name="debt_adjust_value" type="Label" parent="Adjustment"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
