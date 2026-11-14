@@ -1,6 +1,6 @@
 # Modo Governador — design
 
-Status: rascunho para aprovação. Nenhum código de produto foi escrito.
+Status: aprovado pelo autor em 2026-11-14. Nenhum código de produto foi escrito.
 
 ## Intenção
 
