@@ -362,6 +362,8 @@ func _run() -> void:
 	await _shot("l6_conversation_party")
 	await _click(chat.get_node("%say_end"))
 	await _wait()
+	# The center refreshes while the game runs, so the row from before the chat may have been rebuilt.
+	process_row = center.get_node("%process_rows").get_node("process_%d" % int(norm.id))
 	await _click(process_row.get_node("%negotiate"))
 	var deal: NegotiationScreen = _top()
 	_check(deal is NegotiationScreen, "opens the vote negotiation")
