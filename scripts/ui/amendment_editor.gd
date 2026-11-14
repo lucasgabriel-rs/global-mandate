@@ -1,6 +1,7 @@
 class_name AmendmentEditor
 extends ColorRect
-## Editor de emendas: escolhe o dispositivo, a operação e compara com o texto em vigor.
+## Amendment editor: picks the provision, changes its value and compares it with the text in force.
+## There is no free text: the game only understands values of articles with a parameter, deletions and block-built articles.
 
 const ARTICLE_ROW := preload("res://scenes/ui/legislation/article_row.tscn")
 const OP_ROW := preload("res://scenes/ui/legislation/op_row.tscn")
@@ -13,9 +14,6 @@ var norm := {}
 var _article := {}
 var _rights := {}
 
-@onready var _op: OptionButton = %op_pick
-@onready var _kind: OptionButton = %kind_pick
-@onready var _text: TextEdit = %new_text
 @onready var _note: Label = %op_note
 @onready var _feedback: Label = %feedback
 
@@ -30,18 +28,7 @@ func setup(owner_main: Node, target: Dictionary) -> void:
 	(%doc_ementa as TextEdit).text = norm.ementa
 	%doc_name.text_changed.connect(func(t): norm.title = t)
 	%doc_ementa.text_changed.connect(func(): norm.ementa = %doc_ementa.text)
-	for key: String in Legislation.AMENDMENT_OPS:
-		_op.add_item(tr(Legislation.AMENDMENT_OPS[key]))
-		_op.set_item_metadata(_op.item_count - 1, key)
-	_op.item_selected.connect(func(_i): _refresh_form())
-	for key: String in Legislation.ADD_KINDS:
-		_kind.add_item(tr(Legislation.ADD_KINDS[key]))
-		_kind.set_item_metadata(_kind.item_count - 1, key)
 	%add_op.pressed.connect(_add_op)
-	%new_article.pressed.connect(func():
-		_article = {}
-		_choose_op("add")
-		_text.grab_focus())
 	%block_article.pressed.connect(func(): main.open_law_editor(norm))
 	(%poll as PollBox).setup(world, func(): return {} if norm.ops.is_empty() and norm.program.stacks.is_empty() else norm)
 	%save_close.pressed.connect(func(): main.reopen_legislation(0))
@@ -70,7 +57,7 @@ func _fill_articles() -> void:
 		select.tooltip_text = tr("Cláusula pétrea: não pode ser alterada.") if article.petrea else Legislation.article_text(article, true)
 		select.pressed.connect(func():
 			_article = article
-			_choose_op("alter"))
+			_refresh_form())
 		var remove: Button = row.get_node("%delete")
 		remove.disabled = article.petrea
 		if article.petrea:
@@ -82,34 +69,15 @@ func _fill_articles() -> void:
 		list.add_child(row)
 
 
-func _choose_op(key: String) -> void:
-	for i in _op.item_count:
-		if _op.get_item_metadata(i) == key:
-			_op.select(i)
-	_refresh_form()
-
-
-func _selected_op() -> String:
-	return _op.get_item_metadata(_op.selected) if _op.selected >= 0 else "alter"
-
-
 func _refresh_form() -> void:
-	var op := _selected_op()
-	var adding := op == "add"
-	(%article_text as Label).text = tr("Novo dispositivo.") if adding else (Legislation.article_text(_article, true) if not _article.is_empty() else tr("Escolha um dispositivo ao lado."))
-	# Num artigo com parâmetro, "alteração" muda o valor; "substituição" permite reescrever a redação.
-	var is_param: bool = op == "alter" and not _article.is_empty() and String(_article.get("param", "")) != ""
-	(_kind.get_parent() as Control).visible = adding
-	(%new_petrea as Control).visible = adding
-	_text.visible = not is_param and op != "suppress"
-	if not adding and not _article.is_empty() and _text.visible:
-		_text.text = Legislation.article_text(_article, true)
-	elif adding:
-		_text.text = ""
+	(%article_text as Label).text = Legislation.article_text(_article, true) if not _article.is_empty() else tr("Escolha um dispositivo ao lado, ou acrescente um artigo com blocos.")
+	# Only an article with a parameter has a value to change; the others can only be deleted.
+	var is_param: bool = not _article.is_empty() and String(_article.get("param", "")) != "" and not _article.petrea
 	var value_row: Control = (%value_edit as Control).get_parent()
 	var rights: Control = %rights_box
 	value_row.visible = false
 	rights.visible = false
+	(%add_op as Control).visible = is_param
 	if is_param:
 		var value: Variant = _article.value
 		if value is Array:
@@ -134,6 +102,8 @@ func _refresh_form() -> void:
 			else:
 				(%value_edit as LineEdit).text = str(int(value))
 	_note.text = ""
+	if not _article.is_empty() and not is_param:
+		_note.text = tr("%s é cláusula pétrea: não pode ser alterado.") % _article.label if _article.petrea else tr("Este dispositivo é só texto: só pode ser excluído.")
 
 
 func _fill_rights(current: Array) -> void:
@@ -152,50 +122,31 @@ func _fill_rights(current: Array) -> void:
 
 
 func _add_op() -> void:
-	var kind := _selected_op()
-	var op := {"op": kind}
-	if kind == "add":
-		var text := _text.text.strip_edges()
-		if text == "":
-			_note.text = tr("Escreva o texto do novo dispositivo.")
-			return
-		op["kind"] = _kind.get_item_metadata(_kind.selected)
-		op["text"] = text
-		op["petrea"] = (%new_petrea as CheckBox).button_pressed
+	if _article.is_empty():
+		_note.text = tr("Escolha um dispositivo.")
+		return
+	if _article.petrea:
+		_note.text = tr("%s é cláusula pétrea: não pode ser alterado.") % _article.label
+		return
+	var op := {"op": "alter", "article": _article.id}
+	var value: Variant = _article.value
+	if value is Array:
+		var chosen := []
+		for key: String in _rights:
+			if (_rights[key] as CheckBox).button_pressed:
+				chosen.append(key)
+		op["value"] = chosen
+	elif value is String:
+		var options: OptionButton = %value_option
+		op["value"] = options.get_item_metadata(options.selected)
+	elif value is bool:
+		op["value"] = (%value_check as CheckBox).button_pressed
 	else:
-		if _article.is_empty():
-			_note.text = tr("Escolha um dispositivo.")
+		var number := (%value_edit as LineEdit).text.to_int()
+		if number < 0:
+			_note.text = tr("O valor não pode ser negativo.")
 			return
-		if _article.petrea:
-			_note.text = tr("%s é cláusula pétrea: não pode ser alterado.") % _article.label
-			return
-		op["article"] = _article.id
-		if kind != "suppress":
-			if kind == "alter" and String(_article.get("param", "")) != "":
-				var value: Variant = _article.value
-				if value is Array:
-					var chosen := []
-					for key: String in _rights:
-						if (_rights[key] as CheckBox).button_pressed:
-							chosen.append(key)
-					op["value"] = chosen
-				elif value is String:
-					var options: OptionButton = %value_option
-					op["value"] = options.get_item_metadata(options.selected)
-				elif value is bool:
-					op["value"] = (%value_check as CheckBox).button_pressed
-				else:
-					var number := (%value_edit as LineEdit).text.to_int()
-					if number < 0:
-						_note.text = tr("O valor não pode ser negativo.")
-						return
-					op["value"] = number
-			else:
-				var text := _text.text.strip_edges()
-				if text == "" or text == Legislation.article_text(_article, true):
-					_note.text = tr("Mude o texto do dispositivo.")
-					return
-				op["text"] = text
+		op["value"] = number
 	norm.ops.append(op)
 	_fill_ops()
 

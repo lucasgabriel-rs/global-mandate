@@ -18,6 +18,9 @@ var last_compile := {}
 ## Na leitura de uma versão publicada, o programa não é o rascunho da norma.
 var _shown_program := {}
 var _library_program := LawProgram.empty()
+## Palette categories (group, title, blocks with their search text) and the larger groups that contain them.
+var _cat_entries: Array[Dictionary] = []
+var _top_groups: Array[Dictionary] = []
 ## Código que a norma altera ("tributario"...), ou "" para a lei avulsa.
 var code_id := ""
 
@@ -46,6 +49,7 @@ func setup(owner_main: Node, target: Dictionary, version := -1) -> void:
 	_trash.editor = self
 	(%simulator as LawSimulator).setup(self)
 	(%review as LawReview).setup(self)
+	%library_search.text_changed.connect(func(_t): _apply_library_filter())
 	_build_library()
 	_fill_document()
 	_connect()
@@ -86,6 +90,12 @@ func _connect() -> void:
 
 
 func _input(event: InputEvent) -> void:
+	# Esc in the search field clears the search instead of closing the editor.
+	var search: LineEdit = %library_search
+	if event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE and search.has_focus() and search.text != "":
+		get_viewport().set_input_as_handled()
+		search.clear()
+		return
 	# Em leitura não há "salvar": Esc fecha. Na edição, Esc também salva e fecha.
 	if event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE and not (%simulator as Control).visible:
 		get_viewport().set_input_as_handled()
@@ -137,68 +147,131 @@ func _fill_document() -> void:
 	_doc_type.disabled = read_only or norm.type == "emenda" or int(norm.get("amends", -1)) >= 0 or not norm.get("revokes", {}).is_empty()
 
 
-## Paleta. Lei avulsa: os blocos dos códigos e, num grupo aberto, os avançados. Norma de código: só a
-## categoria do código e os eventos; os outros códigos e os avançados ficam recolhidos, a um clique.
+## Palette. Free-standing law: the code blocks, with the advanced ones in an open group. Code norm: only the
+## code's category and the events; the other codes and the advanced blocks stay collapsed, one click away.
+## Each category is a group that opens and closes; they start closed, except the events and the code's own category.
+## The search shows only the blocks that match and opens what contains them; clearing it restores what the player had open.
 func _build_library() -> void:
+	_cat_entries.clear()
+	_top_groups.clear()
 	var cats := LawCatalog.categories()
 	var others: Control = null
-	var advanced: Control = _library_group(tr("Avançado"), tr("Blocos genéricos para regras próprias: condições, cálculos, variáveis e ações administrativas."), code_id == "")
+	var advanced: Control = _library_group(_library, tr("Avançado"), tr("Blocos genéricos para regras próprias: condições, cálculos, variáveis e ações administrativas."), code_id == "")
+	_top_groups.append({"group": advanced, "title": tr("Avançado")})
 	for cat: Dictionary in cats:
-		var mine: bool = String(cat.get("code", "")) == code_id or (code_id != "" and cat.id == "events")
-		var target: Control = _library
+		var own_code: bool = code_id != "" and String(cat.get("code", "")) == code_id
+		var mine: bool = own_code or cat.id == "events"
+		var parent: Control = _library
+		var top: Control = null
 		if code_id != "" and not mine:
 			if cat.has("code"):
 				if others == null:
-					others = _library_group(tr("Outros códigos"), tr("Blocos de outras áreas. Prefira alterar o código de cada área."), false)
-				target = others.get_node("%items")
+					others = _library_group(_library, tr("Outros códigos"), tr("Blocos de outras áreas. Prefira alterar o código de cada área."), false)
+					_top_groups.append({"group": others, "title": tr("Outros códigos")})
+				top = others
 			else:
-				target = advanced.get_node("%items")
+				top = advanced
 		elif cat.get("advanced", false) and not mine:
-			target = advanced.get_node("%items")
+			top = advanced
+		if top:
+			parent = top.get_node("%items")
+		var title := tr(cat.label)
+		var group := _library_group(parent, title, "", mine)
+		group.name = "cat_%s" % cat.id
+		(group.get_node("%toggle") as Button).add_theme_color_override("font_color", cat.get("color", Color.GRAY))
+		var items: Control = group.get_node("%items")
 		var blocks := LawCatalog.in_category(cat.id)
-		var heading: Label = LIBRARY_HEADING.instantiate()
-		heading.name = "cat_%s" % cat.id
-		heading.text = tr(cat.label).to_upper()
-		target.add_child(heading)
+		var entry := {"group": group, "title": title, "parent": top, "views": [], "label_key": _fold(title), "empty": null}
 		if blocks.is_empty():
 			var empty: Label = LIBRARY_HEADING.instantiate()
 			empty.name = "empty_%s" % cat.id
 			empty.text = tr("Os blocos desta área ainda não foram feitos.")
-			target.add_child(empty)
+			items.add_child(empty)
+			entry.empty = empty
 		for def: Dictionary in blocks:
 			var view: LawBlockView = BLOCK.instantiate()
 			view.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
-			target.add_child(view)
-			view.setup(self, LawProgram.new_block(_library_program, def.id), true)
+			items.add_child(view)
+			var block := LawProgram.new_block(_library_program, def.id)
+			view.setup(self, block, true)
+			entry.views.append({"view": view, "key": _fold(LawProgram.block_text(block, true))})
+		_cat_entries.append(entry)
 	if others:
 		_library.move_child(others, -1)
 	_library.move_child(advanced, -1)
+	_apply_library_filter()
 
 
-func _library_group(title: String, hint: String, open: bool) -> Control:
+## A group that opens and closes. An empty `hint` hides the explanation line. What the player opened is kept
+## in the "open" meta, so the search can open and close groups and then give the state back.
+func _library_group(parent: Control, title: String, hint: String, open: bool) -> Control:
 	var group: Control = LIBRARY_GROUP.instantiate()
 	group.name = "group_%s" % title.to_lower().replace(" ", "_")
-	_library.add_child(group)
+	parent.add_child(group)
 	var toggle: Button = group.get_node("%toggle")
-	var items: Control = group.get_node("%items")
 	(group.get_node("%hint") as Label).text = hint
-	var show := func(on: bool):
-		items.visible = on
-		toggle.text = ("▾ " if on else "▸ ") + title
-	toggle.button_pressed = open
-	show.call(open)
-	toggle.toggled.connect(show)
+	(group.get_node("%hint") as Control).visible = hint != ""
+	group.set_meta("open", open)
+	toggle.toggled.connect(func(on: bool):
+		group.set_meta("open", on)
+		_apply_library_filter())
 	return group
 
 
-## O grupo recolhido da paleta que tem o bloco, para o teste abrir antes de arrastar.
-func library_group_of(view: Control) -> Control:
+## Lowercase and without accents, so "acao" finds "ação".
+static func _fold(text: String) -> String:
+	var out := text.to_lower()
+	const FROM := "áàâãäéèêëíìîïóòôõöúùûüçñ"
+	const TO := "aaaaaeeeeiiiiooooouuuucn"
+	for i in FROM.length():
+		out = out.replace(FROM[i], TO[i])
+	return out
+
+
+func _show_group(group: Control, title: String, on: bool, count := -1) -> void:
+	(group.get_node("%items") as Control).visible = on
+	var toggle: Button = group.get_node("%toggle")
+	toggle.set_pressed_no_signal(on)
+	toggle.text = ("▾ " if on else "▸ ") + title + ("" if count < 0 else " (%d)" % count)
+
+
+func _apply_library_filter() -> void:
+	var query := _fold((%library_search as LineEdit).text.strip_edges())
+	var searching := query != ""
+	var found := false
+	var parents_with_hits := {}
+	for entry: Dictionary in _cat_entries:
+		var category_hit: bool = searching and String(entry.label_key).contains(query)
+		var hits := 0
+		for item: Dictionary in entry.views:
+			var show: bool = not searching or category_hit or String(item.key).contains(query)
+			(item.view as Control).visible = show
+			hits += int(show)
+		if entry.empty:
+			(entry.empty as Control).visible = not searching
+		var group: Control = entry.group
+		group.visible = not searching or hits > 0
+		_show_group(group, entry.title, searching or bool(group.get_meta("open")), hits if searching else entry.views.size())
+		if hits > 0 and entry.parent:
+			parents_with_hits[entry.parent] = true
+		found = found or hits > 0
+	for top: Dictionary in _top_groups:
+		var group: Control = top.group
+		group.visible = not searching or parents_with_hits.has(group)
+		_show_group(group, top.title, searching or bool(group.get_meta("open")))
+	(%library_empty as Control).visible = searching and not found
+
+
+## Opens everything that hides the block in the palette (and clears the search if it hides it), so a test can drag it.
+func reveal_in_library(view: Control) -> void:
 	var node := view.get_parent()
 	while node and node != _library:
-		if node.has_node("%toggle"):
-			return node
+		if node.has_meta("open"):
+			node.set_meta("open", true)
 		node = node.get_parent()
-	return null
+	if not view.visible:
+		(%library_search as LineEdit).text = ""
+	_apply_library_filter()
 
 
 func refresh() -> void:

@@ -149,6 +149,20 @@ theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
 text = "Arraste um bloco para a área ao lado. Para apagar, arraste de volta para cá."
 autowrap_mode = 3
 
+[node name="library_search" type="LineEdit" parent="Margem/Coluna/Corpo/library_panel/Coluna"]
+unique_name_in_owner = true
+mouse_filter = 1
+placeholder_text = "Buscar bloco..."
+clear_button_enabled = true
+
+[node name="library_empty" type="Label" parent="Margem/Coluna/Corpo/library_panel/Coluna"]
+unique_name_in_owner = true
+visible = false
+mouse_filter = 2
+theme_override_font_sizes/font_size = 11
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+text = "Nenhum bloco encontrado."
+
 [node name="Rolagem" type="ScrollContainer" parent="Margem/Coluna/Corpo/library_panel/Coluna"]
 size_flags_vertical = 3
 

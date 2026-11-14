@@ -82,9 +82,7 @@ func _click(control: Control) -> void:
 func _library_block(editor: LawEditor, type: String) -> LawBlockView:
 	var found := _find_library(editor.get_node("%library_list"), type)
 	if found and not found.is_visible_in_tree():
-		var group := editor.library_group_of(found)
-		if group:
-			(group.get_node("%toggle") as Button).button_pressed = true
+		editor.reveal_in_library(found)
 	return found
 
 
@@ -101,6 +99,8 @@ func _find_library(from: Node, type: String) -> LawBlockView:
 
 func _show_in_library(editor: LawEditor, view: Control) -> void:
 	var scroll: ScrollContainer = (editor.get_node("%library_list") as Control).get_parent()
+	# The group that just opened has no position yet: wait for the column to settle.
+	await _wait(3)
 	scroll.ensure_control_visible(view)
 	await _wait(3)
 	scroll.scroll_horizontal = 0
@@ -230,6 +230,39 @@ func _run() -> void:
 	_check(editor is LawEditor, "abre o editor de blocos")
 	_check(editor.code_id == "" and (editor.get_node("%library_list").get_node("group_avançado").get_node("%items") as Control).visible, "lei avulsa mostra os avançados abertos")
 	await _shot("l2_editor_vazio")
+	# Palette: categories open and close, and the search finds the block ignoring accents and case.
+	var lib_all: Control = editor.get_node("%library_list")
+	var flow: Control = lib_all.find_child("cat_flow", true, false)
+	var events: Control = lib_all.find_child("cat_events", true, false)
+	_check((events.get_node("%items") as Control).visible and not (flow.get_node("%items") as Control).visible, "só os eventos começam abertos")
+	(flow.get_node("%toggle") as Button).button_pressed = true
+	await _wait()
+	_check((flow.get_node("%items") as Control).visible, "clicar na categoria abre")
+	(flow.get_node("%toggle") as Button).button_pressed = false
+	await _wait()
+	_check(not (flow.get_node("%items") as Control).visible, "clicar de novo fecha")
+	var search: LineEdit = editor.get_node("%library_search")
+	search.text = "ENQUANTO"
+	search.text_changed.emit(search.text)
+	await _wait()
+	var shown := []
+	for view: LawBlockView in editor.find_children("*", "LawBlockView", true, false):
+		if view.in_library and view.is_visible_in_tree():
+			shown.append(view.block.type)
+	_check(shown == ["fl_while"], "a busca deixa só o bloco que casa: %s" % str(shown))
+	_check(flow.is_visible_in_tree() and not events.is_visible_in_tree(), "a busca abre a categoria do bloco e esconde as outras")
+	search.text = "cidadao"
+	search.text_changed.emit(search.text)
+	await _wait()
+	_check(events.is_visible_in_tree() and (editor.find_children("*", "LawBlockView", true, false).any(func(v): return v.in_library and v.block.type == "ev_citizen_enter" and v.is_visible_in_tree())), "sem acento também acha: cidadão")
+	search.text = "zzzz"
+	search.text_changed.emit(search.text)
+	await _wait()
+	_check((editor.get_node("%library_empty") as Control).visible, "sem resultado a paleta avisa")
+	search.text = ""
+	search.text_changed.emit(search.text)
+	await _wait()
+	_check(events.is_visible_in_tree() and (events.get_node("%items") as Control).visible and not (flow.get_node("%items") as Control).visible and not (editor.get_node("%library_empty") as Control).visible, "limpar a busca devolve o que estava aberto")
 	_check((editor.get_node("%present") as Button).disabled, "norma vazia não pode ser apresentada")
 	var canvas: LawCanvas = editor.canvas
 	var program: Dictionary = editor.norm_program()
@@ -449,16 +482,17 @@ func _run() -> void:
 	var diff: RichTextLabel = amendment.get_node("%op_list").get_child(0).get_node("%diff")
 	_check(diff.text.contains("[s]4[/s]"), "compara com o texto anterior: %s" % diff.text)
 	await _shot("l9_emenda")
-	# Criar e excluir artigos, com os botões à vista.
-	amendment.get_node("%new_article").pressed.emit()
+	# The amendment has no free text: the game would not understand what was written.
+	_check(amendment.find_child("new_text", true, false) == null and amendment.find_child("new_article", true, false) == null, "a emenda não tem campo de texto livre")
+	# An article without a parameter can only be deleted.
+	amendment.get_node("%article_list").get_child(1).get_node("%select").pressed.emit()
 	await _wait()
-	(amendment.get_node("%new_text") as TextEdit).text = "O ensino básico é gratuito."
-	amendment.get_node("%add_op").pressed.emit()
-	await _wait()
-	_check(amendment.norm.ops.size() == 2 and amendment.norm.ops[1].op == "add", "novo artigo entra na emenda")
+	_check(not (amendment.get_node("%add_op") as Control).visible, "artigo só de texto não tem como alterar o valor")
+	_check((amendment.get_node("%op_note") as Label).text != "", "e a tela explica por quê")
+	# Deleting articles, with the buttons in view.
 	amendment.get_node("%article_list").get_child(5).get_node("%delete").pressed.emit()
 	await _wait()
-	_check(amendment.norm.ops.size() == 3 and amendment.norm.ops[2].op == "suppress", "excluir artigo entra na emenda")
+	_check(amendment.norm.ops.size() == 2 and amendment.norm.ops[1].op == "suppress", "excluir artigo entra na emenda")
 	_check(amendment.get_node("%article_list").get_child(0).get_node("%delete").disabled, "cláusula pétrea não tem exclusão")
 	await _shot("l9_emenda_criar_excluir")
 	amendment.get_node("%delete_draft").pressed.emit()

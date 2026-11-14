@@ -102,15 +102,6 @@ text = "DISPOSITIVOS EM VIGOR"
 layout_mode = 2
 theme_override_constants/separation = 4
 
-[node name="new_article" type="Button" parent="Centro/Painel/col/Corpo/Dispositivos/NovosBotoes"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-tooltip_text = "Acrescenta um artigo, parágrafo, inciso ou disposição transitória escrevendo o texto."
-focus_mode = 0
-mouse_default_cursor_shape = 2
-text = "Novo artigo"
-
 [node name="block_article" type="Button" parent="Centro/Painel/col/Corpo/Dispositivos/NovosBotoes"]
 unique_name_in_owner = true
 layout_mode = 2
@@ -145,45 +136,8 @@ custom_minimum_size = Vector2(0, 60)
 mouse_filter = 2
 theme_override_font_sizes/font_size = 13
 theme_override_colors/font_color = Color(0.85882354, 0.9019608, 0.9254902, 1)
-text = "Escolha um dispositivo ao lado, ou acrescente um novo."
+text = "Escolha um dispositivo ao lado, ou acrescente um artigo com blocos."
 autowrap_mode = 3
-
-[node name="Op" type="HBoxContainer" parent="Centro/Painel/col/Corpo/Mudanca"]
-theme_override_constants/separation = 4
-
-[node name="OpTexto" type="Label" parent="Centro/Painel/col/Corpo/Mudanca/Op"]
-custom_minimum_size = Vector2(80, 0)
-mouse_filter = 2
-theme_override_font_sizes/font_size = 12
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-text = "Operação"
-
-[node name="op_pick" type="OptionButton" parent="Centro/Painel/col/Corpo/Mudanca/Op"]
-unique_name_in_owner = true
-size_flags_horizontal = 3
-focus_mode = 0
-
-[node name="Tipo" type="HBoxContainer" parent="Centro/Painel/col/Corpo/Mudanca"]
-unique_name_in_owner = true
-theme_override_constants/separation = 4
-
-[node name="TipoTexto" type="Label" parent="Centro/Painel/col/Corpo/Mudanca/Tipo"]
-custom_minimum_size = Vector2(80, 0)
-mouse_filter = 2
-theme_override_font_sizes/font_size = 12
-theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
-text = "Novo"
-
-[node name="kind_pick" type="OptionButton" parent="Centro/Painel/col/Corpo/Mudanca/Tipo"]
-unique_name_in_owner = true
-size_flags_horizontal = 3
-focus_mode = 0
-
-[node name="new_text" type="TextEdit" parent="Centro/Painel/col/Corpo/Mudanca"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 90)
-wrap_mode = 1
-placeholder_text = "Novo texto do dispositivo"
 
 [node name="Valor" type="HBoxContainer" parent="Centro/Painel/col/Corpo/Mudanca"]
 unique_name_in_owner = true
@@ -214,11 +168,6 @@ focus_mode = 0
 [node name="rights_box" type="VBoxContainer" parent="Centro/Painel/col/Corpo/Mudanca"]
 unique_name_in_owner = true
 theme_override_constants/separation = 2
-
-[node name="new_petrea" type="CheckBox" parent="Centro/Painel/col/Corpo/Mudanca"]
-unique_name_in_owner = true
-focus_mode = 0
-text = "Cláusula pétrea"
 
 [node name="add_op" type="Button" parent="Centro/Painel/col/Corpo/Mudanca"]
 unique_name_in_owner = true

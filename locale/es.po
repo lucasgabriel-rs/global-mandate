@@ -1242,8 +1242,20 @@ msgid "MUDANÇA"
 msgstr "CAMBIO"
 
 #: scenes/ui/legislation/amendment_editor.tscn:148
-msgid "Escolha um dispositivo ao lado, ou acrescente um novo."
-msgstr "Elige una disposición al lado, o añade una nueva."
+msgid "Escolha um dispositivo ao lado, ou acrescente um artigo com blocos."
+msgstr "Elige una disposición al lado, o añade un artículo con bloques."
+
+#: scenes/ui/legislation/law_editor.tscn
+msgid "Buscar bloco..."
+msgstr "Buscar bloque..."
+
+#: scenes/ui/legislation/law_editor.tscn
+msgid "Nenhum bloco encontrado."
+msgstr "Ningún bloque encontrado."
+
+#: scripts/ui/amendment_editor.gd
+msgid "Este dispositivo é só texto: só pode ser excluído."
+msgstr "Esta disposición es solo texto: solo se puede eliminar."
 
 #: scenes/ui/legislation/amendment_editor.tscn:159
 msgid "Operação"
