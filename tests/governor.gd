@@ -64,7 +64,43 @@ func _core() -> void:
 	_check(not StateGov.create(small, keep).ok, "a country with a single first-level unit is refused")
 
 
+func _transfers() -> void:
+	var w := _world()
+	var gov: StateGov = StateGov.create(w, _root(w, "BRA")).gov
+	var ruling: Dictionary = w.politics.ruling_party("BRA")
+	var far: Dictionary = ruling
+	for p: Dictionary in w.politics.data_of("BRA").parties:
+		if Politics.distance(ruling, p) > Politics.distance(ruling, far):
+			far = p
+	gov.party_id = int(ruling.id)
+	var allied := gov.monthly_transfer(w)
+	var allied_affinity := gov.affinity(w)
+	gov.party_id = int(far.id)
+	_check(allied_affinity > gov.affinity(w) and allied > gov.monthly_transfer(w), "a governor from the ruling party gets more transfers")
+	_check(is_equal_approx(allied_affinity, 1.0), "affinity is 1 for the ruling party")
+	# A funding request raises the transfers, and has a cooldown.
+	gov.party_id = int(ruling.id)
+	gov.step_month(w)
+	var base := gov.transfers_in
+	var granted := false
+	for seed_value in range(1, 60):
+		w.rng.seed = seed_value
+		var g: StateGov = StateGov.create(w, _root(w, "BRA")).gov
+		g.party_id = int(ruling.id)
+		g.step_month(w)
+		var r := g.request_funds(w)
+		if r.ok:
+			granted = true
+			_check(g.transfers_in > base and float(r.amount) > 0.0, "a granted request raises the transfers")
+			var again := g.request_funds(w)
+			_check(not again.ok and g.request_wait(w) > 0, "a second request inside the cooldown is refused")
+			break
+	_check(granted, "some request is granted")
+	_check(gov.transfers_in > 0.0 and gov.revenue(w) >= gov.transfers_in, "transfers count as revenue")
+
+
 func _init() -> void:
 	_core()
+	_transfers()
 	print("RESULT: ", failures, " failures")
 	quit(1 if failures > 0 else 0)

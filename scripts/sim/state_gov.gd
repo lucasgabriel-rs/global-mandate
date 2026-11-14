@@ -11,6 +11,10 @@ const MAX_SPEND_SHARE := 0.2
 const MAX_TAX_RATE := 0.15
 const DEFAULT_TAX_RATE := 0.05
 ## Spending areas the state may fund, as share of the state GDP. Union-held areas stay at zero.
+const FUNDS_COOLDOWN_MONTHS := 6
+## A granted request adds this share of the annual transfer, fading by FUNDS_BONUS_DECAY each month.
+const FUNDS_REQUEST_SHARE := 0.2
+const FUNDS_BONUS_DECAY := 0.9
 const DEFAULT_SPEND := {"health": 0.015, "education": 0.015, "public_security": 0.01, "infrastructure": 0.005}
 
 var unit_id := -1
@@ -23,6 +27,8 @@ var tax_rate := 0.0
 var spend := {}
 var debt := 0.0
 var transfers_in := 0.0
+var transfer_bonus := 0.0
+var last_request_month := -1000
 
 var _share := 0.0
 var _share_revision := -1
@@ -108,6 +114,44 @@ func set_tax(rate: float) -> Dictionary:
 	return {"ok": true, "msg": ""}
 
 
+## How close the governor's party is to the one that runs the union, from 0 to 1.
+func affinity(world: GameWorld) -> float:
+	var mine := world.politics.party_of(union_iso, party_id)
+	var ruling := world.politics.ruling_party(union_iso)
+	if mine.is_empty() or ruling.is_empty():
+		return 0.5
+	return clampf(1.0 - Politics.distance(mine, ruling) / 2.0, 0.0, 1.0)
+
+
+## What the union hands over this month, from the areas it keeps and the governor's standing with it.
+func monthly_transfer(world: GameWorld) -> float:
+	var u := union(world)
+	var weight := 1.0 - Competences.state_weight(union_iso)
+	return u.revenue * world.subdivisions.pop_share(unit_id) * weight * (0.6 + 0.8 * affinity(world)) / 12.0
+
+
+func request_wait(world: GameWorld) -> int:
+	return maxi(last_request_month + FUNDS_COOLDOWN_MONTHS - world.months_elapsed, 0)
+
+
+## Asks the union for extra money: {ok, msg, amount}.
+func request_funds(world: GameWorld) -> Dictionary:
+	var wait := request_wait(world)
+	if wait > 0:
+		return {"ok": false, "msg": TranslationServer.translate("O governo federal só recebe outro pedido em %d mês(es).") % wait, "amount": 0.0}
+	last_request_month = world.months_elapsed
+	var chance := clampf(0.2 + 0.5 * affinity(world) + 0.3 * (approval - 0.5), 0.05, 0.9)
+	if world.rng.randf() >= chance:
+		return {"ok": false, "msg": TranslationServer.translate("O governo federal recusou o pedido."), "amount": 0.0}
+	var amount := monthly_transfer(world) * 12.0 * FUNDS_REQUEST_SHARE
+	transfer_bonus += amount
+	transfers_in = monthly_transfer(world) * 12.0 + transfer_bonus
+	return {"ok": true, "msg": TranslationServer.translate("O governo federal liberou verba extra."), "amount": amount}
+
+
 ## A month of the state's accounts. Reads the union, writes only the state.
 func step_month(world: GameWorld) -> void:
+	transfer_bonus *= FUNDS_BONUS_DECAY
+	# Transfers are not taken from the union's accounts in v1: the state only receives them.
+	transfers_in = monthly_transfer(world) * 12.0 + transfer_bonus
 	debt = maxf(debt + (spending(world) - revenue(world)) / 12.0, 0.0)
