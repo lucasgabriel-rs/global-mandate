@@ -100,8 +100,10 @@ Fórmulas de PIB e receita estadual, valores iniciais da tabela de competências
 - O nome do cargo (governador, prefeito, ...) depende do tipo da unidade. No Brasil município tem prefeito, não governador.
 - Só unidades de **1º nível** são jogáveis na v1; municípios ficam para depois.
 - A unidade pode ser escolhida em **qualquer país**. A tabela de competências faz de países unitários um desafio maior, sem proibição.
-- Se a unidade passar a outro país, a nova União decide se o governador permanece. Se ela for dividida, o governador fica com a parte que contém a capital. A partida só acaba se a unidade deixar de existir.
-  - Chamada minha: se a nova União não o mantém, o jogador perde o cargo e segue na oposição, como na derrota eleitoral, em vez de encerrar a partida. A decisão da União usa a mesma afinidade partidária dos repasses, com um empurrão para manter quando o governador é popular.
+- Se a unidade for dividida, o jogador fica com a parte que contém a capital. A partida só acaba se a unidade deixar de existir.
+- Se a unidade passar a outro país, a nova União decide se mantém o jogador no cargo **pela bússola política**: compara a posição do jogador (`leader.econ`, `leader.social`, a de antes da troca) com a do partido no poder da nova União, com `Politics.distance`. Dentro do limite, ele é mantido; fora, é retirado. O construtor escolhe o limite, partindo de `COALITION_MAX_DISTANCE`. O que vem depois depende do regime da nova União (democrático quando `dem >= 4.0`, como no resto do código):
+  - **Democracia:** o jogador escolhe a qual partido da nova União se filia, no seletor de partidos que já existe. Se foi mantido, segue como governador (e adota as ideias do partido, como em `join_party`). Chamada minha: se foi retirado, ele também escolhe o partido, perde o cargo e segue como presidente do diretório da unidade (ver Oposição), disputando a eleição seguinte.
+  - **Ditadura:** se foi retirado, **perde a partida**. Se foi mantido, filia-se automaticamente ao partido no poder da nova União, sem escolha.
 
 ## Perguntas para o autor
 
