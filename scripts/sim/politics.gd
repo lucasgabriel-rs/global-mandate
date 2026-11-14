@@ -983,7 +983,7 @@ func step_month(world: GameWorld) -> void:
 ## Every month, each free parliament deliberates what is on the agenda or receives a new proposal from a party.
 func step_world_parliaments(world: GameWorld) -> void:
 	for c: Country in world.countries:
-		if not c.alive or c == world.player or c.dem < FREE_PARLIAMENT_DEM:
+		if not c.alive or (c == world.player and world.governor == null) or c.dem < FREE_PARLIAMENT_DEM:
 			continue
 		var data := data_of(c.iso)
 		if data.is_empty():

@@ -78,11 +78,14 @@ const ACTIONS := {
 }
 # i18n-end
 # i18n-begin
-const ROLE_LABELS := {"head": "Chefe de governo", "opposition": "Líder da oposição", "parliament": "Parlamento", "court": "Corte constitucional"}
+const ROLE_LABELS := {"head": "Chefe de governo", "opposition": "Líder da oposição", "governor": "Chefe do executivo da unidade", "unit_opposition": "Presidente do diretório do partido", "parliament": "Parlamento", "court": "Corte constitucional"}
 # i18n-end
 const ROLE_ACTIONS := {
 	"head": ["create", "edit", "present", "veto", "promulgate", "publish", "revoke", "admin"],
 	"opposition": ["create", "edit", "present"],
+	# State norms come in a later version: a governor has no national norms to write.
+	"governor": [],
+	"unit_opposition": [],
 	"parliament": ["analyze", "vote", "approve", "promulgate"],
 	"court": ["analyze"],
 }
@@ -369,7 +372,7 @@ static func word_diff(before: String, after: String) -> String:
 # --- Permissions ------------------------------------------------------------------------
 
 func role(world: GameWorld) -> String:
-	return "head" if world.in_office else "opposition"
+	return world.role()
 
 
 func can(world: GameWorld, action: String, type := "") -> bool:

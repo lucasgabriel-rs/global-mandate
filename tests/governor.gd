@@ -99,8 +99,35 @@ func _transfers() -> void:
 	_check(gov.transfers_in > 0.0 and gov.revenue(w) >= gov.transfers_in, "transfers count as revenue")
 
 
+func _integration() -> void:
+	var w := GameWorld.new()
+	w.setup(7)
+	var bra: Country = w.by_iso["BRA"]
+	_check(w.governor == null and w.role() == "head", "country mode by default")
+	var r := w.set_governor(_root(w, "BRA"), "normal")
+	_check(r.ok and w.governor is StateGov, "a unit can be chosen at the start")
+	_check(w.role() == "governor" and w.player == bra and w.governed() == null, "the player is tied to the union, which the AI runs")
+	_check(w.governor.party_id >= 0 and w.governor.party_id == int(w.politics.data_of("BRA").player_party), "the governor belongs to a party of the union")
+	_check(w.office_title() == "Governador", "the title comes from the unit type")
+	var y0 := bra.y
+	for i in 400:
+		w.tick_day()
+	_check(bra.y != y0 and w.governor.debt >= 0.0 and w.governor.transfers_in > 0.0, "the union and the state keep evolving")
+	_check(w.legislation.role(w) == "governor" and not w.legislation.can(w, "present"), "the governor does not present national norms")
+	var again := GameWorld.new()
+	again.setup(7)
+	again.load_dict(bytes_to_var(var_to_bytes(w.to_dict())))
+	_check(again.governor != null and again.governor.unit_id == w.governor.unit_id and again.role() == "governor", "the governor survives a save")
+	_check(is_equal_approx(again.governor.approval, w.governor.approval) and again.governor.party_id == w.governor.party_id, "approval and party survive a save")
+	_check(again.governor.last_request_month == w.governor.last_request_month and is_equal_approx(again.governor.debt, w.governor.debt), "state accounts survive a save")
+	for i in 5:
+		again.tick_day()
+	_check(again.day_index == w.day_index + 5, "a loaded governor game keeps running")
+
+
 func _init() -> void:
 	_core()
 	_transfers()
+	_integration()
 	print("RESULT: ", failures, " failures")
 	quit(1 if failures > 0 else 0)

@@ -35,6 +35,8 @@ var usa: Country
 var player: Country
 ## false when the player lost the election: the country stays with the AI, and the player leads the opposition.
 var in_office := true
+## The unit the player governs; null in country mode. The player then stays tied to the union, which the AI runs.
+var governor: StateGov = null
 ## Last month in which each foreign leader received the player: {iso: month}.
 var talks := {}
 var chats := {}           # contact -> messages (ChatLog)
@@ -241,6 +243,43 @@ func _player_upkeep(c: Country) -> void:
 		c.war_exhaustion = maxf(c.war_exhaustion - 0.012, 0.0)
 
 
+## The role the interface plays: "head" and "opposition" in country mode, "governor" and "unit_opposition" in governor mode.
+func role() -> String:
+	if governor != null:
+		return "governor" if governor.in_office else "unit_opposition"
+	return "head" if in_office else "opposition"
+
+
+## Name of the executive office of the governed unit, or empty in country mode.
+func office_title() -> String:
+	if governor == null or not subdivisions.units.has(governor.unit_id):
+		return ""
+	return String(subdivisions.office_of(int(subdivisions.units[governor.unit_id].type)).name)
+
+
+## Starts the match as the head of a first-level unit: {ok, msg}. The union keeps running on the AI.
+func set_governor(unit_id: int, diff: String) -> Dictionary:
+	var made := StateGov.create(self, unit_id)
+	if not made.ok:
+		return made
+	var gov: StateGov = made.gov
+	var union := resolve_owner(gov.union_iso)
+	var approval0 := union.approval
+	var election0 := union.next_election
+	in_office = false
+	governor = gov
+	set_player(union, diff)
+	# The difficulty and the mandate belong to the governor, not to the union's own politics.
+	union.approval = approval0
+	union.next_election = election0
+	politics.clear_cabinet(union.iso)
+	legislation.drop_government_bills(self)
+	gov.party_id = int(politics.data_of(union.iso).player_party)
+	gov.approval = clampf(0.55 + float(DIFFICULTY[diff].approval), 0.2, 0.85)
+	gov.next_election = year_float() + legislation.mandate_years() - 0.1 if union.dem >= 4.0 else -1.0
+	return {"ok": true, "msg": ""}
+
+
 ## Who governs the player's country: the player, or nobody that depends on human decisions.
 func governed() -> Country:
 	return player if in_office else null
@@ -262,7 +301,9 @@ func _on_month() -> void:
 		markets.push_hist(i)
 	if month == 0:
 		diplomacy._compute_shares(self)
-	if player and not in_office:
+	if governor != null:
+		governor.step_month(self)
+	elif player and not in_office:
 		if not player.alive:
 			_finish("golpe", tr("%s deixou de existir, e sua carreira política acabou junto com o país.") % player.name)
 	_send(month_passed)
@@ -405,7 +446,8 @@ func ask_player(prompt: Dictionary) -> void:
 # --- Player politics ---------------------------------------------------
 
 func check_player_politics(c: Country) -> void:
-	if c != player or over:
+	# A governor does not take part in the union's national politics: the AI runs them.
+	if c != player or over or governor != null:
 		return
 	var yf := year_float()
 	if c.dem >= 4.0 and yf >= c.next_election - 0.25 and yf < c.next_election and not campaign_noticed:
@@ -988,6 +1030,7 @@ func to_dict() -> Dictionary:
 		"territories": territories.to_dict(), "leader": leader, "politics": politics.to_dict(),
 		"in_office": in_office, "talks": talks, "chats": chats, "talk_turns": talk_turns, "offers": offers, "legislation": legislation.to_dict(), "treaties": treaties.to_dict(), "next_talk_month": next_talk_month,
 		"infra": infra.to_dict(), "corporate": corporate.to_dict(), "corruption": corruption.to_dict(),
+		"governor": governor.to_dict() if governor != null else {},
 	}
 
 
@@ -1014,6 +1057,7 @@ func load_dict(d: Dictionary) -> void:
 	leader = Character.migrated(d.get("leader", {}), rng) if d.has("leader") and not d.leader.is_empty() else {}
 	politics.from_dict(d.get("politics", {}))
 	in_office = d.get("in_office", true)
+	governor = StateGov.from_dict(d.governor) if not d.get("governor", {}).is_empty() else null
 	talks = d.get("talks", {})
 	chats = d.get("chats", {})
 	talk_turns = d.get("talk_turns", {})

@@ -52,6 +52,7 @@ func _init() -> void:
 		var diff := _same(summary(w), expected)
 		_check(diff == "", "%s: country, date, fund, norms, parties and diplomacy match the old game %s" % [tag, diff])
 		_check(w.in_office == (tag == "government"), "%s: role kept" % tag)
+		_check(w.governor == null and w.role() == ("head" if tag == "government" else "opposition"), "%s: an old save loads in country mode" % tag)
 		for i in 12:
 			w.tick_day()
 		_check(w.day_index == int(expected.day_index) + 12 and is_finite(w.player.y_usd()), "%s: the simulation keeps running" % tag)

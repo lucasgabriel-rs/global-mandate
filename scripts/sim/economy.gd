@@ -909,7 +909,7 @@ static func _labor_and_politics(c: Country, world: GameWorld) -> void:
 	# Closed regimes may fall by coup; democracies go to the polls.
 	var yf := world.year_float()
 	# In opposition, the election of the player's country is still handled by the world.
-	if c != world.player:
+	if c != world.player or world.governor != null:
 		if c.dem >= 4.0 and yf >= c.next_election:
 			_ai_election(c, world)
 		elif c.dem < 4.0 and c.stability < 0.14 and world.rng.randf() < 0.012:

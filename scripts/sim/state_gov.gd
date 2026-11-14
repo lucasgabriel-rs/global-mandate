@@ -155,3 +155,24 @@ func step_month(world: GameWorld) -> void:
 	# Transfers are not taken from the union's accounts in v1: the state only receives them.
 	transfers_in = monthly_transfer(world) * 12.0 + transfer_bonus
 	debt = maxf(debt + (spending(world) - revenue(world)) / 12.0, 0.0)
+
+
+func to_dict() -> Dictionary:
+	return {
+		"unit_id": unit_id, "union_iso": union_iso, "party_id": party_id, "approval": approval, "next_election": next_election,
+		"in_office": in_office, "tax_rate": tax_rate, "spend": spend, "debt": debt, "transfers_in": transfers_in,
+		"transfer_bonus": transfer_bonus, "last_request_month": last_request_month,
+	}
+
+
+static func from_dict(d: Dictionary) -> StateGov:
+	var gov := StateGov.new()
+	gov.unit_id = int(d.unit_id)
+	gov.union_iso = String(d.union_iso)
+	gov.party_id = int(d.party_id)
+	for key: String in ["approval", "next_election", "tax_rate", "debt", "transfers_in", "transfer_bonus"]:
+		gov.set(key, float(d.get(key, 0.0)))
+	gov.in_office = bool(d.get("in_office", true))
+	gov.spend = d.get("spend", {}).duplicate()
+	gov.last_request_month = int(d.get("last_request_month", -1000))
+	return gov
