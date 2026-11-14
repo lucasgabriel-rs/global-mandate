@@ -4,12 +4,13 @@ Status: rascunho para aprovação. Nenhum código de produto foi escrito.
 
 ## Intenção
 
-O jogador governa uma unidade subnacional (estado, província, região) em vez de um país. A experiência é a do jogo atual (orçamento, leis, eleições, aprovação), em escala menor e **sem soberania**: sem política externa, sem moeda, sem forças armadas, e só com as leis que a Constituição deixa a cargo do estado. O motivo declarado pelo autor é que seria divertido; o critério de sucesso é ser jogável e divertido, não ser uma simulação fiel.
+O jogador governa uma unidade subnacional (estado, província, região) em vez de um país. O cargo muda com o tipo da unidade (governador, prefeito, ...). A experiência é a do jogo atual (orçamento, leis, eleições, aprovação), em escala menor e **sem soberania**: sem política externa, sem moeda, sem forças armadas, e só com as leis que a Constituição deixa a cargo do estado. O motivo declarado pelo autor é que seria divertido; o critério de sucesso é ser jogável e divertido, não ser uma simulação fiel.
 
 ## Objetivos
 
 - Escolher uma unidade de 1º nível na tela inicial e jogá-la com a mesma interface de janelas.
-- Orçamento estadual (receitas, despesas, dívida), aprovação e eleição para governador.
+- Orçamento estadual (receitas, despesas, dívida), aprovação e eleição para o cargo executivo da unidade.
+- Nome do cargo por **tipo de unidade** (ver Cargo por tipo de unidade).
 - Relação com a União: repasses, e leis federais que limitam o estado.
 - Tabela de **competências** por país: o que é do estado e o que é da União.
 - O país-mãe segue funcionando sozinho, pela IA.
@@ -18,7 +19,7 @@ O jogador governa uma unidade subnacional (estado, província, região) em vez d
 
 - Assembleia estadual e leis estaduais no editor de leis (v2).
 - Carreira política até a presidência (v3).
-- Municípios como unidades jogáveis.
+- Municípios como unidades jogáveis na v1 (o nome do cargo já é por tipo de unidade, então a estrutura os comporta depois).
 - Qualquer efeito do gasto estadual sobre as contas nacionais (ver Restrições).
 
 ## Antiobjetivos (falha mesmo que "funcione")
@@ -35,15 +36,23 @@ O jogador governa uma unidade subnacional (estado, província, região) em vez d
 
 ## Design (v1)
 
-### Oposição
+### Oposição: presidente do partido na unidade
 
-Ao perder o cargo, o jogador volta a ser presidente do partido, como em `World.enter_opposition`. Fundo, pesquisa, campanha e crítica valem para o estado. A **moção de censura** depende de uma assembleia estadual e fica desligada até a v2. O construtor verifica quais dessas ações em `politics.gd` assumem o parlamento nacional e adapta só o que for preciso.
+Ao perder o cargo, o jogador não vira líder da oposição nacional: ele passa a ser o **presidente do diretório do partido naquela unidade** e disputa a eleição seguinte, com a IA governando a unidade nesse período. Ele usa as ferramentas de oposição que já existem em `politics.gd` (fundo do partido, pesquisa, campanha, crítica ao governo), apontadas para a aprovação e a eleição da unidade.
+
+O diretório é **subordinado à presidência nacional do partido**. Chamada minha para o formato: o diretório recebe só uma parte do fundo do partido, a direção nacional pode vetar candidaturas e pode intervir se o diretório destoar da linha nacional do partido, e a relação do jogador com ela pesa na campanha. O construtor define os números. Quando o partido é o do governo federal, a subordinação rende repasses melhores; quando é de oposição nacional, rende atrito.
+
+A **moção de censura** depende de uma assembleia estadual e fica desligada até a v2. O construtor verifica quais ações de `politics.gd` assumem o parlamento nacional e adapta só o que for preciso.
 
 ### Quem é o jogador
 
 Qualquer escolha aqui mexe nos ~246 usos de `world.player` e nos 74 de `in_office`, então a regra é reaproveitar o que já existe: o caminho da **oposição**, que já deixa o jogador ligado a um país que a IA governa (`in_office = false`, `NationAI.step_month` roda para o país dele, `governed()` devolve `null`).
 
 Chamada minha: no modo governador, `world.player` é o **país-mãe**, `in_office` é `false`, e um campo novo `world.governor` (um `StateGov`, ou `null` no modo país) diz qual unidade o jogador comanda. A interface do país vira leitura, e as janelas estaduais usam `world.governor`. Falta ao construtor verificar quais telas assumem "player não governa" como "player é oposição" e precisam de um terceiro papel (`governor`) em `Legislation.role()`.
+
+### Cargo por tipo de unidade
+
+O nome do cargo executivo é uma propriedade do **tipo** da unidade (`Subdivisions.types`), não do jogo: governador para estados, prefeito para municípios e cidades, e assim por diante, com a regra de cada país. Isso vale também para tipos criados pelo jogador (o criador de unidades pede o nome do cargo, com padrão "Governador" quando nada for dado). Todo texto, janela e notícia que diga "governador" usa o nome do cargo do tipo da unidade jogada, no masculino ou no feminino conforme o cargo. Os msgid ficam em português (o nome do cargo entra como dado, não como texto fixo). Padrões de partida: Brasil, Estado e Distrito Federal: Governador; Município e Cidade: Prefeito. Outros países: o padrão genérico, que o construtor completa a partir dos tipos do cenário.
 
 ### `StateGov`
 
@@ -87,12 +96,12 @@ Fórmulas de PIB e receita estadual, valores iniciais da tabela de competências
 ## Decidido pelo autor
 
 - Perder a eleição para governador **não** encerra a partida: o jogador segue na oposição e disputa a eleição seguinte, com a IA governando o estado nesse período.
-- A oposição é **o mesmo sistema do modo país**: o jogador é o presidente do partido, não um papel novo de "oposição estadual". Ele usa o que já existe em `politics.gd` (fundo do partido, pesquisa, campanha, crítica ao governo), apontado para a aprovação e a eleição do estado. O partido é o partido do jogador na política do país-mãe, então o jogador já pertence a um partido antes de ser governador.
-
+- Na oposição o jogador é o presidente do partido **na unidade**, subordinado à presidência nacional do partido (ver Oposição). Não vira líder de oposição do país.
+- O nome do cargo (governador, prefeito, ...) depende do tipo da unidade. No Brasil município tem prefeito, não governador.
 - A unidade pode ser escolhida em **qualquer país**. A tabela de competências faz de países unitários um desafio maior, sem proibição.
 - Se a unidade passar a outro país, a nova União decide se o governador permanece. Se ela for dividida, o governador fica com a parte que contém a capital. A partida só acaba se a unidade deixar de existir.
   - Chamada minha: se a nova União não o mantém, o jogador perde o cargo e segue na oposição, como na derrota eleitoral, em vez de encerrar a partida. A decisão da União usa a mesma afinidade partidária dos repasses, com um empurrão para manter quando o governador é popular.
 
 ## Perguntas para o autor
 
-Nenhuma em aberto. Aguardando aprovação do documento.
+1. Municípios jogáveis ficam fora da v1 (só 1º nível). Você quer que já entrem na v1, já que o cargo por tipo existe?
