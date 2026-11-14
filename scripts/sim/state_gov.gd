@@ -15,6 +15,10 @@ const FUNDS_COOLDOWN_MONTHS := 6
 ## A granted request adds this share of the annual transfer, fading by FUNDS_BONUS_DECAY each month.
 const FUNDS_REQUEST_SHARE := 0.2
 const FUNDS_BONUS_DECAY := 0.9
+## Approval that decides an election: the executive keeps the post above it, and loses it below.
+const ELECTION_BASELINE := 0.46
+const ELECTION_NOISE := 0.03
+const CAMPAIGN_BONUS := 0.03
 const DEFAULT_SPEND := {"health": 0.015, "education": 0.015, "public_security": 0.01, "infrastructure": 0.005}
 
 var unit_id := -1
@@ -23,6 +27,10 @@ var party_id := -1
 var approval := 0.5
 var next_election := -1.0
 var in_office := true
+## The party that holds the executive: the player's while in office, a rival's in the opposition.
+var incumbent_party := -1
+## Gathered by campaigns in the opposition, spent at the next election.
+var campaign_bonus := 0.0
 var tax_rate := 0.0
 var spend := {}
 var debt := 0.0
@@ -149,6 +157,54 @@ func request_funds(world: GameWorld) -> Dictionary:
 	return {"ok": true, "msg": TranslationServer.translate("O governo federal liberou verba extra."), "amount": amount}
 
 
+## The strongest party of the union other than the player's: the one that takes the post when the player loses it.
+func rival_party(world: GameWorld) -> int:
+	var best := -1
+	var best_support := -1.0
+	for p: Dictionary in world.politics.data_of(union_iso).parties:
+		if int(p.id) != party_id and float(p.support) > best_support:
+			best = int(p.id)
+			best_support = float(p.support)
+	return best
+
+
+## The vote for the head of the unit: {won, winner_party, vetoed}. In office the player needs approval above the
+## baseline (and the national party's blessing); in the opposition, the incumbent's approval has to fall below it.
+func hold_election(world: GameWorld) -> Dictionary:
+	var vetoed := in_office and world.politics.national_veto(world)
+	var score := approval + world.rng.randfn(0.0, ELECTION_NOISE)
+	var won := score >= ELECTION_BASELINE and not vetoed if in_office else score - campaign_bonus < ELECTION_BASELINE
+	campaign_bonus = 0.0
+	return {"won": won, "winner_party": party_id if won else rival_party(world), "vetoed": vetoed}
+
+
+func _reset_approval(world: GameWorld) -> void:
+	approval = clampf(0.55 + world.rng.randf_range(-0.05, 0.08), 0.3, 0.75)
+
+
+## The player loses the post and keeps leading the party's directory in the unit.
+func enter_unit_opposition(world: GameWorld, why: String) -> void:
+	in_office = false
+	incumbent_party = rival_party(world)
+	_reset_approval(world)
+	world.emit_news(TranslationServer.translate("%s deixa o governo de %s.") % [world.leader.get("name", TranslationServer.translate("O líder")), unit(world).get("name", "?")], "politica", union(world))
+	world.ask_player({
+		"title": TranslationServer.translate("Derrotado nas urnas"), "text": why, "always": true,
+		"options": [{"label": TranslationServer.translate("Liderar o diretório"), "hint": TranslationServer.translate("Critique o governo, faça campanha e dispute a próxima eleição"), "fn": func(): pass}],
+	})
+
+
+func take_office(world: GameWorld) -> void:
+	in_office = true
+	incumbent_party = party_id
+	_reset_approval(world)
+	world.emit_news(TranslationServer.translate("%s volta ao governo de %s.") % [world.leader.get("name", TranslationServer.translate("O líder")), unit(world).get("name", "?")], "politica", union(world))
+	world.ask_player({
+		"title": TranslationServer.translate("De volta ao poder!"), "text": TranslationServer.translate("Seu partido venceu a eleição da unidade."), "always": true,
+		"options": [{"label": TranslationServer.translate("Assumir o governo"), "hint": TranslationServer.translate("Revise o orçamento"), "fn": func(): pass}],
+	})
+
+
 ## A month of the state's accounts. Reads the union, writes only the state.
 func step_month(world: GameWorld) -> void:
 	transfer_bonus *= FUNDS_BONUS_DECAY
@@ -160,7 +216,7 @@ func step_month(world: GameWorld) -> void:
 func to_dict() -> Dictionary:
 	return {
 		"unit_id": unit_id, "union_iso": union_iso, "party_id": party_id, "approval": approval, "next_election": next_election,
-		"in_office": in_office, "tax_rate": tax_rate, "spend": spend, "debt": debt, "transfers_in": transfers_in,
+		"in_office": in_office, "incumbent_party": incumbent_party, "campaign_bonus": campaign_bonus, "tax_rate": tax_rate, "spend": spend, "debt": debt, "transfers_in": transfers_in,
 		"transfer_bonus": transfer_bonus, "last_request_month": last_request_month,
 	}
 
@@ -173,6 +229,8 @@ static func from_dict(d: Dictionary) -> StateGov:
 	for key: String in ["approval", "next_election", "tax_rate", "debt", "transfers_in", "transfer_bonus"]:
 		gov.set(key, float(d.get(key, 0.0)))
 	gov.in_office = bool(d.get("in_office", true))
+	gov.incumbent_party = int(d.get("incumbent_party", gov.party_id))
+	gov.campaign_bonus = float(d.get("campaign_bonus", 0.0))
 	gov.spend = d.get("spend", {}).duplicate()
 	gov.last_request_month = int(d.get("last_request_month", -1000))
 	return gov

@@ -125,9 +125,74 @@ func _integration() -> void:
 	_check(again.day_index == w.day_index + 5, "a loaded governor game keeps running")
 
 
+func _governed(iso := "BRA") -> GameWorld:
+	var w := GameWorld.new()
+	w.setup(7)
+	w.set_governor(_root(w, iso), "normal")
+	return w
+
+
+## Forces the election of the unit to happen now with the given approval of whoever holds the executive.
+func _vote(w: GameWorld, approval: float) -> void:
+	w.governor.approval = approval
+	w.governor.next_election = w.year_float() - 0.01
+	w.check_governor_election()
+
+
+func _election() -> void:
+	var w := _governed()
+	_check(w.governor.next_election > w.year_float(), "a democratic union schedules the unit election")
+	_vote(w, 0.95)
+	_check(w.role() == "governor" and w.governor.next_election > w.year_float(), "a popular governor is re-elected and the next election is scheduled")
+	_vote(w, 0.05)
+	_check(w.role() == "unit_opposition" and w.governor.incumbent_party != w.governor.party_id, "an unpopular governor loses and goes to the opposition")
+	_vote(w, 0.95)
+	_check(w.role() == "unit_opposition", "the opposition does not win against a popular incumbent")
+	_vote(w, 0.05)
+	_check(w.role() == "governor" and w.governor.incumbent_party == w.governor.party_id, "the opposition wins against an unpopular incumbent")
+	# A union without elections never schedules one.
+	var cn := _governed("CHN")
+	_check(cn.governor.next_election == -1.0, "a dictatorship has no unit election")
+	cn.year += 5
+	cn.check_governor_election()
+	_check(cn.role() == "governor", "five years later the governor is still in office")
+
+
+func _directory() -> void:
+	var w := _governed()
+	var gov: StateGov = w.governor
+	var pol := w.politics
+	var mine := pol.player_party(w)
+	mine["funds"] = 100.0
+	_check(pol.directory_fund(w) < pol.party_fund(w) and pol.directory_fund(w) > 0.0, "the directory holds only a share of the party fund")
+	_check(not pol.criticize(w).ok, "a governor in office does not use the opposition tools")
+	_check(not pol.censure(w).ok, "there is no motion of censure without a state assembly")
+	_vote(w, 0.05)
+	var union_approval: float = w.player.approval
+	gov.approval = 0.5
+	_check(pol.criticize(w).ok and gov.approval < 0.5, "criticism lowers the approval of the state executive")
+	_check(w.player.approval == union_approval, "and leaves the union's approval alone")
+	var bonus0 := gov.campaign_bonus
+	_check(pol.campaign(w).ok and gov.campaign_bonus > bonus0, "a campaign builds up for the next election")
+	mine["funds"] = 0.0
+	_check(not pol.criticize(w).ok, "without money the directory cannot act")
+	# The national party line: a leader far from the party is vetoed.
+	var party := pol.player_party(w)
+	_check(not pol.national_veto(w), "a leader at the party's own compass is not vetoed")
+	var far := {"econ": 1.0, "social": 1.0}
+	for corner in [{"econ": -1.0, "social": -1.0}, {"econ": -1.0, "social": 1.0}, {"econ": 1.0, "social": -1.0}]:
+		if Politics.distance(corner, party) > Politics.distance(far, party):
+			far = corner
+	w.leader["econ"] = far.econ
+	w.leader["social"] = far.social
+	_check(pol.national_veto(w), "a leader far from the national line is vetoed")
+
+
 func _init() -> void:
 	_core()
 	_transfers()
 	_integration()
+	_election()
+	_directory()
 	print("RESULT: ", failures, " failures")
 	quit(1 if failures > 0 else 0)

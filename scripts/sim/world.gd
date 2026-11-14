@@ -303,6 +303,7 @@ func _on_month() -> void:
 		diplomacy._compute_shares(self)
 	if governor != null:
 		governor.step_month(self)
+		check_governor_election()
 	elif player and not in_office:
 		if not player.alive:
 			_finish("golpe", tr("%s deixou de existir, e sua carreira política acabou junto com o país.") % player.name)
@@ -467,6 +468,22 @@ func check_player_politics(c: Country) -> void:
 			_finish("golpe", tr("Generais e a elite política perderam a paciência. Um golpe encerrou seu governo."))
 		elif c.approval < 0.1 and c.unrest > 0.3 and rng.randf() < 0.05:
 			_finish("golpe", tr("Multidões tomaram o palácio, e os militares não defenderam o regime. Você foi deposto."))
+
+
+## The vote of the governed unit, when its date comes. Unions without elections never schedule one.
+func check_governor_election() -> void:
+	if governor == null or over or governor.next_election < 0.0 or year_float() < governor.next_election:
+		return
+	var gov := governor
+	var result := gov.hold_election(self)
+	gov.next_election = year_float() + legislation.mandate_years()
+	if result.won and not gov.in_office:
+		gov.take_office(self)
+	elif not result.won and gov.in_office:
+		var why: String = TranslationServer.translate("A direção nacional do partido vetou sua candidatura.") if result.vetoed else TranslationServer.translate("Sua aprovação de %d%% não bastou. Você passa a presidir o diretório do partido até a próxima eleição.") % int(gov.approval * 100.0)
+		gov.enter_unit_opposition(self, why)
+	elif result.won:
+		gov.approval = clampf(gov.approval, 0.3, 0.9)
 
 
 func _player_election(c: Country) -> void:

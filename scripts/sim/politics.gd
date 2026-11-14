@@ -41,6 +41,8 @@ const FUND_PRICES := {"poll_popularity": 1.0, "poll_support": 0.35, "campaign": 
 const FUND_LABELS := {"poll_popularity": "Pesquisa de popularidade", "poll_support": "Pesquisa de apoio no parlamento", "campaign": "Campanha", "censure": "Moção de censura", "criticize": "Crítica ao governo", "invite": "Convite a um partido"}
 # i18n-end
 const FUND_START_MONTHS := 3.0
+## Share of the party fund the player's directory in a unit may use; the national leadership keeps the rest.
+const DIRECTORY_FUND_SHARE := 0.35
 ## Above this, an AI party spends on campaigning by itself.
 const FUND_AI_SPEND_UNITS := 8.0
 const UPPER_HOUSE_SHARE := 0.25
@@ -478,6 +480,19 @@ func fund_price(world: GameWorld, kind: String) -> float:
 	return fund_unit(world) * float(FUND_PRICES[kind])
 
 
+## The part of the party fund the player's directory may spend in a unit, in US$ millions.
+func directory_fund(world: GameWorld) -> float:
+	return party_fund(world) * DIRECTORY_FUND_SHARE
+
+
+## True when the player's compass is too far from the national party line: the leadership blocks the candidacy.
+func national_veto(world: GameWorld) -> bool:
+	var party := player_party(world)
+	if party.is_empty():
+		return false
+	return distance({"econ": float(world.leader.get("econ", party.econ)), "social": float(world.leader.get("social", party.social))}, party) > COALITION_REBEL_DISTANCE
+
+
 ## The party fund, in US$ millions.
 func party_fund(world: GameWorld) -> float:
 	return float(player_party(world).get("funds", 0.0))
@@ -574,6 +589,12 @@ static func _count_seats(parties: Array) -> int:
 # --- Opposition ------------------------------------------------------------------------
 
 func _opposition_guard(world: GameWorld, kind: String) -> Dictionary:
+	if world.governor != null:
+		if world.governor.in_office:
+			return {"ok": false, "msg": tr("Você está no governo.")}
+		if directory_fund(world) < fund_price(world, kind):
+			return {"ok": false, "msg": tr("O diretório só pode gastar %s do fundo do partido, e %s custa %s.") % [UiKit.millions(directory_fund(world)), tr(FUND_LABELS[kind]), UiKit.millions(fund_price(world, kind))]}
+		return spend_fund(world, kind)
 	if world.in_office:
 		return {"ok": false, "msg": tr("Você está no governo.")}
 	return spend_fund(world, kind)
@@ -592,6 +613,9 @@ func criticize(world: GameWorld) -> Dictionary:
 	var guard := _opposition_guard(world, "criticize")
 	if not guard.ok:
 		return guard
+	if world.governor != null:
+		world.governor.approval = clampf(world.governor.approval - 0.012, 0.02, 0.95)
+		return {"ok": true, "msg": tr("Sua crítica repercute, e a aprovação do governo da unidade cai.")}
 	world.player.approval = clampf(world.player.approval - 0.012, 0.02, 0.95)
 	_boost_player_party(world, 1.03)
 	return {"ok": true, "msg": tr("Sua crítica repercute, e a aprovação do governo cai.")}
@@ -601,12 +625,17 @@ func campaign(world: GameWorld) -> Dictionary:
 	var guard := _opposition_guard(world, "campaign")
 	if not guard.ok:
 		return guard
+	if world.governor != null:
+		world.governor.campaign_bonus += StateGov.CAMPAIGN_BONUS
+		return {"ok": true, "msg": tr("A campanha percorre a unidade, e o partido cresce nas pesquisas.")}
 	_boost_player_party(world, 1.08)
 	return {"ok": true, "msg": tr("A campanha percorre o país, e o partido cresce nas pesquisas.")}
 
 
 ## Motion of no confidence: if the opposition adds up to the majority of seats, the government falls and there is an election now.
 func censure(world: GameWorld) -> Dictionary:
+	if world.governor != null:
+		return {"ok": false, "msg": tr("Não há assembleia estadual nesta versão.")}
 	var guard := _opposition_guard(world, "censure")
 	if not guard.ok:
 		return guard
