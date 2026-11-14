@@ -1,0 +1,9 @@
+{
+	"default": {"health": "shared", "education": "shared", "public_security": "state", "infrastructure": "shared", "taxes": "shared"},
+	"unitary_default": {"health": "union", "education": "union", "public_security": "union", "infrastructure": "shared", "taxes": "union"},
+	"federal": ["BRA", "USA", "DEU", "ARG", "MEX", "IND", "AUS", "CAN", "RUS", "NGA", "CHE", "AUT", "BEL", "ETH", "MYS", "PAK"],
+	"countries": {
+		"BRA": {"health": "shared", "education": "shared", "public_security": "state", "infrastructure": "shared", "taxes": "shared"},
+		"USA": {"health": "state", "education": "state", "public_security": "state", "infrastructure": "shared", "taxes": "shared"}
+	}
+}
