@@ -29,6 +29,10 @@
 [ext_resource type="Texture2D" path="res://assets/ui/dock/legislacao.svg" id="wi_legislacao"]
 [ext_resource type="Texture2D" path="res://assets/ui/dock/oposicao.svg" id="wi_oposicao"]
 [ext_resource type="PackedScene" path="res://scenes/ui/panels/opposition_panel.tscn" id="sub_7"]
+[ext_resource type="PackedScene" path="res://scenes/ui/panels/state_panel.tscn" id="sub_state"]
+[ext_resource type="PackedScene" path="res://scenes/ui/panels/state_budget.tscn" id="sub_budget"]
+[ext_resource type="PackedScene" path="res://scenes/ui/panels/union_panel.tscn" id="sub_union"]
+[ext_resource type="PackedScene" path="res://scenes/ui/panels/directory_panel.tscn" id="sub_dir"]
 [sub_resource type="StyleBoxFlat" id="StyleBoxOposicao"]
 content_margin_left = 10.0
 content_margin_top = 3.0
@@ -3943,6 +3947,54 @@ icon = ExtResource("wi_oposicao")
 default_size = Vector2(460, 640)
 
 [node name="opposition" parent="desk/w_opposition" instance=ExtResource("sub_7")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="w_state" parent="desk" instance=ExtResource("fw_1") groups=["unit_only"]]
+layout_mode = 0
+offset_right = 440.0
+offset_bottom = 520.0
+title = "Painel da unidade"
+icon = ExtResource("wi_painel")
+default_size = Vector2(440, 520)
+
+[node name="state" parent="desk/w_state" instance=ExtResource("sub_state")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="w_state_budget" parent="desk" instance=ExtResource("fw_1") groups=["governor_only"]]
+layout_mode = 0
+offset_right = 480.0
+offset_bottom = 440.0
+title = "Orçamento da unidade"
+icon = ExtResource("wi_fiscal")
+default_size = Vector2(480, 440)
+
+[node name="state_budget" parent="desk/w_state_budget" instance=ExtResource("sub_budget")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="w_union" parent="desk" instance=ExtResource("fw_1") groups=["unit_only"]]
+layout_mode = 0
+offset_right = 460.0
+offset_bottom = 560.0
+title = "Relações com a União"
+icon = ExtResource("wi_mundo")
+default_size = Vector2(460, 560)
+
+[node name="union" parent="desk/w_union" instance=ExtResource("sub_union")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="w_directory" parent="desk" instance=ExtResource("fw_1") groups=["unit_opposition_only"]]
+layout_mode = 0
+offset_right = 460.0
+offset_bottom = 420.0
+title = "Diretório do partido"
+icon = ExtResource("wi_oposicao")
+default_size = Vector2(460, 420)
+
+[node name="directory" parent="desk/w_directory" instance=ExtResource("sub_dir")]
 unique_name_in_owner = true
 layout_mode = 2
 

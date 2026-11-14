@@ -214,6 +214,17 @@ func _commit_type(id: int, edit: LineEdit) -> void:
 	_update_banner()
 
 
+func _commit_office(id: int, edit: LineEdit) -> void:
+	var office: Dictionary = world.subdivisions.office_of(id)
+	if edit.text == office.name:
+		return
+	var r: Dictionary = world.subdivisions.set_office(id, edit.text, office.female)
+	if not r.ok:
+		_say(r.msg, true)
+		edit.text = office.name
+	_dirty = true
+
+
 func _remove_type(id: int) -> void:
 	var r: Dictionary = world.subdivisions.remove_type(id)
 	if not r.ok:
@@ -431,6 +442,11 @@ func _rebuild_types() -> void:
 		edit.text_submitted.connect(func(_s):
 			edit.release_focus())
 		edit.focus_exited.connect(_commit_type.bind(id, edit))
+		var office: LineEdit = row.get_node("%office_edit")
+		office.text = subs.office_of(id).name
+		office.text_submitted.connect(func(_s):
+			office.release_focus())
+		office.focus_exited.connect(_commit_office.bind(id, office))
 		(row.get_node("%count") as Label).text = str(counts.get(id, 0))
 		row.get_node("%remove").pressed.connect(_remove_type.bind(id))
 		_types_box.add_child(row)

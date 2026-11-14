@@ -111,6 +111,38 @@ icon = ExtResource("ic_oposicao")
 window_index = 11
 action = ""
 
+[node name="dock_state" parent="items" instance=ExtResource("2_item") groups=["unit_only"]]
+visible = false
+layout_mode = 2
+label = "Painel da unidade"
+icon = ExtResource("ic_painel")
+window_index = 12
+action = ""
+
+[node name="dock_state_budget" parent="items" instance=ExtResource("2_item") groups=["governor_only"]]
+visible = false
+layout_mode = 2
+label = "Orçamento da unidade"
+icon = ExtResource("ic_fiscal")
+window_index = 13
+action = ""
+
+[node name="dock_union" parent="items" instance=ExtResource("2_item") groups=["unit_only"]]
+visible = false
+layout_mode = 2
+label = "Relações com a União"
+icon = ExtResource("ic_mundo")
+window_index = 14
+action = ""
+
+[node name="dock_directory" parent="items" instance=ExtResource("2_item") groups=["unit_opposition_only"]]
+visible = false
+layout_mode = 2
+label = "Diretório do partido"
+icon = ExtResource("ic_oposicao")
+window_index = 15
+action = ""
+
 [node name="Separator1" type="ColorRect" parent="items"]
 custom_minimum_size = Vector2(1, 40)
 layout_mode = 2

@@ -1,0 +1,169 @@
+[gd_scene format=3]
+
+[ext_resource type="Theme" path="res://scenes/ui/theme.tres" id="1_theme"]
+[ext_resource type="Script" path="res://scripts/ui/state_budget.gd" id="2_script"]
+
+[node name="state_budget" type="VBoxContainer"]
+size_flags_horizontal = 3
+mouse_filter = 2
+theme = ExtResource("1_theme")
+theme_override_constants/separation = 6
+script = ExtResource("2_script")
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.63529414, 0.6862745, 1)
+theme_override_font_sizes/font_size = 11
+text = "ORÇAMENTO DA UNIDADE"
+
+[node name="balance_label" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(60, 0)
+theme_override_font_sizes/font_size = 14
+text = "—"
+autowrap_mode = 3
+
+[node name="Separator1" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 2
+mouse_filter = 2
+color = Color(0.15294118, 0.2509804, 0.30980393, 1)
+
+[node name="Row_tax_slider" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Name_tax_slider" type="Label" parent="Row_tax_slider"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "Alíquota própria (% do PIB)"
+
+[node name="tax_slider" type="HSlider" parent="Row_tax_slider"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+focus_mode = 0
+max_value = 15
+step = 0.1
+
+[node name="v_tax_slider" type="Label" parent="Row_tax_slider"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+horizontal_alignment = 2
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="Row_sp_health" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Name_sp_health" type="Label" parent="Row_sp_health"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "Saúde (% do PIB)"
+
+[node name="sp_health" type="HSlider" parent="Row_sp_health"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+focus_mode = 0
+max_value = 12
+step = 0.1
+
+[node name="v_sp_health" type="Label" parent="Row_sp_health"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+horizontal_alignment = 2
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="Row_sp_education" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Name_sp_education" type="Label" parent="Row_sp_education"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "Educação (% do PIB)"
+
+[node name="sp_education" type="HSlider" parent="Row_sp_education"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+focus_mode = 0
+max_value = 12
+step = 0.1
+
+[node name="v_sp_education" type="Label" parent="Row_sp_education"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+horizontal_alignment = 2
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="Row_sp_public_security" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Name_sp_public_security" type="Label" parent="Row_sp_public_security"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "Segurança pública (% do PIB)"
+
+[node name="sp_public_security" type="HSlider" parent="Row_sp_public_security"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+focus_mode = 0
+max_value = 12
+step = 0.1
+
+[node name="v_sp_public_security" type="Label" parent="Row_sp_public_security"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+horizontal_alignment = 2
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="Row_sp_infrastructure" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Name_sp_infrastructure" type="Label" parent="Row_sp_infrastructure"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "Infraestrutura (% do PIB)"
+
+[node name="sp_infrastructure" type="HSlider" parent="Row_sp_infrastructure"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+focus_mode = 0
+max_value = 12
+step = 0.1
+
+[node name="v_sp_infrastructure" type="Label" parent="Row_sp_infrastructure"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+horizontal_alignment = 2
+theme_override_font_sizes/font_size = 13
+text = "—"
+
+[node name="budget_note" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(60, 0)
+theme_override_font_sizes/font_size = 12
+text = "—"
+autowrap_mode = 3

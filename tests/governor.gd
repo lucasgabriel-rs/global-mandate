@@ -109,6 +109,7 @@ func _integration() -> void:
 	_check(w.role() == "governor" and w.player == bra and w.governed() == null, "the player is tied to the union, which the AI runs")
 	_check(w.governor.party_id >= 0 and w.governor.party_id == int(w.politics.data_of("BRA").player_party), "the governor belongs to a party of the union")
 	_check(w.office_title() == "Governador", "the title comes from the unit type")
+	_check(w.governor.transfers_in > 0.0, "transfers are already flowing on the first day")
 	var y0 := bra.y
 	for i in 400:
 		w.tick_day()

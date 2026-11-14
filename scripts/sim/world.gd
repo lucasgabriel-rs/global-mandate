@@ -275,6 +275,7 @@ func set_governor(unit_id: int, diff: String) -> Dictionary:
 	politics.clear_cabinet(union.iso)
 	legislation.drop_government_bills(self)
 	gov.party_id = int(politics.data_of(union.iso).player_party)
+	gov.transfers_in = gov.monthly_transfer(self) * 12.0
 	gov.approval = clampf(0.55 + float(DIFFICULTY[diff].approval), 0.2, 0.85)
 	gov.next_election = year_float() + legislation.mandate_years() - 0.1 if union.dem >= 4.0 else -1.0
 	return {"ok": true, "msg": ""}

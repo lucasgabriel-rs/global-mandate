@@ -86,6 +86,10 @@ var _hover_unit := -1
 @onready var _politics: PoliticsPanel = %politics
 @onready var _cabinet: CabinetPanel = %cabinet
 @onready var _opposition: OppositionPanel = %opposition
+@onready var _state: StatePanel = %state
+@onready var _state_budget: StateBudget = %state_budget
+@onready var _union: UnionPanel = %union
+@onready var _directory: DirectoryPanel = %directory
 @onready var economy: EconomyPanel = %economy
 @onready var debt_panel: DebtPanel = %debt
 @onready var _banner: PanelContainer = %banner
@@ -266,6 +270,10 @@ func bind(w: GameWorld, m: MapView) -> void:
 	_politics.bind(w)
 	_cabinet.bind(w)
 	_opposition.bind(w)
+	_state.bind(w)
+	_state_budget.bind(w)
+	_union.bind(w)
+	_directory.bind(w)
 	_role_shown = ""
 	economy.bind(w)
 	border.bind(w, m)
@@ -655,7 +663,7 @@ func _sync_budget_sliders(c: Country) -> void:
 
 ## Shows only what suits the player's role. Scene nodes mark what belongs to each role through the groups
 ## gov_only (government only), opposition_only (opposition only), governor_only and unit_opposition_only (the two roles
-## of governor mode), sovereign_only (hidden while governing a unit) and foreign_only (only in another country's dossier);
+## of governor mode), unit_only (both of them), sovereign_only (hidden while governing a unit) and foreign_only (only in another country's dossier);
 ## role_text swaps the text (or the window title, or the dock icon name) for the metadata
 ## opposition_text while the player is in opposition. Windows of the other role close and do not open.
 func _apply_role() -> void:
@@ -663,14 +671,14 @@ func _apply_role() -> void:
 	var role := world.role()
 	var foreign: bool = world.player != null and selected != null and selected != world.player
 	var seen := {}
-	for group: String in ["gov_only", "opposition_only", "governor_only", "unit_opposition_only", "sovereign_only", "foreign_only"]:
+	for group: String in ["gov_only", "opposition_only", "governor_only", "unit_opposition_only", "unit_only", "sovereign_only", "foreign_only"]:
 		for n: Node in get_tree().get_nodes_in_group(group):
 			if seen.has(n) or not is_ancestor_of(n):
 				continue
 			seen[n] = true
 			var shown := not (n.is_in_group("gov_only") and role != "head") and not (n.is_in_group("opposition_only") and role != "opposition") \
 				and not (n.is_in_group("governor_only") and role != "governor") and not (n.is_in_group("unit_opposition_only") and role != "unit_opposition") \
-				and not (n.is_in_group("sovereign_only") and world.governor != null) and not (n.is_in_group("foreign_only") and not foreign)
+				and not (n.is_in_group("unit_only") and world.governor == null) and not (n.is_in_group("sovereign_only") and world.governor != null) and not (n.is_in_group("foreign_only") and not foreign)
 			if n is FloatWindow:
 				var w: FloatWindow = n
 				w.locked = not shown
@@ -794,6 +802,10 @@ func _refresh_window(i: int, c: Country) -> void:
 		8: _cabinet.refresh()
 		9: economy.refresh()
 		11: _opposition.refresh()
+		12: _state.refresh()
+		13: _state_budget.refresh()
+		14: _union.refresh()
+		15: _directory.refresh()
 		10:
 			var center := legislation_center()
 			if center:
